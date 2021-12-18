@@ -7,6 +7,8 @@ I recently purchased a [Keychron K2](https://www.keychron.com/products/keychron-
 
 **Note**: Tested on Arch Linux only.
 
+<!--more-->
+
 ## Kernel Module
 
 Keychron keyboards are recognized out-of-the-box as Apple keyboards on Linux systems.
