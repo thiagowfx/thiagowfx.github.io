@@ -1,4 +1,4 @@
 dev:
-	hugo server --watch
+	hugo server --buildDrafts --watch
 
 .PHONY: dev
