@@ -1,4 +1,5 @@
 HUGO = hugo
+PORT = 1313  # Listens on port 1313 by default
 
 # Abort if hugo is not installed.
 ifeq (, $(shell which $(HUGO)))
@@ -6,10 +7,9 @@ ifeq (, $(shell which $(HUGO)))
 endif
 
 dev:
-	# Listens on port 1313 by default
-	$(HUGO) server --buildDrafts --watch
+	$(HUGO) server --buildDrafts --port $(PORT) --watch
 
 clean:
-	fuser -k 1313/tcp
+	fuser -k $(PORT)/tcp
 
 .PHONY: dev clean
