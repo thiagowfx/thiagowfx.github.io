@@ -9,7 +9,7 @@ ifeq (, $(shell which $(HUGO)))
 endif
 
 dev:
-	$(HUGO) server --buildDrafts --port $(PORT) --watch
+	$(HUGO) server --baseUrl="$(shell hostname):$(PORT)" --bind="0.0.0.0" --buildDrafts --port $(PORT) --watch
 
 clean:
 	fuser -k $(PORT)/tcp
