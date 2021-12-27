@@ -2,7 +2,6 @@
 title: "Miniflux: Rolling my own RSS Reader"
 date: 2021-12-19T12:52:56-05:00
 tags:
-  <!-- - linux -->
   - rss
   - selfhosted
 draft: true
