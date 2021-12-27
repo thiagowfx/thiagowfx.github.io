@@ -5,7 +5,7 @@ tags:
   - linux
 ---
 
-Issue: Whenever I connect my bluetooth headphones to my Linux workstation, I need to manually switch to them. Whenever I disconnect the headphones, I need to manually switch off them.
+Whenever I connect/disconnect my bluetooth headphones to my Linux workstation, I need to manually switch to/off them.
 
 <!--more-->
 
