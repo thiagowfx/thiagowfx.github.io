@@ -26,7 +26,7 @@ $ modinfo hid_apple
 Ensure the module is loaded within the initram for setups that use LUKS:
 
 ```shell
-$ cat /etc/mkinitcpio.conf | grep MODULES -B 1
+$ grep MODULES -B 1 /etc/mkinitcpio.conf
 # hid_apple for Keychron K2
 MODULES=(hid_apple)
 ```
@@ -37,7 +37,7 @@ This works for wired mode but alas it's not possible to use the keyboard wireles
 - Add the `bluetooth` hook to your mkinitcpio, ensuring it comes before `encrypt`.
 
 ```shell
-$ cat /etc/mkinitcpio.conf | grep HOOKS -B 1
+$ grep HOOKS -B 1 /etc/mkinitcpio.conf
 # bluetooth for Keychron K2
 HOOKS=(base udev autodetect keyboard bluetooth modconf block encrypt filesystems resume fsck)
 ```
@@ -92,7 +92,7 @@ AutoEnable=true
 Finally, another tweak is to make the bluetooth adapter stay awake otherwise it may periodically disconnect:
 
 ```shell
-$ cat /etc/modprobe.d/keychron.conf | grep btusb -B 1
+$ grep btusb -B 1 /etc/modprobe.d/keychron.conf
 # Turn off bluetooth autosuspend.
 options btusb enable_autosuspend=0
 ```
@@ -118,7 +118,7 @@ Change it in the current session only:
 Change it permanently:
 
 ```shell
-$ cat /etc/modprobe.d/keychron.conf | grep hid_apple -B 1
+$ grep hid_apple -B 1 /etc/modprobe.d/keychron.conf
 # Use function keys by default. Press Fn to use multimedia keys.
 options hid_apple fnmode=2
 ```
