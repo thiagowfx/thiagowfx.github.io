@@ -1,7 +1,7 @@
-HUGO = hugo
+HUGO := hugo
 
 # Listens on port 1313 by default
-PORT = 1313
+PORT := 1313
 
 # Abort if hugo is not installed.
 ifeq (, $(shell which $(HUGO)))
