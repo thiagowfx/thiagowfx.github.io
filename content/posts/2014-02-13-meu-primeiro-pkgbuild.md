@@ -66,7 +66,42 @@ existia (sério, se você encontrar algum programa ainda sem PKGBUILD no AUR, me
 fala, que provavelmente eu vou querer criar um para ele). Não há necessidade de
 reinventar a roda.
 
-O meu PKGBUILD é esse [aqui](https://aur.archlinux.org/packages/arch-firefox-nightly-search/). Você pode ver aqui como um PKGBUILD é bastante
+O meu PKGBUILD é esse [aqui](https://github.com/thiagowfx/PKGBUILDs/blob/aur3/arch-firefox-nightly-search/PKGBUILD):
+
+```bash
+pkgname=arch-firefox-nightly-search
+pkgver=37.0a1
+pkgrel=1
+pkgdesc="Firefox Nightly Arch search engines (official packages, AUR, BBS, wiki and bugs)"
+arch=('any')
+url='http://www.archlinux.org/'
+license=('GPL')
+depends=('firefox-nightly')
+source=('arch-bugs-fs.xml'
+  'arch-bugs-t.xml'
+  'arch-forum-a.xml'
+  'arch-forum-c.xml'
+  'arch-pkgs.xml'
+  'arch-wiki.xml'
+  'aur.xml')
+md5sums=('df18835df1ea78bc3fc0e05f934b1e46'
+         '0226a317c8bf23feaa80e21d1706f2d5'
+         '4eaa3d26ac41077ee25b66127ad9ef0a'
+         '2435c34ea6a012fe08a8d17a051e5f80'
+         '403c346ce089ec56c2db67f9f3d87514'
+         'dbb93d1e793b92252b69f65110b33c42'
+         'b70839977625bceb3004dc62fb9e5a65')
+
+package() {
+  prefix="${pkgdir}/opt/firefox-${pkgver}/browser/searchplugins/"
+
+  for file in ${source[@]}; do
+    install -Dm644 "${srcdir}/${file}" "${prefix}/${file}"
+  done
+}
+```
+
+Você pode ver aqui como um PKGBUILD é bastante
 simples "por dentro". Ele não tem nada de especial, é um PKGBUILD como outro
 qualquer. Mas é o meu primeiro -- na verdade, isso faz com que ele seja
 especial, sim. Acho que já dá para perceber o que ele faz.
