@@ -1,5 +1,6 @@
 ---
-title: '{{ replace .Name "-" " " | title }}'
+{{- $today := now.Format "2006-01-"}}
+title: "{{ replace .Name $today "" | humanize | title }}"
 date: {{ .Date }}
 tags:
 draft: true
