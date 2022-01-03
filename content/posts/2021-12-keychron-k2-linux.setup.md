@@ -107,7 +107,8 @@ The default `fnmode` is set to multimedia keys:
 2 = normally function keys, switchable to media keys by holding Fn key
 ```
 
-I prefer to set it to function keys.
+I prefer to set it to function keys. One of the reasons for that is to make
+switching TTYs (Ctrl+Alt+Fn) easy.
 
 Change it in the current session only:
 
