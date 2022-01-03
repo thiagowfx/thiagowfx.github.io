@@ -1,6 +1,7 @@
 ---
 title: 'Keychron K2: Linux Setup'
 date: 2021-12-11T20:59:21-05:00
+lastmod: "2022-01-03"
 tags:
   - hardware
   - linux
@@ -92,7 +93,7 @@ AutoEnable=true
 Finally, another tweak is to make the bluetooth adapter stay awake otherwise it may periodically disconnect:
 
 ```shell
-$ grep btusb -B 1 /etc/modprobe.d/keychron.conf
+$ cat /etc/modprobe.d/btusb.conf
 # Turn off bluetooth autosuspend.
 options btusb enable_autosuspend=0
 ```
@@ -119,7 +120,7 @@ Change it in the current session only:
 Change it permanently:
 
 ```shell
-$ grep hid_apple -B 1 /etc/modprobe.d/keychron.conf
+$ cat /etc/modprobe.d/hid_apple.conf
 # Use function keys by default. Press Fn to use multimedia keys.
 options hid_apple fnmode=2
 ```
