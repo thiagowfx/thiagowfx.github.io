@@ -14,7 +14,7 @@ This article describes my experience transitioning to, setting up and using the 
 
 ## Preamble
 
-I always kind of enjoyed following people and blogs via RSS, even though it has never been a key part of my workflow (nor of the mainstream web). That said, I am not here to convince you why RSS is great, there are good existing resources[^kevq] for that already.
+I always kind of enjoyed following people and blogs via RSS, even though it has never been a key part of my workflow (nor of the mainstream web). That said, I am not here to convince you why RSS is great, there are good existing resources[^kevq][^laura] for that already.
 
 Initially I had used Commafeed, Feedly and Inoreader, which are hosted solutions. They are mostly OK, especially if you only have a handful of feeds. Their free offerings are quite decent, with a limit of a hundred or so feeds. They also have mobile clients (Android, iOS) which are a must these days. I was never fully converted to them though, and my workflow therein would only last for a few weeks or months. Some common barriers were:
 
@@ -118,5 +118,6 @@ Another limitation is that in principle you'll only be able to access Miniflux f
 
 
 [^kevq]: https://kevq.uk/please-add-rss-support-to-your-site/
+[^laura]: https://laurakalbag.com/subscribe/
 [^system-font-stack]: https://css-tricks.com/snippets/css/system-font-stack/
 [^extra-measures]: for example: a VPN like OpenVPN, [Wireguard](https://www.wireguard.com/) or [tailscale](https://tailscale.com/); or a tool like [ngrok](https://ngrok.com/).
