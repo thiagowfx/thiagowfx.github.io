@@ -131,7 +131,7 @@ Let's highlight a few similarities and differences in them, excluding the fact t
 
 - package metadata, by the means of bash variables, are almost equivalent
   one-to-one
-  - the notable difference is in the architecture, Arch primary supports
+  - the notable difference is in the architecture, Arch primarily supports
     _x86_64_ whereas Alpine has support for multiple architectures. When
     a package is architecture agnostic, Arch denotes it with `any` whereas
     alpine has both `noarch` and `all`, the latter is like `any` (=all
@@ -142,9 +142,9 @@ Let's highlight a few similarities and differences in them, excluding the fact t
     `-doc` subpackages are very common. On the other hand, Arch tends to have
     monolithic packages in order to keep it simple, although it also supports
     subpackages.
-  - Alpine supports setting `$builddir` whereas Arch doesn't. As a consequence, it's often unneeded to `cd` in `build()` and `package()` in Alpine, whereas in Arch one does manually change directories to `$srcdir/$pkgname` before building.
+  - Alpine supports setting `$builddir` whereas Arch doesn't. As a consequence, it's often unneeded to `cd` in `build()` and `package()` in Alpine, whereas in Arch one does need to manually change directories to `$srcdir/$pkgname` before building.
   - Alpine lacks optional dependencies, whereas Arch has `optdepends`.
-- Alpine enforces the use of `check` to test packages, otherwise it needs to be explicitly disabled and documented with `!check` in `options=`. That's not the case in Arch.
+- Alpine enforces the use of `check` in test packages, otherwise it needs to be explicitly disabled and documented with `!check` in `options=`. That's not the case in Arch.
 - `check()`, `build()` and `package()` are pretty much similar in both formats. `$srcdir` and `$pkgdir` are provided in both.
 - The [ArchWiki][archwiki] is way more documented in terms of packaging guidelines and examples than Alpine's. If you use DuckDuckGo, you can query for `!aw <foo>` as a bang shortcut to search directly in the ArchWiki.
 
