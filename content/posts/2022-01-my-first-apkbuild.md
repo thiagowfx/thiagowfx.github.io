@@ -21,6 +21,8 @@ Alpine Linux package management is very similar to Arch Linux, with tiny differe
 - `namcap` → `apkbuild-lint` (from `atools`) + `abuild sanitycheck`[^lint]: Linters are different.
 - `updpkgsums` → `abuild checksum`: Generate hashes for package sources.
 
+{{< figure align="center" src="https://imgs.xkcd.com/comics/standards.png" link="https://xkcd.com/927/" alt="Fortunately, the charging one has been solved now that we've all standardized on mini-USB. Or is it micro-USB? Shit." attr="XKCD Courtesy of Randall Munroe" >}}
+
 Other than that, the process of writing an `APKBUILD` is very similar to writing a `PKGBUILD`. In fact, the Arch repositories (especially the [AUR][aur]) tend to be much more comprehensive than Alpine's in terms of number of packages, so chances are if you want to write a new package for Alpine, check in Arch's repos first, it's a good starting point.
 
 ## My first package: `fpp`
