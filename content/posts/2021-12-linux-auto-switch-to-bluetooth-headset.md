@@ -33,7 +33,9 @@ $ systemctl --user restart pulseaudio
 ## PipeWire
 
 ```shell
-$ sudoedit /usr/share/pipewire/pipewire-pulse.conf
+$ sudo mkdir -p /etc/pipewire
+$ sudo cp /usr/share/pipewire/pipewire-pulse.conf /etc/pipewire/pipewire-pulse.conf
+$ sudoedit /etc/pipewire/pipewire-pulse.conf
 ...
 # Extra modules can be loaded here. Setup in default.pa can be moved here
 context.exec = [
@@ -41,6 +43,10 @@ context.exec = [
 ]
 ...
 ```
+
+Alternatively, `~/.config/pipewire/pipewire-pulse.conf` should also work. We
+should not edit the file in `/usr` because it will not survive package
+upgrades.
 
 Then restart pipewire:
 
