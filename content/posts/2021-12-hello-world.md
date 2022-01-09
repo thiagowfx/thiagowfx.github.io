@@ -5,4 +5,11 @@ tags:
   - meta
 ---
 
-Bye World from Hugo!
+Hello World from [Hugo][hugo]!
+
+I am joining the [indieweb][indieweb] and the [JAMStack][jamstack] by making my
+own blog backed by a static site generator (SSG) and deployed with `git`.
+
+[hugo]: https://gohugo.io/
+[indieweb]: https://indieweb.org/
+[jamstack]: https://jamstack.org/
