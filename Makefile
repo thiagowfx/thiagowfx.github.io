@@ -14,6 +14,6 @@ dev:
 
 clean:
 	-fuser -k $(PORT)/tcp
-	$(RM) -r public/
+	$(RM) -r public/ resources/
 
 .PHONY: dev clean
