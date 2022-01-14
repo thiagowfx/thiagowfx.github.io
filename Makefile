@@ -1,3 +1,4 @@
+# Path to hugo binary.
 HUGO := hugo
 
 # Listens on port 1313 by default
