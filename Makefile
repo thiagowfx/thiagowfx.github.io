@@ -16,4 +16,7 @@ clean:
 	-fuser -k $(PORT)/tcp
 	$(RM) -r public/ resources/
 
-.PHONY: dev clean
+pull:
+	git submodule update --init --remote
+
+.PHONY: dev clean pull
