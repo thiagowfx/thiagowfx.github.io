@@ -57,3 +57,4 @@ $ systemctl --user restart pipewire{,-pulse}
 ## References
 
 - https://wiki.archlinux.org/title/PulseAudio#Switch_on_connect
+- https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Config-PulseAudio#configuration-file-pipewire-pulseconf
