@@ -109,12 +109,19 @@ The default `fnmode` is set to multimedia keys:
 ```
 
 I prefer to set it to function keys. One of the reasons for that is to make
-switching TTYs (Ctrl+Alt+Fn) easy.
+switching TTYs (Ctrl+Alt+Fn) possible. For some reason, Fn doesn't seem to work
+in TTYs.
 
 Change it in the current session only:
 
 ```shell
 % echo 2 >> /sys/module/hid_apple/parameters/fnmode
+```
+
+If you do not have a root shell, use `sudo` / `doas` + `tee`:
+
+```shell
+% echo 2 | sudo tee /sys/module/hid_apple/parameters/fnmode
 ```
 
 Change it permanently:
