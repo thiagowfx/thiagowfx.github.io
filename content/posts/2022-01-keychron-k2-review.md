@@ -49,12 +49,13 @@ requirements perfectly. The [issue][paradox-of-choice] was that Keychron had
 
 {{< figure align="center" src="https://imgs.xkcd.com/comics/work.png" link="https://xkcd.com/1741/" alt="Despite it being imaginary, I already have SUCH a strong opinion on the cord-switch firing incident." attr="XKCD Courtesy of Randall Munroe" >}}
 
-After some deliberation I had two options in mind: Keychron K2 and Keychron K1
-TKL. The main difference between them is that the K1 is a low-profile keyboard.
-I didn't know what low-profile meant at the time and had to do some research to
-figure it out[^4].
+After some deliberation I had two options in mind: [Keychron K2][keychron-k2]
+and [Keychron K1][keychron-k1] TKL. The main difference between them is that
+the K1 is a low-profile keyboard. I didn't know what low-profile meant at the
+time and had to do some research to figure it out[^4].
 
-In the end I opted for the K2, red switches (linear), with RGB backlight.
+In the end I opted for the [**Keychron K2**][keychron-k2], red switches (linear),
+with RGB backlight.
 
 ## The keyboard
 
@@ -134,6 +135,8 @@ powerful, but for me it's less stressful to keep things simple.
 [logitech-g915-tkl]: https://www.logitechg.com/en-ca/products/gaming-keyboards/g915-tkl-wireless.html
 [paradox-of-choice]: https://en.wikipedia.org/wiki/The_Paradox_of_Choice
 [keychron-choices]: https://www.keychron.com/collections/all-products
+[keychron-k1]: https://www.keychron.com/products/keychron-k1-wireless-mechanical-keyboard
+[keychron-k2]: https://www.keychron.com/products/keychron-k2-wireless-mechanical-keyboard
 
 [^1]: Linked to the `.pdf` because apparently the SKU isn't listed in the Logitech product website anymore. At the time, it cost ~$120 CAD.
 [^2]: This requirement indirectly excluded all those gaming keyboards with dedicated macro and/or multimedia keys, if they ended up increasing the overall keyboard surface area.
