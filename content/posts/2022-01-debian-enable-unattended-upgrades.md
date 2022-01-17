@@ -104,7 +104,13 @@ Here's what a typical log looks like:
 
 ```shell
 $ (cd /etc/etckeeper && sudo git log)
-commit 5a6478711a1a1198535d5062ca309afb5c99c0eb (HEAD -> master)
+commit 8f9f5e31d9abb833cf645825c1cbda15336818b7 (HEAD -> master)
+Author: root <root@raspberry>
+Date:   Sun Jan 16 06:25:28 2022 -0500
+
+    daily autocommit
+
+commit 5a6478711a1a1198535d5062ca309afb5c99c0eb
 Author: Thiago Perrotta <tbperrotta@gmail.com>
 Date:   Sun Jan 16 02:29:01 2022 -0500
 
