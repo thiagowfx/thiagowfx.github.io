@@ -3,6 +3,7 @@ title: 'Meu primeiro PKGBUILD'
 date: 2014-02-13T20:08:00-03:00
 tags:
   - classics
+  - linux
   - portuguese
 ---
 

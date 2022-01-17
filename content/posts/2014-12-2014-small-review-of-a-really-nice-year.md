@@ -4,7 +4,6 @@ date: 2014-12-24T04:51:52+00:00
 tags:
   - classics
   - meta
-
 ---
 
 **Disclaimer: I haven&#8217;t reviewed this post. It was written in one-shot. I hope it is understandable.**
