@@ -1,3 +1,6 @@
+# Homepage URL.
+BASE_URL ?= $(shell hostname)
+
 # Path to hugo binary.
 HUGO := hugo
 
@@ -10,7 +13,7 @@ ifeq (, $(shell which $(HUGO)))
 endif
 
 dev:
-	$(HUGO) server --baseUrl="$(shell hostname)" --bind="0.0.0.0" --buildDrafts --port $(PORT) --watch
+	$(HUGO) server --baseUrl="$(BASE_URL)" --bind="0.0.0.0" --buildDrafts --port $(PORT) --watch
 
 clean:
 	-fuser -k $(PORT)/tcp
