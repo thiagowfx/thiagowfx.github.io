@@ -5,7 +5,7 @@ tags:
   - linux
 ---
 
-In the same spirit of my first [`PKGBUILD`]({{< ref "2014-02-meu-primeiro-pkgbuild.md" >}}) and [`Ebuild`]({{< ref "2014-09-my-first-ebuild.md" >}}), herein I will describe my first `APKBUILD`.
+In the same spirit of my first [`PKGBUILD`]({{< ref "2014-02-13-meu-primeiro-pkgbuild.md" >}}) and [`Ebuild`]({{< ref "2014-09-28-my-first-ebuild.md" >}}), herein I will describe my first `APKBUILD`.
 
 <!--more-->
 

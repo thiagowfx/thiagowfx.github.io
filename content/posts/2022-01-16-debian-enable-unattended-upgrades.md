@@ -61,7 +61,7 @@ For debugging, one should run:
 $ sudo unattended-upgrade -d
 ```
 
-We could go beyond and add logging by the means of `etckeeper`, just like how we did for Alpine Linux's [`apk`]({{< ref "2022-01-alpine-linux-apk-logs-with-etckeeper" >}}) 
+We could go beyond and add logging by the means of `etckeeper`, just like how we did for Alpine Linux's [`apk`]({{< ref "2022-01-10-alpine-linux-apk-logs-with-etckeeper" >}})
 
 ```shell
 % apt install etckeeper

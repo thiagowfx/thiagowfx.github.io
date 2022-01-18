@@ -7,7 +7,7 @@ tags:
 showtoc: true
 ---
 
-This is a follow-up post of [Keychron K2: Linux Setup]({{< ref "2021-12-keychron-k2-linux.setup.md" >}}). The previous post focused on the configuration of the keyboard, this one focuses on its user experience from the point of view of a Software Engineer.
+This is a follow-up post of [Keychron K2: Linux Setup]({{< ref "2021-12-11-keychron-k2-linux.setup.md" >}}). The previous post focused on the configuration of the keyboard, this one focuses on its user experience from the point of view of a Software Engineer.
 
 <!--more-->
 
@@ -63,7 +63,7 @@ The keyboard met all my expectations, even surpassing them, I am quite satisfied
 
 Linux support
 : Great out-of-the-box support, it just works. Even though I [tweaked]({{< ref
-"2021-12-keychron-k2-linux.setup.md" >}}) a few configs, it wasn't strictly
+"2021-12-11-keychron-k2-linux.setup.md" >}}) a few configs, it wasn't strictly
 necessary. In particular, there's a physical toggle where you can choose between
 macOS (=Linux) or Windows mode. Furthermore they provide both macOS-style (command, option, etc) and
 Windows-style keycaps (super, alt, etc). For Linux I tend to stick with the Windows ones.
