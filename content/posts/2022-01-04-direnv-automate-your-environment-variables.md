@@ -222,7 +222,7 @@ One thing I didn't cover is how secure it is: You need to run `direnv allow` exp
 
 ```shell
 $ touch .envrc
-direnv: error /home/tperrotta/projects/thiagowfx.github.io/.envrc is blocked. Run `direnv allow` to approve its content
+direnv: error ~/projects/foo/.envrc is blocked. Run `direnv allow` to approve its content
 ```
 
 If you run `direnv allow` but later on the file is modified (for example, after `git pull`, whereby you retrieve a modification from a teammate), `direnv` will once again refuse to operate. You'll need to whitelist it again by re-running `direnv allow`. Direnv will snapshot/hash the file contents of `.envrc` remember it across sessions.

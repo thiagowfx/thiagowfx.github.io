@@ -32,8 +32,6 @@ $ systemctl status unattended-upgrades
         CPU: 516ms
      CGroup: /system.slice/unattended-upgrades.serviceGk
              └─22442 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
-
-Jan 16 02:05:42 raspberry.home.arpa systemd[1]: Started Unattended Upgrades Shutdown.
 ```
 
 By default, only security updates are enabled. We can enable all updates by uncommenting the applicable lines:
@@ -96,8 +94,6 @@ systemctl status etckeeper.timer
     Trigger: Mon 2022-01-17 02:28:44 EST; 23h left
    Triggers: ● etckeeper.service
        Docs: man:etckeeper(8)
-
-Jan 16 02:28:44 raspberry.home.arpa systemd[1]: Started Daily autocommit of changes in /etc directory.
 ```
 
 Here's what a typical log looks like:
@@ -111,7 +107,7 @@ Date:   Sun Jan 16 06:25:28 2022 -0500
     daily autocommit
 
 commit 5a6478711a1a1198535d5062ca309afb5c99c0eb
-Author: Thiago Perrotta <tbperrotta@gmail.com>
+Author: root <root@raspberry>
 Date:   Sun Jan 16 02:29:01 2022 -0500
 
     Initial commit

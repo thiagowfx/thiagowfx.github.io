@@ -17,8 +17,7 @@ Hi there. This is possibly the last post from me in this platform. However, sayi
 
 This doesn&#8217;t count the times I said I would quit from wordpress without considering changing platforms. Anyways, this is not really the subject of this post.
 
-Last year I wrote a post similar to this one: ~~http://thiagoperrotta.wordpress.com/2013/12/29/retrospectiva-2013-blablabla/~~
-
+Last year I wrote a post similar to this one.
 And now, here I will register some small changes, tids and bits I&#8217;ve learned and/or discovered this year.I won&#8217;t bother creating links: I&#8217;ll write just pure text.
 
 # The actual post, please

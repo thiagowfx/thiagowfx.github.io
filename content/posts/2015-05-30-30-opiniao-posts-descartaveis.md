@@ -8,7 +8,7 @@ tags:
 
 Eu demorei muito a criar um perfil no Facebook[^1], fui um dos últimos da minha turma do ensino médio a fazer isso. Isso foi na época que o filme &#8216;A rede social&#8217; foi lançado, filme esse que popularizou bastante a rede na época. _Smartphones_ nem eram tão comuns, mas alguns anos depois se tornariam cada vez mais acessíveis.
 
-Vivendo durante quase 4 anos nessa rede social, eu já mudei a minha opinião e visão em relação a ela várias vezes. Nunca a expressei muito bem em um único post, mas pelo menos já fiz menção a várias impressões discretas que tenho dela (exemplos: [1] e [2]). Na verdade, esse post não se trata apenas sobre o Facebook, é sobre redes sociais em geral, mas o Facebook vai ser o exemplo principal daqui.
+Vivendo durante quase 4 anos nessa rede social, eu já mudei a minha opinião e visão em relação a ela várias vezes. Nunca a expressei muito bem em um único post, mas pelo menos já fiz menção a várias impressões discretas que tenho dela. Na verdade, esse post não se trata apenas sobre o Facebook, é sobre redes sociais em geral, mas o Facebook vai ser o exemplo principal daqui.
 
 Pois bem, aí o tempo foi se passando, e uma hora inventaram o conceito de &#8216;news feed&#8217; e &#8216;timeline&#8217;. Hoje parece até trivial e que tudo isso existiu sempre, mas antigamente, desde meados de Orkut, basicamente a gente visualizava tudo &#8212; ou quase tudo &#8212; que os nossos amigos postavam. Não havia algoritmos &#8220;inteligentes&#8221; que tentavam otimizar o conteúdo de acordo com o perfil do usuário, ou pelo menos eles não eram tão bons na época. Em muitas redes sequer havia o conceito de unfollow, ou pelo menos eles eram ainda bem primitivos. (Esses &#8220;ou pelo menos&#8221; são importantes pra não deixar o texto impreciso, mas os detalhes não são muito importantes)
 
@@ -20,9 +20,9 @@ Indo mais a fundo, é possível descobrir muito mais informações sobre as pess
 
 Dados os parágrafos anteriores, apenas com o propósito de criar uma pequena introdução ao contexto do assunto, agora eu questiono: se você fixar uma única pessoa, ela está gerando dados o tempo inteiro, em várias redes diferentes, dados esses que vão ficar armazenados provavelmente quase que pra sempre. Existem dois pontos que eu considero problemáticos aqui: (1) como esses dados poderão ser usados depois &#8212; e quem detém acesso a eles e (2) esses dados realmente precisam ficar expostos o tempo todo para o mundo e/ou seus contatos?
 
-O ponto (1) não é o foco desse post, mas ele pode ser resumido com uma palavra: **privacidade**. Hoje em dia não dá para fugir disso a não ser boicotando completamente algumas redes sociais; isto é, você tem que adotar uma postura parecida com a do Richard Stallman e ser extremamente radical com relação ao seus dados. Ainda assim, isso não quer dizer nada, porque as redes que você boicota podem (e provavelmente estão) estar coletando alguns dados de você sem mesmo o seu consentimento e/ou conhecimento. Se você quiser ler mais sobre isso, saia desse site e leia as páginas do site do Stallman. Em particular, [3], [4], [5] e [6].
+O ponto (1) não é o foco desse post, mas ele pode ser resumido com uma palavra: **privacidade**. Hoje em dia não dá para fugir disso a não ser boicotando completamente algumas redes sociais; isto é, você tem que adotar uma postura parecida com a do Richard Stallman e ser extremamente radical com relação ao seus dados. Ainda assim, isso não quer dizer nada, porque as redes que você boicota podem (e provavelmente estão) estar coletando alguns dados de você sem mesmo o seu consentimento e/ou conhecimento. Se você quiser ler mais sobre isso, saia desse site e leia as páginas do site do Stallman. Em particular, [1], [2], [3] e [4].
 
-Minha opinião resumida sobre (1) é: se você não quer que dada informação sua fique permanentemente guardada por uma dessas empresas, então comece **não** postando essa informação em lugar nenhum &#8212; de verdade, não se trata nem de apenas postar; a sua simples interação com o seu _browser_ já coleta muitos dados sobre você. O aplicativo do Facebook para Android coleta uma informação absurda de dados sobre você (exemplo: [7]). Caso você poste algo, trate de não se arrepender. Talvez você já tenha ouvido falar de pessoas que foram presas por terem postado um único _tweet_ com algum conteúdo ora ofensivo ora enganoso (sim, apenas uma mentira). E não, não adianta apagar depois só pra dizer que o _tweet_ nunca existiu. Eu vou ficar devendo a fonte dessas últimas, mas eu vejo notícias sobre isso de forma razoavelmente frequente. Enfim, sem muito _mimimi_ nessa parte: quem escolhe o que quer usar é você[^5].
+Minha opinião resumida sobre (1) é: se você não quer que dada informação sua fique permanentemente guardada por uma dessas empresas, então comece **não** postando essa informação em lugar nenhum &#8212; de verdade, não se trata nem de apenas postar; a sua simples interação com o seu _browser_ já coleta muitos dados sobre você. O aplicativo do Facebook para Android coleta uma informação absurda de dados sobre você (exemplo: [5]). Caso você poste algo, trate de não se arrepender. Talvez você já tenha ouvido falar de pessoas que foram presas por terem postado um único _tweet_ com algum conteúdo ora ofensivo ora enganoso (sim, apenas uma mentira). E não, não adianta apagar depois só pra dizer que o _tweet_ nunca existiu. Eu vou ficar devendo a fonte dessas últimas, mas eu vejo notícias sobre isso de forma razoavelmente frequente. Enfim, sem muito _mimimi_ nessa parte: quem escolhe o que quer usar é você[^5].
 
 ## Posts descartáveis
 
@@ -65,10 +65,8 @@ E, caramba, se você chegou até aqui: você tem alguma opinião sobre o assunto
 [^8]: https://gist.github.com/robinsloan/3688616
 [^9]: faz tempo que eu não escrevia um post do tipo, de opinião, e em forma de um &#8220;mini essay&#8221;. É relativamente custoso tirar um tempo para resumir bem os argumentos que você vai usar e a forma como você vai escrever esse tipo de post. Mas enfim, eu espero continuar a escrever textos assim de vez em quando, me parece um bom exercício mental.
 
-[1]: https://thiagoperrotta.wordpress.com/2013/11/01/journal-4-aaaaaargh-facebook/
-[2]: https://thiagoperrotta.wordpress.com/2015/03/02/thoughts-on-instagram/
-[3]: https://stallman.org/facebook.html
-[4]: https://stallman.org/apple.html
-[5]: https://stallman.org/amazon.html
-[6]: https://stallman.org/skype.html
-[7]: http://www.techrepublic.com/article/misplaced-fear-about-facebook-messenger-for-android/
+[1]: https://stallman.org/facebook.html
+[2]: https://stallman.org/apple.html
+[3]: https://stallman.org/amazon.html
+[4]: https://stallman.org/skype.html
+[5]: http://www.techrepublic.com/article/misplaced-fear-about-facebook-messenger-for-android/
