@@ -130,7 +130,7 @@ DEFAULT_CIPHER=aes-256-cbc
 # BACKUP_LIMIT=3
 ```
 
-Tip: You can find the list of all explicitly installed packages in `/etc/apk/world`.
+**Tip**: You can find the list of all explicitly installed packages in `/etc/apk/world`.
 
 ## The last piece: make /var persistent
 
