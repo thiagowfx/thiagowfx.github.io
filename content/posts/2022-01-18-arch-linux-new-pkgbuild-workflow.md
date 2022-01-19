@@ -211,6 +211,10 @@ $ urlwatch --urls urlwatch.yml
 [urlwatch]: https://thp.io/2008/urlwatch/
 
 [^1]: Package debugging is out of scope of this post.
-[^2]: For example, use https://gist.github.com or http://paste.opensuse.org/ or http://ix.io/.
-[^3]: If you use https://duckduckgo.com/, query for `!aur bkt` and `!archpkg bkt`. Handy!
-[^4]: In 99% of the cases this is just a matter of bumping the `pkgver=` and updating the checksums.
+[^2]: For example, use https://gist.github.com or http://paste.opensuse.org/ or
+  http://ix.io/.
+[^3]: If you use https://duckduckgo.com/, query for `!aur bkt` and `!archpkg
+  bkt`. Handy!
+[^4]: In 99% of the cases this is just a matter of bumping the `pkgver=` and
+  updating the checksums. If `pkgver=` is the same but there's a fix to the
+  package itself, then bump `pkgrel=` instead.
