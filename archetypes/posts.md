@@ -1,5 +1,5 @@
 ---
-{{- $today := now.Format "2006-01-"}}
+{{- $today := now.Format "2006-01-02"}}
 title: "{{ replace .Name $today "" | humanize | title }}"
 date: {{ .Date }}
 tags:
