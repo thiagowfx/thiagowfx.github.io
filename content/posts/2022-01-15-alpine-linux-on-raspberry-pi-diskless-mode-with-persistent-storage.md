@@ -203,6 +203,8 @@ The final setup works surprisingly well:
 ## References
 
 - https://vincentserpoul.github.io/post/alpine-linux-rpi0/
+- http://dahl-jacobsen.dk/tips/blog/2021-04-08-docker-on-alpine-linux/
+- http://dahl-jacobsen.dk/tips/blog/2018-03-15-alpine-on-raspberry-pi/
 
 
 [7-zip]: https://www.7-zip.org/
