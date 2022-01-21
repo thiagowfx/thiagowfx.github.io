@@ -138,6 +138,10 @@ And then reload the kernel module:
 % modprobe -r hid_apple && modprobe hid_apple
 ```
 
+## Insert Key
+
+By default there is no native `Insert` key. Use `Fn + Del` to trigger `Insert`. For example, `Fn + Shift + Del` works like `Shift + Insert` in X11, yielding paste selection.
+
 ## Battery
 
 Check the battery level programatically:
@@ -164,3 +168,4 @@ This only works in bluetooth mode (not in wired mode).
 - https://github.com/kurgol/keychron
 - https://gist.github.com/andrebrait/961cefe730f4a2c41f57911e6195e444
 - https://mikeshade.com/posts/keychron-linux-function-keys/
+- https://github.com/kurgol/keychron/blob/master/k2.md
