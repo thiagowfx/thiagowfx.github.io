@@ -5,7 +5,6 @@ tags:
   - dev
   - linux
 showtoc: true
-weight: 1
 ---
 
 This document describes my workflow to manage `PKGBUILDs` for the [AUR][aur] (Arch User Repository) in [Arch Linux][arch-linux].
