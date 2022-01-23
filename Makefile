@@ -4,7 +4,7 @@ BASE_URL ?= $(shell hostname)
 # Path to hugo binary.
 HUGO := hugo
 
-# Listens on port 1313 by default
+# Listens on port 1313 by default.
 PORT := 1313
 
 # Abort if hugo is not installed.
