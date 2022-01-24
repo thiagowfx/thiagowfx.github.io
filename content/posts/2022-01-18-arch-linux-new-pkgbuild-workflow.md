@@ -124,7 +124,7 @@ package() {
 
 - `ls src/` and check the directory structure. Update `cd` in your `PKGBUILD` to match it. Usually it will be `cd $srcdir/$pkgname-$pkgver`, but sometimes tiny adjustments are necessary.
 
-- Then run `makepkg -s`. If everything goes well, your package will be successfully built[^1] (`bkt-0.5.0-1-x86_64.pkg.tar.zst`), however that doesn't mean it is a decent package.
+- Then run `makepkg -s`. If everything goes well, your package will be successfully built[^1] (`bkt-0.5.0-1-x86_64.pkg.tar.zst`), however that doesn't mean it is a decent package yet.
 
 - Run `namcap PKGBUILD` and `namcap *.pkg.tar.zst` to lint your package and catch common errors. Fix the errors, if any.
 
@@ -132,13 +132,13 @@ package() {
 
 ## Request feedback if needed
 
-If the package is only relevant to you, stop here. `git commit`, `git push`, and then you're done.
+If the package is only relevant to you, stop here. `git commit`, `git push`, and then you're done. Install the package with `makepkg -i`.
 
 Otherwise, if the package might be potentially useful to other Arch users, you could consider uploading it to the AUR.
 
 Before you do so, stop for a moment and make an honest judgment whether this is a high quality package and whether you're confident it is clean and polished enough, following the best practices documented in the Wiki. The answer doesn't need to be positive, it's perfectly OK to commit mistakes and everyone is a newbie at some point.
 
-If the answer is negative, or if you're new to this process and would like some help, fear no more! There are at least two decent community resources wherein ask for help:
+If the answer is negative, or if you're new to this process and would like some help, fear no more! There are at least two decent community resources wherein to ask for help:
 
 1. [AUR Issues, Discussion & PKGBUILD Requests](https://bbs.archlinux.org/viewforum.php?id=38.) BBS / Forums:  Open a new thread, post your `PKGBUILD` (use `[code][/code]` tags if you paste it directly!) or a link to it[^2]. Request folks to critique your work, mention that you're looking for feedback. This kind of thread is generally well received in the official forums if you demonstrate you did diligent research before asking for help.
 
