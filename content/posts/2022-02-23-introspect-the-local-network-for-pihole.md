@@ -103,7 +103,7 @@ double-check if the device is properly configured: its DNS should be set to the
 IP address of the pihole. Check these:
 
 - `/etc/resolv.conf`
-- If the system uses `systemd`, run `resolvectl`.
+- If the system uses `systemd-resolved`, run `resolvectl`.
 
 Another possibility is that the pihole might be configured to only answer
 queries from `eth0`. Use the http://pi.hole/admin interface to ensure the
