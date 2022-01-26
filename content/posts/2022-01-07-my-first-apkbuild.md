@@ -133,12 +133,13 @@ Let's highlight a few similarities and differences in them, excluding the fact t
 
 - package metadata, by the means of bash variables, are almost equivalent
   one-to-one
-  - the notable difference is in the architecture, Arch primarily supports
+  - A notable difference is the architecture, Arch primarily supports
     _x86_64_ whereas Alpine has support for multiple architectures. When
     a package is architecture agnostic, Arch denotes it with `any` whereas
     alpine has both `noarch` and `all`, the latter is like `any` (=all
     architectures), the `former` means it's agnostic (=e.g. a pure bash script
     or python package).
+  - `APKBUILDs` use flat strings, whereas `PKGBUILDs` use bash arrays
   - Alpine encourages splitting larger packages into subpackages, as such
     `APKBUILD` has first-class support and syntactic sugar for that. `-dev` and
     `-doc` subpackages are very common. On the other hand, Arch tends to have
