@@ -34,7 +34,7 @@ From [Gentoo Wiki][gentoo-wiki]:
 > pass a directory; in that case, all files inside that directory will be
 > treated as additional hosts files.
 
-# The Web way
+## The Web way
 
 Navigate to http://pi.hole/admin/dns_records.php and set your DNS records
 there. From pihole docs:
