@@ -54,9 +54,10 @@ See also: https://cloud.google.com/shell
 
 See also: https://github.com/codespaces
 
-**Tip**: Replace `github.com/username/repository` with
-`github.dev/username/repository` to automatically open the repository within
-a github cloudspace.
+**Tip**: Replace `https://github.com/username/repository` with
+`https://github.dev/username/repository` to automatically open the
+repository within a github cloudspace. Alternatively, if you have
+github shortcuts enabled, press `.` while in the repository page.
 
 [github]: http://github.dev/
 [google]: https://shell.cloud.google.com/?pli=1&show=ide&environment_deployment=ide
