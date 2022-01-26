@@ -12,7 +12,9 @@ with [pihole][pihole].
 
 <!--more-->
 
-## The CLI way
+There are several ways to do so:
+
+## 1. The CLI way: `/etc/pihole/`
 
 Edit `/etc/pihole/custom.list`, set one mapping per line, just as you would for
 `/etc/hosts`:
@@ -34,7 +36,21 @@ From [Gentoo Wiki][gentoo-wiki]:
 > pass a directory; in that case, all files inside that directory will be
 > treated as additional hosts files.
 
-## The Web way
+## 2. The CLI way: `/etc/dnsmasq.d/`
+
+```shell
+$ cat /etc/dnsmasq.d/03-pihole-custom-dns.conf
+address=/localhost.corp.google.com/127.0.0.1
+address=/myhostname.home.arpa/192.168.1.75
+```
+
+From [ArchWiki][arch-wiki]:
+
+> In some cases, such as when operating a captive portal, it can be useful
+> to resolve specific domains names to a hard-coded set of addresses.
+> This is done with the address config.
+
+## 3. The Web way
 
 Navigate to http://pi.hole/admin/dns_records.php and set your DNS records
 there. From pihole docs:
@@ -48,5 +64,14 @@ there. From pihole docs:
 >
 > Only the first record will trigger an address-to-name association.
 
+## Wrapping up
+
+Then restart pihole to apply changes:
+
+```shell
+$ pihole restartdns
+```
+
+[arch-wiki]: https://wiki.archlinux.org/title/Dnsmasq#Override_addresses
 [gentoo-wiki]: https://wiki.gentoo.org/wiki/Dnsmasq#Additional_hosts_file
 [pihole]: https://pi-hole.net/
