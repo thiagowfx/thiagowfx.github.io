@@ -28,7 +28,7 @@ Initially I had used Commafeed, Feedly and Inoreader, which are hosted solutions
 
 These were some of my gripes.
 
-During those years I had also tried to self-host [TinyTinyRSS](https://tt-rss.org/) but it didn't really last long for me:
+During those years I had also tried to self-host [TinyTinyRSS][tinytinyrss] but it didn't really last for me:
 
 1. first, its stack is relatively bloated: hosting and maintaining a typical LAMP stack takes some considerable amount of effort — TinyTinyRSS requires a full PHP installation alongside a webserver (apache, nginx or similar) and a database. Suddenly there was a lot of complexity to maintain all that.
 
@@ -107,6 +107,21 @@ The one main limitation of running Miniflux this way is that you'll need your wo
 
 Another limitation is that in principle you'll only be able to access Miniflux from home, unless you take extra measures[^extra-measures] to make your workstation accessible from outside your home network.
 
+## Other resources
+
+Miniflux clients:
+
+- **Miniflux web app** (PWA), works well enough
+- [Unread](https://apps.apple.com/us/app/unread-an-rss-reader/id1363637349) (iOS) via Fever API, gesture based
+- [Reeder](https://reederapp.com/) (iOS) via Fever API
+- [newsboat](https://newsboat.org/releases/2.21/docs/newsboat.html#_miniflux) (CLI)
+
+Common self-hosted alternatives to Miniflux:
+
+- [FreshRSS][freshrss]
+- [TinyTinyRSS][tinytinyrss]
+- [Feedbin][feedbin] (harder to self-host)
+
 {{< tbc >}}
 - Step 0: How I found out about Miniflux
 - ~~Step 1: Self-Hosting at home~~
@@ -115,6 +130,11 @@ Another limitation is that in principle you'll only be able to access Miniflux f
 - Journey: The Paradigm Shift from Social Media to RSS
 - My miniflux workflow
 {{</ tbc >}}
+
+
+[feedbin]: https://feedbin.com/
+[freshrss]: https://freshrss.org/
+[tinytinyrss]: https://tt-rss.org/
 
 
 [^kevq]: https://kevq.uk/please-add-rss-support-to-your-site/
