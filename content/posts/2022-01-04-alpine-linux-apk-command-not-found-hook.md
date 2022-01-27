@@ -174,9 +174,48 @@ docker-cli-buildx-0.7.1-r0
 
 I wrote the following scripts, which I source in my respective interactive shells, to achieve this behavior out-of-the-box:
 
-{{< gist thiagowfx a16418a0bc8150045e70468649acdae9 >}}
+```shell
+$ cat apk-command-not-found.bash
+#!/bin/bash
+# apk(8) from Alpine Linux command not found hook for bash
 
-The gist above is a snapshot intended for this post in case it ever changes. I keep up-to-date versions of these files in my dotfiles repository, [try out this query](https://github.com/thiagowfx/.dotfiles/search?q=filename%3Aapk-command-not-found&type=code) in case I ever move it elsewhere.
+command_not_found_handle () {
+        local cmd="$1" pkgs
+        mapfile -t pkgs < <(apk list -P -- "cmd:$cmd" 2>/dev/null)
+
+        if (( ${#pkgs[*]} )); then
+                echo "$cmd may be found in the following packages:"
+                printf '  %s\n' "${pkgs[@]}"
+        else
+                echo "bash: command not found: $cmd"
+        fi 1>&2
+
+        return 127
+}
+```
+
+```shell
+$ cat apk-command-not-found.zsh
+#!/bin/zsh
+# apk(8) from Alpine Linux command not found hook for zsh
+
+command_not_found_handler() {
+        local cmd="$1"
+        local pkgs=(${(f)"$(apk list -P -- "cmd:$cmd" 2>/dev/null)"})
+
+        if [[ -n "$pkgs" ]]; then
+                echo "$cmd may be found in the following packages:"
+                printf '  %s\n' "${pkgs[@]}"
+        else
+                echo "zsh: command not found: $cmd"
+        fi 1>&2
+
+        return 127
+}
+```
+
+The snippets above are snapshots intended for this post.
+I keep up-to-date versions of these files in my dotfiles repository, [try out this query](https://github.com/thiagowfx/.dotfiles/search?q=filename%3Aapk-command-not-found&type=code) in case I ever move them elsewhere.
 
 [^moreutils]: https://joeyh.name/code/moreutils/: moreutils is a collection of the unix tools that nobody thought to write long ago when unix was young.
 [^packaging]: pun intended
