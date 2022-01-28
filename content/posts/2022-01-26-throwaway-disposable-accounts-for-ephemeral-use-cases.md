@@ -13,8 +13,8 @@ A brief list of disposable / throwaway account resources:
 
 ## Email inbox
 
-- https://10minutemail.com/
 - https://dispostable.com/
+- https://10minutemail.com/
 - https://yadim.dismail.de/
 
 ## NAT / public URLs
@@ -23,6 +23,7 @@ A brief list of disposable / throwaway account resources:
 
 ## Pastebin
 
+- https://paste.debian.net/
 - https://paste.dismail.de/
 - https://paste.opensuse.org/
 - https://upaste.de/
