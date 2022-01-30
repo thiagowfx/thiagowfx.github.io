@@ -15,13 +15,13 @@ The firewall makes justice to its name as it is really uncomplicated, and a plea
 
 ## Install
 
-Install and set up `ufw`, which should be packaged for most linux
+Install and set up `ufw`[^1], which should be packaged for most linux
 distributions:
 
 ### OpenRC-based (Alpine Linux, Gentoo)
 
 ```shell
-# ufw-extras is optional, it contains additional rules (e.g. mosh)
+# Install ufw and ufw-extras
 $ doas apk install ufw{,-extras}
 
 # Enable ufw daemon
@@ -37,7 +37,7 @@ $ doas ufw enable
 ### Systemd-based (Arch Linux, Debian)
 
 ```shell
-# ufw-extras is optional, it contains additional rules (e.g. mosh)
+# Install ufw and ufw-extras
 $ sudo pacman -Syu ufw{,-extras}
 
 # Enable and start ufw daemon
@@ -151,3 +151,6 @@ Ufw uses iptables under the hood. Inspect the underlying iptables rules:
 
 - https://help.ubuntu.com/community/UFW
 - https://wiki.archlinux.org/title/Uncomplicated_Firewall
+
+
+[^1]: [`ufw-extras`](https://github.com/xyproto/ufw-extras) is optional, it contains additional rules (e.g. mosh, tailscale).
