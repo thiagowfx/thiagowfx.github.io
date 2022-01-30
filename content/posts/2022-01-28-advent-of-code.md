@@ -48,7 +48,7 @@ Was the experience worth it? **Definitely yes**! Even though I only completed ~8
 A few highlights of what I learned *and used* from my python `2to3` transition were f-strings / string interpolation (`print(f'The sum is {sum}')`), "everything is an iterator now" even `map` and `range`, the standard library is awesome and sometimes you stumble upon useful abstractions like `Counter` and `defaultdict`, `sort` is different now (`key` instead of comparison function), this `pdb` debugger thingy, among other topics I can't remember at the moment. I realized the only concept that was previously familiar was the different syntax of the `print` function (you have to use parentheses now).
 
 In terms of workflow, I also learned that virtual environments are now
-supported natively[^5] (`python -m venv`), `direnv` is an amazing tool to
+supported natively[^5] (`python -m venv`), [`direnv`]({{< ref "2022-01-04-direnv-automate-your-environment-variables" >}}) is an amazing tool to
 automate/manage environments in git repositories and also happens to have
 first-class python integration, `pylint` and `autopep8` are good integrations
 with `vim` to help spot basic errors and/or suggest best practices, and `numpy` takes forever to build from source.
