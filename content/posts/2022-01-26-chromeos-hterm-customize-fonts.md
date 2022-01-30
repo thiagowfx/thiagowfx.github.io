@@ -1,5 +1,5 @@
 ---
-title: "ChromeOS hterm: Customize fonts"
+title: "ChromeOS hterm: customize fonts"
 date: 2022-01-26T19:48:52-05:00
 tags:
   - dev

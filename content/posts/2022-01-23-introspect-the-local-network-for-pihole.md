@@ -1,5 +1,5 @@
 ---
-title: "Introspect the local network for pihole"
+title: "Introspect the local network for Pihole"
 date: 2022-01-23T13:34:58-05:00
 tags:
   - linux
