@@ -31,3 +31,7 @@ A brief list of disposable / throwaway account resources:
 ## SMS
 
 - https://smsreceivefree.com/
+
+## Appendix
+
+- [The New Oil](https://blog.thenewoil.org/data-privacy-week-spotlight-backups-ngp6) has some good tips on disinformation for throwaway and/or ephemeral accounts.
