@@ -1,5 +1,5 @@
 ---
-title: 'Opinião: Posts descartáveis'
+title: '★ Opinião: Posts descartáveis'
 date: 2015-05-30T23:29:18+00:00
 tags:
   - classics
