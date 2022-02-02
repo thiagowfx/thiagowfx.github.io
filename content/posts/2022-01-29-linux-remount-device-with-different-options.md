@@ -2,7 +2,6 @@
 title: "Linux: Remount device with different options"
 date: 2022-01-29T23:16:04-05:00
 tags:
-  - dev
   - linux
 showtoc: true
 ---
