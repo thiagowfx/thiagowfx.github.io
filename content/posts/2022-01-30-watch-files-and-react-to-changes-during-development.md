@@ -20,7 +20,7 @@ In order to achieve an edit-and-preview workflow for quick prototyping and local
 
 My goal was to achieve that workflow with the least amount of friction, and with an application that is widely available in most package managers / linux distributions out there.
 
-## Option #1: entr
+## Option #1: entr (recommended)
 
 [`entr(1)`](https://eradman.com/entrproject/):
 
