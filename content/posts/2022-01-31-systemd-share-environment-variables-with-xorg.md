@@ -1,5 +1,5 @@
 ---
-title: "systemd: share environment variables with xorg"
+title: "Systemd: share environment variables with xorg"
 date: 2022-01-31T21:38:54-05:00
 tags:
   - linux
