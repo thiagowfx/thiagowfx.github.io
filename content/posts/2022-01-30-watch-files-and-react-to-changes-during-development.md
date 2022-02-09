@@ -44,6 +44,8 @@ $ fd -e go | entr -r -- make run
 
 It took me less than 5 minutes to install and figure out how to use `entr`.
 
+[This blog post](https://schauderbasis.de/posts/entr/) covers it in more detail.
+
 ## Option #2: watchman
 
 [`watchman`](https://facebook.github.io/watchman/) from Facebook Open Source:
