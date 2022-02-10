@@ -13,7 +13,7 @@ ifeq (, $(shell which $(HUGO)))
   $(error "No hugo in $$PATH, install it first")
 endif
 
-dev:
+run:
 	$(HUGO) server --baseUrl="$(BASE_URL)" --bind="0.0.0.0" --buildDrafts --port $(PORT) --watch
 
 clean:
@@ -30,4 +30,4 @@ ping:
 pull:
 	git submodule update --init --remote
 
-.PHONY: dev clean ping pull
+.PHONY: run clean ping pull
