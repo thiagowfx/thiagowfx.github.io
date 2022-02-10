@@ -13,7 +13,7 @@ Not everything is available via RSS. However, there are some decent workarounds 
 
 ## Newsletters
 
-Some "blogs" and authors refuse to provide RSS feeds to their websites. Instead, they will only provide newsletters.
+Some "blogs" and author[s](https://jamesclear.com/3-2-1) refuse to provide RSS feeds to their websites. Instead, they will only provide newsletters.
 This is very hostile to the open web, and the main reason why it's done is so that these authors can own a direct channel to reach out to their audience directly,
 which is better for (their) business, making it easier for them to push sponsored and promoted content and measure engagement metrics and analytics.
 
@@ -22,6 +22,8 @@ which is better for (their) business, making it easier for them to push sponsore
 You can either [self-host](https://github.com/leafac/kill-the-newsletter) it or use its official hosted version at https://kill-the-newsletter.com/.
 
 ## Twitter
+
+Use Nitter:
 
 > Nitter is a free and open source alternative Twitter front-end focused on privacy. The source is available on GitHub at https://github.com/zedeus/nitter
 
@@ -35,7 +37,7 @@ At the time of this writing the official instance is https://nitter.net.
 
 ## Reddit
 
-Reddit has famously included RSS support for every subreddit, for example: https://www.reddit.com/r/archlinux/.rss[^1].
+Reddit famously includes RSS support for every subreddit, for example[^1]: https://www.reddit.com/r/archlinux/.rss.
 It has a lot of noise though as it includes all recent posts including the ones with a few number of votes.
 
 To experience a higher quality, filtered version of the latest given subreddit posts with more than a certain threshold (of your choosing) of upvotes, check out the [reddit-top-rss](https://github.com/johnwarne/reddit-top-rss) project:
