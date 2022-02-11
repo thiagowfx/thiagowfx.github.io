@@ -227,7 +227,9 @@ direnv: error ~/projects/foo/.envrc is blocked. Run `direnv allow` to approve it
 
 If you run `direnv allow` but later on the file is modified (for example, after `git pull`, whereby you retrieve a modification from a teammate), `direnv` will once again refuse to operate. You'll need to whitelist it again by re-running `direnv allow`. Direnv will snapshot/hash the file contents of `.envrc` remember it across sessions.
 
-Do you use `direnv` or a similar tool to automate your environment variables and/or project modules? Let me know!
+## References
+
+- [Tools You Should Know About: direnv](https://cuddly-octo-palm-tree.com/posts/2021-12-12-tyska-direnv/)
 
 [direnv]: https://direnv.net/
 [direnv-github]: https://github.com/direnv/direnv
