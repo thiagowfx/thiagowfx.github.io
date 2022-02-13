@@ -27,7 +27,4 @@ ping:
 	# Ping Bing (DuckDuckGo, etc) about changes in the sitemap
 	curl -sS -o /dev/null "https://www.bing.com/ping?sitemap=$(SITEMAP)"
 
-pull:
-	git submodule update --init --remote
-
-.PHONY: run clean ping pull
+.PHONY: run clean ping
