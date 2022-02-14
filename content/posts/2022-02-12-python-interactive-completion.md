@@ -8,7 +8,7 @@ showtoc: true
 ---
 
 Sometimes I fire up a `python` interpreter in my terminal for quick
-prototyping, but often forget what the standard library method signaures are.
+prototyping, but often forget what the standard library method signatures are.
 
 For example, how should I invoke `subprocess.call`?
 
