@@ -130,6 +130,8 @@ interface eth0
         static domain_name_servers=
 ```
 
+Note: Restart `dhcpcd` to apply: `systemctl restart dhcpcd`.
+
 - `/etc/network/interfaces` if running Raspberry Pi OS (debian):
 
 ```shell
@@ -143,6 +145,8 @@ iface eth0 inet static
     netmask 255.255.255.0
     gateway 192.168.1.1
 ```
+
+Note: Reconfigure debian networking to apply: `systemctl restart networking`.
 
 - Static DHCP lease from the pihole itself if it's running a DHCP server. This
   solution is a bit redundant and should only be applied as last resort.
