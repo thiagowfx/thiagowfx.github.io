@@ -8,7 +8,7 @@ showtoc: true
 
 As much as I love my [Miniflux](https://miniflux.app/) setup, I've also come to
 appreciate some indie blog aggregators. They are especially handy when I feel
-like breaking out of my own bubble and/or get the occasional serendipity dose
+like breaking out of my own bubble and/or getting the occasional serendipity dose
 to discover new blogs to follow.
 
 <!--more-->
