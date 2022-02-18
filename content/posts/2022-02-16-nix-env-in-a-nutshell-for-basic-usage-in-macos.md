@@ -77,6 +77,11 @@ though. We will find out in a few days when there's some update to one of my
 installed CLI applications. I've heard there's something called nix channel to
 control that. Leaving it for another day though.
 
+**Update(2022-02-18)**: I learned that `nix-env -u` is akin to `apt upgrade` or
+`apk upgrade`. It upgrades installed packages to newer versions but only if it
+is aware there are newer versions. To actually refresh the repositories à la
+`apt update` or `apk update`, use `nix-channel --update`.
+
 ## Uninstall a package
 
 ```shell
