@@ -32,7 +32,7 @@ Window Manager
 ## Hardware
 
 Keyboard
-: [Keychron K2][keychron k2]: Mechanical, RGB, 75%, red (linear) switches
+: [Keychron K2 Aluminum Frame][keychron k2]: Mechanical, RGB, 75%, red (linear) switches
 
 Mouse
 : [Logitech MX Master 2S][mx master 2s]
