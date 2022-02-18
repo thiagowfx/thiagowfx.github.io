@@ -67,6 +67,10 @@ I used all three methods in the past. My favorite one these days is the Chrome E
 
 As a fallback I find that using DuckDuckGo directly is acceptable as well, however it quickly becomes quite annoying to constantly add `!g` to every query. Defaults matter.
 
+## Related
+
+- [Switching to DuckDuckGo](https://blog.meain.io/2019/switching-to-duckduckgo/)
+
 
 [google]: https://google.com/
 [duckduckgo]: https://duckduckgo.com/
