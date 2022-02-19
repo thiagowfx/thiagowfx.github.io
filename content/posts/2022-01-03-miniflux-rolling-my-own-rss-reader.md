@@ -8,7 +8,8 @@ tags:
 showtoc: true
 ---
 
-This article describes my experience transitioning to, setting up and using the [Miniflux](https://miniflux.app/) RSS reader.
+This article describes my experience transitioning to, setting up and using the
+[Miniflux](https://miniflux.app/) RSS reader for the first time.
 
 <!--more-->
 
@@ -40,7 +41,7 @@ Then 2020 and the COVID-19 pandemic came along with all of its imposed
 government lockdowns worldwide. Suddenly many people had a lot of free time on
 their hands.
 
-## Step 1: Self-Hosting at home
+## Self-hosting at home
 
 Having an [Arch Linux](https://archlinux.org/) workstation at home, it felt natural to try out Miniflux there first.
 
@@ -60,10 +61,11 @@ The next step is to configure the PostgreSQL server. Refer to the upstream docum
 - create a `miniflux` database owned by the `miniflux` user
 - perform a few tweaks (extension hstore)
 
-Then we configure miniflux @ `/etc/miniflux.conf`:
+Then configure miniflux:
 
-```ini
-# Purge articles after a few days
+```shell
+$ cat /etc/miniflux.conf
+# Purge articles after a few days: These values are actually the default. Listed here just for reference.
 CLEANUP_ARCHIVE_READ_DAYS=30
 CLEANUP_ARCHIVE_UNREAD_DAYS=90
 
@@ -103,6 +105,8 @@ textarea[name="custom_css"] {
 }
 ```
 
+**Update(2022-02-18)**: It turns out the CSS above isn't really needed as a system font stack is set out-of-the-box.
+
 The one main limitation of running Miniflux this way is that you'll need your workstation to be always on if you want to have continuous access to it. This means if you want to read late at night you'll need to leave your computer on. Not only this is impractical and inconvenient, it's also not much environmentally friendly.
 
 Another limitation is that in principle you'll only be able to access Miniflux from home, unless you take extra measures[^extra-measures] to make your workstation accessible from outside your home network.
@@ -116,26 +120,16 @@ Miniflux clients:
 - [Reeder](https://reederapp.com/) (iOS) via Fever API
 - [newsboat](https://newsboat.org/releases/2.21/docs/newsboat.html#_miniflux) (CLI)
 
-Common self-hosted alternatives to Miniflux:
+Common self-hosted alternatives to miniflux:
 
 - [FreshRSS][freshrss]
 - [TinyTinyRSS][tinytinyrss]
 - [Feedbin][feedbin] (harder to self-host)
 
-{{< tbc >}}
-- Step 0: How I found out about Miniflux
-- ~~Step 1: Self-Hosting at home~~
-- Step 2: Self-Hosting in the cloud
-- Step 3: Maintenance, security and stability
-- Journey: The Paradigm Shift from Social Media to RSS
-- My miniflux workflow
-{{</ tbc >}}
-
 
 [feedbin]: https://feedbin.com/
 [freshrss]: https://freshrss.org/
 [tinytinyrss]: https://tt-rss.org/
-
 
 [^kevq]: https://kevq.uk/please-add-rss-support-to-your-site/
 [^laura]: https://laurakalbag.com/subscribe/
