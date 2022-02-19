@@ -1,5 +1,5 @@
 ---
-title: "SSH plus tmux automatically"
+title: "★ SSH plus tmux automatically"
 date: 2022-02-13T20:20:27-05:00
 tags:
   - dev
