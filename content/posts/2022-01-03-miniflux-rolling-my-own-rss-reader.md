@@ -64,7 +64,7 @@ Then we configure miniflux @ `/etc/miniflux.conf`:
 
 ```ini
 # Purge articles after a few days
-CLEANUP_ARCHIVE_READ_DAYS=15
+CLEANUP_ARCHIVE_READ_DAYS=30
 CLEANUP_ARCHIVE_UNREAD_DAYS=90
 
 # Database configuration
