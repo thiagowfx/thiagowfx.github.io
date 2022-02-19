@@ -4,7 +4,6 @@ url: 'openbox-challenge-day-1'
 date: 2013-10-28T02:12:15+00:00
 tags:
   - classics
-  - challenge
   - linux
 ---
 
