@@ -82,6 +82,9 @@ control that. Leaving it for another day though.
 is aware there are newer versions. To actually refresh the repositories à la
 `apt update` or `apk update`, use `nix-channel --update`.
 
+**Note**: On macOS this needs to be `sudo -i nix-channel --update`. See
+[issue](https://github.com/NixOS/nix/issues/3595).
+
 ## Uninstall a package
 
 ```shell
