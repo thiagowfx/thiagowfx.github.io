@@ -54,7 +54,7 @@ $ hello
 Hello, world!
 ```
 
-In case you're curious, this is a GNU package:
+In case you're curious, this is a GNU binary:
 
 ```shell
 $ hello --version
@@ -67,7 +67,7 @@ There is NO WARRANTY, to the extent permitted by law.
 ```
 
 I have no idea why they are in version 2.10 and what their changelog is. It's
-such a simple package...
+such a simple binary...
 
 If you exit the shell, `hello` seemingly vanishes:
 
