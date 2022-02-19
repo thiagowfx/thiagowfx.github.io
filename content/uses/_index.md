@@ -6,7 +6,7 @@ comments: false
 
 My dotfiles: https://github.com/thiagowfx/.dotfiles/
 
-## Software Engineer / SysOps Workflow
+## Software Engineer / SysOps Daily Drivers
 
 OS
 : [Arch Linux][arch] on desktop, [Alpine Linux][alpine] on servers, [Debian][debian] at work
