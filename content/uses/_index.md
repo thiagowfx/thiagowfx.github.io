@@ -4,6 +4,8 @@ hidemeta: true
 comments: false
 ---
 
+Inspired by [uses.tech](https://uses.tech/).
+
 My dotfiles: https://github.com/thiagowfx/.dotfiles/
 
 ## Software Engineer / SysOps Daily Drivers
