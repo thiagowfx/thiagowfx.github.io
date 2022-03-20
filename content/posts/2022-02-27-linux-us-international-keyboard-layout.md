@@ -50,13 +50,13 @@ This is what a standard QWERTY keyboard[^1] should use to type, for example, in 
 - â ê î ô û     :   ^ + <vowel>
 - ã õ           :   ~ + <vowel>
 - à             :   ` + <vowel>
-- ç (cedilla)   :   Alt Gr + ,
+- ç (cedilla)   :   Alt Gr + , (Option + c on macOS)
 ```
 
 ### German
 
 ```text
-- ß (ss)  :   Alt Gr + s
+- ß (ss)  :   Alt Gr + s (Option + s on macOS)
 - ä ö ü   :   " + <vowel>
 ```
 
