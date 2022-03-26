@@ -3,7 +3,6 @@
 title: "{{ replace .Name $today "" | humanize }}"
 date: {{ .Date }}
 tags:
-draft: true
 showtoc: true
 ---
 
