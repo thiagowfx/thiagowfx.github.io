@@ -34,10 +34,10 @@ Window Manager
 ## Hardware
 
 Keyboard
-: [Keychron K2 Aluminum Frame][keychron k2]: Mechanical, RGB, 75%, red (linear) switches
+: [Keychron K2 Aluminum Frame][keychron k2]: Mechanical, RGB, 75%, brown (tactile) switches
 
 Mouse
-: [Logitech MX Master 2S][mx master 2s]
+: [Logitech MX Master 3][mx master 3]
 
 [alacritty]: https://github.com/alacritty/alacritty
 [alpine]: https://alpinelinux.org/
@@ -57,4 +57,4 @@ Mouse
 [zsh]: https://www.zsh.org/
 
 [keychron k2]: https://www.keychron.com/products/keychron-k2-wireless-mechanical-keyboard
-[mx master 2s]: https://www.logitech.com/en-us/eol/mx-master-2s-mouse.910-005131.html
+[mx master 3]: https://www.logitech.com/en-us/products/mice/mx-master-3.html
