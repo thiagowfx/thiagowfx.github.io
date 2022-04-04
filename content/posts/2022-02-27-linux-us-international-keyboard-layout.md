@@ -4,6 +4,7 @@ date: 2022-02-27T22:47:09-05:00
 tags:
   - linux
   - portuguese
+  - german
 showtoc: true
 ---
 
