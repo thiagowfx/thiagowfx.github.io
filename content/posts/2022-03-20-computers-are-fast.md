@@ -1,5 +1,5 @@
 ---
-title: "> Computers are fast"
+title: "› Computers are fast"
 date: 2022-03-20T15:55:24-03:00
 tags:
   - commentary

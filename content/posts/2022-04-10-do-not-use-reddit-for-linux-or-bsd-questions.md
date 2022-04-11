@@ -1,5 +1,5 @@
 ---
-title: "> Do not use Reddit for Linux or BSD questions"
+title: "› Do not use Reddit for Linux or BSD questions"
 date: 2022-04-10T23:07:00-04:00
 tags:
   - commentary
