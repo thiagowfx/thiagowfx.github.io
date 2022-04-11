@@ -1,12 +1,12 @@
 ---
-title: "Computers are fast"
+title: "> Computers are fast"
 date: 2022-03-20T15:55:24-03:00
 tags:
+  - commentary
   - programming
-  - link
 ---
 
-Like of https://computers-are-fast.github.io.
+Like of [Computers are fast](https://computers-are-fast.github.io).
 
 <!--more-->
 
