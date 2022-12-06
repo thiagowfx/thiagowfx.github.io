@@ -46,7 +46,7 @@ awk 'BEGIN{
 
 `Terminal.app` will not print a gradient.
 
-## 3. GPU acceleration
+## 3. No GPU acceleration
 
 https://unix.stackexchange.com/q/658709:
 
