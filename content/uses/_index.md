@@ -31,14 +31,6 @@ Web Browser
 Window Manager
 : [i3][i3] on xorg/x11, [sway][sway] on wayland
 
-## Hardware
-
-Keyboard
-: [Keychron K2 Aluminum Frame][keychron k2]: Mechanical, RGB, 75%, brown (tactile) switches
-
-Mouse
-: [Logitech MX Master 3][mx master 3]
-
 [alacritty]: https://github.com/alacritty/alacritty
 [alpine]: https://alpinelinux.org/
 [arch]: https://archlinux.org/
@@ -55,6 +47,3 @@ Mouse
 [tmux]: https://github.com/tmux/tmux
 [vim]: https://www.vim.org/
 [zsh]: https://www.zsh.org/
-
-[keychron k2]: https://www.keychron.com/products/keychron-k2-wireless-mechanical-keyboard
-[mx master 3]: https://www.logitech.com/en-us/products/mice/mx-master-3.html
