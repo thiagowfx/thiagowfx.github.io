@@ -13,7 +13,7 @@ ifeq (, $(shell which $(HUGO)))
   $(error "No hugo in $$PATH, install it first")
 endif
 
-run:
+all:
 	$(HUGO) server --baseUrl="$(BASE_URL)" --bind="0.0.0.0" --buildDrafts --port $(PORT) --watch
 
 clean:
@@ -27,4 +27,4 @@ ping:
 	# Ping Bing (DuckDuckGo, etc) about changes in the sitemap
 	curl -sS -o /dev/null "https://www.bing.com/ping?sitemap=$(SITEMAP)"
 
-.PHONY: run clean ping
+.PHONY: all clean ping
