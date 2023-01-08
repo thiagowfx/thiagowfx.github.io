@@ -1,5 +1,5 @@
 # Homepage URL.
-BASE_URL ?= localhost  # $(shell hostname)
+BASE_URL ?= localhost
 # Sitemap URL.
 SITEMAP = https://thiagowfx.github.io/sitemap.xml
 
