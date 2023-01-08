@@ -1,11 +1,11 @@
 # Homepage URL.
-BASE_URL ?= $(shell hostname)
+BASE_URL ?= localhost  # $(shell hostname)
 # Sitemap URL.
 SITEMAP = https://thiagowfx.github.io/sitemap.xml
 
 # Path to hugo binary.
 HUGO := hugo
-# Listens on port 1313 by default.
+# Hugo port
 PORT := 1313
 
 # Abort if hugo is not installed.
