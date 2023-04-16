@@ -2,8 +2,7 @@
 title: "Tracking packages automatically in a single place"
 date: 2022-04-23T18:03:52-04:00
 tags:
-  - automation
-  - design
+  - ideas
 showtoc: true
 ---
 

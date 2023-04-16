@@ -2,7 +2,6 @@
 title: "Large prints"
 date: 2022-04-24T17:58:03-04:00
 tags:
-  - books
   - ideas
 ---
 

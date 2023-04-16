@@ -3,7 +3,6 @@ title: "Ninite: Bootstrap a Windows installation"
 date: 2022-03-17T14:37:15-03:00
 tags:
   - dev
-  - windows
 ---
 
 Whenever I need to fully reinstall a Windows Desktop system, there are certain applications that need to be bootstrapped: image viewer, image editor, office suite, PDF viewer, video player, web browsers, etc.
