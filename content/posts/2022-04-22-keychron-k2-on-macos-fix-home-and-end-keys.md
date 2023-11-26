@@ -19,7 +19,7 @@ For example, when using a text editor such as TextMate or a web browser like Chr
 
 The only way to provoke these effects _out-of-the-box_ is by pressing, respectively, the `Cmd + Left` and `Cmd + Right` shortcuts, as you would normally do in a Macbook laptop native keyboard.
 
-This is very annoying because it only happens in macOS[^1]: the `Home` and `End` keys work just fine in both Linux and Windows. [A reddit user](https://www.reddit.com/r/Keychron/comments/ooice5/home_and_end_keys_not_working_on_monterrey/) reported the same issue in `/r/keychron`, but the existing thread has [no proposed solutions]({{< ref "2022-04-10-do-not-use-reddit-for-linux-or-bsd-questions" >}}).
+This is very annoying because it only happens in macOS[^1]: the `Home` and `End` keys work just fine in both Linux and Windows. [A reddit user](https://www.reddit.com/r/Keychron/comments/ooice5/home_and_end_keys_not_working_on_monterrey/) reported the same issue in `/r/keychron`, but the existing thread has no proposed solutions.
 
 ## Enter Karabiner Elements
 

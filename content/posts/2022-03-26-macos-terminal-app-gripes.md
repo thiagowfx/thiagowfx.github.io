@@ -6,9 +6,9 @@ tags:
   - macos
 ---
 
-`Terminal.app` is a pretty decent terminal emulator for macOS, with sensible defaults. There's absolutely no need to install [`iTerm2`](https://iterm2.com/). I see many people doing it right away when getting a Macbook, but in my opinion it is unnecessarily bloated.
-
-That said, I have my own gripes for `Terminal.app`, but the list is surprisingly small.
+`Terminal.app` is a pretty decent terminal emulator for macOS, with sensible
+defaults. That said, I have my own gripes about it, but the list is
+surprisingly small.
 
 <!--more-->
 
