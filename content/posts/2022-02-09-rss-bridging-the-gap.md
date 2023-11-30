@@ -13,7 +13,7 @@ Not everything is available via RSS. However, there are some decent workarounds 
 
 ## Newsletters
 
-Some "blogs" and author[s](https://jamesclear.com/3-2-1) refuse to provide RSS feeds to their websites. Instead, they will only provide newsletters.
+Some blogs and authors refuse to provide RSS feeds to their websites. Instead, they will only provide newsletters.
 This is very hostile to the open web, and the main reason why it's done is so that these authors can own a direct channel to reach out to their audience directly,
 which is better for (their) business, making it easier for them to push sponsored and promoted content and measure engagement metrics and analytics.
 

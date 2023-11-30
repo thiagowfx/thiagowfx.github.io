@@ -145,10 +145,7 @@ Most of those are wayland-specific options.
 
 `gaps` is available in `i3` as well but only if you use
 [`i3-gaps`](https://github.com/Airblader/i3), which generally I refuse to in
-order to stay closer to vanilla/upstream `i3`. It's a bit of a bummer that
-[Michael Stapelberg](https://michael.stapelberg.ch/) (i3's creator and core
-maintainer) does not want to merge gaps functionality into core `i3`, leading to
-an _unnecessary_ fork and fragmentation within the `i3` community.
+order to stay closer to vanilla/upstream `i3`.
 
 The `play-pause` multimedia key is
 a [bug](https://github.com/swaywm/sway/issues/4783) I found on `sway`. It's quite

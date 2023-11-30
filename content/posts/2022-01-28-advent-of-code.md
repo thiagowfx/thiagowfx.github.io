@@ -31,7 +31,7 @@ Another positive aspect of AoC is that it has an integrated dashboard that track
 
 ## What about me?
 
-As a simpleton my goal for 2021 was relatively less ambitious than that,  I just wanted to improve my Python skills, more specifically Python 3. I learned Python 2 during my first year in university and used it sparingly at work and for personal endeavours, but always had a knowledge gap in Python 3.
+My goal for 2021 was relatively less ambitious than that,  I just wanted to improve my Python skills, more specifically Python 3. I learned Python 2 during my first year in university and used it sparingly at work and for personal endeavours, but always had a knowledge gap in Python 3.
 
 I set up a public git repository with [my solutions][myaoc] and aspired to write simple and elegant python, my only [constraint](https://frantic.im/no-constraints-no-fun/) was to limit myself to what is available in the standard library of a vanilla python3 installation in Alpine linux, with the exception of [`numpy`][numpy] which is widespread enough to deserve an entry in my [`requirements.txt`](https://github.com/thiagowfx/adventofcode/blob/master/requirements.txt), and of course devtools like debuggers, linters and auto formatters as needed.
 

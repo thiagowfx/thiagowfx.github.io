@@ -38,7 +38,7 @@ Here's a non-exhaustive list of trusted providers:
 
 See also: https://cloud.google.com/shell
 
-## [Github Cloudspaces][github]
+## [Github Codespaces][github]
 
 > 👋 Welcome to Codespaces! You are on our default image.
 >    - It includes runtimes and tools for Python, Node.js, Docker, and more.
@@ -56,7 +56,7 @@ See also: https://github.com/codespaces
 
 **Tip**: Replace `https://github.com/username/repository` with
 `https://github.dev/username/repository` to automatically open the
-repository within a github cloudspace. Alternatively, if you have
+repository within a github codespace. Alternatively, if you have
 github shortcuts enabled, press `.` while in the repository page.
 
 [github]: http://github.dev/
