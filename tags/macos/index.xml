@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>macos on Not Just Serendipity</title><link>https://thiagowfx.github.io/tags/macos/</link><description>Recent content in macos on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2023 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Fri, 22 Apr 2022 19:04:17 -0400</lastBuildDate><atom:link href="https://thiagowfx.github.io/tags/macos/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Keychron K2 on macOS: fix Home and End keys</title><link>https://thiagowfx.github.io/2022/04/keychron-k2-on-macos-fix-home-and-end-keys/</link><pubDate>Fri, 22 Apr 2022 19:04:17 -0400</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/04/keychron-k2-on-macos-fix-home-and-end-keys/</guid><description>&lt;p>&lt;strong>Issue&lt;/strong>: For whatever reason, the &lt;code>Home&lt;/code> and &lt;code>End&lt;/code> keys on my &lt;a href="https://thiagowfx.github.io/2022/01/keychron-k2-review/">Keychron K2&lt;/a> do not work as intended on macOS.&lt;/p></description><content:encoded><![CDATA[<p><strong>Issue</strong>: For whatever reason, the <code>Home</code> and <code>End</code> keys on my <a href="https://thiagowfx.github.io/2022/01/keychron-k2-review/">Keychron K2</a> do not work as intended on macOS.</p>
+<h2 id="expectations-vs-reality">Expectations vs Reality</h2>
+<p>For example, when using a text editor such as TextMate or a web browser like Chrome, I&rsquo;d expect:</p>
+<ul>
+<li><code>Home</code> to position the text cursor in the beginning of the line (à la <code>C-a</code> in emacs)</li>
+<li><code>End</code> to position the text cursor in the end of the line (à la <code>C-e</code> in emacs)</li>
+</ul>
+<p>The only way to provoke these effects <em>out-of-the-box</em> is by pressing, respectively, the <code>Cmd + Left</code> and <code>Cmd + Right</code> shortcuts, as you would normally do in a Macbook laptop native keyboard.</p>
+<p>This is very annoying because it only happens in macOS<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>: the <code>Home</code> and <code>End</code> keys work just fine in both Linux and Windows. <a href="https://www.reddit.com/r/Keychron/comments/ooice5/home_and_end_keys_not_working_on_monterrey/">A reddit user</a> reported the same issue in <code>/r/keychron</code>, but the existing thread has no proposed solutions.</p>
+<h2 id="enter-karabiner-elements">Enter Karabiner Elements</h2>
+<p>I&rsquo;ve always heard good things about <a href="http://karabiner-elements.pqrs.org">Karabiner Elements</a> as a praised one-size-fits-all application for keyboards and macros in macOS, thus decided to give it a try. <strong>Bonus points</strong>: it is <a href="https://github.com/pqrs-org/Karabiner-Elements">open source</a>, released into the public domain.</p>
+<p>Upon installing it with <a href="https://formulae.brew.sh/cask/karabiner-elements">Homebrew Cask</a> (<code>brew install karabiner-elements</code>), I executed it. Then I needed to give a bunch of permissions to the application via <code>macOS Settings &gt; Security &amp; Privacy &gt; Privacy &gt; Input Monitoring</code>. The following apps were whitelisted accordingly:</p>
+<ul>
+<li><code>karabiner_grabber</code></li>
+<li><code>karabiner_observer</code></li>
+<li><code>Karabiner-EventViewer.app</code>: this one is optional, but useful for debugging</li>
+</ul>
+<p>The app is straightforward to use. It allows you to do all sorts of reactions to key codes input events.</p>
+<p>I had a simple idea: I wanted to map <code>Home</code> to <code>Cmd + Left</code>, and <code>End</code> to <code>Cmd + Right</code>.</p>
+<p>Unfortunately these are considered &ldquo;Complex modifications&rdquo; because they map one origin key to two destination keys. &ldquo;Simple modifications&rdquo; are <em>one-to-one</em> key mappings. Why is it unfortunate? Because it doesn&rsquo;t seem to be possible to do such mappings via the app UI. Apparently one needs to express those mappings in a <code>.json</code> file instead.</p>
+<h2 id="ah-communities">Ah, communities</h2>
+<p>Sure, no problem, I was about to do it but then I realized there&rsquo;s an <a href="https://ke-complex-modifications.pqrs.org">official website</a> for community-maintained mappings. The website is well organized and curated. Why create something fully from scratch when I could just reuse an existing one?</p>
+<p>I found a &ldquo;Keychron K2&rdquo; category which made me instantly happy but it turned out not to be useful, as there were only two defined mappings therein:</p>
+<blockquote>
+<ul>
+<li>Change Keychron K2 keyboard layout to more closely resemble an Apple keyboard</li>
+<li>Remap some Keychrom K2(US) keys to make it less painful to switch from Macbook(RU) keyboard</li>
+</ul>
+</blockquote>
+<p>None of these mattered to me. Then I searched for <code>home to cmd</code> which led me to <a href="https://ke-complex-modifications.pqrs.org/#HomeEnd">this entry</a>, which had exactly the mappings I wanted:</p>
+<blockquote>
+<p>Home and End</p>
+<ul>
+<li>Home to Command Left</li>
+<li>End to Command Right</li>
+</ul>
+</blockquote>
+<p><a href="https://ke-complex-modifications.pqrs.org/json/HomeEnd.json">Its resulting JSON</a> looks roughly like this (irrelevant bits stripped for the sake of brevity):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Home and End&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;rules&#34;</span>: [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;Home to Command Left&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;manipulators&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;basic&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;from&#34;</span>: {
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;key_code&#34;</span>: <span style="color:#e6db74">&#34;home&#34;</span>
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;to&#34;</span>: [
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;key_code&#34;</span>: <span style="color:#e6db74">&#34;left_arrow&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;modifiers&#34;</span>: <span style="color:#e6db74">&#34;command&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>          ]
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      ]
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;End to Command Right&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;manipulators&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;basic&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;from&#34;</span>: {
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;key_code&#34;</span>: <span style="color:#e6db74">&#34;end&#34;</span>
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;to&#34;</span>: [
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;key_code&#34;</span>: <span style="color:#e6db74">&#34;right_arrow&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;modifiers&#34;</span>: <span style="color:#e6db74">&#34;command&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>          ]
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      ]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>There&rsquo;s conveniently an <strong>Import</strong> button in the website though, which automatically opens the mappings in Karabiner Elements, so I didn&rsquo;t even need to copy and paste the JSON.</p>
+<h2 id="verdict">Verdict</h2>
+<p><strong>End Result</strong>: It worked flawlessly! The only caveat is that from now on I need to keep the Karabiner Elements application running as a daemon, but it is well justified. Plus, if I ever need<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> to map additional keys in the future, now I already have a workflow in place to do so.</p>
+<p>Karabiner is like having <a href="https://qmk.fm">QMK</a> purely at the software layer, which works for any keyboard whatsoever.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>As of this writing: macOS Monterey: 12.3.1.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it">https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it</a>&hellip;&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>macOS terminal app gripes</title><link>https://thiagowfx.github.io/2022/03/macos-terminal-app-gripes/</link><pubDate>Sat, 26 Mar 2022 02:28:15 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/03/macos-terminal-app-gripes/</guid><description>&lt;p>&lt;code>Terminal.app&lt;/code> is a pretty decent terminal emulator for macOS, with sensible
+defaults. That said, I have my own gripes about it, but the list is
+surprisingly small.&lt;/p></description><content:encoded><![CDATA[<p><code>Terminal.app</code> is a pretty decent terminal emulator for macOS, with sensible
+defaults. That said, I have my own gripes about it, but the list is
+surprisingly small.</p>
+<h2 id="1-no-osc-52-support">1. No OSC-52 support</h2>
+<p><a href="https://github.com/roy2220/osc52pty">https://github.com/roy2220/osc52pty</a>:</p>
+<blockquote>
+<p>OSC 52 is one of Xterm Control Sequences, which is designated for clipboard setting. Once a terminal supporting OSC 52 catches a text in the form of OSC 52 from the output, instead of printing the text onto the screen, it decodes the text first and then sends the content to the system clipboard.</p>
+</blockquote>
+<blockquote>
+<p>Although <code>Terminal.app</code> does NOT support OSC 52, here [osc52pty] is the workaround for it.</p>
+</blockquote>
+<p>I dislike this workaround because it requires an external binary. Even though it is a single binary because it is a Golang executable, I still dislike the external dependency.</p>
+<h2 id="2-no-true-color-256-colors">2. No true color (256 colors)</h2>
+<p>What is true color? See <a href="https://stackoverflow.com/questions/6403744/are-there-terminals-that-support-true-color">stack overflow</a> for context.</p>
+<p>Run the <a href="https://gist.github.com/XVilka/8346728">following</a> to print a color band, a smooth (gradient) output indicates true color support:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>awk <span style="color:#e6db74">&#39;BEGIN{
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    s=&#34;/\\/\\/\\/\\/\\&#34;; s=s s s s s s s s;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    for (colnum = 0; colnum&lt;77; colnum++) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        r = 255-(colnum*255/76);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        g = (colnum*510/76);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        b = (colnum*255/76);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        if (g&gt;255) g = 510-g;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        printf &#34;\033[48;2;%d;%d;%dm&#34;, r,g,b;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        printf &#34;\033[38;2;%d;%d;%dm&#34;, 255-r,255-g,255-b;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        printf &#34;%s\033[0m&#34;, substr(s,colnum+1,1);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    printf &#34;\n&#34;;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}&#39;</span>
+</span></span></code></pre></div><p><code>Terminal.app</code> will not print a gradient.</p>
+<h2 id="3-no-gpu-acceleration">3. No GPU acceleration</h2>
+<p><a href="https://unix.stackexchange.com/q/658709">https://unix.stackexchange.com/q/658709</a>:</p>
+<blockquote>
+<p>Q: What are the advantages of hardware-accelerated terminal emulators?</p>
+</blockquote>
+<blockquote>
+<p>A: They can potentially be faster at outputting and refreshing vast amounts of information. It could also allow for smooth(er) scrolling. Human beings however are quite slow at reading this information, [&hellip;] the average person is unlikely to be able to comprehend it anyways. CPU usage could be lower but it needs to be tested.</p>
+</blockquote>
+<p><code>Terminal.app</code> isn&rsquo;t GPU accelerated.</p>
+<h2 id="recommendations">Recommendations</h2>
+<p>Both <a href="https://alacritty.org">alacritty</a> and <a href="https://sw.kovidgoyal.net/kitty/">kitty</a> are decent replacements (or complements) for <code>Terminal.app</code> that work out-of-the-box, with sensible defaults including all the aforementioned points.</p>]]></content:encoded></item><item><title>macOS: sudo with touch ID</title><link>https://thiagowfx.github.io/2022/03/macos-sudo-with-touch-id/</link><pubDate>Mon, 21 Mar 2022 02:13:27 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/03/macos-sudo-with-touch-id/</guid><description>&lt;p>Recent macbooks have a fingerprint reader, which is typically used to unlock the computer and log in.&lt;/p>
+&lt;p>It is also possible to use it for &lt;code>sudo&lt;/code> authentication via &lt;a href="https://en.wikipedia.org/wiki/Pluggable_authentication_module">PAM&lt;/a>:&lt;/p></description><content:encoded><![CDATA[<p>Recent macbooks have a fingerprint reader, which is typically used to unlock the computer and log in.</p>
+<p>It is also possible to use it for <code>sudo</code> authentication via <a href="https://en.wikipedia.org/wiki/Pluggable_authentication_module">PAM</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% $EDITOR /etc/pam.d/sudo       
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># sudo: auth account password session</span>
+</span></span><span style="display:flex;"><span>auth       sufficient     pam_tid.so             <span style="color:#75715e"># &lt;== add this line</span>
+</span></span><span style="display:flex;"><span>auth       sufficient     pam_smartcard.so
+</span></span><span style="display:flex;"><span>auth       required       pam_opendirectory.so
+</span></span><span style="display:flex;"><span>account    required       pam_permit.so
+</span></span><span style="display:flex;"><span>password   required       pam_deny.so
+</span></span><span style="display:flex;"><span>session    required       pam_permit.so
+</span></span></code></pre></div><p>Once the file is saved with the added line, a command with <code>sudo</code> will spawn the touch ID prompt. I confirmed it works on both Terminal.app and Kitty.</p>
+<p>This solution <a href="https://apple.stackexchange.com/a/392407">does not</a> work within <code>tmux</code> (confirmed), and apparently within iTerm2 as well (not confirmed). A separate PAM module is needed to do so (<a href="https://github.com/fabianishere/pam_reattach"><code>pam_reattach.so</code></a>). I&rsquo;d rather keep my core dependencies surface small though and not include a third party, so for now I am satisfied with the native touch ID module.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://sixcolors.com/post/2020/11/quick-tip-enable-touch-id-for-sudo/">https://sixcolors.com/post/2020/11/quick-tip-enable-touch-id-for-sudo/</a></li>
+<li><a href="https://apple.stackexchange.com/a/306324">https://apple.stackexchange.com/a/306324</a></li>
+</ul>]]></content:encoded></item><item><title>★ nix-env in a nutshell for basic usage in macOS</title><link>https://thiagowfx.github.io/2022/02/nix-env-in-a-nutshell-for-basic-usage-in-macos/</link><pubDate>Wed, 16 Feb 2022 20:48:02 -0500</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/02/nix-env-in-a-nutshell-for-basic-usage-in-macos/</guid><description>&lt;p>I am currently evaluating &lt;a href="https://nixos.org/download.html">Nix&lt;/a> as a
+replacement for &lt;a href="https://brew.sh">Homebrew&lt;/a> CLI apps in macOS&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.
+&lt;a href="https://wickedchicken.github.io/post/macos-nix-setup/">Others&lt;/a>
+&lt;a href="https://ianthehenry.com/posts/how-to-learn-nix/switching-from-homebrew-to-nix/">have&lt;/a>
+&lt;a href="https://ghedam.at/15490/so-tell-me-about-nix">previously&lt;/a> written about this.&lt;/p>
+&lt;p>My goal is to keep a sane learning curve and learn things on-the-fly, only as
+needed. Nix is a massive ecosystem and has so many batteries included and
+components (NixOS, NixPkgs, NixOps, Nix programming language, nix-shell,
+nix-env, nix-darwin, home-manager, &amp;hellip;). The good news is that those components
+are for the most part modular, there&amp;rsquo;s no need to adopt them all in order to
+reap the benefits that Nix provides.&lt;/p>
+&lt;p>For now, I am only adopting &lt;code>nix-env&lt;/code> and &lt;code>nix-shell&lt;/code>, with no &lt;code>*.nix&lt;/code> config
+files. This post covers &lt;code>nix-env&lt;/code>.&lt;/p></description><content:encoded><![CDATA[<p>I am currently evaluating <a href="https://nixos.org/download.html">Nix</a> as a
+replacement for <a href="https://brew.sh">Homebrew</a> CLI apps in macOS<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.
+<a href="https://wickedchicken.github.io/post/macos-nix-setup/">Others</a>
+<a href="https://ianthehenry.com/posts/how-to-learn-nix/switching-from-homebrew-to-nix/">have</a>
+<a href="https://ghedam.at/15490/so-tell-me-about-nix">previously</a> written about this.</p>
+<p>My goal is to keep a sane learning curve and learn things on-the-fly, only as
+needed. Nix is a massive ecosystem and has so many batteries included and
+components (NixOS, NixPkgs, NixOps, Nix programming language, nix-shell,
+nix-env, nix-darwin, home-manager, &hellip;). The good news is that those components
+are for the most part modular, there&rsquo;s no need to adopt them all in order to
+reap the benefits that Nix provides.</p>
+<p>For now, I am only adopting <code>nix-env</code> and <code>nix-shell</code>, with no <code>*.nix</code> config
+files. This post covers <code>nix-env</code>.</p>
+<p>For simplicity, think of <code>nix-env</code> as a package manager, akin to <code>apk</code>,
+<code>pacman</code>, <code>brew</code>, <code>apt</code>, <code>pkg</code>, etc.</p>
+<h2 id="install-a-package">Install a package</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -i moreutils
+</span></span><span style="display:flex;"><span>installing <span style="color:#e6db74">&#39;moreutils-0.67&#39;</span>
+</span></span><span style="display:flex;"><span>building <span style="color:#e6db74">&#39;/nix/store/jsp0l5ny3kx8p9lx9w9r0x159i9jjnn6-user-environment.drv&#39;</span>...
+</span></span></code></pre></div><p>I see some guides using <code>nix-env -iA</code> but <code>-i</code> seems to suffice. We could
+optionally specify the <code>nixpkgs.</code> prefix:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -i nixpkgs.moreutils
+</span></span><span style="display:flex;"><span>error: selector <span style="color:#e6db74">&#39;nixpkgs.moreutils&#39;</span> matches no derivations
+</span></span></code></pre></div><p>Oh no! Maybe that&rsquo;s what the <code>-A</code> is for?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -iA nixpkgs.moreutils
+</span></span><span style="display:flex;"><span>replacing old <span style="color:#e6db74">&#39;moreutils-0.67&#39;</span>
+</span></span><span style="display:flex;"><span>installing <span style="color:#e6db74">&#39;moreutils-0.67&#39;</span>
+</span></span></code></pre></div><p>Indeed! Apparently that <code>-A</code> thing stands for attribute. The only thing I know
+is that there are both <code>nixpkgs.*</code> and <code>nixos.*</code>. But I don&rsquo;t care about NixOS
+at this point. I&rsquo;ll just ignore <code>-A</code> from now on, for the time being.</p>
+<h2 id="list-installed-packages">List installed packages</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -q
+</span></span><span style="display:flex;"><span>moreutils-0.67
+</span></span></code></pre></div><p>Easy! This actually gets displayed in my <code>less</code> pager.</p>
+<h2 id="upgrade-installed-packages">Upgrade installed packages</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -u
+</span></span></code></pre></div><p>Easy! At this point, I am not super confident whether that works as intended
+though. We will find out in a few days when there&rsquo;s some update to one of my
+installed CLI applications. I&rsquo;ve heard there&rsquo;s something called nix channel to
+control that. Leaving it for another day though.</p>
+<p><strong>Update(2022-02-18)</strong>: I learned that <code>nix-env -u</code> is akin to <code>apt upgrade</code> or
+<code>apk upgrade</code>. It upgrades installed packages to newer versions but only if it
+is aware there are newer versions. To actually refresh the repositories à la
+<code>apt update</code> or <code>apk update</code>, use <code>nix-channel --update</code>.</p>
+<p><strong>Note</strong>: On macOS this needs to be <code>sudo -i nix-channel --update</code>. See
+<a href="https://github.com/NixOS/nix/issues/3595">issue</a>.</p>
+<h2 id="uninstall-a-package">Uninstall a package</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env --uninstall moreutils
+</span></span><span style="display:flex;"><span>uninstalling <span style="color:#e6db74">&#39;moreutils-0.67&#39;</span>
+</span></span><span style="display:flex;"><span>building <span style="color:#e6db74">&#39;/nix/store/5k8rsf4cxg4iz7cqnqirpww6r97bwnqr-user-environment.drv&#39;</span>...
+</span></span></code></pre></div><p>Easy!</p>
+<h2 id="search-for-packages">Search for packages</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -qaP <span style="color:#e6db74">&#39;.*moreutils.*&#39;</span>
+</span></span></code></pre></div><p>The <code>.*</code> seems to be needed. It works if I omit them, but only if I write the exact package name (apparently called &lsquo;derivation&rsquo; in Nix):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -qaP moreutils
+</span></span><span style="display:flex;"><span>nixpkgs.moreutils  moreutils-0.67
+</span></span></code></pre></div><p>If I write the wrong package name, the following happens:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -qaP moreutil
+</span></span><span style="display:flex;"><span>error: selector <span style="color:#e6db74">&#39;moreutil&#39;</span> matches no derivations, maybe you meant:
+</span></span><span style="display:flex;"><span>       moreutils
+</span></span></code></pre></div><p>It was helpful in this case, but I wouldn&rsquo;t always count on that. It is a bit
+annoying that there&rsquo;s no <code>nix search moreutils</code> command, but it seems that
+<code>nix-env</code> is very heavily tailored to use short flags, just like <code>pacman</code> in
+Arch Linux. I got used to <code>pacman</code>, hopefully I can get used to the <code>nix-env</code>
+short flags at some point.</p>
+<p>Actually I tried it out and there is a <code>nix search</code> command!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix search moreutils
+</span></span><span style="display:flex;"><span>error: experimental Nix feature <span style="color:#e6db74">&#39;nix-command&#39;</span> is disabled; use <span style="color:#e6db74">&#39;--extra-experimental-features nix-command&#39;</span> to override
+</span></span></code></pre></div><p>This isn&rsquo;t very promising though. How come searching is experimental?! Anyway, I can live with the <code>nix-env</code> form for now.</p>
+<p>These are the 5 basic package management operations that I needed to bootstrap
+my dev environment. Without putting much effort on it, my initial list of package
+looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -q
+</span></span><span style="display:flex;"><span>atool-0.39.0
+</span></span><span style="display:flex;"><span>bash-interactive-5.1-p12
+</span></span><span style="display:flex;"><span>coreutils-9.0
+</span></span><span style="display:flex;"><span>exa-0.10.1
+</span></span><span style="display:flex;"><span>fpp-0.9.2
+</span></span><span style="display:flex;"><span>fzf-0.29.0
+</span></span><span style="display:flex;"><span>git-2.34.1
+</span></span><span style="display:flex;"><span>htop-3.1.2
+</span></span><span style="display:flex;"><span>hugo-0.92.0
+</span></span><span style="display:flex;"><span>jq-1.6
+</span></span><span style="display:flex;"><span>less-600
+</span></span><span style="display:flex;"><span>moreutils-0.67
+</span></span><span style="display:flex;"><span>ncdu-1.16
+</span></span><span style="display:flex;"><span>perl5.34.0-ack-3.5.0
+</span></span><span style="display:flex;"><span>ranger-1.9.3
+</span></span><span style="display:flex;"><span>stow-2.3.1
+</span></span><span style="display:flex;"><span>tmux-3.2a
+</span></span><span style="display:flex;"><span>tree-1.8.0
+</span></span><span style="display:flex;"><span>vim-8.2.4186
+</span></span><span style="display:flex;"><span>watch-procps-3.3.16
+</span></span><span style="display:flex;"><span>wget-1.21.2
+</span></span><span style="display:flex;"><span>zoxide-0.8.0
+</span></span></code></pre></div><p>Those were very intuitive to find, with the exception of <code>ack</code> and <code>bash-interactive</code>:</p>
+<ul>
+<li><code>bash</code> is a bit odd because Nix splits it into two packages:
+a non-interactive version and an interactive version. I have no idea why. My
+<code>~/.bashrc</code> wrecked havoc with the non-interactive version.</li>
+<li><code>ack</code> is very oddly named. Really. Also: <code>nix-env -i ack</code> doesn&rsquo;t work, but
+<code>nix-env -iA nixpkgs.ack</code> does. I suspect it will be hard to ignore <code>-A</code> in
+the future.</li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Strictly speaking there&rsquo;s nothing special about macOS in this context.
+The same setup can also be used in Linux distributions, for example, <a href="https://ariya.io/2020/05/nix-package-manager-on-ubuntu-or-debian">Debian
+or Ubuntu</a>.
+In fact, this is what I did at $DAYJOB, because relying solely on Debian for
+package management is a very big limitation. I find that Nix complements the
+Debian repositories very well, the same way that it does for macOS.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>nix-shell in a nutshell</title><link>https://thiagowfx.github.io/2022/02/nix-shell-in-a-nutshell/</link><pubDate>Thu, 10 Feb 2022 20:48:02 -0500</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/02/nix-shell-in-a-nutshell/</guid><description>&lt;p>As soon as we finish installing &lt;a href="https://nixos.org/download.html">&lt;code>Nix&lt;/code>&lt;/a> on
+Darwin, we&amp;rsquo;re greeted with a call to action:&lt;/p>
+&lt;pre tabindex="0">&lt;code>Alright! We&amp;#39;re done!
+Try it! Open a new terminal, and type:
+$ nix-shell -p nix-info --run &amp;#34;nix-info -m&amp;#34;
+Thank you for using this installer. If you have any feedback or need
+help, don&amp;#39;t hesitate:
+You can open an issue at https://github.com/nixos/nix/issues
+&lt;/code>&lt;/pre></description><content:encoded><![CDATA[<p>As soon as we finish installing <a href="https://nixos.org/download.html"><code>Nix</code></a> on
+Darwin, we&rsquo;re greeted with a call to action:</p>
+<pre tabindex="0"><code>Alright! We&#39;re done!
+Try it! Open a new terminal, and type:
+
+  $ nix-shell -p nix-info --run &#34;nix-info -m&#34;
+
+Thank you for using this installer. If you have any feedback or need
+help, don&#39;t hesitate:
+
+You can open an issue at https://github.com/nixos/nix/issues
+</code></pre><h2 id="hello-world-bloated">Hello world (bloated)</h2>
+<p>All right then, let&rsquo;s do it!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-shell -p nix-info --run <span style="color:#e6db74">&#34;nix-info -m&#34;</span>
+</span></span><span style="display:flex;"><span> - system: <span style="color:#e6db74">`</span><span style="color:#e6db74">&#34;aarch64-darwin&#34;</span><span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span> - host os: <span style="color:#e6db74">`</span>Darwin 21.3.0, macOS 12.2<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span> - multi-user?: <span style="color:#e6db74">`</span>yes<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span> - sandbox: <span style="color:#e6db74">`</span>no<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span> - version: <span style="color:#e6db74">`</span>nix-env <span style="color:#f92672">(</span>Nix<span style="color:#f92672">)</span> 2.6.0<span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span> - channels<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span>: <span style="color:#e6db74">`</span><span style="color:#e6db74">&#34;nixpkgs&#34;</span><span style="color:#e6db74">`</span>
+</span></span><span style="display:flex;"><span> - nixpkgs: <span style="color:#e6db74">`</span>/nix/var/nix/profiles/per-user/root/channels/nixpkgs<span style="color:#e6db74">`</span>
+</span></span></code></pre></div><p>Cool, it works. Let&rsquo;s break it down a bit.</p>
+<h2 id="hello-world-classic">Hello world (classic)</h2>
+<p>Nix shell creates an ephemeral shell environment with the customizations you
+want. The most basic customization is to make a given set of packages
+available. There&rsquo;s a <code>hello</code> package:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-shell -p hello
+</span></span><span style="display:flex;"><span>$ hello
+</span></span><span style="display:flex;"><span>Hello, world!
+</span></span></code></pre></div><p>In case you&rsquo;re curious, this is a GNU binary:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ hello --version
+</span></span><span style="display:flex;"><span>hello <span style="color:#f92672">(</span>GNU Hello<span style="color:#f92672">)</span> 2.10
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>C<span style="color:#f92672">)</span> <span style="color:#ae81ff">2014</span> Free Software Foundation, Inc.
+</span></span><span style="display:flex;"><span>License GPLv3+: GNU GPL version <span style="color:#ae81ff">3</span> or later &lt;http://gnu.org/licenses/gpl.html&gt;
+</span></span><span style="display:flex;"><span>This is free software: you are free to change and redistribute it.
+</span></span><span style="display:flex;"><span>There is NO WARRANTY, to the extent permitted by law.
+</span></span></code></pre></div><p>I have no idea why they are in version 2.10 and what their changelog is. It&rsquo;s
+such a simple binary&hellip;</p>
+<p>If you exit the shell, <code>hello</code> seemingly vanishes:</p>
+<pre tabindex="0"><code>$ exit
+exit
+$ hello
+zsh: command not found: hello
+</code></pre><p>An easy way to think of <code>nix-shell</code> is like an ephemeral sandbox where all your
+desired packages are made available when you enter it. It&rsquo;s possible to provide
+more than one package, naturally. It&rsquo;s also possible to provide a <code>shell.nix</code>
+file with the package declarations, so that when you can <code>nix-shell</code> without
+any arguments.</p>
+<pre tabindex="0"><code>$ cat shell.nix
+{ pkgs ? import &lt;nixpkgs&gt; {} }:
+  pkgs.mkShell {
+    # nativeBuildInputs is usually what you want -- tools you need to run
+    nativeBuildInputs = [ pkgs.buildPackages.hello ];
+}
+$ nix-shell
+$ hello
+Hello, world!
+</code></pre><h2 id="hello-world-oneshot">Hello world (oneshot)</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-shell -p hello --run hello
+</span></span><span style="display:flex;"><span>Hello, world!
+</span></span></code></pre></div><p>This oneshot style doesn&rsquo;t enter the shell, it just runs the given <code>--run</code>
+command and then exits.</p>
+<p>This post just scratched the surface of what <code>nix-shell</code> can do. See the
+references below for more in-depth guides about it.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://cuddly-octo-palm-tree.com/posts/2021-12-19-tyska-nix-shell/">Tools You Should Know About: nix-shell</a></li>
+<li><a href="https://ghedam.at/15978/an-introduction-to-nix-shell">An introduction to nix-shell</a></li>
+<li><a href="https://nixos.org/manual/nix/stable/command-ref/nix-shell.html">NixOS manual: <code>nix-shell</code></a></li>
+</ul>]]></content:encoded></item></channel></rss>
