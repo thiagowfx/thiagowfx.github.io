@@ -1,5 +1,3 @@
-# Homepage URL.
-BASE_URL ?= localhost
 # Sitemap URL.
 SITEMAP = https://thiagowfx.github.io/sitemap.xml
 
@@ -14,7 +12,7 @@ ifeq (, $(shell which $(HUGO)))
 endif
 
 all:
-	$(HUGO) server --baseUrl="$(BASE_URL)" --bind="0.0.0.0" --buildDrafts --port $(PORT) --watch
+	$(HUGO) server --bind="0.0.0.0" --buildDrafts --port $(PORT) --watch
 
 clean:
 	# kill process listening on port, if any; fail gracefully
