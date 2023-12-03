@@ -5,6 +5,7 @@ tags:
   - linux
   - rss
   - selfhosted
+  - star
 showtoc: true
 ---
 

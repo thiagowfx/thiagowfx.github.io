@@ -5,6 +5,7 @@ tags:
   - dev
   - linux
   - macos
+  - star
 showtoc: true
 ---
 

@@ -5,6 +5,7 @@ lastmod: "2022-01-03"
 tags:
   - hardware
   - linux
+  - star
 showtoc: true
 ---
 

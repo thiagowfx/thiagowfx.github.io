@@ -4,6 +4,7 @@ date: 2022-01-15T23:18:56-05:00
 tags:
   - linux
   - selfhosted
+  - star
 showtoc: true
 ---
 

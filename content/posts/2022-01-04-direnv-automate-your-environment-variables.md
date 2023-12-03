@@ -3,6 +3,7 @@ title: "★ Direnv: Automate your Environment Variables"
 date: 2022-01-04T00:34:07-05:00
 tags:
   - dev
+  - star
 showtoc: true
 ---
 

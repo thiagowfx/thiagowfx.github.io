@@ -3,6 +3,7 @@ title: "★ Tools you should know about: moreutils"
 date: 2022-05-01T13:02:51-04:00
 tags:
   - linux
+  - star
 showtoc: true
 ---
 

@@ -5,6 +5,7 @@ tags:
   - dev
   - linux
   - programming
+  - star
 showtoc: true
 ---
 
