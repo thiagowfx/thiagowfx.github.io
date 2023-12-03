@@ -1,0 +1,1197 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>star on Not Just Serendipity</title><link>https://thiagowfx.github.io/tags/star/</link><description>Recent content in star on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2023 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Sun, 01 May 2022 13:02:51 -0400</lastBuildDate><atom:link href="https://thiagowfx.github.io/tags/star/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Tools you should know about: moreutils</title><link>https://thiagowfx.github.io/2022/05/tools-you-should-know-about-moreutils/</link><pubDate>Sun, 01 May 2022 13:02:51 -0400</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/05/tools-you-should-know-about-moreutils/</guid><description>&lt;p>&lt;a href="https://joeyh.name/code/moreutils/">&lt;code>moreutils&lt;/code>&lt;/a> has previously been covered &lt;a href="https://news.ycombinator.com/item?id=31043655">elsewhere&lt;/a>, multiple times. It&amp;rsquo;s a collection of small unix tools that follow the &lt;a href="https://en.wikipedia.org/wiki/Unix_philosophy">unix philosophy&lt;/a>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> very strongly.&lt;/p>
+&lt;p>Here are some of my favorites with example usages. Obviously this post isn&amp;rsquo;t a manual which would have been a disservice to the community; refer to the upstream man pages for detailed instructions.&lt;/p></description><content:encoded><![CDATA[<p><a href="https://joeyh.name/code/moreutils/"><code>moreutils</code></a> has previously been covered <a href="https://news.ycombinator.com/item?id=31043655">elsewhere</a>, multiple times. It&rsquo;s a collection of small unix tools that follow the <a href="https://en.wikipedia.org/wiki/Unix_philosophy">unix philosophy</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> very strongly.</p>
+<p>Here are some of my favorites with example usages. Obviously this post isn&rsquo;t a manual which would have been a disservice to the community; refer to the upstream man pages for detailed instructions.</p>
+<h2 id="sponge">sponge</h2>
+<blockquote>
+<p>sponge(1) - soak up standard input and write to a file</p>
+</blockquote>
+<p>Here&rsquo;s a typical workflow <code>sponge(1)</code> is great at:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Given a file</span>
+</span></span><span style="display:flex;"><span>$ cat myfile
+</span></span><span style="display:flex;"><span>a
+</span></span><span style="display:flex;"><span>b
+</span></span><span style="display:flex;"><span>c
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Imagine that for whatever reason we want to replace &#39;a&#39; with &#39;b&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Naively, we could try this:</span>
+</span></span><span style="display:flex;"><span>$ cat myfile | tr <span style="color:#e6db74">&#39;a&#39;</span> <span style="color:#e6db74">&#39;b&#39;</span> &gt; myfile
+</span></span><span style="display:flex;"><span>$ cat myfile
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># However the file becomes empty!</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># It got clobbered when we tried to simultenaously read from and write to it</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># sponge comes to the rescue!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ cat myfile | tr <span style="color:#e6db74">&#39;a&#39;</span> <span style="color:#e6db74">&#39;b&#39;</span> | sponge myfile
+</span></span><span style="display:flex;"><span>$ cat myfile
+</span></span><span style="display:flex;"><span>b
+</span></span><span style="display:flex;"><span>b
+</span></span><span style="display:flex;"><span>c
+</span></span></code></pre></div><p>It is great to use <code>sponge</code> in lieu of <code>&gt;</code> (shell output redirection) in shell pipelines when trying to both read from and write to the same file.</p>
+<h2 id="vidir">vidir</h2>
+<blockquote>
+<p>vidir(1) - edit directories and filenames</p>
+</blockquote>
+<p><code>vidir(1)</code> is great to bulk rename files/directories within a given directory, one level at a time. For example, if I open <code>vidir</code> at the top-level directory of this blog repository, it opens up <code>vim</code> (although it doesn&rsquo;t need to be <code>vim</code>, your <code>$EDITOR</code> is honoured) with the following content:</p>
+<pre tabindex="0"><code>1	./.git
+2	./.github
+3	./.gitignore
+4	./.gitmodules
+5	./.hugo_build.lock
+6	./LICENSE
+7	./Makefile
+8	./README.md
+9	./archetypes
+10	./config.yml
+11	./content
+12	./layouts
+13	./public
+14	./resources
+15	./static
+16	./themes
+</code></pre><p>If I make, say, the following modifications (lines 7 and 8):</p>
+<pre tabindex="0"><code>1	./.git
+2	./.github
+3	./.gitignore
+4	./.gitmodules
+5	./.hugo_build.lock
+6	./LICENSE
+7	./GNUMakefile
+8	./README.rst
+9	./archetypes
+10	./config.yml
+11	./content
+12	./layouts
+13	./public
+14	./resources
+15	./static
+16	./themes
+</code></pre><p>And then save and quit <code>vim</code> (<code>:wq</code>), then the effect would have been the same as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ mv Makefile GNUMakefile
+</span></span><span style="display:flex;"><span>$ mv README.md README.rst
+</span></span></code></pre></div><p>If I changed my mind and decided not to save the modifications, I could just do <code>:cq</code>.</p>
+<p>It&rsquo;s possible to leverage vim features such as <code>.</code> (repeat command) and <code>:%s/</code> (find and replace) to perform those mass file renames quickly and effectively. <code>vidir</code> is a breeze to use!</p>
+<h2 id="ifne">ifne</h2>
+<blockquote>
+<p>ifne(1) - Run command if the standard input is not empty</p>
+</blockquote>
+<p><code>ifne(1)</code> is effective when used with <code>find</code> or <code>fd</code> to keep shell pipes &ldquo;happy&rdquo;. Here&rsquo;s one simple example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ find . -name <span style="color:#e6db74">&#39;*.cpp&#39;</span> | xargs clang-format
+</span></span></code></pre></div><p>This should work as expected, but it&rsquo;s cleaner to do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ find . -name <span style="color:#e6db74">&#39;*.cpp&#39;</span> | ifne xargs clang-format
+</span></span></code></pre></div><p>The added <code>ifne</code> ensures the <code>xargs</code> command is only executed if and only if <code>find</code> yields at least one result in its output.</p>
+<p>This wasn&rsquo;t a very practical example though: a more realistic way to use <code>ifne</code> is with prototypical on-the-fly manipulation of shell pipes wherein initially you just do whatever, but then whenever you notice some command in the middle of the pipe has failed because its input was empty (=the previous pipe command output was empty) you just prepend <code>ifne</code> to it:</p>
+<pre tabindex="0"><code>$ this | is | a | complicated | pipe
+# assume &#34;complicated&#34; fails because it has no input
+# so we iterate and do:
+$ this | is | a | ifne complicated | pipe
+</code></pre><h2 id="combine">combine</h2>
+<blockquote>
+<p>combine(1) - combine sets of lines from two files using boolean operations</p>
+</blockquote>
+<p><code>combine(1)</code> is pretty much <code>comm(1)</code>, but much more user-friendly. Given two files <code>file1</code> and <code>file2</code> it makes it easy to query which lines are {unique, common} to {each, both} files, using boolean operations (or, and, not, xor). Here&rsquo;s one example to find the <em>common lines</em> in <em>both</em> files, compare <code>combine</code> and <code>comm</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ combine file1 and file2
+</span></span><span style="display:flex;"><span>$ comm -12 file1 file2     <span style="color:#75715e"># flags are harder to remember</span>
+</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>The Unix philosophy emphasizes building simple, short, clear, modular, and extensible code that can be easily maintained and repurposed by developers other than its creators. The Unix philosophy favors composability as opposed to monolithic design.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Keychron K2 on macOS: fix Home and End keys</title><link>https://thiagowfx.github.io/2022/04/keychron-k2-on-macos-fix-home-and-end-keys/</link><pubDate>Fri, 22 Apr 2022 19:04:17 -0400</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/04/keychron-k2-on-macos-fix-home-and-end-keys/</guid><description>&lt;p>&lt;strong>Issue&lt;/strong>: For whatever reason, the &lt;code>Home&lt;/code> and &lt;code>End&lt;/code> keys on my &lt;a href="https://thiagowfx.github.io/2022/01/keychron-k2-review/">Keychron K2&lt;/a> do not work as intended on macOS.&lt;/p></description><content:encoded><![CDATA[<p><strong>Issue</strong>: For whatever reason, the <code>Home</code> and <code>End</code> keys on my <a href="https://thiagowfx.github.io/2022/01/keychron-k2-review/">Keychron K2</a> do not work as intended on macOS.</p>
+<h2 id="expectations-vs-reality">Expectations vs Reality</h2>
+<p>For example, when using a text editor such as TextMate or a web browser like Chrome, I&rsquo;d expect:</p>
+<ul>
+<li><code>Home</code> to position the text cursor in the beginning of the line (à la <code>C-a</code> in emacs)</li>
+<li><code>End</code> to position the text cursor in the end of the line (à la <code>C-e</code> in emacs)</li>
+</ul>
+<p>The only way to provoke these effects <em>out-of-the-box</em> is by pressing, respectively, the <code>Cmd + Left</code> and <code>Cmd + Right</code> shortcuts, as you would normally do in a Macbook laptop native keyboard.</p>
+<p>This is very annoying because it only happens in macOS<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>: the <code>Home</code> and <code>End</code> keys work just fine in both Linux and Windows. <a href="https://www.reddit.com/r/Keychron/comments/ooice5/home_and_end_keys_not_working_on_monterrey/">A reddit user</a> reported the same issue in <code>/r/keychron</code>, but the existing thread has no proposed solutions.</p>
+<h2 id="enter-karabiner-elements">Enter Karabiner Elements</h2>
+<p>I&rsquo;ve always heard good things about <a href="http://karabiner-elements.pqrs.org">Karabiner Elements</a> as a praised one-size-fits-all application for keyboards and macros in macOS, thus decided to give it a try. <strong>Bonus points</strong>: it is <a href="https://github.com/pqrs-org/Karabiner-Elements">open source</a>, released into the public domain.</p>
+<p>Upon installing it with <a href="https://formulae.brew.sh/cask/karabiner-elements">Homebrew Cask</a> (<code>brew install karabiner-elements</code>), I executed it. Then I needed to give a bunch of permissions to the application via <code>macOS Settings &gt; Security &amp; Privacy &gt; Privacy &gt; Input Monitoring</code>. The following apps were whitelisted accordingly:</p>
+<ul>
+<li><code>karabiner_grabber</code></li>
+<li><code>karabiner_observer</code></li>
+<li><code>Karabiner-EventViewer.app</code>: this one is optional, but useful for debugging</li>
+</ul>
+<p>The app is straightforward to use. It allows you to do all sorts of reactions to key codes input events.</p>
+<p>I had a simple idea: I wanted to map <code>Home</code> to <code>Cmd + Left</code>, and <code>End</code> to <code>Cmd + Right</code>.</p>
+<p>Unfortunately these are considered &ldquo;Complex modifications&rdquo; because they map one origin key to two destination keys. &ldquo;Simple modifications&rdquo; are <em>one-to-one</em> key mappings. Why is it unfortunate? Because it doesn&rsquo;t seem to be possible to do such mappings via the app UI. Apparently one needs to express those mappings in a <code>.json</code> file instead.</p>
+<h2 id="ah-communities">Ah, communities</h2>
+<p>Sure, no problem, I was about to do it but then I realized there&rsquo;s an <a href="https://ke-complex-modifications.pqrs.org">official website</a> for community-maintained mappings. The website is well organized and curated. Why create something fully from scratch when I could just reuse an existing one?</p>
+<p>I found a &ldquo;Keychron K2&rdquo; category which made me instantly happy but it turned out not to be useful, as there were only two defined mappings therein:</p>
+<blockquote>
+<ul>
+<li>Change Keychron K2 keyboard layout to more closely resemble an Apple keyboard</li>
+<li>Remap some Keychrom K2(US) keys to make it less painful to switch from Macbook(RU) keyboard</li>
+</ul>
+</blockquote>
+<p>None of these mattered to me. Then I searched for <code>home to cmd</code> which led me to <a href="https://ke-complex-modifications.pqrs.org/#HomeEnd">this entry</a>, which had exactly the mappings I wanted:</p>
+<blockquote>
+<p>Home and End</p>
+<ul>
+<li>Home to Command Left</li>
+<li>End to Command Right</li>
+</ul>
+</blockquote>
+<p><a href="https://ke-complex-modifications.pqrs.org/json/HomeEnd.json">Its resulting JSON</a> looks roughly like this (irrelevant bits stripped for the sake of brevity):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Home and End&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;rules&#34;</span>: [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;Home to Command Left&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;manipulators&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;basic&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;from&#34;</span>: {
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;key_code&#34;</span>: <span style="color:#e6db74">&#34;home&#34;</span>
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;to&#34;</span>: [
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;key_code&#34;</span>: <span style="color:#e6db74">&#34;left_arrow&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;modifiers&#34;</span>: <span style="color:#e6db74">&#34;command&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>          ]
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      ]
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;End to Command Right&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;manipulators&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;basic&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;from&#34;</span>: {
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;key_code&#34;</span>: <span style="color:#e6db74">&#34;end&#34;</span>
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;to&#34;</span>: [
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;key_code&#34;</span>: <span style="color:#e6db74">&#34;right_arrow&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;modifiers&#34;</span>: <span style="color:#e6db74">&#34;command&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>          ]
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      ]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>There&rsquo;s conveniently an <strong>Import</strong> button in the website though, which automatically opens the mappings in Karabiner Elements, so I didn&rsquo;t even need to copy and paste the JSON.</p>
+<h2 id="verdict">Verdict</h2>
+<p><strong>End Result</strong>: It worked flawlessly! The only caveat is that from now on I need to keep the Karabiner Elements application running as a daemon, but it is well justified. Plus, if I ever need<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> to map additional keys in the future, now I already have a workflow in place to do so.</p>
+<p>Karabiner is like having <a href="https://qmk.fm">QMK</a> purely at the software layer, which works for any keyboard whatsoever.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>As of this writing: macOS Monterey: 12.3.1.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it">https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it</a>&hellip;&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Wayland: from i3 to sway</title><link>https://thiagowfx.github.io/2022/02/wayland-from-i3-to-sway/</link><pubDate>Sat, 19 Feb 2022 19:18:25 -0500</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/02/wayland-from-i3-to-sway/</guid><description>&lt;p>I&amp;rsquo;ve been giving Wayland a try. My window manager of choice in X11/Xorg is &lt;a href="https://i3wm.org/">&lt;code>i3&lt;/code>&lt;/a>, so the natural choice in Wayland is &lt;a href="https://swaywm.org/">&lt;code>sway&lt;/code>&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>I&rsquo;ve been giving Wayland a try. My window manager of choice in X11/Xorg is <a href="https://i3wm.org/"><code>i3</code></a>, so the natural choice in Wayland is <a href="https://swaywm.org/"><code>sway</code></a>.</p>
+<h2 id="intro">Intro</h2>
+<p><code>sway</code> works well with the <code>i3</code> config out-of-the-box. A few adjustments were necessary for full compatibility. To maximize code reuse, I went with the following structure:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ tree ~/.config/<span style="color:#f92672">{</span>i3,sway<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>/home/typhoon/.config/i3
+</span></span><span style="display:flex;"><span>├── conf.d
+</span></span><span style="display:flex;"><span>│   └── i3.conf
+</span></span><span style="display:flex;"><span>└── config
+</span></span><span style="display:flex;"><span>/home/typhoon/.config/sway
+</span></span><span style="display:flex;"><span>├── conf.d
+</span></span><span style="display:flex;"><span>│   └── sway.conf
+</span></span><span style="display:flex;"><span>└── config -&gt; ../../../i3/.config/i3/config
+</span></span></code></pre></div><ul>
+<li>The master config is
+<a href="https://github.com/thiagowfx/.dotfiles/blob/master/i3/.config/i3/config"><code>~/.config/i3/config</code></a>.
+It is pretty standard, generated by
+<a href="https://build.i3wm.org/docs/i3-config-wizard.html"><code>i3-config-wizard</code></a> with
+a few tweaks on top for my own workflow. It works for both <code>i3</code> and <code>sway</code>.
+The config contains this snippet:</li>
+</ul>
+<pre tabindex="0"><code># Load user configs if existing. Order is important.
+include conf.d/*.conf
+</code></pre><p>The snippet allows drop-in customizations to live in <code>conf.d</code>. The <code>include</code> directive is a relatively <a href="https://github.com/i3/i3/pull/4420">new</a> addition to the i3config syntax and it&rsquo;s the main reason this setup is elegant and minimalist.</p>
+<ul>
+<li>i3-only config options live in <a href="https://github.com/thiagowfx/.dotfiles/blob/master/i3/.config/i3/conf.d/i3.conf"><code>~/.config/i3/conf.d/i3.conf</code></a>. To give you an idea of what it looks like and which options aren&rsquo;t compatible with <code>sway</code>, here&rsquo;s a snapshot of my config in early 2022:</li>
+</ul>
+<pre tabindex="0"><code class="language-conf" data-lang="conf"># i3(1) only config file
+# Commands herein are not compatible or interoperable with sway(1)
+# Reference: https://i3wm.org/docs/userguide.html
+
+# Autostart XDG applications (.desktop files).
+# https://wiki.archlinux.org/title/XDG_Autostart
+#
+# Troubleshooting:
+#   dex -ade i3
+exec dex --autostart --environment i3
+
+# lock screen, Ctrl+Alt+l (systemd)
+exec --no-startup-id xss-lock -l -- i3lock -c 222222
+bindsym Ctrl+Mod1+l exec loginctl lock-session
+
+# XF86AudioPlayPause is not recognized by sway, add it only to i3
+# https://github.com/swaywm/sway/issues/4783
+bindsym XF86AudioPlayPause exec playerctl play-pause
+
+# show window title icon
+for_window [all] title_window_icon on
+
+set $bgcolor #526532
+set_from_resource $black i3.color0
+set_from_resource $red i3.color1
+set_from_resource $green i3.color2
+set_from_resource $white i3.color7
+set_from_resource $gray i3.color8
+
+# Theme colors
+client.focused $bgcolor $bgcolor $white $green
+client.focused_inactive $gray $gray $black $gray
+client.unfocused $black $black $gray $black
+client.urgent $red $red $white $red
+
+# Start i3bar to display a workspace and status bar
+bar {
+    status_command i3status
+    position top
+    workspace_min_width 25
+
+    colors {
+        background $black
+        statusline $white
+
+        focused_workspace $bgcolor $bgcolor $white $black
+        active_workspace $gray $gray $black $gray
+        inactive_workspace $black $black $gray $gray
+        urgent_workspace $red $red $white $green
+    }
+}
+
+# restart i3 inplace (preserves layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# vim: ft=i3config
+</code></pre><p>It&rsquo;s possible some of these configs will become compatible with <code>sway</code> over time, but at the time of this writing they are not.</p>
+<ul>
+<li>sway-only config options live in <a href="https://github.com/thiagowfx/.dotfiles/blob/master/sway/.config/sway/conf.d/sway.conf"><code>~/.config/sway/conf.d/sway.conf</code></a>. To give you an idea of what it looks like and which options aren&rsquo;t compatible with i3, here&rsquo;s a snapshot of my config in early 2022:</li>
+</ul>
+<pre tabindex="0"><code class="language-conf" data-lang="conf"># sway(1) only config file
+# Commands herein are not compatible or interoperable with i3(1)
+# References:
+#   sway(5)
+#   https://github.com/swaywm/sway/wiki
+#   https://github.com/swaywm/sway/wiki/Useful-add-ons-for-sway
+
+# HiDPI
+output &#34;*&#34; scale 1.5
+
+# Wallpaper
+output &#34;*&#34; bg ~/.wallpaper fill
+
+# Gaps a la i3-gaps
+gaps inner 10
+
+# XF86AudioPlayPause is not recognized by sway: xmodmap -pke | grep XF86AudioPlay
+# https://github.com/swaywm/sway/issues/4783
+bindcode 172 exec playerctl play-pause
+
+# Start i3bar to display a workspace and status bar
+bar {
+    status_command i3status
+    position top
+    workspace_min_width 25
+}
+
+# restart i3 inplace (preserves layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r exec sway reload
+
+# vim: ft=i3config
+</code></pre><p>Most of those are wayland-specific options.</p>
+<h2 id="quirks">Quirks</h2>
+<p><code>gaps</code> is available in <code>i3</code> as well but only if you use
+<a href="https://github.com/Airblader/i3"><code>i3-gaps</code></a>, which generally I refuse to in
+order to stay closer to vanilla/upstream <code>i3</code>.</p>
+<p>The <code>play-pause</code> multimedia key is
+a <a href="https://github.com/swaywm/sway/issues/4783">bug</a> I found on <code>sway</code>. It&rsquo;s quite
+annoying, the workaround as you can see above is to use <code>bindcode</code> instead of
+<code>bindsym</code>. For more details see the bug.</p>
+<p>In general <code>sway</code> works very well out-of-the-box so long as you install
+<a href="https://wayland.freedesktop.org/xserver.html">XWayland</a> (<code>xorg-xwayland</code> on
+Arch Linux). XWayland <strong>transparently</strong> proxies X11 apps to a X11 server that
+runs inside wayland.</p>
+<p>It&rsquo;s possible to detect those apps by running
+<a href="https://www.x.org/releases/X11R7.5/doc/man/man1/xprop.1.html"><code>xprop</code></a> and
+trying to click a window: If you cannot do it, then the window is not a X11
+app. Alternatively
+<a href="https://unix.stackexchange.com/questions/162769/what-is-the-purpose-of-xeyes"><code>xeyes</code></a>
+is another way to detect them.</p>
+<p>To achieve a 100% Xorg/X11-free experience with pure wayland, just add
+<code>xwayland disable</code> to the <code>sway</code> config. I wouldn&rsquo;t recommend that though, most
+Linux GUI apps aren&rsquo;t Wayland ready and will probably never be. To put it
+another way, X11/Xorg will take a long time (if ever) to disappear the same way
+that IPv4 will take a long time (if ever) to let IPv6 completely replace it.
+That&rsquo;s life.</p>
+<p>X11 apps look a bit blurry in a 4K monitor with scaled DPI (&gt;96) when they run
+inside Wayland with XWayland. I am not particularly bothered by that, but it&rsquo;s
+noticeable.</p>
+<p>There&rsquo;s no need to replace all of your small <code>i3</code> Xorg utilities with wayland
+ones. For example, <a href="https://github.com/davatorium/rofi"><code>rofi</code></a> (application
+launcher) works just fine (no need for <code>wofi</code>). The stock <code>i3</code> bar (<code>sway</code> bar?)
+works just fine, there&rsquo;s no need for <code>polybar</code> or <code>waybar</code>.</p>
+<p>Some utilities need to be replaced though. For example, <code>dunst</code> (notification
+daemon) does not seem to work with <code>sway</code> out-of-the-box, <code>mako</code> seems to be a
+recommended replacement. <code>i3lock</code> (lock screen) also does not work, <code>sway</code>
+comes with its own screen lock directives. Screenshotters (e.g. <code>scrot</code>) will
+also need to be replaced.</p>
+<p>The system tray does not seem to work fine out-of-the-box. I haven&rsquo;t
+investigated much to figure out what&rsquo;s wrong with it.</p>
+<p>I was looking for a display manager that works well with both X11 and Xorg and
+ended up trying <a href="https://git.sr.ht/~kennylevinsen/greetd"><code>greetd</code></a>,
+<a href="https://github.com/tvrzna/emptty/"><code>emptty</code></a> and
+<a href="https://github.com/fairyglade/ly"><code>ly</code></a>, in that order. <code>ly</code> is in my opinion
+the best one in terms of balancing simplicity and usefulness.</p>
+<p><code>sway</code> / <code>XWayland</code> doesn&rsquo;t source <code>~/.Xresources</code>. This is an issue if you
+rely on customizations therein. It does source <code>~/.Xdefaults</code> though!
+Leveraging this, I did the following changes:</p>
+<ul>
+<li>(i) <code>~/.Xresources</code> sources <code>~/.Xdefaults</code>:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.Xresources
+</span></span><span style="display:flex;"><span>! These settings apply to X11 only.
+</span></span><span style="display:flex;"><span>! Use ~/.Xdefaults <span style="color:#66d9ef">for</span> settings that apply to both X11 and Wayland <span style="color:#f92672">(</span>xorg-xwayland<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include &#34;.Xdefaults&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>! Source:
+</span></span><span style="display:flex;"><span>!   xrdb -merge ~/.Xresources
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>! Dump all properties:
+</span></span><span style="display:flex;"><span>!   xrdb -q
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>! Check <span style="color:#66d9ef">if</span> DPI is set:
+</span></span><span style="display:flex;"><span>!   xrdb -q | grep -i dpi
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>! HiDPI
+</span></span><span style="display:flex;"><span>! Common values:
+</span></span><span style="display:flex;"><span>!   <span style="color:#ae81ff">96</span>  <span style="color:#f92672">(</span>x1.0, baseline<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>!   <span style="color:#ae81ff">144</span> <span style="color:#f92672">(</span>x1.5<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>!   <span style="color:#ae81ff">192</span> <span style="color:#f92672">(</span>x2.0, HiDPI<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>*.dpi: <span style="color:#ae81ff">144</span>
+</span></span></code></pre></div><ul>
+<li>(ii) <code>~/.Xdefaults</code> holds my customizations that originally lived in <code>~/.Xresources</code>:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.Xdefaults
+</span></span><span style="display:flex;"><span>! These settings apply to both X11 and Wayland <span style="color:#f92672">(</span>xorg-xwayland<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>! Use ~/.Xresources <span style="color:#66d9ef">for</span> X11-only settings.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Xft.antialias: true
+</span></span><span style="display:flex;"><span>Xft.hinting: true
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>In principle I could just have symlinked them:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ln -s ~/.Xresources ~/.Xdefaults
+</span></span></code></pre></div><p>The reason why I didn&rsquo;t do it is to avoid double scaling (DPI). You see, my
+<code>sway</code> config already sets DPI / scaling to 1.5x. If we do that in
+<code>~/.Xdefaults</code> as well then Xorg applications would have been scaled twice.</p>
+<h2 id="closing-remarks">Closing remarks</h2>
+<p>In general Wayland / <code>sway</code> works reasonably well out-of-the-box in 2022, but
+tiny adjustments are still necessary, and it isn&rsquo;t as polished as it could have
+been. Furthermore, my workflow is very simple. Try sharing your screen in a
+video call in Wayland and you&rsquo;ll run into other quirks. I have mixed feelings
+and wouldn&rsquo;t necessarily recommend it. I wouldn&rsquo;t give an anti recommendation
+either. It&rsquo;s complicated&hellip;even though Wayland is supposed to overcome some X11
+/ Xorg limitations, as a client and without knowing its internals I fail to see
+its advantages.</p>]]></content:encoded></item><item><title>★ nix-env in a nutshell for basic usage in macOS</title><link>https://thiagowfx.github.io/2022/02/nix-env-in-a-nutshell-for-basic-usage-in-macos/</link><pubDate>Wed, 16 Feb 2022 20:48:02 -0500</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/02/nix-env-in-a-nutshell-for-basic-usage-in-macos/</guid><description>&lt;p>I am currently evaluating &lt;a href="https://nixos.org/download.html">Nix&lt;/a> as a
+replacement for &lt;a href="https://brew.sh">Homebrew&lt;/a> CLI apps in macOS&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.
+&lt;a href="https://wickedchicken.github.io/post/macos-nix-setup/">Others&lt;/a>
+&lt;a href="https://ianthehenry.com/posts/how-to-learn-nix/switching-from-homebrew-to-nix/">have&lt;/a>
+&lt;a href="https://ghedam.at/15490/so-tell-me-about-nix">previously&lt;/a> written about this.&lt;/p>
+&lt;p>My goal is to keep a sane learning curve and learn things on-the-fly, only as
+needed. Nix is a massive ecosystem and has so many batteries included and
+components (NixOS, NixPkgs, NixOps, Nix programming language, nix-shell,
+nix-env, nix-darwin, home-manager, &amp;hellip;). The good news is that those components
+are for the most part modular, there&amp;rsquo;s no need to adopt them all in order to
+reap the benefits that Nix provides.&lt;/p>
+&lt;p>For now, I am only adopting &lt;code>nix-env&lt;/code> and &lt;code>nix-shell&lt;/code>, with no &lt;code>*.nix&lt;/code> config
+files. This post covers &lt;code>nix-env&lt;/code>.&lt;/p></description><content:encoded><![CDATA[<p>I am currently evaluating <a href="https://nixos.org/download.html">Nix</a> as a
+replacement for <a href="https://brew.sh">Homebrew</a> CLI apps in macOS<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.
+<a href="https://wickedchicken.github.io/post/macos-nix-setup/">Others</a>
+<a href="https://ianthehenry.com/posts/how-to-learn-nix/switching-from-homebrew-to-nix/">have</a>
+<a href="https://ghedam.at/15490/so-tell-me-about-nix">previously</a> written about this.</p>
+<p>My goal is to keep a sane learning curve and learn things on-the-fly, only as
+needed. Nix is a massive ecosystem and has so many batteries included and
+components (NixOS, NixPkgs, NixOps, Nix programming language, nix-shell,
+nix-env, nix-darwin, home-manager, &hellip;). The good news is that those components
+are for the most part modular, there&rsquo;s no need to adopt them all in order to
+reap the benefits that Nix provides.</p>
+<p>For now, I am only adopting <code>nix-env</code> and <code>nix-shell</code>, with no <code>*.nix</code> config
+files. This post covers <code>nix-env</code>.</p>
+<p>For simplicity, think of <code>nix-env</code> as a package manager, akin to <code>apk</code>,
+<code>pacman</code>, <code>brew</code>, <code>apt</code>, <code>pkg</code>, etc.</p>
+<h2 id="install-a-package">Install a package</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -i moreutils
+</span></span><span style="display:flex;"><span>installing <span style="color:#e6db74">&#39;moreutils-0.67&#39;</span>
+</span></span><span style="display:flex;"><span>building <span style="color:#e6db74">&#39;/nix/store/jsp0l5ny3kx8p9lx9w9r0x159i9jjnn6-user-environment.drv&#39;</span>...
+</span></span></code></pre></div><p>I see some guides using <code>nix-env -iA</code> but <code>-i</code> seems to suffice. We could
+optionally specify the <code>nixpkgs.</code> prefix:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -i nixpkgs.moreutils
+</span></span><span style="display:flex;"><span>error: selector <span style="color:#e6db74">&#39;nixpkgs.moreutils&#39;</span> matches no derivations
+</span></span></code></pre></div><p>Oh no! Maybe that&rsquo;s what the <code>-A</code> is for?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -iA nixpkgs.moreutils
+</span></span><span style="display:flex;"><span>replacing old <span style="color:#e6db74">&#39;moreutils-0.67&#39;</span>
+</span></span><span style="display:flex;"><span>installing <span style="color:#e6db74">&#39;moreutils-0.67&#39;</span>
+</span></span></code></pre></div><p>Indeed! Apparently that <code>-A</code> thing stands for attribute. The only thing I know
+is that there are both <code>nixpkgs.*</code> and <code>nixos.*</code>. But I don&rsquo;t care about NixOS
+at this point. I&rsquo;ll just ignore <code>-A</code> from now on, for the time being.</p>
+<h2 id="list-installed-packages">List installed packages</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -q
+</span></span><span style="display:flex;"><span>moreutils-0.67
+</span></span></code></pre></div><p>Easy! This actually gets displayed in my <code>less</code> pager.</p>
+<h2 id="upgrade-installed-packages">Upgrade installed packages</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -u
+</span></span></code></pre></div><p>Easy! At this point, I am not super confident whether that works as intended
+though. We will find out in a few days when there&rsquo;s some update to one of my
+installed CLI applications. I&rsquo;ve heard there&rsquo;s something called nix channel to
+control that. Leaving it for another day though.</p>
+<p><strong>Update(2022-02-18)</strong>: I learned that <code>nix-env -u</code> is akin to <code>apt upgrade</code> or
+<code>apk upgrade</code>. It upgrades installed packages to newer versions but only if it
+is aware there are newer versions. To actually refresh the repositories à la
+<code>apt update</code> or <code>apk update</code>, use <code>nix-channel --update</code>.</p>
+<p><strong>Note</strong>: On macOS this needs to be <code>sudo -i nix-channel --update</code>. See
+<a href="https://github.com/NixOS/nix/issues/3595">issue</a>.</p>
+<h2 id="uninstall-a-package">Uninstall a package</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env --uninstall moreutils
+</span></span><span style="display:flex;"><span>uninstalling <span style="color:#e6db74">&#39;moreutils-0.67&#39;</span>
+</span></span><span style="display:flex;"><span>building <span style="color:#e6db74">&#39;/nix/store/5k8rsf4cxg4iz7cqnqirpww6r97bwnqr-user-environment.drv&#39;</span>...
+</span></span></code></pre></div><p>Easy!</p>
+<h2 id="search-for-packages">Search for packages</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -qaP <span style="color:#e6db74">&#39;.*moreutils.*&#39;</span>
+</span></span></code></pre></div><p>The <code>.*</code> seems to be needed. It works if I omit them, but only if I write the exact package name (apparently called &lsquo;derivation&rsquo; in Nix):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -qaP moreutils
+</span></span><span style="display:flex;"><span>nixpkgs.moreutils  moreutils-0.67
+</span></span></code></pre></div><p>If I write the wrong package name, the following happens:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -qaP moreutil
+</span></span><span style="display:flex;"><span>error: selector <span style="color:#e6db74">&#39;moreutil&#39;</span> matches no derivations, maybe you meant:
+</span></span><span style="display:flex;"><span>       moreutils
+</span></span></code></pre></div><p>It was helpful in this case, but I wouldn&rsquo;t always count on that. It is a bit
+annoying that there&rsquo;s no <code>nix search moreutils</code> command, but it seems that
+<code>nix-env</code> is very heavily tailored to use short flags, just like <code>pacman</code> in
+Arch Linux. I got used to <code>pacman</code>, hopefully I can get used to the <code>nix-env</code>
+short flags at some point.</p>
+<p>Actually I tried it out and there is a <code>nix search</code> command!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix search moreutils
+</span></span><span style="display:flex;"><span>error: experimental Nix feature <span style="color:#e6db74">&#39;nix-command&#39;</span> is disabled; use <span style="color:#e6db74">&#39;--extra-experimental-features nix-command&#39;</span> to override
+</span></span></code></pre></div><p>This isn&rsquo;t very promising though. How come searching is experimental?! Anyway, I can live with the <code>nix-env</code> form for now.</p>
+<p>These are the 5 basic package management operations that I needed to bootstrap
+my dev environment. Without putting much effort on it, my initial list of package
+looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ nix-env -q
+</span></span><span style="display:flex;"><span>atool-0.39.0
+</span></span><span style="display:flex;"><span>bash-interactive-5.1-p12
+</span></span><span style="display:flex;"><span>coreutils-9.0
+</span></span><span style="display:flex;"><span>exa-0.10.1
+</span></span><span style="display:flex;"><span>fpp-0.9.2
+</span></span><span style="display:flex;"><span>fzf-0.29.0
+</span></span><span style="display:flex;"><span>git-2.34.1
+</span></span><span style="display:flex;"><span>htop-3.1.2
+</span></span><span style="display:flex;"><span>hugo-0.92.0
+</span></span><span style="display:flex;"><span>jq-1.6
+</span></span><span style="display:flex;"><span>less-600
+</span></span><span style="display:flex;"><span>moreutils-0.67
+</span></span><span style="display:flex;"><span>ncdu-1.16
+</span></span><span style="display:flex;"><span>perl5.34.0-ack-3.5.0
+</span></span><span style="display:flex;"><span>ranger-1.9.3
+</span></span><span style="display:flex;"><span>stow-2.3.1
+</span></span><span style="display:flex;"><span>tmux-3.2a
+</span></span><span style="display:flex;"><span>tree-1.8.0
+</span></span><span style="display:flex;"><span>vim-8.2.4186
+</span></span><span style="display:flex;"><span>watch-procps-3.3.16
+</span></span><span style="display:flex;"><span>wget-1.21.2
+</span></span><span style="display:flex;"><span>zoxide-0.8.0
+</span></span></code></pre></div><p>Those were very intuitive to find, with the exception of <code>ack</code> and <code>bash-interactive</code>:</p>
+<ul>
+<li><code>bash</code> is a bit odd because Nix splits it into two packages:
+a non-interactive version and an interactive version. I have no idea why. My
+<code>~/.bashrc</code> wrecked havoc with the non-interactive version.</li>
+<li><code>ack</code> is very oddly named. Really. Also: <code>nix-env -i ack</code> doesn&rsquo;t work, but
+<code>nix-env -iA nixpkgs.ack</code> does. I suspect it will be hard to ignore <code>-A</code> in
+the future.</li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Strictly speaking there&rsquo;s nothing special about macOS in this context.
+The same setup can also be used in Linux distributions, for example, <a href="https://ariya.io/2020/05/nix-package-manager-on-ubuntu-or-debian">Debian
+or Ubuntu</a>.
+In fact, this is what I did at $DAYJOB, because relying solely on Debian for
+package management is a very big limitation. I find that Nix complements the
+Debian repositories very well, the same way that it does for macOS.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ SSH plus tmux automatically</title><link>https://thiagowfx.github.io/2022/02/ssh-plus-tmux-automatically/</link><pubDate>Sun, 13 Feb 2022 20:20:27 -0500</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/02/ssh-plus-tmux-automatically/</guid><description>&lt;p>One of the most classic sysadmin/DevOps tasks is to use secure shell to connect to remote machines.&lt;/p>
+&lt;p>To persist those connections, a terminal multiplexer is often used, &lt;code>tmux&lt;/code> and &lt;code>screen&lt;/code> being the two most popular ones.&lt;/p>
+&lt;p>In this post I will cover a few different client-side and server-side ways to have &lt;code>ssh&lt;/code> automatically spawn &lt;code>tmux&lt;/code> upon connection.&lt;/p></description><content:encoded><![CDATA[<p>One of the most classic sysadmin/DevOps tasks is to use secure shell to connect to remote machines.</p>
+<p>To persist those connections, a terminal multiplexer is often used, <code>tmux</code> and <code>screen</code> being the two most popular ones.</p>
+<p>In this post I will cover a few different client-side and server-side ways to have <code>ssh</code> automatically spawn <code>tmux</code> upon connection.</p>
+<h2 id="option-1-use-command-line-ssh-flags-client-side-recommended">Option #1: Use command-line ssh flags (client-side, recommended)</h2>
+<p>Start <code>tmux</code>, forcing unicode, attaching to and/or creating a session named <em>main</em>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ssh user@host -t -- tmux -u new -A -s main
+</span></span></code></pre></div><p><code>-u</code> is not strictly necessary, however I experienced occasional weirdness when connecting to some machines and omitting it. Some unicode characters wouldn&rsquo;t be properly rendered, like the horizontal and vertical lines used to render tmux pane splits. Even though most machines should work just fine these days by supporting UTF-8 out-of-the-box, it&rsquo;s safer to always include <code>-u</code> just in case.</p>
+<p>Tip: If it&rsquo;s annoying to remember to type the full command above, consider adding an <code>alias</code> in your shell config. Alternatively, use a ssh client that remembers your flags preferences such as the <a href="https://chrome.google.com/webstore/detail/secure-shell/iodihamcpbpeioajjeobimgagajmlibd?hl=en">chrome secure shell</a> extension.</p>
+<h2 id="option-2-use-sshconfig-client-side">Option #2: Use <code>~/.ssh/config</code> (client-side)</h2>
+<p>This option is very similar to the previous one, but the flags live in the ssh config rather then being specified at the command line:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.ssh/config
+</span></span><span style="display:flex;"><span>Host *
+</span></span><span style="display:flex;"><span>  RequestTTY yes
+</span></span><span style="display:flex;"><span>  RemoteCommand tmux -u new -A -s main
+</span></span></code></pre></div><p>You don&rsquo;t need to match all hosts (<code>Host *</code>), if you&rsquo;d rather match one or more specific hosts, refer to the ssh config syntax <code>ssh_config(5)</code> to add them. A simple example would be <code>Host mymachine.example.org</code>.</p>
+<p><strong>Caveat</strong>: I&rsquo;ve found this method interferes with <code>git</code> + <code>ssh</code> authentication. More specifically:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git remote -v
+</span></span><span style="display:flex;"><span>origin	git@github.com:thiagowfx/.dotfiles.git <span style="color:#f92672">(</span>fetch<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>origin	git@github.com:thiagowfx/.dotfiles.git <span style="color:#f92672">(</span>push<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>$ git push
+</span></span><span style="display:flex;"><span>Cannot execute command-line and remote command.
+</span></span><span style="display:flex;"><span>fatal: Could not read from remote repository.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Please make sure you have the correct access rights
+</span></span><span style="display:flex;"><span>and the repository exists.
+</span></span></code></pre></div><p>Therefore I discourage it, unless you only use it with specific hosts i.e. don&rsquo;t use it with <code>Host *</code>.</p>
+<h2 id="option-3-use-bash_profile-or-similar-server-side-recommended">Option #3: Use <code>~/.bash_profile</code> or similar (server-side, recommended)</h2>
+<p>This method leverages your login shell startup config file (<code>~/.bash_profile</code>, <code>~/.zprofile</code>, etc) to automatically spawn <code>tmux</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># This file is invoked as part of my ~/.bash_profile.</span>
+</span></span><span style="display:flex;"><span>$ cat ~/.profile.d/tmux_auto_ssh.sh.
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Automatically spawn tmux within ssh sessions for interactive terminals.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://stackoverflow.com/a/43819740/1745064</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># The session is called `main`.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a session with PREFIX :new, rename with PREFIX $, toggle with PREFIX s.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Escape hatch:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   ssh &lt;host&gt; -t -- NOTMUX=1 &lt;shell&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -z <span style="color:#e6db74">&#34;</span>$NOTMUX<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">[</span> -z <span style="color:#e6db74">&#34;</span>$TMUX<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">[</span> -n <span style="color:#e6db74">&#34;</span>$SSH_TTY<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">[[</span> $- <span style="color:#f92672">=</span>~ i <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>  tmux -u new -A -s main
+</span></span><span style="display:flex;"><span>  exit
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span></code></pre></div><p>The <code>if</code> basically checks:</p>
+<ul>
+<li>whether we&rsquo;re not already inside a tmux session (we shouldn&rsquo;t be), so that we don&rsquo;t nest <code>tmux</code></li>
+<li>whether we&rsquo;re accessing the shell via <code>ssh</code> (we should be)</li>
+<li>whether we&rsquo;re accessing an interactive shell (we should be), so that it doesn&rsquo;t interefere with oneshot <code>ssh</code> commands</li>
+</ul>
+<p>There&rsquo;s also a escape hatch. If you want to get an interactive shell but bypass <code>tmux</code> for some reason<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, just set <code>NOTMUX=1</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ssh user@host -t -- NOTMUX<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> bash
+</span></span></code></pre></div><h2 id="final-remarks">Final remarks</h2>
+<p>My favorite methods are #1 and #3, and whether I use one or the other depends whether I want to unconditionally spawn <code>tmux</code> server-side, or selectively spawn <code>tmux</code> client-side.</p>
+<p>When using chrome secure shell (hterm) I find #1 convenient because hterm remembers your <code>ssh</code> host settings. That said, in scenarios where I fully control a host and it&rsquo;s not solely used for production, #3 is my favorite as it works unconditionally regardless of the client terminal emulator I am using.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>For example, maybe if <code>tmux</code> broke due to a recent upgrade, or if the <code>~/.tmux.conf</code> is invalid.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ systemd: share environment variables with xorg</title><link>https://thiagowfx.github.io/2022/01/systemd-share-environment-variables-with-xorg/</link><pubDate>Mon, 31 Jan 2022 21:38:54 -0500</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/01/systemd-share-environment-variables-with-xorg/</guid><description>&lt;p>In this post we will learn how to share environment variables (e.g.
+&lt;code>$GDK_SCALE&lt;/code>) between a system user session and X11/Xorg.&lt;/p></description><content:encoded><![CDATA[<p>In this post we will learn how to share environment variables (e.g.
+<code>$GDK_SCALE</code>) between a system user session and X11/Xorg.</p>
+<p>The typical <a href="https://wiki.archlinux.org/title/Xinit"><code>~/.xinitrc</code></a> and/or <a href="https://wiki.archlinux.org/title/Xprofile"><code>~/.xprofile</code></a> setup in
+2020s involves some environment variable exports such as the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># fix java application decorations, for tiling window managers</span>
+</span></span><span style="display:flex;"><span>export _JAVA_AWT_WM_NONREPARENTING<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># make Chrome pick up proxy settings stored in gconf</span>
+</span></span><span style="display:flex;"><span>export DESKTOP_SESSION<span style="color:#f92672">=</span>gnome
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for GTK3+</span>
+</span></span><span style="display:flex;"><span>export GDK_DPI_SCALE<span style="color:#f92672">=</span>0.5
+</span></span><span style="display:flex;"><span>export GDK_SCALE<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for QT</span>
+</span></span><span style="display:flex;"><span>export QT_FONT_DPI<span style="color:#f92672">=</span><span style="color:#ae81ff">192</span>
+</span></span></code></pre></div><p>This particular set of customizations stems from my <a href="https://github.com/thiagowfx/.dotfiles">dotfiles</a> but
+there isn&rsquo;t anything special about it. I&rsquo;ll include an explanation anyway for
+completeness:</p>
+<ul>
+<li>
+<p>The java setting is meant for launching certain java-based applications from
+within a tiling window manager.</p>
+</li>
+<li>
+<p>All the other settings are meant for 4K HiDPI displays. The baseline DPI is
+96, which is too small for 4K monitors, the fonts and icons all look tiny. In
+order to make them scale it&rsquo;s necessary to use a higher DPI. Typical setups
+use either 144 (x1.5) or 192 (x2.0), the bigger the DPI the bigger fonts and
+icons will appear in the screen.</p>
+</li>
+</ul>
+<p>Those exports work well for graphical applications launched from your favorite
+window manager after it has already started, however if you decide to launch an
+application from <code>systemd</code>, those settings will not be picked up by it.</p>
+<p>For example, if you decide to manage <a href="http://jonls.dk/redshift/"><code>redshift</code></a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> (more
+specifically, <code>redshift-gtk</code> which has a system tray app) from a systemd user
+session<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, its fonts will look small.</p>
+<p>There are several ways to address this issue.</p>
+<p>One of them is to edit the service file directly:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ systemctl --user edit redshift-gtk
+</span></span></code></pre></div><p>And then add:</p>
+<pre tabindex="0"><code>[Unit]
+Environment=GDK_SCALE=2 GDK_DPI_SCALE=0.5
+</code></pre><p>Which results in:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.config/systemd/user/redshift-gtk.service.d/override.conf
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Unit<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Environment<span style="color:#f92672">=</span>GDK_SCALE<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> GDK_DPI_SCALE<span style="color:#f92672">=</span>0.5
+</span></span></code></pre></div><p>Which you can make effective by:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ systemctl --user daemon-reload
+</span></span><span style="display:flex;"><span>$ systemctl --user restart redshift-gtk
+</span></span></code></pre></div><p>I am not a fan of this approach though, because this step would need to be repeated
+to all service files you want to manage this way. There&rsquo;s a better, <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> way to
+do so.</p>
+<p><code>systemd</code> supports <a href="https://www.freedesktop.org/software/systemd/man/environment.d.html">environment
+files</a>
+(<code>environment.d(5)</code>). User-defined ones live in
+<code>~/.config/environment.d/*.conf</code> by default.</p>
+<p>This means we could produce the following file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.config/environment.d/user.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># systemd environment.d(5) EnvironmentFile</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://www.freedesktop.org/software/systemd/man/environment.d.html</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Do not use export here.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Alternatively</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   systemctl --user import-environment [var1] [var2] [...]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Troubleshooting</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   systemctl --user show-environment</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># fix java application decorations, for tiling window managers</span>
+</span></span><span style="display:flex;"><span>_JAVA_AWT_WM_NONREPARENTING<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># make Chrome pick up proxy settings stored in gconf</span>
+</span></span><span style="display:flex;"><span>DESKTOP_SESSION<span style="color:#f92672">=</span>gnome
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for GTK3+</span>
+</span></span><span style="display:flex;"><span>GDK_DPI_SCALE<span style="color:#f92672">=</span>0.5
+</span></span><span style="display:flex;"><span>GDK_SCALE<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for QT</span>
+</span></span><span style="display:flex;"><span>QT_FONT_DPI<span style="color:#f92672">=</span><span style="color:#ae81ff">192</span>
+</span></span></code></pre></div><p>Which is applied to all systemd user service files automatically, no need to
+set <code>Environment=</code> manually everywhere.</p>
+<p>However, now we need to maintain two different files: the systemd <code>.conf</code> one
+and the xorg <code>~/.xinitrc</code> one.</p>
+<p>One elegant way to reduce maintenance burden is, in my opinion, the follownig:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.xinitrc
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Parse user session environment variables.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># This file is shared with the systemd user instance.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Export all variables: https://stackoverflow.com/a/30969768/1745064</span>
+</span></span><span style="display:flex;"><span>set -a
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> -r ~/.config/environment.d/user.conf <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> . ~/.config/environment.d/user.conf
+</span></span><span style="display:flex;"><span>set +a
+</span></span></code></pre></div><p>It does what you expect: the underlying shell sources the <code>*.conf</code> file as if
+you were <code>export</code>ing each variable therein.</p>
+<p>One caveat of this setup is that you cannot define the variables
+dynamically; for example, with subshells, with external programs, or with
+simple mathematical operations derived from other variables<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
+<p>Ultimately though you end up with only one file to manage, which is the systemd one.
+<a href="https://en.wikipedia.org/wiki/KISS_principle">KISS</a>™.</p>
+<figure class="align-center "><a href="https://xkcd.com/963/">
+    <img loading="lazy" src="https://imgs.xkcd.com/comics/x11.png#center"
+         alt="Thomas Jefferson thought that every law and every constitution should be torn down and rewritten from scratch every nineteen years--which means X is overdue."/> </a><figcaption>
+            <p>XKCD Courtesy of Randall Munroe</p>
+        </figcaption>
+</figure>
+
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Redshift adjusts the color temperature of your screen according to your
+surroundings. This may help your eyes hurt less if you are working in front
+of the screen at night. Redshift is similar to <a href="https://justgetflux.com/">f.lux</a>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><code>systemctl --user start redshift</code>.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>For example, <code>QT_FONT_DPI=$(($GDK_SCALE * 96))</code> or similar.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Watch files and react to changes during development</title><link>https://thiagowfx.github.io/2022/01/watch-files-and-react-to-changes-during-development/</link><pubDate>Sun, 30 Jan 2022 21:32:17 -0500</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/01/watch-files-and-react-to-changes-during-development/</guid><description>&lt;p>This post describes some tooling usages to watch for file changes and run or reload a command whenever they happen.&lt;/p></description><content:encoded><![CDATA[<p>This post describes some tooling usages to watch for file changes and run or reload a command whenever they happen.</p>
+<h2 id="context">Context</h2>
+<p>I am contributing to <a href="https://github.com/miniflux/v2">miniflux</a>, a minimalist and opinionated RSS reader. Miniflux&rsquo;s stack is as minimalist as the app itself: It&rsquo;s a Golang application that connects to a local PostgreSQL database. It has a well-documented and comprehensive <a href="https://github.com/miniflux/v2/blob/master/Makefile"><code>Makefile</code></a>.</p>
+<p>In order to achieve an edit-and-preview workflow for quick prototyping and local iteration, all that it&rsquo;s needed is to execute <code>make run</code> whenever any<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> file in the repository is changed.</p>
+<p>My goal was to achieve that workflow with the least amount of friction, and with an application that is widely available in most package managers / linux distributions out there.</p>
+<h2 id="option-1-entr-recommended">Option #1: entr (recommended)</h2>
+<p><a href="https://eradman.com/entrproject/"><code>entr(1)</code></a>:</p>
+<blockquote>
+<p>Run arbitrary commands when files change</p>
+</blockquote>
+<p>The following invocation does the job:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ fd | entr -r -- make run
+</span></span></code></pre></div><p>However, we could do better. From the upstream docs:</p>
+<blockquote>
+<p>» ag and ack offer many advantages over utilities such as find(1) or ls(1) in that they recognize files by their contents and are smart enough to skip directories such as .git</p>
+</blockquote>
+<p>I am happy with <code>fd</code> for this use case though. To limit <code>entr</code> to <code>.go</code> files only, we could do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ fd -e go | entr -r -- make run
+</span></span></code></pre></div><p>It took me less than 5 minutes to install and figure out how to use <code>entr</code>.</p>
+<p><a href="https://schauderbasis.de/posts/entr/">This blog post</a> covers it in more detail.</p>
+<h2 id="option-2-watchman">Option #2: watchman</h2>
+<p><a href="https://facebook.github.io/watchman/"><code>watchman</code></a> from Facebook Open Source:</p>
+<blockquote>
+<p>Watchman exists to watch files and record when they change. It can also trigger actions (such as rebuilding assets) when matching files change.</p>
+</blockquote>
+<p>Watchman&rsquo;s workflow doesn&rsquo;t seem to be very suited for this job though. It&rsquo;s much more centered on subscribing to <code>inotify</code> events:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd &lt;repository root&gt;
+</span></span><span style="display:flex;"><span>watchman watch .
+</span></span></code></pre></div><p>&hellip;and then adding predefined actions to recompile parts of the application as they change. The official docs give an example with CSS minification:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># set up a trigger named &#39;buildme&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># will run &#39;minify-css&#39; whenever a CSS file is changed</span>
+</span></span><span style="display:flex;"><span>watchman -- trigger . buildme <span style="color:#e6db74">&#39;*.css&#39;</span> -- minify-css
+</span></span></code></pre></div><p>In this regard it seems to be more modular, and I could easily see a scenario where I would kick off several specialized triggers in a webdev project: for example, one for CSS minification, one for JS minification, another one for TypeScript compilation, etc.</p>
+<p>That said, for the simple use case of triggering (and reloading) <code>make run</code>, it seems overkill. I also found its <a href="https://facebook.github.io/watchman/docs/install.html">official docs</a> too verbose and lacking sample usages for simple <code>Makefile</code>-based projects like miniflux.</p>
+<p>One caveat of <a href="https://repology.org/project/watchman/versions"><code>watchman</code></a> is that it&rsquo;s less widely available than <a href="https://repology.org/project/entr/versions"><code>entr</code></a>. Another caveat is that recently official distributions of watchman seem to be binary only, even though watchman itself is open source.</p>
+<p>It took me several minutes to figure out what&rsquo;s the gist of watchman, only to realize it is more bloated than warranted.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>For simple projects, <code>entr</code> is the way to go, hands down. For complex webdev projects, I would look into <code>watchman</code> more deeply.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>To be truly strict, only changes to <code>.go</code> files matter.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Advent of Code</title><link>https://thiagowfx.github.io/2022/01/advent-of-code/</link><pubDate>Fri, 28 Jan 2022 17:44:00 -0500</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/01/advent-of-code/</guid><description>&lt;p>Last year I found out about &lt;a href="https://adventofcode.com/">Advent of Code&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>Last year I found out about <a href="https://adventofcode.com/">Advent of Code</a>.</p>
+<h2 id="you-said-what">You said what?</h2>
+<p><strong>Advent of Code</strong> by <a href="http://was.tl/">Eric Wastl</a> happens every year since 2015, every December from the 1st to
+the 25th. Each day there&rsquo;s a new programming challenge<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> split into two
+parts. The first part tends to be easier than the second one. The second part
+usually builds upon the first one, being a follow-up task that requires more
+steps and/or with a higher degree of complexity. You can&rsquo;t always reuse the
+bits from the first part to solve the second one though.</p>
+<p>For those familiar with programming contests like <a href="https://icpc.global/">ACM ICPC</a> or <a href="https://olimpiada.ic.unicamp.br/">OBI</a>, or online judges like <a href="https://www.spoj.com/">SPOJ</a> or <a href="https://onlinejudge.org/">UVa</a>, advent of code feels like home. The main difference is that there is no time pressure and no need to write spaghetti and unreadable code; in fact, writing readable and elegant solutions is encouraged (<em>citation needed</em>&hellip;).</p>
+<p>For those familiar with FAANG/Tech whiteboard interviews, advent of code feels a lot like a typical interview. I would even go further and say it&rsquo;s a great way to practice for interviews.</p>
+<p>It is a great moment to either (i) learn a new exciting programming language or (ii) improve your mastery on programming languages that you already know. I know several people (see below) that used AoC<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> to learn Rust or Kotlin or whatever else was exciting for them at the time. It&rsquo;s surprising that the official Kotlin Docs even contain a section called <a href="https://kotlinlang.org/docs/advent-of-code.html">Advent of Code puzzles in idiomatic Kotlin</a>.</p>
+<p>Some folks go even further and use it to practice their <a href="https://codegolf.stackexchange.com/questions/216024/advent-of-code-2020-day-2-part-1">code golfing</a><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> or even <a href="https://ryxcommar.com/2021/12/04/advent-of-code-2021-in-google-sheets-first-4-days/">Google Sheets</a> skills. I have a deep amount of respect for them as it&rsquo;s quite a challenge. If you think it stops there, I&rsquo;ve also seen solutions in <a href="https://github.com/phillbush/aoc">awk</a> and <a href="https://twitter.com/_rsc/status/1476683352493207561">sed</a>.</p>
+<p>Another positive aspect of AoC is that it has an integrated dashboard that tracks your progress as you go. It&rsquo;s a simple element of gamification that immensely improves motivation and fun. You really feel a big desire to collect all those 50 stars&hellip;</p>
+<h2 id="what-about-me">What about me?</h2>
+<p>My goal for 2021 was relatively less ambitious than that,  I just wanted to improve my Python skills, more specifically Python 3. I learned Python 2 during my first year in university and used it sparingly at work and for personal endeavours, but always had a knowledge gap in Python 3.</p>
+<p>I set up a public git repository with <a href="https://github.com/thiagowfx/adventofcode">my solutions</a> and aspired to write simple and elegant python, my only <a href="https://frantic.im/no-constraints-no-fun/">constraint</a> was to limit myself to what is available in the standard library of a vanilla python3 installation in Alpine linux, with the exception of <a href="https://numpy.org/"><code>numpy</code></a> which is widespread enough to deserve an entry in my <a href="https://github.com/thiagowfx/adventofcode/blob/master/requirements.txt"><code>requirements.txt</code></a>, and of course devtools like debuggers, linters and auto formatters as needed.</p>
+<p>As an additional, non-programming challenge I also limited myself to only use the command line. This basically meant no IDEs<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>. My programming environment was ultimately <code>ssh</code> to an Alpine Linux VPS + <code>tmux</code> + <code>vim</code>. To make my life easier, one of the first tasks I accomplished was to write a generic <a href="https://github.com/thiagowfx/adventofcode/blob/master/Makefile"><code>Makefile</code></a> to help me test and run my scripts. A typical invocation would look like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ make DEBUG<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> DAY<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>
+</span></span></code></pre></div><p>&hellip;whereas I could choose between the sample input versus the real one with <code>DEBUG</code>, and the puzzle day with <code>DAY</code>.</p>
+<p>Was the experience worth it? <strong>Definitely yes</strong>! Even though I only completed ~8 puzzles out of the 25 ones due to having my attention split with another project I was working on at the time, the thematic submarine puzzles were hella fun and I learned a lot of python 3 on the way.</p>
+<p>A few highlights of what I learned <em>and used</em> from my python <code>2to3</code> transition were f-strings / string interpolation (<code>print(f'The sum is {sum}')</code>), &ldquo;everything is an iterator now&rdquo; even <code>map</code> and <code>range</code>, the standard library is awesome and sometimes you stumble upon useful abstractions like <code>Counter</code> and <code>defaultdict</code>, <code>sort</code> is different now (<code>key</code> instead of comparison function), this <code>pdb</code> debugger thingy, among other topics I can&rsquo;t remember at the moment. I realized the only concept that was previously familiar was the different syntax of the <code>print</code> function (you have to use parentheses now).</p>
+<p>In terms of workflow, I also learned that virtual environments are now
+supported natively<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup> (<code>python -m venv</code>), <a href="https://thiagowfx.github.io/2022/01/direnv-automate-your-environment-variables/"><code>direnv</code></a> is an amazing tool to
+automate/manage environments in git repositories and also happens to have
+first-class python integration, <code>pylint</code> and <code>autopep8</code> are good integrations
+with <code>vim</code> to help spot basic errors and/or suggest best practices, and <code>numpy</code> takes forever to build from source.</p>
+<h2 id="what-about-the-community">What about the community?</h2>
+<p>AoC enjoys a lot of popularity and zeitgeist, especially during times of the COVID-19 pandemic, but even before then. There&rsquo;s a large <a href="https://www.reddit.com/r/adventofcode/">/r/adventofcode</a> subreddit community, lots of people share their solution snippets and impressions on Twitter (<a href="https://twitter.com/search?q=%23adventofcode&amp;src=typed_query">#AdventOfCode</a>), there&rsquo;s a ton of public git repositories on <a href="https://github.com/search?q=adventofcode">GitHub</a> where people share their coding solutions, in pretty much any programming language you can think of, and finally there are many screencasts on <a href="https://www.youtube.com/results?search_query=advent+of+code">YouTube</a>. The Internet in the 2020s sparks creativity in every unimaginable corner.</p>
+<p>There&rsquo;s so much information that it&rsquo;s impossible to stay on top of everything. Here is a small list of repositories that I followed this year, most of those are acquaintances/friends and/or stumbled upon Twitter:</p>
+<p>C++:</p>
+<ul>
+<li><a href="https://github.com/riuri/adventofcode">https://github.com/riuri/adventofcode</a></li>
+</ul>
+<p>Python:</p>
+<ul>
+<li><a href="https://github.com/sjvrijn/AdventofCode">https://github.com/sjvrijn/AdventofCode</a></li>
+<li><a href="https://github.com/oomenn/AOC">https://github.com/oomenn/AOC</a></li>
+</ul>
+<p>Rust:</p>
+<ul>
+<li><a href="https://github.com/dimo414/advent-2021">https://github.com/dimo414/advent-2021</a></li>
+<li><a href="https://github.com/mfs/aoc">https://github.com/mfs/aoc</a></li>
+</ul>
+<p>I find it&rsquo;s really constructive and useful (and also <em>fun</em>) to peek at other people&rsquo;s solutions after I coded my own. I have extensive (albeit kinda rusty these days) experience with C++ so I wanted to follow at least one repository coded with it; since I wrote my solutions in python it was also a natural choice to follow a few python repositories; and, finally, I wanted to peek at some languages I am not familiar with to get a gist of them. This year I watched Rust and a few bits of Clojure and Kotlin on Twitter.</p>
+<p>Finally, for some extra inspiration, there are also some <em>10x programmers</em><sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup> out there that seem to be fans of AoC as well: <a href="https://github.com/norvig/pytudes">Peter Norvig</a> and <a href="https://twitter.com/_rsc/status/1466089522718986241">Russ Cox (<em>rsc</em>)</a>. There are probably several others I am not aware of.</p>
+<h2 id="final-remarks">Final remarks</h2>
+<p>I am hoping to participate in AoC this year (2022) as well, and possibly revisit the 2021 puzzles and resolve the rest of the ones I missed as time permits.</p>
+<p>Hopefully this post encourages and motivates you to try Advent of Code as well! Happy coding.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Or puzzle, if you will.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Acronym not to be confused with a certain <del>annoying</del>^W politician.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>For those unfamiliar with the concept, code golfing is all about writing a correct solution with the <strong>fewest</strong> amount of characters.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>For example: PyCharm, and also VSCode, which is getting so big these days I don&rsquo;t even know if it&rsquo;s possible to just call it a simple text editor anymore.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p>Back in the days, <code>virtualenvwrapper</code> was all the rage.&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6">
+<p>The <em>10x programmer</em> thing is a well-known joke however in this instance the mentioned characters are indeed superb programmers that I immensely respect.&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Alpine Linux: New APKBUILD Workflow</title><link>https://thiagowfx.github.io/2022/01/alpine-linux-new-apkbuild-workflow/</link><pubDate>Sun, 23 Jan 2022 19:15:02 -0500</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/01/alpine-linux-new-apkbuild-workflow/</guid><description>&lt;p>This document describes my workflow to manage &lt;code>APKBUILDs&lt;/code> for the
+&lt;a href="https://gitlab.alpinelinux.org/alpine/aports">aports&lt;/a> repository in &lt;a href="https://alpinelinux.org/">Alpine Linux&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>This document describes my workflow to manage <code>APKBUILDs</code> for the
+<a href="https://gitlab.alpinelinux.org/alpine/aports">aports</a> repository in <a href="https://alpinelinux.org/">Alpine Linux</a>.</p>
+<h2 id="disclaimer">Disclaimer</h2>
+<p>First of all, this post is not a substitute to the <a href="https://wiki.alpinelinux.org/wiki/Main_Page">AlpineWiki</a>
+and it will likely get outdated at some point. In particular, refer to the
+following articles for up-to-date documentation that will outlive this blog:</p>
+<ul>
+<li><a href="https://wiki.alpinelinux.org/wiki/APKBUILD_Reference">https://wiki.alpinelinux.org/wiki/APKBUILD_Reference</a></li>
+<li><a href="https://wiki.alpinelinux.org/wiki/Abuild_and_Helpers">https://wiki.alpinelinux.org/wiki/Abuild_and_Helpers</a></li>
+<li><a href="https://wiki.alpinelinux.org/wiki/Aports_tree">https://wiki.alpinelinux.org/wiki/Aports_tree</a></li>
+<li><a href="https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package">https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package</a></li>
+</ul>
+<p>This article is not a tutorial, as such it assumes you already know what an
+<code>APKBUILD</code> is and how to use <code>abuild</code>. In particular, you should have the
+<code>alpine-sdk</code>, <code>atools</code> and <code>spdx-licenses-list</code> packages installed in your
+system.</p>
+<h2 id="structure">Structure</h2>
+<p>I manage my packages with <code>git</code>. Create a GitLab account on
+<a href="https://gitlab.alpinelinux.org/">https://gitlab.alpinelinux.org/</a>, fork the <a href="https://gitlab.alpinelinux.org/alpine/aports"><code>aports</code></a> tree, and <code>git clone</code> your fork.</p>
+<p>The structure follows Alpine Linux repositories:</p>
+<pre tabindex="0"><code>$ git clone https://gitlab.alpinelinux.org/alpine/aports.git &amp;&amp; tree -L 1 aports
+aports
+├── CODINGSTYLE.md
+├── COMMITSTYLE.md
+├── README.md
+├── community
+├── main
+├── non-free
+├── scripts
+├── testing
+└── unmaintained
+</code></pre><h2 id="bootstrapping">Bootstrapping</h2>
+<p>I am going to illustrate with a package I added recently, <a href="https://packages.debian.org/source/sensible-utils"><code>sensible-utils</code></a>:</p>
+<ul>
+<li>
+<p>Before you even begin, check if the package already exists, do a quick search in the <a href="https://pkgs.alpinelinux.org/packages?name=sensible%2Dutils">Alpine Repositories</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+</li>
+<li>
+<p>Start by scaffolding a new <code>APKBUILD</code> from the base template:</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cd aports/testing  <span style="color:#75715e"># Always add new packages in testing/ first.</span>
+</span></span><span style="display:flex;"><span>$ newapkbuild sensible-utils
+</span></span><span style="display:flex;"><span>$ cd sensible-utils
+</span></span><span style="display:flex;"><span>$ $EDITOR APKBUILD
+</span></span></code></pre></div><p><strong>Note</strong>: If you have a language-specific package (e.g. perl, python, rust),
+use the language-specific template instead of the base one. Run <code>newapkbuild -h</code> to list available templates. There are also some <code>apkbuild-*</code> helpers such
+as <code>apkbuild-pypi</code> and <code>apkbuild-cpan</code>.</p>
+<ul>
+<li>
+<p>Fill in <code>APKBUILD</code> metadata like <code>pkgname=</code>, <code>url=</code>, etc. Refer to the AlpineWiki for up-to-date best practices.</p>
+</li>
+<li>
+<p>By doing so, I produced the following <code>APKBUILD</code>:</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pkgname<span style="color:#f92672">=</span>sensible-utils
+</span></span><span style="display:flex;"><span>pkgver<span style="color:#f92672">=</span>0.0.14
+</span></span><span style="display:flex;"><span>pkgrel<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>pkgdesc<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Utilities for sensible alternative selection&#34;</span>
+</span></span><span style="display:flex;"><span>url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://packages.debian.org/source/sensible-utils&#34;</span>
+</span></span><span style="display:flex;"><span>arch<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;all&#34;</span>
+</span></span><span style="display:flex;"><span>license<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;GPL-2.0-or-later&#34;</span>
+</span></span><span style="display:flex;"><span>makedepends<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;po4a&#34;</span>
+</span></span><span style="display:flex;"><span>subpackages<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$pkgname<span style="color:#e6db74">-doc&#34;</span>
+</span></span><span style="display:flex;"><span>source<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://ftp.debian.org/debian/pool/main/s/</span>$pkgname<span style="color:#e6db74">/</span><span style="color:#e6db74">${</span>pkgname<span style="color:#e6db74">}</span><span style="color:#e6db74">_</span>$pkgver<span style="color:#e6db74">.tar.xz&#34;</span>
+</span></span><span style="display:flex;"><span>builddir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">.git&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>build<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	./configure --prefix<span style="color:#f92672">=</span>/usr
+</span></span><span style="display:flex;"><span>	make
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>check<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	make -k check
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>package<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	make DESTDIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/&#34;</span> install
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># only works with update-alternatives, specific to debian</span>
+</span></span><span style="display:flex;"><span>	rm <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/bin/select-editor&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sha512sums<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">15ba996f811ab3a9c1f5726f35766d74aafdf925c5c2392b33c6643d6c439796a742f9d0f4625c79de640e6b5e4a6a032b768eb1bc4ac31b448f9767b0ceed44  sensible-utils_0.0.14.tar.xz
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p><strong>Note</strong>: <code>$srcdir</code> refers to the <code>src/</code> directory within <code>sensible-utils</code>. <code>$pkgdir</code>
+refers to the <code>pkg/</code> directory within <code>sensible-utils</code>.</p>
+<p>If you&rsquo;re used to Arch Linux <code>PKGBUILDs</code> you&rsquo;ll notice a striking similarity to
+<code>APKBUILDs</code>. I highlighted a few notable differences in a previous post, <a href="https://thiagowfx.github.io/2022/01/my-first-apkbuild/#build-comparison"><code>My First APKBUILD</code></a>.</p>
+<h2 id="adjustments">Adjustments</h2>
+<ul>
+<li>
+<p>Generate the checksums with <code>abuild checksum</code>. It will automatically update the <code>APKBUILD</code> inplace.</p>
+</li>
+<li>
+<p>Download and extract package files with <code>abuild unpack</code>.</p>
+</li>
+<li>
+<p><code>ls src/</code> and check the directory structure. Update <code>$builddir</code> in your
+<code>APKBUILD</code> to match it. Usually it will be <code>$srcdir/$pkgname-$pkgver</code>, but
+sometimes tiny adjustments are necessary. In this case, it was
+<code>$srcdir/$pkgname.git</code>.</p>
+</li>
+<li>
+<p>Then run <code>abuild -r</code>. If everything goes well, your package (and subpackages,
+if any) will be successfully built<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> in an isolated environment and placed
+in <code>~/packages</code> (<code>sensible-utils-0.0.14-r0.apk</code> and
+<code>sensible-utils-doc-0.0.14-r0.apk</code>), however that doesn&rsquo;t mean it is a decent
+package yet.</p>
+</li>
+<li>
+<p>Run <code>apkbuild-lint APKBUILD</code> and <code>abuild sanitycheck</code> to lint your package
+and catch common errors. Fix the errors, if any.</p>
+</li>
+</ul>
+<h2 id="request-feedback-if-needed">Request feedback if needed</h2>
+<p>If the package is only relevant to you, stop here. <code>git commit</code>, <code>git push</code>, and then you&rsquo;re done. Install the package with <code>doas apk add &lt;pkg&gt;</code>.</p>
+<p>Otherwise, if the package might be potentially useful to other Alpine users, you could consider uploading it to the <a href="https://gitlab.alpinelinux.org/alpine/aports">aports</a> repository.</p>
+<p>Before you do so, stop for a moment and make an honest judgment whether this is a high quality package and whether you&rsquo;re confident it is clean and polished enough, following the best practices documented in the Wiki. The answer doesn&rsquo;t need to be positive, it&rsquo;s perfectly OK to commit mistakes and everyone is a newbie at some point.</p>
+<p>If the answer is negative, or if you&rsquo;re new to this process and would like some help, fear no more! There are at least two decent community resources wherein to ask for help:</p>
+<ol>
+<li>
+<p><a href="https://wiki.alpinelinux.org/wiki/Alpine_Linux:IRC"><code>#alpine-devel</code> on OFTC IRC</a> Drew DeVault wrote a good <a href="https://drewdevault.com/2021/11/24/A-philosophy-for-instant-messaging.html">post</a> about IRC etiquette.</p>
+</li>
+<li>
+<p><a href="https://wiki.alpinelinux.org/wiki/Alpine_Linux:Mailing_lists"><code>alpine-devel</code> mailing list</a>.</p>
+</li>
+</ol>
+<p>If you&rsquo;re part of any other community (e.g. Reddit, Discord) feel free to ask therein as well. Avoid posting everywhere though, pick one community, draft your post and then patiently wait.</p>
+<h2 id="publish-your-package">Publish your package</h2>
+<p>If all is well, it&rsquo;s time to publish your <code>APKBUILD</code>. Follow the up-to-date
+steps at
+<a href="https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Code_review">https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Code_review</a>. There are basically two options:</p>
+<ol>
+<li>
+<p>Send a gitlab merge request (MR). This follows the standard git forge workflow
+(GitHub / BitBucket / GitLab) wherein you fork the main repository, create
+a branch in your own clone, push it and then initiate a pull request<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
+</li>
+<li>
+<p>Alternatively, send an email with your patch to the <code>aports</code> mailing list
+with <a href="https://git-send-email.io/"><code>git send-email</code></a>:</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git config sendemail.to <span style="color:#e6db74">&#34;alpine-aports@lists.alpinelinux.org&#34;</span>
+</span></span><span style="display:flex;"><span>$ git send-email -1  <span style="color:#75715e"># Implicitly uses --to=alpine-linux@lists.alpinelinux.org as set above</span>
+</span></span></code></pre></div><p><strong>Tip</strong>: The second approach has a steep learning curve, however once you
+figure it out it&rsquo;s actually faster, simpler and more streamlined. Whenever
+a new email is sent to the aports mailing list, a MR is automatically created
+on GitLab.</p>
+<p><strong>Note</strong>: If you adopt the email workflow and need to send a follow-up to your
+initial patch, do not use <code>--in-reply-to</code>. Instead, create a new email thread.
+This is needed because as of this post new GitLab MRs are only created when new
+email threads are created. Replies to existing email threads do not update the
+MR patch.</p>
+<p>And that&rsquo;s all! Other useful tips:</p>
+<ul>
+<li>Use <a href="https://repology.org/">repology</a> to look for preexisting packages in other Linux (or even BSD) distributions, it&rsquo;s very handy as a starting point if you have no idea how to package a given package. In particular, Arch Linux <code>PKGBUILDs</code> are very similar to <code>APKBUILDs</code>. Gentoo <code>EBUILDs</code> and FreeBSD <code>Makefiles</code> are also reasonable approximations.</li>
+<li>Use <code>abump</code> to bump pkgver in <code>APKBUILD</code> files if the package gets an update to a newer upstream release.</li>
+<li>Use <code>apkgrel</code> to bump or reset the <code>pkgrel</code> value of your <code>APKBUILD</code>.</li>
+<li>Use <a href="https://thiagowfx.github.io/2022/01/arch-linux-new-pkgbuild-workflow/#bonus-track-upstream"><code>urlwatch</code></a> to track upstream updates.</li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>If you use <a href="https://duckduckgo.com/">https://duckduckgo.com/</a>, query for <code>!alpine sensible-utils</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Package debugging is out of scope of this post.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>In GitLab it&rsquo;s called Merge Request (MR). The list of all aports MRs is <a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests">here</a>.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Arch Linux: New PKGBUILD Workflow</title><link>https://thiagowfx.github.io/2022/01/arch-linux-new-pkgbuild-workflow/</link><pubDate>Tue, 18 Jan 2022 21:59:07 -0500</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/01/arch-linux-new-pkgbuild-workflow/</guid><description>&lt;p>This document describes my workflow to manage &lt;code>PKGBUILDs&lt;/code> for the &lt;a href="https://aur.archlinux.org/">AUR&lt;/a> (Arch User Repository) in &lt;a href="https://www.archlinux.org/">Arch Linux&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>This document describes my workflow to manage <code>PKGBUILDs</code> for the <a href="https://aur.archlinux.org/">AUR</a> (Arch User Repository) in <a href="https://www.archlinux.org/">Arch Linux</a>.</p>
+<h2 id="disclaimer">Disclaimer</h2>
+<p>First of all, this post is not a substitute to the excellent <a href="https://wiki.archlinux.org/">ArchWiki</a> and it will likely get outdated at some point. In particular, refer to the following articles for up-to-date documentation that will outlive this blog:</p>
+<ul>
+<li><a href="https://wiki.archlinux.org/title/Arch_User_Repository">https://wiki.archlinux.org/title/Arch_User_Repository</a></li>
+<li><a href="https://wiki.archlinux.org/title/Arch_package_guidelines">https://wiki.archlinux.org/title/Arch_package_guidelines</a></li>
+<li><a href="https://wiki.archlinux.org/title/Creating_packages">https://wiki.archlinux.org/title/Creating_packages</a></li>
+<li><a href="https://wiki.archlinux.org/title/PKGBUILD">https://wiki.archlinux.org/title/PKGBUILD</a></li>
+</ul>
+<p>This article is not a tutorial, as such it assumes you already know what a <code>PKGBUILD</code> is and how to use <code>makepkg</code>. In particular, you should have the <code>base-devel</code> and <code>devtools</code> packages installed in your system.</p>
+<h2 id="structure">Structure</h2>
+<p>I manage my packages with <code>git</code> plus Eli Schwartz&rsquo;s excellent
+<a href="https://github.com/eli-schwartz/aurpublish">aurpublish</a>. The tree structure is simple, with one <code>PKGBUILD</code> per directory:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git clone https://github.com/thiagowfx/PKGBUILDs <span style="color:#f92672">&amp;&amp;</span> tree PKGBUILDs
+</span></span><span style="display:flex;"><span>PKGBUILDs
+</span></span><span style="display:flex;"><span>├── bkt
+</span></span><span style="display:flex;"><span>│   └── PKGBUILD
+</span></span><span style="display:flex;"><span>├── fpp-git
+</span></span><span style="display:flex;"><span>│   └── PKGBUILD
+</span></span><span style="display:flex;"><span>├── git-crecord
+</span></span><span style="display:flex;"><span>│   └── PKGBUILD
+</span></span><span style="display:flex;"><span>├── i3a
+</span></span><span style="display:flex;"><span>│   └── PKGBUILD
+</span></span><span style="display:flex;"><span>├── LICENSE
+</span></span><span style="display:flex;"><span>├── Makefile
+</span></span><span style="display:flex;"><span>├── README.md
+</span></span><span style="display:flex;"><span>├── ttf-camingocode
+</span></span><span style="display:flex;"><span>│   └── PKGBUILD
+</span></span><span style="display:flex;"><span>└── urlwatch.yml
+</span></span></code></pre></div><p><code>aurpublish</code> is used <em>solely</em> to automate certain interactions with the AUR, more about it later.</p>
+<h2 id="bootstrapping">Bootstrapping</h2>
+<p>I am going to illustrate with a package I added recently, <a href="https://github.com/dimo414/bkt"><code>bkt</code></a>:</p>
+<ul>
+<li>
+<p>Before you even begin, check if the package already exists, do a quick search in the <a href="https://aur.archlinux.org/packages/?O=0&amp;K=bkt">AUR</a> and also in the <a href="https://archlinux.org/packages/?sort=&amp;q=bkt&amp;maintainer=&amp;flagged=">official repos</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+</li>
+<li>
+<p>Start by copying over the standard <code>PKGBUILD</code> template:</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cd PKGBUILDs
+</span></span><span style="display:flex;"><span>$ mkdir bkt <span style="color:#f92672">&amp;&amp;</span> cd bkt
+</span></span><span style="display:flex;"><span>$ cp /usr/share/pacman/PKGBUILD.proto PKGBUILD
+</span></span><span style="display:flex;"><span>$ $EDITOR PKGBUILD
+</span></span></code></pre></div><ul>
+<li>
+<p>Fill in <code>PKGBUILD</code> metadata like <code>pkgname=</code>, <code>url=</code>, etc. Refer to the ArchWiki for up-to-date best practices.</p>
+</li>
+<li>
+<p>The most important step is to refer to <a href="https://wiki.archlinux.org/title/Category:Arch_package_guidelines">https://wiki.archlinux.org/title/Category:Arch_package_guidelines</a> to figure out the package type.</p>
+</li>
+</ul>
+<p><code>bkt</code> is a Rust package. This is my first time packaging for Rust, not a problem though, as I can just refer to <a href="https://wiki.archlinux.org/title/Rust_package_guidelines">https://wiki.archlinux.org/title/Rust_package_guidelines</a>.</p>
+<p>The rust package guidelines page contains the blueprint for <code>prepare()</code>, <code>check()</code>, <code>build()</code> and <code>package()</code>. Packaging is mostly a matter of gluing everything together. Read the project <code>README.md</code> and the wiki, and then combine the needed steps in the <code>PKGBUILD</code>.</p>
+<p>By doing so, I produced the following <code>PKGBUILD</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pkgname<span style="color:#f92672">=</span>bkt
+</span></span><span style="display:flex;"><span>pkgver<span style="color:#f92672">=</span>0.5.0
+</span></span><span style="display:flex;"><span>pkgrel<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>pkgdesc<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A subprocess caching utility&#34;</span>
+</span></span><span style="display:flex;"><span>arch<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;x86_64&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://www.bkt.rs/&#34;</span>
+</span></span><span style="display:flex;"><span>license<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;MIT&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>makedepends<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;cargo&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>source<span style="color:#f92672">=(</span><span style="color:#e6db74">&#34;</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">.tar.gz::https://github.com/dimo414/</span>$pkgname<span style="color:#e6db74">/archive/refs/tags/</span>$pkgver<span style="color:#e6db74">.tar.gz&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>sha256sums<span style="color:#f92672">=()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prepare<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	cd <span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	cargo fetch --locked --target <span style="color:#e6db74">&#34;</span>$CARCH<span style="color:#e6db74">-unknown-linux-gnu&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>build<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	cd <span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	export RUSTUP_TOOLCHAIN<span style="color:#f92672">=</span>stable
+</span></span><span style="display:flex;"><span>	export CARGO_TARGET_DIR<span style="color:#f92672">=</span>target
+</span></span><span style="display:flex;"><span>	cargo build --frozen --release --all-features
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>check<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	cd <span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	export RUSTUP_TOOLCHAIN<span style="color:#f92672">=</span>stable
+</span></span><span style="display:flex;"><span>	cargo test --frozen --all-features
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>package<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	cd <span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	install -Dm0755 -t <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/bin/&#34;</span> <span style="color:#e6db74">&#34;target/release/</span>$pkgname<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>	install -Dm644 LICENSE -t <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/share/licenses/</span>$pkgname<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p><strong>Note</strong>: <code>$srcdir</code> refers to the <code>src/</code> directory within <code>bkt</code>. <code>$pkgdir</code> refers to the <code>pkg/</code> directory within <code>bkt</code>.</p>
+<h2 id="adjustments">Adjustments</h2>
+<ul>
+<li>
+<p>Generate the checksums with <code>updpkgsums</code>. It will automatically update the <code>PKGBUILD</code> inplace.</p>
+</li>
+<li>
+<p>Download and extract package files with <code>makepkg -o</code>.</p>
+</li>
+<li>
+<p><code>ls src/</code> and check the directory structure. Update <code>cd</code> in your <code>PKGBUILD</code> to match it. Usually it will be <code>cd $srcdir/$pkgname-$pkgver</code>, but sometimes tiny adjustments are necessary.</p>
+</li>
+<li>
+<p>Then run <code>makepkg -s</code>. If everything goes well, your package will be successfully built<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> (<code>bkt-0.5.0-1-x86_64.pkg.tar.zst</code>), however that doesn&rsquo;t mean it is a decent package yet.</p>
+</li>
+<li>
+<p>Run <code>namcap PKGBUILD</code> and <code>namcap *.pkg.tar.zst</code> to lint your package and catch common errors. Fix the errors, if any.</p>
+</li>
+<li>
+<p>To ensure all dependencies have been correctly declared and none of them are missing, run <code>makepkg</code> within a clean <a href="https://wiki.archlinux.org/title/Chroo"><em>chroot</em></a>. I like to use Graysky&rsquo;s excellent <a href="https://github.com/graysky2/clean-chroot-manager"><code>ccm</code></a> (Clean Chroot Manager) to do so. Run <code>ccm s</code> (=&ldquo;run makepkg in the clean chroot&rdquo;). If it produces any errors, it likely means you missed some dependencies. Adjust <code>depends=</code>, <code>checkdepends=</code> and <code>makedepends=</code> accordingly.</p>
+</li>
+</ul>
+<h2 id="request-feedback-if-needed">Request feedback if needed</h2>
+<p>If the package is only relevant to you, stop here. <code>git commit</code>, <code>git push</code>, and then you&rsquo;re done. Install the package with <code>makepkg -i</code>.</p>
+<p>Otherwise, if the package might be potentially useful to other Arch users, you could consider uploading it to the AUR.</p>
+<p>Before you do so, stop for a moment and make an honest judgment whether this is a high quality package and whether you&rsquo;re confident it is clean and polished enough, following the best practices documented in the Wiki. The answer doesn&rsquo;t need to be positive, it&rsquo;s perfectly OK to commit mistakes and everyone is a newbie at some point.</p>
+<p>If the answer is negative, or if you&rsquo;re new to this process and would like some help, fear no more! There are at least two decent community resources wherein to ask for help:</p>
+<ol>
+<li>
+<p><a href="https://bbs.archlinux.org/viewforum.php?id=38.">AUR Issues, Discussion &amp; PKGBUILD Requests</a> BBS / Forums:  Open a new thread, post your <code>PKGBUILD</code> (use <code>[code][/code]</code> tags if you paste it directly!) or a link to it<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>. Request folks to critique your work, mention that you&rsquo;re looking for feedback. This kind of thread is generally well received in the official forums if you demonstrate you did diligent research before asking for help.</p>
+</li>
+<li>
+<p><a href="https://lists.archlinux.org/pipermail/aur-general/">AUR General Mailing List</a>: Send an email to the mailing list asking for help. In general, follow proper mailing list etiquette, good resources for that are <a href="https://useplaintext.email/">https://useplaintext.email/</a> and <a href="https://man.sr.ht/lists.sr.ht/etiquette.md">https://man.sr.ht/lists.sr.ht/etiquette.md</a>. TL;DR: Use plain-text instead of HTML in your email.</p>
+</li>
+</ol>
+<p>If you&rsquo;re part of any other community (e.g. Reddit, Discord) feel free to ask therein as well. Avoid posting everywhere though, pick one community, draft your post and then patiently wait.</p>
+<h2 id="publish-your-package">Publish your package</h2>
+<p>If all is well, it&rsquo;s time to publish your <code>PKGBUILD</code> to the <a href="https://aur.archlinux.org/">AUR</a>. Follow the up-to-date steps at <a href="https://wiki.archlinux.org/title/Arch_User_Repository#Submitting_packages">https://wiki.archlinux.org/title/Arch_User_Repository#Submitting_packages</a>.</p>
+<p>TL;DR: If you don&rsquo;t use <em>aurpublish</em>, do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ makepkg --printsrcinfo &gt; .SRCINFO
+</span></span></code></pre></div><p>Then you&rsquo;ll need both the <code>PKGBUILD</code> and the <code>.SRCINFO</code> file, it&rsquo;s basically a matter of committing your changes and pushing them to the right repository.</p>
+<p>If you do use <em>aurpublish</em> this process is much easier, it&rsquo;s mostly a matter of doing <code>git commit</code>, <code>git push</code> and <code>aurpublish bkt</code>. <em>Aurpublish</em> automatically generates the <code>.SRCINFO</code> and a commit message by the means of git hooks.</p>
+<p>And that&rsquo;s all! Other useful tips:</p>
+<ul>
+<li>Use <a href="https://repology.org/">repology</a> to look for preexisting packages in other Linux (or even BSD) distributions, it&rsquo;s very handy as a starting point if you have no idea how to package a given package. In particular, Alpine Linux <code>APKBUILDs</code> are very similar to <code>PKGBUILDs</code>. Gentoo <code>EBUILDs</code> and FreeBSD <code>Makefiles</code> are also reasonable approximations.</li>
+<li>Use <code>makepkg -src</code> to clean up after building a package.</li>
+</ul>
+<h2 id="bonus-track-upstream">Bonus: Track upstream</h2>
+<p>Use a software like <a href="https://thp.io/2008/urlwatch/"><code>urlwatch</code></a> or <a href="https://github.com/lilydjwg/nvchecker"><code>nvchecker</code></a> to track
+future upstream changes so that you can update your packages in a timely
+fashion<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>. There&rsquo;s also a web service called <a href="https://release-monitoring.org/">Release
+Monitoring</a>, part of Fedora Infra. I use <code>urlwatch</code> the
+following way:</p>
+<pre tabindex="0"><code>$ cat PKGBUILDs/urlwatch.yml
+# urls for urlwatch(1)
+---
+name: &#34;bkt&#34;
+command: &#34;git ls-remote --tags https://github.com/dimo414/bkt&#34;
+---
+name: &#34;fpp&#34;
+command: &#34;git ls-remote --tags https://github.com/facebook/PathPicker&#34;
+---
+name: &#34;git-crecord&#34;
+command: &#34;git ls-remote --tags https://github.com/andrewshadura/git-crecord&#34;
+---
+name: &#34;i3a&#34;
+command: &#34;git ls-remote --tags https://git.goral.net.pl/mgoral/i3a&#34;
+# ---
+# name: &#34;ttf-camingocode&#34;
+# N/A
+
+# Run this command periodically via cron or systemd timer.
+# Set up notifications e.g. via sendmail.
+$ urlwatch --urls urlwatch.yml
+</code></pre><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>If you use <a href="https://duckduckgo.com/">https://duckduckgo.com/</a>, query for <code>!aur bkt</code> and <code>!archpkg bkt</code>. Handy!&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Package debugging is out of scope of this post.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>For example, use <a href="https://gist.github.com">https://gist.github.com</a> or <a href="http://paste.opensuse.org/">http://paste.opensuse.org/</a> or
+<a href="http://ix.io/">http://ix.io/</a>.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>In 99% of the cases this is just a matter of bumping the <code>pkgver=</code> and
+updating the checksums. If <code>pkgver=</code> is the same but there&rsquo;s a fix to the
+package itself, then bump <code>pkgrel=</code> instead.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item></channel></rss>
