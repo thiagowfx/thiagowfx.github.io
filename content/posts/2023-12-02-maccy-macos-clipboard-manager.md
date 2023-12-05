@@ -4,7 +4,6 @@ date: 2023-12-02T15:27:06+01:00
 tags:
   - macos
   - dev
-showtoc: true
 ---
 
 **Strongly recommended** to all software developers who use macOS: [Maccy](https://maccy.app/).
