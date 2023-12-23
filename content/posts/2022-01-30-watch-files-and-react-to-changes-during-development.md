@@ -6,7 +6,6 @@ tags:
   - linux
   - programming
   - star
-showtoc: true
 ---
 
 This post describes some tooling usages to watch for file changes and run or reload a command whenever they happen.

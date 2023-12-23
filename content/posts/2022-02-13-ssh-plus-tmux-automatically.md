@@ -5,7 +5,6 @@ tags:
   - dev
   - linux
   - star
-showtoc: true
 ---
 
 One of the most classic sysadmin/DevOps tasks is to use secure shell to connect to remote machines.

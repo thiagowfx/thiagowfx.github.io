@@ -6,7 +6,6 @@ tags:
   - rss
   - selfhosted
   - star
-showtoc: true
 ---
 
 This article describes my experience transitioning to, setting up and using the

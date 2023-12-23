@@ -3,7 +3,6 @@ title: "Translating German to English"
 date: 2022-04-03T01:02:16-04:00
 tags:
   - german
-showtoc: true
 ---
 
 I've been trying to learn German on my own, without taking formal classes. I should write a post about this sometime.

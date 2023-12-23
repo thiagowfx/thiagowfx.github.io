@@ -3,7 +3,6 @@ title: "Linux: Remount device with different options"
 date: 2022-01-29T23:16:04-05:00
 tags:
   - linux
-showtoc: true
 ---
 
 A few recipes for remounting linux devices / disks. It mostly boils down to running `mount -o remount` as root.

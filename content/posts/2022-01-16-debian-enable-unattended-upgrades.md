@@ -4,7 +4,6 @@ date: 2022-01-16T02:07:00-05:00
 tags:
   - linux
   - selfhosted
-showtoc: true
 ---
 
 Here's how we can enable automatic (unattended) package upgrades in Debian.

@@ -4,7 +4,6 @@ date: 2022-01-28T17:44:00-05:00
 tags:
   - programming
   - star
-showtoc: true
 ---
 
 Last year I found out about [Advent of Code][aoc].

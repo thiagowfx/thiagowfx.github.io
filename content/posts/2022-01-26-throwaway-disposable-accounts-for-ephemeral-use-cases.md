@@ -4,7 +4,6 @@ date: 2022-01-26T00:20:40-05:00
 tags:
   - privacy
   - web
-showtoc: true
 ---
 
 A brief list of disposable / throwaway account resources:

@@ -5,7 +5,6 @@ tags:
   - linux
   - portuguese
   - german
-showtoc: true
 ---
 
 I use QWERTY keyboards with a US layout. Sometimes I need to type accents or

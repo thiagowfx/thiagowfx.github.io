@@ -4,7 +4,6 @@ date: 2022-01-23T13:34:58-05:00
 tags:
   - linux
   - selfhosted
-showtoc: true
 ---
 
 Recently I needed to figure out what the IP address of my [pihole][pihole]

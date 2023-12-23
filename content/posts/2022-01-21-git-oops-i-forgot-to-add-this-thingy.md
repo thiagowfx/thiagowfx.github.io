@@ -3,7 +3,6 @@ title: "Git: Oops I forgot to add this thingy"
 date: 2022-01-21T15:58:17-05:00
 tags:
   - dev
-showtoc: true
 ---
 
 Here's a situation that happens often during development:

@@ -6,7 +6,6 @@ tags:
   - linux
   - macos
   - star
-showtoc: true
 ---
 
 I am currently evaluating [Nix](https://nixos.org/download.html) as a

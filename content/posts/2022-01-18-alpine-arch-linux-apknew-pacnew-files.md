@@ -3,7 +3,6 @@ title: "Alpine / Arch Linux: .apk-new and .pacnew files"
 date: 2022-01-18T14:25:20-05:00
 tags:
   - linux
-showtoc: true
 ---
 
 As packages are upgraded over time, updated configs files under `/etc` may

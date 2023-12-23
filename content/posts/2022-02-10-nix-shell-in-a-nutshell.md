@@ -5,7 +5,6 @@ tags:
   - dev
   - linux
   - macos
-showtoc: true
 ---
 
 As soon as we finish installing [`Nix`](https://nixos.org/download.html) on

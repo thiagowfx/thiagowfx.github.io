@@ -4,7 +4,6 @@ date: 2022-01-12T18:09:38-05:00
 tags:
   - hardware
   - star
-showtoc: true
 ---
 
 This is a follow-up post of [Keychron K2: Linux Setup]({{< ref "2021-12-11-keychron-k2-linux.setup.md" >}}). The previous post focused on the configuration of the keyboard, this one focuses on its user experience from the point of view of a Software Engineer.

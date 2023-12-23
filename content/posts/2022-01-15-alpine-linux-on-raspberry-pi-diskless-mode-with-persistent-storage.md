@@ -5,7 +5,6 @@ tags:
   - linux
   - selfhosted
   - star
-showtoc: true
 ---
 
 Use case: Given an Alpine Linux **diskless**[^1] installation meant for

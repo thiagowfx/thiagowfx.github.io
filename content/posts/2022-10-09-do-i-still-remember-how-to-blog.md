@@ -3,7 +3,6 @@ title: "Do I still remember how to blog?"
 date: 2022-10-09T18:31:07+02:00
 tags:
   - meta
-showtoc: true
 ---
 
 I haven't written a blog post for a couple of months now, which is a good indicator I should probably document my workflow before I forget how to do it...

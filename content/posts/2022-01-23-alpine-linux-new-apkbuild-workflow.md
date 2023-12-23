@@ -5,7 +5,6 @@ tags:
   - dev
   - linux
   - star
-showtoc: true
 ---
 
 This document describes my workflow to manage `APKBUILDs` for the

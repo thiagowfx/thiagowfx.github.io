@@ -3,7 +3,6 @@ title: "Alpine Linux: apk logs with etckeeper"
 date: 2022-01-10T23:14:43-05:00
 tags:
   - linux
-showtoc: true
 ---
 
 `apk(8)` is the Alpine Linux package manager. Surprisingly, it lacks native

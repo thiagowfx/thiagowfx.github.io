@@ -4,7 +4,6 @@ date: 2022-05-01T13:02:51-04:00
 tags:
   - linux
   - star
-showtoc: true
 ---
 
 [`moreutils`](https://joeyh.name/code/moreutils/) has previously been covered [elsewhere](https://news.ycombinator.com/item?id=31043655), multiple times. It's a collection of small unix tools that follow the [unix philosophy](https://en.wikipedia.org/wiki/Unix_philosophy)[^1] very strongly.

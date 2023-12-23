@@ -4,7 +4,6 @@ date: 2015-04-03T17:20:19+00:00
 tags:
   - classics
   - linux
-showtoc: true
 ---
 
 ## What&#8217;s Haiku in the first place?

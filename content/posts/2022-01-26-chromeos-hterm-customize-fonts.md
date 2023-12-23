@@ -4,7 +4,6 @@ date: 2022-01-26T19:48:52-05:00
 tags:
   - dev
   - linux
-showtoc: true
 ---
 
 [ChromeOS hterm][hterm] ("Secure Shell extension") is one of my favorite chrome extensions.
