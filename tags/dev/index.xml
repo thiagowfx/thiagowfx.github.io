@@ -1,4 +1,61 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>dev on Not Just Serendipity</title><link>https://thiagowfx.github.io/tags/dev/</link><description>Recent content in dev on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Mon, 08 Jan 2024 18:36:47 +0100</lastBuildDate><atom:link href="https://thiagowfx.github.io/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Python: debugging tip with print and f-strings</title><link>https://thiagowfx.github.io/2024/01/python-debugging-tip-with-print-and-f-strings/</link><pubDate>Mon, 08 Jan 2024 18:36:47 +0100</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/python-debugging-tip-with-print-and-f-strings/</guid><description>&lt;p>It&amp;rsquo;s 2024, &lt;a href="https://yotld.com/">the year of the linux desktop&lt;/a>, and the best™
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>dev on Not Just Serendipity</title><link>https://thiagowfx.github.io/tags/dev/</link><description>Recent content in dev on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Fri, 12 Jan 2024 14:37:13 +0100</lastBuildDate><atom:link href="https://thiagowfx.github.io/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Python: all hail to cache memoization</title><link>https://thiagowfx.github.io/2024/01/python-all-hail-to-cache-memoization/</link><pubDate>Fri, 12 Jan 2024 14:37:13 +0100</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/python-all-hail-to-cache-memoization/</guid><description>&lt;p>In a typical dynamic programming (DP) problem, you&amp;rsquo;ll usually instantiate a
+variable to hold previously computed data (cache).&lt;/p></description><content:encoded><![CDATA[<p>In a typical dynamic programming (DP) problem, you&rsquo;ll usually instantiate a
+variable to hold previously computed data (cache).</p>
+<p>For example, let&rsquo;s consider a naive implementation of the factorial function:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">factorial</span>(n: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> factorial(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+</span></span></code></pre></div><p>Now let&rsquo;s add a cache to improve it, upon a use case wherein it would be called
+multiple times in a row:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>cache: dict[int, int] <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">factorial</span>(n: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> n <span style="color:#f92672">in</span> cache:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> cache[n]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  cache[n] <span style="color:#f92672">=</span> n <span style="color:#f92672">*</span> factorial(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> cache[n]
+</span></span></code></pre></div><p>This is straightforward, the only caveat to watch for is the scope of the
+cache. In general you wouldn&rsquo;t want to store it globally.</p>
+<p>One elegant way to do so is with <code>lru_cache</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> functools <span style="color:#f92672">import</span> lru_cache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@lru_cache</span>(maxsize<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">factorial</span>(n: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> factorial(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+</span></span></code></pre></div><p>The snippet above creates and maintains a cache under the hood. The main caveat
+of that snippet is that it&rsquo;s not easy to remember:</p>
+<ul>
+<li>is it <code>max_size</code> or <code>maxsize</code>?</li>
+<li>is it <code>maxsize=0</code> or <code>maxsize=None</code>?</li>
+</ul>
+<p>This week I found out that there&rsquo;s an even more ergonomic decorator, that it is
+super easy to remember!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> functools <span style="color:#f92672">import</span> cache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@cache</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">factorial</span>(n: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> factorial(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+</span></span></code></pre></div><p><code>@cache</code> is equivalent to <code>lru_cache(maxsize=None)</code>.</p>
+<p>With this trick, you won&rsquo;t ever need to manually memoize any function in python
+anymore!</p>
+<p>This works for any number of arguments so long as they can be used as
+dictionary keys, i.e. the arguments must be
+<a href="https://docs.python.org/3/glossary.html#term-hashable">hashable</a>. Practically
+speaking, this means lists are not cacheable, but tuples are.</p>
+<p>Happy dynamic programming!</p>
+<p><strong>Reference</strong>: <a href="https://docs.python.org/3/library/functools.html">https://docs.python.org/3/library/functools.html</a></p>]]></content:encoded></item><item><title>Python: debugging tip with print and f-strings</title><link>https://thiagowfx.github.io/2024/01/python-debugging-tip-with-print-and-f-strings/</link><pubDate>Mon, 08 Jan 2024 18:36:47 +0100</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/python-debugging-tip-with-print-and-f-strings/</guid><description>&lt;p>It&amp;rsquo;s 2024, &lt;a href="https://yotld.com/">the year of the linux desktop&lt;/a>, and the best™
 way to debug computer programs is still the good ol&amp;rsquo; &lt;code>print&lt;/code> statement.&lt;/p></description><content:encoded><![CDATA[<p>It&rsquo;s 2024, <a href="https://yotld.com/">the year of the linux desktop</a>, and the best™
 way to debug computer programs is still the good ol&rsquo; <code>print</code> statement.</p>
 <p>Since Python 3.6 it is possible to use
@@ -194,80 +251,4 @@ App5	Waiting to download
 </span></span><span style="display:flex;"><span>      Add <span style="color:#e6db74">&#39;+&#39;</span> shortcut <span style="color:#66d9ef">for</span> new subscription page
 </span></span><span style="display:flex;"><span>      Gray out pagination buttons when they are not applicable
 </span></span></code></pre></div><p>This is the first open source project I self-host in a serious manner that I am contributing back to. It is very exciting and fulfilling, and it sparks a lot of joy in my heart.</p>
-<p>I have a few other ideas for improving the miniflux user experience and functionality, while still keeping it simple and elegant. As everything else in life, time is the only constraint&hellip;</p>]]></content:encoded></item><item><title>HTTP: a few acronyms</title><link>https://thiagowfx.github.io/2022/02/http-a-few-acronyms/</link><pubDate>Sun, 27 Feb 2022 21:48:03 -0500</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/02/http-a-few-acronyms/</guid><description>&lt;p>I keep forgetting these, so I wrote a small summary for my own reference.&lt;/p></description><content:encoded><![CDATA[<p>I keep forgetting these, so I wrote a small summary for my own reference.</p>
-<h2 id="hsts">HSTS</h2>
-<p><a href="https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security">Wikipedia — HSTS</a>:</p>
-<blockquote>
-<p>HTTP Strict Transport Security (HSTS) is a policy mechanism that helps to
-protect websites against man-in-the-middle attacks such as protocol downgrade
-attacks and cookie hijacking. It allows web servers to declare that web
-browsers (or other complying user agents) should automatically interact with
-it using only HTTPS connections.</p>
-</blockquote>
-<p>In layman&rsquo;s terms: <em>Force HTTPS on a given domain</em>.</p>
-<p><a href="https://hstspreload.org/">HSTS Preload List</a>:</p>
-<blockquote>
-<p>This form is used to submit domains for inclusion in Chrome&rsquo;s HTTP Strict
-Transport Security (HSTS) preload list. This is a list of sites that are
-hardcoded into Chrome as being HTTPS only.</p>
-<p>Most major browsers (Chrome, Firefox, Opera, Safari, IE 11 and Edge) also
-have HSTS preload lists based on the Chrome list. (See the HSTS compatibility
-matrix.)</p>
-</blockquote>
-<p>If you add your website to that list, major browsers will honor it and only use
-HTTPS for your domain.</p>
-<p>Some <a href="https://en.wikipedia.org/wiki/Top-level_domain">TLDs</a> enforce HTTPS
-through HSTS, some popular ones are <code>.app</code> and <code>.dev</code>.
-<a href="https://serverfault.com/q/1067229/180092">Here</a> is a more comprehensive list.</p>
-<p><code>HSTS</code> is fire-and-forget, you&rsquo;ll usually only need to worry about it once,
-when configuring a SSL certificate (HTTPS) for your domain or subdomains.</p>
-<h2 id="csp">CSP</h2>
-<p><a href="https://en.wikipedia.org/wiki/Content_Security_Policy">Wikipedia — CSP</a>:</p>
-<blockquote>
-<p>Content Security Policy (CSP) is a computer security standard introduced to
-prevent cross-site scripting (XSS), clickjacking and other code injection
-attacks resulting from execution of malicious content in the trusted web page
-context.</p>
-</blockquote>
-<p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">MDN — CSP</a>:</p>
-<blockquote>
-<p>Content Security Policy (CSP) is an added layer of security that helps to
-detect and mitigate certain types of attacks, including Cross-Site Scripting
-(XSS) and data injection attacks. These attacks are used for everything from
-data theft, to site defacement, to malware distribution.</p>
-</blockquote>
-<p>CSP can be configured in at least two distinct ways:</p>
-<ol>
-<li>Web server: return the <code>Content-Security-Policy</code> HTTP header:</li>
-</ol>
-<pre tabindex="0"><code>Content-Security-Policy: default-src &#39;self&#39;; img-src https://*; child-src &#39;none&#39;;
-</code></pre><ol start="2">
-<li>HTML <code>&lt;meta&gt;</code> tag:</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">http-equiv</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Content-Security-Policy&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;default-src &#39;self&#39;; img-src https://*; child-src &#39;none&#39;;&#34;</span>&gt;
-</span></span></code></pre></div><p><code>CSP</code> is something to worry about at the application level. For example,
-<a href="https://github.com/miniflux/v2/issues/748">miniflux</a> to fetch resources
-(fonts) from another domain (Google Fonts).</p>
-<h2 id="cors">CORS</h2>
-<p><a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">Wikipedia — CORS</a>:</p>
-<blockquote>
-<p>Cross-origin resource sharing (CORS) is a mechanism that allows restricted
-resources on a web page to be requested from another domain outside the
-domain from which the first resource was served.</p>
-</blockquote>
-<p>CORS can be configured via web server: return the <code>Access-Control-Allow-Origin</code> HTTP header:</p>
-<pre tabindex="0"><code>Access-Control-Allow-Origin: *
-Access-Control-Allow-Origin: http://example.com:8080
-</code></pre><p><code>CORS</code> is something to worry about at the application level. For example,
-<a href="https://keep.google.com/">https://keep.google.com/</a> ⟷ <a href="https://google.com/">https://google.com/</a> cookies.</p>
-<h2 id="csrf">CSRF</h2>
-<p><a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery">Wikipedia — CSRF</a>:</p>
-<blockquote>
-<p>Cross-site request forgery, also known as one-click attack or session riding
-and abbreviated as CSRF (sometimes pronounced sea-surf) or XSRF, is a type of
-malicious exploit of a website where unauthorized commands are submitted from
-a user that the web application trusts.</p>
-</blockquote>
-<p><code>CSRF</code> is something to be aware of and to watch out for.
-<a href="https://owasp.org/www-community/attacks/csrf">OWASP</a> has some additional
-resources on it.</p>]]></content:encoded></item></channel></rss>
+<p>I have a few other ideas for improving the miniflux user experience and functionality, while still keeping it simple and elegant. As everything else in life, time is the only constraint&hellip;</p>]]></content:encoded></item></channel></rss>
