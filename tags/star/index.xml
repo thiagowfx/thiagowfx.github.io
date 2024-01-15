@@ -1,4 +1,170 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>star on Not Just Serendipity</title><link>https://thiagowfx.github.io/tags/star/</link><description>Recent content in star on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Sun, 01 May 2022 13:02:51 -0400</lastBuildDate><atom:link href="https://thiagowfx.github.io/tags/star/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Tools you should know about: moreutils</title><link>https://thiagowfx.github.io/2022/05/tools-you-should-know-about-moreutils/</link><pubDate>Sun, 01 May 2022 13:02:51 -0400</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/05/tools-you-should-know-about-moreutils/</guid><description>&lt;p>&lt;a href="https://joeyh.name/code/moreutils/">&lt;code>moreutils&lt;/code>&lt;/a> has previously been covered &lt;a href="https://news.ycombinator.com/item?id=31043655">elsewhere&lt;/a>, multiple times. It&amp;rsquo;s a collection of small unix tools that follow the &lt;a href="https://en.wikipedia.org/wiki/Unix_philosophy">unix philosophy&lt;/a>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> very strongly.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>star on Not Just Serendipity</title><link>https://thiagowfx.github.io/tags/star/</link><description>Recent content in star on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Mon, 15 Jan 2024 14:42:51 -0300</lastBuildDate><atom:link href="https://thiagowfx.github.io/tags/star/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Synchronized in Python</title><link>https://thiagowfx.github.io/2024/01/synchronized-in-python/</link><pubDate>Mon, 15 Jan 2024 14:42:51 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/synchronized-in-python/</guid><description>&lt;blockquote>
+&lt;p>&lt;a href="https://stackoverflow.com/questions/53026622/python-equivalent-of-java-synchronized">In Java, you can make a variable thread safe by just adding the &lt;code>synchronized&lt;/code>
+keyword. Is there anything that can achieve the same results in
+Python?&lt;/a>&lt;/p>
+&lt;/blockquote></description><content:encoded><![CDATA[<blockquote>
+<p><a href="https://stackoverflow.com/questions/53026622/python-equivalent-of-java-synchronized">In Java, you can make a variable thread safe by just adding the <code>synchronized</code>
+keyword. Is there anything that can achieve the same results in
+Python?</a></p>
+</blockquote>
+<p>Without having prior knowledge of any python libraries to do so, the primitive interface
+I would expect resembles the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>(object):
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock <span style="color:#f92672">=</span> Lock()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">perform_mutation</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    print(bytes)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock<span style="color:#f92672">.</span>acquire()
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>perform_mutation(bytes)
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock<span style="color:#f92672">.</span>release()
+</span></span></code></pre></div><p>This isn&rsquo;t robust: if an exception happens in <code>perform_mutation</code> the lock would
+never be released. A small improvement we can make is to wrap it with
+<code>try/finally</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>(object):
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock <span style="color:#f92672">=</span> Lock()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">perform_mutation</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    print(bytes)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock<span style="color:#f92672">.</span>acquire()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>      self<span style="color:#f92672">.</span>perform_mutation(bytes)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">finally</span>:
+</span></span><span style="display:flex;"><span>      self<span style="color:#f92672">.</span>lock<span style="color:#f92672">.</span>release()
+</span></span></code></pre></div><p>However it turns out there&rsquo;s a more pythonic way to do so:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> threading <span style="color:#f92672">import</span> Lock
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>(object):
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock <span style="color:#f92672">=</span> Lock()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">perform_mutation</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    print(bytes)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> self<span style="color:#f92672">.</span>lock:
+</span></span><span style="display:flex;"><span>      self<span style="color:#f92672">.</span>perform_mutation(bytes)
+</span></span></code></pre></div><p>How can we test this? First, let&rsquo;s use a single thread.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>  foo <span style="color:#f92672">=</span> Foo()
+</span></span><span style="display:flex;"><span>  foo<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#34;hello from the main thread&#34;</span>)
+</span></span></code></pre></div><p>Now let&rsquo;s use multiple threads:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>  foo <span style="color:#f92672">=</span> Foo()
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  threads <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+</span></span><span style="display:flex;"><span>    thread <span style="color:#f92672">=</span> Thread(target<span style="color:#f92672">=</span>foo<span style="color:#f92672">.</span>write, args<span style="color:#f92672">=</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;hello from thread </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,))
+</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">.</span>append(thread)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Start all threads</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> thread <span style="color:#f92672">in</span> threads:
+</span></span><span style="display:flex;"><span>    thread<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Wait for all threads to finish</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> thread <span style="color:#f92672">in</span> threads:
+</span></span><span style="display:flex;"><span>    thread<span style="color:#f92672">.</span>join()
+</span></span></code></pre></div><p>Without the lock this is one of the results I get locally:</p>
+<pre tabindex="0"><code>% python3 lock.py
+hello from thread 0
+hello from thread 1
+hello from thread 2
+hello from thread 3
+hello from thread 4
+hello from thread 6
+hello from thread 8
+hello from thread 7
+hello from thread 5
+hello from thread 9
+</code></pre><p>With the lock I always get the following, as you would predict:</p>
+<pre tabindex="0"><code>% python3 lock.py
+hello from thread 0
+hello from thread 1
+hello from thread 2
+hello from thread 3
+hello from thread 4
+hello from thread 5
+hello from thread 6
+hello from thread 7
+hello from thread 8
+hello from thread 9
+</code></pre><p>We could go one level deeper in the abstraction by using a <code>@synchronized</code> decorator:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>(object):
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">perform_mutation</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    print(bytes)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@synchronized</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>perform_mutation(bytes)
+</span></span></code></pre></div><p>How do we implement it?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">synchronized</span>(member):
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@wraps</span>(member)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">wrapper</span>(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+</span></span><span style="display:flex;"><span>        lock <span style="color:#f92672">=</span> vars(member)<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;_synchronized_lock&#34;</span>, <span style="color:#66d9ef">None</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> lock <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>            lock <span style="color:#f92672">=</span> vars(member)<span style="color:#f92672">.</span>setdefault(<span style="color:#e6db74">&#34;_synchronized_lock&#34;</span>, Lock())
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> lock:
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">return</span> member(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> wrapper
+</span></span></code></pre></div><p>One last concept to learn: <code>RLock</code> a.k.a. reentrant lock.</p>
+<p>Consider the following program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#f92672">from</span> threading <span style="color:#f92672">import</span> Lock, Thread
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>lock <span style="color:#f92672">=</span> Lock()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">changeA</span>(self, bytes):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> self<span style="color:#f92672">.</span>lock:
+</span></span><span style="display:flex;"><span>            print(bytes)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">changeB</span>(self, bytes):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> self<span style="color:#f92672">.</span>lock:
+</span></span><span style="display:flex;"><span>            print(bytes)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">changeAandB</span>(self, bytes):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> self<span style="color:#f92672">.</span>lock:
+</span></span><span style="display:flex;"><span>            print(bytes)
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>changeA(bytes) <span style="color:#75715e"># a usual lock would block here</span>
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>changeB(bytes)
+</span></span></code></pre></div><p>Invoked as follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span>foo <span style="color:#f92672">=</span> Foo()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>threads <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
+</span></span><span style="display:flex;"><span>    thread <span style="color:#f92672">=</span> Thread(target<span style="color:#f92672">=</span>foo<span style="color:#f92672">.</span>changeA, args<span style="color:#f92672">=</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;hello from thread </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74"> A&#34;</span>,))
+</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">.</span>append(thread)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    thread <span style="color:#f92672">=</span> Thread(target<span style="color:#f92672">=</span>foo<span style="color:#f92672">.</span>changeB, args<span style="color:#f92672">=</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;hello from thread </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74"> B&#34;</span>,))
+</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">.</span>append(thread)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    thread <span style="color:#f92672">=</span> Thread(target<span style="color:#f92672">=</span>foo<span style="color:#f92672">.</span>changeAandB, args<span style="color:#f92672">=</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;hello from thread </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74"> AB&#34;</span>,))
+</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">.</span>append(thread)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Start all threads</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> thread <span style="color:#f92672">in</span> threads:
+</span></span><span style="display:flex;"><span>    thread<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Wait for all threads to finish</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> thread <span style="color:#f92672">in</span> threads:
+</span></span><span style="display:flex;"><span>    thread<span style="color:#f92672">.</span>join()
+</span></span></code></pre></div><p>It will not work as expected. As soon as the first <code>changeAandB</code> gets called, its inner
+<code>self.changeA</code> call will block. This is because the lock can only be acquired once.</p>
+<p>In this specific example, the straightforward way to fix the issue is to use an <code>RLock</code>:
+<code>self.lock = RLock()</code>. The reentrant lock can be locked multiple times.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://theorangeduck.com/page/synchronized-python">https://theorangeduck.com/page/synchronized-python</a></li>
+<li><a href="https://stackoverflow.com/questions/29158282/how-to-create-a-synchronized-function-across-all-instances">https://stackoverflow.com/questions/29158282/how-to-create-a-synchronized-function-across-all-instances</a></li>
+<li><a href="https://stackoverflow.com/questions/53026622/python-equivalent-of-java-synchronized">https://stackoverflow.com/questions/53026622/python-equivalent-of-java-synchronized</a></li>
+<li><a href="https://stackoverflow.com/questions/16567958/when-and-how-to-use-pythons-rlock">https://stackoverflow.com/questions/16567958/when-and-how-to-use-pythons-rlock</a></li>
+</ul>]]></content:encoded></item><item><title>★ Tools you should know about: moreutils</title><link>https://thiagowfx.github.io/2022/05/tools-you-should-know-about-moreutils/</link><pubDate>Sun, 01 May 2022 13:02:51 -0400</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/05/tools-you-should-know-about-moreutils/</guid><description>&lt;p>&lt;a href="https://joeyh.name/code/moreutils/">&lt;code>moreutils&lt;/code>&lt;/a> has previously been covered &lt;a href="https://news.ycombinator.com/item?id=31043655">elsewhere&lt;/a>, multiple times. It&amp;rsquo;s a collection of small unix tools that follow the &lt;a href="https://en.wikipedia.org/wiki/Unix_philosophy">unix philosophy&lt;/a>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> very strongly.&lt;/p>
 &lt;p>Here are some of my favorites with example usages. Obviously this post isn&amp;rsquo;t a manual which would have been a disservice to the community; refer to the upstream man pages for detailed instructions.&lt;/p></description><content:encoded><![CDATA[<p><a href="https://joeyh.name/code/moreutils/"><code>moreutils</code></a> has previously been covered <a href="https://news.ycombinator.com/item?id=31043655">elsewhere</a>, multiple times. It&rsquo;s a collection of small unix tools that follow the <a href="https://en.wikipedia.org/wiki/Unix_philosophy">unix philosophy</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> very strongly.</p>
 <p>Here are some of my favorites with example usages. Obviously this post isn&rsquo;t a manual which would have been a disservice to the community; refer to the upstream man pages for detailed instructions.</p>
 <h2 id="sponge">sponge</h2>
@@ -1006,192 +1172,6 @@ MR patch.</p>
 </li>
 <li id="fn:3">
 <p>In GitLab it&rsquo;s called Merge Request (MR). The list of all aports MRs is <a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests">here</a>.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item><item><title>★ Arch Linux: New PKGBUILD Workflow</title><link>https://thiagowfx.github.io/2022/01/arch-linux-new-pkgbuild-workflow/</link><pubDate>Tue, 18 Jan 2022 21:59:07 -0500</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/01/arch-linux-new-pkgbuild-workflow/</guid><description>&lt;p>This document describes my workflow to manage &lt;code>PKGBUILDs&lt;/code> for the &lt;a href="https://aur.archlinux.org/">AUR&lt;/a> (Arch User Repository) in &lt;a href="https://www.archlinux.org/">Arch Linux&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>This document describes my workflow to manage <code>PKGBUILDs</code> for the <a href="https://aur.archlinux.org/">AUR</a> (Arch User Repository) in <a href="https://www.archlinux.org/">Arch Linux</a>.</p>
-<h2 id="disclaimer">Disclaimer</h2>
-<p>First of all, this post is not a substitute to the excellent <a href="https://wiki.archlinux.org/">ArchWiki</a> and it will likely get outdated at some point. In particular, refer to the following articles for up-to-date documentation that will outlive this blog:</p>
-<ul>
-<li><a href="https://wiki.archlinux.org/title/Arch_User_Repository">https://wiki.archlinux.org/title/Arch_User_Repository</a></li>
-<li><a href="https://wiki.archlinux.org/title/Arch_package_guidelines">https://wiki.archlinux.org/title/Arch_package_guidelines</a></li>
-<li><a href="https://wiki.archlinux.org/title/Creating_packages">https://wiki.archlinux.org/title/Creating_packages</a></li>
-<li><a href="https://wiki.archlinux.org/title/PKGBUILD">https://wiki.archlinux.org/title/PKGBUILD</a></li>
-</ul>
-<p>This article is not a tutorial, as such it assumes you already know what a <code>PKGBUILD</code> is and how to use <code>makepkg</code>. In particular, you should have the <code>base-devel</code> and <code>devtools</code> packages installed in your system.</p>
-<h2 id="structure">Structure</h2>
-<p>I manage my packages with <code>git</code> plus Eli Schwartz&rsquo;s excellent
-<a href="https://github.com/eli-schwartz/aurpublish">aurpublish</a>. The tree structure is simple, with one <code>PKGBUILD</code> per directory:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git clone https://github.com/thiagowfx/PKGBUILDs <span style="color:#f92672">&amp;&amp;</span> tree PKGBUILDs
-</span></span><span style="display:flex;"><span>PKGBUILDs
-</span></span><span style="display:flex;"><span>├── bkt
-</span></span><span style="display:flex;"><span>│   └── PKGBUILD
-</span></span><span style="display:flex;"><span>├── fpp-git
-</span></span><span style="display:flex;"><span>│   └── PKGBUILD
-</span></span><span style="display:flex;"><span>├── git-crecord
-</span></span><span style="display:flex;"><span>│   └── PKGBUILD
-</span></span><span style="display:flex;"><span>├── i3a
-</span></span><span style="display:flex;"><span>│   └── PKGBUILD
-</span></span><span style="display:flex;"><span>├── LICENSE
-</span></span><span style="display:flex;"><span>├── Makefile
-</span></span><span style="display:flex;"><span>├── README.md
-</span></span><span style="display:flex;"><span>├── ttf-camingocode
-</span></span><span style="display:flex;"><span>│   └── PKGBUILD
-</span></span><span style="display:flex;"><span>└── urlwatch.yml
-</span></span></code></pre></div><p><code>aurpublish</code> is used <em>solely</em> to automate certain interactions with the AUR, more about it later.</p>
-<h2 id="bootstrapping">Bootstrapping</h2>
-<p>I am going to illustrate with a package I added recently, <a href="https://github.com/dimo414/bkt"><code>bkt</code></a>:</p>
-<ul>
-<li>
-<p>Before you even begin, check if the package already exists, do a quick search in the <a href="https://aur.archlinux.org/packages/?O=0&amp;K=bkt">AUR</a> and also in the <a href="https://archlinux.org/packages/?sort=&amp;q=bkt&amp;maintainer=&amp;flagged=">official repos</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
-</li>
-<li>
-<p>Start by copying over the standard <code>PKGBUILD</code> template:</p>
-</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cd PKGBUILDs
-</span></span><span style="display:flex;"><span>$ mkdir bkt <span style="color:#f92672">&amp;&amp;</span> cd bkt
-</span></span><span style="display:flex;"><span>$ cp /usr/share/pacman/PKGBUILD.proto PKGBUILD
-</span></span><span style="display:flex;"><span>$ $EDITOR PKGBUILD
-</span></span></code></pre></div><ul>
-<li>
-<p>Fill in <code>PKGBUILD</code> metadata like <code>pkgname=</code>, <code>url=</code>, etc. Refer to the ArchWiki for up-to-date best practices.</p>
-</li>
-<li>
-<p>The most important step is to refer to <a href="https://wiki.archlinux.org/title/Category:Arch_package_guidelines">https://wiki.archlinux.org/title/Category:Arch_package_guidelines</a> to figure out the package type.</p>
-</li>
-</ul>
-<p><code>bkt</code> is a Rust package. This is my first time packaging for Rust, not a problem though, as I can just refer to <a href="https://wiki.archlinux.org/title/Rust_package_guidelines">https://wiki.archlinux.org/title/Rust_package_guidelines</a>.</p>
-<p>The rust package guidelines page contains the blueprint for <code>prepare()</code>, <code>check()</code>, <code>build()</code> and <code>package()</code>. Packaging is mostly a matter of gluing everything together. Read the project <code>README.md</code> and the wiki, and then combine the needed steps in the <code>PKGBUILD</code>.</p>
-<p>By doing so, I produced the following <code>PKGBUILD</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pkgname<span style="color:#f92672">=</span>bkt
-</span></span><span style="display:flex;"><span>pkgver<span style="color:#f92672">=</span>0.5.0
-</span></span><span style="display:flex;"><span>pkgrel<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>pkgdesc<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A subprocess caching utility&#34;</span>
-</span></span><span style="display:flex;"><span>arch<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;x86_64&#39;</span><span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://www.bkt.rs/&#34;</span>
-</span></span><span style="display:flex;"><span>license<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;MIT&#39;</span><span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>makedepends<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;cargo&#39;</span><span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>source<span style="color:#f92672">=(</span><span style="color:#e6db74">&#34;</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">.tar.gz::https://github.com/dimo414/</span>$pkgname<span style="color:#e6db74">/archive/refs/tags/</span>$pkgver<span style="color:#e6db74">.tar.gz&#34;</span><span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>sha256sums<span style="color:#f92672">=()</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>prepare<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	cd <span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	cargo fetch --locked --target <span style="color:#e6db74">&#34;</span>$CARCH<span style="color:#e6db74">-unknown-linux-gnu&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>build<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	cd <span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	export RUSTUP_TOOLCHAIN<span style="color:#f92672">=</span>stable
-</span></span><span style="display:flex;"><span>	export CARGO_TARGET_DIR<span style="color:#f92672">=</span>target
-</span></span><span style="display:flex;"><span>	cargo build --frozen --release --all-features
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>check<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	cd <span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	export RUSTUP_TOOLCHAIN<span style="color:#f92672">=</span>stable
-</span></span><span style="display:flex;"><span>	cargo test --frozen --all-features
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>package<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	cd <span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	install -Dm0755 -t <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/bin/&#34;</span> <span style="color:#e6db74">&#34;target/release/</span>$pkgname<span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>	install -Dm644 LICENSE -t <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/share/licenses/</span>$pkgname<span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><p><strong>Note</strong>: <code>$srcdir</code> refers to the <code>src/</code> directory within <code>bkt</code>. <code>$pkgdir</code> refers to the <code>pkg/</code> directory within <code>bkt</code>.</p>
-<h2 id="adjustments">Adjustments</h2>
-<ul>
-<li>
-<p>Generate the checksums with <code>updpkgsums</code>. It will automatically update the <code>PKGBUILD</code> inplace.</p>
-</li>
-<li>
-<p>Download and extract package files with <code>makepkg -o</code>.</p>
-</li>
-<li>
-<p><code>ls src/</code> and check the directory structure. Update <code>cd</code> in your <code>PKGBUILD</code> to match it. Usually it will be <code>cd $srcdir/$pkgname-$pkgver</code>, but sometimes tiny adjustments are necessary.</p>
-</li>
-<li>
-<p>Then run <code>makepkg -s</code>. If everything goes well, your package will be successfully built<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> (<code>bkt-0.5.0-1-x86_64.pkg.tar.zst</code>), however that doesn&rsquo;t mean it is a decent package yet.</p>
-</li>
-<li>
-<p>Run <code>namcap PKGBUILD</code> and <code>namcap *.pkg.tar.zst</code> to lint your package and catch common errors. Fix the errors, if any.</p>
-</li>
-<li>
-<p>To ensure all dependencies have been correctly declared and none of them are missing, run <code>makepkg</code> within a clean <a href="https://wiki.archlinux.org/title/Chroo"><em>chroot</em></a>. I like to use Graysky&rsquo;s excellent <a href="https://github.com/graysky2/clean-chroot-manager"><code>ccm</code></a> (Clean Chroot Manager) to do so. Run <code>ccm s</code> (=&ldquo;run makepkg in the clean chroot&rdquo;). If it produces any errors, it likely means you missed some dependencies. Adjust <code>depends=</code>, <code>checkdepends=</code> and <code>makedepends=</code> accordingly.</p>
-</li>
-</ul>
-<h2 id="request-feedback-if-needed">Request feedback if needed</h2>
-<p>If the package is only relevant to you, stop here. <code>git commit</code>, <code>git push</code>, and then you&rsquo;re done. Install the package with <code>makepkg -i</code>.</p>
-<p>Otherwise, if the package might be potentially useful to other Arch users, you could consider uploading it to the AUR.</p>
-<p>Before you do so, stop for a moment and make an honest judgment whether this is a high quality package and whether you&rsquo;re confident it is clean and polished enough, following the best practices documented in the Wiki. The answer doesn&rsquo;t need to be positive, it&rsquo;s perfectly OK to commit mistakes and everyone is a newbie at some point.</p>
-<p>If the answer is negative, or if you&rsquo;re new to this process and would like some help, fear no more! There are at least two decent community resources wherein to ask for help:</p>
-<ol>
-<li>
-<p><a href="https://bbs.archlinux.org/viewforum.php?id=38.">AUR Issues, Discussion &amp; PKGBUILD Requests</a> BBS / Forums:  Open a new thread, post your <code>PKGBUILD</code> (use <code>[code][/code]</code> tags if you paste it directly!) or a link to it<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>. Request folks to critique your work, mention that you&rsquo;re looking for feedback. This kind of thread is generally well received in the official forums if you demonstrate you did diligent research before asking for help.</p>
-</li>
-<li>
-<p><a href="https://lists.archlinux.org/pipermail/aur-general/">AUR General Mailing List</a>: Send an email to the mailing list asking for help. In general, follow proper mailing list etiquette, good resources for that are <a href="https://useplaintext.email/">https://useplaintext.email/</a> and <a href="https://man.sr.ht/lists.sr.ht/etiquette.md">https://man.sr.ht/lists.sr.ht/etiquette.md</a>. TL;DR: Use plain-text instead of HTML in your email.</p>
-</li>
-</ol>
-<p>If you&rsquo;re part of any other community (e.g. Reddit, Discord) feel free to ask therein as well. Avoid posting everywhere though, pick one community, draft your post and then patiently wait.</p>
-<h2 id="publish-your-package">Publish your package</h2>
-<p>If all is well, it&rsquo;s time to publish your <code>PKGBUILD</code> to the <a href="https://aur.archlinux.org/">AUR</a>. Follow the up-to-date steps at <a href="https://wiki.archlinux.org/title/Arch_User_Repository#Submitting_packages">https://wiki.archlinux.org/title/Arch_User_Repository#Submitting_packages</a>.</p>
-<p>TL;DR: If you don&rsquo;t use <em>aurpublish</em>, do:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ makepkg --printsrcinfo &gt; .SRCINFO
-</span></span></code></pre></div><p>Then you&rsquo;ll need both the <code>PKGBUILD</code> and the <code>.SRCINFO</code> file, it&rsquo;s basically a matter of committing your changes and pushing them to the right repository.</p>
-<p>If you do use <em>aurpublish</em> this process is much easier, it&rsquo;s mostly a matter of doing <code>git commit</code>, <code>git push</code> and <code>aurpublish bkt</code>. <em>Aurpublish</em> automatically generates the <code>.SRCINFO</code> and a commit message by the means of git hooks.</p>
-<p>And that&rsquo;s all! Other useful tips:</p>
-<ul>
-<li>Use <a href="https://repology.org/">repology</a> to look for preexisting packages in other Linux (or even BSD) distributions, it&rsquo;s very handy as a starting point if you have no idea how to package a given package. In particular, Alpine Linux <code>APKBUILDs</code> are very similar to <code>PKGBUILDs</code>. Gentoo <code>EBUILDs</code> and FreeBSD <code>Makefiles</code> are also reasonable approximations.</li>
-<li>Use <code>makepkg -src</code> to clean up after building a package.</li>
-</ul>
-<h2 id="bonus-track-upstream">Bonus: Track upstream</h2>
-<p>Use a software like <a href="https://thp.io/2008/urlwatch/"><code>urlwatch</code></a> or <a href="https://github.com/lilydjwg/nvchecker"><code>nvchecker</code></a> to track
-future upstream changes so that you can update your packages in a timely
-fashion<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>. There&rsquo;s also a web service called <a href="https://release-monitoring.org/">Release
-Monitoring</a>, part of Fedora Infra. I use <code>urlwatch</code> the
-following way:</p>
-<pre tabindex="0"><code>$ cat PKGBUILDs/urlwatch.yml
-# urls for urlwatch(1)
----
-name: &#34;bkt&#34;
-command: &#34;git ls-remote --tags https://github.com/dimo414/bkt&#34;
----
-name: &#34;fpp&#34;
-command: &#34;git ls-remote --tags https://github.com/facebook/PathPicker&#34;
----
-name: &#34;git-crecord&#34;
-command: &#34;git ls-remote --tags https://github.com/andrewshadura/git-crecord&#34;
----
-name: &#34;i3a&#34;
-command: &#34;git ls-remote --tags https://git.goral.net.pl/mgoral/i3a&#34;
-# ---
-# name: &#34;ttf-camingocode&#34;
-# N/A
-
-# Run this command periodically via cron or systemd timer.
-# Set up notifications e.g. via sendmail.
-$ urlwatch --urls urlwatch.yml
-</code></pre><div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>If you use <a href="https://duckduckgo.com/">https://duckduckgo.com/</a>, query for <code>!aur bkt</code> and <code>!archpkg bkt</code>. Handy!&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>Package debugging is out of scope of this post.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3">
-<p>For example, use <a href="https://gist.github.com">https://gist.github.com</a> or <a href="http://paste.opensuse.org/">http://paste.opensuse.org/</a> or
-<a href="http://ix.io/">http://ix.io/</a>.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:4">
-<p>In 99% of the cases this is just a matter of bumping the <code>pkgver=</code> and
-updating the checksums. If <code>pkgver=</code> is the same but there&rsquo;s a fix to the
-package itself, then bump <code>pkgrel=</code> instead.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>

@@ -1,4 +1,170 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Not Just Serendipity</title><link>https://thiagowfx.github.io/posts/</link><description>Recent content in Posts on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Fri, 12 Jan 2024 14:37:13 +0100</lastBuildDate><atom:link href="https://thiagowfx.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Python: all hail to cache memoization</title><link>https://thiagowfx.github.io/2024/01/python-all-hail-to-cache-memoization/</link><pubDate>Fri, 12 Jan 2024 14:37:13 +0100</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/python-all-hail-to-cache-memoization/</guid><description>&lt;p>In a typical dynamic programming (DP) problem, you&amp;rsquo;ll usually instantiate a
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Not Just Serendipity</title><link>https://thiagowfx.github.io/posts/</link><description>Recent content in Posts on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Mon, 15 Jan 2024 14:42:51 -0300</lastBuildDate><atom:link href="https://thiagowfx.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Synchronized in Python</title><link>https://thiagowfx.github.io/2024/01/synchronized-in-python/</link><pubDate>Mon, 15 Jan 2024 14:42:51 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/synchronized-in-python/</guid><description>&lt;blockquote>
+&lt;p>&lt;a href="https://stackoverflow.com/questions/53026622/python-equivalent-of-java-synchronized">In Java, you can make a variable thread safe by just adding the &lt;code>synchronized&lt;/code>
+keyword. Is there anything that can achieve the same results in
+Python?&lt;/a>&lt;/p>
+&lt;/blockquote></description><content:encoded><![CDATA[<blockquote>
+<p><a href="https://stackoverflow.com/questions/53026622/python-equivalent-of-java-synchronized">In Java, you can make a variable thread safe by just adding the <code>synchronized</code>
+keyword. Is there anything that can achieve the same results in
+Python?</a></p>
+</blockquote>
+<p>Without having prior knowledge of any python libraries to do so, the primitive interface
+I would expect resembles the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>(object):
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock <span style="color:#f92672">=</span> Lock()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">perform_mutation</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    print(bytes)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock<span style="color:#f92672">.</span>acquire()
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>perform_mutation(bytes)
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock<span style="color:#f92672">.</span>release()
+</span></span></code></pre></div><p>This isn&rsquo;t robust: if an exception happens in <code>perform_mutation</code> the lock would
+never be released. A small improvement we can make is to wrap it with
+<code>try/finally</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>(object):
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock <span style="color:#f92672">=</span> Lock()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">perform_mutation</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    print(bytes)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock<span style="color:#f92672">.</span>acquire()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>      self<span style="color:#f92672">.</span>perform_mutation(bytes)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">finally</span>:
+</span></span><span style="display:flex;"><span>      self<span style="color:#f92672">.</span>lock<span style="color:#f92672">.</span>release()
+</span></span></code></pre></div><p>However it turns out there&rsquo;s a more pythonic way to do so:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> threading <span style="color:#f92672">import</span> Lock
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>(object):
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock <span style="color:#f92672">=</span> Lock()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">perform_mutation</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    print(bytes)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> self<span style="color:#f92672">.</span>lock:
+</span></span><span style="display:flex;"><span>      self<span style="color:#f92672">.</span>perform_mutation(bytes)
+</span></span></code></pre></div><p>How can we test this? First, let&rsquo;s use a single thread.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>  foo <span style="color:#f92672">=</span> Foo()
+</span></span><span style="display:flex;"><span>  foo<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#34;hello from the main thread&#34;</span>)
+</span></span></code></pre></div><p>Now let&rsquo;s use multiple threads:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>  foo <span style="color:#f92672">=</span> Foo()
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  threads <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+</span></span><span style="display:flex;"><span>    thread <span style="color:#f92672">=</span> Thread(target<span style="color:#f92672">=</span>foo<span style="color:#f92672">.</span>write, args<span style="color:#f92672">=</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;hello from thread </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,))
+</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">.</span>append(thread)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Start all threads</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> thread <span style="color:#f92672">in</span> threads:
+</span></span><span style="display:flex;"><span>    thread<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Wait for all threads to finish</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> thread <span style="color:#f92672">in</span> threads:
+</span></span><span style="display:flex;"><span>    thread<span style="color:#f92672">.</span>join()
+</span></span></code></pre></div><p>Without the lock this is one of the results I get locally:</p>
+<pre tabindex="0"><code>% python3 lock.py
+hello from thread 0
+hello from thread 1
+hello from thread 2
+hello from thread 3
+hello from thread 4
+hello from thread 6
+hello from thread 8
+hello from thread 7
+hello from thread 5
+hello from thread 9
+</code></pre><p>With the lock I always get the following, as you would predict:</p>
+<pre tabindex="0"><code>% python3 lock.py
+hello from thread 0
+hello from thread 1
+hello from thread 2
+hello from thread 3
+hello from thread 4
+hello from thread 5
+hello from thread 6
+hello from thread 7
+hello from thread 8
+hello from thread 9
+</code></pre><p>We could go one level deeper in the abstraction by using a <code>@synchronized</code> decorator:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>(object):
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">perform_mutation</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    print(bytes)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@synchronized</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write</span>(self, bytes):
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>perform_mutation(bytes)
+</span></span></code></pre></div><p>How do we implement it?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">synchronized</span>(member):
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@wraps</span>(member)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">wrapper</span>(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
+</span></span><span style="display:flex;"><span>        lock <span style="color:#f92672">=</span> vars(member)<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;_synchronized_lock&#34;</span>, <span style="color:#66d9ef">None</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> lock <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>            lock <span style="color:#f92672">=</span> vars(member)<span style="color:#f92672">.</span>setdefault(<span style="color:#e6db74">&#34;_synchronized_lock&#34;</span>, Lock())
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> lock:
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">return</span> member(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> wrapper
+</span></span></code></pre></div><p>One last concept to learn: <code>RLock</code> a.k.a. reentrant lock.</p>
+<p>Consider the following program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#f92672">from</span> threading <span style="color:#f92672">import</span> Lock, Thread
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>lock <span style="color:#f92672">=</span> Lock()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">changeA</span>(self, bytes):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> self<span style="color:#f92672">.</span>lock:
+</span></span><span style="display:flex;"><span>            print(bytes)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">changeB</span>(self, bytes):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> self<span style="color:#f92672">.</span>lock:
+</span></span><span style="display:flex;"><span>            print(bytes)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">changeAandB</span>(self, bytes):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> self<span style="color:#f92672">.</span>lock:
+</span></span><span style="display:flex;"><span>            print(bytes)
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>changeA(bytes) <span style="color:#75715e"># a usual lock would block here</span>
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>changeB(bytes)
+</span></span></code></pre></div><p>Invoked as follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span>foo <span style="color:#f92672">=</span> Foo()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>threads <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
+</span></span><span style="display:flex;"><span>    thread <span style="color:#f92672">=</span> Thread(target<span style="color:#f92672">=</span>foo<span style="color:#f92672">.</span>changeA, args<span style="color:#f92672">=</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;hello from thread </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74"> A&#34;</span>,))
+</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">.</span>append(thread)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    thread <span style="color:#f92672">=</span> Thread(target<span style="color:#f92672">=</span>foo<span style="color:#f92672">.</span>changeB, args<span style="color:#f92672">=</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;hello from thread </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74"> B&#34;</span>,))
+</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">.</span>append(thread)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    thread <span style="color:#f92672">=</span> Thread(target<span style="color:#f92672">=</span>foo<span style="color:#f92672">.</span>changeAandB, args<span style="color:#f92672">=</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;hello from thread </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74"> AB&#34;</span>,))
+</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">.</span>append(thread)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Start all threads</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> thread <span style="color:#f92672">in</span> threads:
+</span></span><span style="display:flex;"><span>    thread<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Wait for all threads to finish</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> thread <span style="color:#f92672">in</span> threads:
+</span></span><span style="display:flex;"><span>    thread<span style="color:#f92672">.</span>join()
+</span></span></code></pre></div><p>It will not work as expected. As soon as the first <code>changeAandB</code> gets called, its inner
+<code>self.changeA</code> call will block. This is because the lock can only be acquired once.</p>
+<p>In this specific example, the straightforward way to fix the issue is to use an <code>RLock</code>:
+<code>self.lock = RLock()</code>. The reentrant lock can be locked multiple times.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://theorangeduck.com/page/synchronized-python">https://theorangeduck.com/page/synchronized-python</a></li>
+<li><a href="https://stackoverflow.com/questions/29158282/how-to-create-a-synchronized-function-across-all-instances">https://stackoverflow.com/questions/29158282/how-to-create-a-synchronized-function-across-all-instances</a></li>
+<li><a href="https://stackoverflow.com/questions/53026622/python-equivalent-of-java-synchronized">https://stackoverflow.com/questions/53026622/python-equivalent-of-java-synchronized</a></li>
+<li><a href="https://stackoverflow.com/questions/16567958/when-and-how-to-use-pythons-rlock">https://stackoverflow.com/questions/16567958/when-and-how-to-use-pythons-rlock</a></li>
+</ul>]]></content:encoded></item><item><title>Python: all hail to cache memoization</title><link>https://thiagowfx.github.io/2024/01/python-all-hail-to-cache-memoization/</link><pubDate>Fri, 12 Jan 2024 14:37:13 +0100</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/python-all-hail-to-cache-memoization/</guid><description>&lt;p>In a typical dynamic programming (DP) problem, you&amp;rsquo;ll usually instantiate a
 variable to hold previously computed data (cache).&lt;/p></description><content:encoded><![CDATA[<p>In a typical dynamic programming (DP) problem, you&rsquo;ll usually instantiate a
 variable to hold previously computed data (cache).</p>
 <p>For example, let&rsquo;s consider a naive implementation of the factorial function:</p>
@@ -223,16 +389,4 @@ Overflow to a large extent, if you learn how to ask questions to it. Example que
 </li>
 </ul>
 <h2 id="stable-diffusionstable-diffusion"><a href="https://stablediffusionweb.com/#demo">Stable Diffusion</a></h2>
-<p>Given a query (text), it generates an image for you. It pairs up quite nicely with Slides (when looking for inspiration) and can effectively replace Google Images to some extent.</p>]]></content:encoded></item><item><title>Do I still remember how to blog?</title><link>https://thiagowfx.github.io/2022/10/do-i-still-remember-how-to-blog/</link><pubDate>Sun, 09 Oct 2022 18:31:07 +0200</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/10/do-i-still-remember-how-to-blog/</guid><description>&lt;p>I haven&amp;rsquo;t written a blog post for a couple of months now, which is a good indicator I should probably document my workflow before I forget how to do it&amp;hellip;&lt;/p></description><content:encoded><![CDATA[<p>I haven&rsquo;t written a blog post for a couple of months now, which is a good indicator I should probably document my workflow before I forget how to do it&hellip;</p>
-<p>First, <code>git clone --recurse https://github.com/thiagowfx/thiagowfx.github.io/</code>.
-I like to store it in <code>~/Projects/thiagowfx.github.io</code>.</p>
-<p>To create a new post, <code>hugo new content/posts/2022-10-09-title-comes-here.md</code>.</p>
-<p>Use either <code>vim</code> or <code>textmate</code> to draft the post. Choose one or more tags,
-trying to reuse existing ones whenever possible. When using <code>vim</code>, use <code>Q</code> to
-reformat paragraphs.</p>
-<p>To preview the post locally, run <code>make run</code> and then open http://localhost:1313/.</p>
-<p>If everything looks good, <code>git commit</code> and <code>git push</code>. GitHub CI will then
-publish the post to <a href="https://pages.github.com/">GitHub Pages</a> in a couple of
-seconds.</p>
-<p>To blog on the go, use <a href="https://github.dev/">https://github.dev/</a>. I documented this setup earlier,
-<a href="https://thiagowfx.github.io/2022/02/hugo-compose-or-edit-blog-posts-from-the-web/">here</a>.</p>]]></content:encoded></item></channel></rss>
+<p>Given a query (text), it generates an image for you. It pairs up quite nicely with Slides (when looking for inspiration) and can effectively replace Google Images to some extent.</p>]]></content:encoded></item></channel></rss>
