@@ -2,7 +2,7 @@
 title: "★ Synchronized in Python"
 date: 2024-01-15T14:42:51-03:00
 tags:
-  - programming
+  - dev
   - bestof
 ---
 

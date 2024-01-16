@@ -3,7 +3,6 @@ title: "Python: debugging tip with print and f-strings"
 date: 2024-01-08T18:36:47+01:00
 tags:
   - dev
-  - programming
 ---
 
 It's 2024, [the year of the linux desktop](https://yotld.com/), and the best™

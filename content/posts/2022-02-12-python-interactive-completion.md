@@ -3,7 +3,6 @@ title: "Python: interactive completion"
 date: 2022-02-12T23:11:44-05:00
 tags:
   - dev
-  - programming
 ---
 
 Sometimes I fire up a `python` interpreter in my terminal for quick

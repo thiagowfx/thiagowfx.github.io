@@ -2,7 +2,7 @@
 title: "Computers are fast"
 date: 2022-03-20T15:55:24-03:00
 tags:
-  - programming
+  - dev
 ---
 
 [Computers are fast](https://computers-are-fast.github.io).

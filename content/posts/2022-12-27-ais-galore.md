@@ -4,7 +4,6 @@ date: 2022-12-27T16:16:36+01:00
 tags:
   - dev
   - ideas
-  - programming
 ---
 
 2022 was an amazing year for AIs.

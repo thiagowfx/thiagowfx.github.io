@@ -3,7 +3,6 @@ title: "Python: all hail to cache memoization"
 date: 2024-01-12T14:37:13+01:00
 tags:
   - dev
-  - programming
 ---
 
 In a typical dynamic programming (DP) problem, you'll usually instantiate a
