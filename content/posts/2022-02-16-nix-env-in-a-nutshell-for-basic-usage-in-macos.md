@@ -5,7 +5,7 @@ tags:
   - dev
   - linux
   - macos
-  - star
+  - bestof
 ---
 
 I am currently evaluating [Nix](https://nixos.org/download.html) as a

@@ -5,7 +5,7 @@ lastmod: "2022-01-03"
 tags:
   - hardware
   - linux
-  - star
+  - bestof
 ---
 
 I recently purchased a [Keychron K2](https://www.keychron.com/products/keychron-k2-wireless-mechanical-keyboard) mechanical keyboard. It is a 75% keyboard that has bluetooth. This article describes some quality-of-life improvements to use it with a Linux system.

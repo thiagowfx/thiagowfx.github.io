@@ -5,7 +5,7 @@ tags:
   - linux
   - rss
   - selfhosted
-  - star
+  - bestof
 ---
 
 This article describes my experience transitioning to, setting up and using the
