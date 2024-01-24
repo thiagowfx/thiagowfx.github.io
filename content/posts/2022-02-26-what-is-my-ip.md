@@ -51,7 +51,7 @@ URL: https://ipinfo.io/
 
 IPInfo returns structured data beyond just your IP address. There are several
 similar services that do this, for example, [What is my
-IP?](https://www.whatismyip.com/), however IPInfo is the cleanest one I have
+IP?](https://www.whatismyip.com/) and https://ifconfig.co/, however IPInfo is the cleanest one I have
 seen.
 
 ## [ping.eu](https://ping.eu/)
