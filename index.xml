@@ -1,4 +1,200 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Not Just Serendipity</title><link>https://thiagowfx.github.io/</link><description>Recent content on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Mon, 22 Jan 2024 18:55:13 -0300</lastBuildDate><atom:link href="https://thiagowfx.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>The fundamental right to paste</title><link>https://thiagowfx.github.io/2024/01/the-fundamental-right-to-paste/</link><pubDate>Mon, 22 Jan 2024 18:55:13 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/the-fundamental-right-to-paste/</guid><description>&lt;p>Some websites attempt to prevent users from pasting text (i.e. &lt;code>Ctrl+V&lt;/code> /
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Not Just Serendipity</title><link>https://thiagowfx.github.io/</link><description>Recent content on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Tue, 23 Jan 2024 23:27:04 -0300</lastBuildDate><atom:link href="https://thiagowfx.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Terraforming a Linode: hello world</title><link>https://thiagowfx.github.io/2024/01/terraforming-a-linode-hello-world/</link><pubDate>Tue, 23 Jan 2024 23:27:04 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/terraforming-a-linode-hello-world/</guid><description>&lt;p>I host my own &lt;a href="https://miniflux.app/">Miniflux&lt;/a> instance, which happens to be
+my favorite RSS reader. Currently it is hosted on Linode (Akamai Cloud)
+running &lt;a href="https://www.alpinelinux.org/">Alpine Linux&lt;/a>.&lt;/p>
+&lt;p>My current setup was performed manually. I was thinking that, for fun, it would
+be cool to fully automate it under the principles of
+&lt;a href="https://en.wikipedia.org/wiki/Infrastructure_as_code">IaC&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>I host my own <a href="https://miniflux.app/">Miniflux</a> instance, which happens to be
+my favorite RSS reader. Currently it is hosted on Linode (Akamai Cloud)
+running <a href="https://www.alpinelinux.org/">Alpine Linux</a>.</p>
+<p>My current setup was performed manually. I was thinking that, for fun, it would
+be cool to fully automate it under the principles of
+<a href="https://en.wikipedia.org/wiki/Infrastructure_as_code">IaC</a>.</p>
+<p>The current setup does not use any containers. I had proudly made it as KISS as
+possible at the time:</p>
+<ol>
+<li>Linode is a very beginner-friendly (and cheap) VPS</li>
+<li>Alpine Linux is a first-class citizen on Linode</li>
+<li>There&rsquo;s an <code>apk</code> <a href="https://pkgs.alpinelinux.org/packages?name=miniflux">package</a> for <code>miniflux</code></li>
+<li>There&rsquo;s an OpenRC<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> script for <code>miniflux</code> (so that it can be controlled via <code>service</code>)</li>
+</ol>
+<p>For the first part of this automation we will look into provisioning a Linode
+with an Alpine Linux installation. In order to do so we will use HashiCorp
+<a href="https://www.terraform.io/">Terraform</a>.</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Provision a new Linode</li>
+<li>Deploy it in Europe</li>
+<li>Use the smallest shape (a so-called <a href="https://www.linode.com/community/questions/211/what-is-a-nanode">Nanode</a>)</li>
+<li>Run Alpine Linux</li>
+<li>Set it up with my <a href="https://github.com/thiagowfx.keys">public ssh key</a>, which is hosted on Github</li>
+</ul>
+<h2 id="terraform-setup">Terraform setup</h2>
+<ul>
+<li>Install a provider for Linode: <a href="https://registry.terraform.io/providers/linode/linode/latest/docs">https://registry.terraform.io/providers/linode/linode/latest/docs</a></li>
+</ul>
+<p>Scaffold it like this, in a <code>main.tf</code> file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#a6e22e">terraform</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">required_providers</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">linode</span> = {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">source</span> = <span style="color:#e6db74">&#34;linode/linode&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Then run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% terraform init
+</span></span></code></pre></div><ul>
+<li>Generate a Linode API token</li>
+</ul>
+<p>Go to <a href="https://cloud.linode.com/profile/tokens">https://cloud.linode.com/profile/tokens</a>, create a new token called
+<code>terraform</code>. with the &ldquo;Linodes&rdquo; scope set to &ldquo;Read/Write&rdquo;.</p>
+<ul>
+<li>Append this API token to <code>main.tf</code>:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">provider</span> <span style="color:#e6db74">&#34;linode&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">token</span> = <span style="color:#e6db74">&#34;&lt;your token here&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>Add a
+<a href="https://registry.terraform.io/providers/linode/linode/latest/docs/resources/instance"><code>linode_instance</code></a>
+with the appropriate fields set according to the documentation:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;linode_instance&#34;</span> <span style="color:#e6db74">&#34;coruscant&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">label</span>  = <span style="color:#e6db74">&#34;coruscant&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">image</span>  = <span style="color:#e6db74">&#34;linode/alpine3.19&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">region</span> = <span style="color:#e6db74">&#34;eu-central&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span>   = <span style="color:#e6db74">&#34;g6-nanode-1&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">authorized_keys</span>  = [<span style="color:#e6db74">&#34;&lt;your ssh public key here&gt;&#34;</span>]
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">backups_enabled</span>  = <span style="color:#e6db74">&#34;false&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">watchdog_enabled</span> = <span style="color:#e6db74">&#34;true&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">booted</span>           = <span style="color:#e6db74">&#34;true&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Then run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% terraform plan
+</span></span></code></pre></div><p>&ldquo;Plan&rdquo; is basically a dry-run. Terraform will output what it intends to do, but nothing will be done yet.</p>
+<ul>
+<li>Analyze the output and double check that it looks correct.</li>
+</ul>
+<p>To actually perform the provisioning, run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% terraform apply
+</span></span></code></pre></div><p>Then confirm the prompt.</p>
+<p>Within a few seconds (or maybe minutes), you should see your new Linode in the
+<a href="https://cloud.linode.com/">Linode Console</a>.</p>
+<p>We can test our deployment by ssh&rsquo;ing to our new machine:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% ssh root@&lt;public IP address&gt; -i ~/.ssh/my_ssh_key
+</span></span><span style="display:flex;"><span>Welcome to Alpine!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The Alpine Wiki contains a large amount of how-to guides and general
+</span></span><span style="display:flex;"><span>information about administrating Alpine systems.
+</span></span><span style="display:flex;"><span>See &lt;https://wiki.alpinelinux.org/&gt;.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>You can setup the system with the command: setup-alpine
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>You may change this message by editing /etc/motd.
+</span></span></code></pre></div><p>Let&rsquo;s take a pause to appreciate how lightweight it is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>localhost:~# df -h
+</span></span><span style="display:flex;"><span>Filesystem                Size      Used Available Use% Mounted on
+</span></span><span style="display:flex;"><span>devtmpfs                 10.0M         <span style="color:#ae81ff">0</span>     10.0M   0% /dev
+</span></span><span style="display:flex;"><span>shm                     487.8M         <span style="color:#ae81ff">0</span>    487.8M   0% /dev/shm
+</span></span><span style="display:flex;"><span>/dev/sda                 24.1G    238.1M     22.6G   1% /
+</span></span><span style="display:flex;"><span>tmpfs                   195.1M    268.0K    194.8M   0% /run
+</span></span></code></pre></div><p>Only 238 MiB!</p>
+<p>To deprovision it, run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% terraform plan -destroy
+</span></span></code></pre></div><p>If everything looks correct, run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% terraform destroy
+</span></span></code></pre></div><p><strong>Warning</strong>: It turns out the &ldquo;Linodes&rdquo; scope was not enough to do the
+deprovisioning. I needed to create a new scope, with more permissions, in order
+to do so.</p>
+<p>As you can see, terraform makes it very trivial to deprovision systems.</p>
+<p><strong>Bonus points</strong>: run <code>terraform fmt</code> to format your file. Never go <a href="https://www.youtube.com/watch?v=-CmadmM5cOk">out of
+style</a>.</p>
+<p><strong>Tip</strong>: At any point you can run <code>terraform validate</code> to verify your <code>main.tf</code>
+file is syntatically correct.</p>
+<p>Two things could be improved in the previous setup:</p>
+<ul>
+<li>We could use <code>authorized_users</code> to pass in our linode username. If we add an
+SSH key to our linode account, then that key would be automatically deployed
+to the system, thereby removing the need to specify <code>authorized_keys</code>.</li>
+<li>Alternatively, we could fetch our key from an URL endpoint with the use of
+the <code>hashicorp/http</code> provider, like so:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#a6e22e">terraform</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">required_providers</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">http</span> = {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">source</span> = <span style="color:#e6db74">&#34;hashicorp/http&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">data</span> <span style="color:#e6db74">&#34;http&#34;</span> <span style="color:#e6db74">&#34;thiagowfx_ssh_keys&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;https://github.com/thiagowfx.keys&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;linode_instance&#34;</span> <span style="color:#e6db74">&#34;coruscant&#34;</span> {<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">authorized_keys</span>  = compact([<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">in</span> split(<span style="color:#e6db74">&#34;</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#e6db74">n&#34;</span>, data.<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">thiagowfx_ssh_keys</span>.<span style="color:#a6e22e">response_body</span>) <span style="color:#f92672">:</span> chomp(<span style="color:#a6e22e">line</span>)])<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>The &ldquo;list comprehension&rdquo; above does line splitting magic to convert them to a
+list of string, and the <code>compact</code> removes the empty new line at the end.</p>
+<p>We could improve the example above even further.</p>
+<p>For starters, let&rsquo;s parameterize out the username to a variable:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">variable</span> <span style="color:#e6db74">&#34;github_username&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span>    = <span style="color:#a6e22e">string</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">default</span> = <span style="color:#e6db74">&#34;thiagowfx&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">data</span> <span style="color:#e6db74">&#34;http&#34;</span> <span style="color:#e6db74">&#34;user_ssh_keys&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;https://github.com/</span><span style="color:#e6db74">${</span>var.<span style="color:#a6e22e">github_username</span><span style="color:#e6db74">}</span><span style="color:#e6db74">.keys&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;linode_instance&#34;</span> <span style="color:#e6db74">&#34;coruscant&#34;</span> {<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">authorized_keys</span>  = compact([<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">in</span> split(<span style="color:#e6db74">&#34;</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#e6db74">n&#34;</span>, data.<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">user_ssh_keys</span>.<span style="color:#a6e22e">response_body</span>) <span style="color:#f92672">:</span> chomp(<span style="color:#a6e22e">line</span>)])<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>We could then easily supply another username with <code>-var</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% terraform plan -var github_username<span style="color:#f92672">=</span>torvalds
+</span></span></code></pre></div><p>Note that the above example leverages <a href="https://developer.hashicorp.com/terraform/language/expressions/strings">string interpolation</a>.</p>
+<p>We could also extract the SSH keys list to its own &ldquo;variable&rdquo; (<a href="https://developer.hashicorp.com/terraform/language/values/locals">locals</a>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#a6e22e">locals</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ssh_keys</span> = compact([<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">in</span> split(<span style="color:#e6db74">&#34;</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#e6db74">n&#34;</span>, data.<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">user_ssh_keys</span>.<span style="color:#a6e22e">response_body</span>) <span style="color:#f92672">:</span> chomp(<span style="color:#a6e22e">line</span>)])
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;linode_instance&#34;</span> <span style="color:#e6db74">&#34;coruscant&#34;</span> {<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">authorized_keys</span>  = <span style="color:#a6e22e">local</span>.<span style="color:#a6e22e">ssh_keys</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # ...
+</span></span></span></code></pre></div><p>A more robust (and stable) way to query the key though is through the Github API:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">data</span> <span style="color:#e6db74">&#34;http&#34;</span> <span style="color:#e6db74">&#34;github_keys&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;https://api.github.com/users/</span><span style="color:#e6db74">${</span>var.<span style="color:#a6e22e">github_username</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/keys&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">locals</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ssh_keys</span> = jsondecode(data.<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">github_keys</span>.<span style="color:#a6e22e">response_body</span>)[<span style="color:#f92672">*</span>].<span style="color:#a6e22e">key</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Note that a typical response body looks like the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>[
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;&lt;id&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;key&#34;</span>: <span style="color:#e6db74">&#34;&lt;ssh key&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>]
+</span></span></code></pre></div><p>API endpoint documentation:
+<a href="https://docs.github.com/en/rest/users/keys?apiVersion=2022-11-28#list-public-keys-for-a-user">https://docs.github.com/en/rest/users/keys?apiVersion=2022-11-28#list-public-keys-for-a-user</a></p>
+<p>If we use <code>output</code> instead of <code>locals</code>, then we can debug (inspect) it with
+<code>terraform output</code>.</p>
+<p>And that&rsquo;s it for today! In a future post, we will continue from here by using
+<a href="https://www.ansible.com/">Ansible</a> to install and set up Miniflux in our new
+Linode.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Alpine Linux does not use <code>systemd</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>The fundamental right to paste</title><link>https://thiagowfx.github.io/2024/01/the-fundamental-right-to-paste/</link><pubDate>Mon, 22 Jan 2024 18:55:13 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/the-fundamental-right-to-paste/</guid><description>&lt;p>Some websites attempt to prevent users from pasting text (i.e. &lt;code>Ctrl+V&lt;/code> /
 &lt;code>Cmd+V&lt;/code>) in web browsers.&lt;/p>
 &lt;p>It serves no purpose in most cases other than hindering accessibility and
 increasing annoyance for users.&lt;/p></description><content:encoded><![CDATA[<p>Some websites attempt to prevent users from pasting text (i.e. <code>Ctrl+V</code> /
@@ -441,24 +637,4 @@ usage: find [-H | -L | -P] [-EXdsx] [-f path] path ... [expression]
        find [-H | -L | -P] [-EXdsx] -f path [path ...] [expression]
 </code></pre><p>My second go to choice is <a href="https://man.archlinux.org/man/fd.1.en"><code>fd(1)</code></a>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ fd -t e -x rmdir
-</span></span></code></pre></div><p>&hellip;this lists all empty directories and invokes <code>rmdir</code> on each of them.</p>]]></content:encoded></item><item><title>Gerrit v3.9 is out</title><link>https://thiagowfx.github.io/2023/12/gerrit-v3.9-is-out/</link><pubDate>Sat, 23 Dec 2023 22:10:00 +0100</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2023/12/gerrit-v3.9-is-out/</guid><description>&lt;p>Gerrit &lt;a href="https://www.gerritcodereview.com/3.9.html">3.9&lt;/a> has been released recently. This is a dear release to me because I was responsible for some of its changes&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>:&lt;/p></description><content:encoded><![CDATA[<p>Gerrit <a href="https://www.gerritcodereview.com/3.9.html">3.9</a> has been released recently. This is a dear release to me because I was responsible for some of its changes<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ PAGER<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cat&#34;</span> git shortlog --author<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Thiago Perrotta&#34;</span> v3.8.0..v3.9.0
-</span></span><span style="display:flex;"><span>Thiago Perrotta <span style="color:#f92672">(</span>3<span style="color:#f92672">)</span>:
-</span></span><span style="display:flex;"><span>      Add <span style="color:#e6db74">&#39;description&#39;</span>, <span style="color:#e6db74">&#39;d&#39;</span> aliases <span style="color:#66d9ef">for</span> the <span style="color:#e6db74">&#39;message&#39;</span> search operator
-</span></span><span style="display:flex;"><span>      Add <span style="color:#e6db74">&#39;m&#39;</span> alias <span style="color:#66d9ef">for</span> the <span style="color:#e6db74">&#39;message&#39;</span> search operator
-</span></span><span style="display:flex;"><span>      UX: <span style="color:#e6db74">&#34;Your Turn&#34;</span> -&gt; <span style="color:#e6db74">&#34;Your turn&#34;</span>
-</span></span></code></pre></div><p>This is not the first Google open source project I contributed to, however I
-wanted to note these contributions here nonetheless.</p>
-<p>One of my favorite aspects of Google culture is the ability to contribute to
-any project in the company at any time in any capacity (the so called &ldquo;20%
-contributions&rdquo;).</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>The output was edited to remove duplicate entries and merge commits
-because the Gerrit project does not maintain a clean history of their
-commits i.e. they do not adopt a rebase workflow.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div><p>&hellip;this lists all empty directories and invokes <code>rmdir</code> on each of them.</p>]]></content:encoded></item></channel></rss>

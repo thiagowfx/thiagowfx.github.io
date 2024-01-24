@@ -1,4 +1,200 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>bestof on Not Just Serendipity</title><link>https://thiagowfx.github.io/tags/bestof/</link><description>Recent content in bestof on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Mon, 15 Jan 2024 14:42:51 -0300</lastBuildDate><atom:link href="https://thiagowfx.github.io/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Synchronized in Python</title><link>https://thiagowfx.github.io/2024/01/synchronized-in-python/</link><pubDate>Mon, 15 Jan 2024 14:42:51 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/synchronized-in-python/</guid><description>&lt;blockquote>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>bestof on Not Just Serendipity</title><link>https://thiagowfx.github.io/tags/bestof/</link><description>Recent content in bestof on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Tue, 23 Jan 2024 23:27:04 -0300</lastBuildDate><atom:link href="https://thiagowfx.github.io/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Terraforming a Linode: hello world</title><link>https://thiagowfx.github.io/2024/01/terraforming-a-linode-hello-world/</link><pubDate>Tue, 23 Jan 2024 23:27:04 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/terraforming-a-linode-hello-world/</guid><description>&lt;p>I host my own &lt;a href="https://miniflux.app/">Miniflux&lt;/a> instance, which happens to be
+my favorite RSS reader. Currently it is hosted on Linode (Akamai Cloud)
+running &lt;a href="https://www.alpinelinux.org/">Alpine Linux&lt;/a>.&lt;/p>
+&lt;p>My current setup was performed manually. I was thinking that, for fun, it would
+be cool to fully automate it under the principles of
+&lt;a href="https://en.wikipedia.org/wiki/Infrastructure_as_code">IaC&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>I host my own <a href="https://miniflux.app/">Miniflux</a> instance, which happens to be
+my favorite RSS reader. Currently it is hosted on Linode (Akamai Cloud)
+running <a href="https://www.alpinelinux.org/">Alpine Linux</a>.</p>
+<p>My current setup was performed manually. I was thinking that, for fun, it would
+be cool to fully automate it under the principles of
+<a href="https://en.wikipedia.org/wiki/Infrastructure_as_code">IaC</a>.</p>
+<p>The current setup does not use any containers. I had proudly made it as KISS as
+possible at the time:</p>
+<ol>
+<li>Linode is a very beginner-friendly (and cheap) VPS</li>
+<li>Alpine Linux is a first-class citizen on Linode</li>
+<li>There&rsquo;s an <code>apk</code> <a href="https://pkgs.alpinelinux.org/packages?name=miniflux">package</a> for <code>miniflux</code></li>
+<li>There&rsquo;s an OpenRC<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> script for <code>miniflux</code> (so that it can be controlled via <code>service</code>)</li>
+</ol>
+<p>For the first part of this automation we will look into provisioning a Linode
+with an Alpine Linux installation. In order to do so we will use HashiCorp
+<a href="https://www.terraform.io/">Terraform</a>.</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Provision a new Linode</li>
+<li>Deploy it in Europe</li>
+<li>Use the smallest shape (a so-called <a href="https://www.linode.com/community/questions/211/what-is-a-nanode">Nanode</a>)</li>
+<li>Run Alpine Linux</li>
+<li>Set it up with my <a href="https://github.com/thiagowfx.keys">public ssh key</a>, which is hosted on Github</li>
+</ul>
+<h2 id="terraform-setup">Terraform setup</h2>
+<ul>
+<li>Install a provider for Linode: <a href="https://registry.terraform.io/providers/linode/linode/latest/docs">https://registry.terraform.io/providers/linode/linode/latest/docs</a></li>
+</ul>
+<p>Scaffold it like this, in a <code>main.tf</code> file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#a6e22e">terraform</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">required_providers</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">linode</span> = {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">source</span> = <span style="color:#e6db74">&#34;linode/linode&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Then run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% terraform init
+</span></span></code></pre></div><ul>
+<li>Generate a Linode API token</li>
+</ul>
+<p>Go to <a href="https://cloud.linode.com/profile/tokens">https://cloud.linode.com/profile/tokens</a>, create a new token called
+<code>terraform</code>. with the &ldquo;Linodes&rdquo; scope set to &ldquo;Read/Write&rdquo;.</p>
+<ul>
+<li>Append this API token to <code>main.tf</code>:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">provider</span> <span style="color:#e6db74">&#34;linode&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">token</span> = <span style="color:#e6db74">&#34;&lt;your token here&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>Add a
+<a href="https://registry.terraform.io/providers/linode/linode/latest/docs/resources/instance"><code>linode_instance</code></a>
+with the appropriate fields set according to the documentation:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;linode_instance&#34;</span> <span style="color:#e6db74">&#34;coruscant&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">label</span>  = <span style="color:#e6db74">&#34;coruscant&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">image</span>  = <span style="color:#e6db74">&#34;linode/alpine3.19&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">region</span> = <span style="color:#e6db74">&#34;eu-central&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span>   = <span style="color:#e6db74">&#34;g6-nanode-1&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">authorized_keys</span>  = [<span style="color:#e6db74">&#34;&lt;your ssh public key here&gt;&#34;</span>]
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">backups_enabled</span>  = <span style="color:#e6db74">&#34;false&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">watchdog_enabled</span> = <span style="color:#e6db74">&#34;true&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">booted</span>           = <span style="color:#e6db74">&#34;true&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Then run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% terraform plan
+</span></span></code></pre></div><p>&ldquo;Plan&rdquo; is basically a dry-run. Terraform will output what it intends to do, but nothing will be done yet.</p>
+<ul>
+<li>Analyze the output and double check that it looks correct.</li>
+</ul>
+<p>To actually perform the provisioning, run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% terraform apply
+</span></span></code></pre></div><p>Then confirm the prompt.</p>
+<p>Within a few seconds (or maybe minutes), you should see your new Linode in the
+<a href="https://cloud.linode.com/">Linode Console</a>.</p>
+<p>We can test our deployment by ssh&rsquo;ing to our new machine:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% ssh root@&lt;public IP address&gt; -i ~/.ssh/my_ssh_key
+</span></span><span style="display:flex;"><span>Welcome to Alpine!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The Alpine Wiki contains a large amount of how-to guides and general
+</span></span><span style="display:flex;"><span>information about administrating Alpine systems.
+</span></span><span style="display:flex;"><span>See &lt;https://wiki.alpinelinux.org/&gt;.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>You can setup the system with the command: setup-alpine
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>You may change this message by editing /etc/motd.
+</span></span></code></pre></div><p>Let&rsquo;s take a pause to appreciate how lightweight it is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>localhost:~# df -h
+</span></span><span style="display:flex;"><span>Filesystem                Size      Used Available Use% Mounted on
+</span></span><span style="display:flex;"><span>devtmpfs                 10.0M         <span style="color:#ae81ff">0</span>     10.0M   0% /dev
+</span></span><span style="display:flex;"><span>shm                     487.8M         <span style="color:#ae81ff">0</span>    487.8M   0% /dev/shm
+</span></span><span style="display:flex;"><span>/dev/sda                 24.1G    238.1M     22.6G   1% /
+</span></span><span style="display:flex;"><span>tmpfs                   195.1M    268.0K    194.8M   0% /run
+</span></span></code></pre></div><p>Only 238 MiB!</p>
+<p>To deprovision it, run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% terraform plan -destroy
+</span></span></code></pre></div><p>If everything looks correct, run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% terraform destroy
+</span></span></code></pre></div><p><strong>Warning</strong>: It turns out the &ldquo;Linodes&rdquo; scope was not enough to do the
+deprovisioning. I needed to create a new scope, with more permissions, in order
+to do so.</p>
+<p>As you can see, terraform makes it very trivial to deprovision systems.</p>
+<p><strong>Bonus points</strong>: run <code>terraform fmt</code> to format your file. Never go <a href="https://www.youtube.com/watch?v=-CmadmM5cOk">out of
+style</a>.</p>
+<p><strong>Tip</strong>: At any point you can run <code>terraform validate</code> to verify your <code>main.tf</code>
+file is syntatically correct.</p>
+<p>Two things could be improved in the previous setup:</p>
+<ul>
+<li>We could use <code>authorized_users</code> to pass in our linode username. If we add an
+SSH key to our linode account, then that key would be automatically deployed
+to the system, thereby removing the need to specify <code>authorized_keys</code>.</li>
+<li>Alternatively, we could fetch our key from an URL endpoint with the use of
+the <code>hashicorp/http</code> provider, like so:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#a6e22e">terraform</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">required_providers</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">http</span> = {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">source</span> = <span style="color:#e6db74">&#34;hashicorp/http&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">data</span> <span style="color:#e6db74">&#34;http&#34;</span> <span style="color:#e6db74">&#34;thiagowfx_ssh_keys&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;https://github.com/thiagowfx.keys&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;linode_instance&#34;</span> <span style="color:#e6db74">&#34;coruscant&#34;</span> {<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">authorized_keys</span>  = compact([<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">in</span> split(<span style="color:#e6db74">&#34;</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#e6db74">n&#34;</span>, data.<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">thiagowfx_ssh_keys</span>.<span style="color:#a6e22e">response_body</span>) <span style="color:#f92672">:</span> chomp(<span style="color:#a6e22e">line</span>)])<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>The &ldquo;list comprehension&rdquo; above does line splitting magic to convert them to a
+list of string, and the <code>compact</code> removes the empty new line at the end.</p>
+<p>We could improve the example above even further.</p>
+<p>For starters, let&rsquo;s parameterize out the username to a variable:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">variable</span> <span style="color:#e6db74">&#34;github_username&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span>    = <span style="color:#a6e22e">string</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">default</span> = <span style="color:#e6db74">&#34;thiagowfx&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">data</span> <span style="color:#e6db74">&#34;http&#34;</span> <span style="color:#e6db74">&#34;user_ssh_keys&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;https://github.com/</span><span style="color:#e6db74">${</span>var.<span style="color:#a6e22e">github_username</span><span style="color:#e6db74">}</span><span style="color:#e6db74">.keys&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;linode_instance&#34;</span> <span style="color:#e6db74">&#34;coruscant&#34;</span> {<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">authorized_keys</span>  = compact([<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">in</span> split(<span style="color:#e6db74">&#34;</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#e6db74">n&#34;</span>, data.<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">user_ssh_keys</span>.<span style="color:#a6e22e">response_body</span>) <span style="color:#f92672">:</span> chomp(<span style="color:#a6e22e">line</span>)])<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>We could then easily supply another username with <code>-var</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% terraform plan -var github_username<span style="color:#f92672">=</span>torvalds
+</span></span></code></pre></div><p>Note that the above example leverages <a href="https://developer.hashicorp.com/terraform/language/expressions/strings">string interpolation</a>.</p>
+<p>We could also extract the SSH keys list to its own &ldquo;variable&rdquo; (<a href="https://developer.hashicorp.com/terraform/language/values/locals">locals</a>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#a6e22e">locals</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ssh_keys</span> = compact([<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">in</span> split(<span style="color:#e6db74">&#34;</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#e6db74">n&#34;</span>, data.<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">user_ssh_keys</span>.<span style="color:#a6e22e">response_body</span>) <span style="color:#f92672">:</span> chomp(<span style="color:#a6e22e">line</span>)])
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;linode_instance&#34;</span> <span style="color:#e6db74">&#34;coruscant&#34;</span> {<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">authorized_keys</span>  = <span style="color:#a6e22e">local</span>.<span style="color:#a6e22e">ssh_keys</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  # ...
+</span></span></span></code></pre></div><p>A more robust (and stable) way to query the key though is through the Github API:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">data</span> <span style="color:#e6db74">&#34;http&#34;</span> <span style="color:#e6db74">&#34;github_keys&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;https://api.github.com/users/</span><span style="color:#e6db74">${</span>var.<span style="color:#a6e22e">github_username</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/keys&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">locals</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ssh_keys</span> = jsondecode(data.<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">github_keys</span>.<span style="color:#a6e22e">response_body</span>)[<span style="color:#f92672">*</span>].<span style="color:#a6e22e">key</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Note that a typical response body looks like the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>[
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;&lt;id&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;key&#34;</span>: <span style="color:#e6db74">&#34;&lt;ssh key&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>]
+</span></span></code></pre></div><p>API endpoint documentation:
+<a href="https://docs.github.com/en/rest/users/keys?apiVersion=2022-11-28#list-public-keys-for-a-user">https://docs.github.com/en/rest/users/keys?apiVersion=2022-11-28#list-public-keys-for-a-user</a></p>
+<p>If we use <code>output</code> instead of <code>locals</code>, then we can debug (inspect) it with
+<code>terraform output</code>.</p>
+<p>And that&rsquo;s it for today! In a future post, we will continue from here by using
+<a href="https://www.ansible.com/">Ansible</a> to install and set up Miniflux in our new
+Linode.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Alpine Linux does not use <code>systemd</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Synchronized in Python</title><link>https://thiagowfx.github.io/2024/01/synchronized-in-python/</link><pubDate>Mon, 15 Jan 2024 14:42:51 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/synchronized-in-python/</guid><description>&lt;blockquote>
 &lt;p>&lt;a href="https://stackoverflow.com/questions/53026622/python-equivalent-of-java-synchronized">In Java, you can make a variable thread safe by just adding the &lt;code>synchronized&lt;/code>
 keyword. Is there anything that can achieve the same results in
 Python?&lt;/a>&lt;/p>
@@ -994,184 +1190,6 @@ with <code>vim</code> to help spot basic errors and/or suggest best practices, a
 </li>
 <li id="fn:6">
 <p>The <em>10x programmer</em> thing is a well-known joke however in this instance the mentioned characters are indeed superb programmers that I immensely respect.&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item><item><title>★ Alpine Linux: New APKBUILD Workflow</title><link>https://thiagowfx.github.io/2022/01/alpine-linux-new-apkbuild-workflow/</link><pubDate>Sun, 23 Jan 2022 19:15:02 -0500</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2022/01/alpine-linux-new-apkbuild-workflow/</guid><description>&lt;p>This document describes my workflow to manage &lt;code>APKBUILDs&lt;/code> for the
-&lt;a href="https://gitlab.alpinelinux.org/alpine/aports">aports&lt;/a> repository in &lt;a href="https://alpinelinux.org/">Alpine Linux&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>This document describes my workflow to manage <code>APKBUILDs</code> for the
-<a href="https://gitlab.alpinelinux.org/alpine/aports">aports</a> repository in <a href="https://alpinelinux.org/">Alpine Linux</a>.</p>
-<h2 id="disclaimer">Disclaimer</h2>
-<p>First of all, this post is not a substitute to the <a href="https://wiki.alpinelinux.org/wiki/Main_Page">AlpineWiki</a>
-and it will likely get outdated at some point. In particular, refer to the
-following articles for up-to-date documentation that will outlive this blog:</p>
-<ul>
-<li><a href="https://wiki.alpinelinux.org/wiki/APKBUILD_Reference">https://wiki.alpinelinux.org/wiki/APKBUILD_Reference</a></li>
-<li><a href="https://wiki.alpinelinux.org/wiki/Abuild_and_Helpers">https://wiki.alpinelinux.org/wiki/Abuild_and_Helpers</a></li>
-<li><a href="https://wiki.alpinelinux.org/wiki/Aports_tree">https://wiki.alpinelinux.org/wiki/Aports_tree</a></li>
-<li><a href="https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package">https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package</a></li>
-</ul>
-<p>This article is not a tutorial, as such it assumes you already know what an
-<code>APKBUILD</code> is and how to use <code>abuild</code>. In particular, you should have the
-<code>alpine-sdk</code>, <code>atools</code> and <code>spdx-licenses-list</code> packages installed in your
-system.</p>
-<h2 id="structure">Structure</h2>
-<p>I manage my packages with <code>git</code>. Create a GitLab account on
-<a href="https://gitlab.alpinelinux.org/">https://gitlab.alpinelinux.org/</a>, fork the <a href="https://gitlab.alpinelinux.org/alpine/aports"><code>aports</code></a> tree, and <code>git clone</code> your fork.</p>
-<p>The structure follows Alpine Linux repositories:</p>
-<pre tabindex="0"><code>$ git clone https://gitlab.alpinelinux.org/alpine/aports.git &amp;&amp; tree -L 1 aports
-aports
-├── CODINGSTYLE.md
-├── COMMITSTYLE.md
-├── README.md
-├── community
-├── main
-├── non-free
-├── scripts
-├── testing
-└── unmaintained
-</code></pre><h2 id="bootstrapping">Bootstrapping</h2>
-<p>I am going to illustrate with a package I added recently, <a href="https://packages.debian.org/source/sensible-utils"><code>sensible-utils</code></a>:</p>
-<ul>
-<li>
-<p>Before you even begin, check if the package already exists, do a quick search in the <a href="https://pkgs.alpinelinux.org/packages?name=sensible%2Dutils">Alpine Repositories</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
-</li>
-<li>
-<p>Start by scaffolding a new <code>APKBUILD</code> from the base template:</p>
-</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cd aports/testing  <span style="color:#75715e"># Always add new packages in testing/ first.</span>
-</span></span><span style="display:flex;"><span>$ newapkbuild sensible-utils
-</span></span><span style="display:flex;"><span>$ cd sensible-utils
-</span></span><span style="display:flex;"><span>$ $EDITOR APKBUILD
-</span></span></code></pre></div><p><strong>Note</strong>: If you have a language-specific package (e.g. perl, python, rust),
-use the language-specific template instead of the base one. Run <code>newapkbuild -h</code> to list available templates. There are also some <code>apkbuild-*</code> helpers such
-as <code>apkbuild-pypi</code> and <code>apkbuild-cpan</code>.</p>
-<ul>
-<li>
-<p>Fill in <code>APKBUILD</code> metadata like <code>pkgname=</code>, <code>url=</code>, etc. Refer to the AlpineWiki for up-to-date best practices.</p>
-</li>
-<li>
-<p>By doing so, I produced the following <code>APKBUILD</code>:</p>
-</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pkgname<span style="color:#f92672">=</span>sensible-utils
-</span></span><span style="display:flex;"><span>pkgver<span style="color:#f92672">=</span>0.0.14
-</span></span><span style="display:flex;"><span>pkgrel<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>pkgdesc<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Utilities for sensible alternative selection&#34;</span>
-</span></span><span style="display:flex;"><span>url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://packages.debian.org/source/sensible-utils&#34;</span>
-</span></span><span style="display:flex;"><span>arch<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;all&#34;</span>
-</span></span><span style="display:flex;"><span>license<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;GPL-2.0-or-later&#34;</span>
-</span></span><span style="display:flex;"><span>makedepends<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;po4a&#34;</span>
-</span></span><span style="display:flex;"><span>subpackages<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$pkgname<span style="color:#e6db74">-doc&#34;</span>
-</span></span><span style="display:flex;"><span>source<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://ftp.debian.org/debian/pool/main/s/</span>$pkgname<span style="color:#e6db74">/</span><span style="color:#e6db74">${</span>pkgname<span style="color:#e6db74">}</span><span style="color:#e6db74">_</span>$pkgver<span style="color:#e6db74">.tar.xz&#34;</span>
-</span></span><span style="display:flex;"><span>builddir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">.git&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>build<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	./configure --prefix<span style="color:#f92672">=</span>/usr
-</span></span><span style="display:flex;"><span>	make
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>check<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	make -k check
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>package<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	make DESTDIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/&#34;</span> install
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># only works with update-alternatives, specific to debian</span>
-</span></span><span style="display:flex;"><span>	rm <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/bin/select-editor&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>sha512sums<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">15ba996f811ab3a9c1f5726f35766d74aafdf925c5c2392b33c6643d6c439796a742f9d0f4625c79de640e6b5e4a6a032b768eb1bc4ac31b448f9767b0ceed44  sensible-utils_0.0.14.tar.xz
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p><strong>Note</strong>: <code>$srcdir</code> refers to the <code>src/</code> directory within <code>sensible-utils</code>. <code>$pkgdir</code>
-refers to the <code>pkg/</code> directory within <code>sensible-utils</code>.</p>
-<p>If you&rsquo;re used to Arch Linux <code>PKGBUILDs</code> you&rsquo;ll notice a striking similarity to
-<code>APKBUILDs</code>. I highlighted a few notable differences in a previous post, <a href="https://thiagowfx.github.io/2022/01/my-first-apkbuild/#build-comparison"><code>My First APKBUILD</code></a>.</p>
-<h2 id="adjustments">Adjustments</h2>
-<ul>
-<li>
-<p>Generate the checksums with <code>abuild checksum</code>. It will automatically update the <code>APKBUILD</code> inplace.</p>
-</li>
-<li>
-<p>Download and extract package files with <code>abuild unpack</code>.</p>
-</li>
-<li>
-<p><code>ls src/</code> and check the directory structure. Update <code>$builddir</code> in your
-<code>APKBUILD</code> to match it. Usually it will be <code>$srcdir/$pkgname-$pkgver</code>, but
-sometimes tiny adjustments are necessary. In this case, it was
-<code>$srcdir/$pkgname.git</code>.</p>
-</li>
-<li>
-<p>Then run <code>abuild -r</code>. If everything goes well, your package (and subpackages,
-if any) will be successfully built<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> in an isolated environment and placed
-in <code>~/packages</code> (<code>sensible-utils-0.0.14-r0.apk</code> and
-<code>sensible-utils-doc-0.0.14-r0.apk</code>), however that doesn&rsquo;t mean it is a decent
-package yet.</p>
-</li>
-<li>
-<p>Run <code>apkbuild-lint APKBUILD</code> and <code>abuild sanitycheck</code> to lint your package
-and catch common errors. Fix the errors, if any.</p>
-</li>
-</ul>
-<h2 id="request-feedback-if-needed">Request feedback if needed</h2>
-<p>If the package is only relevant to you, stop here. <code>git commit</code>, <code>git push</code>, and then you&rsquo;re done. Install the package with <code>doas apk add &lt;pkg&gt;</code>.</p>
-<p>Otherwise, if the package might be potentially useful to other Alpine users, you could consider uploading it to the <a href="https://gitlab.alpinelinux.org/alpine/aports">aports</a> repository.</p>
-<p>Before you do so, stop for a moment and make an honest judgment whether this is a high quality package and whether you&rsquo;re confident it is clean and polished enough, following the best practices documented in the Wiki. The answer doesn&rsquo;t need to be positive, it&rsquo;s perfectly OK to commit mistakes and everyone is a newbie at some point.</p>
-<p>If the answer is negative, or if you&rsquo;re new to this process and would like some help, fear no more! There are at least two decent community resources wherein to ask for help:</p>
-<ol>
-<li>
-<p><a href="https://wiki.alpinelinux.org/wiki/Alpine_Linux:IRC"><code>#alpine-devel</code> on OFTC IRC</a> Drew DeVault wrote a good <a href="https://drewdevault.com/2021/11/24/A-philosophy-for-instant-messaging.html">post</a> about IRC etiquette.</p>
-</li>
-<li>
-<p><a href="https://wiki.alpinelinux.org/wiki/Alpine_Linux:Mailing_lists"><code>alpine-devel</code> mailing list</a>.</p>
-</li>
-</ol>
-<p>If you&rsquo;re part of any other community (e.g. Reddit, Discord) feel free to ask therein as well. Avoid posting everywhere though, pick one community, draft your post and then patiently wait.</p>
-<h2 id="publish-your-package">Publish your package</h2>
-<p>If all is well, it&rsquo;s time to publish your <code>APKBUILD</code>. Follow the up-to-date
-steps at
-<a href="https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Code_review">https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Code_review</a>. There are basically two options:</p>
-<ol>
-<li>
-<p>Send a gitlab merge request (MR). This follows the standard git forge workflow
-(GitHub / BitBucket / GitLab) wherein you fork the main repository, create
-a branch in your own clone, push it and then initiate a pull request<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
-</li>
-<li>
-<p>Alternatively, send an email with your patch to the <code>aports</code> mailing list
-with <a href="https://git-send-email.io/"><code>git send-email</code></a>:</p>
-</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git config sendemail.to <span style="color:#e6db74">&#34;alpine-aports@lists.alpinelinux.org&#34;</span>
-</span></span><span style="display:flex;"><span>$ git send-email -1  <span style="color:#75715e"># Implicitly uses --to=alpine-linux@lists.alpinelinux.org as set above</span>
-</span></span></code></pre></div><p><strong>Tip</strong>: The second approach has a steep learning curve, however once you
-figure it out it&rsquo;s actually faster, simpler and more streamlined. Whenever
-a new email is sent to the aports mailing list, a MR is automatically created
-on GitLab.</p>
-<p><strong>Note</strong>: If you adopt the email workflow and need to send a follow-up to your
-initial patch, do not use <code>--in-reply-to</code>. Instead, create a new email thread.
-This is needed because as of this post new GitLab MRs are only created when new
-email threads are created. Replies to existing email threads do not update the
-MR patch.</p>
-<p>And that&rsquo;s all! Other useful tips:</p>
-<ul>
-<li>Use <a href="https://repology.org/">repology</a> to look for preexisting packages in other Linux (or even BSD) distributions, it&rsquo;s very handy as a starting point if you have no idea how to package a given package. In particular, Arch Linux <code>PKGBUILDs</code> are very similar to <code>APKBUILDs</code>. Gentoo <code>EBUILDs</code> and FreeBSD <code>Makefiles</code> are also reasonable approximations.</li>
-<li>Use <code>abump</code> to bump pkgver in <code>APKBUILD</code> files if the package gets an update to a newer upstream release.</li>
-<li>Use <code>apkgrel</code> to bump or reset the <code>pkgrel</code> value of your <code>APKBUILD</code>.</li>
-<li>Use <a href="https://thiagowfx.github.io/2022/01/arch-linux-new-pkgbuild-workflow/#bonus-track-upstream"><code>urlwatch</code></a> to track upstream updates.</li>
-</ul>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>If you use <a href="https://duckduckgo.com/">https://duckduckgo.com/</a>, query for <code>!alpine sensible-utils</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>Package debugging is out of scope of this post.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3">
-<p>In GitLab it&rsquo;s called Merge Request (MR). The list of all aports MRs is <a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests">here</a>.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>
