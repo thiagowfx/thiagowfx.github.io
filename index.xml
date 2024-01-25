@@ -1,4 +1,101 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Not Just Serendipity</title><link>https://thiagowfx.github.io/</link><description>Recent content on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Tue, 23 Jan 2024 23:27:04 -0300</lastBuildDate><atom:link href="https://thiagowfx.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Terraforming a Linode: hello world</title><link>https://thiagowfx.github.io/2024/01/terraforming-a-linode-hello-world/</link><pubDate>Tue, 23 Jan 2024 23:27:04 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/terraforming-a-linode-hello-world/</guid><description>&lt;p>I host my own &lt;a href="https://miniflux.app/">Miniflux&lt;/a> instance, which happens to be
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Not Just Serendipity</title><link>https://thiagowfx.github.io/</link><description>Recent content on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Thu, 25 Jan 2024 18:27:04 -0300</lastBuildDate><atom:link href="https://thiagowfx.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>★ (Google) Chrome for Testing: reliable downloads for browser automation</title><link>https://thiagowfx.github.io/2024/01/google-chrome-for-testing-reliable-downloads-for-browser-automation/</link><pubDate>Thu, 25 Jan 2024 18:27:04 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/google-chrome-for-testing-reliable-downloads-for-browser-automation/</guid><description>&lt;p>Let&amp;rsquo;s discuss the &lt;em>raison d&amp;rsquo;etre&lt;/em> of &lt;a href="https://developer.chrome.com/blog/chrome-for-testing">Google Chrome for
+Testing&lt;/a>, a project I was
+the Tech Lead of during my tenure on the Chrome Tooling / Browser Automation team
+at Google.&lt;/p></description><content:encoded><![CDATA[<p>Let&rsquo;s discuss the <em>raison d&rsquo;etre</em> of <a href="https://developer.chrome.com/blog/chrome-for-testing">Google Chrome for
+Testing</a>, a project I was
+the Tech Lead of during my tenure on the Chrome Tooling / Browser Automation team
+at Google.</p>
+<p><a href="https://www.youtube.com/watch?v=9y4A15WCGdc">Once upon a time, a few (debugging) mistakes
+ago</a>, web developers would run
+(web) integration tests with <a href="https://www.w3.org/TR/webdriver2/">WebDriver
+Classic</a> using Google Chrome (or Chromium)<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.
+This was a <a href="https://three-body-problem.fandom.com/wiki/Chaotic_Era">chaotic
+era</a>.</p>
+<p><em>&ldquo;Why?&rdquo;</em>, you may rightfully ask.</p>
+<ul>
+<li>The web browser and/or its components / extensions / etc could
+<strong>auto-update</strong> in-between successive test runs, yielding different test
+results, i.e. tests were not guaranteed to be hermetic / deterministic due to
+their (potentially) changing environment, yielding test flakiness</li>
+<li>Chrome adds an <strong>info bar</strong> whenever it is controlled in an automated
+fashion, which changes the CSS viewport, resulting in changes compared to a
+production environment. For example: an automated test that takes a
+screenshot would have a slightly smaller height whenever an infobar is
+present.</li>
+<li>There are no versioned Chrome builds for download. There&rsquo;s no <strong>browser
+pinning</strong>. As a developer you always download the latest version. This makes
+it hard to reason about invariants, especially when new browser versions
+introduce breaking changes, even seemingly small ones.
+<ul>
+<li><strong>Corollary</strong>: The lack of versioned Chrome builds makes it hard to obtain
+a corresponding matching
+<a href="https://chromedriver.chromium.org/downloads">Chromedriver</a> version for
+Chrome. The mismatch (delta) could provoke testing inconsistencies if
+browser APIs diverge</li>
+</ul>
+</li>
+</ul>
+<p>In order to address these (and other) issues, <a href="https://goo.gle/chrome-for-testing">Chrome for
+Testing</a> (hereafter &ldquo;CfT&rdquo;) was born.</p>
+<p>There are other <em>niceties</em> that Chrome for Testing accomplishes as of today:</p>
+<ul>
+<li>The <a href="https://chromedevtools.github.io/devtools-protocol/">CDP (Chrome DevTools
+Protocol)</a> experiment
+(&ldquo;Protocol Monitor&rdquo;) is enabled by default, out-of-the-box. This kind of
+experiment, which enriches your debugging toolbox, is exactly the sensible
+state you want during the development cycle.</li>
+<li>Mechanisms such as <a href="https://developer.chrome.com/blog/self-xss">self-XSS confirmation
+prompts</a> are disabled by default,
+which is the desired behavior for automation. Consider an analogy with
+setting
+<a href="https://askubuntu.com/questions/972516/debian-frontend-environment-variable"><code>DEBIAN_FRONTEND=noninteractive</code></a>
+when running <code>apt</code> in dockerfiles. You don&rsquo;t want prompts (even benign ones)
+to suddenly get in the way of your tests and end up interrupting their
+execution flow.</li>
+<li>Completely agnostic to the concept of &ldquo;Stable&rdquo; / &ldquo;Beta&rdquo; / &ldquo;Dev&rdquo;. If you have
+pinned versions, you don&rsquo;t need to care about any of that.</li>
+<li>CfT releases are made available alongside a subset of corresponding Google
+Chrome releases</li>
+</ul>
+<p>Something important to note:</p>
+<blockquote>
+<p><strong>Warning</strong>: Chrome for Testing has been created purely for browser
+automation and testing purposes, and is not suitable for daily browsing.</p>
+</blockquote>
+<p>The main reason for that is the fact that it does not auto-update. You could
+argue that it doesn&rsquo;t matter: Chrome for most linux distributions also does not
+auto-update by itself. The updates are normally deferred to the distribution&rsquo;s
+package manager (e.g. <code>apt</code>, <code>dnf</code>, <code>pacman</code>, etc). Why should it be different
+for Chrome for Testing?</p>
+<p>An additional point to consider here is that Chrome for Testing could have new
+features in the future that would be optimized for developers, not for end
+users. You don&rsquo;t want end users to shoot themselves on the foot, therefore it&rsquo;s
+easier, better and safer to do a blanket anti-recommendation of CfT for
+non-developers<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
+<p>Because of that, CfT cannot be made the default system browser.</p>
+<p>The easiest way to obtain CfT is via its public API, which is documented here:
+<a href="https://googlechromelabs.github.io/chrome-for-testing/">https://googlechromelabs.github.io/chrome-for-testing/</a>, or through the official
+<a href="https://pptr.dev/browsers-api">CLI utility</a> that is part of Puppeteer.</p>
+<p>Today, for all the reasons above (and more to come!), CfT is the de-facto
+recommended solution for browser automation for all things web applications and
+web platform testing. If you&rsquo;re currently using either Chromium or Google
+Chrome for these purposes, you should switch to it.</p>
+<h2 id="references">References</h2>
+<ul>
+<li>Chrome for Testing Design Document: <a href="https://goo.gle/chrome-for-testing">https://goo.gle/chrome-for-testing</a></li>
+<li><a href="https://developer.chrome.com/blog/self-xss#can_you_disable_it_for_test_automation">How Chrome DevTools helps to defend against self-XSS attacks</a></li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>For simplicity, referred to as just <em>Chrome</em> hereafter.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>The same way you wouldn&rsquo;t recommend Arch Linux for linux newbies.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Terraforming a Linode: hello world</title><link>https://thiagowfx.github.io/2024/01/terraforming-a-linode-hello-world/</link><pubDate>Tue, 23 Jan 2024 23:27:04 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/terraforming-a-linode-hello-world/</guid><description>&lt;p>I host my own &lt;a href="https://miniflux.app/">Miniflux&lt;/a> instance, which happens to be
 my favorite RSS reader. Currently it is hosted on Linode (Akamai Cloud)
 running &lt;a href="https://www.alpinelinux.org/">Alpine Linux&lt;/a>.&lt;/p>
 &lt;p>My current setup was performed manually. I was thinking that, for fun, it would
@@ -622,20 +719,4 @@ in debugging), an equal sign <code>'='</code> may be added after the expression.
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;  is_full_word_match: token=&#39;</span> <span style="color:#f92672">+</span> token <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; words=&#39;</span> <span style="color:#f92672">+</span> words)
 </span></span></code></pre></div><p>Or even:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;  is_full_word_match: token=</span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> words=</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(token, words))
-</span></span></code></pre></div>]]></content:encoded></item><item><title>macOS: remove all empty directories</title><link>https://thiagowfx.github.io/2023/12/macos-remove-all-empty-directories/</link><pubDate>Fri, 29 Dec 2023 02:02:19 +0100</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2023/12/macos-remove-all-empty-directories/</guid><description>&lt;p>For some odd reason my &lt;a href="https://calibre-ebook.com">Calibre&lt;/a> backup to cloud
-storage had a bunch of empty directories. I&amp;rsquo;ve been meaning to remove them, but
-it&amp;rsquo;s cumbersome to do so from the web client.&lt;/p></description><content:encoded><![CDATA[<p>For some odd reason my <a href="https://calibre-ebook.com">Calibre</a> backup to cloud
-storage had a bunch of empty directories. I&rsquo;ve been meaning to remove them, but
-it&rsquo;s cumbersome to do so from the web client.</p>
-<p>Instead, let&rsquo;s do it from a local client.</p>
-<p>Upon installing the cloud storage software, a local directory is exposed under
-<code>/Users/$USER/Library/CloudStorage</code> (macOS).</p>
-<p>My first instinct is to use <a href="https://man.archlinux.org/man/find.1.en"><code>find(1)</code></a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ find -empty -type d -delete
-</span></span></code></pre></div><p>However that does not work on macOS:</p>
-<pre tabindex="0"><code>find: illegal option -- e
-usage: find [-H | -L | -P] [-EXdsx] [-f path] path ... [expression]
-       find [-H | -L | -P] [-EXdsx] -f path [path ...] [expression]
-</code></pre><p>My second go to choice is <a href="https://man.archlinux.org/man/fd.1.en"><code>fd(1)</code></a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ fd -t e -x rmdir
-</span></span></code></pre></div><p>&hellip;this lists all empty directories and invokes <code>rmdir</code> on each of them.</p>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div>]]></content:encoded></item></channel></rss>
