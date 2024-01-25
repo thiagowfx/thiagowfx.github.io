@@ -28,10 +28,10 @@ it hard to reason about invariants, especially when new browser versions
 introduce breaking changes, even seemingly small ones.
 <ul>
 <li><strong>Corollary</strong>: The lack of versioned Chrome builds makes it hard to obtain
-a corresponding matching
+a corresponding (matching)
 <a href="https://chromedriver.chromium.org/downloads">Chromedriver</a> version for
-Chrome. The mismatch (delta) could provoke testing inconsistencies if
-browser APIs diverge</li>
+Chrome. The mismatch (delta) could provoke testing inconsistencies whenever
+browser APIs diverge<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</li>
 </ul>
 </li>
 </ul>
@@ -71,7 +71,7 @@ for Chrome for Testing?</p>
 features in the future that would be optimized for developers, not for end
 users. You don&rsquo;t want end users to shoot themselves on the foot, therefore it&rsquo;s
 easier, better and safer to do a blanket anti-recommendation of CfT for
-non-developers<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
+non-developers<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
 <p>Because of that, CfT cannot be made the default system browser.</p>
 <p>The easiest way to obtain CfT is via its public API, which is documented here:
 <a href="https://googlechromelabs.github.io/chrome-for-testing/">https://googlechromelabs.github.io/chrome-for-testing/</a>, or through the official
@@ -80,6 +80,59 @@ non-developers<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-n
 recommended solution for browser automation for all things web applications and
 web platform testing. If you&rsquo;re currently using either Chromium or Google
 Chrome for these purposes, you should switch to it.</p>
+<h2 id="bonus-how-to-run-chrome-for-testing-in-ci">Bonus: How to run Chrome for Testing in CI?</h2>
+<p>The <a href="https://github.com/GoogleChromeLabs/chromium-bidi">chromium-bidi</a> repository is an excellent (and simple-ish) example on how to do so<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>.</p>
+<p>Given a <code>.github/workflows/e2e.yml</code> file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">E2E tests</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">e2e</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v3</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/setup-node@v3</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">node-version</span>: <span style="color:#ae81ff">16</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">run</span>: <span style="color:#ae81ff">npm ci</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># This is the exciting part wherein we fetch CfT.</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># Despite the &#34;chromium&#34; name, this is actually CfT.</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># We set a explicit shell to force &#34;set -eo pipefail&#34; so that,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># if the command fails, then the entire step fails.</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># We do not want &#34;cut&#34; to run if the download fails for some reason.</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># The syntactic sugar of the parsing could be improved in a future</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># version of the CLI tool, but that&#39;s how it should be done for now.</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># We store the location of the CfT binary in an environment variable.</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Install Google Chrome for Testing</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">shell</span>: <span style="color:#ae81ff">bash</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          cft_binary=&#34;$(npx @puppeteer/browsers install chromium@latest | cut -f 2- -d&#39; &#39;)&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          echo &#34;cft_binary=$chromium_binary&#34; &gt;&gt; $GITHUB_ENV</span>          
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/setup-python@v4</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">python-version</span>: <span style="color:#e6db74">&#39;3.10&#39;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">run</span>: <span style="color:#ae81ff">pip install -r tests/requirements.txt</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># This is an example on how to run a test suite by explicitly pointing</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># out to CfT, using the environment variable set earlier.</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Run E2E tests</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: <span style="color:#ae81ff">npm run e2e</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">BROWSER_BIN</span>: <span style="color:#ae81ff">${{ env.chromium_binary }}</span>
+</span></span></code></pre></div><p>You can find the complete version of this example in an <a href="https://github.com/GoogleChromeLabs/chromium-bidi/blob/7d0962eb85c014dbb2cace7d471dd29474f11eab/.github/workflows/e2e.yml">older
+commit</a>
+within that repository. The reason I link to an older commit is due to its
+direct usage of the <a href="https://pptr.dev/browsers-api">@puppeteer/browsers</a> CLI
+tool, which makes it easier to illustrate how to fetch CfT. Recent commits of
+the repository use a JS wrapper to do so, which is more flexible / robust for
+the purposes of that particular repository at the expense of decreased
+readability for a newcomer. Software Engineering is all about trade-offs after
+all.</p>
 <h2 id="references">References</h2>
 <ul>
 <li>Chrome for Testing Design Document: <a href="https://goo.gle/chrome-for-testing">https://goo.gle/chrome-for-testing</a></li>
@@ -92,7 +145,13 @@ Chrome for these purposes, you should switch to it.</p>
 <p>For simplicity, referred to as just <em>Chrome</em> hereafter.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2">
-<p>The same way you wouldn&rsquo;t recommend Arch Linux for linux newbies.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>You can find lots of such reports <a href="https://groups.google.com/g/chromedriver-users">here</a>.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>The same way you wouldn&rsquo;t recommend Arch Linux for linux newbies.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p><strong>Disclaimer</strong>: I used to work on that repository, thus my self-assessment is clearly biased :-)&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item><item><title>The fundamental right to paste</title><link>https://thiagowfx.github.io/2024/01/the-fundamental-right-to-paste/</link><pubDate>Mon, 22 Jan 2024 18:55:13 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/the-fundamental-right-to-paste/</guid><description>&lt;p>Some websites attempt to prevent users from pasting text (i.e. &lt;code>Ctrl+V&lt;/code> /
