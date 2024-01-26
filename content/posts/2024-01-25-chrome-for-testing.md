@@ -43,7 +43,19 @@ _"Why?"_, you may rightfully ask.
     browser APIs diverge[^3].
 
 In order to address these (and other) issues, [Chrome for
-Testing](https://goo.gle/chrome-for-testing) (hereafter "CfT") was born.
+Testing](https://goo.gle/chrome-for-testing) (hereafter "CfT") was born. To
+clarify, today where are three flavours of Chrom*:
+
+- **Chromium**: the open-source project, https://chromium.org/. The root of all
+  derivatives (Microsoft Edge, Brave, etc). It is available in full source
+  form, but there are no (official) pre-built binaries for it.
+- **Google Chrome**: the proprietary, closed-source version of Chromium developed
+  by Google. Think of it as Chromium on steroids. Google distributes pre-built
+  Chrome binaries for every platform it supports.
+- **Google Chrome for Testing**: think of it as "reproducible (or pinned, or
+  frozen) Google Chrome". It is basically a snapshot of Google Chrome in a
+  fixed time in the past, plus a few bits of developer-oriented features
+  mentioned in this article.
 
 There are other _niceties_ that Chrome for Testing accomplishes as of today:
 
