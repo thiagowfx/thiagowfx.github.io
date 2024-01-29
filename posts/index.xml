@@ -1,4 +1,54 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Not Just Serendipity</title><link>https://thiagowfx.github.io/posts/</link><description>Recent content in Posts on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Mon, 29 Jan 2024 00:06:49 -0300</lastBuildDate><atom:link href="https://thiagowfx.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Anki: find all notes with an empty field</title><link>https://thiagowfx.github.io/2024/01/anki-find-all-notes-with-an-empty-field/</link><pubDate>Mon, 29 Jan 2024 00:06:49 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/anki-find-all-notes-with-an-empty-field/</guid><description>&lt;p>Gabriel Wyner recommends, in its &lt;a href="https://fluent-forever.com/index.html">Fluent
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Not Just Serendipity</title><link>https://thiagowfx.github.io/posts/</link><description>Recent content in Posts on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Mon, 29 Jan 2024 00:20:31 -0300</lastBuildDate><atom:link href="https://thiagowfx.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Hugo: rename a tag</title><link>https://thiagowfx.github.io/2024/01/hugo-rename-a-tag/</link><pubDate>Mon, 29 Jan 2024 00:20:31 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/hugo-rename-a-tag/</guid><description>&lt;p>This blog is rendered by the means of a static site generator (SSG) called
+&lt;a href="https://gohugo.io/">Hugo&lt;/a>. Each blog post has a set of one or more tags
+associated to it. The more posts I create, the more consolidated the tags become.&lt;/p>
+&lt;p>Sometimes I need to rename tags after-the-fact to better reflect the underlying
+posts they represent.&lt;/p></description><content:encoded><![CDATA[<p>This blog is rendered by the means of a static site generator (SSG) called
+<a href="https://gohugo.io/">Hugo</a>. Each blog post has a set of one or more tags
+associated to it. The more posts I create, the more consolidated the tags become.</p>
+<p>Sometimes I need to rename tags after-the-fact to better reflect the underlying
+posts they represent.</p>
+<p>This is how I typically do it. Start from the root of the git repository, then do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% <span style="color:#66d9ef">for</span> file in content/posts/**/*.md; <span style="color:#66d9ef">do</span> gsed -i -e <span style="color:#e6db74">&#39;s/- german/- deutsch/g&#39;</span> <span style="color:#e6db74">&#34;</span>$file<span style="color:#e6db74">&#34;</span>; <span style="color:#66d9ef">done</span>
+</span></span></code></pre></div><p>The example above renames <code>german</code> -&gt; <code>deutsch</code>.</p>
+<p>This isn&rsquo;t the most robust way to do so, but it&rsquo;s the quickest one. For extra robustness, I&rsquo;d do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% fd -t f -e md -e gsed -i -x <span style="color:#e6db74">&#39;s/- german/- deutsch/g&#39;</span>
+</span></span></code></pre></div><p>&hellip;however it&rsquo;s always easier to remember the for loop syntax than the <code>fd</code>
+one.</p>
+<h2 id="why-fd-instead-of-a-for-loop">Why <code>fd</code> instead of a <code>for</code> loop?</h2>
+<p><code>fd(1)</code> is more elegant than shell wildcards. Although, in practice, both ways
+are equivalent and should yield no difference.</p>
+<h2 id="why-gsed-instead-of-sed">Why <code>gsed</code> instead of <code>sed</code>?</h2>
+<p>I am on macOS. The GNU version of <code>sed</code> does not create backup files, which is what I want in most cases. There&rsquo;s no need for backups because everything is checked into git already; if I make a mistake, I can always <code>git reset --hard</code> or <code>git checkout</code>. The BSD version of <code>sed</code> will leave this mess behind:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% fd -t f -e md -x /usr/bin/sed -i -e <span style="color:#e6db74">&#39;s/- german/- deutsch/g&#39;</span>
+</span></span><span style="display:flex;"><span>% git st
+</span></span><span style="display:flex;"><span>% git st
+</span></span><span style="display:flex;"><span>On branch master
+</span></span><span style="display:flex;"><span>Your branch is up to date with <span style="color:#e6db74">&#39;origin/master&#39;</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Changes not staged <span style="color:#66d9ef">for</span> commit:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">(</span>use <span style="color:#e6db74">&#34;git add &lt;file&gt;...&#34;</span> to update what will be committed<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">(</span>use <span style="color:#e6db74">&#34;git restore &lt;file&gt;...&#34;</span> to discard changes in working directory<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>	modified:   2022-02-27-linux-us-international-keyboard-layout.md
+</span></span><span style="display:flex;"><span>	modified:   2022-04-03-translating-german-to-english.md
+</span></span><span style="display:flex;"><span>	modified:   2024-01-29-anki-find-all-notes-with-an-empty-field.md
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Untracked files:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">(</span>use <span style="color:#e6db74">&#34;git add &lt;file&gt;...&#34;</span> to include in what will be committed<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>	2014-01-07-testando-uma-iso-no-linux-sem-o-virtualbox.md-e
+</span></span><span style="display:flex;"><span>	2014-04-18-mini-recovery-tipico-via-usb.md-e
+</span></span><span style="display:flex;"><span>	2014-05-01-instalando-o-gentoo-a-partir-do-arch.md-e
+</span></span><span style="display:flex;"><span>	2014-09-28-my-first-ebuild.md-e
+</span></span><span style="display:flex;"><span>	2015-01-07-the-eudyptula-challenge.md-e
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>There are way more of these <code>*-e</code> files, and they are super annoying. It&rsquo;s easy to get rid of them:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% rm **/*-e
+</span></span></code></pre></div><p>&hellip;but why bother, if we can just stick to the more familiar GNU <code>sed</code> anyway?</p>
+<h2 id="caveats">Caveats</h2>
+<p>Finally, note the caveat: this find and replace is naive and could end up replacing false positives! Nonetheless, I&rsquo;m still a big fan of this approach, because it&rsquo;s the quickest one. As my blog is checked into <code>git</code> anyway, I can always easily review the changes before committing them:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git diff
+</span></span></code></pre></div><p>If there are too many diffs, then prefer an incremental approach:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git add -p
+</span></span></code></pre></div><p>Happy tag renaming! Well, this only happens every once in a while anyway.</p>]]></content:encoded></item><item><title>Anki: find all notes with an empty field</title><link>https://thiagowfx.github.io/2024/01/anki-find-all-notes-with-an-empty-field/</link><pubDate>Mon, 29 Jan 2024 00:06:49 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/anki-find-all-notes-with-an-empty-field/</guid><description>&lt;p>Gabriel Wyner recommends, in its &lt;a href="https://fluent-forever.com/index.html">Fluent
 Forever&lt;/a> book, that each
 &lt;a href="https://apps.ankiweb.net/">Anki&lt;/a> note (card) has at least one image
 associated to it. This is intended to improve overall retention.&lt;/p></description><content:encoded><![CDATA[<p>Gabriel Wyner recommends, in its <a href="https://fluent-forever.com/index.html">Fluent
@@ -724,170 +774,4 @@ it as <code>&lt;200e&gt;</code>.</p>
 I am just some random database primary key ID.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</div>]]></content:encoded></item><item><title>★ Synchronized in Python</title><link>https://thiagowfx.github.io/2024/01/synchronized-in-python/</link><pubDate>Mon, 15 Jan 2024 14:42:51 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/synchronized-in-python/</guid><description>&lt;blockquote>
-&lt;p>&lt;a href="https://stackoverflow.com/questions/53026622/python-equivalent-of-java-synchronized">In Java, you can make a variable thread safe by just adding the &lt;code>synchronized&lt;/code>
-keyword. Is there anything that can achieve the same results in
-Python?&lt;/a>&lt;/p>
-&lt;/blockquote></description><content:encoded><![CDATA[<blockquote>
-<p><a href="https://stackoverflow.com/questions/53026622/python-equivalent-of-java-synchronized">In Java, you can make a variable thread safe by just adding the <code>synchronized</code>
-keyword. Is there anything that can achieve the same results in
-Python?</a></p>
-</blockquote>
-<p>Without having prior knowledge of any python libraries to do so, the primitive interface
-I would expect resembles the following:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>(object):
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __init__(self):
-</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock <span style="color:#f92672">=</span> Lock()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">perform_mutation</span>(self, bytes):
-</span></span><span style="display:flex;"><span>    print(bytes)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write</span>(self, bytes):
-</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock<span style="color:#f92672">.</span>acquire()
-</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>perform_mutation(bytes)
-</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock<span style="color:#f92672">.</span>release()
-</span></span></code></pre></div><p>This isn&rsquo;t robust: if an exception happens in <code>perform_mutation</code> the lock would
-never be released. A small improvement we can make is to wrap it with
-<code>try/finally</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>(object):
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __init__(self):
-</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock <span style="color:#f92672">=</span> Lock()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">perform_mutation</span>(self, bytes):
-</span></span><span style="display:flex;"><span>    print(bytes)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write</span>(self, bytes):
-</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock<span style="color:#f92672">.</span>acquire()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
-</span></span><span style="display:flex;"><span>      self<span style="color:#f92672">.</span>perform_mutation(bytes)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">finally</span>:
-</span></span><span style="display:flex;"><span>      self<span style="color:#f92672">.</span>lock<span style="color:#f92672">.</span>release()
-</span></span></code></pre></div><p>However it turns out there&rsquo;s a more pythonic way to do so:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> threading <span style="color:#f92672">import</span> Lock
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>(object):
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __init__(self):
-</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>lock <span style="color:#f92672">=</span> Lock()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">perform_mutation</span>(self, bytes):
-</span></span><span style="display:flex;"><span>    print(bytes)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write</span>(self, bytes):
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> self<span style="color:#f92672">.</span>lock:
-</span></span><span style="display:flex;"><span>      self<span style="color:#f92672">.</span>perform_mutation(bytes)
-</span></span></code></pre></div><p>How can we test this? First, let&rsquo;s use a single thread.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-</span></span><span style="display:flex;"><span>  foo <span style="color:#f92672">=</span> Foo()
-</span></span><span style="display:flex;"><span>  foo<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#34;hello from the main thread&#34;</span>)
-</span></span></code></pre></div><p>Now let&rsquo;s use multiple threads:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-</span></span><span style="display:flex;"><span>  foo <span style="color:#f92672">=</span> Foo()
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>  threads <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
-</span></span><span style="display:flex;"><span>    thread <span style="color:#f92672">=</span> Thread(target<span style="color:#f92672">=</span>foo<span style="color:#f92672">.</span>write, args<span style="color:#f92672">=</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;hello from thread </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,))
-</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">.</span>append(thread)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Start all threads</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> thread <span style="color:#f92672">in</span> threads:
-</span></span><span style="display:flex;"><span>    thread<span style="color:#f92672">.</span>start()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Wait for all threads to finish</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> thread <span style="color:#f92672">in</span> threads:
-</span></span><span style="display:flex;"><span>    thread<span style="color:#f92672">.</span>join()
-</span></span></code></pre></div><p>Without the lock this is one of the results I get locally:</p>
-<pre tabindex="0"><code>% python3 lock.py
-hello from thread 0
-hello from thread 1
-hello from thread 2
-hello from thread 3
-hello from thread 4
-hello from thread 6
-hello from thread 8
-hello from thread 7
-hello from thread 5
-hello from thread 9
-</code></pre><p>With the lock I always get the following, as you would predict:</p>
-<pre tabindex="0"><code>% python3 lock.py
-hello from thread 0
-hello from thread 1
-hello from thread 2
-hello from thread 3
-hello from thread 4
-hello from thread 5
-hello from thread 6
-hello from thread 7
-hello from thread 8
-hello from thread 9
-</code></pre><p>We could go one level deeper in the abstraction by using a <code>@synchronized</code> decorator:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>(object):
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">perform_mutation</span>(self, bytes):
-</span></span><span style="display:flex;"><span>    print(bytes)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">@synchronized</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write</span>(self, bytes):
-</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>perform_mutation(bytes)
-</span></span></code></pre></div><p>How do we implement it?</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">synchronized</span>(member):
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@wraps</span>(member)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">wrapper</span>(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
-</span></span><span style="display:flex;"><span>        lock <span style="color:#f92672">=</span> vars(member)<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;_synchronized_lock&#34;</span>, <span style="color:#66d9ef">None</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> lock <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:
-</span></span><span style="display:flex;"><span>            lock <span style="color:#f92672">=</span> vars(member)<span style="color:#f92672">.</span>setdefault(<span style="color:#e6db74">&#34;_synchronized_lock&#34;</span>, Lock())
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> lock:
-</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">return</span> member(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> wrapper
-</span></span></code></pre></div><p>One last concept to learn: <code>RLock</code> a.k.a. reentrant lock.</p>
-<p>Consider the following program:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#f92672">from</span> threading <span style="color:#f92672">import</span> Lock, Thread
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>lock <span style="color:#f92672">=</span> Lock()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">changeA</span>(self, bytes):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> self<span style="color:#f92672">.</span>lock:
-</span></span><span style="display:flex;"><span>            print(bytes)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">changeB</span>(self, bytes):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> self<span style="color:#f92672">.</span>lock:
-</span></span><span style="display:flex;"><span>            print(bytes)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">changeAandB</span>(self, bytes):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> self<span style="color:#f92672">.</span>lock:
-</span></span><span style="display:flex;"><span>            print(bytes)
-</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>changeA(bytes) <span style="color:#75715e"># a usual lock would block here</span>
-</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>changeB(bytes)
-</span></span></code></pre></div><p>Invoked as follows:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span>foo <span style="color:#f92672">=</span> Foo()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>threads <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
-</span></span><span style="display:flex;"><span>    thread <span style="color:#f92672">=</span> Thread(target<span style="color:#f92672">=</span>foo<span style="color:#f92672">.</span>changeA, args<span style="color:#f92672">=</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;hello from thread </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74"> A&#34;</span>,))
-</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">.</span>append(thread)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    thread <span style="color:#f92672">=</span> Thread(target<span style="color:#f92672">=</span>foo<span style="color:#f92672">.</span>changeB, args<span style="color:#f92672">=</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;hello from thread </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74"> B&#34;</span>,))
-</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">.</span>append(thread)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    thread <span style="color:#f92672">=</span> Thread(target<span style="color:#f92672">=</span>foo<span style="color:#f92672">.</span>changeAandB, args<span style="color:#f92672">=</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;hello from thread </span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74"> AB&#34;</span>,))
-</span></span><span style="display:flex;"><span>    threads<span style="color:#f92672">.</span>append(thread)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Start all threads</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> thread <span style="color:#f92672">in</span> threads:
-</span></span><span style="display:flex;"><span>    thread<span style="color:#f92672">.</span>start()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Wait for all threads to finish</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> thread <span style="color:#f92672">in</span> threads:
-</span></span><span style="display:flex;"><span>    thread<span style="color:#f92672">.</span>join()
-</span></span></code></pre></div><p>It will not work as expected. As soon as the first <code>changeAandB</code> gets called, its inner
-<code>self.changeA</code> call will block. This is because the lock can only be acquired once.</p>
-<p>In this specific example, the straightforward way to fix the issue is to use an <code>RLock</code>:
-<code>self.lock = RLock()</code>. The reentrant lock can be locked multiple times.</p>
-<h2 id="references">References</h2>
-<ul>
-<li><a href="https://theorangeduck.com/page/synchronized-python">https://theorangeduck.com/page/synchronized-python</a></li>
-<li><a href="https://stackoverflow.com/questions/29158282/how-to-create-a-synchronized-function-across-all-instances">https://stackoverflow.com/questions/29158282/how-to-create-a-synchronized-function-across-all-instances</a></li>
-<li><a href="https://stackoverflow.com/questions/53026622/python-equivalent-of-java-synchronized">https://stackoverflow.com/questions/53026622/python-equivalent-of-java-synchronized</a></li>
-<li><a href="https://stackoverflow.com/questions/16567958/when-and-how-to-use-pythons-rlock">https://stackoverflow.com/questions/16567958/when-and-how-to-use-pythons-rlock</a></li>
-</ul>]]></content:encoded></item></channel></rss>
+</div>]]></content:encoded></item></channel></rss>
