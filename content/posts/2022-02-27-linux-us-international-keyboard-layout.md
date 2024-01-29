@@ -4,7 +4,7 @@ date: 2022-02-27T22:47:09-05:00
 tags:
   - linux
   - portuguese
-  - german
+  - deutsch
 ---
 
 I use QWERTY keyboards with a US layout. Sometimes I need to type accents or
