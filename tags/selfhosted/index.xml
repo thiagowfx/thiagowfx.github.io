@@ -1,4 +1,161 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>selfhosted on Not Just Serendipity</title><link>https://thiagowfx.github.io/tags/selfhosted/</link><description>Recent content in selfhosted on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Tue, 23 Jan 2024 23:27:04 -0300</lastBuildDate><atom:link href="https://thiagowfx.github.io/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Terraforming a Linode: hello world</title><link>https://thiagowfx.github.io/2024/01/terraforming-a-linode-hello-world/</link><pubDate>Tue, 23 Jan 2024 23:27:04 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/terraforming-a-linode-hello-world/</guid><description>&lt;p>I host my own &lt;a href="https://miniflux.app/">Miniflux&lt;/a> instance, which happens to be
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>selfhosted on Not Just Serendipity</title><link>https://thiagowfx.github.io/tags/selfhosted/</link><description>Recent content in selfhosted on Not Just Serendipity</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>tbperrotta@gmail.com (Thiago Perrotta)</managingEditor><webMaster>tbperrotta@gmail.com (Thiago Perrotta)</webMaster><copyright>Copyright © 2021 - 2024 Thiago Perrotta • [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) • [RSS](/index.xml) •</copyright><lastBuildDate>Thu, 01 Feb 2024 14:02:28 -0300</lastBuildDate><atom:link href="https://thiagowfx.github.io/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Integrating terraform with ansible</title><link>https://thiagowfx.github.io/2024/02/integrating-terraform-with-ansible/</link><pubDate>Thu, 01 Feb 2024 14:02:28 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/02/integrating-terraform-with-ansible/</guid><description>&lt;p>This post is a follow-up of &lt;a href="https://thiagowfx.github.io/2024/01/terraforming-a-linode-hello-world/">Terraforming a Linode: hello world&lt;/a>.&lt;/p>
+&lt;blockquote>
+&lt;p>In a future post, we will continue from here by using Ansible to install and
+set up Miniflux in our new Linode.&lt;/p>
+&lt;/blockquote>
+&lt;p>Before we extensively use Ansible to configure our VPS instance, first let&amp;rsquo;s
+set up a basic integration between Terraform and Ansible.&lt;/p></description><content:encoded><![CDATA[<p>This post is a follow-up of <a href="https://thiagowfx.github.io/2024/01/terraforming-a-linode-hello-world/">Terraforming a Linode: hello world</a>.</p>
+<blockquote>
+<p>In a future post, we will continue from here by using Ansible to install and
+set up Miniflux in our new Linode.</p>
+</blockquote>
+<p>Before we extensively use Ansible to configure our VPS instance, first let&rsquo;s
+set up a basic integration between Terraform and Ansible.</p>
+<p>First of all, here&rsquo;s an overview of where I stopped last time. There were a
+couple of lightweight modifications since then. I&rsquo;ll explain some of them
+below.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#f92672">%</span> <span style="color:#a6e22e">cat</span> var<span style="color:#a6e22e">iables</span>.<span style="color:#a6e22e">tf</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">variable</span> <span style="color:#e6db74">&#34;github_username&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span>    = <span style="color:#a6e22e">string</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">default</span> = <span style="color:#e6db74">&#34;thiagowfx&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">variable</span> <span style="color:#e6db74">&#34;linode_hostname&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span>    = <span style="color:#a6e22e">string</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">default</span> = <span style="color:#e6db74">&#34;coruscant&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">variable</span> <span style="color:#e6db74">&#34;linode_region&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span>    = <span style="color:#a6e22e">string</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">default</span> = <span style="color:#e6db74">&#34;eu-central&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>All variables were moved to a <code>variables.tf</code> file. This is to follow standard
+terraform
+<a href="https://developer.hashicorp.com/terraform/language/modules/develop/structure">conventions</a>
+/ recommendations for module structures. Furthermore, it becomes easier to
+manage variables when they are all stored in a single place.</p>
+<p>The main module file now looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#f92672">%</span> <span style="color:#a6e22e">cat</span> <span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">tf</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">terraform</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">required_providers</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">http</span> = {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">source</span> = <span style="color:#e6db74">&#34;hashicorp/http&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">linode</span> = {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">source</span> = <span style="color:#e6db74">&#34;linode/linode&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">provider</span> <span style="color:#e6db74">&#34;linode&#34;</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">data</span> <span style="color:#e6db74">&#34;http&#34;</span> <span style="color:#e6db74">&#34;github_keys&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;https://api.github.com/users/</span><span style="color:#e6db74">${</span>var.<span style="color:#a6e22e">github_username</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/keys&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">locals</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">keys</span> = jsondecode(data.<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">github_keys</span>.<span style="color:#a6e22e">response_body</span>)[<span style="color:#f92672">*</span>].<span style="color:#a6e22e">key</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;linode_instance&#34;</span> <span style="color:#e6db74">&#34;nanode&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span>             = <span style="color:#e6db74">&#34;g6-nanode-1&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">image</span>            = <span style="color:#e6db74">&#34;linode/alpine3.19&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">label</span>            = var.<span style="color:#a6e22e">linode_hostname</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">region</span>           = var.<span style="color:#a6e22e">linode_region</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">authorized_keys</span>  = <span style="color:#a6e22e">local</span>.<span style="color:#a6e22e">keys</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">backups_enabled</span>  = <span style="color:#e6db74">&#34;false&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">booted</span>           = <span style="color:#e6db74">&#34;true&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">watchdog_enabled</span> = <span style="color:#e6db74">&#34;true&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>I removed the token from the linode provider. Now it is supplied via the
+<code>LINODE_TOKEN</code> environment variable. In order to automatically populate that
+variable, I use <a href="https://thiagowfx.github.io/2022/01/direnv-automate-your-environment-variables/"><code>direnv</code></a>. There&rsquo;s an <code>.envrc</code> file that provides its value, like so:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/sh
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e"># terraform init</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>export LINODE_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;my-token-here&#34;</span>
+</span></span></code></pre></div><p>I also created a repository for this project:
+<a href="https://github.com/thiagowfx/knol">https://github.com/thiagowfx/knol</a>. That&rsquo;s enough for preliminaries, now let&rsquo;s
+go back to Ansible.</p>
+<p>The first component we&rsquo;ll need is an Ansible
+<a href="https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html">inventory</a>
+file, containing the IP address of the host we&rsquo;ll manage. It could look like
+this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[all]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">1.2.3.4 ansible_user</span><span style="color:#f92672">=</span><span style="color:#e6db74">root</span>
+</span></span></code></pre></div><p>&hellip;wherein <code>1.2.3.4</code> is the IP address of our VPS.</p>
+<p>That said, due to the fact the VPS instance is created dynamically, maintaining
+that IP address manually would be tedious. Therefore, let&rsquo;s have Terraform
+manage it.</p>
+<p>We can do so with a
+<a href="https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file"><code>local_file</code></a>.
+Heck, we could even use a
+<a href="https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file"><code>template_file</code></a>,
+however it would be overkill as there are only two simple lines in our
+inventory at this point. A <code>local_file</code> is created upon <code>terraform apply</code> and
+deleted upon <code>terraform destroy</code>. Therefore it doesn&rsquo;t even need to be tracked
+by our VCS:</p>
+<pre tabindex="0"><code>resource &#34;local_file&#34; &#34;ansible_inventory&#34; {
+  content  = &lt;&lt;-EOF
+[all]
+${linode_instance.nanode.ip_address} ansible_user=root
+EOF
+  filename = &#34;inventory.ini&#34;
+  file_permission = &#34;0644&#34;
+}
+</code></pre><p>Once we run terraform (plan + apply), an <code>inventory.ini</code> file should be created
+with the above contents.</p>
+<p>Because the IP address is ephemeral and dynamic, we should have a
+straightforward way to see its value. A terraform
+<a href="https://developer.hashicorp.com/terraform/language/values/outputs"><code>output</code></a>
+is perfect for that:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#f92672">%</span> <span style="color:#a6e22e">cat</span> <span style="color:#a6e22e">outputs</span>.<span style="color:#a6e22e">tf</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">output</span> <span style="color:#e6db74">&#34;ip_address&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">value</span> = <span style="color:#a6e22e">linode_instance</span>.<span style="color:#a6e22e">nanode</span>.<span style="color:#a6e22e">ip_address</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Later on (after terraforming) we will be able to use <code>terraform output</code> to see
+the server IP address.</p>
+<p>We have the inventory file. Now we need a
+<a href="https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html">playbook</a>.
+A playbook contains a sequence of tasks to be applied to our server.</p>
+<p>Let&rsquo;s start with a basic playbook that just installs and starts <code>nginx</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Install the web server (nginx)</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">community.general.apk</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">present</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Start the web server</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">service</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">started</span>
+</span></span></code></pre></div><p>Save this to a <code>playbook.yml</code> file.</p>
+<p>After terraforming, we should now be able to run ansible:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% ansible-playbook -i inventory.ini playbook.yml
+</span></span></code></pre></div><p>In order to make this setup more ergonomic, let&rsquo;s create a <code>Makefile</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Makefile" data-lang="Makefile"><span style="display:flex;"><span>TERRAFORM <span style="color:#f92672">:=</span> terraform
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">all</span><span style="color:#f92672">:</span> terraform ansible
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ansible</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>	ansible-playbook -i inventory.ini playbook.yml
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">terraform</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">$(</span>TERRAFORM<span style="color:#66d9ef">)</span> init
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">$(</span>TERRAFORM<span style="color:#66d9ef">)</span> plan
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">$(</span>TERRAFORM<span style="color:#66d9ef">)</span> apply
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clean</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">$(</span>TERRAFORM<span style="color:#66d9ef">)</span> destroy
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">.PHONY</span><span style="color:#f92672">:</span> all ansible terraform clean
+</span></span></code></pre></div><p>Then we can just run <code>make terraform</code> or <code>make ansible</code> for granular steps. Or
+just <code>make</code> to run everything in the right order.</p>
+<p>I extracted the <code>terraform</code> binary to its own variable because it facilitates
+the use of <a href="https://opentofu.org/">OpenTofu</a> (a fork) in lieu of terraform.</p>
+<p>And that&rsquo;s it for today! In a future post, we&rsquo;ll look into extending our
+Ansible usage to fully bootstrap Miniflux on the server.</p>]]></content:encoded></item><item><title>★ Terraforming a Linode: hello world</title><link>https://thiagowfx.github.io/2024/01/terraforming-a-linode-hello-world/</link><pubDate>Tue, 23 Jan 2024 23:27:04 -0300</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2024/01/terraforming-a-linode-hello-world/</guid><description>&lt;p>I host my own &lt;a href="https://miniflux.app/">Miniflux&lt;/a> instance, which happens to be
 my favorite RSS reader. Currently it is hosted on Linode (Akamai Cloud)
 running &lt;a href="https://www.alpinelinux.org/">Alpine Linux&lt;/a>.&lt;/p>
 &lt;p>My current setup was performed manually. I was thinking that, for fun, it would
@@ -856,125 +1013,6 @@ their hands.</p>
 </li>
 <li id="fn:4">
 <p>for example: a VPN like OpenVPN, <a href="https://www.wireguard.com/">Wireguard</a> or <a href="https://tailscale.com/">tailscale</a>; or a tool like <a href="https://ngrok.com/">ngrok</a>.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item><item><title>Ufw: Firewall</title><link>https://thiagowfx.github.io/2021/12/ufw-firewall/</link><pubDate>Tue, 28 Dec 2021 17:14:55 -0500</pubDate><author>tbperrotta@gmail.com (Thiago Perrotta)</author><guid>https://thiagowfx.github.io/2021/12/ufw-firewall/</guid><description>&lt;blockquote>
-&lt;p>Ufw stands for Uncomplicated Firewall, and is a program for managing a netfilter firewall. It provides a command line interface and aims to be uncomplicated and easy to use.&lt;/p>
-&lt;/blockquote></description><content:encoded><![CDATA[<blockquote>
-<p>Ufw stands for Uncomplicated Firewall, and is a program for managing a netfilter firewall. It provides a command line interface and aims to be uncomplicated and easy to use.</p>
-</blockquote>
-<p>The firewall makes justice to its name as it is really uncomplicated, and a pleasure to set up.</p>
-<h2 id="install">Install</h2>
-<p>Install and set up <code>ufw</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, which should be packaged for most linux
-distributions:</p>
-<h3 id="openrc-based-alpine-linux-gentoo">OpenRC-based (Alpine Linux, Gentoo)</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Install ufw and ufw-extras</span>
-</span></span><span style="display:flex;"><span>$ doas apk install ufw<span style="color:#f92672">{</span>,-extras<span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Enable ufw daemon</span>
-</span></span><span style="display:flex;"><span>$ doas rc-update add ufw
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Start ufw daemon</span>
-</span></span><span style="display:flex;"><span>$ doas rc-service ufw start
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Enable firewall</span>
-</span></span><span style="display:flex;"><span>$ doas ufw enable
-</span></span></code></pre></div><h3 id="systemd-based-arch-linux-debian">Systemd-based (Arch Linux, Debian)</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Install ufw and ufw-extras</span>
-</span></span><span style="display:flex;"><span>$ sudo pacman -Syu ufw<span style="color:#f92672">{</span>,-extras<span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Enable and start ufw daemon</span>
-</span></span><span style="display:flex;"><span>$ sudo systemctl enable --now ufw
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Enable firewall</span>
-</span></span><span style="display:flex;"><span>$ sudo ufw enable
-</span></span></code></pre></div><h2 id="add-rules">Add rules</h2>
-<p>Firewall rules can be added with <code>ufw allow [port]</code> or <code>ufw allow [name]</code>.
-Named profiles (for example: ssh, http) live in <code>/etc/ufw/applications.d/</code>, or you can query all of them with <code>ufw app list</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% ufw app list
-</span></span><span style="display:flex;"><span>Available applications:
-</span></span><span style="display:flex;"><span>  AIM
-</span></span><span style="display:flex;"><span>  Bonjour
-</span></span><span style="display:flex;"><span>  CIFS
-</span></span><span style="display:flex;"><span>  DNS
-</span></span><span style="display:flex;"><span>  Deluge
-</span></span><span style="display:flex;"><span>  IMAP
-</span></span><span style="display:flex;"><span>  IMAPS
-</span></span><span style="display:flex;"><span>  IPP
-</span></span><span style="display:flex;"><span>  KTorrent
-</span></span><span style="display:flex;"><span>  Kerberos Admin
-</span></span><span style="display:flex;"><span>  Kerberos Full
-</span></span><span style="display:flex;"><span>  Kerberos KDC
-</span></span><span style="display:flex;"><span>  Kerberos Password
-</span></span><span style="display:flex;"><span>  LDAP
-</span></span><span style="display:flex;"><span>  LDAPS
-</span></span><span style="display:flex;"><span>  LPD
-</span></span><span style="display:flex;"><span>  MSN
-</span></span><span style="display:flex;"><span>  MSN SSL
-</span></span><span style="display:flex;"><span>  Mail submission
-</span></span><span style="display:flex;"><span>  NFS
-</span></span><span style="display:flex;"><span>  POP3
-</span></span><span style="display:flex;"><span>  POP3S
-</span></span><span style="display:flex;"><span>  PeopleNearby
-</span></span><span style="display:flex;"><span>  SMTP
-</span></span><span style="display:flex;"><span>  SSH
-</span></span><span style="display:flex;"><span>  Socks
-</span></span><span style="display:flex;"><span>  Telnet
-</span></span><span style="display:flex;"><span>  Transmission
-</span></span><span style="display:flex;"><span>  Transparent Proxy
-</span></span><span style="display:flex;"><span>  VNC
-</span></span><span style="display:flex;"><span>  WWW
-</span></span><span style="display:flex;"><span>  WWW Cache
-</span></span><span style="display:flex;"><span>  WWW Full
-</span></span><span style="display:flex;"><span>  WWW Secure
-</span></span><span style="display:flex;"><span>  XMPP
-</span></span><span style="display:flex;"><span>  Yahoo
-</span></span><span style="display:flex;"><span>  qBittorrent
-</span></span><span style="display:flex;"><span>  svnserve
-</span></span></code></pre></div><p>Ufw also supports <code>ufw limit [port | name]</code> which is like <code>add</code> but with the
-added ability to &ldquo;deny connections from IP addresses that attempt to initiate
-6 or more connections in the last 30 seconds&rdquo;. It&rsquo;s a good measure to mitigate brute-force and/or DDOS attacks.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># either use named profiles</span>
-</span></span><span style="display:flex;"><span>% ufw allow http-alt
-</span></span><span style="display:flex;"><span>% ufw limit ssh
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># or port numbers</span>
-</span></span><span style="display:flex;"><span>% ufw allow 8080/tcp
-</span></span><span style="display:flex;"><span>% ufw limit <span style="color:#ae81ff">22</span>
-</span></span></code></pre></div><h2 id="remove-rules">Remove rules</h2>
-<p>Firewall rules can be removed by merely adding &lsquo;delete&rsquo; between ufw and the verb.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% ufw delete allow 8080/tcp
-</span></span><span style="display:flex;"><span>% ufw delete limit ssh
-</span></span></code></pre></div><h2 id="check-status">Check status</h2>
-<p>One status command to rule them all, &ldquo;verbose&rdquo; is optional:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% ufw status verbose
-</span></span><span style="display:flex;"><span>Status: active
-</span></span><span style="display:flex;"><span>Logging: on <span style="color:#f92672">(</span>low<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>Default: deny <span style="color:#f92672">(</span>incoming<span style="color:#f92672">)</span>, allow <span style="color:#f92672">(</span>outgoing<span style="color:#f92672">)</span>, disabled <span style="color:#f92672">(</span>routed<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>New profiles: skip
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>To                         Action      From
-</span></span><span style="display:flex;"><span>--                         ------      ----
-</span></span><span style="display:flex;"><span>22/tcp                     LIMIT IN    Anywhere
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8080</span>                       ALLOW IN    Anywhere
-</span></span><span style="display:flex;"><span>22/tcp <span style="color:#f92672">(</span>v6<span style="color:#f92672">)</span>                LIMIT IN    Anywhere <span style="color:#f92672">(</span>v6<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8080</span> <span style="color:#f92672">(</span>v6<span style="color:#f92672">)</span>                  ALLOW IN    Anywhere <span style="color:#f92672">(</span>v6<span style="color:#f92672">)</span>
-</span></span></code></pre></div><p>Ufw uses iptables under the hood. Inspect the underlying iptables rules:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% iptables -S | egrep <span style="color:#e6db74">&#39;\b(22|8080)\b&#39;</span>
-</span></span><span style="display:flex;"><span>-A ufw-user-input -p tcp -m tcp --dport <span style="color:#ae81ff">22</span> -m conntrack --ctstate NEW -m recent --set --name DEFAULT --mask 255.255.255.255 --rsource
-</span></span><span style="display:flex;"><span>-A ufw-user-input -p tcp -m tcp --dport <span style="color:#ae81ff">22</span> -m conntrack --ctstate NEW -m recent --update --seconds <span style="color:#ae81ff">30</span> --hitcount <span style="color:#ae81ff">6</span> --name DEFAULT --mask 255.255.255.255 --rsource -j ufw-user-limit
-</span></span><span style="display:flex;"><span>-A ufw-user-input -p tcp -m tcp --dport <span style="color:#ae81ff">22</span> -j ufw-user-limit-accept
-</span></span><span style="display:flex;"><span>-A ufw-user-input -p tcp -m tcp --dport <span style="color:#ae81ff">8080</span> -j ACCEPT
-</span></span></code></pre></div><h2 id="references">References</h2>
-<ul>
-<li><a href="https://help.ubuntu.com/community/UFW">https://help.ubuntu.com/community/UFW</a></li>
-<li><a href="https://wiki.archlinux.org/title/Uncomplicated_Firewall">https://wiki.archlinux.org/title/Uncomplicated_Firewall</a></li>
-</ul>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><a href="https://github.com/xyproto/ufw-extras"><code>ufw-extras</code></a> is optional, it contains additional rules (e.g. mosh, tailscale).&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>
