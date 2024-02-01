@@ -140,7 +140,7 @@ jobs:
         shell: bash
         run: |
           cft_binary="$(npx @puppeteer/browsers install chromium@latest | cut -f 2- -d' ')"
-          echo "cft_binary=$chromium_binary" >> $GITHUB_ENV
+          echo "cft_binary=$cft_binary" >> $GITHUB_ENV
 
       - uses: actions/setup-python@v4
         with:
@@ -152,7 +152,7 @@ jobs:
       - name: Run E2E tests
         run: npm run e2e
         env:
-          BROWSER_BIN: ${{ env.chromium_binary }}
+          BROWSER_BIN: ${{ env.cft_binary }}
 ```
 
 You can find the complete version of this example in an [older
