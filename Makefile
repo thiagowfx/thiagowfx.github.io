@@ -1,5 +1,5 @@
 # Sitemap URL.
-SITEMAP = https://thiagowfx.github.io/sitemap.xml
+SITEMAP = https://www.perrotta.dev/sitemap.xml
 
 # Path to hugo binary.
 HUGO := hugo
