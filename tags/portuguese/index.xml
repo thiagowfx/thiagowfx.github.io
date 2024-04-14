@@ -37,7 +37,144 @@ so I won&rsquo;t even include it here.</p>
 <p>Alt Gr is typically the Right Alt key.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</div>]]></content:encoded></item><item><title>Instalando o Gentoo a partir do Arch</title><link>https://www.perrotta.dev/2014/05/instalando-o-gentoo-a-partir-do-arch/</link><pubDate>Thu, 01 May 2014 02:20:00 +0000</pubDate><guid>https://www.perrotta.dev/2014/05/instalando-o-gentoo-a-partir-do-arch/</guid><description>&lt;p>&lt;strong>TL;DR&lt;/strong>: pequena TODO list sobre como instalar o Gentoo. Você vai passar 90% do seu tempo olhando para &lt;strong>texto&lt;/strong> dando scroll na tela (processo demorado…).&lt;/p></description><content:encoded><![CDATA[<p><strong>TL;DR</strong>: pequena TODO list sobre como instalar o Gentoo. Você vai passar 90% do seu tempo olhando para <strong>texto</strong> dando scroll na tela (processo demorado…).</p>
+</div>]]></content:encoded></item><item><title>Matroshka</title><link>https://www.perrotta.dev/2016/10/matroshka/</link><pubDate>Sun, 16 Oct 2016 15:49:01 -0200</pubDate><guid>https://www.perrotta.dev/2016/10/matroshka/</guid><description>&lt;p>Recentemente participei de uma
+&lt;a href="https://ctf.tecland.com.br/Pwn2Win/game/scoreboard/">CTF&lt;/a> promovida pelo
+&lt;a href="https://ctf-br.org/elt">ELT&lt;/a> (Epic Leet Team). Uma das &lt;em>challs&lt;/em> que consegui
+resolver completamente foi a &lt;strong>matroshka&lt;/strong>, e aqui está um breve &lt;em>write-up&lt;/em>
+sobre a mesma.&lt;/p>
+&lt;p>Dado um arquivo &lt;code>matroshka.tar.gz&lt;/code>, precisávamos encontrar a &lt;em>flag&lt;/em>.&lt;/p></description><content:encoded><![CDATA[<p>Recentemente participei de uma
+<a href="https://ctf.tecland.com.br/Pwn2Win/game/scoreboard/">CTF</a> promovida pelo
+<a href="https://ctf-br.org/elt">ELT</a> (Epic Leet Team). Uma das <em>challs</em> que consegui
+resolver completamente foi a <strong>matroshka</strong>, e aqui está um breve <em>write-up</em>
+sobre a mesma.</p>
+<p>Dado um arquivo <code>matroshka.tar.gz</code>, precisávamos encontrar a <em>flag</em>.</p>
+<p>Não era difícil desconfiar do que esse arquivo / <em>chall</em> se tratava: matroshkas
+são aquelas bonecas russas que se encaixam umas dentro das outras. Então&hellip;de
+cara, logo já desconfiei: provavelmente existe um arquivo compactado dentro de
+outro, dentro de outro, dentro de outro, e assim por diante&hellip;</p>
+<p>Por experiência, não valeria a pena tentar descompactar tudo manualmente, pois
+sabe-se lá quantos níveis de compactação esse negócio iria ter (provavelmente
+mais do que 100).</p>
+<p>De cara logo pensei em usar o <a href="https://brettcsmith.org/2007/dtrx/">dtrx</a>, que é
+um excelente programa (não perco tempo e sempre rodo um <code>port install dtrx</code>)
+para extrair arquivos sem ter que ficar se lembrando das sintaxes individuais de
+cada programa. Nesse caso, não iria rolar: os arquivos eram renomeados de forma
+a <em>trickear</em> o dtrx, que funciona através de heurísticas, uma delas é a
+&rsquo;extensão&rsquo; do nome do arquivo. Por exemplo, vários arquivos (após
+descompactados) eram renomeados na forma <code>*.elt</code>.</p>
+<p>A segunda alternativa foi (<strong>serendipidade</strong>, não conhecia essa ferramenta
+antes) tentar utilizar o <a href="http://www.nongnu.org/atool/">atool</a>. Por motivos
+similares ao <code>dtrx</code>, não rolou.</p>
+<p>Pois bem, então o jeito ia ser descompactar tudo na marra. Pensei em escrever um
+programa que faria o seguinte:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>	unzip <span style="color:#f92672">&lt;</span>file<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">catch</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>		tar xf <span style="color:#f92672">&lt;</span>file<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">catch</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// ...e assim por diante
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Obviamente eu utilizaria os programas diretamente, então a coisa poderia ficar
+um pouco mais simples, utilizando os return codes dos mesmos para detectar se
+descompactaram o arquivo com sucesso. Por exemplo, <code>tar xf &lt;file&gt;</code> retorna <code>0</code>
+se rodou corretamente, do contrário ele retorna algo diferente de zero. Isso se
+mostrou válido para todos os programas de descompactação que utilizei, exceto o
+lha, que insistia em retornar <code>0</code> de qualquer jeito, mesmo quando falhava.</p>
+<p>Para automatizar essa tarefa, resolvi utilizar <code>python2</code>. <code>C/C++</code> provavelmente
+também seriam bons candidatos, mas eu queria praticar o meu <code>python</code>.</p>
+<p>Após algumas inspeções, notei que cada arquivo continha um e somente um arquivo
+dentro dele, então a ideia base seria:</p>
+<ul>
+<li>mantenha uma lista com todos os arquivos conhecidos até então (no começo, só
+haveria um);</li>
+<li>descompacte esse arquivo;</li>
+<li>detecte qual arquivo acabou de ser descompactado</li>
+<li>continue fazendo isso até encontrar a <code>flag</code></li>
+</ul>
+<p>Meu código ficou assim:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> subprocess
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TARGET_DIR <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;mat&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">uncompress_kgb</span>(file):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> subprocess<span style="color:#f92672">.</span>call([<span style="color:#e6db74">&#34;kgb&#34;</span>, file])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">uncompress_gzip</span>(file):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> subprocess<span style="color:#f92672">.</span>call([<span style="color:#e6db74">&#34;gunzip&#34;</span>, <span style="color:#e6db74">&#34;-S&#34;</span>, <span style="color:#e6db74">&#39;.&#39;</span> <span style="color:#f92672">+</span> file<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;.&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], file])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">uncompress_tar</span>(file):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> subprocess<span style="color:#f92672">.</span>call([<span style="color:#e6db74">&#34;tar&#34;</span>, <span style="color:#e6db74">&#34;xvf&#34;</span>, file])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">uncompress_rar</span>(file):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> subprocess<span style="color:#f92672">.</span>call([<span style="color:#e6db74">&#34;unrar&#34;</span>, <span style="color:#e6db74">&#34;x&#34;</span>, file])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">uncompress_lha</span>(file):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> subprocess<span style="color:#f92672">.</span>call([<span style="color:#e6db74">&#34;lha&#34;</span>, <span style="color:#e6db74">&#34;e&#34;</span>, file])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">uncompress_zip</span>(file):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> subprocess<span style="color:#f92672">.</span>call([<span style="color:#e6db74">&#34;unzip&#34;</span>, file])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">uncompress_arj</span>(file):
+</span></span><span style="display:flex;"><span>    subprocess<span style="color:#f92672">.</span>call([<span style="color:#e6db74">&#34;cp&#34;</span>, file, file <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.arj&#34;</span>])
+</span></span><span style="display:flex;"><span>    err <span style="color:#f92672">=</span> subprocess<span style="color:#f92672">.</span>call([<span style="color:#e6db74">&#34;arj&#34;</span>, <span style="color:#e6db74">&#34;x&#34;</span>, file])
+</span></span><span style="display:flex;"><span>    subprocess<span style="color:#f92672">.</span>call([<span style="color:#e6db74">&#34;rm&#34;</span>, file <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.arj&#34;</span>])
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> err
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">uncompress_7z</span>(file):
+</span></span><span style="display:flex;"><span>    subprocess<span style="color:#f92672">.</span>call([<span style="color:#e6db74">&#34;7z&#34;</span>, <span style="color:#e6db74">&#34;x&#34;</span>, file])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">colorprint</span>(s):
+</span></span><span style="display:flex;"><span>    print <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\033</span><span style="color:#e6db74">[93m&#39;</span> <span style="color:#f92672">+</span> repr(s) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\033</span><span style="color:#e6db74">[0m&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>chdir(TARGET_DIR)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>base <span style="color:#f92672">=</span> set()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>    newbase <span style="color:#f92672">=</span> set(os<span style="color:#f92672">.</span>listdir(<span style="color:#e6db74">&#39;.&#39;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    diff <span style="color:#f92672">=</span> newbase <span style="color:#f92672">-</span> base
+</span></span><span style="display:flex;"><span>    colorprint(diff)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> len(diff) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">&#34;len(diff) &gt; 1&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elif</span> len(diff) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        print <span style="color:#e6db74">&#34;len(diff) == 0&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> file <span style="color:#f92672">in</span> diff:
+</span></span><span style="display:flex;"><span>        err <span style="color:#f92672">=</span> uncompress_kgb(file)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> err <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            err <span style="color:#f92672">=</span> uncompress_gzip(file)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> err <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                err <span style="color:#f92672">=</span> uncompress_tar(file)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> err <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                    err <span style="color:#f92672">=</span> uncompress_rar(file)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> err <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                        err <span style="color:#f92672">=</span> uncompress_zip(file)
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">if</span> err <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                            err <span style="color:#f92672">=</span> uncompress_arj(file)
+</span></span><span style="display:flex;"><span>                            <span style="color:#66d9ef">if</span> err <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                                err <span style="color:#f92672">=</span> uncompress_7z(file)
+</span></span><span style="display:flex;"><span>                                <span style="color:#66d9ef">if</span> err <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                                    err <span style="color:#f92672">=</span> uncompress_lha(file)
+</span></span><span style="display:flex;"><span>                                    <span style="color:#66d9ef">if</span> err <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                                        print <span style="color:#e6db74">&#34;lha fail&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    base <span style="color:#f92672">=</span> newbase
+</span></span></code></pre></div><p>Essa ideia funcionou bastante bem. A única coisa <em>overkill</em> foi que eu não
+deletei arquivos anteriores; isso poderia ter simplificado significativamente o
+problema (e os <em>sets</em> no python).</p>
+<p>Ademais, uma das coisas chatas do <code>arj</code> é que ele só é capaz de extrair arquivos
+que terminam em <code>*.arj</code>, então fui obrigado a renomear/copiar um arquivo antes
+de tentar utilizá-lo para extrair seu conteúdo.</p>]]></content:encoded></item><item><title>Instalando o Gentoo a partir do Arch</title><link>https://www.perrotta.dev/2014/05/instalando-o-gentoo-a-partir-do-arch/</link><pubDate>Thu, 01 May 2014 02:20:00 +0000</pubDate><guid>https://www.perrotta.dev/2014/05/instalando-o-gentoo-a-partir-do-arch/</guid><description>&lt;p>&lt;strong>TL;DR&lt;/strong>: pequena TODO list sobre como instalar o Gentoo. Você vai passar 90% do seu tempo olhando para &lt;strong>texto&lt;/strong> dando scroll na tela (processo demorado…).&lt;/p></description><content:encoded><![CDATA[<p><strong>TL;DR</strong>: pequena TODO list sobre como instalar o Gentoo. Você vai passar 90% do seu tempo olhando para <strong>texto</strong> dando scroll na tela (processo demorado…).</p>
 <p>Esse é o método mais tradicional possível (e que me interessa) que pude constatar. Adapte-o para as suas próprias necessidades:</p>
 <ul>
 <li>
