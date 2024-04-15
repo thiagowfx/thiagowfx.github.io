@@ -1,18 +1,16 @@
 # Sitemap URL.
 SITEMAP = https://www.perrotta.dev/sitemap.xml
 
-# Path to hugo binary.
-HUGO := hugo
 # Hugo port
 PORT := 1313
 
 # Abort if hugo is not installed.
-ifeq (, $(shell which $(HUGO)))
+ifeq (, $(shell which hugo))
   $(error "No hugo in $$PATH, install it first")
 endif
 
 all:
-	$(HUGO) server --bind="0.0.0.0" --buildDrafts --port $(PORT) --watch
+	hugo server --bind="0.0.0.0" --buildDrafts --port $(PORT) --watch
 
 clean:
 	# kill process listening on port, if any; fail gracefully
