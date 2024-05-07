@@ -1,4 +1,44 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Not Just Serendipity</title><link>https://www.perrotta.dev/posts/</link><description>Recent content in Posts on Not Just Serendipity</description><generator>Hugo -- 0.125.5</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta • CC BY-NC-SA 4.0 • RSS •</copyright><lastBuildDate>Fri, 03 May 2024 16:46:28 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Be aware that your public SSH keys can reveal your identity</title><link>https://www.perrotta.dev/2024/05/be-aware-that-your-public-ssh-keys-can-reveal-your-identity/</link><pubDate>Fri, 03 May 2024 16:46:28 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/be-aware-that-your-public-ssh-keys-can-reveal-your-identity/</guid><description>&lt;p>If you have a GitHub account configured with SSH, your public keys are available
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on Not Just Serendipity</title><link>https://www.perrotta.dev/posts/</link><description>Recent content in Posts on Not Just Serendipity</description><generator>Hugo -- 0.125.6</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta • CC BY-NC-SA 4.0 • RSS •</copyright><lastBuildDate>Tue, 07 May 2024 16:03:27 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Pritunl log in via CLI</title><link>https://www.perrotta.dev/2024/05/pritunl-log-in-via-cli/</link><pubDate>Tue, 07 May 2024 16:03:27 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/pritunl-log-in-via-cli/</guid><description>&lt;p>&lt;a href="https://pritunl.com/">Pritunl&lt;/a> is an Enterprise Distributed OpenVPN server.&lt;/p>
+&lt;p>In order to run its client on macOS, an &lt;code>.app&lt;/code> is provided. However, using it to
+log in every day is quite tedious.&lt;/p>
+&lt;p>Let&amp;rsquo;s automate it so that we can connect to the VPN with a single command.&lt;/p></description><content:encoded><![CDATA[<p><a href="https://pritunl.com/">Pritunl</a> is an Enterprise Distributed OpenVPN server.</p>
+<p>In order to run its client on macOS, an <code>.app</code> is provided. However, using it to
+log in every day is quite tedious.</p>
+<p>Let&rsquo;s automate it so that we can connect to the VPN with a single command.</p>
+<p>In order to fetch the credentials in this example in a secure manner, we&rsquo;ll be
+using 1password. <a href="https://www.passwordstore.org/"><code>pass</code></a> would have worked just
+as fine.</p>
+<p>First, configure Pritunl via its app UI, creating a profile for your corp
+credentials.</p>
+<p>Then figure out what the profile ID you just created is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>profile_id<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>/Applications/Pritunl.app/Contents/Resources/pritunl-client list --json | jq -r <span style="color:#e6db74">&#39;.[0].id&#39;</span><span style="color:#66d9ef">)</span>
+</span></span></code></pre></div><p>Now, create an entry in 1Password for your Pritunl credentials associated with
+the profile above.</p>
+<p>Let&rsquo;s use the <code>op</code> official CLI tool from 1Password to fetch the password and
+the OTP (one-time password) for the &ldquo;Pritunl (VPN)&rdquo; entry (change it
+accordingly).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>op_id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#39;Pritunl (VPN)&#39;</span> --format json | jq -r <span style="color:#e6db74">&#39;.id&#39;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>password<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op read <span style="color:#e6db74">&#34;op://private/</span>$op_id<span style="color:#e6db74">/password&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>otp<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#34;</span>$op_id<span style="color:#e6db74">&#34;</span> --totp<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p>Now we can use the <code>pritunl-client</code> to log in programatically:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pritunl-client start <span style="color:#e6db74">&#34;</span>$profile_id<span style="color:#e6db74">&#34;</span> --password <span style="color:#e6db74">&#34;</span>$password$otp<span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p>Then verify it has indeed connected:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pritunl-client list
+</span></span></code></pre></div><p>The trick is that it accepts the concatenation of the password with the OTP as
+the password. There&rsquo;s not a separate <code>--otp</code> flag.</p>
+<p>Putting everything together, we can create a function for our favorite shell:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Log into corp VPN</span>
+</span></span><span style="display:flex;"><span>pritunl_login<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	local profile_id<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>/Applications/Pritunl.app/Contents/Resources/pritunl-client list --json | jq -r <span style="color:#e6db74">&#39;.[0].id&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	local op_id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#39;Pritunl (VPN)&#39;</span> --format json | jq -r <span style="color:#e6db74">&#39;.id&#39;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>	local password<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op read <span style="color:#e6db74">&#34;op://private/</span>$op_id<span style="color:#e6db74">/password&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>	local otp<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#34;</span>$op_id<span style="color:#e6db74">&#34;</span> --totp<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	pritunl-client start <span style="color:#e6db74">&#34;</span>$profile_id<span style="color:#e6db74">&#34;</span> --password <span style="color:#e6db74">&#34;</span>$password$otp<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>	pritunl-client list
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div>]]></content:encoded></item><item><title>Be aware that your public SSH keys can reveal your identity</title><link>https://www.perrotta.dev/2024/05/be-aware-that-your-public-ssh-keys-can-reveal-your-identity/</link><pubDate>Fri, 03 May 2024 16:46:28 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/be-aware-that-your-public-ssh-keys-can-reveal-your-identity/</guid><description>&lt;p>If you have a GitHub account configured with SSH, your public keys are available
 at &lt;code>https://github.com/$USERNAME.keys&lt;/code>.&lt;/p>
 &lt;p>For example, mine: &lt;a href="https://github.com/thiagowfx.keys">https://github.com/thiagowfx.keys&lt;/a>&lt;/p>
 &lt;p>And then let&amp;rsquo;s say you also use your full name on GitHub.&lt;/p></description><content:encoded><![CDATA[<p>If you have a GitHub account configured with SSH, your public keys are available
@@ -220,84 +260,4 @@ be added.</p>
 </ol>
 <p>It&rsquo;s a good idea to set up WHOIS privacy, so that your domain registration
 details stay private. Some registrars such as Porkbun and NearlyFreeSpeech will
-gladly offer an option for that, either for free or at a low cost, respectively.</p>]]></content:encoded></item><item><title>Anki: custom language card</title><link>https://www.perrotta.dev/2024/02/anki-custom-language-card/</link><pubDate>Sat, 03 Feb 2024 13:02:21 -0300</pubDate><guid>https://www.perrotta.dev/2024/02/anki-custom-language-card/</guid><description>&lt;p>The more time you spent playing with &lt;a href="https://apps.ankiweb.net/">Anki&lt;/a>, the
-more opinionated you become.&lt;/p>
-&lt;p>Upon reading &lt;a href="https://fluent-forever.com/index.html">Fluent Forever&lt;/a> by Gabriel
-Wyner, I got an itch to create my own Anki note template for learning
-languages.&lt;/p></description><content:encoded><![CDATA[<p>The more time you spent playing with <a href="https://apps.ankiweb.net/">Anki</a>, the
-more opinionated you become.</p>
-<p>Upon reading <a href="https://fluent-forever.com/index.html">Fluent Forever</a> by Gabriel
-Wyner, I got an itch to create my own Anki note template for learning
-languages.</p>
-<h2 id="the-template">The template</h2>
-<p>There&rsquo;s no point explaining how to create a new template; the excellent <a href="https://docs.ankiweb.net/templates/intro.html">Anki
-documentation</a> already does so.
-Instead, I&rsquo;ll just list and explain the template I created.</p>
-<p>The template is called &ldquo;Deutsch Language Card 🇩🇪&rdquo;. It has four fields:</p>
-<ol>
-<li>Front</li>
-<li>Front Example</li>
-<li>Back</li>
-<li>Striked</li>
-</ol>
-<p>Front and Back come from the built-in template. There&rsquo;s nothing special about
-them. I use &ldquo;Front&rdquo; for the canonical term in the foreign language I&rsquo;m
-learning, and &ldquo;Back&rdquo; for the explanation in the base / native language I&rsquo;m
-mostly familiar with<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
-<p>Here&rsquo;s an example:</p>
-<pre tabindex="0"><code>Front: das Buch
-Back: book 📚
-</code></pre><p>Whenever possible I include one or more emojis 😃 in the &ldquo;Back&rdquo; field.</p>
-<p>The <strong>canonicalization</strong> of the &ldquo;Front&rdquo; field is important, and one of the best
-(key, even!) features of Anki. It will smartly detect (and prevent!) duplicates
-from being created. It is case sensitive, therefore it&rsquo;s important to create
-one convention and stick to it.</p>
-<p>&ldquo;Front Example&rdquo; is used to complement the &ldquo;Front&rdquo; field. It consists of one or
-both of the following:</p>
-<ul>
-<li>A phrase or sentence containing the Front term.</li>
-<li>A picture representing the Front term.</li>
-</ul>
-<p>To increase overall retention, it&rsquo;s always best to add cues familiar to your
-context.</p>
-<p>Add phrases that resonate with you or that you find in textbooks or
-blog posts that resonate with you. In my experience, adding random phrases is
-not effective.</p>
-<p>Add images that represent well that you&rsquo;re describing and that
-resonate with you. Photos that you take yourself are also fair game!</p>
-<p>&ldquo;Striked&rdquo; is to disambiguate synonyms or false cognates. For example:</p>
-<pre tabindex="0"><code>Front: der Sturm
-Back: storm ⛈️
-Striked: das Gewitter, das Unwetter
-</code></pre><p>When I am reviewing the Back card, I want to cue myself not to think about the
-striked terms.</p>
-<h2 id="the-source-code">The source code</h2>
-<h3 id="the-front-card">The Front card</h3>
-<pre tabindex="0"><code class="language-anki" data-lang="anki">{{Front}} {{tts de_DE:Front}}
-
-{{#Front Example}}
-&lt;br&gt;
-&lt;i&gt;{{Front Example}}&lt;/i&gt; {{tts de_DE:Front Example}}
-{{/Front Example}}
-</code></pre><p>The front card includes a text-to-speech sample that is generated on-the-fly.
-It works very well on macOS and iOS. In fact, that&rsquo;s main reason why the
-template is called &ldquo;Deutsch Language Card&rdquo; instead of just &ldquo;Language Card&rdquo;. The
-text-to-speech engine is customized to have an accent in the given language.
-For (High) German, that is <code>de_DE</code>.</p>
-<h3 id="the-back-card">The Back card</h3>
-<pre tabindex="0"><code class="language-anki" data-lang="anki">{{Back}}
-
-{{#Striked}}
-&lt;br&gt;&lt;br&gt;
-&lt;s&gt;{{Striked}}&lt;/s&gt;
-{{/Striked}}
-</code></pre><p>The striked terms are <del>striked</del>, as you would expect.</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>Interestingly I prefer to use English most of the time, even though it is
-not my mother tongue.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+gladly offer an option for that, either for free or at a low cost, respectively.</p>]]></content:encoded></item></channel></rss>
