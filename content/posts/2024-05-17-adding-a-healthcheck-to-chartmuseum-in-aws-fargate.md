@@ -56,3 +56,5 @@ The `/health` endpoint merely returns a simple JSON:
 ```json
 {"healthy":true}
 ```
+
+References: https://stackoverflow.com/questions/47722898/how-can-i-make-a-docker-healthcheck-with-wget-instead-of-curl
