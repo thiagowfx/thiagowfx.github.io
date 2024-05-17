@@ -1,4 +1,33 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Linux on Not Just Serendipity</title><link>https://www.perrotta.dev/tags/linux/</link><description>Recent content in Linux on Not Just Serendipity</description><generator>Hugo -- 0.125.6</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta • CC BY-NC-SA 4.0 • RSS •</copyright><lastBuildDate>Fri, 03 May 2024 16:46:28 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Be aware that your public SSH keys can reveal your identity</title><link>https://www.perrotta.dev/2024/05/be-aware-that-your-public-ssh-keys-can-reveal-your-identity/</link><pubDate>Fri, 03 May 2024 16:46:28 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/be-aware-that-your-public-ssh-keys-can-reveal-your-identity/</guid><description>&lt;p>If you have a GitHub account configured with SSH, your public keys are available
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Linux on Not Just Serendipity</title><link>https://www.perrotta.dev/tags/linux/</link><description>Recent content in Linux on Not Just Serendipity</description><generator>Hugo -- 0.126.1</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta • CC BY-NC-SA 4.0 • RSS •</copyright><lastBuildDate>Fri, 17 May 2024 11:15:09 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Adding a healthcheck to chartmuseum in AWS Fargate</title><link>https://www.perrotta.dev/2024/05/adding-a-healthcheck-to-chartmuseum-in-aws-fargate/</link><pubDate>Fri, 17 May 2024 11:15:09 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/adding-a-healthcheck-to-chartmuseum-in-aws-fargate/</guid><description>&lt;p>Assume that you have a &lt;a href="https://chartmuseum.com/">Chartmuseum&lt;/a> container running
+in &lt;a href="https://aws.amazon.com/fargate/">AWS Fargate&lt;/a>.&lt;/p>
+&lt;p>Chartmuseum is a repository for helm charts. AWS Fargate is an Amazon service to
+run containers (&amp;ldquo;serverless&amp;rdquo;), being part of ECS (Elastic Container Service).&lt;/p>
+&lt;p>Problem statement: Add a container &lt;em>healthcheck&lt;/em> to the chartmuseum task
+definition associated with the container.&lt;/p></description><content:encoded><![CDATA[<p>Assume that you have a <a href="https://chartmuseum.com/">Chartmuseum</a> container running
+in <a href="https://aws.amazon.com/fargate/">AWS Fargate</a>.</p>
+<p>Chartmuseum is a repository for helm charts. AWS Fargate is an Amazon service to
+run containers (&ldquo;serverless&rdquo;), being part of ECS (Elastic Container Service).</p>
+<p>Problem statement: Add a container <em>healthcheck</em> to the chartmuseum task
+definition associated with the container.</p>
+<p>The <a href="https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_HealthCheck.html">official
+docs</a>
+suggest using <code>curl</code>:</p>
+<pre tabindex="0"><code>[&#34;CMD-SHELL&#34;, &#34;curl -f http://localhost/ || exit 1&#34;]
+</code></pre><p>For Chartmuseum specifically we&rsquo;re interested in its <code>/health</code> endpoint, as per
+<a href="https://github.com/helm/chartmuseum/issues/28">this reference</a>:</p>
+<pre tabindex="0"><code>[&#34;CMD-SHELL&#34;, &#34;curl -f http://localhost/health || exit 1&#34;]
+</code></pre><p>But we&rsquo;re using port 8080:</p>
+<pre tabindex="0"><code>[&#34;CMD-SHELL&#34;, &#34;curl -f http://localhost:8080/health || exit 1&#34;]
+</code></pre><p>If you use this healthcheck for the official chartmuseum image
+(<code>ghcr.io/helm/chartmuseum</code>) it will fail, because the Alpine Linux environment
+it uses does not contain <code>curl</code>.</p>
+<p>A straightforward fix is to use <code>wget</code> instead:</p>
+<pre tabindex="0"><code>[&#34;CMD-SHELL&#34;, &#34;wget -q --spider http://localhost:8080/health || exit 1&#34;]
+</code></pre><p><code>--spider</code> is needed because we do not want to download anything, <code>-q</code> is
+optional and short for &ldquo;quiet&rdquo;.</p>
+<p>The <code>/health</code> endpoint merely returns a simple JSON:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{<span style="color:#f92672">&#34;healthy&#34;</span>:<span style="color:#66d9ef">true</span>}
+</span></span></code></pre></div>]]></content:encoded></item><item><title>Be aware that your public SSH keys can reveal your identity</title><link>https://www.perrotta.dev/2024/05/be-aware-that-your-public-ssh-keys-can-reveal-your-identity/</link><pubDate>Fri, 03 May 2024 16:46:28 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/be-aware-that-your-public-ssh-keys-can-reveal-your-identity/</guid><description>&lt;p>If you have a GitHub account configured with SSH, your public keys are available
 at &lt;code>https://github.com/$USERNAME.keys&lt;/code>.&lt;/p>
 &lt;p>For example, mine: &lt;a href="https://github.com/thiagowfx.keys">https://github.com/thiagowfx.keys&lt;/a>&lt;/p>
 &lt;p>And then let&amp;rsquo;s say you also use your full name on GitHub.&lt;/p></description><content:encoded><![CDATA[<p>If you have a GitHub account configured with SSH, your public keys are available
@@ -714,61 +743,6 @@ references below for more in-depth guides about it.</p>
 <ol>
 <li id="fn:1">
 <p>To make it system-wide, change the relevant file in <code>/etc</code>: for example, <code>/etc/bashrc</code> for <code>bash</code>. I would advise against it though.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item><item><title>Transfer bash history to zsh</title><link>https://www.perrotta.dev/2022/02/transfer-bash-history-to-zsh/</link><pubDate>Fri, 04 Feb 2022 21:58:50 -0500</pubDate><guid>https://www.perrotta.dev/2022/02/transfer-bash-history-to-zsh/</guid><description>&lt;p>After years of using &lt;code>bash&lt;/code> as my default interactive shell at $DAYJOB,
-I decided to switch to &lt;code>zsh&lt;/code>. I didn&amp;rsquo;t want to start from scratch and lose all
-my history though:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ wc -l ~/.bash_history | cut -f1 -d&lt;span style="color:#e6db74">&amp;#39; &amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">64002&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Thus my goal was to first migrate all my history from &lt;code>bash&lt;/code> to &lt;code>zsh&lt;/code>.&lt;/p></description><content:encoded><![CDATA[<p>After years of using <code>bash</code> as my default interactive shell at $DAYJOB,
-I decided to switch to <code>zsh</code>. I didn&rsquo;t want to start from scratch and lose all
-my history though:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ wc -l ~/.bash_history | cut -f1 -d<span style="color:#e6db74">&#39; &#39;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64002</span>
-</span></span></code></pre></div><p>Thus my goal was to first migrate all my history from <code>bash</code> to <code>zsh</code>.</p>
-<p>The <code>bash-to-zsh-hist.py</code> python script in this
-<a href="https://gist.github.com/muendelezaji/c14722ab66b505a49861b8a74e52b274">gist</a>
-did most of the job:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># -*- coding: utf-8 -*-</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># This is how I used it:</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># $ cat ~/.bash_history | python bash-to-zsh-hist.py &gt;&gt; ~/.zsh_history</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
-</span></span><span style="display:flex;"><span>    timestamp <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> sys<span style="color:#f92672">.</span>stdin<span style="color:#f92672">.</span>readlines():
-</span></span><span style="display:flex;"><span>        line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>rstrip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> line<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#39;#&#39;</span>) <span style="color:#f92672">and</span> timestamp <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:
-</span></span><span style="display:flex;"><span>            t <span style="color:#f92672">=</span> line[<span style="color:#ae81ff">1</span>:]
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> t<span style="color:#f92672">.</span>isdigit():
-</span></span><span style="display:flex;"><span>                timestamp <span style="color:#f92672">=</span> t
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>            sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#39;: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">:0;</span><span style="color:#e6db74">%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> (timestamp <span style="color:#f92672">or</span> time<span style="color:#f92672">.</span>time(), line))
-</span></span><span style="display:flex;"><span>            timestamp <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
-</span></span><span style="display:flex;"><span>    main()
-</span></span></code></pre></div><p>To use it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ wget https://gist.githubusercontent.com/muendelezaji/c14722ab66b505a49861b8a74e52b274/raw/49f0fb7f661bdf794742257f58950d209dd6cb62/bash-to-zsh-hist.py
-</span></span><span style="display:flex;"><span>$ chmod +x ./bash-to-zsh-hist.py
-</span></span><span style="display:flex;"><span>$ cat .bash_history | ./bash-to-zsh-hist.py &gt;&gt; ~/.zsh_history
-</span></span></code></pre></div><p>However, that didn&rsquo;t fully work. Upon running <code>zsh</code>, there was an error:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ zsh
-</span></span><span style="display:flex;"><span>zsh: corrupt history file /usr/local/google/home/tperrotta/.zsh_history
-</span></span></code></pre></div><p>A quick google search led me to <a href="https://shapeshed.com/zsh-corrupt-history-file/">a blog post</a>. I adapted the command suggest therein<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ strings -eS .zsh_history | sponge .zsh_history
-</span></span></code></pre></div><p>And that fixed the issue!</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><code>sponge</code> comes from the <a href="https://joeyh.name/code/moreutils/">moreutils</a> package.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>
