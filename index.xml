@@ -1,4 +1,77 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Not Just Serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on Not Just Serendipity</description><generator>Hugo -- 0.126.1</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta • CC BY-NC-SA 4.0 • RSS •</copyright><lastBuildDate>Fri, 17 May 2024 11:15:09 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Adding a healthcheck to chartmuseum in AWS Fargate</title><link>https://www.perrotta.dev/2024/05/adding-a-healthcheck-to-chartmuseum-in-aws-fargate/</link><pubDate>Fri, 17 May 2024 11:15:09 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/adding-a-healthcheck-to-chartmuseum-in-aws-fargate/</guid><description>&lt;p>Assume that you have a &lt;a href="https://chartmuseum.com/">Chartmuseum&lt;/a> container running
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Not Just Serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on Not Just Serendipity</description><generator>Hugo -- 0.126.1</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta • CC BY-NC-SA 4.0 • RSS •</copyright><lastBuildDate>Tue, 21 May 2024 14:31:03 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform: AWS deployment to random availability zones</title><link>https://www.perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/</link><pubDate>Tue, 21 May 2024 14:31:03 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/</guid><description>&lt;p>A common scenario: there&amp;rsquo;s a new deployment you would like to roll out to AWS.
+Let&amp;rsquo;s say you pick &amp;ldquo;us-east-1&amp;rdquo; as your cloud region. There are multiple
+availability zones within it:&lt;/p>
+&lt;ul>
+&lt;li>us-east-1a&lt;/li>
+&lt;li>us-east-1b&lt;/li>
+&lt;li>us-east-1c&lt;/li>
+&lt;li>us-east-1d&lt;/li>
+&lt;li>us-east-1e&lt;/li>
+&lt;li>us-east-1f&lt;/li>
+&lt;/ul>
+&lt;p>Suppose you want to pick two of them for your service/app, and you don&amp;rsquo;t
+particularly care about which one. How to proceed?&lt;/p></description><content:encoded><![CDATA[<p>A common scenario: there&rsquo;s a new deployment you would like to roll out to AWS.
+Let&rsquo;s say you pick &ldquo;us-east-1&rdquo; as your cloud region. There are multiple
+availability zones within it:</p>
+<ul>
+<li>us-east-1a</li>
+<li>us-east-1b</li>
+<li>us-east-1c</li>
+<li>us-east-1d</li>
+<li>us-east-1e</li>
+<li>us-east-1f</li>
+</ul>
+<p>Suppose you want to pick two of them for your service/app, and you don&rsquo;t
+particularly care about which one. How to proceed?</p>
+<h2 id="option-1-hard-coding">Option #1: Hard-coding</h2>
+<p>Pick two arbitrary zones and hard-code them.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">variable</span> <span style="color:#e6db74">&#34;availability_zones&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span>    = list(<span style="color:#a6e22e">string</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">default</span> = [<span style="color:#e6db74">&#34;us-east-1a&#34;</span>, <span style="color:#e6db74">&#34;us-east-1b&#34;</span>]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_subnet&#34;</span> <span style="color:#e6db74">&#34;private&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">vpc_id</span>            = <span style="color:#a6e22e">aws_vpc</span>.<span style="color:#a6e22e">chartmuseum</span>.<span style="color:#a6e22e">id</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">cidr_block</span>        = element(var.<span style="color:#a6e22e">private_subnets</span>, count.<span style="color:#a6e22e">index</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">availability_zone</span> = element(var.<span style="color:#a6e22e">availability_zones</span>, count.<span style="color:#a6e22e">index</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">count</span>             = length(var.<span style="color:#a6e22e">private_subnets</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Caveat</strong>: <a href="https://www.goodreads.com/book/show/10639.The_Paradox_of_Choice">The paradox of
+choice</a>,
+unnecessary decision fatigue.</p>
+<h2 id="option-2-pick-the-first-two">Option #2: Pick the first two</h2>
+<p>Use the AWS data source to dynamically find all zones, and pick the first two.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">data</span> <span style="color:#e6db74">&#34;aws_availability_zones&#34;</span> <span style="color:#e6db74">&#34;available&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">state</span> = <span style="color:#e6db74">&#34;available&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_subnet&#34;</span> <span style="color:#e6db74">&#34;private&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">vpc_id</span>            = <span style="color:#a6e22e">aws_vpc</span>.<span style="color:#a6e22e">chartmuseum</span>.<span style="color:#a6e22e">id</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">cidr_block</span>        = element(var.<span style="color:#a6e22e">private_subnets</span>, count.<span style="color:#a6e22e">index</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">availability_zone</span> = element(data.<span style="color:#a6e22e">aws_availability_zones</span>.<span style="color:#a6e22e">available</span>.<span style="color:#a6e22e">names</span>, count.<span style="color:#a6e22e">index</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">count</span>             = length(var.<span style="color:#a6e22e">private_subnets</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Note that <code>terraform plan</code> should display the full zone list.</p>
+<p><strong>Caveat</strong>: Heavily biased towards the first two zones.</p>
+<h2 id="option-3-random-shuffling">Option #3: Random shuffling</h2>
+<p>Pick two zones at random!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">data</span> <span style="color:#e6db74">&#34;aws_availability_zones&#34;</span> <span style="color:#e6db74">&#34;available&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">state</span> = <span style="color:#e6db74">&#34;available&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;random_shuffle&#34;</span> <span style="color:#e6db74">&#34;aws_availability_zone_names&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">input</span>        = data.<span style="color:#a6e22e">aws_availability_zones</span>.<span style="color:#a6e22e">available</span>.<span style="color:#a6e22e">names</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">result_count</span> = <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_subnet&#34;</span> <span style="color:#e6db74">&#34;private&#34;</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">vpc_id</span>            = <span style="color:#a6e22e">aws_vpc</span>.<span style="color:#a6e22e">chartmuseum</span>.<span style="color:#a6e22e">id</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">cidr_block</span>        = element(var.<span style="color:#a6e22e">private_subnets</span>, count.<span style="color:#a6e22e">index</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">availability_zone</span> = element(<span style="color:#a6e22e">random_shuffle</span>.<span style="color:#a6e22e">aws_availability_zone_names</span>.<span style="color:#a6e22e">result</span>, count.<span style="color:#a6e22e">index</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">count</span>             = length(var.<span style="color:#a6e22e">private_subnets</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Winner</strong>: In my opinion, this is the most elegant approach.</p>
+<p><code>random_shuffle</code> will output the selected regions upon running <code>terraform apply</code>.</p>]]></content:encoded></item><item><title>Adding a healthcheck to chartmuseum in AWS Fargate</title><link>https://www.perrotta.dev/2024/05/adding-a-healthcheck-to-chartmuseum-in-aws-fargate/</link><pubDate>Fri, 17 May 2024 11:15:09 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/adding-a-healthcheck-to-chartmuseum-in-aws-fargate/</guid><description>&lt;p>Assume that you have a &lt;a href="https://chartmuseum.com/">Chartmuseum&lt;/a> container running
 in &lt;a href="https://aws.amazon.com/fargate/">AWS Fargate&lt;/a>.&lt;/p>
 &lt;p>Chartmuseum is a repository for helm charts. AWS Fargate is an Amazon service to
 run containers (&amp;ldquo;serverless&amp;rdquo;), being part of ECS (Elastic Container Service).&lt;/p>
@@ -269,12 +342,4 @@ single battery charge without any byte sent to the network.</p>
 <ul>
 <li>do not use it for public transit, it is terrible as it does not have
 real-time data integration</li>
-</ul>]]></content:encoded></item><item><title>New domain</title><link>https://www.perrotta.dev/2024/02/new-domain/</link><pubDate>Sun, 04 Feb 2024 23:27:09 -0300</pubDate><guid>https://www.perrotta.dev/2024/02/new-domain/</guid><description>&lt;p>I got a new domain! This blog is now available on &lt;a href="https://www.perrotta.dev/">https://www.perrotta.dev/&lt;/a>.
-There&amp;rsquo;s also a redirect to it from &lt;a href="https://blog.perrotta.dev/">https://blog.perrotta.dev/&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>I got a new domain! This blog is now available on <a href="https://www.perrotta.dev/">https://www.perrotta.dev/</a>.
-There&rsquo;s also a redirect to it from <a href="https://blog.perrotta.dev/">https://blog.perrotta.dev/</a>.</p>
-<p>I don&rsquo;t know which one I like best, so <code>www</code> is the canonical subdomain for now.
-Feel free to update the RSS in your feed reader, although
-<a href="https://thiagowfx.github.io/">https://thiagowfx.github.io/</a> should keep working for a little longer, until (if
-ever) I decide to migrate the static hosting off Github Pages.</p>
-<p>This is a project I wanted to do since ages ago, and my goals go beyond merely
-making my blog available under it. Stay tuned for more updates.</p>]]></content:encoded></item></channel></rss>
+</ul>]]></content:encoded></item></channel></rss>
