@@ -1,4 +1,72 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Not Just Serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on Not Just Serendipity</description><generator>Hugo -- 0.126.1</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta • CC BY-NC-SA 4.0 • RSS •</copyright><lastBuildDate>Tue, 21 May 2024 14:31:03 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform: AWS deployment to random availability zones</title><link>https://www.perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/</link><pubDate>Tue, 21 May 2024 14:31:03 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/</guid><description>&lt;p>A common scenario: there&amp;rsquo;s a new deployment you would like to roll out to AWS.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Not Just Serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on Not Just Serendipity</description><generator>Hugo -- 0.126.1</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta • CC BY-NC-SA 4.0 • RSS •</copyright><lastBuildDate>Tue, 28 May 2024 10:23:22 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Github actions workflow</title><link>https://www.perrotta.dev/2024/05/github-actions-workflow/</link><pubDate>Tue, 28 May 2024 10:23:22 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/github-actions-workflow/</guid><description>&lt;p>This post exemplifies an efficient workflow to shorten the edit-refresh loop
+when dealing with github actions.&lt;/p></description><content:encoded><![CDATA[<p>This post exemplifies an efficient workflow to shorten the edit-refresh loop
+when dealing with github actions.</p>
+<h2 id="assumptions">Assumptions</h2>
+<ul>
+<li>You have <code>git</code>, <code>jq</code> and the <a href="https://cli.github.com/"><code>gh</code></a> command-line tool
+installed (<code>brew install gh</code>)</li>
+<li>You have a github actions file in
+<code>~/.github/workflows/package-release-dispatch.yml</code>.</li>
+<li>The action has the following form:</li>
+</ul>
+<pre tabindex="0"><code>on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: &#39;Ref to build from. This can either be a SHA or a branch/tag&#39;
+        required: true
+        type: string
+  push:
+    branches:
+      - master
+    paths:
+      - &#39;.github/workflows/package-release-dispatch.yml&#39;
+      - &#39;helm/**&#39;
+</code></pre><p>The goal is to iterate on the <code>jobs:</code> section of the action.</p>
+<h2 id="workflow">Workflow</h2>
+<p>Trigger an action run from the command line:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh workflow run package-release-dispatch.yml <span style="color:#f92672">[</span>--ref master<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>-f ref<span style="color:#f92672">=</span>master<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p><code>--ref</code> should be the git branch you&rsquo;re working on, for example,
+<code>thiagowfx/my-cool-feature</code>.</p>
+<p><code>-f</code> provides an input to the workflow. In this case, there&rsquo;s an input named
+<code>ref</code>, which is meant to be the branch the action will act upon.</p>
+<p>The action takes a little while to trigger, we can <code>sleep</code> to give it some time.
+I found that <code>sleep 3</code> is a sensible value (3 seconds).</p>
+<p>How to view the action?</p>
+<p>First we need to get its ID. Here&rsquo;s one way to do so:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh run list --workflow<span style="color:#f92672">=</span>package-release-dispatch.yml --json databaseId --jq <span style="color:#e6db74">&#39;.[0].databaseId&#39;</span>
+</span></span></code></pre></div><h3 id="option-1-via-the-command-line">Option 1) Via the command-line</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh run watch &lt;id&gt;
+</span></span></code></pre></div><p>It&rsquo;s analogous to <code>watch</code>, continuously refreshing the action progress in the
+background, step by step. Example:</p>
+<pre tabindex="0"><code>* master Package release dispatch · 12345678
+Triggered via workflow_dispatch about 1 minute ago
+
+JOBS
+* build (ID 23456789)
+  ✓ Set up job
+  ✓ Checkout source code
+  ✓ Run azure/setup-helm@v4
+  ✓ Install yq
+  ✓ Install helm cm-push plugin
+  ✓ Set up Helm repos
+  * Helm package all charts sans blacklist
+  * Publish all helm packages
+  * Post Checkout source code
+</code></pre><h3 id="option-2-via-the-web-browser">Option 2) Via the web browser</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh run view &lt;id&gt; -w
+</span></span></code></pre></div><p>It will open the system web browser in the right page, pertaining to the action
+run.</p>
+<h2 id="putting-everything-together">Putting everything together</h2>
+<h3 id="option-1">Option 1)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh workflow run package-release-dispatch.yml --ref master -f ref<span style="color:#f92672">=</span>master <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  sleep <span style="color:#ae81ff">3</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  gh run watch <span style="color:#66d9ef">$(</span>gh run list --workflow<span style="color:#f92672">=</span>package-release-dispatch.yml --json databaseId --jq <span style="color:#e6db74">&#39;.[0].databaseId&#39;</span><span style="color:#66d9ef">)</span>
+</span></span></code></pre></div><h3 id="option-2">Option 2)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh workflow run package-release-dispatch.yml --ref master -f ref<span style="color:#f92672">=</span>master <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  sleep <span style="color:#ae81ff">3</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  gh run view <span style="color:#66d9ef">$(</span>gh run list --workflow<span style="color:#f92672">=</span>package-release-dispatch.yml --json databaseId --jq <span style="color:#e6db74">&#39;.[0].databaseId&#39;</span><span style="color:#66d9ef">)</span> -w
+</span></span></code></pre></div>]]></content:encoded></item><item><title>Terraform: AWS deployment to random availability zones</title><link>https://www.perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/</link><pubDate>Tue, 21 May 2024 14:31:03 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/</guid><description>&lt;p>A common scenario: there&amp;rsquo;s a new deployment you would like to roll out to AWS.
 Let&amp;rsquo;s say you pick &amp;ldquo;us-east-1&amp;rdquo; as your cloud region. There are multiple
 availability zones within it:&lt;/p>
 &lt;ul>
@@ -288,58 +356,4 @@ simply not show up.</p>
 <p>The simplest way to force it to do so is to <a href="https://www.youtube.com/watch?v=DPqdyoTpyEs">turn the Wi-Fi off and on
 again</a>.</p>
 <p>Should it not work, the second way is to open your favorite browser and navigate
-to <a href="https://captive.apple.com">captive.apple.com</a> (macOS, iOS).</p>]]></content:encoded></item><item><title>Organic Maps: off-line maps</title><link>https://www.perrotta.dev/2024/02/organic-maps-off-line-maps/</link><pubDate>Wed, 21 Feb 2024 00:36:57 +0100</pubDate><guid>https://www.perrotta.dev/2024/02/organic-maps-off-line-maps/</guid><description>&lt;p>&lt;a href="https://organicmaps.app/">https://organicmaps.app/&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>Organic Maps is a free Android &amp;amp; iOS offline maps app for travelers,
-tourists, hikers, drivers and cyclists based on OpenStreetMap data created
-by the community. It is a privacy-focused, open-source fork of [&amp;hellip;]&lt;/p>
-&lt;/blockquote>
-&lt;blockquote>
-&lt;p>Organic Maps is one of the few applications nowadays that supports 100% of
-features without an active Internet connection. Install Organic Maps,
-download maps, throw away your SIM card, and go for a weeklong trip on a
-single battery charge without any byte sent to the network.&lt;/p>
-&lt;/blockquote>
-&lt;p>Positive impressions:&lt;/p>
-&lt;ul>
-&lt;li>works great on iOS (didn&amp;rsquo;t test on Android yet)&lt;/li>
-&lt;li>a great companion for &lt;strong>cycling&lt;/strong> within the city&lt;/li>
-&lt;li>more fun and more lightweight than Google Maps&lt;/li>
-&lt;li>low impact on device battery life&lt;/li>
-&lt;li>extremely privacy friendly (no ads, no tracking, no push notifications, etc)&lt;/li>
-&lt;li>extremely mobile data friendly (works fully offline)&lt;/li>
-&lt;li>open-source, and without any IAP&lt;/li>
-&lt;li>works out-of-the-box, no sign up necessary&lt;/li>
-&lt;/ul>
-&lt;p>Negative impressions:&lt;/p>
-&lt;ul>
-&lt;li>do not use it for public transit, it is terrible as it does not have
-real-time data integration&lt;/li>
-&lt;/ul></description><content:encoded><![CDATA[<p><a href="https://organicmaps.app/">https://organicmaps.app/</a>:</p>
-<blockquote>
-<p>Organic Maps is a free Android &amp; iOS offline maps app for travelers,
-tourists, hikers, drivers and cyclists based on OpenStreetMap data created
-by the community. It is a privacy-focused, open-source fork of [&hellip;]</p>
-</blockquote>
-<blockquote>
-<p>Organic Maps is one of the few applications nowadays that supports 100% of
-features without an active Internet connection. Install Organic Maps,
-download maps, throw away your SIM card, and go for a weeklong trip on a
-single battery charge without any byte sent to the network.</p>
-</blockquote>
-<p>Positive impressions:</p>
-<ul>
-<li>works great on iOS (didn&rsquo;t test on Android yet)</li>
-<li>a great companion for <strong>cycling</strong> within the city</li>
-<li>more fun and more lightweight than Google Maps</li>
-<li>low impact on device battery life</li>
-<li>extremely privacy friendly (no ads, no tracking, no push notifications, etc)</li>
-<li>extremely mobile data friendly (works fully offline)</li>
-<li>open-source, and without any IAP</li>
-<li>works out-of-the-box, no sign up necessary</li>
-</ul>
-<p>Negative impressions:</p>
-<ul>
-<li>do not use it for public transit, it is terrible as it does not have
-real-time data integration</li>
-</ul>]]></content:encoded></item></channel></rss>
+to <a href="https://captive.apple.com">captive.apple.com</a> (macOS, iOS).</p>]]></content:encoded></item></channel></rss>

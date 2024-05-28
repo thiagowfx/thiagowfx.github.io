@@ -1,4 +1,72 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Bestof on Not Just Serendipity</title><link>https://www.perrotta.dev/tags/bestof/</link><description>Recent content in Bestof on Not Just Serendipity</description><generator>Hugo -- 0.126.1</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta • CC BY-NC-SA 4.0 • RSS •</copyright><lastBuildDate>Thu, 01 Feb 2024 14:02:28 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Integrating terraform with ansible</title><link>https://www.perrotta.dev/2024/02/integrating-terraform-with-ansible/</link><pubDate>Thu, 01 Feb 2024 14:02:28 -0300</pubDate><guid>https://www.perrotta.dev/2024/02/integrating-terraform-with-ansible/</guid><description>&lt;p>This post is a follow-up of &lt;a href="https://www.perrotta.dev/2024/01/terraforming-a-linode-hello-world/">Terraforming a Linode: hello world&lt;/a>.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Bestof on Not Just Serendipity</title><link>https://www.perrotta.dev/tags/bestof/</link><description>Recent content in Bestof on Not Just Serendipity</description><generator>Hugo -- 0.126.1</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta • CC BY-NC-SA 4.0 • RSS •</copyright><lastBuildDate>Tue, 28 May 2024 10:23:22 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Github actions workflow</title><link>https://www.perrotta.dev/2024/05/github-actions-workflow/</link><pubDate>Tue, 28 May 2024 10:23:22 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/github-actions-workflow/</guid><description>&lt;p>This post exemplifies an efficient workflow to shorten the edit-refresh loop
+when dealing with github actions.&lt;/p></description><content:encoded><![CDATA[<p>This post exemplifies an efficient workflow to shorten the edit-refresh loop
+when dealing with github actions.</p>
+<h2 id="assumptions">Assumptions</h2>
+<ul>
+<li>You have <code>git</code>, <code>jq</code> and the <a href="https://cli.github.com/"><code>gh</code></a> command-line tool
+installed (<code>brew install gh</code>)</li>
+<li>You have a github actions file in
+<code>~/.github/workflows/package-release-dispatch.yml</code>.</li>
+<li>The action has the following form:</li>
+</ul>
+<pre tabindex="0"><code>on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: &#39;Ref to build from. This can either be a SHA or a branch/tag&#39;
+        required: true
+        type: string
+  push:
+    branches:
+      - master
+    paths:
+      - &#39;.github/workflows/package-release-dispatch.yml&#39;
+      - &#39;helm/**&#39;
+</code></pre><p>The goal is to iterate on the <code>jobs:</code> section of the action.</p>
+<h2 id="workflow">Workflow</h2>
+<p>Trigger an action run from the command line:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh workflow run package-release-dispatch.yml <span style="color:#f92672">[</span>--ref master<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>-f ref<span style="color:#f92672">=</span>master<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p><code>--ref</code> should be the git branch you&rsquo;re working on, for example,
+<code>thiagowfx/my-cool-feature</code>.</p>
+<p><code>-f</code> provides an input to the workflow. In this case, there&rsquo;s an input named
+<code>ref</code>, which is meant to be the branch the action will act upon.</p>
+<p>The action takes a little while to trigger, we can <code>sleep</code> to give it some time.
+I found that <code>sleep 3</code> is a sensible value (3 seconds).</p>
+<p>How to view the action?</p>
+<p>First we need to get its ID. Here&rsquo;s one way to do so:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh run list --workflow<span style="color:#f92672">=</span>package-release-dispatch.yml --json databaseId --jq <span style="color:#e6db74">&#39;.[0].databaseId&#39;</span>
+</span></span></code></pre></div><h3 id="option-1-via-the-command-line">Option 1) Via the command-line</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh run watch &lt;id&gt;
+</span></span></code></pre></div><p>It&rsquo;s analogous to <code>watch</code>, continuously refreshing the action progress in the
+background, step by step. Example:</p>
+<pre tabindex="0"><code>* master Package release dispatch · 12345678
+Triggered via workflow_dispatch about 1 minute ago
+
+JOBS
+* build (ID 23456789)
+  ✓ Set up job
+  ✓ Checkout source code
+  ✓ Run azure/setup-helm@v4
+  ✓ Install yq
+  ✓ Install helm cm-push plugin
+  ✓ Set up Helm repos
+  * Helm package all charts sans blacklist
+  * Publish all helm packages
+  * Post Checkout source code
+</code></pre><h3 id="option-2-via-the-web-browser">Option 2) Via the web browser</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh run view &lt;id&gt; -w
+</span></span></code></pre></div><p>It will open the system web browser in the right page, pertaining to the action
+run.</p>
+<h2 id="putting-everything-together">Putting everything together</h2>
+<h3 id="option-1">Option 1)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh workflow run package-release-dispatch.yml --ref master -f ref<span style="color:#f92672">=</span>master <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  sleep <span style="color:#ae81ff">3</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  gh run watch <span style="color:#66d9ef">$(</span>gh run list --workflow<span style="color:#f92672">=</span>package-release-dispatch.yml --json databaseId --jq <span style="color:#e6db74">&#39;.[0].databaseId&#39;</span><span style="color:#66d9ef">)</span>
+</span></span></code></pre></div><h3 id="option-2">Option 2)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh workflow run package-release-dispatch.yml --ref master -f ref<span style="color:#f92672">=</span>master <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  sleep <span style="color:#ae81ff">3</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  gh run view <span style="color:#66d9ef">$(</span>gh run list --workflow<span style="color:#f92672">=</span>package-release-dispatch.yml --json databaseId --jq <span style="color:#e6db74">&#39;.[0].databaseId&#39;</span><span style="color:#66d9ef">)</span> -w
+</span></span></code></pre></div>]]></content:encoded></item><item><title>★ Integrating terraform with ansible</title><link>https://www.perrotta.dev/2024/02/integrating-terraform-with-ansible/</link><pubDate>Thu, 01 Feb 2024 14:02:28 -0300</pubDate><guid>https://www.perrotta.dev/2024/02/integrating-terraform-with-ansible/</guid><description>&lt;p>This post is a follow-up of &lt;a href="https://www.perrotta.dev/2024/01/terraforming-a-linode-hello-world/">Terraforming a Linode: hello world&lt;/a>.&lt;/p>
 &lt;blockquote>
 &lt;p>In a future post, we will continue from here by using Ansible to install and
 set up Miniflux in our new Linode.&lt;/p>
@@ -1296,132 +1364,6 @@ Debian repositories very well, the same way that it does for macOS.&#160;<a href
 <ol>
 <li id="fn:1">
 <p>For example, maybe if <code>tmux</code> broke due to a recent upgrade, or if the <code>~/.tmux.conf</code> is invalid.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item><item><title>★ systemd: share environment variables with xorg</title><link>https://www.perrotta.dev/2022/01/systemd-share-environment-variables-with-xorg/</link><pubDate>Mon, 31 Jan 2022 21:38:54 -0500</pubDate><guid>https://www.perrotta.dev/2022/01/systemd-share-environment-variables-with-xorg/</guid><description>&lt;p>In this post we will learn how to share environment variables (e.g.
-&lt;code>$GDK_SCALE&lt;/code>) between a system user session and X11/Xorg.&lt;/p></description><content:encoded><![CDATA[<p>In this post we will learn how to share environment variables (e.g.
-<code>$GDK_SCALE</code>) between a system user session and X11/Xorg.</p>
-<p>The typical <a href="https://wiki.archlinux.org/title/Xinit"><code>~/.xinitrc</code></a> and/or <a href="https://wiki.archlinux.org/title/Xprofile"><code>~/.xprofile</code></a> setup in
-2020s involves some environment variable exports such as the following:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># fix java application decorations, for tiling window managers</span>
-</span></span><span style="display:flex;"><span>export _JAVA_AWT_WM_NONREPARENTING<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># make Chrome pick up proxy settings stored in gconf</span>
-</span></span><span style="display:flex;"><span>export DESKTOP_SESSION<span style="color:#f92672">=</span>gnome
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for GTK3+</span>
-</span></span><span style="display:flex;"><span>export GDK_DPI_SCALE<span style="color:#f92672">=</span>0.5
-</span></span><span style="display:flex;"><span>export GDK_SCALE<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for QT</span>
-</span></span><span style="display:flex;"><span>export QT_FONT_DPI<span style="color:#f92672">=</span><span style="color:#ae81ff">192</span>
-</span></span></code></pre></div><p>This particular set of customizations stems from my <a href="https://github.com/thiagowfx/.dotfiles">dotfiles</a> but
-there isn&rsquo;t anything special about it. I&rsquo;ll include an explanation anyway for
-completeness:</p>
-<ul>
-<li>
-<p>The java setting is meant for launching certain java-based applications from
-within a tiling window manager.</p>
-</li>
-<li>
-<p>All the other settings are meant for 4K HiDPI displays. The baseline DPI is
-96, which is too small for 4K monitors, the fonts and icons all look tiny. In
-order to make them scale it&rsquo;s necessary to use a higher DPI. Typical setups
-use either 144 (x1.5) or 192 (x2.0), the bigger the DPI the bigger fonts and
-icons will appear in the screen.</p>
-</li>
-</ul>
-<p>Those exports work well for graphical applications launched from your favorite
-window manager after it has already started, however if you decide to launch an
-application from <code>systemd</code>, those settings will not be picked up by it.</p>
-<p>For example, if you decide to manage <a href="http://jonls.dk/redshift/"><code>redshift</code></a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> (more
-specifically, <code>redshift-gtk</code> which has a system tray app) from a systemd user
-session<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, its fonts will look small.</p>
-<p>There are several ways to address this issue.</p>
-<p>One of them is to edit the service file directly:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ systemctl --user edit redshift-gtk
-</span></span></code></pre></div><p>And then add:</p>
-<pre tabindex="0"><code>[Unit]
-Environment=GDK_SCALE=2 GDK_DPI_SCALE=0.5
-</code></pre><p>Which results in:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.config/systemd/user/redshift-gtk.service.d/override.conf
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Unit<span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span>Environment<span style="color:#f92672">=</span>GDK_SCALE<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> GDK_DPI_SCALE<span style="color:#f92672">=</span>0.5
-</span></span></code></pre></div><p>Which you can make effective by:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ systemctl --user daemon-reload
-</span></span><span style="display:flex;"><span>$ systemctl --user restart redshift-gtk
-</span></span></code></pre></div><p>I am not a fan of this approach though, because this step would need to be repeated
-to all service files you want to manage this way. There&rsquo;s a better, <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> way to
-do so.</p>
-<p><code>systemd</code> supports <a href="https://www.freedesktop.org/software/systemd/man/environment.d.html">environment
-files</a>
-(<code>environment.d(5)</code>). User-defined ones live in
-<code>~/.config/environment.d/*.conf</code> by default.</p>
-<p>This means we could produce the following file:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.config/environment.d/user.conf
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># systemd environment.d(5) EnvironmentFile</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://www.freedesktop.org/software/systemd/man/environment.d.html</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Do not use export here.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Alternatively</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#   systemctl --user import-environment [var1] [var2] [...]</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Troubleshooting</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#   systemctl --user show-environment</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># fix java application decorations, for tiling window managers</span>
-</span></span><span style="display:flex;"><span>_JAVA_AWT_WM_NONREPARENTING<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># make Chrome pick up proxy settings stored in gconf</span>
-</span></span><span style="display:flex;"><span>DESKTOP_SESSION<span style="color:#f92672">=</span>gnome
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for GTK3+</span>
-</span></span><span style="display:flex;"><span>GDK_DPI_SCALE<span style="color:#f92672">=</span>0.5
-</span></span><span style="display:flex;"><span>GDK_SCALE<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for QT</span>
-</span></span><span style="display:flex;"><span>QT_FONT_DPI<span style="color:#f92672">=</span><span style="color:#ae81ff">192</span>
-</span></span></code></pre></div><p>Which is applied to all systemd user service files automatically, no need to
-set <code>Environment=</code> manually everywhere.</p>
-<p>However, now we need to maintain two different files: the systemd <code>.conf</code> one
-and the xorg <code>~/.xinitrc</code> one.</p>
-<p>One elegant way to reduce maintenance burden is, in my opinion, the follownig:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.xinitrc
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Parse user session environment variables.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># This file is shared with the systemd user instance.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Export all variables: https://stackoverflow.com/a/30969768/1745064</span>
-</span></span><span style="display:flex;"><span>set -a
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> -r ~/.config/environment.d/user.conf <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> . ~/.config/environment.d/user.conf
-</span></span><span style="display:flex;"><span>set +a
-</span></span></code></pre></div><p>It does what you expect: the underlying shell sources the <code>*.conf</code> file as if
-you were <code>export</code>ing each variable therein.</p>
-<p>One caveat of this setup is that you cannot define the variables
-dynamically; for example, with subshells, with external programs, or with
-simple mathematical operations derived from other variables<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
-<p>Ultimately though you end up with only one file to manage, which is the systemd one.
-<a href="https://en.wikipedia.org/wiki/KISS_principle">KISS</a>™.</p>
-<figure class="align-center "><a href="https://xkcd.com/963/">
-    <img loading="lazy" src="https://imgs.xkcd.com/comics/x11.png#center"
-         alt="Thomas Jefferson thought that every law and every constitution should be torn down and rewritten from scratch every nineteen years--which means X is overdue."/> </a><figcaption>
-            <p>XKCD Courtesy of Randall Munroe</p>
-        </figcaption>
-</figure>
-
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>Redshift adjusts the color temperature of your screen according to your
-surroundings. This may help your eyes hurt less if you are working in front
-of the screen at night. Redshift is similar to <a href="https://justgetflux.com/">f.lux</a>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p><code>systemctl --user start redshift</code>.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3">
-<p>For example, <code>QT_FONT_DPI=$(($GDK_SCALE * 96))</code> or similar.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>
