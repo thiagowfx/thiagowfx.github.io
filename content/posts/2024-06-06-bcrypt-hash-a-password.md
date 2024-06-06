@@ -10,8 +10,7 @@ tags:
 Given the password `correct horse battery staple`, we would like to bcrypt-hash
 it.
 
-{{< figure align="center" src="https://imgs.xkcd.com/comics/password_strength.png" link="https://xkcd.com/936/" alt="Through 20 years of effort, we've successfully trained everyone to use passwords that are hard for humans to remember, but easy for computers to guess.
-" attr="XKCD Courtesy of Randall Munroe" >}}
+{{< figure align="center" src="https://imgs.xkcd.com/comics/password_strength.png" link="https://xkcd.com/936/" alt="Through 20 years of effort, we've successfully trained everyone to use passwords that are hard for humans to remember, but easy for computers to guess." attr="XKCD Courtesy of Randall Munroe" >}}
 
 <!--more-->
 
