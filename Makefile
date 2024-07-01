@@ -1,4 +1,4 @@
-# Sitemap URL.
+# Sitemap URL
 SITEMAP = https://www.perrotta.dev/sitemap.xml
 
 # Hugo port
