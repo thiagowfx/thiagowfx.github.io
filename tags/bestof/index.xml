@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Bestof on Not Just Serendipity</title><link>https://www.perrotta.dev/tags/bestof/</link><description>Recent content in Bestof on Not Just Serendipity</description><generator>Hugo -- 0.128.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta • CC BY-NC-SA 4.0 • RSS •</copyright><lastBuildDate>Sun, 23 Jun 2024 14:50:19 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>★ XY problem</title><link>https://www.perrotta.dev/2024/06/xy-problem/</link><pubDate>Sun, 23 Jun 2024 14:50:19 +0200</pubDate><guid>https://www.perrotta.dev/2024/06/xy-problem/</guid><description>&lt;p>When asking questions or filing bugs / feature requests in the internet, I often
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Bestof on not just serendipity</title><link>https://www.perrotta.dev/tags/bestof/</link><description>Recent content in Bestof on not just serendipity</description><generator>Hugo -- 0.128.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta • CC BY-NC-SA 4.0 • RSS •</copyright><lastBuildDate>Sun, 23 Jun 2024 14:50:19 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>★ XY problem</title><link>https://www.perrotta.dev/2024/06/xy-problem/</link><pubDate>Sun, 23 Jun 2024 14:50:19 +0200</pubDate><guid>https://www.perrotta.dev/2024/06/xy-problem/</guid><description>&lt;p>When asking questions or filing bugs / feature requests in the internet, I often
 refer to these two invaluable resources:&lt;/p></description><content:encoded><![CDATA[<p>When asking questions or filing bugs / feature requests in the internet, I often
 refer to these two invaluable resources:</p>
 <ul>
@@ -1318,6 +1318,1302 @@ or Ubuntu</a>.
 In fact, this is what I did at $DAYJOB, because relying solely on Debian for
 package management is a very big limitation. I find that Nix complements the
 Debian repositories very well, the same way that it does for macOS.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ SSH plus tmux automatically</title><link>https://www.perrotta.dev/2022/02/ssh-plus-tmux-automatically/</link><pubDate>Sun, 13 Feb 2022 20:20:27 -0500</pubDate><guid>https://www.perrotta.dev/2022/02/ssh-plus-tmux-automatically/</guid><description>&lt;p>One of the most classic sysadmin/DevOps tasks is to use secure shell to connect to remote machines.&lt;/p>
+&lt;p>To persist those connections, a terminal multiplexer is often used, &lt;code>tmux&lt;/code> and &lt;code>screen&lt;/code> being the two most popular ones.&lt;/p>
+&lt;p>In this post I will cover a few different client-side and server-side ways to have &lt;code>ssh&lt;/code> automatically spawn &lt;code>tmux&lt;/code> upon connection.&lt;/p></description><content:encoded><![CDATA[<p>One of the most classic sysadmin/DevOps tasks is to use secure shell to connect to remote machines.</p>
+<p>To persist those connections, a terminal multiplexer is often used, <code>tmux</code> and <code>screen</code> being the two most popular ones.</p>
+<p>In this post I will cover a few different client-side and server-side ways to have <code>ssh</code> automatically spawn <code>tmux</code> upon connection.</p>
+<h2 id="option-1-use-command-line-ssh-flags-client-side-recommended">Option #1: Use command-line ssh flags (client-side, recommended)</h2>
+<p>Start <code>tmux</code>, forcing unicode, attaching to and/or creating a session named <em>main</em>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ssh user@host -t -- tmux -u new -A -s main
+</span></span></code></pre></div><p><code>-u</code> is not strictly necessary, however I experienced occasional weirdness when connecting to some machines and omitting it. Some unicode characters wouldn&rsquo;t be properly rendered, like the horizontal and vertical lines used to render tmux pane splits. Even though most machines should work just fine these days by supporting UTF-8 out-of-the-box, it&rsquo;s safer to always include <code>-u</code> just in case.</p>
+<p>Tip: If it&rsquo;s annoying to remember to type the full command above, consider adding an <code>alias</code> in your shell config. Alternatively, use a ssh client that remembers your flags preferences such as the <a href="https://chrome.google.com/webstore/detail/secure-shell/iodihamcpbpeioajjeobimgagajmlibd?hl=en">chrome secure shell</a> extension.</p>
+<h2 id="option-2-use-sshconfig-client-side">Option #2: Use <code>~/.ssh/config</code> (client-side)</h2>
+<p>This option is very similar to the previous one, but the flags live in the ssh config rather then being specified at the command line:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.ssh/config
+</span></span><span style="display:flex;"><span>Host *
+</span></span><span style="display:flex;"><span>  RequestTTY yes
+</span></span><span style="display:flex;"><span>  RemoteCommand tmux -u new -A -s main
+</span></span></code></pre></div><p>You don&rsquo;t need to match all hosts (<code>Host *</code>), if you&rsquo;d rather match one or more specific hosts, refer to the ssh config syntax <code>ssh_config(5)</code> to add them. A simple example would be <code>Host mymachine.example.org</code>.</p>
+<p><strong>Caveat</strong>: I&rsquo;ve found this method interferes with <code>git</code> + <code>ssh</code> authentication. More specifically:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git remote -v
+</span></span><span style="display:flex;"><span>origin	git@github.com:thiagowfx/.dotfiles.git <span style="color:#f92672">(</span>fetch<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>origin	git@github.com:thiagowfx/.dotfiles.git <span style="color:#f92672">(</span>push<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>$ git push
+</span></span><span style="display:flex;"><span>Cannot execute command-line and remote command.
+</span></span><span style="display:flex;"><span>fatal: Could not read from remote repository.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Please make sure you have the correct access rights
+</span></span><span style="display:flex;"><span>and the repository exists.
+</span></span></code></pre></div><p>Therefore I discourage it, unless you only use it with specific hosts i.e. don&rsquo;t use it with <code>Host *</code>.</p>
+<h2 id="option-3-use-bash_profile-or-similar-server-side-recommended">Option #3: Use <code>~/.bash_profile</code> or similar (server-side, recommended)</h2>
+<p>This method leverages your login shell startup config file (<code>~/.bash_profile</code>, <code>~/.zprofile</code>, etc) to automatically spawn <code>tmux</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># This file is invoked as part of my ~/.bash_profile.</span>
+</span></span><span style="display:flex;"><span>$ cat ~/.profile.d/tmux_auto_ssh.sh.
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Automatically spawn tmux within ssh sessions for interactive terminals.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://stackoverflow.com/a/43819740/1745064</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># The session is called `main`.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a session with PREFIX :new, rename with PREFIX $, toggle with PREFIX s.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Escape hatch:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   ssh &lt;host&gt; -t -- NOTMUX=1 &lt;shell&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -z <span style="color:#e6db74">&#34;</span>$NOTMUX<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">[</span> -z <span style="color:#e6db74">&#34;</span>$TMUX<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">[</span> -n <span style="color:#e6db74">&#34;</span>$SSH_TTY<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">[[</span> $- <span style="color:#f92672">=</span>~ i <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>  tmux -u new -A -s main
+</span></span><span style="display:flex;"><span>  exit
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span></code></pre></div><p>The <code>if</code> basically checks:</p>
+<ul>
+<li>whether we&rsquo;re not already inside a tmux session (we shouldn&rsquo;t be), so that we don&rsquo;t nest <code>tmux</code></li>
+<li>whether we&rsquo;re accessing the shell via <code>ssh</code> (we should be)</li>
+<li>whether we&rsquo;re accessing an interactive shell (we should be), so that it doesn&rsquo;t interefere with oneshot <code>ssh</code> commands</li>
+</ul>
+<p>There&rsquo;s also a escape hatch. If you want to get an interactive shell but bypass <code>tmux</code> for some reason<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, just set <code>NOTMUX=1</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ssh user@host -t -- NOTMUX<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> bash
+</span></span></code></pre></div><h2 id="final-remarks">Final remarks</h2>
+<p>My favorite methods are #1 and #3, and whether I use one or the other depends whether I want to unconditionally spawn <code>tmux</code> server-side, or selectively spawn <code>tmux</code> client-side.</p>
+<p>When using chrome secure shell (hterm) I find #1 convenient because hterm remembers your <code>ssh</code> host settings. That said, in scenarios where I fully control a host and it&rsquo;s not solely used for production, #3 is my favorite as it works unconditionally regardless of the client terminal emulator I am using.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>For example, maybe if <code>tmux</code> broke due to a recent upgrade, or if the <code>~/.tmux.conf</code> is invalid.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ systemd: share environment variables with xorg</title><link>https://www.perrotta.dev/2022/01/systemd-share-environment-variables-with-xorg/</link><pubDate>Mon, 31 Jan 2022 21:38:54 -0500</pubDate><guid>https://www.perrotta.dev/2022/01/systemd-share-environment-variables-with-xorg/</guid><description>&lt;p>In this post we will learn how to share environment variables (e.g.
+&lt;code>$GDK_SCALE&lt;/code>) between a system user session and X11/Xorg.&lt;/p></description><content:encoded><![CDATA[<p>In this post we will learn how to share environment variables (e.g.
+<code>$GDK_SCALE</code>) between a system user session and X11/Xorg.</p>
+<p>The typical <a href="https://wiki.archlinux.org/title/Xinit"><code>~/.xinitrc</code></a> and/or <a href="https://wiki.archlinux.org/title/Xprofile"><code>~/.xprofile</code></a> setup in
+2020s involves some environment variable exports such as the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># fix java application decorations, for tiling window managers</span>
+</span></span><span style="display:flex;"><span>export _JAVA_AWT_WM_NONREPARENTING<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># make Chrome pick up proxy settings stored in gconf</span>
+</span></span><span style="display:flex;"><span>export DESKTOP_SESSION<span style="color:#f92672">=</span>gnome
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for GTK3+</span>
+</span></span><span style="display:flex;"><span>export GDK_DPI_SCALE<span style="color:#f92672">=</span>0.5
+</span></span><span style="display:flex;"><span>export GDK_SCALE<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for QT</span>
+</span></span><span style="display:flex;"><span>export QT_FONT_DPI<span style="color:#f92672">=</span><span style="color:#ae81ff">192</span>
+</span></span></code></pre></div><p>This particular set of customizations stems from my <a href="https://github.com/thiagowfx/.dotfiles">dotfiles</a> but
+there isn&rsquo;t anything special about it. I&rsquo;ll include an explanation anyway for
+completeness:</p>
+<ul>
+<li>
+<p>The java setting is meant for launching certain java-based applications from
+within a tiling window manager.</p>
+</li>
+<li>
+<p>All the other settings are meant for 4K HiDPI displays. The baseline DPI is
+96, which is too small for 4K monitors, the fonts and icons all look tiny. In
+order to make them scale it&rsquo;s necessary to use a higher DPI. Typical setups
+use either 144 (x1.5) or 192 (x2.0), the bigger the DPI the bigger fonts and
+icons will appear in the screen.</p>
+</li>
+</ul>
+<p>Those exports work well for graphical applications launched from your favorite
+window manager after it has already started, however if you decide to launch an
+application from <code>systemd</code>, those settings will not be picked up by it.</p>
+<p>For example, if you decide to manage <a href="http://jonls.dk/redshift/"><code>redshift</code></a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> (more
+specifically, <code>redshift-gtk</code> which has a system tray app) from a systemd user
+session<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, its fonts will look small.</p>
+<p>There are several ways to address this issue.</p>
+<p>One of them is to edit the service file directly:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ systemctl --user edit redshift-gtk
+</span></span></code></pre></div><p>And then add:</p>
+<pre tabindex="0"><code>[Unit]
+Environment=GDK_SCALE=2 GDK_DPI_SCALE=0.5
+</code></pre><p>Which results in:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.config/systemd/user/redshift-gtk.service.d/override.conf
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Unit<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Environment<span style="color:#f92672">=</span>GDK_SCALE<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> GDK_DPI_SCALE<span style="color:#f92672">=</span>0.5
+</span></span></code></pre></div><p>Which you can make effective by:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ systemctl --user daemon-reload
+</span></span><span style="display:flex;"><span>$ systemctl --user restart redshift-gtk
+</span></span></code></pre></div><p>I am not a fan of this approach though, because this step would need to be repeated
+to all service files you want to manage this way. There&rsquo;s a better, <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> way to
+do so.</p>
+<p><code>systemd</code> supports <a href="https://www.freedesktop.org/software/systemd/man/environment.d.html">environment
+files</a>
+(<code>environment.d(5)</code>). User-defined ones live in
+<code>~/.config/environment.d/*.conf</code> by default.</p>
+<p>This means we could produce the following file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.config/environment.d/user.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># systemd environment.d(5) EnvironmentFile</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://www.freedesktop.org/software/systemd/man/environment.d.html</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Do not use export here.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Alternatively</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   systemctl --user import-environment [var1] [var2] [...]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Troubleshooting</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   systemctl --user show-environment</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># fix java application decorations, for tiling window managers</span>
+</span></span><span style="display:flex;"><span>_JAVA_AWT_WM_NONREPARENTING<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># make Chrome pick up proxy settings stored in gconf</span>
+</span></span><span style="display:flex;"><span>DESKTOP_SESSION<span style="color:#f92672">=</span>gnome
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for GTK3+</span>
+</span></span><span style="display:flex;"><span>GDK_DPI_SCALE<span style="color:#f92672">=</span>0.5
+</span></span><span style="display:flex;"><span>GDK_SCALE<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for QT</span>
+</span></span><span style="display:flex;"><span>QT_FONT_DPI<span style="color:#f92672">=</span><span style="color:#ae81ff">192</span>
+</span></span></code></pre></div><p>Which is applied to all systemd user service files automatically, no need to
+set <code>Environment=</code> manually everywhere.</p>
+<p>However, now we need to maintain two different files: the systemd <code>.conf</code> one
+and the xorg <code>~/.xinitrc</code> one.</p>
+<p>One elegant way to reduce maintenance burden is, in my opinion, the follownig:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.xinitrc
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Parse user session environment variables.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># This file is shared with the systemd user instance.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Export all variables: https://stackoverflow.com/a/30969768/1745064</span>
+</span></span><span style="display:flex;"><span>set -a
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> -r ~/.config/environment.d/user.conf <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> . ~/.config/environment.d/user.conf
+</span></span><span style="display:flex;"><span>set +a
+</span></span></code></pre></div><p>It does what you expect: the underlying shell sources the <code>*.conf</code> file as if
+you were <code>export</code>ing each variable therein.</p>
+<p>One caveat of this setup is that you cannot define the variables
+dynamically; for example, with subshells, with external programs, or with
+simple mathematical operations derived from other variables<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
+<p>Ultimately though you end up with only one file to manage, which is the systemd one.
+<a href="https://en.wikipedia.org/wiki/KISS_principle">KISS</a>™.</p>
+<figure class="align-center "><a href="https://xkcd.com/963/">
+    <img loading="lazy" src="https://imgs.xkcd.com/comics/x11.png#center"
+         alt="Thomas Jefferson thought that every law and every constitution should be torn down and rewritten from scratch every nineteen years--which means X is overdue."/> </a><figcaption>
+            <p>XKCD Courtesy of Randall Munroe</p>
+        </figcaption>
+</figure>
+
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Redshift adjusts the color temperature of your screen according to your
+surroundings. This may help your eyes hurt less if you are working in front
+of the screen at night. Redshift is similar to <a href="https://justgetflux.com/">f.lux</a>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><code>systemctl --user start redshift</code>.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>For example, <code>QT_FONT_DPI=$(($GDK_SCALE * 96))</code> or similar.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Watch files and react to changes during development</title><link>https://www.perrotta.dev/2022/01/watch-files-and-react-to-changes-during-development/</link><pubDate>Sun, 30 Jan 2022 21:32:17 -0500</pubDate><guid>https://www.perrotta.dev/2022/01/watch-files-and-react-to-changes-during-development/</guid><description>&lt;p>This post describes some tooling usages to watch for file changes and run or reload a command whenever they happen.&lt;/p></description><content:encoded><![CDATA[<p>This post describes some tooling usages to watch for file changes and run or reload a command whenever they happen.</p>
+<h2 id="context">Context</h2>
+<p>I am contributing to <a href="https://github.com/miniflux/v2">miniflux</a>, a minimalist and opinionated RSS reader. Miniflux&rsquo;s stack is as minimalist as the app itself: It&rsquo;s a Golang application that connects to a local PostgreSQL database. It has a well-documented and comprehensive <a href="https://github.com/miniflux/v2/blob/master/Makefile"><code>Makefile</code></a>.</p>
+<p>In order to achieve an edit-and-preview workflow for quick prototyping and local iteration, all that it&rsquo;s needed is to execute <code>make run</code> whenever any<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> file in the repository is changed.</p>
+<p>My goal was to achieve that workflow with the least amount of friction, and with an application that is widely available in most package managers / linux distributions out there.</p>
+<h2 id="option-1-entr-recommended">Option #1: entr (recommended)</h2>
+<p><a href="https://eradman.com/entrproject/"><code>entr(1)</code></a>:</p>
+<blockquote>
+<p>Run arbitrary commands when files change</p>
+</blockquote>
+<p>The following invocation does the job:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ fd | entr -r -- make run
+</span></span></code></pre></div><p>However, we could do better. From the upstream docs:</p>
+<blockquote>
+<p>» ag and ack offer many advantages over utilities such as find(1) or ls(1) in that they recognize files by their contents and are smart enough to skip directories such as .git</p>
+</blockquote>
+<p>I am happy with <code>fd</code> for this use case though. To limit <code>entr</code> to <code>.go</code> files only, we could do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ fd -e go | entr -r -- make run
+</span></span></code></pre></div><p>It took me less than 5 minutes to install and figure out how to use <code>entr</code>.</p>
+<p><a href="https://schauderbasis.de/posts/entr/">This blog post</a> covers it in more detail.</p>
+<h2 id="option-2-watchman">Option #2: watchman</h2>
+<p><a href="https://facebook.github.io/watchman/"><code>watchman</code></a> from Facebook Open Source:</p>
+<blockquote>
+<p>Watchman exists to watch files and record when they change. It can also trigger actions (such as rebuilding assets) when matching files change.</p>
+</blockquote>
+<p>Watchman&rsquo;s workflow doesn&rsquo;t seem to be very suited for this job though. It&rsquo;s much more centered on subscribing to <code>inotify</code> events:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd &lt;repository root&gt;
+</span></span><span style="display:flex;"><span>watchman watch .
+</span></span></code></pre></div><p>&hellip;and then adding predefined actions to recompile parts of the application as they change. The official docs give an example with CSS minification:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># set up a trigger named &#39;buildme&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># will run &#39;minify-css&#39; whenever a CSS file is changed</span>
+</span></span><span style="display:flex;"><span>watchman -- trigger . buildme <span style="color:#e6db74">&#39;*.css&#39;</span> -- minify-css
+</span></span></code></pre></div><p>In this regard it seems to be more modular, and I could easily see a scenario where I would kick off several specialized triggers in a webdev project: for example, one for CSS minification, one for JS minification, another one for TypeScript compilation, etc.</p>
+<p>That said, for the simple use case of triggering (and reloading) <code>make run</code>, it seems overkill. I also found its <a href="https://facebook.github.io/watchman/docs/install.html">official docs</a> too verbose and lacking sample usages for simple <code>Makefile</code>-based projects like miniflux.</p>
+<p>One caveat of <a href="https://repology.org/project/watchman/versions"><code>watchman</code></a> is that it&rsquo;s less widely available than <a href="https://repology.org/project/entr/versions"><code>entr</code></a>. Another caveat is that recently official distributions of watchman seem to be binary only, even though watchman itself is open source.</p>
+<p>It took me several minutes to figure out what&rsquo;s the gist of watchman, only to realize it is more bloated than warranted.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>For simple projects, <code>entr</code> is the way to go, hands down. For complex webdev projects, I would look into <code>watchman</code> more deeply.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>To be truly strict, only changes to <code>.go</code> files matter.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Advent of Code</title><link>https://www.perrotta.dev/2022/01/advent-of-code/</link><pubDate>Fri, 28 Jan 2022 17:44:00 -0500</pubDate><guid>https://www.perrotta.dev/2022/01/advent-of-code/</guid><description>&lt;p>Last year I found out about &lt;a href="https://adventofcode.com/">Advent of Code&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>Last year I found out about <a href="https://adventofcode.com/">Advent of Code</a>.</p>
+<h2 id="you-said-what">You said what?</h2>
+<p><strong>Advent of Code</strong> by <a href="http://was.tl/">Eric Wastl</a> happens every year since 2015, every December from the 1st to
+the 25th. Each day there&rsquo;s a new programming challenge<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> split into two
+parts. The first part tends to be easier than the second one. The second part
+usually builds upon the first one, being a follow-up task that requires more
+steps and/or with a higher degree of complexity. You can&rsquo;t always reuse the
+bits from the first part to solve the second one though.</p>
+<p>For those familiar with programming contests like <a href="https://icpc.global/">ACM ICPC</a> or <a href="https://olimpiada.ic.unicamp.br/">OBI</a>, or online judges like <a href="https://www.spoj.com/">SPOJ</a> or <a href="https://onlinejudge.org/">UVa</a>, advent of code feels like home. The main difference is that there is no time pressure and no need to write spaghetti and unreadable code; in fact, writing readable and elegant solutions is encouraged (<em>citation needed</em>&hellip;).</p>
+<p>For those familiar with FAANG/Tech whiteboard interviews, advent of code feels a lot like a typical interview. I would even go further and say it&rsquo;s a great way to practice for interviews.</p>
+<p>It is a great moment to either (i) learn a new exciting programming language or (ii) improve your mastery on programming languages that you already know. I know several people (see below) that used AoC<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> to learn Rust or Kotlin or whatever else was exciting for them at the time. It&rsquo;s surprising that the official Kotlin Docs even contain a section called <a href="https://kotlinlang.org/docs/advent-of-code.html">Advent of Code puzzles in idiomatic Kotlin</a>.</p>
+<p>Some folks go even further and use it to practice their <a href="https://codegolf.stackexchange.com/questions/216024/advent-of-code-2020-day-2-part-1">code golfing</a><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> or even <a href="https://ryxcommar.com/2021/12/04/advent-of-code-2021-in-google-sheets-first-4-days/">Google Sheets</a> skills. I have a deep amount of respect for them as it&rsquo;s quite a challenge. If you think it stops there, I&rsquo;ve also seen solutions in <a href="https://github.com/phillbush/aoc">awk</a> and <a href="https://twitter.com/_rsc/status/1476683352493207561">sed</a>.</p>
+<p>Another positive aspect of AoC is that it has an integrated dashboard that tracks your progress as you go. It&rsquo;s a simple element of gamification that immensely improves motivation and fun. You really feel a big desire to collect all those 50 stars&hellip;</p>
+<h2 id="what-about-me">What about me?</h2>
+<p>My goal for 2021 was relatively less ambitious than that,  I just wanted to improve my Python skills, more specifically Python 3. I learned Python 2 during my first year in university and used it sparingly at work and for personal endeavours, but always had a knowledge gap in Python 3.</p>
+<p>I set up a public git repository with <a href="https://github.com/thiagowfx/adventofcode">my solutions</a> and aspired to write simple and elegant python, my only <a href="https://frantic.im/no-constraints-no-fun/">constraint</a> was to limit myself to what is available in the standard library of a vanilla python3 installation in Alpine linux, with the exception of <a href="https://numpy.org/"><code>numpy</code></a> which is widespread enough to deserve an entry in my <a href="https://github.com/thiagowfx/adventofcode/blob/master/requirements.txt"><code>requirements.txt</code></a>, and of course devtools like debuggers, linters and auto formatters as needed.</p>
+<p>As an additional, non-programming challenge I also limited myself to only use the command line. This basically meant no IDEs<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>. My programming environment was ultimately <code>ssh</code> to an Alpine Linux VPS + <code>tmux</code> + <code>vim</code>. To make my life easier, one of the first tasks I accomplished was to write a generic <a href="https://github.com/thiagowfx/adventofcode/blob/master/Makefile"><code>Makefile</code></a> to help me test and run my scripts. A typical invocation would look like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ make DEBUG<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> DAY<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>
+</span></span></code></pre></div><p>&hellip;whereas I could choose between the sample input versus the real one with <code>DEBUG</code>, and the puzzle day with <code>DAY</code>.</p>
+<p>Was the experience worth it? <strong>Definitely yes</strong>! Even though I only completed ~8 puzzles out of the 25 ones due to having my attention split with another project I was working on at the time, the thematic submarine puzzles were hella fun and I learned a lot of python 3 on the way.</p>
+<p>A few highlights of what I learned <em>and used</em> from my python <code>2to3</code> transition were f-strings / string interpolation (<code>print(f'The sum is {sum}')</code>), &ldquo;everything is an iterator now&rdquo; even <code>map</code> and <code>range</code>, the standard library is awesome and sometimes you stumble upon useful abstractions like <code>Counter</code> and <code>defaultdict</code>, <code>sort</code> is different now (<code>key</code> instead of comparison function), this <code>pdb</code> debugger thingy, among other topics I can&rsquo;t remember at the moment. I realized the only concept that was previously familiar was the different syntax of the <code>print</code> function (you have to use parentheses now).</p>
+<p>In terms of workflow, I also learned that virtual environments are now
+supported natively<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup> (<code>python -m venv</code>), <a href="https://www.perrotta.dev/2022/01/direnv-automate-your-environment-variables/"><code>direnv</code></a> is an amazing tool to
+automate/manage environments in git repositories and also happens to have
+first-class python integration, <code>pylint</code> and <code>autopep8</code> are good integrations
+with <code>vim</code> to help spot basic errors and/or suggest best practices, and <code>numpy</code> takes forever to build from source.</p>
+<h2 id="what-about-the-community">What about the community?</h2>
+<p>AoC enjoys a lot of popularity and zeitgeist, especially during times of the COVID-19 pandemic, but even before then. There&rsquo;s a large <a href="https://www.reddit.com/r/adventofcode/">/r/adventofcode</a> subreddit community, lots of people share their solution snippets and impressions on Twitter (<a href="https://twitter.com/search?q=%23adventofcode&amp;src=typed_query">#AdventOfCode</a>), there&rsquo;s a ton of public git repositories on <a href="https://github.com/search?q=adventofcode">GitHub</a> where people share their coding solutions, in pretty much any programming language you can think of, and finally there are many screencasts on <a href="https://www.youtube.com/results?search_query=advent+of+code">YouTube</a>. The Internet in the 2020s sparks creativity in every unimaginable corner.</p>
+<p>There&rsquo;s so much information that it&rsquo;s impossible to stay on top of everything. Here is a small list of repositories that I followed this year, most of those are acquaintances/friends and/or stumbled upon Twitter:</p>
+<p>C++:</p>
+<ul>
+<li><a href="https://github.com/riuri/adventofcode">https://github.com/riuri/adventofcode</a></li>
+</ul>
+<p>Python:</p>
+<ul>
+<li><a href="https://github.com/sjvrijn/AdventofCode">https://github.com/sjvrijn/AdventofCode</a></li>
+<li><a href="https://github.com/oomenn/AOC">https://github.com/oomenn/AOC</a></li>
+</ul>
+<p>Rust:</p>
+<ul>
+<li><a href="https://github.com/dimo414/advent-2021">https://github.com/dimo414/advent-2021</a></li>
+<li><a href="https://github.com/mfs/aoc">https://github.com/mfs/aoc</a></li>
+</ul>
+<p>I find it&rsquo;s really constructive and useful (and also <em>fun</em>) to peek at other people&rsquo;s solutions after I coded my own. I have extensive (albeit kinda rusty these days) experience with C++ so I wanted to follow at least one repository coded with it; since I wrote my solutions in python it was also a natural choice to follow a few python repositories; and, finally, I wanted to peek at some languages I am not familiar with to get a gist of them. This year I watched Rust and a few bits of Clojure and Kotlin on Twitter.</p>
+<p>Finally, for some extra inspiration, there are also some <em>10x programmers</em><sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup> out there that seem to be fans of AoC as well: <a href="https://github.com/norvig/pytudes">Peter Norvig</a> and <a href="https://twitter.com/_rsc/status/1466089522718986241">Russ Cox (<em>rsc</em>)</a>. There are probably several others I am not aware of.</p>
+<h2 id="final-remarks">Final remarks</h2>
+<p>I am hoping to participate in AoC this year (2022) as well, and possibly revisit the 2021 puzzles and resolve the rest of the ones I missed as time permits.</p>
+<p>Hopefully this post encourages and motivates you to try Advent of Code as well! Happy coding.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Or puzzle, if you will.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Acronym not to be confused with a certain <del>annoying</del>^W politician.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>For those unfamiliar with the concept, code golfing is all about writing a correct solution with the <strong>fewest</strong> amount of characters.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>For example: PyCharm, and also VSCode, which is getting so big these days I don&rsquo;t even know if it&rsquo;s possible to just call it a simple text editor anymore.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p>Back in the days, <code>virtualenvwrapper</code> was all the rage.&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6">
+<p>The <em>10x programmer</em> thing is a well-known joke however in this instance the mentioned characters are indeed superb programmers that I immensely respect.&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Alpine Linux: New APKBUILD Workflow</title><link>https://www.perrotta.dev/2022/01/alpine-linux-new-apkbuild-workflow/</link><pubDate>Sun, 23 Jan 2022 19:15:02 -0500</pubDate><guid>https://www.perrotta.dev/2022/01/alpine-linux-new-apkbuild-workflow/</guid><description>&lt;p>This document describes my workflow to manage &lt;code>APKBUILDs&lt;/code> for the
+&lt;a href="https://gitlab.alpinelinux.org/alpine/aports">aports&lt;/a> repository in &lt;a href="https://alpinelinux.org/">Alpine Linux&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>This document describes my workflow to manage <code>APKBUILDs</code> for the
+<a href="https://gitlab.alpinelinux.org/alpine/aports">aports</a> repository in <a href="https://alpinelinux.org/">Alpine Linux</a>.</p>
+<h2 id="disclaimer">Disclaimer</h2>
+<p>First of all, this post is not a substitute to the <a href="https://wiki.alpinelinux.org/wiki/Main_Page">AlpineWiki</a>
+and it will likely get outdated at some point. In particular, refer to the
+following articles for up-to-date documentation that will outlive this blog:</p>
+<ul>
+<li><a href="https://wiki.alpinelinux.org/wiki/APKBUILD_Reference">https://wiki.alpinelinux.org/wiki/APKBUILD_Reference</a></li>
+<li><a href="https://wiki.alpinelinux.org/wiki/Abuild_and_Helpers">https://wiki.alpinelinux.org/wiki/Abuild_and_Helpers</a></li>
+<li><a href="https://wiki.alpinelinux.org/wiki/Aports_tree">https://wiki.alpinelinux.org/wiki/Aports_tree</a></li>
+<li><a href="https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package">https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package</a></li>
+</ul>
+<p>This article is not a tutorial, as such it assumes you already know what an
+<code>APKBUILD</code> is and how to use <code>abuild</code>. In particular, you should have the
+<code>alpine-sdk</code>, <code>atools</code> and <code>spdx-licenses-list</code> packages installed in your
+system.</p>
+<h2 id="structure">Structure</h2>
+<p>I manage my packages with <code>git</code>. Create a GitLab account on
+<a href="https://gitlab.alpinelinux.org/">https://gitlab.alpinelinux.org/</a>, fork the <a href="https://gitlab.alpinelinux.org/alpine/aports"><code>aports</code></a> tree, and <code>git clone</code> your fork.</p>
+<p>The structure follows Alpine Linux repositories:</p>
+<pre tabindex="0"><code>$ git clone https://gitlab.alpinelinux.org/alpine/aports.git &amp;&amp; tree -L 1 aports
+aports
+├── CODINGSTYLE.md
+├── COMMITSTYLE.md
+├── README.md
+├── community
+├── main
+├── non-free
+├── scripts
+├── testing
+└── unmaintained
+</code></pre><h2 id="bootstrapping">Bootstrapping</h2>
+<p>I am going to illustrate with a package I added recently, <a href="https://packages.debian.org/source/sensible-utils"><code>sensible-utils</code></a>:</p>
+<ul>
+<li>
+<p>Before you even begin, check if the package already exists, do a quick search in the <a href="https://pkgs.alpinelinux.org/packages?name=sensible%2Dutils">Alpine Repositories</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+</li>
+<li>
+<p>Start by scaffolding a new <code>APKBUILD</code> from the base template:</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cd aports/testing  <span style="color:#75715e"># Always add new packages in testing/ first.</span>
+</span></span><span style="display:flex;"><span>$ newapkbuild sensible-utils
+</span></span><span style="display:flex;"><span>$ cd sensible-utils
+</span></span><span style="display:flex;"><span>$ $EDITOR APKBUILD
+</span></span></code></pre></div><p><strong>Note</strong>: If you have a language-specific package (e.g. perl, python, rust),
+use the language-specific template instead of the base one. Run <code>newapkbuild -h</code> to list available templates. There are also some <code>apkbuild-*</code> helpers such
+as <code>apkbuild-pypi</code> and <code>apkbuild-cpan</code>.</p>
+<ul>
+<li>
+<p>Fill in <code>APKBUILD</code> metadata like <code>pkgname=</code>, <code>url=</code>, etc. Refer to the AlpineWiki for up-to-date best practices.</p>
+</li>
+<li>
+<p>By doing so, I produced the following <code>APKBUILD</code>:</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pkgname<span style="color:#f92672">=</span>sensible-utils
+</span></span><span style="display:flex;"><span>pkgver<span style="color:#f92672">=</span>0.0.14
+</span></span><span style="display:flex;"><span>pkgrel<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>pkgdesc<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Utilities for sensible alternative selection&#34;</span>
+</span></span><span style="display:flex;"><span>url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://packages.debian.org/source/sensible-utils&#34;</span>
+</span></span><span style="display:flex;"><span>arch<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;all&#34;</span>
+</span></span><span style="display:flex;"><span>license<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;GPL-2.0-or-later&#34;</span>
+</span></span><span style="display:flex;"><span>makedepends<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;po4a&#34;</span>
+</span></span><span style="display:flex;"><span>subpackages<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$pkgname<span style="color:#e6db74">-doc&#34;</span>
+</span></span><span style="display:flex;"><span>source<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://ftp.debian.org/debian/pool/main/s/</span>$pkgname<span style="color:#e6db74">/</span><span style="color:#e6db74">${</span>pkgname<span style="color:#e6db74">}</span><span style="color:#e6db74">_</span>$pkgver<span style="color:#e6db74">.tar.xz&#34;</span>
+</span></span><span style="display:flex;"><span>builddir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">.git&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>build<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	./configure --prefix<span style="color:#f92672">=</span>/usr
+</span></span><span style="display:flex;"><span>	make
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>check<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	make -k check
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>package<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	make DESTDIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/&#34;</span> install
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># only works with update-alternatives, specific to debian</span>
+</span></span><span style="display:flex;"><span>	rm <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/bin/select-editor&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sha512sums<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">15ba996f811ab3a9c1f5726f35766d74aafdf925c5c2392b33c6643d6c439796a742f9d0f4625c79de640e6b5e4a6a032b768eb1bc4ac31b448f9767b0ceed44  sensible-utils_0.0.14.tar.xz
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p><strong>Note</strong>: <code>$srcdir</code> refers to the <code>src/</code> directory within <code>sensible-utils</code>. <code>$pkgdir</code>
+refers to the <code>pkg/</code> directory within <code>sensible-utils</code>.</p>
+<p>If you&rsquo;re used to Arch Linux <code>PKGBUILDs</code> you&rsquo;ll notice a striking similarity to
+<code>APKBUILDs</code>. I highlighted a few notable differences in a previous post, <a href="https://www.perrotta.dev/2022/01/my-first-apkbuild/#build-comparison"><code>My First APKBUILD</code></a>.</p>
+<h2 id="adjustments">Adjustments</h2>
+<ul>
+<li>
+<p>Generate the checksums with <code>abuild checksum</code>. It will automatically update the <code>APKBUILD</code> inplace.</p>
+</li>
+<li>
+<p>Download and extract package files with <code>abuild unpack</code>.</p>
+</li>
+<li>
+<p><code>ls src/</code> and check the directory structure. Update <code>$builddir</code> in your
+<code>APKBUILD</code> to match it. Usually it will be <code>$srcdir/$pkgname-$pkgver</code>, but
+sometimes tiny adjustments are necessary. In this case, it was
+<code>$srcdir/$pkgname.git</code>.</p>
+</li>
+<li>
+<p>Then run <code>abuild -r</code>. If everything goes well, your package (and subpackages,
+if any) will be successfully built<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> in an isolated environment and placed
+in <code>~/packages</code> (<code>sensible-utils-0.0.14-r0.apk</code> and
+<code>sensible-utils-doc-0.0.14-r0.apk</code>), however that doesn&rsquo;t mean it is a decent
+package yet.</p>
+</li>
+<li>
+<p>Run <code>apkbuild-lint APKBUILD</code> and <code>abuild sanitycheck</code> to lint your package
+and catch common errors. Fix the errors, if any.</p>
+</li>
+</ul>
+<h2 id="request-feedback-if-needed">Request feedback if needed</h2>
+<p>If the package is only relevant to you, stop here. <code>git commit</code>, <code>git push</code>, and then you&rsquo;re done. Install the package with <code>doas apk add &lt;pkg&gt;</code>.</p>
+<p>Otherwise, if the package might be potentially useful to other Alpine users, you could consider uploading it to the <a href="https://gitlab.alpinelinux.org/alpine/aports">aports</a> repository.</p>
+<p>Before you do so, stop for a moment and make an honest judgment whether this is a high quality package and whether you&rsquo;re confident it is clean and polished enough, following the best practices documented in the Wiki. The answer doesn&rsquo;t need to be positive, it&rsquo;s perfectly OK to commit mistakes and everyone is a newbie at some point.</p>
+<p>If the answer is negative, or if you&rsquo;re new to this process and would like some help, fear no more! There are at least two decent community resources wherein to ask for help:</p>
+<ol>
+<li>
+<p><a href="https://wiki.alpinelinux.org/wiki/Alpine_Linux:IRC"><code>#alpine-devel</code> on OFTC IRC</a> Drew DeVault wrote a good <a href="https://drewdevault.com/2021/11/24/A-philosophy-for-instant-messaging.html">post</a> about IRC etiquette.</p>
+</li>
+<li>
+<p><a href="https://wiki.alpinelinux.org/wiki/Alpine_Linux:Mailing_lists"><code>alpine-devel</code> mailing list</a>.</p>
+</li>
+</ol>
+<p>If you&rsquo;re part of any other community (e.g. Reddit, Discord) feel free to ask therein as well. Avoid posting everywhere though, pick one community, draft your post and then patiently wait.</p>
+<h2 id="publish-your-package">Publish your package</h2>
+<p>If all is well, it&rsquo;s time to publish your <code>APKBUILD</code>. Follow the up-to-date
+steps at
+<a href="https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Code_review">https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Code_review</a>. There are basically two options:</p>
+<ol>
+<li>
+<p>Send a gitlab merge request (MR). This follows the standard git forge workflow
+(GitHub / BitBucket / GitLab) wherein you fork the main repository, create
+a branch in your own clone, push it and then initiate a pull request<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
+</li>
+<li>
+<p>Alternatively, send an email with your patch to the <code>aports</code> mailing list
+with <a href="https://git-send-email.io/"><code>git send-email</code></a>:</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git config sendemail.to <span style="color:#e6db74">&#34;alpine-aports@lists.alpinelinux.org&#34;</span>
+</span></span><span style="display:flex;"><span>$ git send-email -1  <span style="color:#75715e"># Implicitly uses --to=alpine-linux@lists.alpinelinux.org as set above</span>
+</span></span></code></pre></div><p><strong>Tip</strong>: The second approach has a steep learning curve, however once you
+figure it out it&rsquo;s actually faster, simpler and more streamlined. Whenever
+a new email is sent to the aports mailing list, a MR is automatically created
+on GitLab.</p>
+<p><strong>Note</strong>: If you adopt the email workflow and need to send a follow-up to your
+initial patch, do not use <code>--in-reply-to</code>. Instead, create a new email thread.
+This is needed because as of this post new GitLab MRs are only created when new
+email threads are created. Replies to existing email threads do not update the
+MR patch.</p>
+<p>And that&rsquo;s all! Other useful tips:</p>
+<ul>
+<li>Use <a href="https://repology.org/">repology</a> to look for preexisting packages in other Linux (or even BSD) distributions, it&rsquo;s very handy as a starting point if you have no idea how to package a given package. In particular, Arch Linux <code>PKGBUILDs</code> are very similar to <code>APKBUILDs</code>. Gentoo <code>EBUILDs</code> and FreeBSD <code>Makefiles</code> are also reasonable approximations.</li>
+<li>Use <code>abump</code> to bump pkgver in <code>APKBUILD</code> files if the package gets an update to a newer upstream release.</li>
+<li>Use <code>apkgrel</code> to bump or reset the <code>pkgrel</code> value of your <code>APKBUILD</code>.</li>
+<li>Use <a href="https://www.perrotta.dev/2022/01/arch-linux-new-pkgbuild-workflow/#bonus-track-upstream"><code>urlwatch</code></a> to track upstream updates.</li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>If you use <a href="https://duckduckgo.com/">https://duckduckgo.com/</a>, query for <code>!alpine sensible-utils</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Package debugging is out of scope of this post.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>In GitLab it&rsquo;s called Merge Request (MR). The list of all aports MRs is <a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests">here</a>.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Arch Linux: New PKGBUILD Workflow</title><link>https://www.perrotta.dev/2022/01/arch-linux-new-pkgbuild-workflow/</link><pubDate>Tue, 18 Jan 2022 21:59:07 -0500</pubDate><guid>https://www.perrotta.dev/2022/01/arch-linux-new-pkgbuild-workflow/</guid><description>&lt;p>This document describes my workflow to manage &lt;code>PKGBUILDs&lt;/code> for the &lt;a href="https://aur.archlinux.org/">AUR&lt;/a> (Arch User Repository) in &lt;a href="https://www.archlinux.org/">Arch Linux&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>This document describes my workflow to manage <code>PKGBUILDs</code> for the <a href="https://aur.archlinux.org/">AUR</a> (Arch User Repository) in <a href="https://www.archlinux.org/">Arch Linux</a>.</p>
+<h2 id="disclaimer">Disclaimer</h2>
+<p>First of all, this post is not a substitute to the excellent <a href="https://wiki.archlinux.org/">ArchWiki</a> and it will likely get outdated at some point. In particular, refer to the following articles for up-to-date documentation that will outlive this blog:</p>
+<ul>
+<li><a href="https://wiki.archlinux.org/title/Arch_User_Repository">https://wiki.archlinux.org/title/Arch_User_Repository</a></li>
+<li><a href="https://wiki.archlinux.org/title/Arch_package_guidelines">https://wiki.archlinux.org/title/Arch_package_guidelines</a></li>
+<li><a href="https://wiki.archlinux.org/title/Creating_packages">https://wiki.archlinux.org/title/Creating_packages</a></li>
+<li><a href="https://wiki.archlinux.org/title/PKGBUILD">https://wiki.archlinux.org/title/PKGBUILD</a></li>
+</ul>
+<p>This article is not a tutorial, as such it assumes you already know what a <code>PKGBUILD</code> is and how to use <code>makepkg</code>. In particular, you should have the <code>base-devel</code> and <code>devtools</code> packages installed in your system.</p>
+<h2 id="structure">Structure</h2>
+<p>I manage my packages with <code>git</code> plus Eli Schwartz&rsquo;s excellent
+<a href="https://github.com/eli-schwartz/aurpublish">aurpublish</a>. The tree structure is simple, with one <code>PKGBUILD</code> per directory:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git clone https://github.com/thiagowfx/PKGBUILDs <span style="color:#f92672">&amp;&amp;</span> tree PKGBUILDs
+</span></span><span style="display:flex;"><span>PKGBUILDs
+</span></span><span style="display:flex;"><span>├── bkt
+</span></span><span style="display:flex;"><span>│   └── PKGBUILD
+</span></span><span style="display:flex;"><span>├── fpp-git
+</span></span><span style="display:flex;"><span>│   └── PKGBUILD
+</span></span><span style="display:flex;"><span>├── git-crecord
+</span></span><span style="display:flex;"><span>│   └── PKGBUILD
+</span></span><span style="display:flex;"><span>├── i3a
+</span></span><span style="display:flex;"><span>│   └── PKGBUILD
+</span></span><span style="display:flex;"><span>├── LICENSE
+</span></span><span style="display:flex;"><span>├── Makefile
+</span></span><span style="display:flex;"><span>├── README.md
+</span></span><span style="display:flex;"><span>├── ttf-camingocode
+</span></span><span style="display:flex;"><span>│   └── PKGBUILD
+</span></span><span style="display:flex;"><span>└── urlwatch.yml
+</span></span></code></pre></div><p><code>aurpublish</code> is used <em>solely</em> to automate certain interactions with the AUR, more about it later.</p>
+<h2 id="bootstrapping">Bootstrapping</h2>
+<p>I am going to illustrate with a package I added recently, <a href="https://github.com/dimo414/bkt"><code>bkt</code></a>:</p>
+<ul>
+<li>
+<p>Before you even begin, check if the package already exists, do a quick search in the <a href="https://aur.archlinux.org/packages/?O=0&amp;K=bkt">AUR</a> and also in the <a href="https://archlinux.org/packages/?sort=&amp;q=bkt&amp;maintainer=&amp;flagged=">official repos</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+</li>
+<li>
+<p>Start by copying over the standard <code>PKGBUILD</code> template:</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cd PKGBUILDs
+</span></span><span style="display:flex;"><span>$ mkdir bkt <span style="color:#f92672">&amp;&amp;</span> cd bkt
+</span></span><span style="display:flex;"><span>$ cp /usr/share/pacman/PKGBUILD.proto PKGBUILD
+</span></span><span style="display:flex;"><span>$ $EDITOR PKGBUILD
+</span></span></code></pre></div><ul>
+<li>
+<p>Fill in <code>PKGBUILD</code> metadata like <code>pkgname=</code>, <code>url=</code>, etc. Refer to the ArchWiki for up-to-date best practices.</p>
+</li>
+<li>
+<p>The most important step is to refer to <a href="https://wiki.archlinux.org/title/Category:Arch_package_guidelines">https://wiki.archlinux.org/title/Category:Arch_package_guidelines</a> to figure out the package type.</p>
+</li>
+</ul>
+<p><code>bkt</code> is a Rust package. This is my first time packaging for Rust, not a problem though, as I can just refer to <a href="https://wiki.archlinux.org/title/Rust_package_guidelines">https://wiki.archlinux.org/title/Rust_package_guidelines</a>.</p>
+<p>The rust package guidelines page contains the blueprint for <code>prepare()</code>, <code>check()</code>, <code>build()</code> and <code>package()</code>. Packaging is mostly a matter of gluing everything together. Read the project <code>README.md</code> and the wiki, and then combine the needed steps in the <code>PKGBUILD</code>.</p>
+<p>By doing so, I produced the following <code>PKGBUILD</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pkgname<span style="color:#f92672">=</span>bkt
+</span></span><span style="display:flex;"><span>pkgver<span style="color:#f92672">=</span>0.5.0
+</span></span><span style="display:flex;"><span>pkgrel<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>pkgdesc<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A subprocess caching utility&#34;</span>
+</span></span><span style="display:flex;"><span>arch<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;x86_64&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://www.bkt.rs/&#34;</span>
+</span></span><span style="display:flex;"><span>license<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;MIT&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>makedepends<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;cargo&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>source<span style="color:#f92672">=(</span><span style="color:#e6db74">&#34;</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">.tar.gz::https://github.com/dimo414/</span>$pkgname<span style="color:#e6db74">/archive/refs/tags/</span>$pkgver<span style="color:#e6db74">.tar.gz&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>sha256sums<span style="color:#f92672">=()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prepare<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	cd <span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	cargo fetch --locked --target <span style="color:#e6db74">&#34;</span>$CARCH<span style="color:#e6db74">-unknown-linux-gnu&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>build<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	cd <span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	export RUSTUP_TOOLCHAIN<span style="color:#f92672">=</span>stable
+</span></span><span style="display:flex;"><span>	export CARGO_TARGET_DIR<span style="color:#f92672">=</span>target
+</span></span><span style="display:flex;"><span>	cargo build --frozen --release --all-features
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>check<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	cd <span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	export RUSTUP_TOOLCHAIN<span style="color:#f92672">=</span>stable
+</span></span><span style="display:flex;"><span>	cargo test --frozen --all-features
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>package<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	cd <span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	install -Dm0755 -t <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/bin/&#34;</span> <span style="color:#e6db74">&#34;target/release/</span>$pkgname<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>	install -Dm644 LICENSE -t <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/share/licenses/</span>$pkgname<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p><strong>Note</strong>: <code>$srcdir</code> refers to the <code>src/</code> directory within <code>bkt</code>. <code>$pkgdir</code> refers to the <code>pkg/</code> directory within <code>bkt</code>.</p>
+<h2 id="adjustments">Adjustments</h2>
+<ul>
+<li>
+<p>Generate the checksums with <code>updpkgsums</code>. It will automatically update the <code>PKGBUILD</code> inplace.</p>
+</li>
+<li>
+<p>Download and extract package files with <code>makepkg -o</code>.</p>
+</li>
+<li>
+<p><code>ls src/</code> and check the directory structure. Update <code>cd</code> in your <code>PKGBUILD</code> to match it. Usually it will be <code>cd $srcdir/$pkgname-$pkgver</code>, but sometimes tiny adjustments are necessary.</p>
+</li>
+<li>
+<p>Then run <code>makepkg -s</code>. If everything goes well, your package will be successfully built<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> (<code>bkt-0.5.0-1-x86_64.pkg.tar.zst</code>), however that doesn&rsquo;t mean it is a decent package yet.</p>
+</li>
+<li>
+<p>Run <code>namcap PKGBUILD</code> and <code>namcap *.pkg.tar.zst</code> to lint your package and catch common errors. Fix the errors, if any.</p>
+</li>
+<li>
+<p>To ensure all dependencies have been correctly declared and none of them are missing, run <code>makepkg</code> within a clean <a href="https://wiki.archlinux.org/title/Chroo"><em>chroot</em></a>. I like to use Graysky&rsquo;s excellent <a href="https://github.com/graysky2/clean-chroot-manager"><code>ccm</code></a> (Clean Chroot Manager) to do so. Run <code>ccm s</code> (=&ldquo;run makepkg in the clean chroot&rdquo;). If it produces any errors, it likely means you missed some dependencies. Adjust <code>depends=</code>, <code>checkdepends=</code> and <code>makedepends=</code> accordingly.</p>
+</li>
+</ul>
+<h2 id="request-feedback-if-needed">Request feedback if needed</h2>
+<p>If the package is only relevant to you, stop here. <code>git commit</code>, <code>git push</code>, and then you&rsquo;re done. Install the package with <code>makepkg -i</code>.</p>
+<p>Otherwise, if the package might be potentially useful to other Arch users, you could consider uploading it to the AUR.</p>
+<p>Before you do so, stop for a moment and make an honest judgment whether this is a high quality package and whether you&rsquo;re confident it is clean and polished enough, following the best practices documented in the Wiki. The answer doesn&rsquo;t need to be positive, it&rsquo;s perfectly OK to commit mistakes and everyone is a newbie at some point.</p>
+<p>If the answer is negative, or if you&rsquo;re new to this process and would like some help, fear no more! There are at least two decent community resources wherein to ask for help:</p>
+<ol>
+<li>
+<p><a href="https://bbs.archlinux.org/viewforum.php?id=38.">AUR Issues, Discussion &amp; PKGBUILD Requests</a> BBS / Forums:  Open a new thread, post your <code>PKGBUILD</code> (use <code>[code][/code]</code> tags if you paste it directly!) or a link to it<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>. Request folks to critique your work, mention that you&rsquo;re looking for feedback. This kind of thread is generally well received in the official forums if you demonstrate you did diligent research before asking for help.</p>
+</li>
+<li>
+<p><a href="https://lists.archlinux.org/pipermail/aur-general/">AUR General Mailing List</a>: Send an email to the mailing list asking for help. In general, follow proper mailing list etiquette, good resources for that are <a href="https://useplaintext.email/">https://useplaintext.email/</a> and <a href="https://man.sr.ht/lists.sr.ht/etiquette.md">https://man.sr.ht/lists.sr.ht/etiquette.md</a>. TL;DR: Use plain-text instead of HTML in your email.</p>
+</li>
+</ol>
+<p>If you&rsquo;re part of any other community (e.g. Reddit, Discord) feel free to ask therein as well. Avoid posting everywhere though, pick one community, draft your post and then patiently wait.</p>
+<h2 id="publish-your-package">Publish your package</h2>
+<p>If all is well, it&rsquo;s time to publish your <code>PKGBUILD</code> to the <a href="https://aur.archlinux.org/">AUR</a>. Follow the up-to-date steps at <a href="https://wiki.archlinux.org/title/Arch_User_Repository#Submitting_packages">https://wiki.archlinux.org/title/Arch_User_Repository#Submitting_packages</a>.</p>
+<p>TL;DR: If you don&rsquo;t use <em>aurpublish</em>, do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ makepkg --printsrcinfo &gt; .SRCINFO
+</span></span></code></pre></div><p>Then you&rsquo;ll need both the <code>PKGBUILD</code> and the <code>.SRCINFO</code> file, it&rsquo;s basically a matter of committing your changes and pushing them to the right repository.</p>
+<p>If you do use <em>aurpublish</em> this process is much easier, it&rsquo;s mostly a matter of doing <code>git commit</code>, <code>git push</code> and <code>aurpublish bkt</code>. <em>Aurpublish</em> automatically generates the <code>.SRCINFO</code> and a commit message by the means of git hooks.</p>
+<p>And that&rsquo;s all! Other useful tips:</p>
+<ul>
+<li>Use <a href="https://repology.org/">repology</a> to look for preexisting packages in other Linux (or even BSD) distributions, it&rsquo;s very handy as a starting point if you have no idea how to package a given package. In particular, Alpine Linux <code>APKBUILDs</code> are very similar to <code>PKGBUILDs</code>. Gentoo <code>EBUILDs</code> and FreeBSD <code>Makefiles</code> are also reasonable approximations.</li>
+<li>Use <code>makepkg -src</code> to clean up after building a package.</li>
+</ul>
+<h2 id="bonus-track-upstream">Bonus: Track upstream</h2>
+<p>Use a software like <a href="https://thp.io/2008/urlwatch/"><code>urlwatch</code></a> or <a href="https://github.com/lilydjwg/nvchecker"><code>nvchecker</code></a> to track
+future upstream changes so that you can update your packages in a timely
+fashion<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>. There&rsquo;s also a web service called <a href="https://release-monitoring.org/">Release
+Monitoring</a>, part of Fedora Infra. I use <code>urlwatch</code> the
+following way:</p>
+<pre tabindex="0"><code>$ cat PKGBUILDs/urlwatch.yml
+# urls for urlwatch(1)
+---
+name: &#34;bkt&#34;
+command: &#34;git ls-remote --tags https://github.com/dimo414/bkt&#34;
+---
+name: &#34;fpp&#34;
+command: &#34;git ls-remote --tags https://github.com/facebook/PathPicker&#34;
+---
+name: &#34;git-crecord&#34;
+command: &#34;git ls-remote --tags https://github.com/andrewshadura/git-crecord&#34;
+---
+name: &#34;i3a&#34;
+command: &#34;git ls-remote --tags https://git.goral.net.pl/mgoral/i3a&#34;
+# ---
+# name: &#34;ttf-camingocode&#34;
+# N/A
+
+# Run this command periodically via cron or systemd timer.
+# Set up notifications e.g. via sendmail.
+$ urlwatch --urls urlwatch.yml
+</code></pre><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>If you use <a href="https://duckduckgo.com/">https://duckduckgo.com/</a>, query for <code>!aur bkt</code> and <code>!archpkg bkt</code>. Handy!&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Package debugging is out of scope of this post.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>For example, use <a href="https://gist.github.com">https://gist.github.com</a> or <a href="http://paste.opensuse.org/">http://paste.opensuse.org/</a> or
+<a href="http://ix.io/">http://ix.io/</a>.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>In 99% of the cases this is just a matter of bumping the <code>pkgver=</code> and
+updating the checksums. If <code>pkgver=</code> is the same but there&rsquo;s a fix to the
+package itself, then bump <code>pkgrel=</code> instead.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Alpine Linux on Raspberry Pi: Diskless Mode with persistent storage</title><link>https://www.perrotta.dev/2022/01/alpine-linux-on-raspberry-pi-diskless-mode-with-persistent-storage/</link><pubDate>Sat, 15 Jan 2022 23:18:56 -0500</pubDate><guid>https://www.perrotta.dev/2022/01/alpine-linux-on-raspberry-pi-diskless-mode-with-persistent-storage/</guid><description>&lt;p>Use case: Given an Alpine Linux &lt;strong>diskless&lt;/strong>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> installation meant for
+a Raspberry Pi setup, we would like to add a persistent storage component to it
+to make it survive across reboots.&lt;/p></description><content:encoded><![CDATA[<p>Use case: Given an Alpine Linux <strong>diskless</strong><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> installation meant for
+a Raspberry Pi setup, we would like to add a persistent storage component to it
+to make it survive across reboots.</p>
+<h2 id="goal">Goal</h2>
+<p>The <a href="https://wiki.alpinelinux.org/wiki/Installation">Alpine Linux Wiki</a> covers most of the installation process, hence I will only document the bits that were lacking and/or confusing therein.</p>
+<p>My use case is the following:</p>
+<blockquote>
+<p>Given a Raspberry Pi 3B with an old 4GiB SD Card as CF storage<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, install Alpine Linux in diskless mode. Find a way to preserve modifications in <code>/etc</code> and <code>/var</code>, as well as any installed packages through its <code>apk</code> package manager.</p>
+</blockquote>
+<p>Let&rsquo;s follow the steps outlined in the wiki.</p>
+<h2 id="copy-alpine-to-the-sd-card">Copy Alpine to the SD Card</h2>
+<blockquote>
+<p>Grab the SD card and install Alpine Linux in it.</p>
+</blockquote>
+<p>Alpine provides officially supported images designed for the Raspberry Pi.</p>
+<p>Most Linux distributions provide an <code>.iso</code> or <code>.img</code> file to be installed with a tool like <a href="https://www.balena.io/etcher/">Balena Etcher</a>, <a href="https://rufus.ie/en/">Rufus</a>, <a href="https://www.raspberrypi.com/news/raspberry-pi-imager-imaging-utility/"><strong>Raspberry Pi Imager</strong></a> or plain <code>dd</code><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
+<p>Alpine is not like most Linux distributions: Instead, it provides a <code>.tar.gz</code> archive with files that should be copied directly to the SD card. Grab the latest version (3.15 at the time of this post) from <a href="https://alpinelinux.org/downloads/">https://alpinelinux.org/downloads/</a>. There are 3 options:</p>
+<ul>
+<li>
+<p><code>armhf</code>: Works with all Pis, but may perform less optimally on recent versions.</p>
+</li>
+<li>
+<p><code>armv7</code>: Works with the Pi 3B, 32-bit.</p>
+</li>
+<li>
+<p><code>aarch64</code>: Works with the Pi 3B, 64-bit.</p>
+</li>
+</ul>
+<p>I opted for <code>aarch64</code> to make it 64-bit, but <code>armv7</code> would also have worked well for my setup. In fact, Raspberry Pi OS (Debian) uses <code>armv7</code> (32-bit) at the time of this writing.</p>
+<p>Before copying files over, format the SD Card. As I was doing this
+from a Windows machine because it was the only one I had readily available with
+a SD card slot, I just used the native Windows Disk Management tool to do so.
+I decided to allocate a 100MB<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup> FAT32 partition. The rest of the SD card would be
+blank for now. Alpine is surprisingly small, 100MB was more than enough for the kernel and other needed files.</p>
+<p>Once the SD card is formatted, copy the files over to it. It turns out Windows cannot extract tarballs (<code>.tar.gz</code>); a tool like <a href="https://www.7-zip.org/">7-zip</a> should do the job. Copy the files over to the root of the newly allocated FAT32 partition, and then safely eject the SD card.</p>
+<h2 id="boot-alpine-from-the-sd-card">Boot Alpine from the SD Card</h2>
+<p>The next step is to insert the SD Card into the Pi and then boot. I had some trouble in this step and eventually figured out I didn&rsquo;t mark the primary FAT32 partition as bootable. Unfortunately it&rsquo;s not straightforward to mark the partition as bootable from Windows. On a Linux machine there&rsquo;s a wide array of tools to do so: <code>fdisk</code>, <code>cfdisk</code> (TUI), <code>sfdisk</code> (scriptable <code>fdisk</code>), <code>parted</code>, <code>gparted</code> (GUI) are some of them. I worked around that by installing Raspberry Pi OS on the SD card with the Raspberry Pi imager, and then overwriting it with the Alpine files. This works because the Raspberry PI OS installation marks the FAT32 partition as bootable.</p>
+<h2 id="install-alpine">Install Alpine</h2>
+<p>Installing Alpine is well documented in the <a href="https://wiki.alpinelinux.org/wiki/Installation">wiki</a> thus it won&rsquo;t be covered here. It basically comes down to invoking <code>setup-alpine</code>, which then invokes other <code>setup-*</code> scripts.</p>
+<p>Keep in mind we&rsquo;re not really &ldquo;installing&rdquo; Alpine as this is a diskless installation. A more accurate term here would be &ldquo;configuring&rdquo;.</p>
+<p>Before invoking the installation script, I created a second primary partition in the SD card, set to <code>ext4</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Configure networking to get working internet access.</span>
+</span></span><span style="display:flex;"><span>% setup-interfaces
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install some partitioning tools.</span>
+</span></span><span style="display:flex;"><span>% apk add cfdisk e2fsprogs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a second partition (mmcblk0p2) and write it.</span>
+</span></span><span style="display:flex;"><span>% cfdisk /dev/mmcblk0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Format the partition as ext4.</span>
+</span></span><span style="display:flex;"><span>% mkfs.ext4 /dev/mmcblk0p2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Mount the partition under /media.</span>
+</span></span><span style="display:flex;"><span>% mount /dev/mmcblk0p2 /media/mmcblk0p2
+</span></span></code></pre></div><p>The installation is straightforward, we just need to pay attention to a few select steps:</p>
+<ul>
+<li><code>setup-disk</code>: Select <code>none</code> to ensure a <code>diskless</code> installation<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>.</li>
+<li><code>setup-apkcache</code>: Select <code>/media/mmcblk0p2/cache</code> to persist downloaded <code>apk</code> packages.</li>
+<li><code>setup-lbu</code>: Edit <code>/etc/lbu/lbu.conf</code> and set <code>LBU_MEDIA=&quot;mmcblk0p2&quot;</code>. Note: Do not add <code>/media</code> as it is implicit.</li>
+</ul>
+<p>Once the installation is complete, run <code>lbu commit</code> to persist the changes in the second partition. Once you do so, a <code>&lt;hostname&gt;.apkovl.tar.gz</code><sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup> file should materialize on <code>/media/mmcblk0p2/</code>.</p>
+<p>This is a good moment to reboot. Before we do so, let&rsquo;s cache the packages we had previously downloaded.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Cache packages.</span>
+</span></span><span style="display:flex;"><span>% apk cache download
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>% reboot
+</span></span></code></pre></div><h2 id="after-the-first-reboot">After the first reboot</h2>
+<p>If everything worked as expected, once you reboot all your previously installed packages should have been preserved and automatically restored / reinstalled, as well as your modifications done to <code>/etc</code>.</p>
+<p>From this point on, whenever you install a new package that you want to be preserved for subsequent reboots, run <code>lbu commit</code> afterwards. For example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% apk add vim
+</span></span><span style="display:flex;"><span>% lbu commit
+</span></span></code></pre></div><p>If you would like to see what is going to be committed, run <code>lbu status</code> or <code>lbu diff</code> before doing the actual commit. Whenever you commit, <code>/media/mmcblk0p2/&lt;hostname&gt;.apkovl.tar.gz</code> gets overwritten with your most recent modifications.</p>
+<p>It&rsquo;s possible to keep more than one backup file by changing <code>BACKUP_LIMIT=</code> in <code>/etc/lbu/lbu.conf</code>. This is specially handy if you decide to revert to an earlier system snapshot / state later on. The stock config looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% cat /etc/lbu/lbu.conf
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># what cipher to use with -e option</span>
+</span></span><span style="display:flex;"><span>DEFAULT_CIPHER<span style="color:#f92672">=</span>aes-256-cbc
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Uncomment the row below to encrypt config by default</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ENCRYPTION=$DEFAULT_CIPHER</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Uncomment below to avoid &lt;media&gt; option to &#39;lbu commit&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Can also be set to &#39;floppy&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># LBU_MEDIA=usb</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Set the LBU_BACKUPDIR variable in case you prefer to save the apkovls</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># in a normal directory instead of mounting an external media.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># LBU_BACKUPDIR=/root/config-backups</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Uncomment below to let lbu make up to 3 backups</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># BACKUP_LIMIT=3</span>
+</span></span></code></pre></div><p><strong>Tip</strong>: You can find the list of all explicitly installed packages in <code>/etc/apk/world</code>.</p>
+<h2 id="the-last-piece-make-var-persistent">The last piece: make /var persistent</h2>
+<p>There are three natural ways that come to mind to make <code>/var</code> persistent:</p>
+<h3 id="a-separate-partition-or-file">A) Separate partition (or file)</h3>
+<p>Instead of two partitions (FAT32 and ext4), create 3 partitions: FAT32, ext4 and ext4. Use the latter one to mount <code>/var</code> on, saving this information in <code>/etc/fstab</code>. The main disadvantage of this setup is that you&rsquo;ll need to allocate a fixed amount of space of each of the ext4 partitions and it may be difficult to figure out how to split the space between them.</p>
+<p>A variant of this approach is to just create the third partition as a file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 500MB file</span>
+</span></span><span style="display:flex;"><span>% dd <span style="color:#66d9ef">if</span><span style="color:#f92672">=</span>/dev/zero of<span style="color:#f92672">=</span>/media/mmcblk0p2/var.img bs<span style="color:#f92672">=</span>1M count<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span> status<span style="color:#f92672">=</span>progress
+</span></span><span style="display:flex;"><span>% mkfs.ext4 /media/mmcblk0p2/var.img
+</span></span><span style="display:flex;"><span>% mount /media/mmcblk0p2/var.img /var
+</span></span></code></pre></div><p>This works because the Linux kernel supports mounting files as if they were device blocks, treating them as loop devices (pseudo-devices).</p>
+<p>I don&rsquo;t like these approaches because they shadow the preexisting <code>/var</code> from the boot media, which in turn messes up with existing services that use it such as <code>cron</code>: <code>% crontab -l</code> would fail. One workaround would be to mount a <code>/var</code> subdirectory instead: for example, <code>/var/lib/docker</code> for docker.</p>
+<h3 id="b-bind-mount">B) Bind mount</h3>
+<p>This one is straightforward:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% mount --bind /media/mmcblk0p2/var/lib/docker /var/lib/docker
+</span></span></code></pre></div><p>The actual partition lives in the SD card, however we make a bind mount under
+<code>/var</code>, which is like an <em>alias</em>. From <a href="https://unix.stackexchange.com/questions/198590/what-is-a-bind-mount">Stack Exchange</a>:</p>
+<blockquote>
+<p>A bind mount is an alternate view of a directory tree. Classically, mounting creates a view of a storage device as a directory tree. A bind mount instead takes an existing directory tree and replicates it under a different point. The directories and files in the bind mount are the same as the original. Any modification on one side is immediately reflected on the other side, since the two views show the same data.</p>
+</blockquote>
+<h3 id="c-overlay-mount">C) Overlay mount</h3>
+<p>From <a href="https://wiki.archlinux.org/title/Overlay_filesystem">ArchWiki</a>:</p>
+<blockquote>
+<p>Overlayfs allows one, usually read-write, directory tree to be overlaid onto another, read-only directory tree. All modifications go to the upper, writable layer. This type of mechanism is most often used for live CDs but there is a wide variety of other uses.</p>
+</blockquote>
+<p>It&rsquo;s perfect for our use case, which uses a live bootable SD card for Alpine. It blends the preexisting, ephemeral, in-memory <code>/var</code> with the persistent in-disk <code>/var</code>.</p>
+<p>I wanted to mount <code>/var</code> directly but found it to be problematic for the same reasons mentioned earlier, therefore I just went with <code>/var/lib/docker</code> instead:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Create overlay upper and work directories.</span>
+</span></span><span style="display:flex;"><span>% mkdir -p /media/mmcblk0p2/var/lib/docker /media/mmcblk0p2/var/lib/docker-work
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Add mountpoint entry to fstab. Note: The work dir must be an empty directory in the same filesystem mount as the upper directory.</span>
+</span></span><span style="display:flex;"><span>% echo <span style="color:#e6db74">&#34;overlay /var/lib/docker overlay lowerdir=/var/lib/docker,upperdir=/media/mmcblk0p2/var/lib/docker,workdir=/media/mmcblk0p2/var/lib/docker-work 0 0&#34;</span> &gt;&gt; /etc/fstab
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Mount all fstab entries, including our newly added one.</span>
+</span></span><span style="display:flex;"><span>% mount -a
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p>I opted for the third approach, using an overlay mount, it was the most
+seamless one. A bind mount would have been fine as well.</p>
+<p>The final setup works surprisingly well:</p>
+<ul>
+<li>Alpine Linux is very lightweight and runs mostly from RAM</li>
+<li><code>apk</code> cache is persistent to the ext4 partition</li>
+<li><code>/var/</code> is persistent to the ext4 partition</li>
+<li><code>lbu commit</code> persists changes in <code>/etc/</code> and <code>/home/</code> in the ext4 partition</li>
+<li>Every reboot fully resets the system sans persistent components above</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://vincentserpoul.github.io/post/alpine-linux-rpi0/">https://vincentserpoul.github.io/post/alpine-linux-rpi0/</a></li>
+<li><a href="http://dahl-jacobsen.dk/tips/blog/2021-04-08-docker-on-alpine-linux/">http://dahl-jacobsen.dk/tips/blog/2021-04-08-docker-on-alpine-linux/</a></li>
+<li><a href="http://dahl-jacobsen.dk/tips/blog/2018-03-15-alpine-on-raspberry-pi/">http://dahl-jacobsen.dk/tips/blog/2018-03-15-alpine-on-raspberry-pi/</a></li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Running (almost) fully from RAM.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>CF = Compact disk.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>On Linux I&rsquo;d usually opt for <code>dd</code>, on Windows the Raspberry Pi Imager is a sensible choice.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>100MB is overly conservative, but keep in mind I had a very small SD Card, with only 4GiB storage. 250MB or even 500MB should be a more sensible default if you have a bigger SD Card (e.g. 32GiB).&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p>An alternative is to select <code>data</code> disk mode, but it didn&rsquo;t work for me.&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6">
+<p><em>ovl</em> is short for <em>overlay</em>. Not to be confused with <em>vol</em> for <em>volume</em>.&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Keychron K2: Review</title><link>https://www.perrotta.dev/2022/01/keychron-k2-review/</link><pubDate>Wed, 12 Jan 2022 18:09:38 -0500</pubDate><guid>https://www.perrotta.dev/2022/01/keychron-k2-review/</guid><description>&lt;p>This is a follow-up post of &lt;a href="https://www.perrotta.dev/2021/12/keychron-k2-linux-setup/">Keychron K2: Linux Setup&lt;/a>. The previous post focused on the configuration of the keyboard, this one focuses on its user experience from the point of view of a Software Engineer.&lt;/p></description><content:encoded><![CDATA[<p>This is a follow-up post of <a href="https://www.perrotta.dev/2021/12/keychron-k2-linux-setup/">Keychron K2: Linux Setup</a>. The previous post focused on the configuration of the keyboard, this one focuses on its user experience from the point of view of a Software Engineer.</p>
+<h2 id="previously">Previously&hellip;</h2>
+<p>My first (and previous) mechanical keyboard was a <a href="https://www.logitech.com/assets/64198/g610-orion-red.pdf">Logitech G610 Orion
+Red</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. It&rsquo;s a full wired keyboard with Cherry MX Red switches
+(linear) and dedicated multimedia keys. In my opinion it is a solid choice for
+beginners because its interface is quite familiar thanks to the wide range of
+available keys. It is branded as a gaming keyboard but frankly it was a fine
+office keyboard as well. However after using it for a while I wanted to
+upgrade.</p>
+<p>The natural upgrade path would contain one or more of the following features, in order of importance:</p>
+<ol>
+<li>good support for both <strong>Linux</strong> and macOS, especially Linux</li>
+<li><strong>compact</strong>: tenkeyless a.k.a. 80%, or 75%<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></li>
+<li><strong>portable</strong>: wireless, either with a dongle or with bluetooth or both</li>
+<li>with decent battery life: should outlast at least a week of office work</li>
+<li>not overpriced: ~$200 CAD budget</li>
+<li>playful: with RGB backlight (instead of white LED)</li>
+</ol>
+<p>Given those, a natural upgrade path would have been the <a href="https://www.logitechg.com/en-ca/products/gaming-keyboards/g915-tkl-wireless.html">Logitech G915
+TKL</a>. Its main caveat is that it is relatively overpriced,
+~$300 CAD. Above that $300 CAD point one should arguably be looking for
+ergonomic and/or fully programmable (QMK firmware) keyboards, like the Kinesis
+Advantage and/or the Ergodox EZ<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>. Even though the G915 TKL is rock solid, it
+didn&rsquo;t have any fancy features to justify that investment.</p>
+<h2 id="the-quest-for-the-_perfect_-keyboard">The quest for the <em>perfect</em> keyboard&hellip;</h2>
+<p>I then proceeded to outsource my luck to the wisdom of the crowds, by asking
+for recommendations in a mailing list at $DAYJOB, giving them a subset of the
+requirements above.</p>
+<p>The choice was then obvious: I&rsquo;d get a <strong>Keychron</strong>. It fit all of my
+requirements perfectly. The <a href="https://en.wikipedia.org/wiki/The_Paradox_of_Choice">issue</a> was that Keychron had
+<a href="https://www.keychron.com/collections/all-products">so many choices</a> to pick from.</p>
+<figure class="align-center "><a href="https://xkcd.com/1741/">
+    <img loading="lazy" src="https://imgs.xkcd.com/comics/work.png#center"
+         alt="Despite it being imaginary, I already have SUCH a strong opinion on the cord-switch firing incident."/> </a><figcaption>
+            <p>XKCD Courtesy of Randall Munroe</p>
+        </figcaption>
+</figure>
+
+<p>After some deliberation I had two options in mind: <a href="https://www.keychron.com/products/keychron-k2-wireless-mechanical-keyboard">Keychron K2</a>
+and <a href="https://www.keychron.com/products/keychron-k1-wireless-mechanical-keyboard">Keychron K1</a> TKL. The main difference between them is that
+the K1 is a low-profile keyboard. I didn&rsquo;t know what low-profile meant at the
+time and had to do some research to figure it out<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>.</p>
+<p>In the end I opted for the <a href="https://www.keychron.com/products/keychron-k2-wireless-mechanical-keyboard"><strong>Keychron K2</strong></a>, red switches (linear),
+with RGB backlight.</p>
+<h2 id="the-keyboard">The keyboard</h2>
+<p>The keyboard met all my expectations, even surpassing them, I am quite satisfied overall:</p>
+<dl>
+<dt>Linux support</dt>
+<dd>Great out-of-the-box support, it just works. Even though I <a href="https://www.perrotta.dev/2021/12/keychron-k2-linux-setup/">tweaked</a> a few configs, it wasn&rsquo;t strictly
+necessary. In particular, there&rsquo;s a physical toggle where you can choose between
+macOS (=Linux) or Windows mode. Furthermore they provide both macOS-style (command, option, etc) and
+Windows-style keycaps (super, alt, etc). For Linux I tend to stick with the Windows ones.</dd>
+<dt>Compact</dt>
+<dd>A 75% keyboard is compact by definition, what else could I add?
+I wouldn&rsquo;t go lower than that though, in my opinion removing the function keys
+goes too far and makes the keyboard harder to use. A Tenkeyless / 80% option
+would also be compact enough while maybe increasing comfort a little bit, but
+I managed to adapt quickly to the 75% layout. Multimedia and OS keys are easily
+available by the means of <code>Fn + F1</code>, etc.</dd>
+<dt>Portable</dt>
+<dd>It has bluetooth, but can also be used while plugged in. There&rsquo;s a toggle that
+controls which mode (wireless or wired) to use. The bluetooth has 3 channels and
+it&rsquo;s very easy to switch between them: <code>Fn + 1</code>, <code>Fn + 2</code>, <code>Fn + 3</code>. This makes it easy
+to switch between laptops and/or workstation, work and/or personal. The cable connector
+is USB-C which in my opinion is a must these days (2020s).</dd>
+<dt>Battery life</dt>
+<dd>Battery lasts more than enough, to the point that I don&rsquo;t even need to care about it.
+I tend to recharge it every 2 weeks or so. <code>Fn + b</code> will let me have a visual indication
+of how much juice is still left. The keyboard automatically sleeps after 10 minutes of inactivity
+in order to save battery, which I think is a nice bonus, I don&rsquo;t need to worry about turning it off.
+This can be disabled if it ends up being annoying, though.</dd>
+<dt>Great value for money</dt>
+<dd>$90 USD at the time of this writing. Because I didn&rsquo;t want to deal with international shipping, I ended up
+simply buying it from one of their official local retailers in Canada, <a href="https://oneofzero.net/">OneOfZero</a>. This
+slightly increased what I paid for it (~$150 CAD with taxes), on the other hand the shipping was really fast. Just
+beware, this particular retailer does not have a friendly return policy, if I recall correctly they charge a 25% fee
+and end up throwing the keyboard away (landfill), which is very depressing.</dd>
+<dt>Playful</dt>
+<dd>The RGB lighting is fluff and completely irrelevant in terms of productivity, however it adds a playful touch to the keyboard.
+I would say that white lighting is enough, but sometimes it&rsquo;s just <em>cool</em> to change to different color(s).
+What can I say, we humans are visual creatures. You can easily adjust the light brightness and toggle it on/off (<code>Fn + light</code>),
+plus there are several patterns to choose from. I tend to use a still pattern because it isn&rsquo;t distracting for programming or
+other type of work that requires focus.</dd>
+</dl>
+<p><strong>Finally</strong>: The keyboard keycaps are quite sturdy and stick well in place. I had some
+issues with my previous keyboard where some of its keycaps would easily fall
+off it when moving it within my backpack. I do not have this issue with the
+Keychron.</p>
+<h2 id="future">Future</h2>
+<p>Mechanical keyboards are meant to last. I do not intend to upgrade it any time
+soon. However, if/when I ever do it, I will be looking for the following features:</p>
+<ul>
+<li>QMK firmware / programmable: would unlock more workflow possibilities. The
+Keychron Q1 would be a good candidate for this.</li>
+<li>With a dongle, in addition to bluetooth. Because sometimes bluetooth is just
+annoying and/or unreliable. The Logitech G915 TKL has a dongle.</li>
+<li>Other switches? So far I&rsquo;ve only used red ones (linear). More silent switches
+could be useful.</li>
+<li>Ergonomic: Whether it&rsquo;s a split, an ortholinear or just a curved keyboard,
+I figure that at some point it will be a good investment for my wrists.
+Adaptation is difficult but it may be necessary one day.</li>
+</ul>
+<p>I am not particularly attracted to custom keycaps, they are cute but not my cup
+of tea. And I also do not see the appeal of hot swappable keycaps. I can
+understand why some folks appreciate those features, customizability is
+powerful, but for me it&rsquo;s less stressful to keep things simple.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Linked to the <code>.pdf</code> because apparently the SKU isn&rsquo;t listed in the Logitech product website anymore. At the time, it cost ~$120 CAD.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>This requirement indirectly excluded all those gaming keyboards with dedicated macro and/or multimedia keys, if they ended up increasing the overall keyboard surface area.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>In the past, I had the opportunity to borrow these from coworkers for a week but couldn&rsquo;t quite adapt to them, their learning curve is quite steep. Maybe I&rsquo;ll try that again in the future.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>It basically means the keys are thinner than usual, comparable to laptop keyboard keys.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ My First APKBUILD</title><link>https://www.perrotta.dev/2022/01/my-first-apkbuild/</link><pubDate>Fri, 07 Jan 2022 20:03:07 -0500</pubDate><guid>https://www.perrotta.dev/2022/01/my-first-apkbuild/</guid><description>&lt;p>In the same spirit of my first PKGBUILD and &lt;a href="https://www.perrotta.dev/2014/09/my-first-ebuild/">&lt;code>Ebuild&lt;/code>&lt;/a>, herein I will describe my first &lt;code>APKBUILD&lt;/code>.&lt;/p></description><content:encoded><![CDATA[<p>In the same spirit of my first PKGBUILD and <a href="https://www.perrotta.dev/2014/09/my-first-ebuild/"><code>Ebuild</code></a>, herein I will describe my first <code>APKBUILD</code>.</p>
+<h2 id="at-a-glance">At a glance</h2>
+<p>Alpine Linux package management is very similar to Arch Linux, with tiny differences:</p>
+<ul>
+<li><code>PKGBUILD</code> → <code>APKBUILD</code>: The filename is obviously different. Their format are very similar though, both of them are bash scripts with variables and functions. In particular, there&rsquo;s <code>check</code>, <code>patch</code>, <code>build</code> and <code>package</code>.</li>
+<li><code>cp /usr/share/pacman/PKGBUILD.proto</code> → <code>newapkbuild</code>: Template versus scaffolding.</li>
+<li><code>pacman</code> → <code>apk</code>: The package manager is different.</li>
+<li><code>makepkg -s</code> → <code>abuild -r</code>: <code>makepkg</code> drives all things package building for <code>pacman</code>. <code>abuild</code> drives package building for <code>apk</code>.</li>
+<li><code>makepkg -i</code> → <code>apk add &lt;pkg&gt;</code>: <code>makepkg</code> can also drive package installations whereas <code>abuild</code> cannot, <code>apk</code> must be used.</li>
+<li><code>namcap</code> → <code>apkbuild-lint</code> (from <code>atools</code>) + <code>abuild sanitycheck</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>: Linters are different.</li>
+<li><code>updpkgsums</code> → <code>abuild checksum</code>: Generate hashes for package sources.</li>
+</ul>
+<figure class="align-center "><a href="https://xkcd.com/927/">
+    <img loading="lazy" src="https://imgs.xkcd.com/comics/standards.png#center"
+         alt="Fortunately, the charging one has been solved now that we&#39;ve all standardized on mini-USB. Or is it micro-USB? Shit."/> </a><figcaption>
+            <p>XKCD Courtesy of Randall Munroe</p>
+        </figcaption>
+</figure>
+
+<p>Other than that, the process of writing an <code>APKBUILD</code> is very similar to writing a <code>PKGBUILD</code>. In fact, the Arch repositories (especially the <a href="https://aur.archlinux.org/">AUR</a>) tend to be much more comprehensive than Alpine&rsquo;s in terms of number of packages, so chances are if you want to write a new package for Alpine, check in Arch&rsquo;s repos first, it&rsquo;s a good starting point.</p>
+<h2 id="my-first-package-fpp">My first package: <code>fpp</code></h2>
+<p><code>fpp</code> stands for &lsquo;Facebook Path Picker&rsquo;.</p>
+<p>As of the time of this post, I maintain <a href="https://aur.archlinux.org/packages/fpp-git/"><code>fpp-git</code></a> in the AUR. It looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pkgname<span style="color:#f92672">=</span>fpp-git
+</span></span><span style="display:flex;"><span>pkgver<span style="color:#f92672">=</span>0.9.2.r130.ge0d5cfc
+</span></span><span style="display:flex;"><span>pkgrel<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>pkgdesc<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;TUI that lets you pick paths out of its stdin and run arbitrary commands on them&#39;</span>
+</span></span><span style="display:flex;"><span>url<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;https://facebook.github.io/PathPicker&#39;</span>
+</span></span><span style="display:flex;"><span>license<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;MIT&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>source<span style="color:#f92672">=(</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>pkgname%-git<span style="color:#e6db74">}</span><span style="color:#e6db74">::git+https://github.com/facebook/PathPicker.git&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>sha256sums<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;SKIP&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>arch<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;any&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>makedepends<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;git&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>depends<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;python&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>conflicts<span style="color:#f92672">=(</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>pkgname%-git<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>provides<span style="color:#f92672">=(</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>pkgname%-git<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prepare<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  cd <span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span><span style="color:#e6db74">${</span>pkgname%-git<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>  rm -r <span style="color:#e6db74">&#34;src/tests&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pkgver<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  cd <span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span><span style="color:#e6db74">${</span>pkgname%-git<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>  git describe --long --tags | sed <span style="color:#e6db74">&#39;s/\([^-]*-g\)/r\1/;s/-/./g&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>package<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  cd <span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span><span style="color:#e6db74">${</span>pkgname%-git<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># library</span>
+</span></span><span style="display:flex;"><span>  install -Dm755 <span style="color:#e6db74">&#34;fpp&#34;</span> -t <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/share/fpp&#34;</span>
+</span></span><span style="display:flex;"><span>  cp -a src <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/share/fpp&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># entrypoint</span>
+</span></span><span style="display:flex;"><span>  install -dm755 <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/bin&#34;</span>
+</span></span><span style="display:flex;"><span>  ln -s <span style="color:#e6db74">&#34;/usr/share/fpp/fpp&#34;</span> <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/bin&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># documentation</span>
+</span></span><span style="display:flex;"><span>  install -Dm644 LICENSE -t <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/share/licenses/</span>$pkgname<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>  install -Dm644 <span style="color:#e6db74">&#34;debian/usr/share/man/man1/fpp.1&#34;</span> -t <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/share/man/man1&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p><code>PKGBUILD</code> guidelines and instructions:</p>
+<ul>
+<li><a href="https://wiki.archlinux.org/title/PKGBUILD">https://wiki.archlinux.org/title/PKGBUILD</a></li>
+<li><a href="https://wiki.archlinux.org/title/Arch_package_guidelines">https://wiki.archlinux.org/title/Arch_package_guidelines</a></li>
+</ul>
+<p>The equivalent <code>APKBUILD</code> I wrote looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pkgname<span style="color:#f92672">=</span>fpp
+</span></span><span style="display:flex;"><span>pkgver<span style="color:#f92672">=</span>0.9.2
+</span></span><span style="display:flex;"><span>pkgrel<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>pkgdesc<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;TUI that lets you pick paths out of its stdin and run arbitrary commands on them&#34;</span>
+</span></span><span style="display:flex;"><span>url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://facebook.github.io/PathPicker&#34;</span>
+</span></span><span style="display:flex;"><span>arch<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;noarch&#34;</span>
+</span></span><span style="display:flex;"><span>license<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;MIT&#34;</span>
+</span></span><span style="display:flex;"><span>depends<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bash python3&#34;</span>
+</span></span><span style="display:flex;"><span>subpackages<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$pkgname<span style="color:#e6db74">-doc&#34;</span>
+</span></span><span style="display:flex;"><span>source<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$pkgname<span style="color:#e6db74">-</span>$pkgver<span style="color:#e6db74">.tar.gz::https://github.com/facebook/PathPicker/archive/</span>$pkgver<span style="color:#e6db74">.tar.gz&#34;</span>
+</span></span><span style="display:flex;"><span>builddir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/PathPicker-</span>$pkgver<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>check<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	fpp --version
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prepare<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	default_prepare
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	rm -r <span style="color:#e6db74">&#34;src/__tests__&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>package<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># library</span>
+</span></span><span style="display:flex;"><span>	install -Dm755 <span style="color:#e6db74">&#34;fpp&#34;</span> -t <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/share/fpp&#34;</span>
+</span></span><span style="display:flex;"><span>	cp -a src <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/share/fpp&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># entrypoint</span>
+</span></span><span style="display:flex;"><span>	install -dm755 <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/bin&#34;</span>
+</span></span><span style="display:flex;"><span>	ln -s <span style="color:#e6db74">&#34;/usr/share/fpp/fpp&#34;</span> <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/bin&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># documentation</span>
+</span></span><span style="display:flex;"><span>	install -Dm644 LICENSE -t <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/share/licenses/</span>$pkgname<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>	install -Dm644 <span style="color:#e6db74">&#34;debian/usr/share/man/man1/fpp.1&#34;</span> -t <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/share/man/man1&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sha512sums<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">65b6b077f437bd642ebf94c55be901aabc73f7b9c89e4522c4f51970c4d63d744ad8fa29cac06816851f63bcb81d0480e61d405231c582e9aca0f4e650949a97  fpp-0.9.2.tar.gz
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p><code>APKBUILD</code> guidelines and instructions:</p>
+<ul>
+<li><a href="https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package">https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package</a></li>
+<li><a href="https://wiki.alpinelinux.org/wiki/APKBUILD_Reference">https://wiki.alpinelinux.org/wiki/APKBUILD_Reference</a></li>
+</ul>
+<h2 id="build-comparison">Build Comparison</h2>
+<p>Let&rsquo;s highlight a few similarities and differences in them, excluding the fact that one is fetched from git and the other one fetches a point release directly<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>:</p>
+<ul>
+<li>package metadata, by the means of bash variables, are almost equivalent
+one-to-one
+<ul>
+<li>A notable difference is the architecture, Arch primarily supports
+<em>x86_64</em> whereas Alpine has support for multiple architectures. When
+a package is architecture agnostic, Arch denotes it with <code>any</code> whereas
+alpine has both <code>noarch</code> and <code>all</code>, the latter is like <code>any</code> (=all
+architectures), the <code>former</code> means it&rsquo;s agnostic (=e.g. a pure bash script
+or python package).</li>
+<li><code>APKBUILDs</code> use flat strings, whereas <code>PKGBUILDs</code> use bash arrays</li>
+<li>Alpine encourages splitting larger packages into subpackages, as such
+<code>APKBUILD</code> has first-class support and syntactic sugar for that. <code>-dev</code> and
+<code>-doc</code> subpackages are very common. On the other hand, Arch tends to have
+monolithic packages in order to keep it simple, although it also supports
+subpackages.</li>
+<li>Alpine supports setting <code>$builddir</code> whereas Arch doesn&rsquo;t. As a consequence, it&rsquo;s often unneeded to <code>cd</code> in <code>build()</code> and <code>package()</code> in Alpine, whereas in Arch one does need to manually change directories to <code>$srcdir/$pkgname</code> before building.</li>
+<li>Alpine lacks optional dependencies, whereas Arch has <code>optdepends</code>.</li>
+</ul>
+</li>
+<li>Alpine enforces the use of <code>check</code> in test packages, otherwise it needs to be explicitly disabled and documented with <code>!check</code> in <code>options=</code>. That&rsquo;s not the case in Arch.</li>
+<li><code>check()</code>, <code>build()</code> and <code>package()</code> are pretty much similar in both formats. <code>$srcdir</code> and <code>$pkgdir</code> are provided in both.</li>
+<li>The <a href="https://wiki.archlinux.org/title/Main_page">ArchWiki</a> is way more documented in terms of packaging guidelines and examples than Alpine&rsquo;s. If you use DuckDuckGo, you can query for <code>!aw &lt;foo&gt;</code> as a bang shortcut to search directly in the ArchWiki.</li>
+</ul>
+<p>Last but not least, in Arch one can install package tarballs<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> with <code>makepkg -i</code> or <code>pacman -U</code>. In Alpine that approach doesn&rsquo;t seem to be directly supported. The workflow is to add a local repository diretory in <code>/etc/apk/repositories</code> (notice the last two lines):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat /etc/apk/repositories
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># http://dl-cdn.alpinelinux.org/alpine/v3.15/main</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># http://dl-cdn.alpinelinux.org/alpine/v3.15/community</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># http://dl-cdn.alpinelinux.org/alpine/latest-stable/main</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># http://dl-cdn.alpinelinux.org/alpine/latest-stable/community</span>
+</span></span><span style="display:flex;"><span>http://dl-cdn.alpinelinux.org/alpine/edge/main
+</span></span><span style="display:flex;"><span>http://dl-cdn.alpinelinux.org/alpine/edge/community
+</span></span><span style="display:flex;"><span>http://dl-cdn.alpinelinux.org/alpine/edge/testing
+</span></span><span style="display:flex;"><span>/home/$USER/packages/community
+</span></span><span style="display:flex;"><span>/home/$USER/packages/testing
+</span></span></code></pre></div><p><code>abuild</code> will place the resulting package tarball in <code>~/packages</code>, in this case:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ls ~/packages/testing/x86_64/fpp*
+</span></span><span style="display:flex;"><span>/home/$USER/packages/testing/x86_64/fpp-0.9.2-r0.apk
+</span></span><span style="display:flex;"><span>/home/$USER/packages/testing/x86_64/fpp-doc-0.9.2-r0.apk
+</span></span></code></pre></div><p>&hellip;and then <code>apk add fpp</code> will automagically recognize it&rsquo;s in there and install it. The advantage of this approach is that it keeps a local package repository around and it&rsquo;s well integrated with <code>apk</code>, way differently from <code>pacman</code> that has no integration with the AUR at all. One could also possibly set up a local repository in Arch, for example, with <a href="https://github.com/graysky2/clean-chroot-manager"><code>ccm</code></a>, but it takes extra steps and it&rsquo;s not officially supported.</p>
+<h2 id="upstream-contributions">Upstream Contributions</h2>
+<p>On Arch, to contribute a <code>PKGBUILD</code> upstream one just needs to create an account in the <a href="https://aur.archlinux.org/">AUR</a>. Armed with a git + ssh infrastructure, all you need to do is <code>git push</code>. There are no ACLs involved, anyone can do that<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>.</p>
+<p>On Alpine there&rsquo;s a bit more of politics involved<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>: Anyone can send a <code>patch(1)</code>, either via <a href="mailto:alpine-aports@lists.alpinelinux.org">mailing list</a> or via a <a href="https://gitlab.alpinelinux.org/alpine/aports">Gitlab MR</a> (merge request). Patch works well with <code>git send-email -1</code>, being automatically cross-posted to a Gitlab MR. On the other hand the MR workflow is easier to be followed up on feedback from developers and other contributors (<code>git push --force</code>), and it&rsquo;s also cross-posted, to the mailing list. An Alpine developer with the appropriate permissions must approve your patch/MR before it becomes available to other Alpine users.</p>
+<p>Sadly at the time of this writing <a href="https://lists.alpinelinux.org/~alpine/aports/patches/3799">my patch</a> hasn&rsquo;t yet been approved (2 weeks later), however we&rsquo;re in holiday season. This wouldn&rsquo;t have been a problem in the AUR, where I could have just pushed it immediately, without any review. On the other hand the Alpine approach at least gives me some hope that the submitted packages have slightly higher quality than the average ones in the AUR, since they need to be manually reviewed/approved/vetted by at least one Alpine developer.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Install <code>spdx-licenses-list</code> to lint the licenses, it&rsquo;s used by <code>abuild sanitycheck</code> as an optional dependency.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>The AUR tends to have both non-vcs and vcs versions of a software, whereas Alpine is focused a bit more on stability and tends to have non-vcs only. This is not a hard rule though, exceptions may exist.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><code>.tar.xz</code> or, more recently, <code>.tar.zstd</code>.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>And this is one of the reasons why you should always inspect every <code>PKGBUILD</code> you install from the Arch User Repository, as it could have been tampered with and/or contain malicious code.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p>I&rsquo;ll leave it open-ended whether that&rsquo;s a bug or a feature. Depending on the lens you see through, it could be considered either gatekeeping (bureaucracy, control) or sanity (quality, stability). It has pros and cons, and even those are arguable.&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Alpine Linux: apk command not found hook</title><link>https://www.perrotta.dev/2022/01/alpine-linux-apk-command-not-found-hook/</link><pubDate>Tue, 04 Jan 2022 16:25:51 -0500</pubDate><guid>https://www.perrotta.dev/2022/01/alpine-linux-apk-command-not-found-hook/</guid><description>&lt;p>In this post we will learn how to define a command-not-found hook to the &lt;code>apk(8)&lt;/code> package manager in Alpine Linux.&lt;/p>
+&lt;h2 id="sneak-peek">Sneak peek&lt;/h2>
+&lt;p>Before:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ podman
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>zsh: correct &lt;span style="color:#e6db74">&amp;#39;podman&amp;#39;&lt;/span> to &lt;span style="color:#e6db74">&amp;#39;pod2man&amp;#39;&lt;/span> &lt;span style="color:#f92672">[&lt;/span>nyae&lt;span style="color:#f92672">]&lt;/span>? n
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>zsh: command not found: podman
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ podman
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>zsh: correct &lt;span style="color:#e6db74">&amp;#39;podman&amp;#39;&lt;/span> to &lt;span style="color:#e6db74">&amp;#39;pod2man&amp;#39;&lt;/span> &lt;span style="color:#f92672">[&lt;/span>nyae&lt;span style="color:#f92672">]&lt;/span>? n
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>podman may be found in the following packages:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;cmd:podman&amp;gt; podman-3.4.4-r1 x86_64 &lt;span style="color:#f92672">{&lt;/span>podman&lt;span style="color:#f92672">}&lt;/span> &lt;span style="color:#f92672">(&lt;/span>Apache-2.0&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description><content:encoded><![CDATA[<p>In this post we will learn how to define a command-not-found hook to the <code>apk(8)</code> package manager in Alpine Linux.</p>
+<h2 id="sneak-peek">Sneak peek</h2>
+<p>Before:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ podman
+</span></span><span style="display:flex;"><span>zsh: correct <span style="color:#e6db74">&#39;podman&#39;</span> to <span style="color:#e6db74">&#39;pod2man&#39;</span> <span style="color:#f92672">[</span>nyae<span style="color:#f92672">]</span>? n
+</span></span><span style="display:flex;"><span>zsh: command not found: podman
+</span></span></code></pre></div><p>After:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ podman
+</span></span><span style="display:flex;"><span>zsh: correct <span style="color:#e6db74">&#39;podman&#39;</span> to <span style="color:#e6db74">&#39;pod2man&#39;</span> <span style="color:#f92672">[</span>nyae<span style="color:#f92672">]</span>? n
+</span></span><span style="display:flex;"><span>podman may be found in the following packages:
+</span></span><span style="display:flex;"><span>  &lt;cmd:podman&gt; podman-3.4.4-r1 x86_64 <span style="color:#f92672">{</span>podman<span style="color:#f92672">}</span> <span style="color:#f92672">(</span>Apache-2.0<span style="color:#f92672">)</span>
+</span></span></code></pre></div><h2 id="preamble">Preamble</h2>
+<p>Whenever you type a command that is not in your <code>$PATH</code>, usually your shell
+will yell at you that it wasn&rsquo;t found.</p>
+<p>The typical workflow in this scenario is to use the search functionality of your package manager in order to find which package provides the binary you&rsquo;re interested in.</p>
+<p>In Alpine Linux, one would do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ apk search podman
+</span></span><span style="display:flex;"><span>podman-doc-3.4.4-r1
+</span></span><span style="display:flex;"><span>podman-remote-3.4.4-r1
+</span></span><span style="display:flex;"><span>podman-docker-3.4.4-r1
+</span></span><span style="display:flex;"><span>openscap-1.3.5-r3
+</span></span><span style="display:flex;"><span>podman-3.4.4-r1
+</span></span><span style="display:flex;"><span>podman-compose-0.1.5-r4
+</span></span><span style="display:flex;"><span>podman-bash-completion-3.4.4-r1
+</span></span><span style="display:flex;"><span>podman-zsh-completion-3.4.4-r1
+</span></span><span style="display:flex;"><span>py3-podman-3.2.1-r1
+</span></span><span style="display:flex;"><span>podman-docker-doc-3.4.4-r1
+</span></span><span style="display:flex;"><span>podman-openrc-3.4.4-r1
+</span></span><span style="display:flex;"><span>podman-fish-completion-3.4.4-r1
+</span></span></code></pre></div><p>The output is a bit noisy, but with a bit of experience you could easily figure out the package you&rsquo;re looking for is simply called <code>podman</code>, given the output above.</p>
+<p>Surely this was an easy example, what if we tried something less obvious?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ vidir
+</span></span><span style="display:flex;"><span>zsh: correct <span style="color:#e6db74">&#39;vidir&#39;</span> to <span style="color:#e6db74">&#39;vdir&#39;</span> <span style="color:#f92672">[</span>nyae<span style="color:#f92672">]</span>? n
+</span></span><span style="display:flex;"><span>zsh: command not found: vidir
+</span></span></code></pre></div><p>There&rsquo;s no <code>vidir</code> binary, then surely there&rsquo;s a <code>vidir</code> package, right?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ doas apk add vidir
+</span></span><span style="display:flex;"><span>ERROR: unable to <span style="color:#66d9ef">select</span> packages:
+</span></span><span style="display:flex;"><span>  vidir <span style="color:#f92672">(</span>no such package<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>    required by: world<span style="color:#f92672">[</span>vidir<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Er, no. You&rsquo;ll need to use search again:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ apk search vidir
+</span></span><span style="display:flex;"><span>moreutils-0.67-r0
+</span></span></code></pre></div><p>There it is, <code>moreutils</code>. Great piece of software, by the way<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>What if we could automate this?</p>
+<h2 id="automating-command-not-found-1st-try">Automating command-not-found: 1st try</h2>
+<p>In bash, one can define a <code>command_not_found_handle</code> function. In zsh, one can define a <code>command_not_found_handler</code> function. I know, why can&rsquo;t it be the same function, right? Just one <code>r</code> in the way. Regardless of whichever shell you use, the point is that the function is invoked whenever you run a command that is not in the <code>$PATH</code> (or that isn&rsquo;t a shell built-in).</p>
+<p>In principle, you could do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>command_not_found_handle<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  local cmd<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>  apk search <span style="color:#e6db74">&#34;</span>$cmd<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>It&rsquo;s a good first try, and it surely works as expected, but it can be a bit noisy sometimes. Look at the podman output above, it outputs several unrelated packages, none of which provide the <code>podman</code> binary other than its homonym.</p>
+<h2 id="automating-command-not-found-2nd-try">Automating command-not-found: 2nd try</h2>
+<p>In Alpine, we can do slightly better. <code>apk(8)</code> has the concept of providers:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ apk list -P | awk <span style="color:#e6db74">&#39;{print $1}&#39;</span> | egrep <span style="color:#e6db74">&#39;&lt;\w+:&#39;</span> | cut -f <span style="color:#ae81ff">1</span> -d <span style="color:#e6db74">&#39;:&#39;</span> | cut -c 2- | sort -u
+</span></span><span style="display:flex;"><span>cmd
+</span></span><span style="display:flex;"><span>dbus
+</span></span><span style="display:flex;"><span>pc
+</span></span><span style="display:flex;"><span>so
+</span></span></code></pre></div><p><code>-P</code> above stands for <code>--providers</code>. This roughly means one can search for a package that provides a given shared library (<code>so</code>), or a package that provides a given binary (<code>cmd</code>), and so on. We&rsquo;re interested in the <code>cmd:</code> provider.</p>
+<p>If we tried it with <code>podman</code>, we would get the following output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ apk list -P -- <span style="color:#e6db74">&#34;cmd:podman&#34;</span>
+</span></span><span style="display:flex;"><span>&lt;cmd:podman&gt; podman-3.4.4-r1 x86_64 <span style="color:#f92672">{</span>podman<span style="color:#f92672">}</span> <span style="color:#f92672">(</span>Apache-2.0<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>Look at how much shorter and direct it is, compared to the 1st approach!</p>
+<p>Here&rsquo;s what it looks like if we try it with a binary provided by multiple packages:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ apk list -P -- <span style="color:#e6db74">&#34;cmd:docker&#34;</span>
+</span></span><span style="display:flex;"><span>&lt;cmd:docker&gt; docker-cli-20.10.11-r0 x86_64 <span style="color:#f92672">{</span>docker<span style="color:#f92672">}</span> <span style="color:#f92672">(</span>Apache-2.0<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>installed<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>&lt;cmd:docker&gt; podman-docker-3.4.4-r1 x86_64 <span style="color:#f92672">{</span>podman<span style="color:#f92672">}</span> <span style="color:#f92672">(</span>Apache-2.0<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>It&rsquo;s very easy to see that both <code>docker-cli</code> and <code>podman-docker</code> provide <code>docker</code>. If you just did a simple search, you&rsquo;d get a lot of noise:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ apk search docker
+</span></span><span style="display:flex;"><span>docker-bash-completion-20.10.11-r0
+</span></span><span style="display:flex;"><span>docker-cli-20.10.11-r0
+</span></span><span style="display:flex;"><span>docker-machine-driver-kvm2-1.24.0-r0
+</span></span><span style="display:flex;"><span>x11docker-6.9.0-r2
+</span></span><span style="display:flex;"><span>docker-volume-local-persist-1.3.0-r5
+</span></span><span style="display:flex;"><span>podman-docker-3.4.4-r1
+</span></span><span style="display:flex;"><span>openvswitch-2.12.3-r4
+</span></span><span style="display:flex;"><span>docker-engine-20.10.11-r0
+</span></span><span style="display:flex;"><span>docker-openrc-20.10.11-r0
+</span></span><span style="display:flex;"><span>dockerize-0.6.1-r9
+</span></span><span style="display:flex;"><span>docker-fish-completion-20.10.11-r0
+</span></span><span style="display:flex;"><span>openscap-1.3.5-r3
+</span></span><span style="display:flex;"><span>docker-py-5.0.3-r1
+</span></span><span style="display:flex;"><span>openvswitch-ovn-2.12.3-r4
+</span></span><span style="display:flex;"><span>docker-registry-openrc-2.7.1-r5
+</span></span><span style="display:flex;"><span>docker-doc-20.10.11-r0
+</span></span><span style="display:flex;"><span>rsyslog-imdocker-8.2108.0-r0
+</span></span><span style="display:flex;"><span>lazydocker-0.12-r2
+</span></span><span style="display:flex;"><span>docker-compose-bash-completion-1.29.2-r2
+</span></span><span style="display:flex;"><span>docker-compose-1.29.2-r2
+</span></span><span style="display:flex;"><span>py3-dockerpty-0.4.1-r4
+</span></span><span style="display:flex;"><span>docker-compose-zsh-completion-1.29.2-r2
+</span></span><span style="display:flex;"><span>docker-registry-2.7.1-r5
+</span></span><span style="display:flex;"><span>docker-credential-ecr-login-0.5.0-r2
+</span></span><span style="display:flex;"><span>dockerpy-creds-0.4.0-r3
+</span></span><span style="display:flex;"><span>docker-cli-compose-2.1.1-r0
+</span></span><span style="display:flex;"><span>docker-credential-ecr-login-doc-0.5.0-r2
+</span></span><span style="display:flex;"><span>podman-docker-doc-3.4.4-r1
+</span></span><span style="display:flex;"><span>docker-20.10.11-r0
+</span></span><span style="display:flex;"><span>docker-compose-fish-completion-1.29.2-r2
+</span></span><span style="display:flex;"><span>flannel-contrib-cni-0.15.1-r0
+</span></span><span style="display:flex;"><span>docker-zsh-completion-20.10.11-r0
+</span></span><span style="display:flex;"><span>docker-volume-local-persist-openrc-1.3.0-r5
+</span></span><span style="display:flex;"><span>docker-cli-buildx-0.7.1-r0
+</span></span></code></pre></div><h2 id="packagingpackaging-it-all-together">Packaging<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> it all together</h2>
+<p>I wrote the following scripts, which I source in my respective interactive shells, to achieve this behavior out-of-the-box:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat apk-command-not-found.bash
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># apk(8) from Alpine Linux command not found hook for bash</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>command_not_found_handle <span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        local cmd<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> pkgs
+</span></span><span style="display:flex;"><span>        mapfile -t pkgs &lt; &lt;<span style="color:#f92672">(</span>apk list -P -- <span style="color:#e6db74">&#34;cmd:</span>$cmd<span style="color:#e6db74">&#34;</span> 2&gt;/dev/null<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span> <span style="color:#e6db74">${#</span>pkgs[*]<span style="color:#e6db74">}</span> <span style="color:#f92672">))</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>                echo <span style="color:#e6db74">&#34;</span>$cmd<span style="color:#e6db74"> may be found in the following packages:&#34;</span>
+</span></span><span style="display:flex;"><span>                printf <span style="color:#e6db74">&#39;  %s\n&#39;</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>pkgs[@]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>                echo <span style="color:#e6db74">&#34;bash: command not found: </span>$cmd<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">fi</span> 1&gt;&amp;<span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat apk-command-not-found.zsh
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/zsh</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># apk(8) from Alpine Linux command not found hook for zsh</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>command_not_found_handler<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        local cmd<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>        local pkgs<span style="color:#f92672">=(</span><span style="color:#e6db74">${</span>(f)<span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>apk list -P -- <span style="color:#e6db74">&#34;cmd:</span>$cmd<span style="color:#e6db74">&#34;</span> 2&gt;/dev/null<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">}</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> -n <span style="color:#e6db74">&#34;</span>$pkgs<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>                echo <span style="color:#e6db74">&#34;</span>$cmd<span style="color:#e6db74"> may be found in the following packages:&#34;</span>
+</span></span><span style="display:flex;"><span>                printf <span style="color:#e6db74">&#39;  %s\n&#39;</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>pkgs[@]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>                echo <span style="color:#e6db74">&#34;zsh: command not found: </span>$cmd<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">fi</span> 1&gt;&amp;<span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">127</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>The snippets above are snapshots intended for this post.
+I keep up-to-date versions of these files in my dotfiles repository, <a href="https://github.com/thiagowfx/.dotfiles/search?q=filename%3Aapk-command-not-found&amp;type=code">try out this query</a> in case I ever move them elsewhere.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://joeyh.name/code/moreutils/">https://joeyh.name/code/moreutils/</a>: moreutils is a collection of the unix tools that nobody thought to write long ago when unix was young.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>pun intended&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>

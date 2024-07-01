@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Not Just Serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on Not Just Serendipity</description><generator>Hugo -- 0.128.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta • CC BY-NC-SA 4.0 • RSS •</copyright><lastBuildDate>Mon, 01 Jul 2024 18:48:47 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Explain a crontab expression</title><link>https://www.perrotta.dev/2024/07/explain-a-crontab-expression/</link><pubDate>Mon, 01 Jul 2024 18:48:47 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/explain-a-crontab-expression/</guid><description>&lt;p>Given, for example, &lt;code>0 0 * * *&lt;/code>, how do you figure out when it will run?&lt;/p></description><content:encoded><![CDATA[<p>Given, for example, <code>0 0 * * *</code>, how do you figure out when it will run?</p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>not just serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on not just serendipity</description><generator>Hugo -- 0.128.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta • CC BY-NC-SA 4.0 • RSS •</copyright><lastBuildDate>Mon, 01 Jul 2024 18:48:47 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Explain a crontab expression</title><link>https://www.perrotta.dev/2024/07/explain-a-crontab-expression/</link><pubDate>Mon, 01 Jul 2024 18:48:47 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/explain-a-crontab-expression/</guid><description>&lt;p>Given, for example, &lt;code>0 0 * * *&lt;/code>, how do you figure out when it will run?&lt;/p></description><content:encoded><![CDATA[<p>Given, for example, <code>0 0 * * *</code>, how do you figure out when it will run?</p>
 <ul>
 <li>Option 1: Read the docs! The <a href="https://wiki.archlinux.org/title/Cron">ArchWiki</a>
 is frequently a great reference. Alternatively, use your favorite search
@@ -262,4 +262,266 @@ it uses does not contain <code>curl</code>.</p>
 optional and short for &ldquo;quiet&rdquo;.</p>
 <p>The <code>/health</code> endpoint merely returns a simple JSON:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{<span style="color:#f92672">&#34;healthy&#34;</span>:<span style="color:#66d9ef">true</span>}
-</span></span></code></pre></div><p>References: <a href="https://stackoverflow.com/questions/47722898/how-can-i-make-a-docker-healthcheck-with-wget-instead-of-curl">https://stackoverflow.com/questions/47722898/how-can-i-make-a-docker-healthcheck-with-wget-instead-of-curl</a></p>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div><p>References: <a href="https://stackoverflow.com/questions/47722898/how-can-i-make-a-docker-healthcheck-with-wget-instead-of-curl">https://stackoverflow.com/questions/47722898/how-can-i-make-a-docker-healthcheck-with-wget-instead-of-curl</a></p>]]></content:encoded></item><item><title>Pritunl log in via CLI</title><link>https://www.perrotta.dev/2024/05/pritunl-log-in-via-cli/</link><pubDate>Tue, 07 May 2024 16:03:27 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/pritunl-log-in-via-cli/</guid><description>&lt;p>&lt;a href="https://pritunl.com/">Pritunl&lt;/a> is an Enterprise Distributed OpenVPN server.&lt;/p>
+&lt;p>In order to run its client on macOS, an &lt;code>.app&lt;/code> is provided. However, using it to
+log in every day is quite tedious.&lt;/p>
+&lt;p>Let&amp;rsquo;s automate it so that we can connect to the VPN with a single command.&lt;/p></description><content:encoded><![CDATA[<p><a href="https://pritunl.com/">Pritunl</a> is an Enterprise Distributed OpenVPN server.</p>
+<p>In order to run its client on macOS, an <code>.app</code> is provided. However, using it to
+log in every day is quite tedious.</p>
+<p>Let&rsquo;s automate it so that we can connect to the VPN with a single command.</p>
+<p>In order to fetch the credentials in this example in a secure manner, we&rsquo;ll be
+using 1password. <a href="https://www.passwordstore.org/"><code>pass</code></a> would have worked just
+as fine.</p>
+<p>First, configure Pritunl via its app UI, creating a profile for your corp
+credentials.</p>
+<p>Then figure out what the profile ID you just created is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>profile_id<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>/Applications/Pritunl.app/Contents/Resources/pritunl-client list --json | jq -r <span style="color:#e6db74">&#39;.[0].id&#39;</span><span style="color:#66d9ef">)</span>
+</span></span></code></pre></div><p>Now, create an entry in 1Password for your Pritunl credentials associated with
+the profile above.</p>
+<p>Let&rsquo;s use the <code>op</code> official CLI tool from 1Password to fetch the password and
+the OTP (one-time password) for the &ldquo;Pritunl (VPN)&rdquo; entry (change it
+accordingly).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>op_id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#39;Pritunl (VPN)&#39;</span> --format json | jq -r <span style="color:#e6db74">&#39;.id&#39;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>password<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op read <span style="color:#e6db74">&#34;op://private/</span>$op_id<span style="color:#e6db74">/password&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>otp<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#34;</span>$op_id<span style="color:#e6db74">&#34;</span> --totp<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p>Now we can use the <code>pritunl-client</code> to log in programatically:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pritunl-client start <span style="color:#e6db74">&#34;</span>$profile_id<span style="color:#e6db74">&#34;</span> --password <span style="color:#e6db74">&#34;</span>$password$otp<span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p>Then verify it has indeed connected:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pritunl-client list
+</span></span></code></pre></div><p>The trick is that it accepts the concatenation of the password with the OTP as
+the password. There&rsquo;s not a separate <code>--otp</code> flag.</p>
+<p>Putting everything together, we can create a function for our favorite shell:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Log into corp VPN</span>
+</span></span><span style="display:flex;"><span>pritunl_login<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	local profile_id<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>/Applications/Pritunl.app/Contents/Resources/pritunl-client list --json | jq -r <span style="color:#e6db74">&#39;.[0].id&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	local op_id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#39;Pritunl (VPN)&#39;</span> --format json | jq -r <span style="color:#e6db74">&#39;.id&#39;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>	local password<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op read <span style="color:#e6db74">&#34;op://private/</span>$op_id<span style="color:#e6db74">/password&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>	local otp<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#34;</span>$op_id<span style="color:#e6db74">&#34;</span> --totp<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	pritunl-client start <span style="color:#e6db74">&#34;</span>$profile_id<span style="color:#e6db74">&#34;</span> --password <span style="color:#e6db74">&#34;</span>$password$otp<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>	pritunl-client list
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div>]]></content:encoded></item><item><title>Be aware that your public SSH keys can reveal your identity</title><link>https://www.perrotta.dev/2024/05/be-aware-that-your-public-ssh-keys-can-reveal-your-identity/</link><pubDate>Fri, 03 May 2024 16:46:28 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/be-aware-that-your-public-ssh-keys-can-reveal-your-identity/</guid><description>&lt;p>If you have a GitHub account configured with SSH, your public keys are available
+at &lt;code>https://github.com/$USERNAME.keys&lt;/code>.&lt;/p>
+&lt;p>For example, mine: &lt;a href="https://github.com/thiagowfx.keys">https://github.com/thiagowfx.keys&lt;/a>&lt;/p>
+&lt;p>And then let&amp;rsquo;s say you also use your full name on GitHub.&lt;/p></description><content:encoded><![CDATA[<p>If you have a GitHub account configured with SSH, your public keys are available
+at <code>https://github.com/$USERNAME.keys</code>.</p>
+<p>For example, mine: <a href="https://github.com/thiagowfx.keys">https://github.com/thiagowfx.keys</a></p>
+<p>And then let&rsquo;s say you also use your full name on GitHub.</p>
+<pre tabindex="0"><code>% ssh whoami.filippo.io
+The authenticity of host &#39;whoami.filippo.io (2a09:8280:1::a:5d6)&#39; can&#39;t be established.
+ED25519 key fingerprint is SHA256:qGAqPqtlvFBCt4LfMME3IgJqZWlcrlBMxNmGjhLVYzY.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added &#39;whoami.filippo.io&#39; (ED25519) to the list of known hosts.
+
+    +---------------------------------------------------------------------+
+    |                                                                     |
+    |             _o/ Hello Thiago Perrotta!
+    |                                                                     |
+    |                                                                     |
+    |  Did you know that ssh sends all your public keys to any server     |
+    |  it tries to authenticate to?                                       |
+    |                                                                     |
+    |  We matched them to the keys of your GitHub account,                |
+    |  @thiagowfx, which are available via the GraphQL API
+    |  and at https://github.com/thiagowfx.keys
+    |                                                                     |
+    |  -- Filippo (https://filippo.io)                                    |
+    |                                                                     |
+    |                                                                     |
+    |  P.S. The source of this server is at                               |
+    |  https://github.com/FiloSottile/whoami.filippo.io                   |
+    |                                                                     |
+    +---------------------------------------------------------------------+
+
+Shared connection to whoami.filippo.io closed.
+</code></pre><p>Then be careful when connecting to random public ssh servers when you have an
+intent to be anonymous.</p>
+<p>It&rsquo;s possible to &ldquo;hide&rdquo; yourself by either setting the <code>IdentitiesOnly=yes</code>
+option, or by removing all your local ssh keys altogether, even if only
+temporarily.</p>]]></content:encoded></item><item><title>Shell text substitution</title><link>https://www.perrotta.dev/2024/04/shell-text-substitution/</link><pubDate>Sun, 07 Apr 2024 23:13:09 +0200</pubDate><guid>https://www.perrotta.dev/2024/04/shell-text-substitution/</guid><description>&lt;p>I learned a neat shell trick this week. In both &lt;code>bash&lt;/code> and &lt;code>zsh&lt;/code> you can use the
+circumflex / caret (&lt;code>^&lt;/code>) symbol to find &amp;amp; replace a word from the previous
+command.&lt;/p>
+&lt;p>Usage: &lt;code>^prev^next&lt;/code>. It&amp;rsquo;s best illustrated with examples:&lt;/p></description><content:encoded><![CDATA[<p>I learned a neat shell trick this week. In both <code>bash</code> and <code>zsh</code> you can use the
+circumflex / caret (<code>^</code>) symbol to find &amp; replace a word from the previous
+command.</p>
+<p>Usage: <code>^prev^next</code>. It&rsquo;s best illustrated with examples:</p>
+<h2 id="terraform">terraform</h2>
+<p>Instead of running:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>terraform init -var-file /path/to/foo.tfvars
+</span></span><span style="display:flex;"><span>terraform plan -var-file /path/to/foo.tfvars
+</span></span><span style="display:flex;"><span>terraform apply -var-file /path/to/foo.tfvars
+</span></span></code></pre></div><p>Run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>terraform init -var-file /path/to/foo.tfvars
+</span></span><span style="display:flex;"><span>^init^plan
+</span></span><span style="display:flex;"><span>^plan^apply
+</span></span></code></pre></div><h2 id="systemd">systemd</h2>
+<p>Instead of running:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo systemctl restart nginx
+</span></span><span style="display:flex;"><span>sudo systemctl status nginx
+</span></span></code></pre></div><p>Run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo systemctl restart nginx
+</span></span><span style="display:flex;"><span>^restart^status
+</span></span></code></pre></div><h2 id="one-observation">one observation</h2>
+<p><code>zsh</code> will run the substitution right away, whereas <code>bash</code> will allow you
+to review and edit the replaced command before running it.</p>]]></content:encoded></item><item><title>pyenv</title><link>https://www.perrotta.dev/2024/03/pyenv/</link><pubDate>Sun, 10 Mar 2024 22:18:34 +0100</pubDate><guid>https://www.perrotta.dev/2024/03/pyenv/</guid><description>&lt;p>When working on Python projects, &lt;a href="https://github.com/pyenv/pyenv">&lt;code>pyenv&lt;/code>&lt;/a> is a
+great python environment / version manager, especially on macOS wherein you
+cannot easily control the python system version.&lt;/p></description><content:encoded><![CDATA[<p>When working on Python projects, <a href="https://github.com/pyenv/pyenv"><code>pyenv</code></a> is a
+great python environment / version manager, especially on macOS wherein you
+cannot easily control the python system version.</p>
+<p>I&rsquo;d recommend to install it with homebrew (<code>brew install pyenv</code>).</p>
+<p>The upstream documentation is great. The commands you&rsquo;ll typically use are:</p>
+<ul>
+<li><code>pyenv versions</code>: list all installed versions</li>
+<li><code>pyenv global &lt;version&gt;</code>: set a specific python version for your whole system</li>
+<li><code>pyenv local</code>: set a specific python version only for a specific project
+(directory)</li>
+</ul>
+<p>And then it&rsquo;s handy to add the following blurb to your shell rc file to make
+<code>pyenv</code> work properly out-of-the-box:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># pyenv: https://github.com/pyenv/pyenv</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> hash pyenv &gt;/dev/null 2&gt;&amp;1; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>	export PYENV_ROOT<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$HOME<span style="color:#e6db74">/.pyenv&#34;</span>
+</span></span><span style="display:flex;"><span>	path_munge <span style="color:#e6db74">&#34;</span>$PYENV_ROOT<span style="color:#e6db74">/bin&#34;</span>
+</span></span><span style="display:flex;"><span>	eval <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>pyenv init -<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span></code></pre></div><p>Note that <code>path_munge</code> is a custom function, it merely appends the given
+argument to the <code>$PATH</code>.</p>]]></content:encoded></item><item><title>chrome-fresh: start a fresh instance of Google Chrome</title><link>https://www.perrotta.dev/2024/03/chrome-fresh-start-a-fresh-instance-of-google-chrome/</link><pubDate>Sun, 10 Mar 2024 21:55:16 +0100</pubDate><guid>https://www.perrotta.dev/2024/03/chrome-fresh-start-a-fresh-instance-of-google-chrome/</guid><description>&lt;p>I used to have the following handy script to launch a new (fresh!) instance of
+Google Chrome when working on &lt;a href="https://www.perrotta.dev/2024/01/google-chrome-for-testing-reliable-downloads-for-browser-automation/">Chrome for Testing&lt;/a> in the Browser Automation team at
+Google:&lt;/p></description><content:encoded><![CDATA[<p>I used to have the following handy script to launch a new (fresh!) instance of
+Google Chrome when working on <a href="https://www.perrotta.dev/2024/01/google-chrome-for-testing-reliable-downloads-for-browser-automation/">Chrome for Testing</a> in the Browser Automation team at
+Google:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e"># start chrome with ephemeral settings (every run of Chrome is empty)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># usage: chrome-fresh out/Default/chrome</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TMPDIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>mktemp -d<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>trap <span style="color:#e6db74">&#39;rm -rf &#34;${TMPDIR}&#34;&#39;</span> EXIT
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CHROME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>1<span style="color:#66d9ef">:-</span>google-chrome<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>; shift
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://github.com/GoogleChrome/chrome-launcher/blob/main/docs/chrome-flags-for-tools.md</span>
+</span></span><span style="display:flex;"><span>CHROME_FLAGS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;--use-mock-keychain&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>uname -s<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Darwin&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#e6db74">&#34;</span>$CHROME<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">==</span> *.app <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>	open -n <span style="color:#e6db74">&#34;</span>$CHROME<span style="color:#e6db74">&#34;</span> --args <span style="color:#e6db74">&#34;</span>$CHROME_FLAGS<span style="color:#e6db74">&#34;</span> --user-data-dir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$TMPDIR<span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;</span>$@<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>  <span style="color:#75715e"># &#34;Linux&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;</span>$CHROME<span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;</span>$CHROME_FLAGS<span style="color:#e6db74">&#34;</span> --user-data-dir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$TMPDIR<span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;</span>$@<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span></code></pre></div><p>The script is self-documenting, it was properly tested on both Linux and macOS.</p>
+<p>The typical use case would be to compile a new Google Chrome binary
+(<code>/out/Default/chrome</code>), and then use the script to launch it with a fresh user
+data directory, to ensure the previous launch settings do not interfere with the
+current one.</p>]]></content:encoded></item><item><title>Set terminal language to English</title><link>https://www.perrotta.dev/2024/02/set-terminal-language-to-english/</link><pubDate>Thu, 22 Feb 2024 09:48:34 +0100</pubDate><guid>https://www.perrotta.dev/2024/02/set-terminal-language-to-english/</guid><description>&lt;p>I changed my macOS system language to German, with the intent of &lt;a href="https://www.perrotta.dev/2022/04/translating-german-to-english/">getting more
+exposure to it&lt;/a>.&lt;/p>
+&lt;p>One negative side effect is that most binaries I execute with my shell (for
+example: &lt;code>git&lt;/code>) are now outputting German text as well&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>. In hindsight, this
+should have been expected.&lt;/p></description><content:encoded><![CDATA[<p>I changed my macOS system language to German, with the intent of <a href="https://www.perrotta.dev/2022/04/translating-german-to-english/">getting more
+exposure to it</a>.</p>
+<p>One negative side effect is that most binaries I execute with my shell (for
+example: <code>git</code>) are now outputting German text as well<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. In hindsight, this
+should have been expected.</p>
+<p>A simple fix is to override the environment locale with English. I made the
+following
+<a href="https://github.com/thiagowfx/.dotfiles/commit/4b784b1fa89f569623340cf3d58cc22d8504926a">addition</a>
+to my <a href="https://github.com/thiagowfx/.dotfiles">dotfiles</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Force the system-wide language to English.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Both &#34;en_US&#34; and &#34;en_CA&#34; work here.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># We could also optionally set LC_ALL but it is not necessary.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verify current locale settings with `locale`.</span>
+</span></span><span style="display:flex;"><span>export LANG<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en_US&#34;</span>
+</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>You could argue that it&rsquo;s actually desirable to have terminal applications
+output German. However, nothing beats the standardization, consistency and
+familiarity of English for developer tooling. If I really need to have this
+extreme exposure one day, it&rsquo;s always possible to just <code>unset LANG</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>Force captive portal to open</title><link>https://www.perrotta.dev/2024/02/force-captive-portal-to-open/</link><pubDate>Thu, 22 Feb 2024 09:33:57 +0100</pubDate><guid>https://www.perrotta.dev/2024/02/force-captive-portal-to-open/</guid><description>&lt;p>Sometimes, when connecting to public Wi-Fi hotposts, especially in airports and
+coffee shops, the captive portal gateway required to get internet access will
+simply not show up.&lt;/p></description><content:encoded><![CDATA[<p>Sometimes, when connecting to public Wi-Fi hotposts, especially in airports and
+coffee shops, the captive portal gateway required to get internet access will
+simply not show up.</p>
+<p>The simplest way to force it to do so is to <a href="https://www.youtube.com/watch?v=DPqdyoTpyEs">turn the Wi-Fi off and on
+again</a>.</p>
+<p>Should it not work, the second way is to open your favorite browser and navigate
+to <a href="https://captive.apple.com">captive.apple.com</a> (macOS, iOS).</p>]]></content:encoded></item><item><title>Organic Maps: off-line maps</title><link>https://www.perrotta.dev/2024/02/organic-maps-off-line-maps/</link><pubDate>Wed, 21 Feb 2024 00:36:57 +0100</pubDate><guid>https://www.perrotta.dev/2024/02/organic-maps-off-line-maps/</guid><description>&lt;p>&lt;a href="https://organicmaps.app/">https://organicmaps.app/&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>Organic Maps is a free Android &amp;amp; iOS offline maps app for travelers,
+tourists, hikers, drivers and cyclists based on OpenStreetMap data created
+by the community. It is a privacy-focused, open-source fork of [&amp;hellip;]&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p>Organic Maps is one of the few applications nowadays that supports 100% of
+features without an active Internet connection. Install Organic Maps,
+download maps, throw away your SIM card, and go for a weeklong trip on a
+single battery charge without any byte sent to the network.&lt;/p>
+&lt;/blockquote>
+&lt;p>Positive impressions:&lt;/p>
+&lt;ul>
+&lt;li>works great on iOS (didn&amp;rsquo;t test on Android yet)&lt;/li>
+&lt;li>a great companion for &lt;strong>cycling&lt;/strong> within the city&lt;/li>
+&lt;li>more fun and more lightweight than Google Maps&lt;/li>
+&lt;li>low impact on device battery life&lt;/li>
+&lt;li>extremely privacy friendly (no ads, no tracking, no push notifications, etc)&lt;/li>
+&lt;li>extremely mobile data friendly (works fully offline)&lt;/li>
+&lt;li>open-source, and without any IAP&lt;/li>
+&lt;li>works out-of-the-box, no sign up necessary&lt;/li>
+&lt;/ul>
+&lt;p>Negative impressions:&lt;/p>
+&lt;ul>
+&lt;li>do not use it for public transit, it is terrible as it does not have
+real-time data integration&lt;/li>
+&lt;/ul></description><content:encoded><![CDATA[<p><a href="https://organicmaps.app/">https://organicmaps.app/</a>:</p>
+<blockquote>
+<p>Organic Maps is a free Android &amp; iOS offline maps app for travelers,
+tourists, hikers, drivers and cyclists based on OpenStreetMap data created
+by the community. It is a privacy-focused, open-source fork of [&hellip;]</p>
+</blockquote>
+<blockquote>
+<p>Organic Maps is one of the few applications nowadays that supports 100% of
+features without an active Internet connection. Install Organic Maps,
+download maps, throw away your SIM card, and go for a weeklong trip on a
+single battery charge without any byte sent to the network.</p>
+</blockquote>
+<p>Positive impressions:</p>
+<ul>
+<li>works great on iOS (didn&rsquo;t test on Android yet)</li>
+<li>a great companion for <strong>cycling</strong> within the city</li>
+<li>more fun and more lightweight than Google Maps</li>
+<li>low impact on device battery life</li>
+<li>extremely privacy friendly (no ads, no tracking, no push notifications, etc)</li>
+<li>extremely mobile data friendly (works fully offline)</li>
+<li>open-source, and without any IAP</li>
+<li>works out-of-the-box, no sign up necessary</li>
+</ul>
+<p>Negative impressions:</p>
+<ul>
+<li>do not use it for public transit, it is terrible as it does not have
+real-time data integration</li>
+</ul>]]></content:encoded></item><item><title>New domain</title><link>https://www.perrotta.dev/2024/02/new-domain/</link><pubDate>Sun, 04 Feb 2024 23:27:09 -0300</pubDate><guid>https://www.perrotta.dev/2024/02/new-domain/</guid><description>&lt;p>I got a new domain! This blog is now available on &lt;a href="https://www.perrotta.dev/">https://www.perrotta.dev/&lt;/a>.
+There&amp;rsquo;s also a redirect to it from &lt;a href="https://blog.perrotta.dev/">https://blog.perrotta.dev/&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>I got a new domain! This blog is now available on <a href="https://www.perrotta.dev/">https://www.perrotta.dev/</a>.
+There&rsquo;s also a redirect to it from <a href="https://blog.perrotta.dev/">https://blog.perrotta.dev/</a>.</p>
+<p>I don&rsquo;t know which one I like best, so <code>www</code> is the canonical subdomain for now.
+Feel free to update the RSS in your feed reader, although
+<a href="https://thiagowfx.github.io/">https://thiagowfx.github.io/</a> should keep working for a little longer, until (if
+ever) I decide to migrate the static hosting off Github Pages.</p>
+<p>This is a project I wanted to do since ages ago, and my goals go beyond merely
+making my blog available under it. Stay tuned for more updates.</p>]]></content:encoded></item><item><title>WHOIS</title><link>https://www.perrotta.dev/2024/02/whois/</link><pubDate>Sun, 04 Feb 2024 00:20:15 -0300</pubDate><guid>https://www.perrotta.dev/2024/02/whois/</guid><description>&lt;p>I got myself a brand new domain! As I play with it, expect documentation to
+be added.&lt;/p>
+&lt;p>&lt;strong>How to query the WHOIS for the domain?&lt;/strong>&lt;/p></description><content:encoded><![CDATA[<p>I got myself a brand new domain! As I play with it, expect documentation to
+be added.</p>
+<p><strong>How to query the WHOIS for the domain?</strong></p>
+<ol>
+<li>From the command line: <code>$ whois &lt;domain&gt;</code></li>
+<li>From the registrar WHOIS, e.g. <a href="https://porkbun.com/whois">https://porkbun.com/whois</a>, <a href="https://www.gandi.net/en/domain/p/whois">https://www.gandi.net/en/domain/p/whois</a></li>
+<li>From the registry WHOIS, e.g. <a href="https://lookup.icann.org/">https://lookup.icann.org/</a>, <a href="https://www.registry.google/whois-lookup/">https://www.registry.google/whois-lookup/</a></li>
+</ol>
+<p>It&rsquo;s a good idea to set up WHOIS privacy, so that your domain registration
+details stay private. Some registrars such as Porkbun and NearlyFreeSpeech will
+gladly offer an option for that, either for free or at a low cost, respectively.</p>]]></content:encoded></item></channel></rss>
