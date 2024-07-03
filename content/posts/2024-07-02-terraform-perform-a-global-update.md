@@ -1,5 +1,5 @@
 ---
-title: Terraform perform a global update
+title: "Terraform: perform a global update"
 date: 2024-07-02T12:33:37+02:00
 tags:
   - dev
