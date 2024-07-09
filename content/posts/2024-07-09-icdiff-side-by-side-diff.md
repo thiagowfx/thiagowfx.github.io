@@ -5,8 +5,8 @@ tags:
   - dev
 ---
 
-`icdiff` is a simple diffing tool written in python that comes with two sensible
-out-of-the-box defaults:
+[`icdiff`](https://www.jefftk.com/icdiff) is a simple diffing tool written in
+python that comes with two sensible out-of-the-box defaults:
 
 - colored diff output
 - side-by-side diff
