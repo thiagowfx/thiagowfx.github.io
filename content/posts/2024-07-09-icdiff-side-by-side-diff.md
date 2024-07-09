@@ -1,5 +1,5 @@
 ---
-title: "Icdiff: side-by-side diff"
+title: "icdiff: side-by-side diff"
 date: 2024-07-09T10:47:51+02:00
 tags:
   - dev
