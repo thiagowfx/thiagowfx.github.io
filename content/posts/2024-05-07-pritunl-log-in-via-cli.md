@@ -41,7 +41,7 @@ password="$(op read "op://private/$op_id/password")"
 otp="$(op item get "$op_id" --totp)"
 ```
 
-Now we can use the `pritunl-client` to log in programatically:
+Now we can use the `pritunl-client` to log in programmatically:
 
 ```shell
 pritunl-client start "$profile_id" --password "$password$otp"

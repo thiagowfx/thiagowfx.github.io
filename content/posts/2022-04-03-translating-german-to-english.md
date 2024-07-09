@@ -15,7 +15,7 @@ For now, in this post I will briefly list the resources I use to translate Germa
 
 Everyone knows Google Translate, right? Direct link for `DE->EN` translations: https://translate.google.com/?sl=de&tl=en/
 
-Google Translate is my to go swiss-army knife one-size-fits-all application whenever I need to translate something without thinking too much. It is decent for **words** and for **phrases, sentences and expressions**, giving you: (i) translation, (ii) synonyms / alternate translations, (iii) dictionary definition and (iv) pronounciation.
+Google Translate is my to go swiss-army knife one-size-fits-all application whenever I need to translate something without thinking too much. It is decent for **words** and for **phrases, sentences and expressions**, giving you: (i) translation, (ii) synonyms / alternate translations, (iii) dictionary definition and (iv) pronunciation.
 
 A quicker shortcut to use on the go is [Google](https://www.google.com/) itself: A query like [`translate strasse from german`](https://www.google.com/search?q=translate+strasse+from+german) works as you would expect, and it even displays an `Open in Google Translate` button for further tweaking.
 

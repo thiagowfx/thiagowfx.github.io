@@ -160,7 +160,7 @@ As you can see, terraform makes it very trivial to deprovision systems.
 style](https://www.youtube.com/watch?v=-CmadmM5cOk).
 
 **Tip**: At any point you can run `terraform validate` to verify your `main.tf`
-file is syntatically correct.
+file is syntactically correct.
 
 Two things could be improved in the previous setup:
 

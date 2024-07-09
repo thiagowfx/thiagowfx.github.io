@@ -144,7 +144,7 @@ By default there is no native `Insert` key. Use `Fn + Del` to trigger `Insert`. 
 
 ## Battery
 
-Check the battery level programatically:
+Check the battery level programmatically:
 
 ```shell
 % pacman -S upower

@@ -62,4 +62,4 @@ $ git rebase -i abcdef~1
 [commit-message]: https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 [tig]: https://jonas.github.io/tig/
 
-[^1]: For example: your [dotfiles](https://gitub.com/thiagowfx/.dotfiles), or your personal blog.
+[^1]: For example: your [dotfiles](https://github.com/thiagowfx/.dotfiles), or your personal blog.

@@ -9,7 +9,7 @@ I was looking for a way to **track packages and parcels** (mail) for the most po
 
 <!--more-->
 
-There were only two requeriments:
+There were only two requirements:
 
 1. _one place to rule them all_: whether an app, chatbot, self-hosted software, or website, all services should be available from a single UI endpoint, for **ease of management**
 2. automatic / periodic updates: whether by polling, subscription or webhook, the service should autonomously retrieve parcel statuses; accessing each individual provider website should be a no-go

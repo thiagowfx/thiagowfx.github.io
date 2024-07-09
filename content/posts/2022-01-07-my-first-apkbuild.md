@@ -152,7 +152,7 @@ Let's highlight a few similarities and differences in them, excluding the fact t
 - `check()`, `build()` and `package()` are pretty much similar in both formats. `$srcdir` and `$pkgdir` are provided in both.
 - The [ArchWiki][archwiki] is way more documented in terms of packaging guidelines and examples than Alpine's. If you use DuckDuckGo, you can query for `!aw <foo>` as a bang shortcut to search directly in the ArchWiki.
 
-Last but not least, in Arch one can install package tarballs[^tarball] with `makepkg -i` or `pacman -U`. In Alpine that approach doesn't seem to be directly supported. The workflow is to add a local repository diretory in `/etc/apk/repositories` (notice the last two lines):
+Last but not least, in Arch one can install package tarballs[^tarball] with `makepkg -i` or `pacman -U`. In Alpine that approach doesn't seem to be directly supported. The workflow is to add a local repository directory in `/etc/apk/repositories` (notice the last two lines):
 
 ```shell
 $ cat /etc/apk/repositories

@@ -81,7 +81,7 @@ The `if` basically checks:
 
 - whether we're not already inside a tmux session (we shouldn't be), so that we don't nest `tmux`
 - whether we're accessing the shell via `ssh` (we should be)
-- whether we're accessing an interactive shell (we should be), so that it doesn't interefere with oneshot `ssh` commands
+- whether we're accessing an interactive shell (we should be), so that it doesn't interfere with oneshot `ssh` commands
 
 There's also a escape hatch. If you want to get an interactive shell but bypass `tmux` for some reason[^1], just set `NOTMUX=1`:
 
