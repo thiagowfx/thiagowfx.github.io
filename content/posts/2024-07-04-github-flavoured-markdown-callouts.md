@@ -1,5 +1,5 @@
 ---
-title: Github-flavoured Markdown: Callouts
+title: "Github-flavoured Markdown: Callouts"
 date: 2024-07-04T10:17:08+02:00
 tags:
   - dev
