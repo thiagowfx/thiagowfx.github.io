@@ -1,4 +1,26 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.128.2</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 • RSS</copyright><lastBuildDate>Tue, 09 Jul 2024 10:47:51 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Icdiff: side-by-side diff</title><link>https://www.perrotta.dev/2024/07/icdiff-side-by-side-diff/</link><pubDate>Tue, 09 Jul 2024 10:47:51 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/icdiff-side-by-side-diff/</guid><description>&lt;p>&lt;a href="https://www.jefftk.com/icdiff">&lt;code>icdiff&lt;/code>&lt;/a> is a simple diffing tool written in
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.128.2</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 • RSS</copyright><lastBuildDate>Tue, 09 Jul 2024 11:36:34 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>kubectl: get secret with jsonpath and add a newline</title><link>https://www.perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/</link><pubDate>Tue, 09 Jul 2024 11:36:34 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/</guid><description>&lt;p>When retrieving opaque secrets with &lt;code>kubectl&lt;/code>, one will often invoke this
+typical command:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ubuntu@ubuntu:~ $ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;{.data.value}&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>eW91IGFyZSBjdXJpb3VzIGFyZW50IHlvdQ&lt;span style="color:#f92672">==&lt;/span>ubuntu@ubuntu:~ $
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>But isn&amp;rsquo;t this ugly? The prompt is concatenated with the output.&lt;/p></description><content:encoded><![CDATA[<p>When retrieving opaque secrets with <code>kubectl</code>, one will often invoke this
+typical command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ubuntu@ubuntu:~ $ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.data.value}&#39;</span>
+</span></span><span style="display:flex;"><span>eW91IGFyZSBjdXJpb3VzIGFyZW50IHlvdQ<span style="color:#f92672">==</span>ubuntu@ubuntu:~ $
+</span></span></code></pre></div><p>But isn&rsquo;t this ugly? The prompt is concatenated with the output.</p>
+<p>It turns out <code>jsonpath</code> can emit a newline for improved readability:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ubuntu@ubuntu:~ $ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.data.value}{&#34;\n&#34;}&#39;</span>
+</span></span><span style="display:flex;"><span>eW91IGFyZSBjdXJpb3VzIGFyZW50IHlvdQ<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span>ubuntu@ubuntu:~ $
+</span></span></code></pre></div><p>Note that the <code>{&quot;\n&quot;}</code> <strong>must</strong> be quoted.</p>
+<p>And then you could pipe it to <code>base64 -d</code> afterwards, as usual, and it&rsquo;s a no-op:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.data.value}{&#34;\n&#34;}&#39;</span> | base64 -d
+</span></span><span style="display:flex;"><span>you are curious arent youubuntu@ubuntu:~ $
+</span></span></code></pre></div><p>However, the <code>base64</code> output also swallows the newline. This can be resolved
+with a simple <code>echo</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.data.value}{&#34;\n&#34;}&#39;</span> | base64 -d <span style="color:#f92672">&amp;&amp;</span> echo
+</span></span><span style="display:flex;"><span>you are curious arent you
+</span></span><span style="display:flex;"><span>ubuntu@ubuntu:~ $
+</span></span></code></pre></div><p>Newlines are hard, eh?</p>]]></content:encoded></item><item><title>icdiff: side-by-side diff</title><link>https://www.perrotta.dev/2024/07/icdiff-side-by-side-diff/</link><pubDate>Tue, 09 Jul 2024 10:47:51 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/icdiff-side-by-side-diff/</guid><description>&lt;p>&lt;a href="https://www.jefftk.com/icdiff">&lt;code>icdiff&lt;/code>&lt;/a> is a simple diffing tool written in
 python that comes with two sensible out-of-the-box defaults:&lt;/p>
 &lt;ul>
 &lt;li>colored diff output&lt;/li>
@@ -801,195 +823,6 @@ readability and system stability in this case.</li>
 <a href="https://github.com/thiagowfx/.dotfiles">dotfiles</a> repository though. I
 included a snapshot merely because there&rsquo;s a non-zero chance the git
 version could be moved elsewhere someday.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item><item><title>★ (Google) Chrome for Testing: reliable downloads for browser automation</title><link>https://www.perrotta.dev/2024/01/google-chrome-for-testing-reliable-downloads-for-browser-automation/</link><pubDate>Thu, 25 Jan 2024 18:27:04 -0300</pubDate><guid>https://www.perrotta.dev/2024/01/google-chrome-for-testing-reliable-downloads-for-browser-automation/</guid><description>&lt;p>Let&amp;rsquo;s discuss the &lt;em>raison d&amp;rsquo;etre&lt;/em> of &lt;a href="https://developer.chrome.com/blog/chrome-for-testing">Google Chrome for
-Testing&lt;/a>, a project I was
-the Tech Lead of during my tenure on the Chrome Tooling / Browser Automation team
-at Google.&lt;/p></description><content:encoded><![CDATA[<p>Let&rsquo;s discuss the <em>raison d&rsquo;etre</em> of <a href="https://developer.chrome.com/blog/chrome-for-testing">Google Chrome for
-Testing</a>, a project I was
-the Tech Lead of during my tenure on the Chrome Tooling / Browser Automation team
-at Google.</p>
-<p><a href="https://www.youtube.com/watch?v=9y4A15WCGdc">Once upon a time, a few (debugging) mistakes
-ago</a>, web developers would run
-(web) integration tests with <a href="https://www.w3.org/TR/webdriver2/">WebDriver
-Classic</a> using Google Chrome (or Chromium)<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.
-This was a <a href="https://three-body-problem.fandom.com/wiki/Chaotic_Era">chaotic
-era</a>.</p>
-<p><em>&ldquo;Why?&rdquo;</em>, you may rightfully ask.</p>
-<ul>
-<li>The web browser and/or its components / extensions / etc could
-<strong>auto-update</strong> in-between successive test runs, yielding different test
-results, i.e. tests were not guaranteed to be hermetic / deterministic due to
-their (potentially) changing environment, yielding test flakiness</li>
-<li>Chrome adds an <strong>info bar</strong> whenever it is controlled in an automated
-fashion, which changes the CSS viewport, resulting in changes compared to a
-production environment. For example: an automated test that takes a
-screenshot would have a slightly smaller height whenever an infobar is
-present.</li>
-<li>There are no versioned Chrome builds for download. There&rsquo;s no <strong>browser
-pinning</strong>. As a developer you always download the latest version. This makes
-it hard to reason about invariants, especially when new browser versions
-introduce breaking changes, even seemingly small ones.
-<ul>
-<li><strong>Corollary</strong>: The lack of versioned Chrome builds makes it hard to obtain
-a corresponding (matching)
-<a href="https://chromedriver.chromium.org/downloads">Chromedriver</a> version for
-Chrome. The mismatch (delta) could provoke testing inconsistencies whenever
-browser APIs diverge<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</li>
-</ul>
-</li>
-</ul>
-<p>In order to address these (and other) issues, <a href="https://goo.gle/chrome-for-testing">Chrome for
-Testing</a> (hereafter &ldquo;CfT&rdquo;) was born. To
-clarify, today where are three flavours of Chrom*:</p>
-<ul>
-<li><strong>Chromium</strong>: the open-source project, <a href="https://chromium.org/">https://chromium.org/</a>. The root of all
-derivatives (Microsoft Edge, Brave, etc). It is available in full source
-form, but there are no (official) pre-built binaries for it.</li>
-<li><strong>Google Chrome</strong>: the proprietary, closed-source version of Chromium developed
-by Google. Think of it as Chromium on steroids. Google distributes pre-built
-Chrome binaries for every platform it supports.</li>
-<li><strong>Google Chrome for Testing</strong>: think of it as &ldquo;reproducible (or pinned, or
-frozen) Google Chrome&rdquo;. It is basically a snapshot of Google Chrome in a
-fixed time in the past, plus a few bits of developer-oriented features
-mentioned in this article.</li>
-</ul>
-<p>There are other <em>niceties</em> that Chrome for Testing accomplishes as of today:</p>
-<ul>
-<li>The <a href="https://chromedevtools.github.io/devtools-protocol/">CDP (Chrome DevTools
-Protocol)</a> experiment
-(&ldquo;Protocol Monitor&rdquo;) is enabled by default, out-of-the-box. This kind of
-experiment, which enriches your debugging toolbox, is exactly the sensible
-state you want during the development cycle.</li>
-<li>Mechanisms such as <a href="https://developer.chrome.com/blog/self-xss">self-XSS confirmation
-prompts</a> are disabled by default,
-which is the desired behavior for automation. Consider an analogy with
-setting
-<a href="https://askubuntu.com/questions/972516/debian-frontend-environment-variable"><code>DEBIAN_FRONTEND=noninteractive</code></a>
-when running <code>apt</code> in dockerfiles. You don&rsquo;t want prompts (even benign ones)
-to suddenly get in the way of your tests and end up interrupting their
-execution flow.</li>
-<li>Completely agnostic to the concept of &ldquo;Stable&rdquo; / &ldquo;Beta&rdquo; / &ldquo;Dev&rdquo;. If you have
-pinned versions, you don&rsquo;t need to care about any of that.</li>
-<li>CfT releases are made available alongside a subset of corresponding Google
-Chrome releases</li>
-</ul>
-<p>Something important to note:</p>
-<blockquote>
-<p><strong>Warning</strong>: Chrome for Testing has been created purely for browser
-automation and testing purposes, and is not suitable for daily browsing.</p>
-</blockquote>
-<p>The main reason for that is the fact that it does not auto-update. You could
-argue that it doesn&rsquo;t matter: Chrome for most linux distributions also does not
-auto-update by itself. The updates are normally deferred to the distribution&rsquo;s
-package manager (e.g. <code>apt</code>, <code>dnf</code>, <code>pacman</code>, etc). Why should it be different
-for Chrome for Testing?</p>
-<p>An additional point to consider here is that Chrome for Testing could have new
-features in the future that would be optimized for developers, not for end
-users. You don&rsquo;t want end users to shoot themselves on the foot, therefore it&rsquo;s
-easier, better and safer to do a blanket anti-recommendation of CfT for
-non-developers<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
-<p>Because of that, CfT cannot be made the default system browser.</p>
-<p>The easiest way to obtain CfT is via its public API, which is documented here:
-<a href="https://googlechromelabs.github.io/chrome-for-testing/">https://googlechromelabs.github.io/chrome-for-testing/</a>, or through the official
-<a href="https://pptr.dev/browsers-api">CLI utility</a> that is part of Puppeteer.</p>
-<p>Today, for all the reasons above (and more to come!), CfT is the de-facto
-recommended solution for browser automation for all things web applications and
-web platform testing. If you&rsquo;re currently using either Chromium or Google
-Chrome for these purposes, you should switch to it.</p>
-<h2 id="bonus-how-to-run-chrome-for-testing-in-ci">Bonus: How to run Chrome for Testing in CI?</h2>
-<p>The <a href="https://github.com/GoogleChromeLabs/chromium-bidi">chromium-bidi</a> repository is an excellent (and simple-ish) example on how to do so<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>.</p>
-<p>Given a <code>.github/workflows/e2e.yml</code> file:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">E2E tests</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">e2e</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v3</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/setup-node@v3</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">node-version</span>: <span style="color:#ae81ff">16</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">run</span>: <span style="color:#ae81ff">npm ci</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># This is the exciting part wherein we fetch CfT.</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># Despite the &#34;chromium&#34; name, this is actually CfT.</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># We set a explicit shell to force &#34;set -eo pipefail&#34; so that,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># if the command fails, then the entire step fails.</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># We do not want &#34;cut&#34; to run if the download fails for some reason.</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># The syntactic sugar of the parsing could be improved in a future</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># version of the CLI tool, but that&#39;s how it should be done for now.</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">#</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># We store the location of the CfT binary in an environment variable.</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Install Google Chrome for Testing</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">shell</span>: <span style="color:#ae81ff">bash</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          cft_binary=&#34;$(npx @puppeteer/browsers install chromium@latest | cut -f 2- -d&#39; &#39;)&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          echo &#34;cft_binary=$cft_binary&#34; &gt;&gt; $GITHUB_ENV</span>          
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/setup-python@v4</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">python-version</span>: <span style="color:#e6db74">&#39;3.10&#39;</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">run</span>: <span style="color:#ae81ff">pip install -r tests/requirements.txt</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># This is an example on how to run a test suite by explicitly pointing</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># out to CfT, using the environment variable set earlier.</span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Run E2E tests</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: <span style="color:#ae81ff">npm run e2e</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">env</span>:
-</span></span><span style="display:flex;"><span>          <span style="color:#f92672">BROWSER_BIN</span>: <span style="color:#ae81ff">${{ env.cft_binary }}</span>
-</span></span></code></pre></div><p>You can find the complete version of this example in an <a href="https://github.com/GoogleChromeLabs/chromium-bidi/blob/7d0962eb85c014dbb2cace7d471dd29474f11eab/.github/workflows/e2e.yml">older
-commit</a>
-within that repository. The reason I link to an older commit is due to its
-direct usage of the <a href="https://pptr.dev/browsers-api">@puppeteer/browsers</a> CLI
-tool, which makes it easier to illustrate how to fetch CfT. Recent commits of
-the repository use a JS wrapper to do so, which is more flexible / robust for
-the purposes of that particular repository at the expense of decreased
-readability for a newcomer. Software Engineering is all about trade-offs after
-all.</p>
-<p>To fully realize the benefits of reproducibility, you should not use <code>latest</code>.
-Instead, pin the browser to a specific version.</p>
-<p>If using an environment variable (or a command-line flag) is not an option for
-some reason, then an alternative would be to create a symlink (<code>ln -s</code>) to
-<code>$cft_binary</code> from a place in the front of your <code>$PATH</code>. Or, alternatively,
-temporarily update your <code>$PATH</code> with the <code>dirname</code> of <code>$cft_binary</code>.</p>
-<p>Also, if you cannot or do not want to install <code>npm</code> (<code>npx</code>) just for the sake
-of fetching CfT<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>, then just fetch it directly (use <code>curl</code> or <code>wget</code>) from
-its <a href="https://github.com/GoogleChromeLabs/chrome-for-testing#json-api-endpoints">API
-endpoint</a>, for example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/121.0.6167.85/linux64/chrome-linux64.zip
-</span></span></code></pre></div><p>Although note that this is not a future-proof way of fetching CfT. It&rsquo;s a
-simple shortcut. The better way is to query the JSON metadata file for a
-specific platform and browser version:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% curl https://googlechromelabs.github.io/chrome-for-testing/latest-patch-versions-per-build-with-downloads.json | jq -r <span style="color:#e6db74">&#39;.builds.&#34;121.0.6167&#34;.downloads.chrome[] | select(.platform == &#34;linux64&#34;).url&#39;</span>
-</span></span></code></pre></div><p>&hellip;so that the download works even if the URL changes in the future <a href="https://github.com/GoogleChromeLabs/chrome-for-testing/pull/102">for some
-reason</a>.</p>
-<h2 id="references">References</h2>
-<ul>
-<li>Chrome for Testing Design Document: <a href="https://goo.gle/chrome-for-testing">https://goo.gle/chrome-for-testing</a></li>
-<li><a href="https://developer.chrome.com/blog/self-xss#can_you_disable_it_for_test_automation">How Chrome DevTools helps to defend against self-XSS attacks</a></li>
-</ul>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>For simplicity, referred to as just <em>Chrome</em> hereafter.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>You can find lots of such reports <a href="https://groups.google.com/g/chromedriver-users">here</a>.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3">
-<p>The same way you wouldn&rsquo;t recommend Arch Linux for linux newbies.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:4">
-<p><strong>Disclaimer</strong>: I used to work on that repository, thus my self-assessment is clearly biased :-)&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:5">
-<p>I know, I know, JS bloat.&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>

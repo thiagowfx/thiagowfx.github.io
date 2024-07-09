@@ -1,4 +1,26 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on not just serendipity</title><link>https://www.perrotta.dev/posts/</link><description>Recent content in Posts on not just serendipity</description><generator>Hugo -- 0.128.2</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 • RSS</copyright><lastBuildDate>Tue, 09 Jul 2024 10:47:51 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Icdiff: side-by-side diff</title><link>https://www.perrotta.dev/2024/07/icdiff-side-by-side-diff/</link><pubDate>Tue, 09 Jul 2024 10:47:51 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/icdiff-side-by-side-diff/</guid><description>&lt;p>&lt;a href="https://www.jefftk.com/icdiff">&lt;code>icdiff&lt;/code>&lt;/a> is a simple diffing tool written in
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on not just serendipity</title><link>https://www.perrotta.dev/posts/</link><description>Recent content in Posts on not just serendipity</description><generator>Hugo -- 0.128.2</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 • RSS</copyright><lastBuildDate>Tue, 09 Jul 2024 11:36:34 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>kubectl: get secret with jsonpath and add a newline</title><link>https://www.perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/</link><pubDate>Tue, 09 Jul 2024 11:36:34 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/</guid><description>&lt;p>When retrieving opaque secrets with &lt;code>kubectl&lt;/code>, one will often invoke this
+typical command:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ubuntu@ubuntu:~ $ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;{.data.value}&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>eW91IGFyZSBjdXJpb3VzIGFyZW50IHlvdQ&lt;span style="color:#f92672">==&lt;/span>ubuntu@ubuntu:~ $
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>But isn&amp;rsquo;t this ugly? The prompt is concatenated with the output.&lt;/p></description><content:encoded><![CDATA[<p>When retrieving opaque secrets with <code>kubectl</code>, one will often invoke this
+typical command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ubuntu@ubuntu:~ $ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.data.value}&#39;</span>
+</span></span><span style="display:flex;"><span>eW91IGFyZSBjdXJpb3VzIGFyZW50IHlvdQ<span style="color:#f92672">==</span>ubuntu@ubuntu:~ $
+</span></span></code></pre></div><p>But isn&rsquo;t this ugly? The prompt is concatenated with the output.</p>
+<p>It turns out <code>jsonpath</code> can emit a newline for improved readability:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ubuntu@ubuntu:~ $ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.data.value}{&#34;\n&#34;}&#39;</span>
+</span></span><span style="display:flex;"><span>eW91IGFyZSBjdXJpb3VzIGFyZW50IHlvdQ<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span>ubuntu@ubuntu:~ $
+</span></span></code></pre></div><p>Note that the <code>{&quot;\n&quot;}</code> <strong>must</strong> be quoted.</p>
+<p>And then you could pipe it to <code>base64 -d</code> afterwards, as usual, and it&rsquo;s a no-op:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.data.value}{&#34;\n&#34;}&#39;</span> | base64 -d
+</span></span><span style="display:flex;"><span>you are curious arent youubuntu@ubuntu:~ $
+</span></span></code></pre></div><p>However, the <code>base64</code> output also swallows the newline. This can be resolved
+with a simple <code>echo</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.data.value}{&#34;\n&#34;}&#39;</span> | base64 -d <span style="color:#f92672">&amp;&amp;</span> echo
+</span></span><span style="display:flex;"><span>you are curious arent you
+</span></span><span style="display:flex;"><span>ubuntu@ubuntu:~ $
+</span></span></code></pre></div><p>Newlines are hard, eh?</p>]]></content:encoded></item><item><title>icdiff: side-by-side diff</title><link>https://www.perrotta.dev/2024/07/icdiff-side-by-side-diff/</link><pubDate>Tue, 09 Jul 2024 10:47:51 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/icdiff-side-by-side-diff/</guid><description>&lt;p>&lt;a href="https://www.jefftk.com/icdiff">&lt;code>icdiff&lt;/code>&lt;/a> is a simple diffing tool written in
 python that comes with two sensible out-of-the-box defaults:&lt;/p>
 &lt;ul>
 &lt;li>colored diff output&lt;/li>
@@ -584,32 +606,4 @@ Google:</p>
 <p>The typical use case would be to compile a new Google Chrome binary
 (<code>/out/Default/chrome</code>), and then use the script to launch it with a fresh user
 data directory, to ensure the previous launch settings do not interfere with the
-current one.</p>]]></content:encoded></item><item><title>Set terminal language to English</title><link>https://www.perrotta.dev/2024/02/set-terminal-language-to-english/</link><pubDate>Thu, 22 Feb 2024 09:48:34 +0100</pubDate><guid>https://www.perrotta.dev/2024/02/set-terminal-language-to-english/</guid><description>&lt;p>I changed my macOS system language to German, with the intent of &lt;a href="https://www.perrotta.dev/2022/04/translating-german-to-english/">getting more
-exposure to it&lt;/a>.&lt;/p>
-&lt;p>One negative side effect is that most binaries I execute with my shell (for
-example: &lt;code>git&lt;/code>) are now outputting German text as well&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>. In hindsight, this
-should have been expected.&lt;/p></description><content:encoded><![CDATA[<p>I changed my macOS system language to German, with the intent of <a href="https://www.perrotta.dev/2022/04/translating-german-to-english/">getting more
-exposure to it</a>.</p>
-<p>One negative side effect is that most binaries I execute with my shell (for
-example: <code>git</code>) are now outputting German text as well<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. In hindsight, this
-should have been expected.</p>
-<p>A simple fix is to override the environment locale with English. I made the
-following
-<a href="https://github.com/thiagowfx/.dotfiles/commit/4b784b1fa89f569623340cf3d58cc22d8504926a">addition</a>
-to my <a href="https://github.com/thiagowfx/.dotfiles">dotfiles</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Force the system-wide language to English.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Both &#34;en_US&#34; and &#34;en_CA&#34; work here.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># We could also optionally set LC_ALL but it is not necessary.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verify current locale settings with `locale`.</span>
-</span></span><span style="display:flex;"><span>export LANG<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en_US&#34;</span>
-</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>You could argue that it&rsquo;s actually desirable to have terminal applications
-output German. However, nothing beats the standardization, consistency and
-familiarity of English for developer tooling. If I really need to have this
-extreme exposure one day, it&rsquo;s always possible to just <code>unset LANG</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+current one.</p>]]></content:encoded></item></channel></rss>
