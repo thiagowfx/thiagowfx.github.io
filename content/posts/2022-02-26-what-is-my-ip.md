@@ -60,3 +60,13 @@ URL: https://ping.eu/
 
 I'll also give an honourable mention to ping.eu as it contains a small handful
 of utilities to check for things like Traceroute, DNS, whois, port check, etc.
+
+## [`ifconfig.io`](https://ifconfig.io/)
+
+**Update** (2024-07-11): Add `ifconfig.io`.
+
+URL: https://ifconfig.io/
+
+```shell
+$ curl ifconfig.io
+```
