@@ -12,7 +12,7 @@ It is also possible to use it for `sudo` authentication via [PAM](https://en.wik
 <!--more-->
 
 ```shell
-% $EDITOR /etc/pam.d/sudo       
+% $EDITOR /etc/pam.d/sudo
 # sudo: auth account password session
 auth       sufficient     pam_tid.so             # <== add this line
 auth       sufficient     pam_smartcard.so

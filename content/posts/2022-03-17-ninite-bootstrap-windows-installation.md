@@ -32,6 +32,6 @@ This is the URL I used to install sensible applications for my parents:
 https://ninite.com/7zip-chrome-classicstart-dropbox-firefox-gimp-googledrivefordesktop-inkscape-irfanview-klitecodecs-libreoffice-qbittorrent-steam-sumatrapdf-teamviewer15-thunderbird-vlc/
 
 
-[^1]: For example, by saying 'No' to junk like browser toolbars, add-ons and "extras". 
+[^1]: For example, by saying 'No' to junk like browser toolbars, add-ons and "extras".
 [^2]: You can add more pieces of software as needed.
 [^3]: I wanted to say 'reproducibility', but it's not quite what it means.

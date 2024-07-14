@@ -24,7 +24,7 @@ For more, see <a href="https://www.haiku-os.org/about" target="_blank" rel="noo
 
 1. Get Haiku. You can do it either from [here](https://www.haiku-os.org/get-haiku), or get nightly releases from [here](http://download.haiku-os.org/nightly-images/x86_gcc2_hybrid/). I personally recommend the nightly releases; I first installed the latest non-nightly one, but later on I discovered that is was very old (circa 2012): it didn&#8217;t even have a package manager.
 2. Which image should you download? In this post, I am assuming we&#8217;ll install Haiku directly to a (real) disk, so I&#8217;m downloading the **raw** image. Actually, the **anyboot** image can also be downloaded &#8212; and this is the one you will get if you opted for a non-nightly version; however, the anyboot image will be converted to a raw one in step 3 before we proceed. So, skip the next step if you downloaded the raw image.
-3. Got your anyboot image? Now, convert it to raw (run this from a bash compatible shell): 
+3. Got your anyboot image? Now, convert it to raw (run this from a bash compatible shell):
 
 ```shell
 $ dd if=haiku-anyboot.image of=haiku.raw bs=1M skip=$(expr $(od -j 454 -N4 -i -A n haiku-anyboot.image) / 2048)
@@ -34,7 +34,7 @@ $ dd if=/dev/zero of=haiku.raw bs=1 seek=506 count=4 conv=notrunc
 **Update (2022)**: These days `dd` supports `status=progress` to display the image writing progress.
 
 4. Now that we got a raw image, we are writing it directly to a disk partition. First things first: find 3GB or more of free space in your disk. Then create room for a partition in there (for example, with _fdisk_ or _gparted)_. Got it? Now create a partition in there. I&#8217;ll assume the partition is `/dev/sda42`. Please change 42 for the appropriate number in your case.
-5. Copy the raw image to the partition (this should be done as ROOT); **WARNING**: double check the partition and the disk number, otherwise you might lose data. 
+5. Copy the raw image to the partition (this should be done as ROOT); **WARNING**: double check the partition and the disk number, otherwise you might lose data.
 
 ```shell
 $ dd if=haiku.raw of=/dev/sda42 bs=1M conv=notrunc
@@ -47,7 +47,7 @@ $ gcc makebootabletiny.c -o makebootabletiny
 % ./makebootabletiny /dev/sda42  # this one: as ROOT
 ```
 
-7. Make your bootloader know about Haiku. If you&#8217;re using `grub2`z, you can add something such as the following lines to `/etc/grub.d/40_custom`: 
+7. Make your bootloader know about Haiku. If you&#8217;re using `grub2`z, you can add something such as the following lines to `/etc/grub.d/40_custom`:
 
 ```shell
 menuentry "Haiku OS" {

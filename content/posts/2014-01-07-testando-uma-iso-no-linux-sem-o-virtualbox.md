@@ -36,7 +36,7 @@ lsmod | grep kvm
 Se ver alguma saída, existem boas chances de o módulo correto do _KVM_ já ter sido carregado pelo seu kernel. Para fins de comparação, essa é a minha saída:
 
 ```shell
-kvm_intel 131191 3 
+kvm_intel 131191 3
 kvm 388773 1 kvm_intel
 ```
 

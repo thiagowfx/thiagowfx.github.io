@@ -79,7 +79,7 @@ Now let's use multiple threads:
 ```python
 if __name__ == "__main__":
   foo = Foo()
-  
+
   threads = []
   for i in range(10):
     thread = Thread(target=foo.write, args=(f"hello from thread {i}",))
