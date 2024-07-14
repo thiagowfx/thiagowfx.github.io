@@ -2,7 +2,6 @@
 title: "Terraform: AWS deployment to random availability zones"
 date: 2024-05-21T14:31:03+02:00
 tags:
-  - aws
   - devops
 ---
 
