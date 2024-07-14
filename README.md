@@ -1,5 +1,6 @@
 # not just serendipity
 
+[![gh-pages](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/gh-pages.yaml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/gh-pages.yaml)
 [![pre-commit](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yaml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yaml)
 
 This blog is managed with [`hugo`][hugo].
