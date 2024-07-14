@@ -1,4 +1,6 @@
-# @thiagowfx's blog
+# not just serendipity
+
+[![pre-commit](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yaml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yaml)
 
 This blog is managed with [`hugo`][hugo].
 
