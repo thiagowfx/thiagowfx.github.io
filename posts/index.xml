@@ -1,4 +1,47 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on not just serendipity</title><link>https://www.perrotta.dev/posts/</link><description>Recent content in Posts on not just serendipity</description><generator>Hugo -- 0.128.2</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 • RSS</copyright><lastBuildDate>Tue, 09 Jul 2024 11:36:34 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>kubectl: get secret with jsonpath and add a newline</title><link>https://www.perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/</link><pubDate>Tue, 09 Jul 2024 11:36:34 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/</guid><description>&lt;p>When retrieving opaque secrets with &lt;code>kubectl&lt;/code>, one will often invoke this
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on not just serendipity</title><link>https://www.perrotta.dev/posts/</link><description>Recent content in Posts on not just serendipity</description><generator>Hugo -- 0.128.2</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 • RSS</copyright><lastBuildDate>Mon, 15 Jul 2024 13:23:35 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>kubectl: get all logs from all pods</title><link>https://www.perrotta.dev/2024/07/kubectl-get-all-logs-from-all-pods/</link><pubDate>Mon, 15 Jul 2024 13:23:35 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/kubectl-get-all-logs-from-all-pods/</guid><description>&lt;p>Frequently:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl logs -n argocd argocd-repo-server-5d59975687-dxnh7
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>But how do you know what hash to use after &lt;code>server-&lt;/code>?&lt;/p></description><content:encoded><![CDATA[<p>Frequently:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl logs -n argocd argocd-repo-server-5d59975687-dxnh7
+</span></span></code></pre></div><p>But how do you know what hash to use after <code>server-</code>?</p>
+<p><strong>Option 1)</strong>: TAB auto-completion:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl logs -n argocd argocd-repo-server-&lt;TAB&gt;
+</span></span></code></pre></div><p><strong>Caveats</strong>:</p>
+<ul>
+<li>tab completion for <code>kubectl</code> isn&rsquo;t always properly set up</li>
+<li>if there is more than one pod, you would have to type in the first few letters
+of the hash before hitting TAB again, that&rsquo;s annoying and non-ergonomic</li>
+</ul>
+<p><strong>Option 2)</strong>: subshell</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl logs -n argocd <span style="color:#66d9ef">$(</span>kubectl get pod -n argocd | grep argocd-repo-server | cut -f1 -d<span style="color:#e6db74">&#39; &#39;</span> | head -1<span style="color:#66d9ef">)</span>
+</span></span></code></pre></div><p><strong>Caveats</strong>:</p>
+<ul>
+<li>a lot of typing</li>
+<li><code>head -1</code> is necessary in case there are multiple pods<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></li>
+</ul>
+<p><strong>Option 3)</strong>: get all logs from all pods that match a given label</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl logs -n argocd -l app<span style="color:#f92672">=</span>app.kubernetes.io/instance<span style="color:#f92672">=</span>argocd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>--all-containers<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>--ignore-errors<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>This is much more ergonomic.</p>
+<p>You still need to figure out what label to use though:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl describe pod -n argocd argocd-repo-server-5d59975687-dxnh7 | grep -A7 -i labels:
+</span></span><span style="display:flex;"><span>Labels:           app.kubernetes.io/component<span style="color:#f92672">=</span>repo-server
+</span></span><span style="display:flex;"><span>                  app.kubernetes.io/instance<span style="color:#f92672">=</span>argocd
+</span></span><span style="display:flex;"><span>                  app.kubernetes.io/managed-by<span style="color:#f92672">=</span>Helm
+</span></span><span style="display:flex;"><span>                  app.kubernetes.io/name<span style="color:#f92672">=</span>argocd-repo-server
+</span></span><span style="display:flex;"><span>                  app.kubernetes.io/part-of<span style="color:#f92672">=</span>argocd
+</span></span><span style="display:flex;"><span>                  app.kubernetes.io/version<span style="color:#f92672">=</span>v2.11.4
+</span></span><span style="display:flex;"><span>                  helm.sh/chart<span style="color:#f92672">=</span>argo-cd-7.3.4
+</span></span><span style="display:flex;"><span>                  pod-template-hash<span style="color:#f92672">=</span>5d59975687
+</span></span></code></pre></div><p><strong>Source</strong>: <a href="https://stackoverflow.com/questions/33069736/how-do-i-get-logs-from-all-pods-of-a-kubernetes-replication-controller">https://stackoverflow.com/questions/33069736/how-do-i-get-logs-from-all-pods-of-a-kubernetes-replication-controller</a></p>
+<p>Happy logging!</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Or <code>tail -1</code>, for that matter.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>kubectl: get secret with jsonpath and add a newline</title><link>https://www.perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/</link><pubDate>Tue, 09 Jul 2024 11:36:34 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/</guid><description>&lt;p>When retrieving opaque secrets with &lt;code>kubectl&lt;/code>, one will often invoke this
 typical command:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ubuntu@ubuntu:~ $ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;{.data.value}&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>eW91IGFyZSBjdXJpb3VzIGFyZW50IHlvdQ&lt;span style="color:#f92672">==&lt;/span>ubuntu@ubuntu:~ $
@@ -487,44 +530,4 @@ it uses does not contain <code>curl</code>.</p>
 optional and short for &ldquo;quiet&rdquo;.</p>
 <p>The <code>/health</code> endpoint merely returns a simple JSON:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{<span style="color:#f92672">&#34;healthy&#34;</span>:<span style="color:#66d9ef">true</span>}
-</span></span></code></pre></div><p>References: <a href="https://stackoverflow.com/questions/47722898/how-can-i-make-a-docker-healthcheck-with-wget-instead-of-curl">https://stackoverflow.com/questions/47722898/how-can-i-make-a-docker-healthcheck-with-wget-instead-of-curl</a></p>]]></content:encoded></item><item><title>Pritunl log in via CLI</title><link>https://www.perrotta.dev/2024/05/pritunl-log-in-via-cli/</link><pubDate>Tue, 07 May 2024 16:03:27 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/pritunl-log-in-via-cli/</guid><description>&lt;p>&lt;a href="https://pritunl.com/">Pritunl&lt;/a> is an Enterprise Distributed OpenVPN server.&lt;/p>
-&lt;p>In order to run its client on macOS, an &lt;code>.app&lt;/code> is provided. However, using it to
-log in every day is quite tedious.&lt;/p>
-&lt;p>Let&amp;rsquo;s automate it so that we can connect to the VPN with a single command.&lt;/p></description><content:encoded><![CDATA[<p><a href="https://pritunl.com/">Pritunl</a> is an Enterprise Distributed OpenVPN server.</p>
-<p>In order to run its client on macOS, an <code>.app</code> is provided. However, using it to
-log in every day is quite tedious.</p>
-<p>Let&rsquo;s automate it so that we can connect to the VPN with a single command.</p>
-<p>In order to fetch the credentials in this example in a secure manner, we&rsquo;ll be
-using 1password. <a href="https://www.passwordstore.org/"><code>pass</code></a> would have worked just
-as fine.</p>
-<p>First, configure Pritunl via its app UI, creating a profile for your corp
-credentials.</p>
-<p>Then figure out what the profile ID you just created is:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>profile_id<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>/Applications/Pritunl.app/Contents/Resources/pritunl-client list --json | jq -r <span style="color:#e6db74">&#39;.[0].id&#39;</span><span style="color:#66d9ef">)</span>
-</span></span></code></pre></div><p>Now, create an entry in 1Password for your Pritunl credentials associated with
-the profile above.</p>
-<p>Let&rsquo;s use the <code>op</code> official CLI tool from 1Password to fetch the password and
-the OTP (one-time password) for the &ldquo;Pritunl (VPN)&rdquo; entry (change it
-accordingly).</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>op_id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#39;Pritunl (VPN)&#39;</span> --format json | jq -r <span style="color:#e6db74">&#39;.id&#39;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>password<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op read <span style="color:#e6db74">&#34;op://private/</span>$op_id<span style="color:#e6db74">/password&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>otp<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#34;</span>$op_id<span style="color:#e6db74">&#34;</span> --totp<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>Now we can use the <code>pritunl-client</code> to log in programmatically:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pritunl-client start <span style="color:#e6db74">&#34;</span>$profile_id<span style="color:#e6db74">&#34;</span> --password <span style="color:#e6db74">&#34;</span>$password$otp<span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>Then verify it has indeed connected:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pritunl-client list
-</span></span></code></pre></div><p>The trick is that it accepts the concatenation of the password with the OTP as
-the password. There&rsquo;s not a separate <code>--otp</code> flag.</p>
-<p>Putting everything together, we can create a function for our favorite shell:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Log into corp VPN</span>
-</span></span><span style="display:flex;"><span>pritunl_login<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	local profile_id<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>/Applications/Pritunl.app/Contents/Resources/pritunl-client list --json | jq -r <span style="color:#e6db74">&#39;.[0].id&#39;</span><span style="color:#66d9ef">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	local op_id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#39;Pritunl (VPN)&#39;</span> --format json | jq -r <span style="color:#e6db74">&#39;.id&#39;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>	local password<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op read <span style="color:#e6db74">&#34;op://private/</span>$op_id<span style="color:#e6db74">/password&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>	local otp<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#34;</span>$op_id<span style="color:#e6db74">&#34;</span> --totp<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	pritunl-client start <span style="color:#e6db74">&#34;</span>$profile_id<span style="color:#e6db74">&#34;</span> --password <span style="color:#e6db74">&#34;</span>$password$otp<span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>	pritunl-client list
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div><p>References: <a href="https://stackoverflow.com/questions/47722898/how-can-i-make-a-docker-healthcheck-with-wget-instead-of-curl">https://stackoverflow.com/questions/47722898/how-can-i-make-a-docker-healthcheck-with-wget-instead-of-curl</a></p>]]></content:encoded></item></channel></rss>

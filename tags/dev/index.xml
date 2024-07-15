@@ -1,4 +1,47 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.128.2</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 • RSS</copyright><lastBuildDate>Tue, 09 Jul 2024 11:36:34 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>kubectl: get secret with jsonpath and add a newline</title><link>https://www.perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/</link><pubDate>Tue, 09 Jul 2024 11:36:34 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/</guid><description>&lt;p>When retrieving opaque secrets with &lt;code>kubectl&lt;/code>, one will often invoke this
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.128.2</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 • RSS</copyright><lastBuildDate>Mon, 15 Jul 2024 13:23:35 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>kubectl: get all logs from all pods</title><link>https://www.perrotta.dev/2024/07/kubectl-get-all-logs-from-all-pods/</link><pubDate>Mon, 15 Jul 2024 13:23:35 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/kubectl-get-all-logs-from-all-pods/</guid><description>&lt;p>Frequently:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl logs -n argocd argocd-repo-server-5d59975687-dxnh7
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>But how do you know what hash to use after &lt;code>server-&lt;/code>?&lt;/p></description><content:encoded><![CDATA[<p>Frequently:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl logs -n argocd argocd-repo-server-5d59975687-dxnh7
+</span></span></code></pre></div><p>But how do you know what hash to use after <code>server-</code>?</p>
+<p><strong>Option 1)</strong>: TAB auto-completion:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl logs -n argocd argocd-repo-server-&lt;TAB&gt;
+</span></span></code></pre></div><p><strong>Caveats</strong>:</p>
+<ul>
+<li>tab completion for <code>kubectl</code> isn&rsquo;t always properly set up</li>
+<li>if there is more than one pod, you would have to type in the first few letters
+of the hash before hitting TAB again, that&rsquo;s annoying and non-ergonomic</li>
+</ul>
+<p><strong>Option 2)</strong>: subshell</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl logs -n argocd <span style="color:#66d9ef">$(</span>kubectl get pod -n argocd | grep argocd-repo-server | cut -f1 -d<span style="color:#e6db74">&#39; &#39;</span> | head -1<span style="color:#66d9ef">)</span>
+</span></span></code></pre></div><p><strong>Caveats</strong>:</p>
+<ul>
+<li>a lot of typing</li>
+<li><code>head -1</code> is necessary in case there are multiple pods<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></li>
+</ul>
+<p><strong>Option 3)</strong>: get all logs from all pods that match a given label</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl logs -n argocd -l app<span style="color:#f92672">=</span>app.kubernetes.io/instance<span style="color:#f92672">=</span>argocd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>--all-containers<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>--ignore-errors<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>This is much more ergonomic.</p>
+<p>You still need to figure out what label to use though:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl describe pod -n argocd argocd-repo-server-5d59975687-dxnh7 | grep -A7 -i labels:
+</span></span><span style="display:flex;"><span>Labels:           app.kubernetes.io/component<span style="color:#f92672">=</span>repo-server
+</span></span><span style="display:flex;"><span>                  app.kubernetes.io/instance<span style="color:#f92672">=</span>argocd
+</span></span><span style="display:flex;"><span>                  app.kubernetes.io/managed-by<span style="color:#f92672">=</span>Helm
+</span></span><span style="display:flex;"><span>                  app.kubernetes.io/name<span style="color:#f92672">=</span>argocd-repo-server
+</span></span><span style="display:flex;"><span>                  app.kubernetes.io/part-of<span style="color:#f92672">=</span>argocd
+</span></span><span style="display:flex;"><span>                  app.kubernetes.io/version<span style="color:#f92672">=</span>v2.11.4
+</span></span><span style="display:flex;"><span>                  helm.sh/chart<span style="color:#f92672">=</span>argo-cd-7.3.4
+</span></span><span style="display:flex;"><span>                  pod-template-hash<span style="color:#f92672">=</span>5d59975687
+</span></span></code></pre></div><p><strong>Source</strong>: <a href="https://stackoverflow.com/questions/33069736/how-do-i-get-logs-from-all-pods-of-a-kubernetes-replication-controller">https://stackoverflow.com/questions/33069736/how-do-i-get-logs-from-all-pods-of-a-kubernetes-replication-controller</a></p>
+<p>Happy logging!</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Or <code>tail -1</code>, for that matter.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>kubectl: get secret with jsonpath and add a newline</title><link>https://www.perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/</link><pubDate>Tue, 09 Jul 2024 11:36:34 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/</guid><description>&lt;p>When retrieving opaque secrets with &lt;code>kubectl&lt;/code>, one will often invoke this
 typical command:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ubuntu@ubuntu:~ $ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;{.data.value}&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>eW91IGFyZSBjdXJpb3VzIGFyZW50IHlvdQ&lt;span style="color:#f92672">==&lt;/span>ubuntu@ubuntu:~ $
@@ -683,146 +726,4 @@ are equivalent and should yield no difference.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git diff
 </span></span></code></pre></div><p>If there are too many diffs, then prefer an incremental approach:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git add -p
-</span></span></code></pre></div><p>Happy tag renaming! Well, this only happens every once in a while anyway.</p>]]></content:encoded></item><item><title>sd-world: perform a full system upgrade</title><link>https://www.perrotta.dev/2024/01/sd-world-perform-a-full-system-upgrade/</link><pubDate>Sun, 28 Jan 2024 01:42:04 -0300</pubDate><guid>https://www.perrotta.dev/2024/01/sd-world-perform-a-full-system-upgrade/</guid><description>&lt;p>Whenever I want to upgrade any one of my systems, I run &lt;code>sd-world&lt;/code>.&lt;/p></description><content:encoded><![CDATA[<p>Whenever I want to upgrade any one of my systems, I run <code>sd-world</code>.</p>
-<p>You can find the current version of <code>sd-world</code>
-<a href="https://github.com/thiagowfx/.dotfiles/blob/master/scripts/.bin/sd-world">here</a>
-in my dotfiles.</p>
-<p>Here&rsquo;s a snapshot<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env bash
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e"># perform a full system upgrade</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>set -euo pipefail
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>log<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	local bold<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>tput bold<span style="color:#66d9ef">)</span> normal<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>tput sgr0<span style="color:#66d9ef">)</span>
-</span></span><span style="display:flex;"><span>	echo <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>bold<span style="color:#e6db74">}</span>$*<span style="color:#e6db74">${</span>normal<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>run_if_exists<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> command -v <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> &gt;/dev/null 2&gt;&amp;1; <span style="color:#66d9ef">then</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> $# -eq <span style="color:#ae81ff">1</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
-</span></span><span style="display:flex;"><span>			log <span style="color:#e6db74">&#34;Running </span>$1<span style="color:#e6db74">...&#34;</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>			shift
-</span></span><span style="display:flex;"><span>			log <span style="color:#e6db74">&#34;Running </span>$*<span style="color:#e6db74">...&#34;</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#e6db74">&#34;</span>$@<span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">fi</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">elif</span> <span style="color:#f92672">[[</span> -d <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
-</span></span><span style="display:flex;"><span>		shift
-</span></span><span style="display:flex;"><span>		log <span style="color:#e6db74">&#34;Running </span>$*<span style="color:#e6db74">...&#34;</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;</span>$@<span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">fi</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># usage: do_git &lt;path/to/git/repo&gt;</span>
-</span></span><span style="display:flex;"><span>do_git<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> -d <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
-</span></span><span style="display:flex;"><span>		run_if_exists <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> git -C <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> pull origin master
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">fi</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>uname<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> in
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># linux</span>
-</span></span><span style="display:flex;"><span>	Linux<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e"># alpine linux</span>
-</span></span><span style="display:flex;"><span>		run_if_exists <span style="color:#e6db74">&#34;apk&#34;</span> doas apk upgrade
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e"># arch linux</span>
-</span></span><span style="display:flex;"><span>		run_if_exists <span style="color:#e6db74">&#34;pacman&#34;</span> sudo pacman -Syu
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e"># debian linux</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e"># warning: macos has /usr/bin/apt which is a Java thing</span>
-</span></span><span style="display:flex;"><span>		run_if_exists <span style="color:#e6db74">&#34;apt-get&#34;</span> sudo apt-get upgrade -y
-</span></span><span style="display:flex;"><span>		run_if_exists <span style="color:#e6db74">&#34;apt-get&#34;</span> sudo apt-get autoremove
-</span></span><span style="display:flex;"><span>		;;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># macOS</span>
-</span></span><span style="display:flex;"><span>	Darwin<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e"># homebrew</span>
-</span></span><span style="display:flex;"><span>		run_if_exists <span style="color:#e6db74">&#34;brew&#34;</span> brew upgrade
-</span></span><span style="display:flex;"><span>		run_if_exists <span style="color:#e6db74">&#34;brew&#34;</span> brew cleanup
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e"># system update and app store</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e"># run_if_exists &#34;softwareupdate&#34; softwareupdate --install --all</span>
-</span></span><span style="display:flex;"><span>		run_if_exists <span style="color:#e6db74">&#34;mas&#34;</span> mas upgrade
-</span></span><span style="display:flex;"><span>		;;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># windows</span>
-</span></span><span style="display:flex;"><span>	MINGW*<span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e"># third-party package manager</span>
-</span></span><span style="display:flex;"><span>		run_if_exists <span style="color:#e6db74">&#34;scoop&#34;</span> scoop update
-</span></span><span style="display:flex;"><span>		;;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">esac</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># flatpaks</span>
-</span></span><span style="display:flex;"><span>run_if_exists <span style="color:#e6db74">&#34;flatpak&#34;</span> flatpak update
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># nix</span>
-</span></span><span style="display:flex;"><span>run_if_exists <span style="color:#e6db74">&#34;nix-channel&#34;</span> nix-channel --update
-</span></span><span style="display:flex;"><span>run_if_exists <span style="color:#e6db74">&#34;nix-env&#34;</span> nix-env -u
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># pihole</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># update pihole itself and gravity lists</span>
-</span></span><span style="display:flex;"><span>run_if_exists <span style="color:#e6db74">&#34;pihole&#34;</span> pihole -up
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># dotfiles</span>
-</span></span><span style="display:flex;"><span>do_git <span style="color:#e6db74">&#34;</span>$HOME<span style="color:#e6db74">/.dotfiles&#34;</span>
-</span></span><span style="display:flex;"><span>do_git <span style="color:#e6db74">&#34;</span>$HOME<span style="color:#e6db74">/.dotfiles_corp&#34;</span>
-</span></span></code></pre></div><p>There&rsquo;s a lot to unpack here.</p>
-<h2 id="why-is-it-called-sd-world">Why is it called <code>sd-world</code>?</h2>
-<p><code>world</code> is an inspiration taken from <a href="https://www.gentoo.org/">Gentoo Linux</a>.
-To upgrade a typical gentoo system, you usually run:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>emerge --ask --quiet --update --changed-use --deep @world
-</span></span></code></pre></div><p>There&rsquo;s something deeply inspiring about saying it out loud: &ldquo;emerge the
-world&rdquo;. As if the whole world is at your fingertips.</p>
-<p><code>sd</code> stands for &ldquo;script directory&rdquo;, it&rsquo;s an inspiration taken from <a href="https://ianthehenry.com/posts/sd-my-script-directory/">Ian
-Henry</a>.</p>
-<p><strong>Rationale</strong>: I tend to put scripts I run semi-frequently in a <code>.bin</code>
-directory that is in my system <code>$PATH</code>. However, there&rsquo;s always a chance their
-name could clash with a built-in one (e.g. in <code>/usr/bin/</code>). In order to prevent
-(or mitigate) it from happening, a prefix is added. For a long time in my life
-I used the <code>t-</code> prefix, merely because of my first name initial. At some point
-I migrated to <code>sd-</code>. That&rsquo;s all, nothing fancy about it.</p>
-<h2 id="why-bash">Why <code>bash</code>?</h2>
-<p><code>bash</code> is the de-facto standard shell in most Linux distributions I care about.
-And it&rsquo;s also easily available in macOS and BSDs. And it&rsquo;s POSIX compliant.</p>
-<p><strong>Therefore</strong>: availability, portability and compatibility.</p>
-<h2 id="why-usrbinenv-bash-instead-of-binbash">Why <code>/usr/bin/env bash</code> instead of <code>/bin/bash</code>?</h2>
-<p>Because the <code>env</code> shebang is more portable. This is more relevant when working
-with BSDs. On Linux <code>/bin/bash</code> should be mostly fine.</p>
-<h2 id="why-set--euo-pipefail">Why <code>set -euo pipefail</code>?</h2>
-<p>A well-established <a href="https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425">good
-practice</a>.</p>
-<h2 id="why-use-a-separare-log-function">Why use a separare <code>log</code> function?</h2>
-<ol>
-<li>Old habits die hard.</li>
-<li>Consistent formatting.</li>
-</ol>
-<h2 id="why-run_if_exists">Why <code>run_if_exists</code>?</h2>
-<p>Since the script attempts to upgrade (potentially) many package managers, at
-the very least we try to skip the ones that aren&rsquo;t installed. For example,
-there&rsquo;s no need to attempt to run <code>pacman</code> in a macOS system.</p>
-<h2 id="what-else">What else?</h2>
-<p>The rest should be quite straightforward to understand. Some design decisions:</p>
-<ul>
-<li><code>sudo</code> permissions are not asked upfront, because not every system uses
-<code>sudo</code>. Notably, Alpine Linux and OpenBSD use <code>doas</code> by default. Also,
-laziness is OK as the script is intended for interactive use.</li>
-<li><code>git</code> is there merely for convenience. Updating my dotfiles could be done
-from a separate script, but that would be overkill for my simple use case.</li>
-<li>There&rsquo;s no concurrency / parallelism, and that&rsquo;s intentional. I prefer output
-readability and system stability in this case.</li>
-</ul>
-<p><a href="https://en.wikipedia.org/wiki/Scarface:_The_World_Is_Yours">The world is yours</a>.</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>Prefer to refer to the up-to-date version in my
-<a href="https://github.com/thiagowfx/.dotfiles">dotfiles</a> repository though. I
-included a snapshot merely because there&rsquo;s a non-zero chance the git
-version could be moved elsewhere someday.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div><p>Happy tag renaming! Well, this only happens every once in a while anyway.</p>]]></content:encoded></item></channel></rss>
