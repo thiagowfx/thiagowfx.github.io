@@ -28,12 +28,14 @@ Then the lazy web helped me with inspirations, and I settled with the following
 format:
 
 > **Alice**: Hi
+>
 > **Bob**: Hello
 
 In code:
 
 ```markdown
 > **Alice**: Hi
+>
 > **Bob**: Hello
 ```
 
