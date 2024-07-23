@@ -5,6 +5,7 @@ date: {{ .Date }}
 tags:
   - dev
   - devops
+  - serenity
 ---
 
 <!--more-->
