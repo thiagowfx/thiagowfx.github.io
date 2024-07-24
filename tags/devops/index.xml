@@ -1,4 +1,40 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.129.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS</copyright><lastBuildDate>Mon, 15 Jul 2024 13:23:35 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>kubectl: get all logs from all pods</title><link>https://www.perrotta.dev/2024/07/kubectl-get-all-logs-from-all-pods/</link><pubDate>Mon, 15 Jul 2024 13:23:35 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/kubectl-get-all-logs-from-all-pods/</guid><description>&lt;p>Frequently:&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.129.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS</copyright><lastBuildDate>Wed, 24 Jul 2024 14:48:09 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Parallel</title><link>https://www.perrotta.dev/2024/07/parallel/</link><pubDate>Wed, 24 Jul 2024 14:48:09 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/parallel/</guid><description>&lt;p>Apparently there are two Unix-y ways to run commands in parallel:&lt;/p>
+&lt;ul>
+&lt;li>GNU parallel: &lt;a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/&lt;/a>&lt;/li>
+&lt;li>moreutils parallel: &lt;a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/&lt;/a>&lt;/li>
+&lt;/ul></description><content:encoded><![CDATA[<p>Apparently there are two Unix-y ways to run commands in parallel:</p>
+<ul>
+<li>GNU parallel: <a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/</a></li>
+<li>moreutils parallel: <a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/</a></li>
+</ul>
+<p>A simple example with <code>wc -l</code>:</p>
+<p>GNU receives input from stdin:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>find . -type f | parallel wc -l
+</span></span></code></pre></div><p>Moreutils receives input from command-line arguments:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>parallel wc -l -- <span style="color:#66d9ef">$(</span>find . -type f<span style="color:#66d9ef">)</span>
+</span></span></code></pre></div><p>Style aside, the annoyance is that they are not compatible in Debian, Ubuntu and
+macOS (homebrew), due to both having the <code>parallel</code> executable:</p>
+<ul>
+<li><a href="https://superuser.com/questions/917577/how-can-i-install-gnu-parallel-alongside-moreutils-on-ubuntu-debian">https://superuser.com/questions/917577/how-can-i-install-gnu-parallel-alongside-moreutils-on-ubuntu-debian</a></li>
+<li><a href="https://askubuntu.com/questions/1191516/what-happens-to-usr-bin-parallel-if-i-install-the-moreutils-on-top-of-the-paral">https://askubuntu.com/questions/1191516/what-happens-to-usr-bin-parallel-if-i-install-the-moreutils-on-top-of-the-paral</a></li>
+</ul>
+<p>Debian thread wherein no consensus is achieved:
+<a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=597050">https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=597050</a></p>
+<p>I will stick to <code>moreutils</code> due to its simplicity and richer suite.
+Nonetheless, it would be better if we didn&rsquo;t have binary clashes like this. It
+is really annoying and developer-unfriendly.</p>
+<p>Of course, my favorite Linux distributions do not have this issue:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% apk info -L moreutils | grep parallel
+</span></span><span style="display:flex;"><span>usr/bin/parallel-moreutils
+</span></span></code></pre></div><p>&hellip;Alpine just installs <code>parallel</code> from <code>moreutils</code> with another name.</p>
+<p>Arch Linux <a href="https://gitlab.archlinux.org/archlinux/packaging/packages/moreutils/-/blob/main/PKGBUILD?ref_type=heads">does the
+same</a>:</p>
+<pre tabindex="0"><code>mv &#34;$pkgdir&#34;/usr/bin/parallel &#34;$pkgdir&#34;/usr/bin/parallel-moreutils
+</code></pre><p>Moreover, GNU Parallel has an annoying citation notice, which the Arch Linux
+package <a href="https://gitlab.archlinux.org/archlinux/packaging/packages/parallel/-/blob/main/0001-Remove-citation-things.patch?ref_type=heads">helpfully
+removes</a>.
+<a href="https://news.ycombinator.com/item?id=15319715">Some context</a>. Not everyone
+works in academia.</p>]]></content:encoded></item><item><title>kubectl: get all logs from all pods</title><link>https://www.perrotta.dev/2024/07/kubectl-get-all-logs-from-all-pods/</link><pubDate>Mon, 15 Jul 2024 13:23:35 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/kubectl-get-all-logs-from-all-pods/</guid><description>&lt;p>Frequently:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl logs -n argocd argocd-repo-server-5d59975687-dxnh7
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>But how do you know what hash to use after &lt;code>server-&lt;/code>?&lt;/p></description><content:encoded><![CDATA[<p>Frequently:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl logs -n argocd argocd-repo-server-5d59975687-dxnh7

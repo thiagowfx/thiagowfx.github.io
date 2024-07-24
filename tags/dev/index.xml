@@ -1,4 +1,40 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.129.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS</copyright><lastBuildDate>Sat, 20 Jul 2024 16:19:53 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Alpine Linux: How to install all manpages (idiomatically)</title><link>https://www.perrotta.dev/2024/07/alpine-linux-how-to-install-all-manpages-idiomatically/</link><pubDate>Sat, 20 Jul 2024 16:19:53 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/alpine-linux-how-to-install-all-manpages-idiomatically/</guid><description>&lt;p>This post is a reply to
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.129.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS</copyright><lastBuildDate>Wed, 24 Jul 2024 14:48:09 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Parallel</title><link>https://www.perrotta.dev/2024/07/parallel/</link><pubDate>Wed, 24 Jul 2024 14:48:09 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/parallel/</guid><description>&lt;p>Apparently there are two Unix-y ways to run commands in parallel:&lt;/p>
+&lt;ul>
+&lt;li>GNU parallel: &lt;a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/&lt;/a>&lt;/li>
+&lt;li>moreutils parallel: &lt;a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/&lt;/a>&lt;/li>
+&lt;/ul></description><content:encoded><![CDATA[<p>Apparently there are two Unix-y ways to run commands in parallel:</p>
+<ul>
+<li>GNU parallel: <a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/</a></li>
+<li>moreutils parallel: <a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/</a></li>
+</ul>
+<p>A simple example with <code>wc -l</code>:</p>
+<p>GNU receives input from stdin:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>find . -type f | parallel wc -l
+</span></span></code></pre></div><p>Moreutils receives input from command-line arguments:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>parallel wc -l -- <span style="color:#66d9ef">$(</span>find . -type f<span style="color:#66d9ef">)</span>
+</span></span></code></pre></div><p>Style aside, the annoyance is that they are not compatible in Debian, Ubuntu and
+macOS (homebrew), due to both having the <code>parallel</code> executable:</p>
+<ul>
+<li><a href="https://superuser.com/questions/917577/how-can-i-install-gnu-parallel-alongside-moreutils-on-ubuntu-debian">https://superuser.com/questions/917577/how-can-i-install-gnu-parallel-alongside-moreutils-on-ubuntu-debian</a></li>
+<li><a href="https://askubuntu.com/questions/1191516/what-happens-to-usr-bin-parallel-if-i-install-the-moreutils-on-top-of-the-paral">https://askubuntu.com/questions/1191516/what-happens-to-usr-bin-parallel-if-i-install-the-moreutils-on-top-of-the-paral</a></li>
+</ul>
+<p>Debian thread wherein no consensus is achieved:
+<a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=597050">https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=597050</a></p>
+<p>I will stick to <code>moreutils</code> due to its simplicity and richer suite.
+Nonetheless, it would be better if we didn&rsquo;t have binary clashes like this. It
+is really annoying and developer-unfriendly.</p>
+<p>Of course, my favorite Linux distributions do not have this issue:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% apk info -L moreutils | grep parallel
+</span></span><span style="display:flex;"><span>usr/bin/parallel-moreutils
+</span></span></code></pre></div><p>&hellip;Alpine just installs <code>parallel</code> from <code>moreutils</code> with another name.</p>
+<p>Arch Linux <a href="https://gitlab.archlinux.org/archlinux/packaging/packages/moreutils/-/blob/main/PKGBUILD?ref_type=heads">does the
+same</a>:</p>
+<pre tabindex="0"><code>mv &#34;$pkgdir&#34;/usr/bin/parallel &#34;$pkgdir&#34;/usr/bin/parallel-moreutils
+</code></pre><p>Moreover, GNU Parallel has an annoying citation notice, which the Arch Linux
+package <a href="https://gitlab.archlinux.org/archlinux/packaging/packages/parallel/-/blob/main/0001-Remove-citation-things.patch?ref_type=heads">helpfully
+removes</a>.
+<a href="https://news.ycombinator.com/item?id=15319715">Some context</a>. Not everyone
+works in academia.</p>]]></content:encoded></item><item><title>Alpine Linux: How to install all manpages (idiomatically)</title><link>https://www.perrotta.dev/2024/07/alpine-linux-how-to-install-all-manpages-idiomatically/</link><pubDate>Sat, 20 Jul 2024 16:19:53 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/alpine-linux-how-to-install-all-manpages-idiomatically/</guid><description>&lt;p>This post is a reply to
 &lt;a href="https://tilde.town/~kzimmermann/articles/installing_alpine_manpages.html">https://tilde.town/~kzimmermann/articles/installing_alpine_manpages.html&lt;/a>.&lt;/p>
 &lt;p>The author describes their experience while attempting to install all man pages
 for all the packages in use in their system.&lt;/p>
@@ -579,161 +615,4 @@ familiarity of English for developer tooling. If I really need to have this
 extreme exposure one day, it&rsquo;s always possible to just <code>unset LANG</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</div>]]></content:encoded></item><item><title>★ Integrating terraform with ansible</title><link>https://www.perrotta.dev/2024/02/integrating-terraform-with-ansible/</link><pubDate>Thu, 01 Feb 2024 14:02:28 -0300</pubDate><guid>https://www.perrotta.dev/2024/02/integrating-terraform-with-ansible/</guid><description>&lt;p>This post is a follow-up of &lt;a href="https://www.perrotta.dev/2024/01/terraforming-a-linode-hello-world/">Terraforming a Linode: hello world&lt;/a>.&lt;/p>
-&lt;blockquote>
-&lt;p>In a future post, we will continue from here by using Ansible to install and
-set up Miniflux in our new Linode.&lt;/p>
-&lt;/blockquote>
-&lt;p>Before we extensively use Ansible to configure our VPS instance, first let&amp;rsquo;s
-set up a basic integration between Terraform and Ansible.&lt;/p></description><content:encoded><![CDATA[<p>This post is a follow-up of <a href="https://www.perrotta.dev/2024/01/terraforming-a-linode-hello-world/">Terraforming a Linode: hello world</a>.</p>
-<blockquote>
-<p>In a future post, we will continue from here by using Ansible to install and
-set up Miniflux in our new Linode.</p>
-</blockquote>
-<p>Before we extensively use Ansible to configure our VPS instance, first let&rsquo;s
-set up a basic integration between Terraform and Ansible.</p>
-<p>First of all, here&rsquo;s an overview of where I stopped last time. There were a
-couple of lightweight modifications since then. I&rsquo;ll explain some of them
-below.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#f92672">%</span> <span style="color:#a6e22e">cat</span> var<span style="color:#a6e22e">iables</span>.<span style="color:#a6e22e">tf</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">variable</span> <span style="color:#e6db74">&#34;github_username&#34;</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span>    = <span style="color:#a6e22e">string</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">default</span> = <span style="color:#e6db74">&#34;thiagowfx&#34;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
-</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">variable</span> <span style="color:#e6db74">&#34;linode_hostname&#34;</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span>    = <span style="color:#a6e22e">string</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">default</span> = <span style="color:#e6db74">&#34;coruscant&#34;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
-</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">variable</span> <span style="color:#e6db74">&#34;linode_region&#34;</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span>    = <span style="color:#a6e22e">string</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">default</span> = <span style="color:#e6db74">&#34;eu-central&#34;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>All variables were moved to a <code>variables.tf</code> file. This is to follow standard
-terraform
-<a href="https://developer.hashicorp.com/terraform/language/modules/develop/structure">conventions</a>
-/ recommendations for module structures. Furthermore, it becomes easier to
-manage variables when they are all stored in a single place.</p>
-<p>The main module file now looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#f92672">%</span> <span style="color:#a6e22e">cat</span> <span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">tf</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">terraform</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">required_providers</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">http</span> = {
-</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">source</span> = <span style="color:#e6db74">&#34;hashicorp/http&#34;</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">linode</span> = {
-</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">source</span> = <span style="color:#e6db74">&#34;linode/linode&#34;</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
-</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">provider</span> <span style="color:#e6db74">&#34;linode&#34;</span> {}
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
-</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">data</span> <span style="color:#e6db74">&#34;http&#34;</span> <span style="color:#e6db74">&#34;github_keys&#34;</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">url</span> = <span style="color:#e6db74">&#34;https://api.github.com/users/</span><span style="color:#e6db74">${</span>var.<span style="color:#a6e22e">github_username</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/keys&#34;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">locals</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">keys</span> = jsondecode(data.<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">github_keys</span>.<span style="color:#a6e22e">response_body</span>)[<span style="color:#f92672">*</span>].<span style="color:#a6e22e">key</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
-</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;linode_instance&#34;</span> <span style="color:#e6db74">&#34;nanode&#34;</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span>             = <span style="color:#e6db74">&#34;g6-nanode-1&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">image</span>            = <span style="color:#e6db74">&#34;linode/alpine3.19&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">label</span>            = var.<span style="color:#a6e22e">linode_hostname</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">region</span>           = var.<span style="color:#a6e22e">linode_region</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">authorized_keys</span>  = <span style="color:#a6e22e">local</span>.<span style="color:#a6e22e">keys</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">backups_enabled</span>  = <span style="color:#e6db74">&#34;false&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">booted</span>           = <span style="color:#e6db74">&#34;true&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">watchdog_enabled</span> = <span style="color:#e6db74">&#34;true&#34;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>I removed the token from the linode provider. Now it is supplied via the
-<code>LINODE_TOKEN</code> environment variable. In order to automatically populate that
-variable, I use <a href="https://www.perrotta.dev/2022/01/direnv-automate-your-environment-variables/"><code>direnv</code></a>. There&rsquo;s an <code>.envrc</code> file that provides its value, like so:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/sh
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e"># terraform init</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>export LINODE_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;my-token-here&#34;</span>
-</span></span></code></pre></div><p>I also created a repository for this project:
-<a href="https://github.com/thiagowfx/knol">https://github.com/thiagowfx/knol</a>. That&rsquo;s enough for preliminaries, now let&rsquo;s
-go back to Ansible.</p>
-<p>The first component we&rsquo;ll need is an Ansible
-<a href="https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html">inventory</a>
-file, containing the IP address of the host we&rsquo;ll manage. It could look like
-this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[all]</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">1.2.3.4 ansible_user</span><span style="color:#f92672">=</span><span style="color:#e6db74">root</span>
-</span></span></code></pre></div><p>&hellip;wherein <code>1.2.3.4</code> is the IP address of our VPS.</p>
-<p>That said, due to the fact the VPS instance is created dynamically, maintaining
-that IP address manually would be tedious. Therefore, let&rsquo;s have Terraform
-manage it.</p>
-<p>We can do so with a
-<a href="https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file"><code>local_file</code></a>.
-Heck, we could even use a
-<a href="https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file"><code>template_file</code></a>,
-however it would be overkill as there are only two simple lines in our
-inventory at this point. A <code>local_file</code> is created upon <code>terraform apply</code> and
-deleted upon <code>terraform destroy</code>. Therefore it doesn&rsquo;t even need to be tracked
-by our VCS:</p>
-<pre tabindex="0"><code>resource &#34;local_file&#34; &#34;ansible_inventory&#34; {
-  content  = &lt;&lt;-EOF
-[all]
-${linode_instance.nanode.ip_address} ansible_user=root
-EOF
-  filename = &#34;inventory.ini&#34;
-  file_permission = &#34;0644&#34;
-}
-</code></pre><p>Once we run terraform (plan + apply), an <code>inventory.ini</code> file should be created
-with the above contents.</p>
-<p>Because the IP address is ephemeral and dynamic, we should have a
-straightforward way to see its value. A terraform
-<a href="https://developer.hashicorp.com/terraform/language/values/outputs"><code>output</code></a>
-is perfect for that:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#f92672">%</span> <span style="color:#a6e22e">cat</span> <span style="color:#a6e22e">outputs</span>.<span style="color:#a6e22e">tf</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">output</span> <span style="color:#e6db74">&#34;ip_address&#34;</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">value</span> = <span style="color:#a6e22e">linode_instance</span>.<span style="color:#a6e22e">nanode</span>.<span style="color:#a6e22e">ip_address</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Later on (after terraforming) we will be able to use <code>terraform output</code> to see
-the server IP address.</p>
-<p>We have the inventory file. Now we need a
-<a href="https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html">playbook</a>.
-A playbook contains a sequence of tasks to be applied to our server.</p>
-<p>Let&rsquo;s start with a basic playbook that just installs and starts <code>nginx</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
-</span></span><span style="display:flex;"><span>- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tasks</span>:
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Install the web server (nginx)</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">community.general.apk</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">present</span>
-</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Start the web server</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">service</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">state</span>: <span style="color:#ae81ff">started</span>
-</span></span></code></pre></div><p>Save this to a <code>playbook.yml</code> file.</p>
-<p>After terraforming, we should now be able to run ansible:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% ansible-playbook -i inventory.ini playbook.yml
-</span></span></code></pre></div><p>In order to make this setup more ergonomic, let&rsquo;s create a <code>Makefile</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Makefile" data-lang="Makefile"><span style="display:flex;"><span>TERRAFORM <span style="color:#f92672">:=</span> terraform
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">all</span><span style="color:#f92672">:</span> terraform ansible
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ansible</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>	ansible-playbook -i inventory.ini playbook.yml
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">terraform</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">$(</span>TERRAFORM<span style="color:#66d9ef">)</span> init
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">$(</span>TERRAFORM<span style="color:#66d9ef">)</span> plan
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">$(</span>TERRAFORM<span style="color:#66d9ef">)</span> apply
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clean</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">$(</span>TERRAFORM<span style="color:#66d9ef">)</span> destroy
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">.PHONY</span><span style="color:#f92672">:</span> all ansible terraform clean
-</span></span></code></pre></div><p>Then we can just run <code>make terraform</code> or <code>make ansible</code> for granular steps. Or
-just <code>make</code> to run everything in the right order.</p>
-<p>I extracted the <code>terraform</code> binary to its own variable because it facilitates
-the use of <a href="https://opentofu.org/">OpenTofu</a> (a fork) in lieu of terraform.</p>
-<p>And that&rsquo;s it for today! In a future post, we&rsquo;ll look into extending our
-Ansible usage to fully bootstrap Miniflux on the server.</p>]]></content:encoded></item></channel></rss>
+</div>]]></content:encoded></item></channel></rss>
