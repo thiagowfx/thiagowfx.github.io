@@ -1,4 +1,27 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.130.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS</copyright><lastBuildDate>Wed, 24 Jul 2024 14:48:09 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Parallel</title><link>https://www.perrotta.dev/2024/07/parallel/</link><pubDate>Wed, 24 Jul 2024 14:48:09 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/parallel/</guid><description>&lt;p>Apparently there are two Unix-y ways to run commands in parallel:&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.130.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS</copyright><lastBuildDate>Tue, 30 Jul 2024 22:56:58 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker on Alpine Linux</title><link>https://www.perrotta.dev/2024/07/docker-on-alpine-linux/</link><pubDate>Tue, 30 Jul 2024 22:56:58 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/docker-on-alpine-linux/</guid><description>&lt;p>In this post: how to properly start &lt;code>docker&lt;/code> on an Alpine Linux server.&lt;/p></description><content:encoded><![CDATA[<p>In this post: how to properly start <code>docker</code> on an Alpine Linux server.</p>
+<p>First, install <code>docker</code> and friends:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>doas apk add docker docker-cli docker-compose
+</span></span></code></pre></div><p>Then start the <code>docker</code> service:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>doas service docker start
+</span></span></code></pre></div><p>Check if it started successfully:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>service docker status
+</span></span></code></pre></div><p>If not, then look at the logs:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>less /var/log/docker.log
+</span></span></code></pre></div><p>I got an error:</p>
+<pre tabindex="0"><code>failed to start daemon: error initializing graphdriver: driver not supported
+</code></pre><p>The suggestion was to change the driver to <code>overlay2</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% $EDITOR /etc/docker/daemon.json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;storage-driver&#34;</span>: <span style="color:#e6db74">&#34;overlay2&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>Then restart <code>docker</code>.</p>
+<p>I got another error:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>level<span style="color:#f92672">=</span>error msg<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;failed to mount overlay: no such device&#34;</span> storage-driver<span style="color:#f92672">=</span>overlay2
+</span></span></code></pre></div><p>The suggestion was to reboot:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>doas reboot
+</span></span></code></pre></div><p>Then start <code>docker</code> again:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>doas service docker start
+</span></span></code></pre></div><p>And now everything works!</p>]]></content:encoded></item><item><title>Parallel</title><link>https://www.perrotta.dev/2024/07/parallel/</link><pubDate>Wed, 24 Jul 2024 14:48:09 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/parallel/</guid><description>&lt;p>Apparently there are two Unix-y ways to run commands in parallel:&lt;/p>
 &lt;ul>
 &lt;li>GNU parallel: &lt;a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/&lt;/a>&lt;/li>
 &lt;li>moreutils parallel: &lt;a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/&lt;/a>&lt;/li>
@@ -603,32 +626,4 @@ Google:</p>
 <p>The typical use case would be to compile a new Google Chrome binary
 (<code>/out/Default/chrome</code>), and then use the script to launch it with a fresh user
 data directory, to ensure the previous launch settings do not interfere with the
-current one.</p>]]></content:encoded></item><item><title>Set terminal language to English</title><link>https://www.perrotta.dev/2024/02/set-terminal-language-to-english/</link><pubDate>Thu, 22 Feb 2024 09:48:34 +0100</pubDate><guid>https://www.perrotta.dev/2024/02/set-terminal-language-to-english/</guid><description>&lt;p>I changed my macOS system language to German, with the intent of &lt;a href="https://www.perrotta.dev/2022/04/translating-german-to-english/">getting more
-exposure to it&lt;/a>.&lt;/p>
-&lt;p>One negative side effect is that most binaries I execute with my shell (for
-example: &lt;code>git&lt;/code>) are now outputting German text as well&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>. In hindsight, this
-should have been expected.&lt;/p></description><content:encoded><![CDATA[<p>I changed my macOS system language to German, with the intent of <a href="https://www.perrotta.dev/2022/04/translating-german-to-english/">getting more
-exposure to it</a>.</p>
-<p>One negative side effect is that most binaries I execute with my shell (for
-example: <code>git</code>) are now outputting German text as well<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. In hindsight, this
-should have been expected.</p>
-<p>A simple fix is to override the environment locale with English. I made the
-following
-<a href="https://github.com/thiagowfx/.dotfiles/commit/4b784b1fa89f569623340cf3d58cc22d8504926a">addition</a>
-to my <a href="https://github.com/thiagowfx/.dotfiles">dotfiles</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Force the system-wide language to English.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Both &#34;en_US&#34; and &#34;en_CA&#34; work here.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># We could also optionally set LC_ALL but it is not necessary.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verify current locale settings with `locale`.</span>
-</span></span><span style="display:flex;"><span>export LANG<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en_US&#34;</span>
-</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>You could argue that it&rsquo;s actually desirable to have terminal applications
-output German. However, nothing beats the standardization, consistency and
-familiarity of English for developer tooling. If I really need to have this
-extreme exposure one day, it&rsquo;s always possible to just <code>unset LANG</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+current one.</p>]]></content:encoded></item></channel></rss>
