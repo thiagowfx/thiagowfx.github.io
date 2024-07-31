@@ -1,4 +1,25 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.130.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS</copyright><lastBuildDate>Tue, 30 Jul 2024 22:56:58 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker on Alpine Linux</title><link>https://www.perrotta.dev/2024/07/docker-on-alpine-linux/</link><pubDate>Tue, 30 Jul 2024 22:56:58 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/docker-on-alpine-linux/</guid><description>&lt;p>In this post: how to properly start &lt;code>docker&lt;/code> on an Alpine Linux server.&lt;/p></description><content:encoded><![CDATA[<p>In this post: how to properly start <code>docker</code> on an Alpine Linux server.</p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.130.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS</copyright><lastBuildDate>Thu, 01 Aug 2024 01:02:10 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Direnv nested</title><link>https://www.perrotta.dev/2024/08/direnv-nested/</link><pubDate>Thu, 01 Aug 2024 01:02:10 +0200</pubDate><guid>https://www.perrotta.dev/2024/08/direnv-nested/</guid><description>&lt;p>I covered &lt;a href="https://www.perrotta.dev/2022/01/direnv-automate-your-environment-variables/">&lt;code>direnv&lt;/code>&lt;/a> before.&lt;/p>
+&lt;p>&lt;strong>New scenario&lt;/strong>: Given a directory structure with two nested &lt;code>.envrc&lt;/code>s:&lt;/p></description><content:encoded><![CDATA[<p>I covered <a href="https://www.perrotta.dev/2022/01/direnv-automate-your-environment-variables/"><code>direnv</code></a> before.</p>
+<p><strong>New scenario</strong>: Given a directory structure with two nested <code>.envrc</code>s:</p>
+<pre tabindex="0"><code>% tree -a top
+top
+├── .envrc
+└── inner
+    └── .envrc
+</code></pre><p>It turns out that, surprisingly, <code>cd top/inner</code> will load <em>only</em>
+<code>top/inner/.envrc</code>. The top-level <code>top/.envrc</code> will <em>not</em> be automatically
+loaded.</p>
+<p>This is intentional, meant for security reasons.</p>
+<p>In order to source the parent <code>.envrc</code>, add <code>source_up</code> to the inner one.</p>
+<p>Alternatively, <code>source_env ..</code> also works. I prefer <code>source_up</code>.</p>
+<p>There&rsquo;s also <code>source_up_if_exists</code>, which works gracefully even if there&rsquo;s
+no env file to source upwards.</p>
+<p>The full list of built-in functions is available here:
+<a href="https://direnv.net/man/direnv-stdlib.1.html">https://direnv.net/man/direnv-stdlib.1.html</a></p>
+<p><strong>Reference</strong>: <a href="https://github.com/direnv/direnv/issues/757">https://github.com/direnv/direnv/issues/757</a></p>
+<p><strong>Use Case</strong>: Add top-level environment variables to <code>top/.envrc</code>. Add <code>layout</code>
+to <code>top/inner/.envrc</code>. For example, perhaps <code>inner</code> is a custom <code>git</code> repository
+/ project.</p>]]></content:encoded></item><item><title>Docker on Alpine Linux</title><link>https://www.perrotta.dev/2024/07/docker-on-alpine-linux/</link><pubDate>Tue, 30 Jul 2024 22:56:58 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/docker-on-alpine-linux/</guid><description>&lt;p>In this post: how to properly start &lt;code>docker&lt;/code> on an Alpine Linux server.&lt;/p></description><content:encoded><![CDATA[<p>In this post: how to properly start <code>docker</code> on an Alpine Linux server.</p>
 <p>First, install <code>docker</code> and friends:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>doas apk add docker docker-cli docker-compose
 </span></span></code></pre></div><p>Then start the <code>docker</code> service:</p>
@@ -600,30 +621,4 @@ cannot easily control the python system version.</p>
 </span></span><span style="display:flex;"><span>	eval <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>pyenv init -<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
 </span></span></code></pre></div><p>Note that <code>path_munge</code> is a custom function, it merely appends the given
-argument to the <code>$PATH</code>.</p>]]></content:encoded></item><item><title>chrome-fresh: start a fresh instance of Google Chrome</title><link>https://www.perrotta.dev/2024/03/chrome-fresh-start-a-fresh-instance-of-google-chrome/</link><pubDate>Sun, 10 Mar 2024 21:55:16 +0100</pubDate><guid>https://www.perrotta.dev/2024/03/chrome-fresh-start-a-fresh-instance-of-google-chrome/</guid><description>&lt;p>I used to have the following handy script to launch a new (fresh!) instance of
-Google Chrome when working on &lt;a href="https://www.perrotta.dev/2024/01/google-chrome-for-testing-reliable-downloads-for-browser-automation/">Chrome for Testing&lt;/a> in the Browser Automation team at
-Google:&lt;/p></description><content:encoded><![CDATA[<p>I used to have the following handy script to launch a new (fresh!) instance of
-Google Chrome when working on <a href="https://www.perrotta.dev/2024/01/google-chrome-for-testing-reliable-downloads-for-browser-automation/">Chrome for Testing</a> in the Browser Automation team at
-Google:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e"># start chrome with ephemeral settings (every run of Chrome is empty)</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># usage: chrome-fresh out/Default/chrome</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>TMPDIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>mktemp -d<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>trap <span style="color:#e6db74">&#39;rm -rf &#34;${TMPDIR}&#34;&#39;</span> EXIT
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>CHROME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>1<span style="color:#66d9ef">:-</span>google-chrome<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>; shift
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://github.com/GoogleChrome/chrome-launcher/blob/main/docs/chrome-flags-for-tools.md</span>
-</span></span><span style="display:flex;"><span>CHROME_FLAGS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;--use-mock-keychain&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>uname -s<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Darwin&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#e6db74">&#34;</span>$CHROME<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">==</span> *.app <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
-</span></span><span style="display:flex;"><span>	open -n <span style="color:#e6db74">&#34;</span>$CHROME<span style="color:#e6db74">&#34;</span> --args <span style="color:#e6db74">&#34;</span>$CHROME_FLAGS<span style="color:#e6db74">&#34;</span> --user-data-dir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$TMPDIR<span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;</span>$@<span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>  <span style="color:#75715e"># &#34;Linux&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;</span>$CHROME<span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;</span>$CHROME_FLAGS<span style="color:#e6db74">&#34;</span> --user-data-dir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$TMPDIR<span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;</span>$@<span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
-</span></span></code></pre></div><p>The script is self-documenting, it was properly tested on both Linux and macOS.</p>
-<p>The typical use case would be to compile a new Google Chrome binary
-(<code>/out/Default/chrome</code>), and then use the script to launch it with a fresh user
-data directory, to ensure the previous launch settings do not interfere with the
-current one.</p>]]></content:encoded></item></channel></rss>
+argument to the <code>$PATH</code>.</p>]]></content:encoded></item></channel></rss>
