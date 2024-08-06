@@ -9,7 +9,7 @@ Recent macbooks have a fingerprint reader, which is typically used to unlock the
 
 It is also possible to use it for `sudo` authentication via [PAM](https://en.wikipedia.org/wiki/Pluggable_authentication_module).
 
-This was previously covered [here]({{< ref "2022-03-21-macos-sudo-with-touch-id.md" >}}).
+This was previously covered [here]({{< ref "2022-03-21-macos-sudo-with-touch-id" >}}).
 
 Now, with macOS Sonoma, it's also possible to make this setting survive OS upgrades.
 

@@ -24,7 +24,7 @@ It would be really nice if I could just pop up an editor in a web browser just l
 
 [Mike Stone](https://mikestone.me/creating-on-github/) describes one way to do so, where he edits it directly from GitHub. That works fine, but then you need to write your post all at once, there's no "save and continue later".
 
-I think a better approach is to use [GitHub codespaces]({{< ref "2022-01-02-ephemeral-linux-shell-access-in-the-cloud.md" >}}): I go to https://github.dev/thiagowfx/thiagowfx.github.io where there's a Visual Studio Code instance running on the web, make my edits or compose a new post therein, and then `git push`. Even if I don't want to `git push` right away, I could just come back later and continue it from where I stopped. It's brilliant! It even has terminal access if needed (e.g. to play with `hugo` on the go).
+I think a better approach is to use [GitHub codespaces]({{< ref "2022-01-02-ephemeral-linux-shell-access-in-the-cloud" >}}): I go to https://github.dev/thiagowfx/thiagowfx.github.io where there's a Visual Studio Code instance running on the web, make my edits or compose a new post therein, and then `git push`. Even if I don't want to `git push` right away, I could just come back later and continue it from where I stopped. It's brilliant! It even has terminal access if needed (e.g. to play with `hugo` on the go).
 
 <!--more-->
 

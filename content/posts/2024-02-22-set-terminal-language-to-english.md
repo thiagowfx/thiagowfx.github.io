@@ -6,7 +6,7 @@ tags:
 ---
 
 I changed my macOS system language to German, with the intent of [getting more
-exposure to it]({{< ref "2022-04-03-translating-german-to-english.md" >}}).
+exposure to it]({{< ref "2022-04-03-translating-german-to-english" >}}).
 
 One negative side effect is that most binaries I execute with my shell (for
 example: `git`) are now outputting German text as well[^1]. In hindsight, this

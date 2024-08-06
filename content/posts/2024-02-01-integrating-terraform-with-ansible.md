@@ -7,7 +7,7 @@ tags:
   - selfhosted
 ---
 
-This post is a follow-up of [Terraforming a Linode: hello world]({{< ref "2024-01-23-terraforming-a-linode-hello-world.md" >}}).
+This post is a follow-up of [Terraforming a Linode: hello world]({{< ref "2024-01-23-terraforming-a-linode-hello-world" >}}).
 
 > In a future post, we will continue from here by using Ansible to install and
 > set up Miniflux in our new Linode.
