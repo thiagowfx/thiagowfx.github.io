@@ -70,6 +70,15 @@ Rust:
 - https://github.com/dimo414/advent-2021
 - https://github.com/mfs/aoc
 
+**Edit (2024-08-06)**: Additions from 2022:
+
+C++:
+- https://github.com/eariassoto/advent-of-code-cpp
+
+Python:
+- https://github.com/achrafmam2/adventofcode
+- https://github.com/mcerdeiro/aoc2022
+
 I find it's really constructive and useful (and also _fun_) to peek at other people's solutions after I coded my own. I have extensive (albeit kinda rusty these days) experience with C++ so I wanted to follow at least one repository coded with it; since I wrote my solutions in python it was also a natural choice to follow a few python repositories; and, finally, I wanted to peek at some languages I am not familiar with to get a gist of them. This year I watched Rust and a few bits of Clojure and Kotlin on Twitter.
 
 Finally, for some extra inspiration, there are also some _10x programmers_[^6] out there that seem to be fans of AoC as well: [Peter Norvig](https://github.com/norvig/pytudes) and [Russ Cox (_rsc_)](https://twitter.com/_rsc/status/1466089522718986241). There are probably several others I am not aware of.
