@@ -1,4 +1,34 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.130.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS</copyright><lastBuildDate>Thu, 01 Aug 2024 01:02:10 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Direnv nested</title><link>https://www.perrotta.dev/2024/08/direnv-nested/</link><pubDate>Thu, 01 Aug 2024 01:02:10 +0200</pubDate><guid>https://www.perrotta.dev/2024/08/direnv-nested/</guid><description>&lt;p>I covered &lt;a href="https://www.perrotta.dev/2022/01/direnv-automate-your-environment-variables/">&lt;code>direnv&lt;/code>&lt;/a> before.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.131.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS</copyright><lastBuildDate>Tue, 06 Aug 2024 13:37:31 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>kubectl: print all secret values in plain text</title><link>https://www.perrotta.dev/2024/08/kubectl-print-all-secret-values-in-plain-text/</link><pubDate>Tue, 06 Aug 2024 13:37:31 +0200</pubDate><guid>https://www.perrotta.dev/2024/08/kubectl-print-all-secret-values-in-plain-text/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;a href="https://kubernetes.io/docs/concepts/configuration/secret/">kubernetes
+secret&lt;/a> with more
+than one key-value pair, print &lt;strong>all&lt;/strong> of them in plain text (i.e.
+base64-decoded in this context).&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Given a <a href="https://kubernetes.io/docs/concepts/configuration/secret/">kubernetes
+secret</a> with more
+than one key-value pair, print <strong>all</strong> of them in plain text (i.e.
+base64-decoded in this context).</p>
+<p>Basically, something like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl cat secret -n infra-services my-cool-secret
+</span></span></code></pre></div><p>Except that there is no <code>kubectl cat</code>, what a shame. It would be really great if
+we had it, for consistency with <code>systemctl cat</code>. Oh well.</p>
+<p>There is <code>kubectl edit</code> though – amen, just like <code>systemctl edit</code>. This will
+open your <code>$EDITOR</code>. It&rsquo;s often inconvenient to copy text to the clipboard from
+your terminal-based editor though, due to intricacies of different terminals,
+shells, terminal multiplexers, and OSC-52, therefore I don&rsquo;t deem this as an
+acceptable solution.</p>
+<p>There is a simple trick though:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>EDITOR<span style="color:#f92672">=</span>cat kubectl edit secret -n infra-services my-cool-secret
+</span></span></code></pre></div><p>&hellip;which works exactly as you would expect <code>kubectl cat</code> to behave. It displays
+a warning at the end:</p>
+<pre tabindex="0"><code>Edit cancelled, no changes made.
+</code></pre><p>&hellip;however it can be duly ignored.</p>
+<p>If we didn&rsquo;t have this trick, we could have:</p>
+<ul>
+<li>written a bloated tool in golang to pipe to e.g. <a href="https://github.com/ashleyschuett/kubernetes-secret-decode">https://github.com/ashleyschuett/kubernetes-secret-decode</a> (<a href="https://itnext.io/secrets-in-plain-text-13a98f54ef97">via</a>)</li>
+<li>used the <code>kubectl edit</code> trick above, with a decent terminal and OSC-52 setup</li>
+<li>used <code>jq</code> with its <code>map</code> and <code>base64d</code> constructs (c.f. <a href="https://stackoverflow.com/questions/50286066/kubernetes-kubectl-print-all-secrets">Stack
+Overflow</a>)</li>
+<li>used <code>kubectl describe</code> with <code>-o jsonpath</code>, specifying every single field, one
+by one (super tedious) c.f. <a href="https://www.perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/">this previous post</a></li>
+</ul>]]></content:encoded></item><item><title>Direnv nested</title><link>https://www.perrotta.dev/2024/08/direnv-nested/</link><pubDate>Thu, 01 Aug 2024 01:02:10 +0200</pubDate><guid>https://www.perrotta.dev/2024/08/direnv-nested/</guid><description>&lt;p>I covered &lt;a href="https://www.perrotta.dev/2022/01/direnv-automate-your-environment-variables/">&lt;code>direnv&lt;/code>&lt;/a> before.&lt;/p>
 &lt;p>&lt;strong>New scenario&lt;/strong>: Given a directory structure with two nested &lt;code>.envrc&lt;/code>s:&lt;/p></description><content:encoded><![CDATA[<p>I covered <a href="https://www.perrotta.dev/2022/01/direnv-automate-your-environment-variables/"><code>direnv</code></a> before.</p>
 <p><strong>New scenario</strong>: Given a directory structure with two nested <code>.envrc</code>s:</p>
 <pre tabindex="0"><code>% tree -a top
@@ -599,26 +629,4 @@ command.</p>
 </span></span><span style="display:flex;"><span>^restart^status
 </span></span></code></pre></div><h2 id="one-observation">one observation</h2>
 <p><code>zsh</code> will run the substitution right away, whereas <code>bash</code> will allow you
-to review and edit the replaced command before running it.</p>]]></content:encoded></item><item><title>pyenv</title><link>https://www.perrotta.dev/2024/03/pyenv/</link><pubDate>Sun, 10 Mar 2024 22:18:34 +0100</pubDate><guid>https://www.perrotta.dev/2024/03/pyenv/</guid><description>&lt;p>When working on Python projects, &lt;a href="https://github.com/pyenv/pyenv">&lt;code>pyenv&lt;/code>&lt;/a> is a
-great python environment / version manager, especially on macOS wherein you
-cannot easily control the python system version.&lt;/p></description><content:encoded><![CDATA[<p>When working on Python projects, <a href="https://github.com/pyenv/pyenv"><code>pyenv</code></a> is a
-great python environment / version manager, especially on macOS wherein you
-cannot easily control the python system version.</p>
-<p>I&rsquo;d recommend to install it with homebrew (<code>brew install pyenv</code>).</p>
-<p>The upstream documentation is great. The commands you&rsquo;ll typically use are:</p>
-<ul>
-<li><code>pyenv versions</code>: list all installed versions</li>
-<li><code>pyenv global &lt;version&gt;</code>: set a specific python version for your whole system</li>
-<li><code>pyenv local</code>: set a specific python version only for a specific project
-(directory)</li>
-</ul>
-<p>And then it&rsquo;s handy to add the following blurb to your shell rc file to make
-<code>pyenv</code> work properly out-of-the-box:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># pyenv: https://github.com/pyenv/pyenv</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> hash pyenv &gt;/dev/null 2&gt;&amp;1; <span style="color:#66d9ef">then</span>
-</span></span><span style="display:flex;"><span>	export PYENV_ROOT<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$HOME<span style="color:#e6db74">/.pyenv&#34;</span>
-</span></span><span style="display:flex;"><span>	path_munge <span style="color:#e6db74">&#34;</span>$PYENV_ROOT<span style="color:#e6db74">/bin&#34;</span>
-</span></span><span style="display:flex;"><span>	eval <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>pyenv init -<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
-</span></span></code></pre></div><p>Note that <code>path_munge</code> is a custom function, it merely appends the given
-argument to the <code>$PATH</code>.</p>]]></content:encoded></item></channel></rss>
+to review and edit the replaced command before running it.</p>]]></content:encoded></item></channel></rss>
