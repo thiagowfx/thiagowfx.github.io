@@ -154,6 +154,22 @@ We could also add:
 
 ...to ensure that a plain `make` invokation behaves like `make help`.
 
+**Edit(2024-08-08)**: I had to make one small adaptation[^2] to make it work with
+dependencies, which is t he whole point of `make`:
+
+```
+help:  ## Show this help.
+	@grep -E '^[a-zA-Z_-]+([ \t]+[a-zA-Z_-]+)*:[ \ta-zA-Z_-]*## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {n=split($$1, targets, /[ \t]+/); for (i=1; i<=n; i++) {if (targets[i] != "") printf "\033[36m%-30s\033[0m %s\n", targets[i], $$2}}' | sort
+```
+
+The previous version would not recognize the following entry:
+
+```
+all-in-dev: edit webhook  ## Run all necessary steps in the development environment.`
+```
+
 [^1]: If I'll start to talk about "AI" in this blog, the very least I can do is
     to call them what they really are: **LLMs**. The "AI" acronym is currently _way_
     too hyped.
+[^2]: Never fully trust LLMs. Well, drop the _fully_. Just **never trust LLMs**,
+    period.
