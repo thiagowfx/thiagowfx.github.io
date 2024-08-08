@@ -101,13 +101,23 @@ webhook-edit                   Modify github webhooks to the deploy servers.
 <p>We could also add:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span>.DEFAULT_GOAL <span style="color:#f92672">:=</span> help
 </span></span></code></pre></div><p>&hellip;to ensure that a plain <code>make</code> invokation behaves like <code>make help</code>.</p>
-<div class="footnotes" role="doc-endnotes">
+<p><strong>Edit(2024-08-08)</strong>: I had to make one small adaptation<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> to make it work with
+dependencies, which is t he whole point of <code>make</code>:</p>
+<pre tabindex="0"><code>help:  ## Show this help.
+	@grep -E &#39;^[a-zA-Z_-]+([ \t]+[a-zA-Z_-]+)*:[ \ta-zA-Z_-]*## .*$$&#39; $(MAKEFILE_LIST) | awk &#39;BEGIN {FS = &#34;:.*?## &#34;}; {n=split($$1, targets, /[ \t]+/); for (i=1; i&lt;=n; i++) {if (targets[i] != &#34;&#34;) printf &#34;\033[36m%-30s\033[0m %s\n&#34;, targets[i], $$2}}&#39; | sort
+</code></pre><p>The previous version would not recognize the following entry:</p>
+<pre tabindex="0"><code>all-in-dev: edit webhook  ## Run all necessary steps in the development environment.`
+</code></pre><div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
 <p>If I&rsquo;ll start to talk about &ldquo;AI&rdquo; in this blog, the very least I can do is
 to call them what they really are: <strong>LLMs</strong>. The &ldquo;AI&rdquo; acronym is currently <em>way</em>
 too hyped.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Never fully trust LLMs. Well, drop the <em>fully</em>. Just <strong>never trust LLMs</strong>,
+period.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>
