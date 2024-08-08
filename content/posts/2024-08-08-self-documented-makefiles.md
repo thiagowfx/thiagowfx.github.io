@@ -38,7 +38,7 @@ edit: edit-webhook
 edit-webhook webhook-edit:
 	"$$EDITOR" "$(TERRAFORM_GITHUB_PATH)/main.tf"
 
-# Apply github webhooks from to the deploy servers.
+# Apply github webhooks to the deploy servers.
 webhook:
 	$(TERRAFORM) -chdir="$(TERRAFORM_GITHUB_PATH)" apply
 
@@ -106,13 +106,20 @@ webhook:   Apply github webhooks to the deploy servers.
 
 The second source suggested:
 
+```make
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+```
+
+...which produces:
+
 ```
 % make help
 edit                           Edit all files.
 webhook                        Apply github webhooks to the deploy servers.
 ```
 
-The formatting is great, but it does not match multiple targets in a single
+The formatting is great, but alas it does not match multiple targets in a single
 line.
 
 I could have modified the targets to be like this:
@@ -155,11 +162,11 @@ We could also add:
 ...to ensure that a plain `make` invokation behaves like `make help`.
 
 **Edit(2024-08-08)**: I had to make one small adaptation[^2] to make it work with
-dependencies, which is t he whole point of `make`:
+dependencies, which is the whole point of `make`:
 
 ```
 help:  ## Show this help.
-	@grep -E '^[a-zA-Z_-]+([ \t]+[a-zA-Z_-]+)*:[ \ta-zA-Z_-]*## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {n=split($$1, targets, /[ \t]+/); for (i=1; i<=n; i++) {if (targets[i] != "") printf "\033[36m%-30s\033[0m %s\n", targets[i], $$2}}' | sort
+	@grep -E '^[.a-zA-Z_-]+([ \t]+[.a-zA-Z_-]+)*:[ \t.a-zA-Z_-]*## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {n=split($$1, targets, /[ \t]+/); for (i=1; i<=n; i++) {if (targets[i] != "") printf "\033[36m%-30s\033[0m %s\n", targets[i], $$2}}' | sort
 ```
 
 The previous version would not recognize the following entry:
