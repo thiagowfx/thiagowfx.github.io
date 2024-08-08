@@ -1,4 +1,116 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.131.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS</copyright><lastBuildDate>Tue, 06 Aug 2024 14:39:31 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Optimize PNG images</title><link>https://www.perrotta.dev/2024/08/optimize-png-images/</link><pubDate>Tue, 06 Aug 2024 14:39:31 +0200</pubDate><guid>https://www.perrotta.dev/2024/08/optimize-png-images/</guid><description>&lt;p>Before checking &lt;code>.png&lt;/code> images into git repositories, you should optimize them –
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.131.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS</copyright><lastBuildDate>Thu, 08 Aug 2024 10:42:49 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Self-documented Makefiles</title><link>https://www.perrotta.dev/2024/08/self-documented-makefiles/</link><pubDate>Thu, 08 Aug 2024 10:42:49 +0200</pubDate><guid>https://www.perrotta.dev/2024/08/self-documented-makefiles/</guid><description>&lt;p>&lt;code>Makefile&lt;/code>s are often great &lt;code>bash&lt;/code> script replacements. Instead of creating a
+&lt;code>bash&lt;/code> script with multiple functions with various dependencies (from a
+topological graph viewpoint), just create a bunch of &lt;code>Makefile&lt;/code> targets.&lt;/p></description><content:encoded><![CDATA[<p><code>Makefile</code>s are often great <code>bash</code> script replacements. Instead of creating a
+<code>bash</code> script with multiple functions with various dependencies (from a
+topological graph viewpoint), just create a bunch of <code>Makefile</code> targets.</p>
+<p>Recently I found myself writing the following <code>Makefile</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span><span style="color:#75715e"># This Makefile is used to bootstrap the ArgoCD installation in the cluster.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"># It is idempotent.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>ROOT <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>shell git rev-parse --show-toplevel<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>TERRAFORM_GITHUB_PATH <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>ROOT<span style="color:#66d9ef">)</span><span style="color:#e6db74">/terraform/modules/global-github&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TERRAFORM <span style="color:#f92672">:=</span> terraform
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">all</span><span style="color:#f92672">:</span> webhook
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Update helm dependencies.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">helm helm-dep-update</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>	helm dep update <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>ROOT<span style="color:#66d9ef">)</span><span style="color:#e6db74">/helm/argocd&#34;</span>
+</span></span><span style="display:flex;"><span>	helm dep update <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>ROOT<span style="color:#66d9ef">)</span><span style="color:#e6db74">/helm/external-secrets&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Edit all files.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">edit</span><span style="color:#f92672">:</span> edit-webhook
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Modify github webhooks to the deploy servers.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">edit-webhook webhook-edit</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;</span>$$<span style="color:#e6db74">EDITOR&#34;</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>TERRAFORM_GITHUB_PATH<span style="color:#66d9ef">)</span><span style="color:#e6db74">/main.tf&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Apply github webhooks from to the deploy servers.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">webhook</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">$(</span>TERRAFORM<span style="color:#66d9ef">)</span> -chdir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>TERRAFORM_GITHUB_PATH<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> apply
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">.PHONY</span><span style="color:#f92672">:</span> all edit edit-webhook helm helm-dep-update webhook webhook-edit
+</span></span></code></pre></div><p>As you can see, there are a bunch of comments on top of each target. The
+question is: How to surface these comments to the user?</p>
+<p>A <code>make help</code> command would be great.</p>
+<p>With a bit of searching, I found:</p>
+<ul>
+<li><a href="https://gist.github.com/prwhite/8168133">https://gist.github.com/prwhite/8168133</a></li>
+<li><a href="https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html">https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html</a></li>
+</ul>
+<p>These were good starting points. The technique was to transform the above
+<code>Makefile</code> into the following one:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span><span style="color:#75715e"># This Makefile is used to bootstrap the ArgoCD installation in the cluster.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"># It is idempotent.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>ROOT <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>shell git rev-parse --show-toplevel<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>TERRAFORM_GITHUB_PATH <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>ROOT<span style="color:#66d9ef">)</span><span style="color:#e6db74">/terraform/modules/global-github&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TERRAFORM <span style="color:#f92672">:=</span> terraform
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">all</span><span style="color:#f92672">:</span> webhook
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">helm helm-dep-update</span><span style="color:#f92672">:</span>  <span style="color:#75715e">## Update helm dependencies.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	helm dep update <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>ROOT<span style="color:#66d9ef">)</span><span style="color:#e6db74">/helm/argocd&#34;</span>
+</span></span><span style="display:flex;"><span>	helm dep update <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>ROOT<span style="color:#66d9ef">)</span><span style="color:#e6db74">/helm/external-secrets&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">edit</span><span style="color:#f92672">:</span> edit-webhook  <span style="color:#75715e">## Edit all files.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">edit-webhook webhook-edit</span><span style="color:#f92672">:</span>  <span style="color:#75715e">## Modify github webhooks to the deploy servers.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#e6db74">&#34;</span>$$<span style="color:#e6db74">EDITOR&#34;</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>TERRAFORM_GITHUB_PATH<span style="color:#66d9ef">)</span><span style="color:#e6db74">/main.tf&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webhook</span><span style="color:#f92672">:</span>  <span style="color:#75715e">## Apply github webhooks to the deploy servers.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">$(</span>TERRAFORM<span style="color:#66d9ef">)</span> -chdir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>TERRAFORM_GITHUB_PATH<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> apply
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">.PHONY</span><span style="color:#f92672">:</span> all edit edit-webhook helm helm-dep-update webhook webhook-edit
+</span></span></code></pre></div><p>Then we would add a <code>help</code> target to parse the comments after the <code>##</code>.</p>
+<p>The first source suggested:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span><span style="color:#a6e22e">help</span><span style="color:#f92672">:</span>           <span style="color:#75715e">## Show this help.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	@fgrep -h <span style="color:#e6db74">&#34;##&#34;</span> <span style="color:#66d9ef">$(</span>MAKEFILE_LIST<span style="color:#66d9ef">)</span> | fgrep -v fgrep | sed -e <span style="color:#e6db74">&#39;s/\\$$//&#39;</span> | sed -e <span style="color:#e6db74">&#39;s/##//&#39;</span>
+</span></span></code></pre></div><p>It is simple and gets the job done, but the formatting was poor:</p>
+<pre tabindex="0"><code>% make help
+help:            Show this help.
+helm helm-dep-update:   Update helm dependencies.
+edit: edit-webhook   Edit all files.
+edit-webhook webhook-edit:   Modify github webhooks to the deploy servers.
+webhook:   Apply github webhooks to the deploy servers.
+</code></pre><p>The second source suggested:</p>
+<pre tabindex="0"><code>% make help
+edit                           Edit all files.
+webhook                        Apply github webhooks to the deploy servers.
+</code></pre><p>The formatting is great, but it does not match multiple targets in a single
+line.</p>
+<p>I could have modified the targets to be like this:</p>
+<pre tabindex="0"><code>edit-webhook: webhook-edit
+webhook-edit:  ## Description here
+</code></pre><p>However then I would have to duplicate their comments. I wanted to do better.</p>
+<p>With a bit of LLM<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> magic from GPT-4o, we can have the best of both worlds,
+supporting both single and multiple targets in the same line:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span><span style="color:#a6e22e">help</span><span style="color:#f92672">:</span>  <span style="color:#75715e">## Show this help.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	@grep -E <span style="color:#e6db74">&#39;^[a-zA-Z_-]+([ \t]+[a-zA-Z_-]+)*:[ \t]*## .*$$&#39;</span> <span style="color:#66d9ef">$(</span>MAKEFILE_LIST<span style="color:#66d9ef">)</span> | awk <span style="color:#e6db74">&#39;BEGIN {FS = &#34;:.*?## &#34;}; {n=split($$1, targets, /[ \t]+/); for (i=1; i&lt;=n; i++) {if (targets[i] != &#34;&#34;) printf &#34;\033[36m%-30s\033[0m %s\n&#34;, targets[i], $$2}}&#39;</span> | sort
+</span></span></code></pre></div><p>The output (amazing!):</p>
+<pre tabindex="0"><code>% make help
+edit-webhook                   Modify github webhooks to the deploy servers.
+helm                           Update helm dependencies.
+helm-dep-update                Update helm dependencies.
+help                           Show this help.
+webhook                        Apply github webhooks the deploy servers.
+webhook-edit                   Modify github webhooks to the deploy servers.
+</code></pre><p>The chat session: <a href="https://chatgpt.com/share/f9872dfa-650e-4a0c-b974-701181c237c6">https://chatgpt.com/share/f9872dfa-650e-4a0c-b974-701181c237c6</a>.</p>
+<p>We could also add:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span>.DEFAULT_GOAL <span style="color:#f92672">:=</span> help
+</span></span></code></pre></div><p>&hellip;to ensure that a plain <code>make</code> invokation behaves like <code>make help</code>.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>If I&rsquo;ll start to talk about &ldquo;AI&rdquo; in this blog, the very least I can do is
+to call them what they really are: <strong>LLMs</strong>. The &ldquo;AI&rdquo; acronym is currently <em>way</em>
+too hyped.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>Optimize PNG images</title><link>https://www.perrotta.dev/2024/08/optimize-png-images/</link><pubDate>Tue, 06 Aug 2024 14:39:31 +0200</pubDate><guid>https://www.perrotta.dev/2024/08/optimize-png-images/</guid><description>&lt;p>Before checking &lt;code>.png&lt;/code> images into git repositories, you should optimize them –
 mostly for their file size.&lt;/p></description><content:encoded><![CDATA[<p>Before checking <code>.png</code> images into git repositories, you should optimize them –
 mostly for their file size.</p>
 <p>The Chromium project provides <a href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/tools/resources/optimize-png-files.sh">this
@@ -575,44 +687,4 @@ run.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh workflow run package-release-dispatch.yml --ref master -f ref<span style="color:#f92672">=</span>master <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  sleep <span style="color:#ae81ff">3</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  gh run view <span style="color:#66d9ef">$(</span>gh run list --workflow<span style="color:#f92672">=</span>package-release-dispatch.yml --json databaseId --jq <span style="color:#e6db74">&#39;.[0].databaseId&#39;</span><span style="color:#66d9ef">)</span> -w
-</span></span></code></pre></div>]]></content:encoded></item><item><title>Pritunl log in via CLI</title><link>https://www.perrotta.dev/2024/05/pritunl-log-in-via-cli/</link><pubDate>Tue, 07 May 2024 16:03:27 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/pritunl-log-in-via-cli/</guid><description>&lt;p>&lt;a href="https://pritunl.com/">Pritunl&lt;/a> is an Enterprise Distributed OpenVPN server.&lt;/p>
-&lt;p>In order to run its client on macOS, an &lt;code>.app&lt;/code> is provided. However, using it to
-log in every day is quite tedious.&lt;/p>
-&lt;p>Let&amp;rsquo;s automate it so that we can connect to the VPN with a single command.&lt;/p></description><content:encoded><![CDATA[<p><a href="https://pritunl.com/">Pritunl</a> is an Enterprise Distributed OpenVPN server.</p>
-<p>In order to run its client on macOS, an <code>.app</code> is provided. However, using it to
-log in every day is quite tedious.</p>
-<p>Let&rsquo;s automate it so that we can connect to the VPN with a single command.</p>
-<p>In order to fetch the credentials in this example in a secure manner, we&rsquo;ll be
-using 1password. <a href="https://www.passwordstore.org/"><code>pass</code></a> would have worked just
-as fine.</p>
-<p>First, configure Pritunl via its app UI, creating a profile for your corp
-credentials.</p>
-<p>Then figure out what the profile ID you just created is:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>profile_id<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>/Applications/Pritunl.app/Contents/Resources/pritunl-client list --json | jq -r <span style="color:#e6db74">&#39;.[0].id&#39;</span><span style="color:#66d9ef">)</span>
-</span></span></code></pre></div><p>Now, create an entry in 1Password for your Pritunl credentials associated with
-the profile above.</p>
-<p>Let&rsquo;s use the <code>op</code> official CLI tool from 1Password to fetch the password and
-the OTP (one-time password) for the &ldquo;Pritunl (VPN)&rdquo; entry (change it
-accordingly).</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>op_id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#39;Pritunl (VPN)&#39;</span> --format json | jq -r <span style="color:#e6db74">&#39;.id&#39;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>password<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op read <span style="color:#e6db74">&#34;op://private/</span>$op_id<span style="color:#e6db74">/password&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>otp<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#34;</span>$op_id<span style="color:#e6db74">&#34;</span> --totp<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>Now we can use the <code>pritunl-client</code> to log in programmatically:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pritunl-client start <span style="color:#e6db74">&#34;</span>$profile_id<span style="color:#e6db74">&#34;</span> --password <span style="color:#e6db74">&#34;</span>$password$otp<span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>Then verify it has indeed connected:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pritunl-client list
-</span></span></code></pre></div><p>The trick is that it accepts the concatenation of the password with the OTP as
-the password. There&rsquo;s not a separate <code>--otp</code> flag.</p>
-<p>Putting everything together, we can create a function for our favorite shell:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Log into corp VPN</span>
-</span></span><span style="display:flex;"><span>pritunl_login<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	local profile_id<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>/Applications/Pritunl.app/Contents/Resources/pritunl-client list --json | jq -r <span style="color:#e6db74">&#39;.[0].id&#39;</span><span style="color:#66d9ef">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	local op_id<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#39;Pritunl (VPN)&#39;</span> --format json | jq -r <span style="color:#e6db74">&#39;.id&#39;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>	local password<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op read <span style="color:#e6db74">&#34;op://private/</span>$op_id<span style="color:#e6db74">/password&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>	local otp<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>op item get <span style="color:#e6db74">&#34;</span>$op_id<span style="color:#e6db74">&#34;</span> --totp<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	pritunl-client start <span style="color:#e6db74">&#34;</span>$profile_id<span style="color:#e6db74">&#34;</span> --password <span style="color:#e6db74">&#34;</span>$password$otp<span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>	pritunl-client list
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span></code></pre></div>]]></content:encoded></item></channel></rss>
