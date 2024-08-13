@@ -1,4 +1,46 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>not just serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on not just serendipity</description><generator>Hugo -- 0.131.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS</copyright><lastBuildDate>Sat, 10 Aug 2024 21:30:27 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Release</title><link>https://www.perrotta.dev/2024/08/release/</link><pubDate>Sat, 10 Aug 2024 21:30:27 +0200</pubDate><guid>https://www.perrotta.dev/2024/08/release/</guid><description>me: walks towards a linux laptop from someone in a party1
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>not just serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on not just serendipity</description><generator>Hugo -- 0.132.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS</copyright><lastBuildDate>Tue, 13 Aug 2024 11:27:17 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>JSON schema negation</title><link>https://www.perrotta.dev/2024/08/json-schema-negation/</link><pubDate>Tue, 13 Aug 2024 11:27:17 +0200</pubDate><guid>https://www.perrotta.dev/2024/08/json-schema-negation/</guid><description>&lt;p>&lt;a href="https://json-schema.org/">JSON Schema&lt;/a> is a powerful validation tool to enforce
+a given structure and/or data type in JSON and YAML files.&lt;/p>
+&lt;p>&lt;strong>Problem statement&lt;/strong>: Disallow &lt;code>aws.iam_role&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>, with the implicit goal of
+allowing &lt;code>aws.iamRole&lt;/code>. Because naming and sticking to conventions is hard.&lt;/p>
+&lt;p>Illustration:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">aws&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">iamRole&lt;/span>: &lt;span style="color:#ae81ff">fooArn&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">iam_role&lt;/span>: &lt;span style="color:#ae81ff">barArn &lt;/span> &lt;span style="color:#75715e"># &amp;lt;-- disallow&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description><content:encoded><![CDATA[<p><a href="https://json-schema.org/">JSON Schema</a> is a powerful validation tool to enforce
+a given structure and/or data type in JSON and YAML files.</p>
+<p><strong>Problem statement</strong>: Disallow <code>aws.iam_role</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, with the implicit goal of
+allowing <code>aws.iamRole</code>. Because naming and sticking to conventions is hard.</p>
+<p>Illustration:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">aws</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">iamRole</span>: <span style="color:#ae81ff">fooArn</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">iam_role</span>: <span style="color:#ae81ff">barArn </span> <span style="color:#75715e"># &lt;-- disallow</span>
+</span></span></code></pre></div><p>We can accomplish this with the following schema (<code>% cat values.schema.json</code>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;$schema&#34;</span>: <span style="color:#e6db74">&#34;http://json-schema.org/draft-07/schema#&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Schema that disallows aws.iam_role&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;object&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;additionalProperties&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;properties&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;aws&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;object&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;additionalProperties&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;not&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;required&#34;</span>: [<span style="color:#e6db74">&#34;iam_role&#34;</span>]
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Test</strong>: <code>helm lint</code> should fail that schema validation with the aforementioned
+input.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>This is for a <a href="https://helm.sh/docs/topics/charts/#schema-files">helm
+chart</a>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>Release</title><link>https://www.perrotta.dev/2024/08/release/</link><pubDate>Sat, 10 Aug 2024 21:30:27 +0200</pubDate><guid>https://www.perrotta.dev/2024/08/release/</guid><description>me: walks towards a linux laptop from someone in a party1
 me: runs cat /etc/*release
 &amp;hellip;Gentoo Linux&amp;hellip;
 A smile appears. Enlightenment irradiates.
@@ -666,35 +708,4 @@ direct 1:1 mapping with the classic g3doc callouts at Google (except for
 <ul>
 <li><a href="https://github.blog/changelog/2023-12-14-new-markdown-extension-alerts-provide-distinctive-styling-for-significant-content/">https://github.blog/changelog/2023-12-14-new-markdown-extension-alerts-provide-distinctive-styling-for-significant-content/</a></li>
 <li><a href="https://github.com/orgs/community/discussions/16925">https://github.com/orgs/community/discussions/16925</a></li>
-</ul>]]></content:encoded></item><item><title>Pipes: RSS Manipulation</title><link>https://www.perrotta.dev/2024/07/pipes-rss-manipulation/</link><pubDate>Wed, 03 Jul 2024 21:50:24 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/pipes-rss-manipulation/</guid><description>&lt;p>&lt;a href="https://en.wikipedia.org/wiki/Yahoo!_Pipes">Yahoo! Pipes&lt;/a> is not around
-anymore, however there is a modern replacement for it: &lt;a href="https://www.pipes.digital/">https://www.pipes.digital/&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p><a href="https://en.wikipedia.org/wiki/Yahoo!_Pipes">Yahoo! Pipes</a> is not around
-anymore, however there is a modern replacement for it: <a href="https://www.pipes.digital/">https://www.pipes.digital/</a>.</p>
-<p>It was on Hacker News recently: <a href="https://news.ycombinator.com/item?id=40841980">https://news.ycombinator.com/item?id=40841980</a></p>
-<p>Here is a practical use case for it: to filter out unwanted episodes from
-podcast RSS feeds.</p>
-<p>I follow <a href="https://jovemnerd.com.br/podcasts/nerdcast">Jovem Nerd - Nerdcasts</a>.
-They are a Brazilian podcast.</p>
-<p>However, in the recent years, they added a lot of other (unrelated) podcasts
-from their network to the main NerdCast feed, effectively polluting it. The
-cleaner and elegant action to do would have been to publish individual RSS feeds
-for each of their podcast series, and perhaps an additional one to contain all
-of them, for those who would like to subscribe to everything. But that&rsquo;s not
-what they do.</p>
-<p>This is an effective marketing strategy for them, because the smaller podcast
-series benefit from the exposure in the main feed. At the same time, this is
-hostile to listeners, as we end up receiving bundling of episodes we are not
-looking for.</p>
-<p>Enter the new Pipes.</p>
-<p>With it I can build the following pipeline:</p>
-<ul>
-<li>fetch the nerdcast feed: <a href="https://api.jovemnerd.com.br/feed-nerdcast/">https://api.jovemnerd.com.br/feed-nerdcast/</a></li>
-<li>filter only the items that contain &ldquo;NerdCast&rdquo; in <code>item.title</code></li>
-<li>publish a new feed</li>
-</ul>
-<p>The end result (&ldquo;NerdCast ONLY&rdquo;):</p>
-<ul>
-<li>Preview: <a href="https://www.pipes.digital/feedpreview/VqaEW4qJ">https://www.pipes.digital/feedpreview/VqaEW4qJ</a></li>
-<li>Raw feed: <a href="https://www.pipes.digital/feed/VqaEW4qJ">https://www.pipes.digital/feed/VqaEW4qJ</a>?</li>
-</ul>
-<p>You are welcome.</p>
-<p>Documentation: <a href="https://www.pipes.digital/docs">https://www.pipes.digital/docs</a></p>]]></content:encoded></item></channel></rss>
+</ul>]]></content:encoded></item></channel></rss>
