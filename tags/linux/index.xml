@@ -1,4 +1,31 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Linux on not just serendipity</title><link>https://www.perrotta.dev/tags/linux/</link><description>Recent content in Linux on not just serendipity</description><generator>Hugo -- 0.132.1</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Sat, 20 Jul 2024 16:19:53 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Alpine Linux: How to install all manpages (idiomatically)</title><link>https://www.perrotta.dev/2024/07/alpine-linux-how-to-install-all-manpages-idiomatically/</link><pubDate>Sat, 20 Jul 2024 16:19:53 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/alpine-linux-how-to-install-all-manpages-idiomatically/</guid><description>&lt;p>This post is a reply to
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Linux on not just serendipity</title><link>https://www.perrotta.dev/tags/linux/</link><description>Recent content in Linux on not just serendipity</description><generator>Hugo -- 0.133.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Sun, 18 Aug 2024 17:32:48 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>apk autoupdate on alpine linux</title><link>https://www.perrotta.dev/2024/08/apk-autoupdate-on-alpine-linux/</link><pubDate>Sun, 18 Aug 2024 17:32:48 +0200</pubDate><guid>https://www.perrotta.dev/2024/08/apk-autoupdate-on-alpine-linux/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Upon running &lt;code>doas apk upgrade&lt;/code> on Alpine Linux, select
+packages with binaries backed by system services should be automatically
+restarted.&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Upon running <code>doas apk upgrade</code> on Alpine Linux, select
+packages with binaries backed by system services should be automatically
+restarted.</p>
+<p>Deb-based systems have
+<a href="https://manpages.debian.org/bookworm/debian-goodies/checkrestart.8.en.html"><code>checkrestart(8)</code></a>.</p>
+<p>On Alpine, the best available approach as of today is <a href="https://github.com/jirutka/apk-autoupdate/">https://github.com/jirutka/apk-autoupdate/</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>doas apk add apk-autoupdate
+</span></span><span style="display:flex;"><span>$EDITOR /etc/apk/autoupdate.conf
+</span></span></code></pre></div><p>Then make the two following changes<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
+<pre tabindex="0"><code># Because the default is &#39;*&#39;, which will prevent all services from restarting.
+services_blacklist=&#34;&#34;
+
+# List of services that should be restarted upon package upgrades.
+services_whitelist=&#34;miniflux tailscale&#34;
+</code></pre><p>From this point on, whenever there are system upgrades for the aforementioned
+services (<code>doas apk upgrade</code>), they will be automatically restarted. There&rsquo;s no
+need for <code>doas /etc/init.d/miniflux restart</code>.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>h/t to @fossdd for replying to my
+<a href="https://github.com/jirutka/apk-autoupdate/issues/8">https://github.com/jirutka/apk-autoupdate/issues/8</a> thread.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>Alpine Linux: How to install all manpages (idiomatically)</title><link>https://www.perrotta.dev/2024/07/alpine-linux-how-to-install-all-manpages-idiomatically/</link><pubDate>Sat, 20 Jul 2024 16:19:53 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/alpine-linux-how-to-install-all-manpages-idiomatically/</guid><description>&lt;p>This post is a reply to
 &lt;a href="https://tilde.town/~kzimmermann/articles/installing_alpine_manpages.html">https://tilde.town/~kzimmermann/articles/installing_alpine_manpages.html&lt;/a>.&lt;/p>
 &lt;p>The author describes their experience while attempting to install all man pages
 for all the packages in use in their system.&lt;/p>
@@ -1033,132 +1060,6 @@ or <a href="https://en.wikipedia.org/wiki/Zram">Wikipedia</a>.</p>
 <ol>
 <li id="fn:1">
 <p>zswap should have more priority than the swap file.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item><item><title>★ systemd: share environment variables with xorg</title><link>https://www.perrotta.dev/2022/01/systemd-share-environment-variables-with-xorg/</link><pubDate>Mon, 31 Jan 2022 21:38:54 -0500</pubDate><guid>https://www.perrotta.dev/2022/01/systemd-share-environment-variables-with-xorg/</guid><description>&lt;p>In this post we will learn how to share environment variables (e.g.
-&lt;code>$GDK_SCALE&lt;/code>) between a system user session and X11/Xorg.&lt;/p></description><content:encoded><![CDATA[<p>In this post we will learn how to share environment variables (e.g.
-<code>$GDK_SCALE</code>) between a system user session and X11/Xorg.</p>
-<p>The typical <a href="https://wiki.archlinux.org/title/Xinit"><code>~/.xinitrc</code></a> and/or <a href="https://wiki.archlinux.org/title/Xprofile"><code>~/.xprofile</code></a> setup in
-2020s involves some environment variable exports such as the following:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># fix java application decorations, for tiling window managers</span>
-</span></span><span style="display:flex;"><span>export _JAVA_AWT_WM_NONREPARENTING<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># make Chrome pick up proxy settings stored in gconf</span>
-</span></span><span style="display:flex;"><span>export DESKTOP_SESSION<span style="color:#f92672">=</span>gnome
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for GTK3+</span>
-</span></span><span style="display:flex;"><span>export GDK_DPI_SCALE<span style="color:#f92672">=</span>0.5
-</span></span><span style="display:flex;"><span>export GDK_SCALE<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for QT</span>
-</span></span><span style="display:flex;"><span>export QT_FONT_DPI<span style="color:#f92672">=</span><span style="color:#ae81ff">192</span>
-</span></span></code></pre></div><p>This particular set of customizations stems from my <a href="https://github.com/thiagowfx/.dotfiles">dotfiles</a> but
-there isn&rsquo;t anything special about it. I&rsquo;ll include an explanation anyway for
-completeness:</p>
-<ul>
-<li>
-<p>The java setting is meant for launching certain java-based applications from
-within a tiling window manager.</p>
-</li>
-<li>
-<p>All the other settings are meant for 4K HiDPI displays. The baseline DPI is
-96, which is too small for 4K monitors, the fonts and icons all look tiny. In
-order to make them scale it&rsquo;s necessary to use a higher DPI. Typical setups
-use either 144 (x1.5) or 192 (x2.0), the bigger the DPI the bigger fonts and
-icons will appear in the screen.</p>
-</li>
-</ul>
-<p>Those exports work well for graphical applications launched from your favorite
-window manager after it has already started, however if you decide to launch an
-application from <code>systemd</code>, those settings will not be picked up by it.</p>
-<p>For example, if you decide to manage <a href="http://jonls.dk/redshift/"><code>redshift</code></a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> (more
-specifically, <code>redshift-gtk</code> which has a system tray app) from a systemd user
-session<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, its fonts will look small.</p>
-<p>There are several ways to address this issue.</p>
-<p>One of them is to edit the service file directly:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ systemctl --user edit redshift-gtk
-</span></span></code></pre></div><p>And then add:</p>
-<pre tabindex="0"><code>[Unit]
-Environment=GDK_SCALE=2 GDK_DPI_SCALE=0.5
-</code></pre><p>Which results in:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.config/systemd/user/redshift-gtk.service.d/override.conf
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Unit<span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span>Environment<span style="color:#f92672">=</span>GDK_SCALE<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> GDK_DPI_SCALE<span style="color:#f92672">=</span>0.5
-</span></span></code></pre></div><p>Which you can make effective by:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ systemctl --user daemon-reload
-</span></span><span style="display:flex;"><span>$ systemctl --user restart redshift-gtk
-</span></span></code></pre></div><p>I am not a fan of this approach though, because this step would need to be repeated
-to all service files you want to manage this way. There&rsquo;s a better, <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> way to
-do so.</p>
-<p><code>systemd</code> supports <a href="https://www.freedesktop.org/software/systemd/man/environment.d.html">environment
-files</a>
-(<code>environment.d(5)</code>). User-defined ones live in
-<code>~/.config/environment.d/*.conf</code> by default.</p>
-<p>This means we could produce the following file:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.config/environment.d/user.conf
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># systemd environment.d(5) EnvironmentFile</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://www.freedesktop.org/software/systemd/man/environment.d.html</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Do not use export here.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Alternatively</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#   systemctl --user import-environment [var1] [var2] [...]</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Troubleshooting</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#   systemctl --user show-environment</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># fix java application decorations, for tiling window managers</span>
-</span></span><span style="display:flex;"><span>_JAVA_AWT_WM_NONREPARENTING<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># make Chrome pick up proxy settings stored in gconf</span>
-</span></span><span style="display:flex;"><span>DESKTOP_SESSION<span style="color:#f92672">=</span>gnome
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for GTK3+</span>
-</span></span><span style="display:flex;"><span>GDK_DPI_SCALE<span style="color:#f92672">=</span>0.5
-</span></span><span style="display:flex;"><span>GDK_SCALE<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># HiDPI settings for QT</span>
-</span></span><span style="display:flex;"><span>QT_FONT_DPI<span style="color:#f92672">=</span><span style="color:#ae81ff">192</span>
-</span></span></code></pre></div><p>Which is applied to all systemd user service files automatically, no need to
-set <code>Environment=</code> manually everywhere.</p>
-<p>However, now we need to maintain two different files: the systemd <code>.conf</code> one
-and the xorg <code>~/.xinitrc</code> one.</p>
-<p>One elegant way to reduce maintenance burden is, in my opinion, the follownig:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cat ~/.xinitrc
-</span></span><span style="display:flex;"><span>...
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Parse user session environment variables.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># This file is shared with the systemd user instance.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Export all variables: https://stackoverflow.com/a/30969768/1745064</span>
-</span></span><span style="display:flex;"><span>set -a
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span> -r ~/.config/environment.d/user.conf <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> . ~/.config/environment.d/user.conf
-</span></span><span style="display:flex;"><span>set +a
-</span></span></code></pre></div><p>It does what you expect: the underlying shell sources the <code>*.conf</code> file as if
-you were <code>export</code>ing each variable therein.</p>
-<p>One caveat of this setup is that you cannot define the variables
-dynamically; for example, with subshells, with external programs, or with
-simple mathematical operations derived from other variables<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
-<p>Ultimately though you end up with only one file to manage, which is the systemd one.
-<a href="https://en.wikipedia.org/wiki/KISS_principle">KISS</a>™.</p>
-<figure class="align-center "><a href="https://xkcd.com/963/">
-    <img loading="lazy" src="https://imgs.xkcd.com/comics/x11.png#center"
-         alt="Thomas Jefferson thought that every law and every constitution should be torn down and rewritten from scratch every nineteen years--which means X is overdue."/> </a><figcaption>
-            <p>XKCD Courtesy of Randall Munroe</p>
-        </figcaption>
-</figure>
-
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>Redshift adjusts the color temperature of your screen according to your
-surroundings. This may help your eyes hurt less if you are working in front
-of the screen at night. Redshift is similar to <a href="https://justgetflux.com/">f.lux</a>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p><code>systemctl --user start redshift</code>.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3">
-<p>For example, <code>QT_FONT_DPI=$(($GDK_SCALE * 96))</code> or similar.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>
