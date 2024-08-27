@@ -49,4 +49,10 @@ From https://helm.sh/docs/helm/helm_list/:
 > the server's default, which may be much higher than 256. Pairing the '--max'
 > flag with the '--offset' flag allows you to page through results.
 
+Therefore I settle with this form:
+
+```
+$ helm ls -a -A --max 9999 | grep sms
+```
+
 Happy helming.
