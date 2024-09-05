@@ -19,7 +19,7 @@ a git alias that creates a branch with an arbitrary name.
 nbt = !git nb \"thiagowfx/$(shuf -n1 /usr/share/dict/words | tr \"[:upper:]\" \"[:lower:]\")\"
 ```
 
-Running `git nbt` will create a branch such as `thiagowfx/foo`.
+Running `git nbt`[^2] will create a branch such as `thiagowfx/foo`.
 
 The `{username}/` prefix is to make it easier to attribute your branches to
 yourself, which can be handy when working collaboratively with other engineers
@@ -30,3 +30,5 @@ The word after the slash is sourced from dictionary words on your system.
 <!--more-->
 
 [^1]: See https://en.wikipedia.org/wiki/Decision_fatigue, https://en.wikipedia.org/wiki/The_Paradox_of_Choice.
+
+[^2]: `nbt` stands for "new branch throwaway".
