@@ -22,7 +22,7 @@ This is a hack with a dry-run deletion operation.
 Alternatively, use `aws s3 ls`[^1] plus `grep` / `awk` / `sed`:
 
 ```shell
-aws s3 ls --profile {aws_profile} s3://example.com/my/path | awk -F ' ' '{print $4}' | grep '.thiagowfx$'
+aws s3 ls --profile {aws_profile} s3://example.com/my/path | awk -F ' ' '{print $4}' | grep 'thiagowfx$'
 ```
 
 Why would you use `rm` in lieu of `ls`? Mostly because of the built-in
