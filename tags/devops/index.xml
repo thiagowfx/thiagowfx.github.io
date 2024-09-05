@@ -1,4 +1,22 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.134.1</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Wed, 04 Sep 2024 22:01:29 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>git: create a throwaway branch</title><link>https://www.perrotta.dev/2024/09/git-create-a-throwaway-branch/</link><pubDate>Wed, 04 Sep 2024 22:01:29 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/git-create-a-throwaway-branch/</guid><description>&lt;p>Let&amp;rsquo;s say you want to submit a quick, perhaps even trivial, one-off pull request
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.134.1</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 05 Sep 2024 17:09:38 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS S3: search by suffix</title><link>https://www.perrotta.dev/2024/09/aws-s3-search-by-suffix/</link><pubDate>Thu, 05 Sep 2024 17:09:38 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/aws-s3-search-by-suffix/</guid><description>&lt;p>Given an AWS S3 bucket, how to recursively list all objects within it that match
+a given suffix?&lt;/p></description><content:encoded><![CDATA[<p>Given an AWS S3 bucket, how to recursively list all objects within it that match
+a given suffix?</p>
+<p>The following example searches for all objects that end with <code>thiagowfx</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>aws s3 rm --profile <span style="color:#f92672">{</span>aws_profile<span style="color:#f92672">}</span> s3://example.com/my/path/ --recursive --dryrun --exclude <span style="color:#e6db74">&#39;*&#39;</span> --include <span style="color:#e6db74">&#34;*thiagowfx&#34;</span>
+</span></span></code></pre></div><p>This is a hack with a dry-run deletion operation.</p>
+<p>Alternatively, use <code>aws s3 ls</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> plus <code>grep</code> / <code>awk</code> / <code>sed</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>aws s3 ls --profile <span style="color:#f92672">{</span>aws_profile<span style="color:#f92672">}</span> s3://example.com/my/path | awk -F <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#e6db74">&#39;{print $4}&#39;</span> | grep <span style="color:#e6db74">&#39;.thiagowfx$&#39;</span>
+</span></span></code></pre></div><p>Why would you use <code>rm</code> in lieu of <code>ls</code>? Mostly because of the built-in
+<code>--include</code> / <code>--exclude</code> options. If you happen to have millions of objects in
+your S3 bucket, then you do not need to list them all.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://docs.aws.amazon.com/cli/latest/reference/s3/ls.html">https://docs.aws.amazon.com/cli/latest/reference/s3/ls.html</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>git: create a throwaway branch</title><link>https://www.perrotta.dev/2024/09/git-create-a-throwaway-branch/</link><pubDate>Wed, 04 Sep 2024 22:01:29 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/git-create-a-throwaway-branch/</guid><description>&lt;p>Let&amp;rsquo;s say you want to submit a quick, perhaps even trivial, one-off pull request
 (PR).&lt;/p>
 &lt;p>One step you can do to minimize the number of decisions&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> to make is to have
 a git alias that creates a branch with an arbitrary name.&lt;/p>
@@ -620,77 +638,4 @@ run.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh workflow run package-release-dispatch.yml --ref master -f ref<span style="color:#f92672">=</span>master <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  sleep <span style="color:#ae81ff">3</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  gh run view <span style="color:#66d9ef">$(</span>gh run list --workflow<span style="color:#f92672">=</span>package-release-dispatch.yml --json databaseId --jq <span style="color:#e6db74">&#39;.[0].databaseId&#39;</span><span style="color:#66d9ef">)</span> -w
-</span></span></code></pre></div>]]></content:encoded></item><item><title>Terraform: AWS deployment to random availability zones</title><link>https://www.perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/</link><pubDate>Tue, 21 May 2024 14:31:03 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/</guid><description>&lt;p>A common scenario: there&amp;rsquo;s a new deployment you would like to roll out to AWS.
-Let&amp;rsquo;s say you pick &amp;ldquo;us-east-1&amp;rdquo; as your cloud region. There are multiple
-availability zones within it:&lt;/p>
-&lt;ul>
-&lt;li>us-east-1a&lt;/li>
-&lt;li>us-east-1b&lt;/li>
-&lt;li>us-east-1c&lt;/li>
-&lt;li>us-east-1d&lt;/li>
-&lt;li>us-east-1e&lt;/li>
-&lt;li>us-east-1f&lt;/li>
-&lt;/ul>
-&lt;p>Suppose you want to pick two of them for your service/app, and you don&amp;rsquo;t
-particularly care about which one. How to proceed?&lt;/p></description><content:encoded><![CDATA[<p>A common scenario: there&rsquo;s a new deployment you would like to roll out to AWS.
-Let&rsquo;s say you pick &ldquo;us-east-1&rdquo; as your cloud region. There are multiple
-availability zones within it:</p>
-<ul>
-<li>us-east-1a</li>
-<li>us-east-1b</li>
-<li>us-east-1c</li>
-<li>us-east-1d</li>
-<li>us-east-1e</li>
-<li>us-east-1f</li>
-</ul>
-<p>Suppose you want to pick two of them for your service/app, and you don&rsquo;t
-particularly care about which one. How to proceed?</p>
-<h2 id="option-1-hard-coding">Option #1: Hard-coding</h2>
-<p>Pick two arbitrary zones and hard-code them.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">variable</span> <span style="color:#e6db74">&#34;availability_zones&#34;</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">type</span>    = list(<span style="color:#a6e22e">string</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">default</span> = [<span style="color:#e6db74">&#34;us-east-1a&#34;</span>, <span style="color:#e6db74">&#34;us-east-1b&#34;</span>]
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
-</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_subnet&#34;</span> <span style="color:#e6db74">&#34;private&#34;</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">vpc_id</span>            = <span style="color:#a6e22e">aws_vpc</span>.<span style="color:#a6e22e">chartmuseum</span>.<span style="color:#a6e22e">id</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">cidr_block</span>        = element(var.<span style="color:#a6e22e">private_subnets</span>, count.<span style="color:#a6e22e">index</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">availability_zone</span> = element(var.<span style="color:#a6e22e">availability_zones</span>, count.<span style="color:#a6e22e">index</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">count</span>             = length(var.<span style="color:#a6e22e">private_subnets</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>Caveat</strong>: <a href="https://www.goodreads.com/book/show/10639.The_Paradox_of_Choice">The paradox of
-choice</a>,
-unnecessary decision fatigue.</p>
-<h2 id="option-2-pick-the-first-two">Option #2: Pick the first two</h2>
-<p>Use the AWS data source to dynamically find all zones, and pick the first two.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">data</span> <span style="color:#e6db74">&#34;aws_availability_zones&#34;</span> <span style="color:#e6db74">&#34;available&#34;</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">state</span> = <span style="color:#e6db74">&#34;available&#34;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
-</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_subnet&#34;</span> <span style="color:#e6db74">&#34;private&#34;</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">vpc_id</span>            = <span style="color:#a6e22e">aws_vpc</span>.<span style="color:#a6e22e">chartmuseum</span>.<span style="color:#a6e22e">id</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">cidr_block</span>        = element(var.<span style="color:#a6e22e">private_subnets</span>, count.<span style="color:#a6e22e">index</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">availability_zone</span> = element(data.<span style="color:#a6e22e">aws_availability_zones</span>.<span style="color:#a6e22e">available</span>.<span style="color:#a6e22e">names</span>, count.<span style="color:#a6e22e">index</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">count</span>             = length(var.<span style="color:#a6e22e">private_subnets</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Note that <code>terraform plan</code> should display the full zone list.</p>
-<p><strong>Caveat</strong>: Heavily biased towards the first two zones.</p>
-<h2 id="option-3-random-shuffling">Option #3: Random shuffling</h2>
-<p>Pick two zones at random!</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-terraform" data-lang="terraform"><span style="display:flex;"><span><span style="color:#66d9ef">data</span> <span style="color:#e6db74">&#34;aws_availability_zones&#34;</span> <span style="color:#e6db74">&#34;available&#34;</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">state</span> = <span style="color:#e6db74">&#34;available&#34;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
-</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;random_shuffle&#34;</span> <span style="color:#e6db74">&#34;aws_availability_zone_names&#34;</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">input</span>        = data.<span style="color:#a6e22e">aws_availability_zones</span>.<span style="color:#a6e22e">available</span>.<span style="color:#a6e22e">names</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">result_count</span> = <span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">
-</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_subnet&#34;</span> <span style="color:#e6db74">&#34;private&#34;</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">vpc_id</span>            = <span style="color:#a6e22e">aws_vpc</span>.<span style="color:#a6e22e">chartmuseum</span>.<span style="color:#a6e22e">id</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">cidr_block</span>        = element(var.<span style="color:#a6e22e">private_subnets</span>, count.<span style="color:#a6e22e">index</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">availability_zone</span> = element(<span style="color:#a6e22e">random_shuffle</span>.<span style="color:#a6e22e">aws_availability_zone_names</span>.<span style="color:#a6e22e">result</span>, count.<span style="color:#a6e22e">index</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">count</span>             = length(var.<span style="color:#a6e22e">private_subnets</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>Winner</strong>: In my opinion, this is the most elegant approach.</p>
-<p><code>random_shuffle</code> will output the selected regions upon running <code>terraform apply</code>.</p>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div>]]></content:encoded></item></channel></rss>
