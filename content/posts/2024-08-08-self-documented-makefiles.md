@@ -5,7 +5,6 @@ tags:
   - bestof
   - dev
   - devops
-  - llm
 ---
 
 `Makefile`s are often great `bash` script replacements. Instead of creating a
