@@ -1,4 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.134.1</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 05 Sep 2024 17:09:38 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS S3: search by suffix</title><link>https://www.perrotta.dev/2024/09/aws-s3-search-by-suffix/</link><pubDate>Thu, 05 Sep 2024 17:09:38 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/aws-s3-search-by-suffix/</guid><description>&lt;p>Given an AWS S3 bucket, how to recursively list all objects within it that match
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.134.1</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Fri, 06 Sep 2024 17:41:30 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>End of life package info</title><link>https://www.perrotta.dev/2024/09/end-of-life-package-info/</link><pubDate>Fri, 06 Sep 2024 17:41:30 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/end-of-life-package-info/</guid><description>&lt;p>&lt;a href="https://endoflife.date/">https://endoflife.date/&lt;/a> is like &lt;a href="https://repology.org/">Repology&lt;/a> but, instead
+of package versions, it tracks the &lt;em>end of life&lt;/em> of various packages, linux
+distributions, frameworks, etc.&lt;/p></description><content:encoded><![CDATA[<p><a href="https://endoflife.date/">https://endoflife.date/</a> is like <a href="https://repology.org/">Repology</a> but, instead
+of package versions, it tracks the <em>end of life</em> of various packages, linux
+distributions, frameworks, etc.</p>
+<p>For example, Alpine Linux: <a href="https://endoflife.date/alpine">https://endoflife.date/alpine</a></p>]]></content:encoded></item><item><title>AWS S3: search by suffix</title><link>https://www.perrotta.dev/2024/09/aws-s3-search-by-suffix/</link><pubDate>Thu, 05 Sep 2024 17:09:38 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/aws-s3-search-by-suffix/</guid><description>&lt;p>Given an AWS S3 bucket, how to recursively list all objects within it that match
 a given suffix?&lt;/p></description><content:encoded><![CDATA[<p>Given an AWS S3 bucket, how to recursively list all objects within it that match
 a given suffix?</p>
 <p>The following example searches for all objects that end with <code>thiagowfx</code>.</p>
@@ -570,72 +575,4 @@ it.</p>
 <pre tabindex="0"><code>$2a$10$HKSHfLu4l7TvOmnLkhUngu2U1pJUUw7hEU0LE1iN84S09fJsZowHm
 </code></pre><p>You could verify it matches e.g. via <a href="https://bcrypt-generator.com/">https://bcrypt-generator.com/</a>.</p>
 <p><strong>Context</strong>: <a href="https://argo-cd.readthedocs.io/en/stable/">ArgoCD</a> expects a
-bcrypt-hashed password in its config file.</p>]]></content:encoded></item><item><title>★ Github actions workflow</title><link>https://www.perrotta.dev/2024/05/github-actions-workflow/</link><pubDate>Tue, 28 May 2024 10:23:22 +0200</pubDate><guid>https://www.perrotta.dev/2024/05/github-actions-workflow/</guid><description>&lt;p>This post exemplifies an efficient workflow to shorten the edit-refresh loop
-when dealing with github actions.&lt;/p></description><content:encoded><![CDATA[<p>This post exemplifies an efficient workflow to shorten the edit-refresh loop
-when dealing with github actions.</p>
-<h2 id="assumptions">Assumptions</h2>
-<ul>
-<li>You have <code>git</code>, <code>jq</code> and the <a href="https://cli.github.com/"><code>gh</code></a> command-line tool
-installed (<code>brew install gh</code>)</li>
-<li>You have a github actions file in
-<code>~/.github/workflows/package-release-dispatch.yml</code>.</li>
-<li>The action has the following form:</li>
-</ul>
-<pre tabindex="0"><code>on:
-  workflow_dispatch:
-    inputs:
-      ref:
-        description: &#39;Ref to build from. This can either be a SHA or a branch/tag&#39;
-        required: true
-        type: string
-  push:
-    branches:
-      - master
-    paths:
-      - &#39;.github/workflows/package-release-dispatch.yml&#39;
-      - &#39;helm/**&#39;
-</code></pre><p>The goal is to iterate on the <code>jobs:</code> section of the action.</p>
-<h2 id="workflow">Workflow</h2>
-<p>Trigger an action run from the command line:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh workflow run package-release-dispatch.yml <span style="color:#f92672">[</span>--ref master<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>-f ref<span style="color:#f92672">=</span>master<span style="color:#f92672">]</span>
-</span></span></code></pre></div><p><code>--ref</code> should be the git branch you&rsquo;re working on, for example,
-<code>thiagowfx/my-cool-feature</code>.</p>
-<p><code>-f</code> provides an input to the workflow. In this case, there&rsquo;s an input named
-<code>ref</code>, which is meant to be the branch the action will act upon.</p>
-<p>The action takes a little while to trigger, we can <code>sleep</code> to give it some time.
-I found that <code>sleep 3</code> is a sensible value (3 seconds).</p>
-<p>How to view the action?</p>
-<p>First we need to get its ID. Here&rsquo;s one way to do so:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh run list --workflow<span style="color:#f92672">=</span>package-release-dispatch.yml --json databaseId --jq <span style="color:#e6db74">&#39;.[0].databaseId&#39;</span>
-</span></span></code></pre></div><h3 id="option-1-via-the-command-line">Option 1) Via the command-line</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh run watch &lt;id&gt;
-</span></span></code></pre></div><p>It&rsquo;s analogous to <code>watch</code>, continuously refreshing the action progress in the
-background, step by step. Example:</p>
-<pre tabindex="0"><code>* master Package release dispatch · 12345678
-Triggered via workflow_dispatch about 1 minute ago
-
-JOBS
-* build (ID 23456789)
-  ✓ Set up job
-  ✓ Checkout source code
-  ✓ Run azure/setup-helm@v4
-  ✓ Install yq
-  ✓ Install helm cm-push plugin
-  ✓ Set up Helm repos
-  * Helm package all charts sans blacklist
-  * Publish all helm packages
-  * Post Checkout source code
-</code></pre><h3 id="option-2-via-the-web-browser">Option 2) Via the web browser</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh run view &lt;id&gt; -w
-</span></span></code></pre></div><p>It will open the system web browser in the right page, pertaining to the action
-run.</p>
-<h2 id="putting-everything-together">Putting everything together</h2>
-<h3 id="option-1">Option 1)</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh workflow run package-release-dispatch.yml --ref master -f ref<span style="color:#f92672">=</span>master <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  sleep <span style="color:#ae81ff">3</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  gh run watch <span style="color:#66d9ef">$(</span>gh run list --workflow<span style="color:#f92672">=</span>package-release-dispatch.yml --json databaseId --jq <span style="color:#e6db74">&#39;.[0].databaseId&#39;</span><span style="color:#66d9ef">)</span>
-</span></span></code></pre></div><h3 id="option-2">Option 2)</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gh workflow run package-release-dispatch.yml --ref master -f ref<span style="color:#f92672">=</span>master <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  sleep <span style="color:#ae81ff">3</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  gh run view <span style="color:#66d9ef">$(</span>gh run list --workflow<span style="color:#f92672">=</span>package-release-dispatch.yml --json databaseId --jq <span style="color:#e6db74">&#39;.[0].databaseId&#39;</span><span style="color:#66d9ef">)</span> -w
-</span></span></code></pre></div>]]></content:encoded></item></channel></rss>
+bcrypt-hashed password in its config file.</p>]]></content:encoded></item></channel></rss>
