@@ -2,8 +2,8 @@
 title: "★ Keychron K2: Review"
 date: 2022-01-12T18:09:38-05:00
 tags:
-  - hardware
   - bestof
+  - dev
 ---
 
 This is a follow-up post of [Keychron K2: Linux Setup]({{< ref "2021-12-11-keychron-k2-linux.setup" >}}). The previous post focused on the configuration of the keyboard, this one focuses on its user experience from the point of view of a Software Engineer.
