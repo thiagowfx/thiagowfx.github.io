@@ -2,7 +2,7 @@
 title: "LaTeX template for simple interviews"
 date: 2023-12-23T21:49:15+01:00
 tags:
-  - ideas
+  - dev
 ---
 
 Whenever I need to write out a simple document wherein content is more important than form, **LaTeX** is my preferred choice. It beats Google Docs, Microsoft Word, LibreOffice, or any other text processor for that matter.

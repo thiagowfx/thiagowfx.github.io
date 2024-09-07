@@ -2,7 +2,7 @@
 title: "Tracking packages automatically in a single place"
 date: 2022-04-23T18:03:52-04:00
 tags:
-  - ideas
+  - dev
 ---
 
 I was looking for a way to **track packages and parcels** (mail) for the most popular post and courier services e.g. DHL, UPS, Fedex, Canada Post, USPS, Correios, etc.

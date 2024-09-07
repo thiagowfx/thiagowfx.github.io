@@ -2,7 +2,7 @@
 title: "Large prints"
 date: 2022-04-24T17:58:03-04:00
 tags:
-  - ideas
+  - serenity
 ---
 
 It occurred to me the **Large Prints** section of our local public library is a decent way to sample popular books.
