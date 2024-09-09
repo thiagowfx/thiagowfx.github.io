@@ -24,7 +24,7 @@ For example, for this post:
 
 > ScratchObscureTrendHumiliate
 >
-> # of possible passwords:
+> Number of possible passwords:
 > 3 quadrillion
 
 Good (and memorable!) enough for me.
