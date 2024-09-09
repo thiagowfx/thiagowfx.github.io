@@ -31,8 +31,7 @@ There's actually more, but I don't want to make this post too spammy for search 
 The aforementioned text is wrapped in this HTML:
 
 ```html
-<div dir=3D"ltr">Hello<span style=3D"color:rgb(255,255,255);font-family:&qu=
-ot;Comic Sans MS&quot;;font-size:1px">
+<div dir=3D"ltr">Hello<span style=3D"color:rgb(255,255,255);font-family:&quot;Comic Sans MS&quot;;font-size:1px">
 ```
 
 Which explains why it is 'invisible' (note the white color).
