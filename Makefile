@@ -13,8 +13,6 @@ all:
 	hugo server --bind="0.0.0.0" --buildDrafts --port $(PORT) --watch
 
 clean:
-	# kill process listening on port, if any; fail gracefully
-	-fuser -k $(PORT)/tcp
 	$(RM) -r public/ resources/
 
 ping:
