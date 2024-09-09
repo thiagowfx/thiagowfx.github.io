@@ -159,7 +159,7 @@ We could also add:
 .DEFAULT_GOAL := help
 ```
 
-...to ensure that a plain `make` invokation behaves like `make help`.
+...to ensure that a plain `make` invocation behaves like `make help`.
 
 **Edit(2024-08-08)**: I had to make one small adaptation[^2] to make it work with
 dependencies, which is the whole point of `make`:

@@ -15,7 +15,7 @@ It is such a powerful association meaning.
 
 Which emoji are you?
 
-Also, some people (millenials?) tend to (over)use emoticons, perhaps even more
+Also, some people (millennials?) tend to (over)use emoticons, perhaps even more
 so than GIFs by Gen-Z. ;)
 
 

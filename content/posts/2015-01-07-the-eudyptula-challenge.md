@@ -80,9 +80,9 @@ clean:
     make -C $(KERNEL) M=$(PWD) clean
 ```
 
-The `Makefile` wasn&#8217;t right in my first trial, either. Another requirement of this task was that this file should provide an environment variable, as an alternative location for the build directory of the kernel, opposed to being a hard coded value. I provided one from the beginning, but the way I wrote it was slightly wrong.
+The `Makefile` wasn't right in my first trial, either. Another requirement of this task was that this file should provide an environment variable, as an alternative location for the build directory of the kernel, opposed to being a hard coded value. I provided one from the beginning, but the way I wrote it was slightly wrong.
 
-Now, this code didn&#8217;t just pop out of my head out of nothing. Although I know how to program in C, I never did kernel programming before. I had to look up for some documentation about how to write a module. It wasn&#8217;t super straightforward, because I found many documentation sources about writing modules for the Linux 2.6.x version, which is outdated now[^7], and the modern version of writing modules is a bit different from it.
+Now, this code didn't just pop out of my head out of nothing. Although I know how to program in C, I never did kernel programming before. I had to look up for some documentation about how to write a module. It wasn't super straightforward, because I found many documentation sources about writing modules for the Linux 2.6.x version, which is outdated now[^7], and the modern version of writing modules is a bit different from it.
 
 Also, I was careful not to accidentally find a solution for this task directly. Of course, some people have already done it, and they could have written something about their experiences, as I am doing right now.
 
