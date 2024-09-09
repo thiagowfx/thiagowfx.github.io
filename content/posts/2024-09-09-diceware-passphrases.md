@@ -18,7 +18,7 @@ manager, however I wanted to take this opportunity to employ _Diceware_:
 
 The original source has the best explanation: https://diceware.dmuth.org/.
 
-Or you could read [Wikipedia] as well.
+Or you could read [Wikipedia](https://en.wikipedia.org/wiki/Diceware) as well.
 
 For example, for this post:
 
