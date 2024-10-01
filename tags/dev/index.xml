@@ -1,4 +1,38 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.134.3</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 24 Sep 2024 14:21:20 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>helm: list recent chart upgrades</title><link>https://www.perrotta.dev/2024/09/helm-list-recent-chart-upgrades/</link><pubDate>Tue, 24 Sep 2024 14:21:20 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/helm-list-recent-chart-upgrades/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a kubernetes cluster with many helm charts in
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.135.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 01 Oct 2024 17:59:17 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>ack: match and return only the matched string</title><link>https://www.perrotta.dev/2024/10/ack-match-and-return-only-the-matched-string/</link><pubDate>Tue, 01 Oct 2024 17:59:17 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/ack-match-and-return-only-the-matched-string/</guid><description>&lt;p>&lt;strong>Context&lt;/strong>: Helm charts use &lt;code>.Values.{foo}&lt;/code> in &lt;code>templates/&lt;/code> for templating from
+&lt;code>values.yaml&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Goal&lt;/strong>: Return all unique values used in &lt;code>templates/&lt;/code>. The intention for it is
+to add them all as defaults to &lt;code>values.yaml&lt;/code>.&lt;/p></description><content:encoded><![CDATA[<p><strong>Context</strong>: Helm charts use <code>.Values.{foo}</code> in <code>templates/</code> for templating from
+<code>values.yaml</code>.</p>
+<p><strong>Goal</strong>: Return all unique values used in <code>templates/</code>. The intention for it is
+to add them all as defaults to <code>values.yaml</code>.</p>
+<p>First attempt:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ack <span style="color:#e6db74">&#39;\.Values\.&#39;</span>
+</span></span></code></pre></div><p>One could proceed manually from here, but this is not very ergonomic in big helm
+charts.</p>
+<p>A better (and more precise) attempt is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ack <span style="color:#e6db74">&#39;\.Values[\.\w+]+&#39;</span>
+</span></span></code></pre></div><p>This will match <code>.Values.config.foo</code>, in addition to <code>.Values.foo</code>.</p>
+<p>To return only the matched strings, add <code>-o</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ack -o <span style="color:#e6db74">&#39;\.Values[\.\w+]+&#39;</span>
+</span></span></code></pre></div><p>Here is a real example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ack -o <span style="color:#e6db74">&#39;\.Values[\.\w+]+&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>values.yaml
+</span></span><span style="display:flex;"><span>349:29:.Values.global.prometheus_scrape_interval
+</span></span><span style="display:flex;"><span>863:29:.Values.global.prometheus_scrape_interval
+</span></span><span style="display:flex;"><span>903:20:.Values.global.global_grafana_ingest_url
+</span></span></code></pre></div><p>To return only the values, add <code>-h</code> (it will hide the filenames):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ack -o -h <span style="color:#e6db74">&#39;\.Values[\.\w+]+&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>.Values.global.prometheus_scrape_interval
+</span></span><span style="display:flex;"><span>.Values.global.prometheus_scrape_interval
+</span></span><span style="display:flex;"><span>.Values.global.global_grafana_ingest_url
+</span></span></code></pre></div><p>Now all that is left to do is to pipe it to <code>sort -u</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ack -o -h <span style="color:#e6db74">&#39;\.Values[\.\w+]+&#39;</span> | sort -u
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>.Values.global.prometheus_scrape_interval
+</span></span><span style="display:flex;"><span>.Values.global.global_grafana_ingest_url
+</span></span></code></pre></div>]]></content:encoded></item><item><title>helm: list recent chart upgrades</title><link>https://www.perrotta.dev/2024/09/helm-list-recent-chart-upgrades/</link><pubDate>Tue, 24 Sep 2024 14:21:20 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/helm-list-recent-chart-upgrades/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a kubernetes cluster with many helm charts in
 different namespaces, how to use &lt;code>helm&lt;/code> to query the list of the last recently
 &amp;ldquo;touched&amp;rdquo; charts?&lt;/p>
 &lt;p>By &amp;ldquo;touched&amp;rdquo; we mean either installed (via &lt;code>helm install&lt;/code>) or upgraded (via
@@ -542,27 +576,4 @@ no env file to source upwards.</p>
 <p><strong>Reference</strong>: <a href="https://github.com/direnv/direnv/issues/757">https://github.com/direnv/direnv/issues/757</a></p>
 <p><strong>Use Case</strong>: Add top-level environment variables to <code>top/.envrc</code>. Add <code>layout</code>
 to <code>top/inner/.envrc</code>. For example, perhaps <code>inner</code> is a custom <code>git</code> repository
-/ project.</p>]]></content:encoded></item><item><title>Docker on Alpine Linux</title><link>https://www.perrotta.dev/2024/07/docker-on-alpine-linux/</link><pubDate>Tue, 30 Jul 2024 22:56:58 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/docker-on-alpine-linux/</guid><description>&lt;p>In this post: how to properly start &lt;code>docker&lt;/code> on an Alpine Linux server.&lt;/p></description><content:encoded><![CDATA[<p>In this post: how to properly start <code>docker</code> on an Alpine Linux server.</p>
-<p>First, install <code>docker</code> and friends:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>doas apk add docker docker-cli docker-compose
-</span></span></code></pre></div><p>Then start the <code>docker</code> service:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>doas service docker start
-</span></span></code></pre></div><p>Check if it started successfully:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>service docker status
-</span></span></code></pre></div><p>If not, then look at the logs:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>less /var/log/docker.log
-</span></span></code></pre></div><p>I got an error:</p>
-<pre tabindex="0"><code>failed to start daemon: error initializing graphdriver: driver not supported
-</code></pre><p>The suggestion was to change the driver to <code>overlay2</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% $EDITOR /etc/docker/daemon.json
-</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;storage-driver&#34;</span>: <span style="color:#e6db74">&#34;overlay2&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><p>Then restart <code>docker</code>.</p>
-<p>I got another error:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>level<span style="color:#f92672">=</span>error msg<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;failed to mount overlay: no such device&#34;</span> storage-driver<span style="color:#f92672">=</span>overlay2
-</span></span></code></pre></div><p>The suggestion was to reboot:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>doas reboot
-</span></span></code></pre></div><p>Then start <code>docker</code> again:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>doas service docker start
-</span></span></code></pre></div><p>And now everything works!</p>]]></content:encoded></item></channel></rss>
+/ project.</p>]]></content:encoded></item></channel></rss>
