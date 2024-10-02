@@ -1,4 +1,76 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Bestof on not just serendipity</title><link>https://www.perrotta.dev/tags/bestof/</link><description>Recent content in Bestof on not just serendipity</description><generator>Hugo -- 0.135.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Sun, 22 Sep 2024 13:02:39 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Anki: custom language card (cont.)</title><link>https://www.perrotta.dev/2024/09/anki-custom-language-card-cont./</link><pubDate>Sun, 22 Sep 2024 13:02:39 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/anki-custom-language-card-cont./</guid><description>&lt;p>This post builds upon the previous &lt;a href="https://www.perrotta.dev/2024/02/anki-custom-language-card/">Anki: custom language card&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>This post builds upon the previous <a href="https://www.perrotta.dev/2024/02/anki-custom-language-card/">Anki: custom language card</a>.</p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Bestof on not just serendipity</title><link>https://www.perrotta.dev/tags/bestof/</link><description>Recent content in Bestof on not just serendipity</description><generator>Hugo -- 0.135.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Wed, 02 Oct 2024 13:33:56 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Erratic: human-friendly google3 piper snapshots</title><link>https://www.perrotta.dev/2024/10/erratic-human-friendly-google3-piper-snapshots/</link><pubDate>Wed, 02 Oct 2024 13:33:56 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/erratic-human-friendly-google3-piper-snapshots/</guid><description>&lt;p>In the google3 codebase, when working with Piper directly (i.e. not
+Fig[-on-CitC]), I often liked to use this tool called &lt;code>erratic&lt;/code> (abbrev: &lt;code>er&lt;/code>),
+which was a 20% project of another Software Engineer&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p></description><content:encoded><![CDATA[<p>In the google3 codebase, when working with Piper directly (i.e. not
+Fig[-on-CitC]), I often liked to use this tool called <code>erratic</code> (abbrev: <code>er</code>),
+which was a 20% project of another Software Engineer<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<h2 id="google3-workflow">google3 workflow</h2>
+<p>The workflow is as follows:</p>
+<ul>
+<li>Make some changes: <code>g4 open</code>, <code>g4 edit</code>, etc</li>
+<li>Create a CL (ChangeList) <code>g4 change</code></li>
+</ul>
+<p>Now let&rsquo;s say you&rsquo;re anticipating some heavy refactoring, in the same CL<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>,
+that you could potentially regret and want to revert.</p>
+<p>This would be a great moment to use <code>erratic</code>. After installing it (or aliasing
+it, if using it via X20), run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% er explain <span style="color:#e6db74">&#34;this is working perfectly before bob@ asked me to refactor it&#34;</span>
+</span></span></code></pre></div><ul>
+<li>Make additional changes</li>
+<li>Feel free to make more snapshots (checkpoints), as you see fit</li>
+</ul>
+<p>If you ever want to roll back, run <code>er list</code>. It will list all explicit
+snapshots you annotated so far. Locate the one you want to roll back to:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% er list
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">42</span> <span style="color:#e6db74">&#34;this is working perfectly before bob@ asked me to refactor it&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">78</span> <span style="color:#e6db74">&#34;second refactoring&#34;</span>
+</span></span></code></pre></div><p>Now just roll back to it:</p>
+<pre tabindex="0"><code>% er restore 42
+</code></pre><p>Sometimes you&rsquo;ll need to run <code>g4 add</code> afterwards. And we&rsquo;re done!</p>
+<p><strong>Colophon</strong>: Why use <code>erratic</code> at all, since CitC already does automatic
+periodic snapshots out-of-the-box? Because these automatic snapshots are meant
+for machines, not humans; they are not very developer-friendly. You could get
+your way around <code>rsync</code> + finding the correct timestamps to copy from, but
+that&rsquo;s not fun at all, and not a good use of time either.</p>
+<h2 id="git-workflow">git workflow</h2>
+<p>How to replicate a similar workflow in a non-Google world?</p>
+<p>For most of us, non-Google necessarily means <code>git</code>. Let&rsquo;s ignore <code>hg</code>
+(mercurial) in this context.</p>
+<p>There is not much to do, actually: <a href="https://github.blog/open-source/git/commits-are-snapshots-not-diffs/">https://github.blog/open-source/git/commits-are-snapshots-not-diffs/</a></p>
+<p><code>git</code> commits are already snapshots. The workflow is:</p>
+<ul>
+<li>Make some changes, then <code>git add</code></li>
+<li>Create a branch (<code>git switch --create</code>), commit your changes</li>
+<li>To make a snapshot, just make a new commit and annotate it (<code>git commit -m &quot;foo&quot;</code>)</li>
+<li>To list your snapshots, run <code>git rev-list $(git show-branch --merge-base HEAD)^..HEAD --pretty</code>. This will list all commits since your branch diverted.
+You could add an alias to it in your <code>~/.gitconfig</code>.</li>
+<li>To roll back, run <code>git reset --hard {commit}</code>.</li>
+</ul>
+<p><strong>Caveat</strong>: You will lose track of all commits after <code>{commit}</code>. Although it
+would still be possible to recover them with <code>git reflog</code> (in case of a
+mistake), that is not developer-friendly workflow.</p>
+<p>Then the follow-up question is: how to roll back without losing track of
+intermediate work?</p>
+<p>One way is to create a new branch that points out to <code>{commit}</code> instead of
+hard-resetting your entire worktree:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git checkout -b mynewbranch <span style="color:#f92672">{</span>commit<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>Once you are satisfied, just delete the previous branch and then rename the
+current one to it.</p>
+<p>Another possibility is the use of <a href="https://git-scm.com/docs/git-worktree">git
+worktrees</a> to divert (spin-off) branches.</p>
+<p>This becomes a very natural workflow once you repeat it a couple of times.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>I have gladly peer bonused him. You should <em>always</em> peer bonus those folks
+who helped you become more productive.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Arguably you should create a separate CL for that (go/small-cls), but who
+am I to judge? Unless I am your teammate&hellip;&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ Anki: custom language card (cont.)</title><link>https://www.perrotta.dev/2024/09/anki-custom-language-card-cont./</link><pubDate>Sun, 22 Sep 2024 13:02:39 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/anki-custom-language-card-cont./</guid><description>&lt;p>This post builds upon the previous &lt;a href="https://www.perrotta.dev/2024/02/anki-custom-language-card/">Anki: custom language card&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>This post builds upon the previous <a href="https://www.perrotta.dev/2024/02/anki-custom-language-card/">Anki: custom language card</a>.</p>
 <h2 id="searching-word-boundaries">Searching word boundaries</h2>
 <p>When searching for a word such as <em>Mann</em>, results such as <em>Mannschaft</em> come up.</p>
 <p>To search accounting for the word boundary, like a typical <code>\bMann\b</code> regex, use
@@ -2270,173 +2342,6 @@ $ urlwatch --urls urlwatch.yml
 <p>In 99% of the cases this is just a matter of bumping the <code>pkgver=</code> and
 updating the checksums. If <code>pkgver=</code> is the same but there&rsquo;s a fix to the
 package itself, then bump <code>pkgrel=</code> instead.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item><item><title>★ Alpine Linux on Raspberry Pi: Diskless Mode with persistent storage</title><link>https://www.perrotta.dev/2022/01/alpine-linux-on-raspberry-pi-diskless-mode-with-persistent-storage/</link><pubDate>Sat, 15 Jan 2022 23:18:56 -0500</pubDate><guid>https://www.perrotta.dev/2022/01/alpine-linux-on-raspberry-pi-diskless-mode-with-persistent-storage/</guid><description>&lt;p>Use case: Given an Alpine Linux &lt;strong>diskless&lt;/strong>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> installation meant for
-a Raspberry Pi setup, we would like to add a persistent storage component to it
-to make it survive across reboots.&lt;/p></description><content:encoded><![CDATA[<p>Use case: Given an Alpine Linux <strong>diskless</strong><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> installation meant for
-a Raspberry Pi setup, we would like to add a persistent storage component to it
-to make it survive across reboots.</p>
-<h2 id="goal">Goal</h2>
-<p>The <a href="https://wiki.alpinelinux.org/wiki/Installation">Alpine Linux Wiki</a> covers most of the installation process, hence I will only document the bits that were lacking and/or confusing therein.</p>
-<p>My use case is the following:</p>
-<blockquote>
-<p>Given a Raspberry Pi 3B with an old 4GiB SD Card as CF storage<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, install Alpine Linux in diskless mode. Find a way to preserve modifications in <code>/etc</code> and <code>/var</code>, as well as any installed packages through its <code>apk</code> package manager.</p>
-</blockquote>
-<p>Let&rsquo;s follow the steps outlined in the wiki.</p>
-<h2 id="copy-alpine-to-the-sd-card">Copy Alpine to the SD Card</h2>
-<blockquote>
-<p>Grab the SD card and install Alpine Linux in it.</p>
-</blockquote>
-<p>Alpine provides officially supported images designed for the Raspberry Pi.</p>
-<p>Most Linux distributions provide an <code>.iso</code> or <code>.img</code> file to be installed with a tool like <a href="https://www.balena.io/etcher/">Balena Etcher</a>, <a href="https://rufus.ie/en/">Rufus</a>, <a href="https://www.raspberrypi.com/news/raspberry-pi-imager-imaging-utility/"><strong>Raspberry Pi Imager</strong></a> or plain <code>dd</code><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
-<p>Alpine is not like most Linux distributions: Instead, it provides a <code>.tar.gz</code> archive with files that should be copied directly to the SD card. Grab the latest version (3.15 at the time of this post) from <a href="https://alpinelinux.org/downloads/">https://alpinelinux.org/downloads/</a>. There are 3 options:</p>
-<ul>
-<li>
-<p><code>armhf</code>: Works with all Pis, but may perform less optimally on recent versions.</p>
-</li>
-<li>
-<p><code>armv7</code>: Works with the Pi 3B, 32-bit.</p>
-</li>
-<li>
-<p><code>aarch64</code>: Works with the Pi 3B, 64-bit.</p>
-</li>
-</ul>
-<p>I opted for <code>aarch64</code> to make it 64-bit, but <code>armv7</code> would also have worked well for my setup. In fact, Raspberry Pi OS (Debian) uses <code>armv7</code> (32-bit) at the time of this writing.</p>
-<p>Before copying files over, format the SD Card. As I was doing this
-from a Windows machine because it was the only one I had readily available with
-a SD card slot, I just used the native Windows Disk Management tool to do so.
-I decided to allocate a 100MB<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup> FAT32 partition. The rest of the SD card would be
-blank for now. Alpine is surprisingly small, 100MB was more than enough for the kernel and other needed files.</p>
-<p>Once the SD card is formatted, copy the files over to it. It turns out Windows cannot extract tarballs (<code>.tar.gz</code>); a tool like <a href="https://www.7-zip.org/">7-zip</a> should do the job. Copy the files over to the root of the newly allocated FAT32 partition, and then safely eject the SD card.</p>
-<h2 id="boot-alpine-from-the-sd-card">Boot Alpine from the SD Card</h2>
-<p>The next step is to insert the SD Card into the Pi and then boot. I had some trouble in this step and eventually figured out I didn&rsquo;t mark the primary FAT32 partition as bootable. Unfortunately it&rsquo;s not straightforward to mark the partition as bootable from Windows. On a Linux machine there&rsquo;s a wide array of tools to do so: <code>fdisk</code>, <code>cfdisk</code> (TUI), <code>sfdisk</code> (scriptable <code>fdisk</code>), <code>parted</code>, <code>gparted</code> (GUI) are some of them. I worked around that by installing Raspberry Pi OS on the SD card with the Raspberry Pi imager, and then overwriting it with the Alpine files. This works because the Raspberry PI OS installation marks the FAT32 partition as bootable.</p>
-<h2 id="install-alpine">Install Alpine</h2>
-<p>Installing Alpine is well documented in the <a href="https://wiki.alpinelinux.org/wiki/Installation">wiki</a> thus it won&rsquo;t be covered here. It basically comes down to invoking <code>setup-alpine</code>, which then invokes other <code>setup-*</code> scripts.</p>
-<p>Keep in mind we&rsquo;re not really &ldquo;installing&rdquo; Alpine as this is a diskless installation. A more accurate term here would be &ldquo;configuring&rdquo;.</p>
-<p>Before invoking the installation script, I created a second primary partition in the SD card, set to <code>ext4</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Configure networking to get working internet access.</span>
-</span></span><span style="display:flex;"><span>% setup-interfaces
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install some partitioning tools.</span>
-</span></span><span style="display:flex;"><span>% apk add cfdisk e2fsprogs
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a second partition (mmcblk0p2) and write it.</span>
-</span></span><span style="display:flex;"><span>% cfdisk /dev/mmcblk0
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Format the partition as ext4.</span>
-</span></span><span style="display:flex;"><span>% mkfs.ext4 /dev/mmcblk0p2
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Mount the partition under /media.</span>
-</span></span><span style="display:flex;"><span>% mount /dev/mmcblk0p2 /media/mmcblk0p2
-</span></span></code></pre></div><p>The installation is straightforward, we just need to pay attention to a few select steps:</p>
-<ul>
-<li><code>setup-disk</code>: Select <code>none</code> to ensure a <code>diskless</code> installation<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>.</li>
-<li><code>setup-apkcache</code>: Select <code>/media/mmcblk0p2/cache</code> to persist downloaded <code>apk</code> packages.</li>
-<li><code>setup-lbu</code>: Edit <code>/etc/lbu/lbu.conf</code> and set <code>LBU_MEDIA=&quot;mmcblk0p2&quot;</code>. Note: Do not add <code>/media</code> as it is implicit.</li>
-</ul>
-<p>Once the installation is complete, run <code>lbu commit</code> to persist the changes in the second partition. Once you do so, a <code>&lt;hostname&gt;.apkovl.tar.gz</code><sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup> file should materialize on <code>/media/mmcblk0p2/</code>.</p>
-<p>This is a good moment to reboot. Before we do so, let&rsquo;s cache the packages we had previously downloaded.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Cache packages.</span>
-</span></span><span style="display:flex;"><span>% apk cache download
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>% reboot
-</span></span></code></pre></div><h2 id="after-the-first-reboot">After the first reboot</h2>
-<p>If everything worked as expected, once you reboot all your previously installed packages should have been preserved and automatically restored / reinstalled, as well as your modifications done to <code>/etc</code>.</p>
-<p>From this point on, whenever you install a new package that you want to be preserved for subsequent reboots, run <code>lbu commit</code> afterwards. For example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% apk add vim
-</span></span><span style="display:flex;"><span>% lbu commit
-</span></span></code></pre></div><p>If you would like to see what is going to be committed, run <code>lbu status</code> or <code>lbu diff</code> before doing the actual commit. Whenever you commit, <code>/media/mmcblk0p2/&lt;hostname&gt;.apkovl.tar.gz</code> gets overwritten with your most recent modifications.</p>
-<p>It&rsquo;s possible to keep more than one backup file by changing <code>BACKUP_LIMIT=</code> in <code>/etc/lbu/lbu.conf</code>. This is specially handy if you decide to revert to an earlier system snapshot / state later on. The stock config looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% cat /etc/lbu/lbu.conf
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># what cipher to use with -e option</span>
-</span></span><span style="display:flex;"><span>DEFAULT_CIPHER<span style="color:#f92672">=</span>aes-256-cbc
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Uncomment the row below to encrypt config by default</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># ENCRYPTION=$DEFAULT_CIPHER</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Uncomment below to avoid &lt;media&gt; option to &#39;lbu commit&#39;</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Can also be set to &#39;floppy&#39;</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># LBU_MEDIA=usb</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Set the LBU_BACKUPDIR variable in case you prefer to save the apkovls</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># in a normal directory instead of mounting an external media.</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># LBU_BACKUPDIR=/root/config-backups</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Uncomment below to let lbu make up to 3 backups</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># BACKUP_LIMIT=3</span>
-</span></span></code></pre></div><p><strong>Tip</strong>: You can find the list of all explicitly installed packages in <code>/etc/apk/world</code>.</p>
-<h2 id="the-last-piece-make-var-persistent">The last piece: make /var persistent</h2>
-<p>There are three natural ways that come to mind to make <code>/var</code> persistent:</p>
-<h3 id="a-separate-partition-or-file">A) Separate partition (or file)</h3>
-<p>Instead of two partitions (FAT32 and ext4), create 3 partitions: FAT32, ext4 and ext4. Use the latter one to mount <code>/var</code> on, saving this information in <code>/etc/fstab</code>. The main disadvantage of this setup is that you&rsquo;ll need to allocate a fixed amount of space of each of the ext4 partitions and it may be difficult to figure out how to split the space between them.</p>
-<p>A variant of this approach is to just create the third partition as a file:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 500MB file</span>
-</span></span><span style="display:flex;"><span>% dd <span style="color:#66d9ef">if</span><span style="color:#f92672">=</span>/dev/zero of<span style="color:#f92672">=</span>/media/mmcblk0p2/var.img bs<span style="color:#f92672">=</span>1M count<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span> status<span style="color:#f92672">=</span>progress
-</span></span><span style="display:flex;"><span>% mkfs.ext4 /media/mmcblk0p2/var.img
-</span></span><span style="display:flex;"><span>% mount /media/mmcblk0p2/var.img /var
-</span></span></code></pre></div><p>This works because the Linux kernel supports mounting files as if they were device blocks, treating them as loop devices (pseudo-devices).</p>
-<p>I don&rsquo;t like these approaches because they shadow the preexisting <code>/var</code> from the boot media, which in turn messes up with existing services that use it such as <code>cron</code>: <code>% crontab -l</code> would fail. One workaround would be to mount a <code>/var</code> subdirectory instead: for example, <code>/var/lib/docker</code> for docker.</p>
-<h3 id="b-bind-mount">B) Bind mount</h3>
-<p>This one is straightforward:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% mount --bind /media/mmcblk0p2/var/lib/docker /var/lib/docker
-</span></span></code></pre></div><p>The actual partition lives in the SD card, however we make a bind mount under
-<code>/var</code>, which is like an <em>alias</em>. From <a href="https://unix.stackexchange.com/questions/198590/what-is-a-bind-mount">Stack Exchange</a>:</p>
-<blockquote>
-<p>A bind mount is an alternate view of a directory tree. Classically, mounting creates a view of a storage device as a directory tree. A bind mount instead takes an existing directory tree and replicates it under a different point. The directories and files in the bind mount are the same as the original. Any modification on one side is immediately reflected on the other side, since the two views show the same data.</p>
-</blockquote>
-<h3 id="c-overlay-mount">C) Overlay mount</h3>
-<p>From <a href="https://wiki.archlinux.org/title/Overlay_filesystem">ArchWiki</a>:</p>
-<blockquote>
-<p>Overlayfs allows one, usually read-write, directory tree to be overlaid onto another, read-only directory tree. All modifications go to the upper, writable layer. This type of mechanism is most often used for live CDs but there is a wide variety of other uses.</p>
-</blockquote>
-<p>It&rsquo;s perfect for our use case, which uses a live bootable SD card for Alpine. It blends the preexisting, ephemeral, in-memory <code>/var</code> with the persistent in-disk <code>/var</code>.</p>
-<p>I wanted to mount <code>/var</code> directly but found it to be problematic for the same reasons mentioned earlier, therefore I just went with <code>/var/lib/docker</code> instead:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Create overlay upper and work directories.</span>
-</span></span><span style="display:flex;"><span>% mkdir -p /media/mmcblk0p2/var/lib/docker /media/mmcblk0p2/var/lib/docker-work
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Add mountpoint entry to fstab. Note: The work dir must be an empty directory in the same filesystem mount as the upper directory.</span>
-</span></span><span style="display:flex;"><span>% echo <span style="color:#e6db74">&#34;overlay /var/lib/docker overlay lowerdir=/var/lib/docker,upperdir=/media/mmcblk0p2/var/lib/docker,workdir=/media/mmcblk0p2/var/lib/docker-work 0 0&#34;</span> &gt;&gt; /etc/fstab
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Mount all fstab entries, including our newly added one.</span>
-</span></span><span style="display:flex;"><span>% mount -a
-</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
-<p>I opted for the third approach, using an overlay mount, it was the most
-seamless one. A bind mount would have been fine as well.</p>
-<p>The final setup works surprisingly well:</p>
-<ul>
-<li>Alpine Linux is very lightweight and runs mostly from RAM</li>
-<li><code>apk</code> cache is persistent to the ext4 partition</li>
-<li><code>/var/</code> is persistent to the ext4 partition</li>
-<li><code>lbu commit</code> persists changes in <code>/etc/</code> and <code>/home/</code> in the ext4 partition</li>
-<li>Every reboot fully resets the system sans persistent components above</li>
-</ul>
-<h2 id="references">References</h2>
-<ul>
-<li><a href="https://vincentserpoul.github.io/post/alpine-linux-rpi0/">https://vincentserpoul.github.io/post/alpine-linux-rpi0/</a></li>
-<li><a href="http://dahl-jacobsen.dk/tips/blog/2021-04-08-docker-on-alpine-linux/">http://dahl-jacobsen.dk/tips/blog/2021-04-08-docker-on-alpine-linux/</a></li>
-<li><a href="http://dahl-jacobsen.dk/tips/blog/2018-03-15-alpine-on-raspberry-pi/">http://dahl-jacobsen.dk/tips/blog/2018-03-15-alpine-on-raspberry-pi/</a></li>
-</ul>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>Running (almost) fully from RAM.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>CF = Compact disk.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3">
-<p>On Linux I&rsquo;d usually opt for <code>dd</code>, on Windows the Raspberry Pi Imager is a sensible choice.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:4">
-<p>100MB is overly conservative, but keep in mind I had a very small SD Card, with only 4GiB storage. 250MB or even 500MB should be a more sensible default if you have a bigger SD Card (e.g. 32GiB).&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:5">
-<p>An alternative is to select <code>data</code> disk mode, but it didn&rsquo;t work for me.&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:6">
-<p><em>ovl</em> is short for <em>overlay</em>. Not to be confused with <em>vol</em> for <em>volume</em>.&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>

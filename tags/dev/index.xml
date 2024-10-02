@@ -1,4 +1,76 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.135.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Wed, 02 Oct 2024 13:30:29 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>fd: match full path</title><link>https://www.perrotta.dev/2024/10/fd-match-full-path/</link><pubDate>Wed, 02 Oct 2024 13:30:29 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/fd-match-full-path/</guid><description>&lt;p>When using &lt;a href="https://github.com/sharkdp/fd">&lt;code>fd(1)&lt;/code>&lt;/a>, only the filename is
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.135.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Wed, 02 Oct 2024 13:33:56 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Erratic: human-friendly google3 piper snapshots</title><link>https://www.perrotta.dev/2024/10/erratic-human-friendly-google3-piper-snapshots/</link><pubDate>Wed, 02 Oct 2024 13:33:56 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/erratic-human-friendly-google3-piper-snapshots/</guid><description>&lt;p>In the google3 codebase, when working with Piper directly (i.e. not
+Fig[-on-CitC]), I often liked to use this tool called &lt;code>erratic&lt;/code> (abbrev: &lt;code>er&lt;/code>),
+which was a 20% project of another Software Engineer&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p></description><content:encoded><![CDATA[<p>In the google3 codebase, when working with Piper directly (i.e. not
+Fig[-on-CitC]), I often liked to use this tool called <code>erratic</code> (abbrev: <code>er</code>),
+which was a 20% project of another Software Engineer<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<h2 id="google3-workflow">google3 workflow</h2>
+<p>The workflow is as follows:</p>
+<ul>
+<li>Make some changes: <code>g4 open</code>, <code>g4 edit</code>, etc</li>
+<li>Create a CL (ChangeList) <code>g4 change</code></li>
+</ul>
+<p>Now let&rsquo;s say you&rsquo;re anticipating some heavy refactoring, in the same CL<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>,
+that you could potentially regret and want to revert.</p>
+<p>This would be a great moment to use <code>erratic</code>. After installing it (or aliasing
+it, if using it via X20), run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% er explain <span style="color:#e6db74">&#34;this is working perfectly before bob@ asked me to refactor it&#34;</span>
+</span></span></code></pre></div><ul>
+<li>Make additional changes</li>
+<li>Feel free to make more snapshots (checkpoints), as you see fit</li>
+</ul>
+<p>If you ever want to roll back, run <code>er list</code>. It will list all explicit
+snapshots you annotated so far. Locate the one you want to roll back to:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% er list
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">42</span> <span style="color:#e6db74">&#34;this is working perfectly before bob@ asked me to refactor it&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">78</span> <span style="color:#e6db74">&#34;second refactoring&#34;</span>
+</span></span></code></pre></div><p>Now just roll back to it:</p>
+<pre tabindex="0"><code>% er restore 42
+</code></pre><p>Sometimes you&rsquo;ll need to run <code>g4 add</code> afterwards. And we&rsquo;re done!</p>
+<p><strong>Colophon</strong>: Why use <code>erratic</code> at all, since CitC already does automatic
+periodic snapshots out-of-the-box? Because these automatic snapshots are meant
+for machines, not humans; they are not very developer-friendly. You could get
+your way around <code>rsync</code> + finding the correct timestamps to copy from, but
+that&rsquo;s not fun at all, and not a good use of time either.</p>
+<h2 id="git-workflow">git workflow</h2>
+<p>How to replicate a similar workflow in a non-Google world?</p>
+<p>For most of us, non-Google necessarily means <code>git</code>. Let&rsquo;s ignore <code>hg</code>
+(mercurial) in this context.</p>
+<p>There is not much to do, actually: <a href="https://github.blog/open-source/git/commits-are-snapshots-not-diffs/">https://github.blog/open-source/git/commits-are-snapshots-not-diffs/</a></p>
+<p><code>git</code> commits are already snapshots. The workflow is:</p>
+<ul>
+<li>Make some changes, then <code>git add</code></li>
+<li>Create a branch (<code>git switch --create</code>), commit your changes</li>
+<li>To make a snapshot, just make a new commit and annotate it (<code>git commit -m &quot;foo&quot;</code>)</li>
+<li>To list your snapshots, run <code>git rev-list $(git show-branch --merge-base HEAD)^..HEAD --pretty</code>. This will list all commits since your branch diverted.
+You could add an alias to it in your <code>~/.gitconfig</code>.</li>
+<li>To roll back, run <code>git reset --hard {commit}</code>.</li>
+</ul>
+<p><strong>Caveat</strong>: You will lose track of all commits after <code>{commit}</code>. Although it
+would still be possible to recover them with <code>git reflog</code> (in case of a
+mistake), that is not developer-friendly workflow.</p>
+<p>Then the follow-up question is: how to roll back without losing track of
+intermediate work?</p>
+<p>One way is to create a new branch that points out to <code>{commit}</code> instead of
+hard-resetting your entire worktree:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git checkout -b mynewbranch <span style="color:#f92672">{</span>commit<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>Once you are satisfied, just delete the previous branch and then rename the
+current one to it.</p>
+<p>Another possibility is the use of <a href="https://git-scm.com/docs/git-worktree">git
+worktrees</a> to divert (spin-off) branches.</p>
+<p>This becomes a very natural workflow once you repeat it a couple of times.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>I have gladly peer bonused him. You should <em>always</em> peer bonus those folks
+who helped you become more productive.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Arguably you should create a separate CL for that (go/small-cls), but who
+am I to judge? Unless I am your teammate&hellip;&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>fd: match full path</title><link>https://www.perrotta.dev/2024/10/fd-match-full-path/</link><pubDate>Wed, 02 Oct 2024 13:30:29 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/fd-match-full-path/</guid><description>&lt;p>When using &lt;a href="https://github.com/sharkdp/fd">&lt;code>fd(1)&lt;/code>&lt;/a>, only the filename is
 matched by default.&lt;/p>
 &lt;p>To match the full path, use &lt;code>-p&lt;/code>. It is often useful to combine it with &lt;code>--type file&lt;/code>.&lt;/p></description><content:encoded><![CDATA[<p>When using <a href="https://github.com/sharkdp/fd"><code>fd(1)</code></a>, only the filename is
 matched by default.</p>
@@ -532,37 +604,4 @@ to do so. It boils down to installing and running the following executables:</p>
 <li><code>pngcrush</code>: <a href="https://pmt.sourceforge.io/pngcrush/">https://pmt.sourceforge.io/pngcrush/</a></li>
 <li><code>pngout</code>: <a href="https://www.jonof.id.au/kenutils.html">https://www.jonof.id.au/kenutils.html</a></li>
 </ul>
-<p>The first two are available via homebrew.</p>]]></content:encoded></item><item><title>kubectl: print all secret values in plain text</title><link>https://www.perrotta.dev/2024/08/kubectl-print-all-secret-values-in-plain-text/</link><pubDate>Tue, 06 Aug 2024 13:37:31 +0200</pubDate><guid>https://www.perrotta.dev/2024/08/kubectl-print-all-secret-values-in-plain-text/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;a href="https://kubernetes.io/docs/concepts/configuration/secret/">kubernetes
-secret&lt;/a> with more
-than one key-value pair, print &lt;strong>all&lt;/strong> of them in plain text (i.e.
-base64-decoded in this context).&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Given a <a href="https://kubernetes.io/docs/concepts/configuration/secret/">kubernetes
-secret</a> with more
-than one key-value pair, print <strong>all</strong> of them in plain text (i.e.
-base64-decoded in this context).</p>
-<p><strong>Edit(2024-08-08)</strong>: It turns out I made a mistake. The effect of the post
-below is akin to <code>kubectl get [...] -o yaml</code>. I&rsquo;ll keep the post for
-bookkeeping purposes anyway.</p>
-<p>Basically, something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>kubectl cat secret -n infra-services my-cool-secret
-</span></span></code></pre></div><p>Except that there is no <code>kubectl cat</code>, what a shame. It would be really great if
-we had it, for consistency with <code>systemctl cat</code>. Oh well.</p>
-<p>There is <code>kubectl edit</code> though – amen, just like <code>systemctl edit</code>. This will
-open your <code>$EDITOR</code>. It&rsquo;s often inconvenient to copy text to the clipboard from
-your terminal-based editor though, due to intricacies of different terminals,
-shells, terminal multiplexers, and OSC-52, therefore I don&rsquo;t deem this as an
-acceptable solution.</p>
-<p>There is a simple trick though:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>EDITOR<span style="color:#f92672">=</span>cat kubectl edit secret -n infra-services my-cool-secret
-</span></span></code></pre></div><p>&hellip;which works exactly as you would expect <code>kubectl cat</code> to behave. It displays
-a warning at the end:</p>
-<pre tabindex="0"><code>Edit cancelled, no changes made.
-</code></pre><p>&hellip;however it can be duly ignored.</p>
-<p>If we didn&rsquo;t have this trick, we could have:</p>
-<ul>
-<li>written a bloated tool in golang to pipe to e.g. <a href="https://github.com/ashleyschuett/kubernetes-secret-decode">https://github.com/ashleyschuett/kubernetes-secret-decode</a> (<a href="https://itnext.io/secrets-in-plain-text-13a98f54ef97">via</a>)</li>
-<li>used the <code>kubectl edit</code> trick above, with a decent terminal and OSC-52 setup</li>
-<li>used <code>jq</code> with its <code>map</code> and <code>base64d</code> constructs (c.f. <a href="https://stackoverflow.com/questions/50286066/kubernetes-kubectl-print-all-secrets">Stack
-Overflow</a>)</li>
-<li>used <code>kubectl describe</code> with <code>-o jsonpath</code>, specifying every single field, one
-by one (super tedious) c.f. <a href="https://www.perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/">this previous post</a></li>
-</ul>]]></content:encoded></item></channel></rss>
+<p>The first two are available via homebrew.</p>]]></content:encoded></item></channel></rss>

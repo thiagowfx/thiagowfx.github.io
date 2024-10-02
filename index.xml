@@ -1,4 +1,76 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>not just serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on not just serendipity</description><generator>Hugo -- 0.135.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Wed, 02 Oct 2024 13:30:29 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>fd: match full path</title><link>https://www.perrotta.dev/2024/10/fd-match-full-path/</link><pubDate>Wed, 02 Oct 2024 13:30:29 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/fd-match-full-path/</guid><description>&lt;p>When using &lt;a href="https://github.com/sharkdp/fd">&lt;code>fd(1)&lt;/code>&lt;/a>, only the filename is
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>not just serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on not just serendipity</description><generator>Hugo -- 0.135.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Wed, 02 Oct 2024 13:33:56 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Erratic: human-friendly google3 piper snapshots</title><link>https://www.perrotta.dev/2024/10/erratic-human-friendly-google3-piper-snapshots/</link><pubDate>Wed, 02 Oct 2024 13:33:56 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/erratic-human-friendly-google3-piper-snapshots/</guid><description>&lt;p>In the google3 codebase, when working with Piper directly (i.e. not
+Fig[-on-CitC]), I often liked to use this tool called &lt;code>erratic&lt;/code> (abbrev: &lt;code>er&lt;/code>),
+which was a 20% project of another Software Engineer&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p></description><content:encoded><![CDATA[<p>In the google3 codebase, when working with Piper directly (i.e. not
+Fig[-on-CitC]), I often liked to use this tool called <code>erratic</code> (abbrev: <code>er</code>),
+which was a 20% project of another Software Engineer<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<h2 id="google3-workflow">google3 workflow</h2>
+<p>The workflow is as follows:</p>
+<ul>
+<li>Make some changes: <code>g4 open</code>, <code>g4 edit</code>, etc</li>
+<li>Create a CL (ChangeList) <code>g4 change</code></li>
+</ul>
+<p>Now let&rsquo;s say you&rsquo;re anticipating some heavy refactoring, in the same CL<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>,
+that you could potentially regret and want to revert.</p>
+<p>This would be a great moment to use <code>erratic</code>. After installing it (or aliasing
+it, if using it via X20), run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% er explain <span style="color:#e6db74">&#34;this is working perfectly before bob@ asked me to refactor it&#34;</span>
+</span></span></code></pre></div><ul>
+<li>Make additional changes</li>
+<li>Feel free to make more snapshots (checkpoints), as you see fit</li>
+</ul>
+<p>If you ever want to roll back, run <code>er list</code>. It will list all explicit
+snapshots you annotated so far. Locate the one you want to roll back to:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% er list
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">42</span> <span style="color:#e6db74">&#34;this is working perfectly before bob@ asked me to refactor it&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">78</span> <span style="color:#e6db74">&#34;second refactoring&#34;</span>
+</span></span></code></pre></div><p>Now just roll back to it:</p>
+<pre tabindex="0"><code>% er restore 42
+</code></pre><p>Sometimes you&rsquo;ll need to run <code>g4 add</code> afterwards. And we&rsquo;re done!</p>
+<p><strong>Colophon</strong>: Why use <code>erratic</code> at all, since CitC already does automatic
+periodic snapshots out-of-the-box? Because these automatic snapshots are meant
+for machines, not humans; they are not very developer-friendly. You could get
+your way around <code>rsync</code> + finding the correct timestamps to copy from, but
+that&rsquo;s not fun at all, and not a good use of time either.</p>
+<h2 id="git-workflow">git workflow</h2>
+<p>How to replicate a similar workflow in a non-Google world?</p>
+<p>For most of us, non-Google necessarily means <code>git</code>. Let&rsquo;s ignore <code>hg</code>
+(mercurial) in this context.</p>
+<p>There is not much to do, actually: <a href="https://github.blog/open-source/git/commits-are-snapshots-not-diffs/">https://github.blog/open-source/git/commits-are-snapshots-not-diffs/</a></p>
+<p><code>git</code> commits are already snapshots. The workflow is:</p>
+<ul>
+<li>Make some changes, then <code>git add</code></li>
+<li>Create a branch (<code>git switch --create</code>), commit your changes</li>
+<li>To make a snapshot, just make a new commit and annotate it (<code>git commit -m &quot;foo&quot;</code>)</li>
+<li>To list your snapshots, run <code>git rev-list $(git show-branch --merge-base HEAD)^..HEAD --pretty</code>. This will list all commits since your branch diverted.
+You could add an alias to it in your <code>~/.gitconfig</code>.</li>
+<li>To roll back, run <code>git reset --hard {commit}</code>.</li>
+</ul>
+<p><strong>Caveat</strong>: You will lose track of all commits after <code>{commit}</code>. Although it
+would still be possible to recover them with <code>git reflog</code> (in case of a
+mistake), that is not developer-friendly workflow.</p>
+<p>Then the follow-up question is: how to roll back without losing track of
+intermediate work?</p>
+<p>One way is to create a new branch that points out to <code>{commit}</code> instead of
+hard-resetting your entire worktree:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git checkout -b mynewbranch <span style="color:#f92672">{</span>commit<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>Once you are satisfied, just delete the previous branch and then rename the
+current one to it.</p>
+<p>Another possibility is the use of <a href="https://git-scm.com/docs/git-worktree">git
+worktrees</a> to divert (spin-off) branches.</p>
+<p>This becomes a very natural workflow once you repeat it a couple of times.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>I have gladly peer bonused him. You should <em>always</em> peer bonus those folks
+who helped you become more productive.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Arguably you should create a separate CL for that (go/small-cls), but who
+am I to judge? Unless I am your teammate&hellip;&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>fd: match full path</title><link>https://www.perrotta.dev/2024/10/fd-match-full-path/</link><pubDate>Wed, 02 Oct 2024 13:30:29 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/fd-match-full-path/</guid><description>&lt;p>When using &lt;a href="https://github.com/sharkdp/fd">&lt;code>fd(1)&lt;/code>&lt;/a>, only the filename is
 matched by default.&lt;/p>
 &lt;p>To match the full path, use &lt;code>-p&lt;/code>. It is often useful to combine it with &lt;code>--type file&lt;/code>.&lt;/p></description><content:encoded><![CDATA[<p>When using <a href="https://github.com/sharkdp/fd"><code>fd(1)</code></a>, only the filename is
 matched by default.</p>
@@ -369,48 +441,6 @@ need for <code>doas /etc/init.d/miniflux restart</code>.</p>
 <li id="fn:1">
 <p>h/t to @fossdd for replying to my
 <a href="https://github.com/jirutka/apk-autoupdate/issues/8">https://github.com/jirutka/apk-autoupdate/issues/8</a> thread.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item><item><title>JSON schema negation</title><link>https://www.perrotta.dev/2024/08/json-schema-negation/</link><pubDate>Tue, 13 Aug 2024 11:27:17 +0200</pubDate><guid>https://www.perrotta.dev/2024/08/json-schema-negation/</guid><description>&lt;p>&lt;a href="https://json-schema.org/">JSON Schema&lt;/a> is a powerful validation tool to enforce
-a given structure and/or data type in JSON and YAML files.&lt;/p>
-&lt;p>&lt;strong>Problem statement&lt;/strong>: Disallow &lt;code>aws.iam_role&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>, with the implicit goal of
-allowing &lt;code>aws.iamRole&lt;/code>. Because naming and sticking to conventions is hard.&lt;/p>
-&lt;p>Illustration:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">aws&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">iamRole&lt;/span>: &lt;span style="color:#ae81ff">fooArn&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">iam_role&lt;/span>: &lt;span style="color:#ae81ff">barArn &lt;/span> &lt;span style="color:#75715e"># &amp;lt;-- disallow&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description><content:encoded><![CDATA[<p><a href="https://json-schema.org/">JSON Schema</a> is a powerful validation tool to enforce
-a given structure and/or data type in JSON and YAML files.</p>
-<p><strong>Problem statement</strong>: Disallow <code>aws.iam_role</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, with the implicit goal of
-allowing <code>aws.iamRole</code>. Because naming and sticking to conventions is hard.</p>
-<p>Illustration:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">aws</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">iamRole</span>: <span style="color:#ae81ff">fooArn</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">iam_role</span>: <span style="color:#ae81ff">barArn </span> <span style="color:#75715e"># &lt;-- disallow</span>
-</span></span></code></pre></div><p>We can accomplish this with the following schema (<code>% cat values.schema.json</code>):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;$schema&#34;</span>: <span style="color:#e6db74">&#34;http://json-schema.org/draft-07/schema#&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Schema that disallows aws.iam_role&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;object&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;additionalProperties&#34;</span>: <span style="color:#66d9ef">true</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;properties&#34;</span>: {
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;aws&#34;</span>: {
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;object&#34;</span>,
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;additionalProperties&#34;</span>: <span style="color:#66d9ef">true</span>,
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;not&#34;</span>: {
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;required&#34;</span>: [<span style="color:#e6db74">&#34;iam_role&#34;</span>]
-</span></span><span style="display:flex;"><span>      }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>Test</strong>: <code>helm lint</code> should fail that schema validation with the aforementioned
-input.</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>This is for a <a href="https://helm.sh/docs/topics/charts/#schema-files">helm
-chart</a>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>

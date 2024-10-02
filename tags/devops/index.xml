@@ -1,4 +1,76 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.135.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Wed, 02 Oct 2024 13:30:29 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>fd: match full path</title><link>https://www.perrotta.dev/2024/10/fd-match-full-path/</link><pubDate>Wed, 02 Oct 2024 13:30:29 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/fd-match-full-path/</guid><description>&lt;p>When using &lt;a href="https://github.com/sharkdp/fd">&lt;code>fd(1)&lt;/code>&lt;/a>, only the filename is
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.135.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Wed, 02 Oct 2024 13:33:56 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Erratic: human-friendly google3 piper snapshots</title><link>https://www.perrotta.dev/2024/10/erratic-human-friendly-google3-piper-snapshots/</link><pubDate>Wed, 02 Oct 2024 13:33:56 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/erratic-human-friendly-google3-piper-snapshots/</guid><description>&lt;p>In the google3 codebase, when working with Piper directly (i.e. not
+Fig[-on-CitC]), I often liked to use this tool called &lt;code>erratic&lt;/code> (abbrev: &lt;code>er&lt;/code>),
+which was a 20% project of another Software Engineer&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p></description><content:encoded><![CDATA[<p>In the google3 codebase, when working with Piper directly (i.e. not
+Fig[-on-CitC]), I often liked to use this tool called <code>erratic</code> (abbrev: <code>er</code>),
+which was a 20% project of another Software Engineer<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<h2 id="google3-workflow">google3 workflow</h2>
+<p>The workflow is as follows:</p>
+<ul>
+<li>Make some changes: <code>g4 open</code>, <code>g4 edit</code>, etc</li>
+<li>Create a CL (ChangeList) <code>g4 change</code></li>
+</ul>
+<p>Now let&rsquo;s say you&rsquo;re anticipating some heavy refactoring, in the same CL<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>,
+that you could potentially regret and want to revert.</p>
+<p>This would be a great moment to use <code>erratic</code>. After installing it (or aliasing
+it, if using it via X20), run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% er explain <span style="color:#e6db74">&#34;this is working perfectly before bob@ asked me to refactor it&#34;</span>
+</span></span></code></pre></div><ul>
+<li>Make additional changes</li>
+<li>Feel free to make more snapshots (checkpoints), as you see fit</li>
+</ul>
+<p>If you ever want to roll back, run <code>er list</code>. It will list all explicit
+snapshots you annotated so far. Locate the one you want to roll back to:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% er list
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">42</span> <span style="color:#e6db74">&#34;this is working perfectly before bob@ asked me to refactor it&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">78</span> <span style="color:#e6db74">&#34;second refactoring&#34;</span>
+</span></span></code></pre></div><p>Now just roll back to it:</p>
+<pre tabindex="0"><code>% er restore 42
+</code></pre><p>Sometimes you&rsquo;ll need to run <code>g4 add</code> afterwards. And we&rsquo;re done!</p>
+<p><strong>Colophon</strong>: Why use <code>erratic</code> at all, since CitC already does automatic
+periodic snapshots out-of-the-box? Because these automatic snapshots are meant
+for machines, not humans; they are not very developer-friendly. You could get
+your way around <code>rsync</code> + finding the correct timestamps to copy from, but
+that&rsquo;s not fun at all, and not a good use of time either.</p>
+<h2 id="git-workflow">git workflow</h2>
+<p>How to replicate a similar workflow in a non-Google world?</p>
+<p>For most of us, non-Google necessarily means <code>git</code>. Let&rsquo;s ignore <code>hg</code>
+(mercurial) in this context.</p>
+<p>There is not much to do, actually: <a href="https://github.blog/open-source/git/commits-are-snapshots-not-diffs/">https://github.blog/open-source/git/commits-are-snapshots-not-diffs/</a></p>
+<p><code>git</code> commits are already snapshots. The workflow is:</p>
+<ul>
+<li>Make some changes, then <code>git add</code></li>
+<li>Create a branch (<code>git switch --create</code>), commit your changes</li>
+<li>To make a snapshot, just make a new commit and annotate it (<code>git commit -m &quot;foo&quot;</code>)</li>
+<li>To list your snapshots, run <code>git rev-list $(git show-branch --merge-base HEAD)^..HEAD --pretty</code>. This will list all commits since your branch diverted.
+You could add an alias to it in your <code>~/.gitconfig</code>.</li>
+<li>To roll back, run <code>git reset --hard {commit}</code>.</li>
+</ul>
+<p><strong>Caveat</strong>: You will lose track of all commits after <code>{commit}</code>. Although it
+would still be possible to recover them with <code>git reflog</code> (in case of a
+mistake), that is not developer-friendly workflow.</p>
+<p>Then the follow-up question is: how to roll back without losing track of
+intermediate work?</p>
+<p>One way is to create a new branch that points out to <code>{commit}</code> instead of
+hard-resetting your entire worktree:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git checkout -b mynewbranch <span style="color:#f92672">{</span>commit<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>Once you are satisfied, just delete the previous branch and then rename the
+current one to it.</p>
+<p>Another possibility is the use of <a href="https://git-scm.com/docs/git-worktree">git
+worktrees</a> to divert (spin-off) branches.</p>
+<p>This becomes a very natural workflow once you repeat it a couple of times.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>I have gladly peer bonused him. You should <em>always</em> peer bonus those folks
+who helped you become more productive.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Arguably you should create a separate CL for that (go/small-cls), but who
+am I to judge? Unless I am your teammate&hellip;&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>fd: match full path</title><link>https://www.perrotta.dev/2024/10/fd-match-full-path/</link><pubDate>Wed, 02 Oct 2024 13:30:29 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/fd-match-full-path/</guid><description>&lt;p>When using &lt;a href="https://github.com/sharkdp/fd">&lt;code>fd(1)&lt;/code>&lt;/a>, only the filename is
 matched by default.&lt;/p>
 &lt;p>To match the full path, use &lt;code>-p&lt;/code>. It is often useful to combine it with &lt;code>--type file&lt;/code>.&lt;/p></description><content:encoded><![CDATA[<p>When using <a href="https://github.com/sharkdp/fd"><code>fd(1)</code></a>, only the filename is
 matched by default.</p>
@@ -520,53 +592,4 @@ to <code>top/inner/.envrc</code>. For example, perhaps <code>inner</code> is a c
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>doas reboot
 </span></span></code></pre></div><p>Then start <code>docker</code> again:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>doas service docker start
-</span></span></code></pre></div><p>And now everything works!</p>]]></content:encoded></item><item><title>Parallel</title><link>https://www.perrotta.dev/2024/07/parallel/</link><pubDate>Wed, 24 Jul 2024 14:48:09 +0200</pubDate><guid>https://www.perrotta.dev/2024/07/parallel/</guid><description>&lt;p>Apparently there are two Unix-y ways to run commands in parallel:&lt;/p>
-&lt;ul>
-&lt;li>GNU parallel: &lt;a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/&lt;/a>&lt;/li>
-&lt;li>moreutils parallel: &lt;a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/&lt;/a>&lt;/li>
-&lt;/ul></description><content:encoded><![CDATA[<p>Apparently there are two Unix-y ways to run commands in parallel:</p>
-<ul>
-<li>GNU parallel: <a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/</a></li>
-<li>moreutils parallel: <a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/</a></li>
-</ul>
-<p>A simple example with <code>wc -l</code>:</p>
-<p>GNU receives input from stdin:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>find . -type f | parallel wc -l
-</span></span></code></pre></div><p>Moreutils receives input from command-line arguments:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>parallel wc -l -- <span style="color:#66d9ef">$(</span>find . -type f<span style="color:#66d9ef">)</span>
-</span></span></code></pre></div><p>Style aside, the annoyance is that they are not compatible in Debian, Ubuntu and
-macOS (homebrew), due to both having the <code>parallel</code> executable:</p>
-<ul>
-<li><a href="https://superuser.com/questions/917577/how-can-i-install-gnu-parallel-alongside-moreutils-on-ubuntu-debian">https://superuser.com/questions/917577/how-can-i-install-gnu-parallel-alongside-moreutils-on-ubuntu-debian</a></li>
-<li><a href="https://askubuntu.com/questions/1191516/what-happens-to-usr-bin-parallel-if-i-install-the-moreutils-on-top-of-the-paral">https://askubuntu.com/questions/1191516/what-happens-to-usr-bin-parallel-if-i-install-the-moreutils-on-top-of-the-paral</a></li>
-</ul>
-<p>Debian thread wherein no consensus is achieved:
-<a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=597050">https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=597050</a></p>
-<p>I will stick to <code>moreutils</code> due to its simplicity and richer suite.
-Nonetheless, it would be better if we didn&rsquo;t have binary clashes like this. It
-is really annoying and developer-unfriendly.</p>
-<p>Of course, my favorite Linux distributions do not have this issue:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% apk info -L moreutils | grep parallel
-</span></span><span style="display:flex;"><span>usr/bin/parallel-moreutils
-</span></span></code></pre></div><p>&hellip;Alpine just installs <code>parallel</code> from <code>moreutils</code> with another name.</p>
-<p>Arch Linux <a href="https://gitlab.archlinux.org/archlinux/packaging/packages/moreutils/-/blob/main/PKGBUILD?ref_type=heads">does the
-same</a>:</p>
-<pre tabindex="0"><code>mv &#34;$pkgdir&#34;/usr/bin/parallel &#34;$pkgdir&#34;/usr/bin/parallel-moreutils
-</code></pre><p>Moreover, GNU Parallel has an annoying citation notice, which the Arch Linux
-package <a href="https://gitlab.archlinux.org/archlinux/packaging/packages/parallel/-/blob/main/0001-Remove-citation-things.patch?ref_type=heads">helpfully
-removes</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><a href="https://bugs.launchpad.net/ubuntu/+source/parallel/+bug/1779764">Some</a>
-<a href="https://news.ycombinator.com/item?id=15319715">context</a>. Not everyone works
-in academia. Also it&rsquo;s quite weird that the program is called &ldquo;GNU
-parallel&rdquo;, is published under the GPL, and yet does not seemingly follow the
-<a href="https://www.gnu.org/licenses/gpl-faq.en.html#RequireCitation">GPL
-guidelines</a>.
-<a href="https://git.savannah.gnu.org/cgit/parallel.git/tree/doc/citation-notice-faq.txt#n27">This</a>
-is the official FAQ of the program.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div><p>And now everything works!</p>]]></content:encoded></item></channel></rss>
