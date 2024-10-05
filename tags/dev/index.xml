@@ -1,4 +1,75 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.135.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Sat, 05 Oct 2024 23:58:48 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Steam Deck "downloading update" boot loop</title><link>https://www.perrotta.dev/2024/10/steam-deck-downloading-update-boot-loop/</link><pubDate>Sat, 05 Oct 2024 23:58:48 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/steam-deck-downloading-update-boot-loop/</guid><description>&lt;p>Today I tried to use my Steam Deck to no avail.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.135.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Sun, 06 Oct 2024 00:31:23 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Tracking cheap flights from Munich</title><link>https://www.perrotta.dev/2024/10/tracking-cheap-flights-from-munich/</link><pubDate>Sun, 06 Oct 2024 00:31:23 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/tracking-cheap-flights-from-munich/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>I wanted to be notified whenever a flight deal from Munich&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> appeared. The
+destination doesn&amp;rsquo;t really matter.&lt;/p></description><content:encoded><![CDATA[<h2 id="overview">Overview</h2>
+<p>I wanted to be notified whenever a flight deal from Munich<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> appeared. The
+destination doesn&rsquo;t really matter.</p>
+<p>There are several ways to do so semi-automatically, I tried all of them at least
+once:</p>
+<ul>
+<li>follow travel blogs</li>
+<li>sign up for newsletters</li>
+<li>follow instagram pages or influencers that relay promos</li>
+<li>visit the websites from airlines directly</li>
+<li>use bots / scraping</li>
+<li>ask friends periodically</li>
+<li>date a flight attendant</li>
+</ul>
+<p>The list above is overwhelming, and I have no time for all of it. Furthermore, I
+have zero desire to inundate myself with (even) more social media posts, that
+are often empty in nature.</p>
+<p>Moreover I wanted to build a permanent and long-lasting solution on top of my
+personal infrastructure.</p>
+<p>Hence the only real options were: (i) travel blogs, (ii) newsletters, (iii)
+scraping.</p>
+<p>The first phase is implemented as a Telegram channel:
+<a href="https://t.me/bavariabudgetbirds">https://t.me/bavariabudgetbirds</a>.</p>
+<p>Whenever there are new deals my server pushes an update to the Telegram channel
+above for each of them. The deals<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> are tracked via a list of curated RSS feed
+subscriptions, which is filtered to only match keywords that are pertaining to
+Munich. It is not perfect, but it is good enough for my purposes, virtually
+marginally free to run, and needs zero maintenance.</p>
+<h2 id="technical-details">Technical Details</h2>
+<p>I have a VPS that runs <a href="https://www.alpinelinux.org/">Alpine Linux</a>. The VPS
+provider is not important.</p>
+<p>The OS runs the excellent <a href="https://miniflux.app/">Miniflux</a> app, managed via
+OpenRC. In this specific deployment, there is no <code>systemd</code>, and there is no
+virtualization (<code>docker</code>, <code>kubernetes</code>, etc). It is 100%
+<a href="https://en.wikipedia.org/wiki/KISS_principle">KISS</a>. Miniflux is actively
+developed and Alpine Linux package releases happen frequently and quickly. Even
+if they do not, I have the means to create <code>APKBUILD</code>s myself when needed
+(see previous posts).</p>
+<p>Miniflux is populated with the list of travel blogs I follow, filtering out
+non-relevant posts, polled roughly every 2 hours. There is a separate Miniflux
+user for this purpose, so that my own subscriptions do not get mingled
+in-between.</p>
+<p>I use the Miniflux integration with Telegram to ensure that new posts are
+immediately pushed to the aforementioned channel with my Telegram bot.</p>
+<p>Wishlist for the future:</p>
+<ol>
+<li>Add the ability to integrate with websites that do not support
+RSS directly and/or that block RSS readers. Examples:</li>
+</ol>
+<ul>
+<li><a href="https://lowcost.pro/route/MUC/XXX/EN/">https://lowcost.pro/route/MUC/XXX/EN/</a></li>
+<li><a href="https://www.secretflying.com/posts/category/cities-countries/germany/">https://www.secretflying.com/posts/category/cities-countries/germany/</a></li>
+<li><a href="https://www.trabber.de/en/flights-from-germany-de/">https://www.trabber.de/en/flights-from-germany-de/</a></li>
+</ul>
+<ol start="2">
+<li>Convert newsletters-only sources to RSS feeds.</li>
+</ol>
+<p>This solution can easily be generalized for any location; there is absolutely
+nothing special about Munich in this context.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Munich, Memmingen or Nuremberg (Nürnberg)&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Blog posts, really.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>Steam Deck "downloading update" boot loop</title><link>https://www.perrotta.dev/2024/10/steam-deck-downloading-update-boot-loop/</link><pubDate>Sat, 05 Oct 2024 23:58:48 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/steam-deck-downloading-update-boot-loop/</guid><description>&lt;p>Today I tried to use my Steam Deck to no avail.&lt;/p>
 &lt;p>Upon turning it on, a “Downloading update (…)” splash screen would appear, then the device would quickly turn itself off, in a matter of seconds.&lt;/p></description><content:encoded><![CDATA[<p>Today I tried to use my Steam Deck to no avail.</p>
 <p>Upon turning it on, a “Downloading update (…)” splash screen would appear, then the device would quickly turn itself off, in a matter of seconds.</p>
 <p>Repeating this dance a couple of times yielded the same results.</p>
@@ -473,131 +544,6 @@ input.</p>
 <li id="fn:1">
 <p>This is for a <a href="https://helm.sh/docs/topics/charts/#schema-files">helm
 chart</a>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item><item><title>★ Self-documented Makefiles</title><link>https://www.perrotta.dev/2024/08/self-documented-makefiles/</link><pubDate>Thu, 08 Aug 2024 10:42:49 +0200</pubDate><guid>https://www.perrotta.dev/2024/08/self-documented-makefiles/</guid><description>&lt;p>&lt;code>Makefile&lt;/code>s are often great &lt;code>bash&lt;/code> script replacements. Instead of creating a
-&lt;code>bash&lt;/code> script with multiple functions with various dependencies (from a
-topological graph viewpoint), just create a bunch of &lt;code>Makefile&lt;/code> targets.&lt;/p></description><content:encoded><![CDATA[<p><code>Makefile</code>s are often great <code>bash</code> script replacements. Instead of creating a
-<code>bash</code> script with multiple functions with various dependencies (from a
-topological graph viewpoint), just create a bunch of <code>Makefile</code> targets.</p>
-<p>Recently I found myself writing the following <code>Makefile</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span><span style="color:#75715e"># This Makefile is used to bootstrap the ArgoCD installation in the cluster.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"># It is idempotent.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>ROOT <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>shell git rev-parse --show-toplevel<span style="color:#66d9ef">)</span>
-</span></span><span style="display:flex;"><span>TERRAFORM_GITHUB_PATH <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>ROOT<span style="color:#66d9ef">)</span><span style="color:#e6db74">/terraform/modules/global-github&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>TERRAFORM <span style="color:#f92672">:=</span> terraform
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">all</span><span style="color:#f92672">:</span> webhook
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Update helm dependencies.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">helm helm-dep-update</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>	helm dep update <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>ROOT<span style="color:#66d9ef">)</span><span style="color:#e6db74">/helm/argocd&#34;</span>
-</span></span><span style="display:flex;"><span>	helm dep update <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>ROOT<span style="color:#66d9ef">)</span><span style="color:#e6db74">/helm/external-secrets&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Edit all files.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">edit</span><span style="color:#f92672">:</span> edit-webhook
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Modify github webhooks to the deploy servers.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">edit-webhook webhook-edit</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;</span>$$<span style="color:#e6db74">EDITOR&#34;</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>TERRAFORM_GITHUB_PATH<span style="color:#66d9ef">)</span><span style="color:#e6db74">/main.tf&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Apply github webhooks to the deploy servers.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">webhook</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">$(</span>TERRAFORM<span style="color:#66d9ef">)</span> -chdir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>TERRAFORM_GITHUB_PATH<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> apply
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">.PHONY</span><span style="color:#f92672">:</span> all edit edit-webhook helm helm-dep-update webhook webhook-edit
-</span></span></code></pre></div><p>As you can see, there are a bunch of comments on top of each target. The
-question is: How to surface these comments to the user?</p>
-<p>A <code>make help</code> command would be great.</p>
-<p>With a bit of searching, I found:</p>
-<ul>
-<li><a href="https://gist.github.com/prwhite/8168133">https://gist.github.com/prwhite/8168133</a></li>
-<li><a href="https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html">https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html</a></li>
-</ul>
-<p>These were good starting points. The technique was to transform the above
-<code>Makefile</code> into the following one:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span><span style="color:#75715e"># This Makefile is used to bootstrap the ArgoCD installation in the cluster.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"># It is idempotent.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>ROOT <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>shell git rev-parse --show-toplevel<span style="color:#66d9ef">)</span>
-</span></span><span style="display:flex;"><span>TERRAFORM_GITHUB_PATH <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>ROOT<span style="color:#66d9ef">)</span><span style="color:#e6db74">/terraform/modules/global-github&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>TERRAFORM <span style="color:#f92672">:=</span> terraform
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">all</span><span style="color:#f92672">:</span> webhook
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">helm helm-dep-update</span><span style="color:#f92672">:</span>  <span style="color:#75715e">## Update helm dependencies.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	helm dep update <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>ROOT<span style="color:#66d9ef">)</span><span style="color:#e6db74">/helm/argocd&#34;</span>
-</span></span><span style="display:flex;"><span>	helm dep update <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>ROOT<span style="color:#66d9ef">)</span><span style="color:#e6db74">/helm/external-secrets&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">edit</span><span style="color:#f92672">:</span> edit-webhook  <span style="color:#75715e">## Edit all files.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">edit-webhook webhook-edit</span><span style="color:#f92672">:</span>  <span style="color:#75715e">## Modify github webhooks to the deploy servers.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#e6db74">&#34;</span>$$<span style="color:#e6db74">EDITOR&#34;</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>TERRAFORM_GITHUB_PATH<span style="color:#66d9ef">)</span><span style="color:#e6db74">/main.tf&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">webhook</span><span style="color:#f92672">:</span>  <span style="color:#75715e">## Apply github webhooks to the deploy servers.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">$(</span>TERRAFORM<span style="color:#66d9ef">)</span> -chdir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>TERRAFORM_GITHUB_PATH<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> apply
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">.PHONY</span><span style="color:#f92672">:</span> all edit edit-webhook helm helm-dep-update webhook webhook-edit
-</span></span></code></pre></div><p>Then we would add a <code>help</code> target to parse the comments after the <code>##</code>.</p>
-<p>The first source suggested:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span><span style="color:#a6e22e">help</span><span style="color:#f92672">:</span>           <span style="color:#75715e">## Show this help.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	@fgrep -h <span style="color:#e6db74">&#34;##&#34;</span> <span style="color:#66d9ef">$(</span>MAKEFILE_LIST<span style="color:#66d9ef">)</span> | fgrep -v fgrep | sed -e <span style="color:#e6db74">&#39;s/\\$$//&#39;</span> | sed -e <span style="color:#e6db74">&#39;s/##//&#39;</span>
-</span></span></code></pre></div><p>It is simple and gets the job done, but the formatting was poor:</p>
-<pre tabindex="0"><code>% make help
-help:            Show this help.
-helm helm-dep-update:   Update helm dependencies.
-edit: edit-webhook   Edit all files.
-edit-webhook webhook-edit:   Modify github webhooks to the deploy servers.
-webhook:   Apply github webhooks to the deploy servers.
-</code></pre><p>The second source suggested:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span><span style="color:#a6e22e">help</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>	@grep -E <span style="color:#e6db74">&#39;^[a-zA-Z_-]+:.*?## .*$$&#39;</span> <span style="color:#66d9ef">$(</span>MAKEFILE_LIST<span style="color:#66d9ef">)</span> | sort | awk <span style="color:#e6db74">&#39;BEGIN {FS = &#34;:.*?## &#34;}; {printf &#34;\033[36m%-30s\033[0m %s\n&#34;, $$1, $$2}&#39;</span>
-</span></span></code></pre></div><p>&hellip;which produces:</p>
-<pre tabindex="0"><code>% make help
-edit                           Edit all files.
-webhook                        Apply github webhooks to the deploy servers.
-</code></pre><p>The formatting is great, but alas it does not match multiple targets in a single
-line.</p>
-<p>I could have modified the targets to be like this:</p>
-<pre tabindex="0"><code>edit-webhook: webhook-edit
-webhook-edit:  ## Description here
-</code></pre><p>However then I would have to duplicate their comments. I wanted to do better.</p>
-<p>With a bit of LLM<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> magic from GPT-4o, we can have the best of both worlds,
-supporting both single and multiple targets in the same line:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span><span style="color:#a6e22e">help</span><span style="color:#f92672">:</span>  <span style="color:#75715e">## Show this help.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	@grep -E <span style="color:#e6db74">&#39;^[a-zA-Z_-]+([ \t]+[a-zA-Z_-]+)*:[ \t]*## .*$$&#39;</span> <span style="color:#66d9ef">$(</span>MAKEFILE_LIST<span style="color:#66d9ef">)</span> | awk <span style="color:#e6db74">&#39;BEGIN {FS = &#34;:.*?## &#34;}; {n=split($$1, targets, /[ \t]+/); for (i=1; i&lt;=n; i++) {if (targets[i] != &#34;&#34;) printf &#34;\033[36m%-30s\033[0m %s\n&#34;, targets[i], $$2}}&#39;</span> | sort
-</span></span></code></pre></div><p>The output (amazing!):</p>
-<pre tabindex="0"><code>% make help
-edit-webhook                   Modify github webhooks to the deploy servers.
-helm                           Update helm dependencies.
-helm-dep-update                Update helm dependencies.
-help                           Show this help.
-webhook                        Apply github webhooks the deploy servers.
-webhook-edit                   Modify github webhooks to the deploy servers.
-</code></pre><p>The chat session: <a href="https://chatgpt.com/share/f9872dfa-650e-4a0c-b974-701181c237c6">https://chatgpt.com/share/f9872dfa-650e-4a0c-b974-701181c237c6</a>.</p>
-<p>We could also add:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span>.DEFAULT_GOAL <span style="color:#f92672">:=</span> help
-</span></span></code></pre></div><p>&hellip;to ensure that a plain <code>make</code> invocation behaves like <code>make help</code>.</p>
-<p><strong>Edit(2024-08-08)</strong>: I had to make one small adaptation<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> to make it work with
-dependencies, which is the whole point of <code>make</code>:</p>
-<pre tabindex="0"><code>help:  ## Show this help.
-	@grep -E &#39;^[.a-zA-Z_-]+([ \t]+[.a-zA-Z_-]+)*:[ \t.a-zA-Z_-]*## .*$$&#39; $(MAKEFILE_LIST) | awk &#39;BEGIN {FS = &#34;:.*?## &#34;}; {n=split($$1, targets, /[ \t]+/); for (i=1; i&lt;=n; i++) {if (targets[i] != &#34;&#34;) printf &#34;\033[36m%-30s\033[0m %s\n&#34;, targets[i], $$2}}&#39; | sort
-</code></pre><p>The previous version would not recognize the following entry:</p>
-<pre tabindex="0"><code>all-in-dev: edit webhook  ## Run all necessary steps in the development environment.`
-</code></pre><div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>If I&rsquo;ll start to talk about &ldquo;AI&rdquo; in this blog, the very least I can do is
-to call them what they really are: <strong>LLMs</strong>. The &ldquo;AI&rdquo; acronym is currently <em>way</em>
-too hyped.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>Never fully trust LLMs. Well, drop the <em>fully</em>. Just <strong>never trust LLMs</strong>,
-period.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>
