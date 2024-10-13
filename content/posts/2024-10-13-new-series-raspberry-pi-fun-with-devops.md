@@ -1,5 +1,5 @@
 ---
-title: “★ New series: Raspberry Pi fun with DevOps"
+title: "★ New series: Raspberry Pi fun with DevOps"
 date: 2024-10-13T11:31:13+02:00
 tags:
   - dev
@@ -43,39 +43,39 @@ _a.k.a. rules of engagement_
 
 No Windows. No macOS. Anything else is fair game. Corollary: It must run either Linux or BSD.
 
-1. It must be vanilla / upstream
+2. It must be vanilla / upstream
 
 No spin-offs. For example: for Ubuntu, no Xubuntu. For Arch Linux, no Manjaro. For Gentoo, no Funtoo.
 And so on. Stick to the _core_ / base Linux distributions.
 For BSD, this is a non-issue.
 
-1. Every software installation _must_ come from a package
+3. Every software installation _must_ come from a package
 
 If there is no package, I will create one myself.
 This is easier if I use Arch Linux or Alpine Linux, but I am willing to contribute to other distributions as well.
 
-1. It must have no X11 nor Wayland nor a graphical system
+4. It must have no X11 nor Wayland nor a graphical system
 
 It should be a pure server.
 In the past I ran RaspberryPi OS (neé Raspbian) and it wasn’t very useful, besides being super slow and sluggish.
 
-1. Software updates must happen with a single command
+5. Software updates must happen with a single command
 
 There is no need for auto-updates (these are often not well-supported anyways), but a human operator should be able to upgrade
 _everything_ in a single shot. It doesn’t have to be a single command (e.g. `apt update` + `apt upgrade` is acceptable), but it
 should be contained within a short script.
 
-1. It should be reasonably popular and well-supported
+6. It should be reasonably popular and well-supported
 
 No obscure distributions.
 I don’t particularly care about a sizeable community (I won’t join their Discord server nor Reddit community anyway),
-but there should be at least one support channel, and it would be preferred that it is old-school (BBS / Discourse / forums, mailing lists, IRC / Matrix).
+but there should be at least one official support channel, and it would be preferred that it is old-school (BBS / Discourse / forums, mailing lists, IRC / Matrix).
 Stack Exchange is also acceptable to an extent.
 The problem with the modern stuff (Discord, Reddit) is that it is too proprietary, can / will disappear at any moment, and will be heavily used to train LLMs with no scrutiny.
 Commercial support is fine. For example, Red Hat backing Fedora, Canonical backing Ubuntu, and SUSE backing openSUSE is a non-issue.
 I would just avoid commercial enterprises that suffocate their open counterparts.
 
-1. It should support Raspberry Pi (the ARM architecture, for that matter) as a first-class citizen
+7. It should support Raspberry Pi (the ARM architecture, for that matter) as a first-class citizen
 
 If Raspberry Pi support is considered experimental, I would avoid the trouble at this time.
 
