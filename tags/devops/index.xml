@@ -1,4 +1,138 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Fri, 18 Oct 2024 14:52:44 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Makefile: path to root dir</title><link>https://www.perrotta.dev/2024/10/makefile-path-to-root-dir/</link><pubDate>Fri, 18 Oct 2024 14:52:44 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/makefile-path-to-root-dir/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>Makefile&lt;/code> within &lt;code>~/git/scaffolding/Makefile&lt;/code>,
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Fri, 18 Oct 2024 14:57:27 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>★ prodaccess</title><link>https://www.perrotta.dev/2024/10/prodaccess/</link><pubDate>Fri, 18 Oct 2024 14:57:27 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/prodaccess/</guid><description>&lt;p>At Google we had a &lt;code>prodaccess&lt;/code> command used to log in and authenticate in all
+sorts of internal corp systems&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> for 20 hours. It became a daily ritual to run
+&lt;code>prodaccess&lt;/code> first thing in the morning when logging in upon unlocking our
+physical workstations&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>.&lt;/p>
+&lt;p>During the pandemic, when heavily using our virtual workstations (dubbed
+&lt;em>cloudtops&lt;/em>, think of an EC2 instance or a VPS) it was common to hook
+&lt;code>prodaccess&lt;/code> into &lt;code>ssh&lt;/code>. There was a &lt;code>prodcertstatus&lt;/code> command that would tell
+you when &lt;code>prodaccess&lt;/code> would expire. A common pattern was to modify your &lt;code>ssh&lt;/code>
+startup command to automatically run &lt;code>prodaccess&lt;/code> whenever &lt;code>prodcertstatus&lt;/code>
+indicated that access would expire within 2-4 hours, depending on the user&amp;rsquo;s
+preference.&lt;/p>
+&lt;p>Given my trained muscle memory, I wanted to continue to use this alias even in
+environments other than Google:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat ~/.profile.d/functions_corp.sh
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>...&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>prodaccess&lt;span style="color:#f92672">()&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;--&amp;gt; VPN&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> vpn_login
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;--&amp;gt; Teleport&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> teleport_login
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;--&amp;gt; AWS&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> aws_login
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;--&amp;gt; Azure&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> azure_login
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">case&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$1&lt;span style="color:#e6db74">&amp;#34;&lt;/span> in
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> -u|--update&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;--&amp;gt; mr&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># Update all well-known corp repositories&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">(&lt;/span>cd ~/Corp &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> mr update &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> mr run git world&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># Package manager upgrade&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;--&amp;gt; sd-world&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> sd-world
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> shift
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ;;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> -a|--all&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;--&amp;gt; Atlas Mongo&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> atlas_login
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> shift
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ;;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">esac&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>...&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Notes:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>mr&lt;/code> is &lt;a href="https://myrepos.branchable.com/">https://myrepos.branchable.com/&lt;/a> (&amp;ldquo;a tool to manage all your version
+control repositories&amp;rdquo;)&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>&lt;/li>
+&lt;li>&lt;code>sd-world&lt;/code> was introduced in a &lt;a href="https://www.perrotta.dev/2024/01/sd-world-perform-a-full-system-upgrade/">previous post&lt;/a>: it performs a full system upgrade&lt;/li>
+&lt;li>&lt;code>--all&lt;/code> holds services I only need / use from time to time.&lt;/li>
+&lt;li>&lt;code>shift&lt;/code> is not really needed, but IMHO it&amp;rsquo;s a good practice (and another
+ingrained habit of mine), especially when inside &lt;code>for&lt;/code> loops&lt;/li>
+&lt;li>&lt;code>git world&lt;/code> is an alias in my &lt;code>~/.gitconfig&lt;/code> that runs &lt;code>git fetch --all &amp;amp;&amp;amp; git remote prune origin&lt;/code>&lt;/li>
+&lt;/ul></description><content:encoded><![CDATA[<p>At Google we had a <code>prodaccess</code> command used to log in and authenticate in all
+sorts of internal corp systems<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> for 20 hours. It became a daily ritual to run
+<code>prodaccess</code> first thing in the morning when logging in upon unlocking our
+physical workstations<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
+<p>During the pandemic, when heavily using our virtual workstations (dubbed
+<em>cloudtops</em>, think of an EC2 instance or a VPS) it was common to hook
+<code>prodaccess</code> into <code>ssh</code>. There was a <code>prodcertstatus</code> command that would tell
+you when <code>prodaccess</code> would expire. A common pattern was to modify your <code>ssh</code>
+startup command to automatically run <code>prodaccess</code> whenever <code>prodcertstatus</code>
+indicated that access would expire within 2-4 hours, depending on the user&rsquo;s
+preference.</p>
+<p>Given my trained muscle memory, I wanted to continue to use this alias even in
+environments other than Google:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% cat ~/.profile.d/functions_corp.sh
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>prodaccess<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	echo <span style="color:#e6db74">&#34;--&gt; VPN&#34;</span>
+</span></span><span style="display:flex;"><span>	vpn_login
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	echo <span style="color:#e6db74">&#34;--&gt; Teleport&#34;</span>
+</span></span><span style="display:flex;"><span>	teleport_login
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	echo <span style="color:#e6db74">&#34;--&gt; AWS&#34;</span>
+</span></span><span style="display:flex;"><span>	aws_login
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    echo <span style="color:#e6db74">&#34;--&gt; Azure&#34;</span>
+</span></span><span style="display:flex;"><span>    azure_login
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> in
+</span></span><span style="display:flex;"><span>		-u|--update<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>			echo <span style="color:#e6db74">&#34;--&gt; mr&#34;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e"># Update all well-known corp repositories</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#f92672">(</span>cd ~/Corp <span style="color:#f92672">&amp;&amp;</span> mr update <span style="color:#f92672">&amp;&amp;</span> mr run git world<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e"># Package manager upgrade</span>
+</span></span><span style="display:flex;"><span>			echo <span style="color:#e6db74">&#34;--&gt; sd-world&#34;</span>
+</span></span><span style="display:flex;"><span>			sd-world
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			shift
+</span></span><span style="display:flex;"><span>			;;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		-a|--all<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>			echo <span style="color:#e6db74">&#34;--&gt; Atlas Mongo&#34;</span>
+</span></span><span style="display:flex;"><span>			atlas_login
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			shift
+</span></span><span style="display:flex;"><span>			;;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">esac</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Notes:</p>
+<ul>
+<li><code>mr</code> is <a href="https://myrepos.branchable.com/">https://myrepos.branchable.com/</a> (&ldquo;a tool to manage all your version
+control repositories&rdquo;)<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></li>
+<li><code>sd-world</code> was introduced in a <a href="https://www.perrotta.dev/2024/01/sd-world-perform-a-full-system-upgrade/">previous post</a>: it performs a full system upgrade</li>
+<li><code>--all</code> holds services I only need / use from time to time.</li>
+<li><code>shift</code> is not really needed, but IMHO it&rsquo;s a good practice (and another
+ingrained habit of mine), especially when inside <code>for</code> loops</li>
+<li><code>git world</code> is an alias in my <code>~/.gitconfig</code> that runs <code>git fetch --all &amp;&amp; git remote prune origin</code></li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Until someone in CorpEng decided it was a good idea to
+<a href="https://killedbygoogle.com/">deprecate</a> it in favour of a new <code>gcert</code>
+command, destroying many SWE-years of developed muscle memory.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Ah, the <em>good ol&rsquo; times</em>.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>I should write a post about it sometime.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>Makefile: path to root dir</title><link>https://www.perrotta.dev/2024/10/makefile-path-to-root-dir/</link><pubDate>Fri, 18 Oct 2024 14:52:44 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/makefile-path-to-root-dir/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>Makefile&lt;/code> within &lt;code>~/git/scaffolding/Makefile&lt;/code>,
 and a command that needs to run from the &lt;code>scaffolding/&lt;/code> directory, create an
 &lt;code>all&lt;/code> target that works from any directory.&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Given a <code>Makefile</code> within <code>~/git/scaffolding/Makefile</code>,
 and a command that needs to run from the <code>scaffolding/</code> directory, create an
@@ -490,41 +624,6 @@ your S3 bucket, then you do not need to list them all.</p>
 <ol>
 <li id="fn:1">
 <p><a href="https://docs.aws.amazon.com/cli/latest/reference/s3/ls.html">https://docs.aws.amazon.com/cli/latest/reference/s3/ls.html</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item><item><title>git: create a throwaway branch</title><link>https://www.perrotta.dev/2024/09/git-create-a-throwaway-branch/</link><pubDate>Wed, 04 Sep 2024 22:01:29 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/git-create-a-throwaway-branch/</guid><description>&lt;p>Let&amp;rsquo;s say you want to submit a quick, perhaps even trivial, one-off pull request
-(PR).&lt;/p>
-&lt;p>One step you can do to minimize the number of decisions&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> to make is to have
-a git alias that creates a branch with an arbitrary name.&lt;/p>
-&lt;pre tabindex="0">&lt;code>% cat ~/.gitconfig
-# ...
-[alias]
-nbt = !git nb \&amp;#34;thiagowfx/$(shuf -n1 /usr/share/dict/words | tr \&amp;#34;[:upper:]\&amp;#34; \&amp;#34;[:lower:]\&amp;#34;)\&amp;#34;
-&lt;/code>&lt;/pre>&lt;p>Running &lt;code>git nbt&lt;/code>&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup> will create a branch such as &lt;code>thiagowfx/foo&lt;/code>.&lt;/p>
-&lt;p>The &lt;code>{username}/&lt;/code> prefix is to make it easier to attribute your branches to
-yourself, which can be handy when working collaboratively with other engineers
-in a team.&lt;/p>
-&lt;p>The word after the slash is sourced from dictionary words on your system.&lt;/p></description><content:encoded><![CDATA[<p>Let&rsquo;s say you want to submit a quick, perhaps even trivial, one-off pull request
-(PR).</p>
-<p>One step you can do to minimize the number of decisions<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> to make is to have
-a git alias that creates a branch with an arbitrary name.</p>
-<pre tabindex="0"><code>% cat ~/.gitconfig
-# ...
-[alias]
-nbt = !git nb \&#34;thiagowfx/$(shuf -n1 /usr/share/dict/words | tr \&#34;[:upper:]\&#34; \&#34;[:lower:]\&#34;)\&#34;
-</code></pre><p>Running <code>git nbt</code><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> will create a branch such as <code>thiagowfx/foo</code>.</p>
-<p>The <code>{username}/</code> prefix is to make it easier to attribute your branches to
-yourself, which can be handy when working collaboratively with other engineers
-in a team.</p>
-<p>The word after the slash is sourced from dictionary words on your system.</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>See <a href="https://en.wikipedia.org/wiki/Decision_fatigue">https://en.wikipedia.org/wiki/Decision_fatigue</a>, <a href="https://en.wikipedia.org/wiki/The_Paradox_of_Choice">https://en.wikipedia.org/wiki/The_Paradox_of_Choice</a>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p><code>nbt</code> stands for &ldquo;new branch throwaway&rdquo;.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>

@@ -1,4 +1,138 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Bestof on not just serendipity</title><link>https://www.perrotta.dev/tags/bestof/</link><description>Recent content in Bestof on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Sun, 13 Oct 2024 11:31:13 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>★ New series: Raspberry Pi fun with DevOps</title><link>https://www.perrotta.dev/2024/10/new-series-raspberry-pi-fun-with-devops/</link><pubDate>Sun, 13 Oct 2024 11:31:13 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/new-series-raspberry-pi-fun-with-devops/</guid><description>&lt;h2 id="intro">Intro&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Bestof on not just serendipity</title><link>https://www.perrotta.dev/tags/bestof/</link><description>Recent content in Bestof on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Fri, 18 Oct 2024 14:57:27 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>★ prodaccess</title><link>https://www.perrotta.dev/2024/10/prodaccess/</link><pubDate>Fri, 18 Oct 2024 14:57:27 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/prodaccess/</guid><description>&lt;p>At Google we had a &lt;code>prodaccess&lt;/code> command used to log in and authenticate in all
+sorts of internal corp systems&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> for 20 hours. It became a daily ritual to run
+&lt;code>prodaccess&lt;/code> first thing in the morning when logging in upon unlocking our
+physical workstations&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>.&lt;/p>
+&lt;p>During the pandemic, when heavily using our virtual workstations (dubbed
+&lt;em>cloudtops&lt;/em>, think of an EC2 instance or a VPS) it was common to hook
+&lt;code>prodaccess&lt;/code> into &lt;code>ssh&lt;/code>. There was a &lt;code>prodcertstatus&lt;/code> command that would tell
+you when &lt;code>prodaccess&lt;/code> would expire. A common pattern was to modify your &lt;code>ssh&lt;/code>
+startup command to automatically run &lt;code>prodaccess&lt;/code> whenever &lt;code>prodcertstatus&lt;/code>
+indicated that access would expire within 2-4 hours, depending on the user&amp;rsquo;s
+preference.&lt;/p>
+&lt;p>Given my trained muscle memory, I wanted to continue to use this alias even in
+environments other than Google:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat ~/.profile.d/functions_corp.sh
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>...&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>prodaccess&lt;span style="color:#f92672">()&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;--&amp;gt; VPN&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> vpn_login
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;--&amp;gt; Teleport&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> teleport_login
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;--&amp;gt; AWS&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> aws_login
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;--&amp;gt; Azure&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> azure_login
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">case&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$1&lt;span style="color:#e6db74">&amp;#34;&lt;/span> in
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> -u|--update&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;--&amp;gt; mr&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># Update all well-known corp repositories&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">(&lt;/span>cd ~/Corp &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> mr update &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> mr run git world&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># Package manager upgrade&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;--&amp;gt; sd-world&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> sd-world
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> shift
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ;;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> -a|--all&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;--&amp;gt; Atlas Mongo&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> atlas_login
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> shift
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ;;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">esac&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>...&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Notes:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>mr&lt;/code> is &lt;a href="https://myrepos.branchable.com/">https://myrepos.branchable.com/&lt;/a> (&amp;ldquo;a tool to manage all your version
+control repositories&amp;rdquo;)&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>&lt;/li>
+&lt;li>&lt;code>sd-world&lt;/code> was introduced in a &lt;a href="https://www.perrotta.dev/2024/01/sd-world-perform-a-full-system-upgrade/">previous post&lt;/a>: it performs a full system upgrade&lt;/li>
+&lt;li>&lt;code>--all&lt;/code> holds services I only need / use from time to time.&lt;/li>
+&lt;li>&lt;code>shift&lt;/code> is not really needed, but IMHO it&amp;rsquo;s a good practice (and another
+ingrained habit of mine), especially when inside &lt;code>for&lt;/code> loops&lt;/li>
+&lt;li>&lt;code>git world&lt;/code> is an alias in my &lt;code>~/.gitconfig&lt;/code> that runs &lt;code>git fetch --all &amp;amp;&amp;amp; git remote prune origin&lt;/code>&lt;/li>
+&lt;/ul></description><content:encoded><![CDATA[<p>At Google we had a <code>prodaccess</code> command used to log in and authenticate in all
+sorts of internal corp systems<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> for 20 hours. It became a daily ritual to run
+<code>prodaccess</code> first thing in the morning when logging in upon unlocking our
+physical workstations<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
+<p>During the pandemic, when heavily using our virtual workstations (dubbed
+<em>cloudtops</em>, think of an EC2 instance or a VPS) it was common to hook
+<code>prodaccess</code> into <code>ssh</code>. There was a <code>prodcertstatus</code> command that would tell
+you when <code>prodaccess</code> would expire. A common pattern was to modify your <code>ssh</code>
+startup command to automatically run <code>prodaccess</code> whenever <code>prodcertstatus</code>
+indicated that access would expire within 2-4 hours, depending on the user&rsquo;s
+preference.</p>
+<p>Given my trained muscle memory, I wanted to continue to use this alias even in
+environments other than Google:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% cat ~/.profile.d/functions_corp.sh
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>prodaccess<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	echo <span style="color:#e6db74">&#34;--&gt; VPN&#34;</span>
+</span></span><span style="display:flex;"><span>	vpn_login
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	echo <span style="color:#e6db74">&#34;--&gt; Teleport&#34;</span>
+</span></span><span style="display:flex;"><span>	teleport_login
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	echo <span style="color:#e6db74">&#34;--&gt; AWS&#34;</span>
+</span></span><span style="display:flex;"><span>	aws_login
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    echo <span style="color:#e6db74">&#34;--&gt; Azure&#34;</span>
+</span></span><span style="display:flex;"><span>    azure_login
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> in
+</span></span><span style="display:flex;"><span>		-u|--update<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>			echo <span style="color:#e6db74">&#34;--&gt; mr&#34;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e"># Update all well-known corp repositories</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#f92672">(</span>cd ~/Corp <span style="color:#f92672">&amp;&amp;</span> mr update <span style="color:#f92672">&amp;&amp;</span> mr run git world<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e"># Package manager upgrade</span>
+</span></span><span style="display:flex;"><span>			echo <span style="color:#e6db74">&#34;--&gt; sd-world&#34;</span>
+</span></span><span style="display:flex;"><span>			sd-world
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			shift
+</span></span><span style="display:flex;"><span>			;;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		-a|--all<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>			echo <span style="color:#e6db74">&#34;--&gt; Atlas Mongo&#34;</span>
+</span></span><span style="display:flex;"><span>			atlas_login
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			shift
+</span></span><span style="display:flex;"><span>			;;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">esac</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Notes:</p>
+<ul>
+<li><code>mr</code> is <a href="https://myrepos.branchable.com/">https://myrepos.branchable.com/</a> (&ldquo;a tool to manage all your version
+control repositories&rdquo;)<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></li>
+<li><code>sd-world</code> was introduced in a <a href="https://www.perrotta.dev/2024/01/sd-world-perform-a-full-system-upgrade/">previous post</a>: it performs a full system upgrade</li>
+<li><code>--all</code> holds services I only need / use from time to time.</li>
+<li><code>shift</code> is not really needed, but IMHO it&rsquo;s a good practice (and another
+ingrained habit of mine), especially when inside <code>for</code> loops</li>
+<li><code>git world</code> is an alias in my <code>~/.gitconfig</code> that runs <code>git fetch --all &amp;&amp; git remote prune origin</code></li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Until someone in CorpEng decided it was a good idea to
+<a href="https://killedbygoogle.com/">deprecate</a> it in favour of a new <code>gcert</code>
+command, destroying many SWE-years of developed muscle memory.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Ah, the <em>good ol&rsquo; times</em>.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>I should write a post about it sometime.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>★ New series: Raspberry Pi fun with DevOps</title><link>https://www.perrotta.dev/2024/10/new-series-raspberry-pi-fun-with-devops/</link><pubDate>Sun, 13 Oct 2024 11:31:13 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/new-series-raspberry-pi-fun-with-devops/</guid><description>&lt;h2 id="intro">Intro&lt;/h2>
 &lt;p>I have two raspberry pi&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> units sitting idle at home, a 3B and a 4.&lt;/p>
 &lt;p>For a long time I’ve been wanting to do something useful with them,
 while increasing my DevOps toolkit knowledge.&lt;/p></description><content:encoded><![CDATA[<h2 id="intro">Intro</h2>
@@ -2080,184 +2214,6 @@ with <code>vim</code> to help spot basic errors and/or suggest best practices, a
 </li>
 <li id="fn:6">
 <p>The <em>10x programmer</em> thing is a well-known joke however in this instance the mentioned characters are indeed superb programmers that I immensely respect.&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item><item><title>★ Alpine Linux: New APKBUILD Workflow</title><link>https://www.perrotta.dev/2022/01/alpine-linux-new-apkbuild-workflow/</link><pubDate>Sun, 23 Jan 2022 19:15:02 -0500</pubDate><guid>https://www.perrotta.dev/2022/01/alpine-linux-new-apkbuild-workflow/</guid><description>&lt;p>This document describes my workflow to manage &lt;code>APKBUILDs&lt;/code> for the
-&lt;a href="https://gitlab.alpinelinux.org/alpine/aports">aports&lt;/a> repository in &lt;a href="https://alpinelinux.org/">Alpine Linux&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>This document describes my workflow to manage <code>APKBUILDs</code> for the
-<a href="https://gitlab.alpinelinux.org/alpine/aports">aports</a> repository in <a href="https://alpinelinux.org/">Alpine Linux</a>.</p>
-<h2 id="disclaimer">Disclaimer</h2>
-<p>First of all, this post is not a substitute to the <a href="https://wiki.alpinelinux.org/wiki/Main_Page">AlpineWiki</a>
-and it will likely get outdated at some point. In particular, refer to the
-following articles for up-to-date documentation that will outlive this blog:</p>
-<ul>
-<li><a href="https://wiki.alpinelinux.org/wiki/APKBUILD_Reference">https://wiki.alpinelinux.org/wiki/APKBUILD_Reference</a></li>
-<li><a href="https://wiki.alpinelinux.org/wiki/Abuild_and_Helpers">https://wiki.alpinelinux.org/wiki/Abuild_and_Helpers</a></li>
-<li><a href="https://wiki.alpinelinux.org/wiki/Aports_tree">https://wiki.alpinelinux.org/wiki/Aports_tree</a></li>
-<li><a href="https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package">https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package</a></li>
-</ul>
-<p>This article is not a tutorial, as such it assumes you already know what an
-<code>APKBUILD</code> is and how to use <code>abuild</code>. In particular, you should have the
-<code>alpine-sdk</code>, <code>atools</code> and <code>spdx-licenses-list</code> packages installed in your
-system.</p>
-<h2 id="structure">Structure</h2>
-<p>I manage my packages with <code>git</code>. Create a GitLab account on
-<a href="https://gitlab.alpinelinux.org/">https://gitlab.alpinelinux.org/</a>, fork the <a href="https://gitlab.alpinelinux.org/alpine/aports"><code>aports</code></a> tree, and <code>git clone</code> your fork.</p>
-<p>The structure follows Alpine Linux repositories:</p>
-<pre tabindex="0"><code>$ git clone https://gitlab.alpinelinux.org/alpine/aports.git &amp;&amp; tree -L 1 aports
-aports
-├── CODINGSTYLE.md
-├── COMMITSTYLE.md
-├── README.md
-├── community
-├── main
-├── non-free
-├── scripts
-├── testing
-└── unmaintained
-</code></pre><h2 id="bootstrapping">Bootstrapping</h2>
-<p>I am going to illustrate with a package I added recently, <a href="https://packages.debian.org/source/sensible-utils"><code>sensible-utils</code></a>:</p>
-<ul>
-<li>
-<p>Before you even begin, check if the package already exists, do a quick search in the <a href="https://pkgs.alpinelinux.org/packages?name=sensible%2Dutils">Alpine Repositories</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
-</li>
-<li>
-<p>Start by scaffolding a new <code>APKBUILD</code> from the base template:</p>
-</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ cd aports/testing  <span style="color:#75715e"># Always add new packages in testing/ first.</span>
-</span></span><span style="display:flex;"><span>$ newapkbuild sensible-utils
-</span></span><span style="display:flex;"><span>$ cd sensible-utils
-</span></span><span style="display:flex;"><span>$ $EDITOR APKBUILD
-</span></span></code></pre></div><p><strong>Note</strong>: If you have a language-specific package (e.g. perl, python, rust),
-use the language-specific template instead of the base one. Run <code>newapkbuild -h</code> to list available templates. There are also some <code>apkbuild-*</code> helpers such
-as <code>apkbuild-pypi</code> and <code>apkbuild-cpan</code>.</p>
-<ul>
-<li>
-<p>Fill in <code>APKBUILD</code> metadata like <code>pkgname=</code>, <code>url=</code>, etc. Refer to the AlpineWiki for up-to-date best practices.</p>
-</li>
-<li>
-<p>By doing so, I produced the following <code>APKBUILD</code>:</p>
-</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pkgname<span style="color:#f92672">=</span>sensible-utils
-</span></span><span style="display:flex;"><span>pkgver<span style="color:#f92672">=</span>0.0.14
-</span></span><span style="display:flex;"><span>pkgrel<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>pkgdesc<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Utilities for sensible alternative selection&#34;</span>
-</span></span><span style="display:flex;"><span>url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://packages.debian.org/source/sensible-utils&#34;</span>
-</span></span><span style="display:flex;"><span>arch<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;all&#34;</span>
-</span></span><span style="display:flex;"><span>license<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;GPL-2.0-or-later&#34;</span>
-</span></span><span style="display:flex;"><span>makedepends<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;po4a&#34;</span>
-</span></span><span style="display:flex;"><span>subpackages<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$pkgname<span style="color:#e6db74">-doc&#34;</span>
-</span></span><span style="display:flex;"><span>source<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://ftp.debian.org/debian/pool/main/s/</span>$pkgname<span style="color:#e6db74">/</span><span style="color:#e6db74">${</span>pkgname<span style="color:#e6db74">}</span><span style="color:#e6db74">_</span>$pkgver<span style="color:#e6db74">.tar.xz&#34;</span>
-</span></span><span style="display:flex;"><span>builddir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$srcdir<span style="color:#e6db74">/</span>$pkgname<span style="color:#e6db74">.git&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>build<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	./configure --prefix<span style="color:#f92672">=</span>/usr
-</span></span><span style="display:flex;"><span>	make
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>check<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	make -k check
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>package<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	make DESTDIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/&#34;</span> install
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># only works with update-alternatives, specific to debian</span>
-</span></span><span style="display:flex;"><span>	rm <span style="color:#e6db74">&#34;</span>$pkgdir<span style="color:#e6db74">/usr/bin/select-editor&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>sha512sums<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">15ba996f811ab3a9c1f5726f35766d74aafdf925c5c2392b33c6643d6c439796a742f9d0f4625c79de640e6b5e4a6a032b768eb1bc4ac31b448f9767b0ceed44  sensible-utils_0.0.14.tar.xz
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p><strong>Note</strong>: <code>$srcdir</code> refers to the <code>src/</code> directory within <code>sensible-utils</code>. <code>$pkgdir</code>
-refers to the <code>pkg/</code> directory within <code>sensible-utils</code>.</p>
-<p>If you&rsquo;re used to Arch Linux <code>PKGBUILDs</code> you&rsquo;ll notice a striking similarity to
-<code>APKBUILDs</code>. I highlighted a few notable differences in a previous post, <a href="https://www.perrotta.dev/2022/01/my-first-apkbuild/#build-comparison"><code>My First APKBUILD</code></a>.</p>
-<h2 id="adjustments">Adjustments</h2>
-<ul>
-<li>
-<p>Generate the checksums with <code>abuild checksum</code>. It will automatically update the <code>APKBUILD</code> inplace.</p>
-</li>
-<li>
-<p>Download and extract package files with <code>abuild unpack</code>.</p>
-</li>
-<li>
-<p><code>ls src/</code> and check the directory structure. Update <code>$builddir</code> in your
-<code>APKBUILD</code> to match it. Usually it will be <code>$srcdir/$pkgname-$pkgver</code>, but
-sometimes tiny adjustments are necessary. In this case, it was
-<code>$srcdir/$pkgname.git</code>.</p>
-</li>
-<li>
-<p>Then run <code>abuild -r</code>. If everything goes well, your package (and subpackages,
-if any) will be successfully built<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> in an isolated environment and placed
-in <code>~/packages</code> (<code>sensible-utils-0.0.14-r0.apk</code> and
-<code>sensible-utils-doc-0.0.14-r0.apk</code>), however that doesn&rsquo;t mean it is a decent
-package yet.</p>
-</li>
-<li>
-<p>Run <code>apkbuild-lint APKBUILD</code> and <code>abuild sanitycheck</code> to lint your package
-and catch common errors. Fix the errors, if any.</p>
-</li>
-</ul>
-<h2 id="request-feedback-if-needed">Request feedback if needed</h2>
-<p>If the package is only relevant to you, stop here. <code>git commit</code>, <code>git push</code>, and then you&rsquo;re done. Install the package with <code>doas apk add &lt;pkg&gt;</code>.</p>
-<p>Otherwise, if the package might be potentially useful to other Alpine users, you could consider uploading it to the <a href="https://gitlab.alpinelinux.org/alpine/aports">aports</a> repository.</p>
-<p>Before you do so, stop for a moment and make an honest judgment whether this is a high quality package and whether you&rsquo;re confident it is clean and polished enough, following the best practices documented in the Wiki. The answer doesn&rsquo;t need to be positive, it&rsquo;s perfectly OK to commit mistakes and everyone is a newbie at some point.</p>
-<p>If the answer is negative, or if you&rsquo;re new to this process and would like some help, fear no more! There are at least two decent community resources wherein to ask for help:</p>
-<ol>
-<li>
-<p><a href="https://wiki.alpinelinux.org/wiki/Alpine_Linux:IRC"><code>#alpine-devel</code> on OFTC IRC</a> Drew DeVault wrote a good <a href="https://drewdevault.com/2021/11/24/A-philosophy-for-instant-messaging.html">post</a> about IRC etiquette.</p>
-</li>
-<li>
-<p><a href="https://wiki.alpinelinux.org/wiki/Alpine_Linux:Mailing_lists"><code>alpine-devel</code> mailing list</a>.</p>
-</li>
-</ol>
-<p>If you&rsquo;re part of any other community (e.g. Reddit, Discord) feel free to ask therein as well. Avoid posting everywhere though, pick one community, draft your post and then patiently wait.</p>
-<h2 id="publish-your-package">Publish your package</h2>
-<p>If all is well, it&rsquo;s time to publish your <code>APKBUILD</code>. Follow the up-to-date
-steps at
-<a href="https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Code_review">https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Code_review</a>. There are basically two options:</p>
-<ol>
-<li>
-<p>Send a gitlab merge request (MR). This follows the standard git forge workflow
-(GitHub / BitBucket / GitLab) wherein you fork the main repository, create
-a branch in your own clone, push it and then initiate a pull request<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
-</li>
-<li>
-<p>Alternatively, send an email with your patch to the <code>aports</code> mailing list
-with <a href="https://git-send-email.io/"><code>git send-email</code></a>:</p>
-</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git config sendemail.to <span style="color:#e6db74">&#34;alpine-aports@lists.alpinelinux.org&#34;</span>
-</span></span><span style="display:flex;"><span>$ git send-email -1  <span style="color:#75715e"># Implicitly uses --to=alpine-linux@lists.alpinelinux.org as set above</span>
-</span></span></code></pre></div><p><strong>Tip</strong>: The second approach has a steep learning curve, however once you
-figure it out it&rsquo;s actually faster, simpler and more streamlined. Whenever
-a new email is sent to the aports mailing list, a MR is automatically created
-on GitLab.</p>
-<p><strong>Note</strong>: If you adopt the email workflow and need to send a follow-up to your
-initial patch, do not use <code>--in-reply-to</code>. Instead, create a new email thread.
-This is needed because as of this post new GitLab MRs are only created when new
-email threads are created. Replies to existing email threads do not update the
-MR patch.</p>
-<p>And that&rsquo;s all! Other useful tips:</p>
-<ul>
-<li>Use <a href="https://repology.org/">repology</a> to look for preexisting packages in other Linux (or even BSD) distributions, it&rsquo;s very handy as a starting point if you have no idea how to package a given package. In particular, Arch Linux <code>PKGBUILDs</code> are very similar to <code>APKBUILDs</code>. Gentoo <code>EBUILDs</code> and FreeBSD <code>Makefiles</code> are also reasonable approximations.</li>
-<li>Use <code>abump</code> to bump pkgver in <code>APKBUILD</code> files if the package gets an update to a newer upstream release.</li>
-<li>Use <code>apkgrel</code> to bump or reset the <code>pkgrel</code> value of your <code>APKBUILD</code>.</li>
-<li>Use <a href="https://www.perrotta.dev/2022/01/arch-linux-new-pkgbuild-workflow/#bonus-track-upstream"><code>urlwatch</code></a> to track upstream updates.</li>
-</ul>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>If you use <a href="https://duckduckgo.com/">https://duckduckgo.com/</a>, query for <code>!alpine sensible-utils</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>Package debugging is out of scope of this post.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:3">
-<p>In GitLab it&rsquo;s called Merge Request (MR). The list of all aports MRs is <a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests">here</a>.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>
