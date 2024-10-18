@@ -1,4 +1,32 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.135.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 15 Oct 2024 13:14:40 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>kubectl: force delete pods</title><link>https://www.perrotta.dev/2024/10/kubectl-force-delete-pods/</link><pubDate>Tue, 15 Oct 2024 13:14:40 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/kubectl-force-delete-pods/</guid><description>&lt;p>Our installation of &lt;code>traefik&lt;/code> via &lt;code>helm&lt;/code> got stuck today in such a way that its
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Fri, 18 Oct 2024 14:52:44 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Makefile: path to root dir</title><link>https://www.perrotta.dev/2024/10/makefile-path-to-root-dir/</link><pubDate>Fri, 18 Oct 2024 14:52:44 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/makefile-path-to-root-dir/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>Makefile&lt;/code> within &lt;code>~/git/scaffolding/Makefile&lt;/code>,
+and a command that needs to run from the &lt;code>scaffolding/&lt;/code> directory, create an
+&lt;code>all&lt;/code> target that works from any directory.&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Given a <code>Makefile</code> within <code>~/git/scaffolding/Makefile</code>,
+and a command that needs to run from the <code>scaffolding/</code> directory, create an
+<code>all</code> target that works from any directory.</p>
+<p><strong>Solution</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span><span style="color:#75715e"># The directory wherein the Makefile resides.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>ROOT_DIR <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>patsubst %/,%,<span style="color:#66d9ef">$(</span>dir <span style="color:#66d9ef">$(</span>realpath <span style="color:#66d9ef">$(</span>lastword <span style="color:#66d9ef">$(</span>MAKEFILE_LIST<span style="color:#66d9ef">)))))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">all</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    @echo <span style="color:#66d9ef">$(</span>ROOT_DIR<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>	kickstart <span style="color:#66d9ef">$(</span>ROOT_DIR<span style="color:#66d9ef">)</span>/app
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">.PHONY</span><span style="color:#f92672">:</span> all
+</span></span></code></pre></div><p><strong>Explanation</strong>:</p>
+<ul>
+<li>The <code>echo</code> is used only for debugging, therefore it should be removed in prod.</li>
+<li>The <code>kickstart</code> command will properly run having <code>~/git/scaffolding</code> as <code>$PWD</code>
+whether you invoke it from <code>~/git/scaffolding</code> or from <code>~/git</code> (via <code>make -C</code>).</li>
+<li><code>pathsubst</code> is needed to remove the trailing slash (<code>/</code>) from the directory,
+so that <code>$(ROOT_DIR)/</code> does not yield a double slash, which works but it is
+ugly.</li>
+</ul>
+<p><strong>Source</strong> (adapted): <a href="https://stackoverflow.com/questions/18136918/how-to-get-current-relative-directory-of-your-makefile">https://stackoverflow.com/questions/18136918/how-to-get-current-relative-directory-of-your-makefile</a></p>]]></content:encoded></item><item><title>kubectl: list all node pods</title><link>https://www.perrotta.dev/2024/10/kubectl-list-all-node-pods/</link><pubDate>Wed, 16 Oct 2024 12:26:24 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/kubectl-list-all-node-pods/</guid><description>&lt;p>Recipe to list all pods that belong to a given node:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ kubectl get pod -o wide --field-selector spec.nodeName&lt;span style="color:#f92672">={&lt;/span>node_name&lt;span style="color:#f92672">}&lt;/span> -A
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description><content:encoded><![CDATA[<p>Recipe to list all pods that belong to a given node:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl get pod -o wide --field-selector spec.nodeName<span style="color:#f92672">={</span>node_name<span style="color:#f92672">}</span> -A
+</span></span></code></pre></div><p><strong>Source</strong>: <a href="https://stackoverflow.com/questions/39231880/kubernetes-api-get-pods-on-specific-nodes">https://stackoverflow.com/questions/39231880/kubernetes-api-get-pods-on-specific-nodes</a></p>
+<p>This <em>ought to</em> be easier to remember&hellip;</p>]]></content:encoded></item><item><title>kubectl: force delete pods</title><link>https://www.perrotta.dev/2024/10/kubectl-force-delete-pods/</link><pubDate>Tue, 15 Oct 2024 13:14:40 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/kubectl-force-delete-pods/</guid><description>&lt;p>Our installation of &lt;code>traefik&lt;/code> via &lt;code>helm&lt;/code> got stuck today in such a way that its
 pods did not terminate, even with successive &lt;code>kubectl delete&lt;/code>.&lt;/p>
 &lt;p>&lt;code>--force&lt;/code> did not work either :mildshock:&lt;/p></description><content:encoded><![CDATA[<p>Our installation of <code>traefik</code> via <code>helm</code> got stuck today in such a way that its
 pods did not terminate, even with successive <code>kubectl delete</code>.</p>
@@ -161,21 +189,8 @@ to print the repository root.</p>]]></content:encoded></item><item><title>Conver
 <p>In this context avoid using <code>&gt;</code> output redirection because it would mangle the input file. Unless you redirect to another file, of course.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</div>]]></content:encoded></item><item><title>git misspellings</title><link>https://www.perrotta.dev/2024/10/git-misspellings/</link><pubDate>Thu, 10 Oct 2024 13:26:57 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/git-misspellings/</guid><description>&lt;p>Buried into a &lt;code>~/.bashrc&lt;/code> far away&amp;hellip;&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;/p>
-&lt;pre tabindex="0">&lt;code># misspellings for git
-alias t=git
-alias it=git
-alias gi=git
-alias gt=git
-alias gti=git
-&lt;/code>&lt;/pre>&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>History makes &lt;em>no mistake&lt;/em>: all these have occurred at least once.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description><content:encoded><![CDATA[<p>Buried into a <code>~/.bashrc</code> far away&hellip;<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+</div>]]></content:encoded></item><item><title>git misspellings</title><link>https://www.perrotta.dev/2024/10/git-misspellings/</link><pubDate>Thu, 10 Oct 2024 13:26:57 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/git-misspellings/</guid><description>Buried into a ~/.bashrc far away&amp;hellip;1
+# misspellings for git alias t=git alias it=git alias gi=git alias gt=git alias gti=git History makes no mistake: all these have occurred at least once.&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description><content:encoded><![CDATA[<p>Buried into a <code>~/.bashrc</code> far away&hellip;<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
 <pre tabindex="0"><code># misspellings for git
 alias t=git
 alias it=git
@@ -512,42 +527,4 @@ in a team.</p>
 <p><code>nbt</code> stands for &ldquo;new branch throwaway&rdquo;.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</div>]]></content:encoded></item><item><title>YAML multiline strings</title><link>https://www.perrotta.dev/2024/09/yaml-multiline-strings/</link><pubDate>Tue, 03 Sep 2024 11:55:53 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/yaml-multiline-strings/</guid><description>&lt;p>I keep forgetting what the correct syntax is.&lt;/p>
-&lt;p>This reference is the best: &lt;a href="https://yaml-multiline.info/">https://yaml-multiline.info/&lt;/a>&lt;/p></description><content:encoded><![CDATA[<p>I keep forgetting what the correct syntax is.</p>
-<p>This reference is the best: <a href="https://yaml-multiline.info/">https://yaml-multiline.info/</a></p>
-<p>Summary:</p>
-<ul>
-<li><code>&gt;</code> eats newlines, <code>|</code> keeps them.</li>
-<li>Appending a <code>-</code> to either of these eats the newline(s) at the end. Omitting it
-keeps one. Appending a <code>+</code> preserves all newlines at the end.</li>
-</ul>]]></content:encoded></item><item><title>Helm: list all installed charts in the cluster</title><link>https://www.perrotta.dev/2024/08/helm-list-all-installed-charts-in-the-cluster/</link><pubDate>Mon, 26 Aug 2024 17:57:07 +0200</pubDate><guid>https://www.perrotta.dev/2024/08/helm-list-all-installed-charts-in-the-cluster/</guid><description>&lt;p>In theory this ought to be really easy:&lt;/p>
-&lt;pre tabindex="0">&lt;code>$ helm ls -h
-[...]
--a, --all show all releases without any filter applied
--A, --all-namespaces list releases across all namespaces
-&lt;/code>&lt;/pre></description><content:encoded><![CDATA[<p>In theory this ought to be really easy:</p>
-<pre tabindex="0"><code>$ helm ls -h
-[...]
-  -a, --all                  show all releases without any filter applied
-  -A, --all-namespaces       list releases across all namespaces
-</code></pre><p>So&hellip;one of these should work, right?</p>
-<pre tabindex="0"><code>helm ls -a
-helm ls -A
-</code></pre><p>I have a <code>sms-service</code> running in the cluster in the <code>default</code> namespace. If I
-<code>grep</code> any of the previous commands to <code>sms</code>, it does not show up though.</p>
-<p>Then&hellip;maybe <code>helm ls -a -A</code>? Nope.</p>
-<p>Here&rsquo;s what works:</p>
-<pre tabindex="0"><code>$ helm ls -a --max 9999 | grep sms
-sms-service                  	default  	356     	2024-08-26 14:09:50.705277885 +0000 UTC	deployed	sms-v0.1.0
-</code></pre><p>Kinda ridiculous, eh?</p>
-<pre tabindex="0"><code> -m, --max int              maximum number of releases to fetch (default 256)
-</code></pre><p>From <a href="https://helm.sh/docs/helm/helm_list/">https://helm.sh/docs/helm/helm_list/</a>:</p>
-<blockquote>
-<p>By default, up to 256 items may be returned. To limit this, use the &lsquo;&ndash;max&rsquo;
-flag. Setting &lsquo;&ndash;max&rsquo; to 0 will not return all results. Rather, it will return
-the server&rsquo;s default, which may be much higher than 256. Pairing the &lsquo;&ndash;max&rsquo;
-flag with the &lsquo;&ndash;offset&rsquo; flag allows you to page through results.</p>
-</blockquote>
-<p>Therefore I settle with this form:</p>
-<pre tabindex="0"><code>$ helm ls -a -A --max 9999 | grep sms
-</code></pre><p>Happy helming.</p>]]></content:encoded></item></channel></rss>
+</div>]]></content:encoded></item></channel></rss>

@@ -1,4 +1,32 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>not just serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on not just serendipity</description><generator>Hugo -- 0.135.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 15 Oct 2024 13:14:40 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>kubectl: force delete pods</title><link>https://www.perrotta.dev/2024/10/kubectl-force-delete-pods/</link><pubDate>Tue, 15 Oct 2024 13:14:40 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/kubectl-force-delete-pods/</guid><description>&lt;p>Our installation of &lt;code>traefik&lt;/code> via &lt;code>helm&lt;/code> got stuck today in such a way that its
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>not just serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Fri, 18 Oct 2024 14:52:44 +0200</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Makefile: path to root dir</title><link>https://www.perrotta.dev/2024/10/makefile-path-to-root-dir/</link><pubDate>Fri, 18 Oct 2024 14:52:44 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/makefile-path-to-root-dir/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>Makefile&lt;/code> within &lt;code>~/git/scaffolding/Makefile&lt;/code>,
+and a command that needs to run from the &lt;code>scaffolding/&lt;/code> directory, create an
+&lt;code>all&lt;/code> target that works from any directory.&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Given a <code>Makefile</code> within <code>~/git/scaffolding/Makefile</code>,
+and a command that needs to run from the <code>scaffolding/</code> directory, create an
+<code>all</code> target that works from any directory.</p>
+<p><strong>Solution</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span><span style="color:#75715e"># The directory wherein the Makefile resides.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>ROOT_DIR <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>patsubst %/,%,<span style="color:#66d9ef">$(</span>dir <span style="color:#66d9ef">$(</span>realpath <span style="color:#66d9ef">$(</span>lastword <span style="color:#66d9ef">$(</span>MAKEFILE_LIST<span style="color:#66d9ef">)))))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">all</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    @echo <span style="color:#66d9ef">$(</span>ROOT_DIR<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>	kickstart <span style="color:#66d9ef">$(</span>ROOT_DIR<span style="color:#66d9ef">)</span>/app
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">.PHONY</span><span style="color:#f92672">:</span> all
+</span></span></code></pre></div><p><strong>Explanation</strong>:</p>
+<ul>
+<li>The <code>echo</code> is used only for debugging, therefore it should be removed in prod.</li>
+<li>The <code>kickstart</code> command will properly run having <code>~/git/scaffolding</code> as <code>$PWD</code>
+whether you invoke it from <code>~/git/scaffolding</code> or from <code>~/git</code> (via <code>make -C</code>).</li>
+<li><code>pathsubst</code> is needed to remove the trailing slash (<code>/</code>) from the directory,
+so that <code>$(ROOT_DIR)/</code> does not yield a double slash, which works but it is
+ugly.</li>
+</ul>
+<p><strong>Source</strong> (adapted): <a href="https://stackoverflow.com/questions/18136918/how-to-get-current-relative-directory-of-your-makefile">https://stackoverflow.com/questions/18136918/how-to-get-current-relative-directory-of-your-makefile</a></p>]]></content:encoded></item><item><title>kubectl: list all node pods</title><link>https://www.perrotta.dev/2024/10/kubectl-list-all-node-pods/</link><pubDate>Wed, 16 Oct 2024 12:26:24 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/kubectl-list-all-node-pods/</guid><description>&lt;p>Recipe to list all pods that belong to a given node:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ kubectl get pod -o wide --field-selector spec.nodeName&lt;span style="color:#f92672">={&lt;/span>node_name&lt;span style="color:#f92672">}&lt;/span> -A
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description><content:encoded><![CDATA[<p>Recipe to list all pods that belong to a given node:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ kubectl get pod -o wide --field-selector spec.nodeName<span style="color:#f92672">={</span>node_name<span style="color:#f92672">}</span> -A
+</span></span></code></pre></div><p><strong>Source</strong>: <a href="https://stackoverflow.com/questions/39231880/kubernetes-api-get-pods-on-specific-nodes">https://stackoverflow.com/questions/39231880/kubernetes-api-get-pods-on-specific-nodes</a></p>
+<p>This <em>ought to</em> be easier to remember&hellip;</p>]]></content:encoded></item><item><title>kubectl: force delete pods</title><link>https://www.perrotta.dev/2024/10/kubectl-force-delete-pods/</link><pubDate>Tue, 15 Oct 2024 13:14:40 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/kubectl-force-delete-pods/</guid><description>&lt;p>Our installation of &lt;code>traefik&lt;/code> via &lt;code>helm&lt;/code> got stuck today in such a way that its
 pods did not terminate, even with successive &lt;code>kubectl delete&lt;/code>.&lt;/p>
 &lt;p>&lt;code>--force&lt;/code> did not work either :mildshock:&lt;/p></description><content:encoded><![CDATA[<p>Our installation of <code>traefik</code> via <code>helm</code> got stuck today in such a way that its
 pods did not terminate, even with successive <code>kubectl delete</code>.</p>
@@ -161,21 +189,8 @@ to print the repository root.</p>]]></content:encoded></item><item><title>Conver
 <p>In this context avoid using <code>&gt;</code> output redirection because it would mangle the input file. Unless you redirect to another file, of course.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</div>]]></content:encoded></item><item><title>git misspellings</title><link>https://www.perrotta.dev/2024/10/git-misspellings/</link><pubDate>Thu, 10 Oct 2024 13:26:57 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/git-misspellings/</guid><description>&lt;p>Buried into a &lt;code>~/.bashrc&lt;/code> far away&amp;hellip;&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;/p>
-&lt;pre tabindex="0">&lt;code># misspellings for git
-alias t=git
-alias it=git
-alias gi=git
-alias gt=git
-alias gti=git
-&lt;/code>&lt;/pre>&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>History makes &lt;em>no mistake&lt;/em>: all these have occurred at least once.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description><content:encoded><![CDATA[<p>Buried into a <code>~/.bashrc</code> far away&hellip;<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+</div>]]></content:encoded></item><item><title>git misspellings</title><link>https://www.perrotta.dev/2024/10/git-misspellings/</link><pubDate>Thu, 10 Oct 2024 13:26:57 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/git-misspellings/</guid><description>Buried into a ~/.bashrc far away&amp;hellip;1
+# misspellings for git alias t=git alias it=git alias gi=git alias gt=git alias gti=git History makes no mistake: all these have occurred at least once.&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description><content:encoded><![CDATA[<p>Buried into a <code>~/.bashrc</code> far away&hellip;<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
 <pre tabindex="0"><code># misspellings for git
 alias t=git
 alias it=git
@@ -540,7 +555,7 @@ created files that were not yet <code>git add</code>-ed.</p>
 <p>When searching for a word with Umlauts such as <em>Über</em>, you should type it
 exactly as is.</p>
 <p>If you are lazy or do not recall where the umlaut falls, perhaps you would think
-of searchin for <em>uber</em>, however that does not work.</p>
+of searching for <em>uber</em>, however that does not work.</p>
 <p>To make it work, prepend <code>nc:</code> to the word. In this case: <code>nc:uber</code> will
 properly match <em>über</em>. NC stands for non-combining.</p>
 <h2 id="searching-word-boundaries-whilst-ignoring-accents">Searching word boundaries <strong>whilst</strong> ignoring accents</h2>
@@ -601,20 +616,13 @@ want to spend valuable mental effort derailing from your main task.</p>
 Choose whichever feels more natural in the appropriate context.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</div>]]></content:encoded></item><item><title>Slack: AI plug-in</title><link>https://www.perrotta.dev/2024/09/slack-ai-plug-in/</link><pubDate>Wed, 18 Sep 2024 14:15:56 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/slack-ai-plug-in/</guid><description>&lt;blockquote>
-&lt;p>&lt;strong>Coworker&lt;/strong>: Do you have an AI plug-in for Slack?&lt;/p>
-&lt;p>&lt;strong>Coworker&lt;/strong>: I see that you use things like this: AI: Exclude &amp;ldquo;cert-manager&amp;rdquo; from the alert (manually)&lt;/p>
-&lt;p>&lt;strong>Me&lt;/strong>: lol, this is just an abbrev. for &amp;ldquo;Action Item&amp;rdquo;. Might as well have been &amp;ldquo;TODO:&amp;rdquo;&lt;/p>
-&lt;p>&lt;strong>Coworker&lt;/strong>: AI is such a buzzword nowadays, looks like I&amp;rsquo;m starting to get brainwashed to see it in everything&lt;/p>
-&lt;/blockquote></description><content:encoded><![CDATA[<blockquote>
+</div>]]></content:encoded></item><item><title>Slack: AI plug-in</title><link>https://www.perrotta.dev/2024/09/slack-ai-plug-in/</link><pubDate>Wed, 18 Sep 2024 14:15:56 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/slack-ai-plug-in/</guid><description>Coworker: Do you have an AI plug-in for Slack?
+Coworker: I see that you use things like this: AI: Exclude &amp;ldquo;cert-manager&amp;rdquo; from the alert (manually)
+Me: lol, this is just an abbrev. for &amp;ldquo;Action Item&amp;rdquo;. Might as well have been &amp;ldquo;TODO:&amp;rdquo;
+Coworker: AI is such a buzzword nowadays, looks like I&amp;rsquo;m starting to get brainwashed to see it in everything</description><content:encoded><![CDATA[<blockquote>
 <p><strong>Coworker</strong>: Do you have an AI plug-in for Slack?</p>
 <p><strong>Coworker</strong>: I see that you use things like this: AI: Exclude &ldquo;cert-manager&rdquo; from the alert (manually)</p>
 <p><strong>Me</strong>: lol, this is just an abbrev. for &ldquo;Action Item&rdquo;. Might as well have been &ldquo;TODO:&rdquo;</p>
 <p><strong>Coworker</strong>: AI is such a buzzword nowadays, looks like I&rsquo;m starting to get brainwashed to see it in everything</p>
 </blockquote>
-]]></content:encoded></item><item><title>Chromium: Delete entry in URL bar</title><link>https://www.perrotta.dev/2024/09/chromium-delete-entry-in-url-bar/</link><pubDate>Wed, 18 Sep 2024 09:40:29 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/chromium-delete-entry-in-url-bar/</guid><description>&lt;p>&lt;strong>TL;DR&lt;/strong>: &lt;code>Shift + &amp;lt;DEL&amp;gt;&lt;/code>.&lt;/p></description><content:encoded><![CDATA[<p><strong>TL;DR</strong>: <code>Shift + &lt;DEL&gt;</code>.</p>
-<p>Perhaps you don&rsquo;t have a <code>DEL</code> key in your keyboard. Macbooks can emit <code>DEL</code>
-with <code>Fn + Delete</code> (<code>Delete</code> here is the traditional <code>Backspace</code>).</p>]]></content:encoded></item><item><title>less(1): scroll back one page</title><link>https://www.perrotta.dev/2024/09/less1-scroll-back-one-page/</link><pubDate>Tue, 10 Sep 2024 12:02:31 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/less1-scroll-back-one-page/</guid><description>&lt;p>&lt;code>less(1)&lt;/code>: you use &lt;code>SPC&lt;/code> to scroll forward. How to scroll back?&lt;/p></description><content:encoded><![CDATA[<p><code>less(1)</code>: you use <code>SPC</code> to scroll forward. How to scroll back?</p>
-<p>I would think <code>Shift + SPC</code> would be the sought shortcut, but it isn&rsquo;t.</p>
-<p>Press <code>b</code> (short for &ldquo;backward(s)&rdquo;).</p>
-<p>&hellip;which also implies: use <code>f</code> to scroll forward.</p>]]></content:encoded></item></channel></rss>
+]]></content:encoded></item></channel></rss>
