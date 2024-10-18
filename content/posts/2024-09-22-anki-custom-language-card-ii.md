@@ -24,7 +24,7 @@ When searching for a word with Umlauts such as _Über_, you should type it
 exactly as is.
 
 If you are lazy or do not recall where the umlaut falls, perhaps you would think
-of searchin for _uber_, however that does not work.
+of searching for _uber_, however that does not work.
 
 To make it work, prepend `nc:` to the word. In this case: `nc:uber` will
 properly match _über_. NC stands for non-combining.
