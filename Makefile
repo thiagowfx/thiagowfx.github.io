@@ -12,6 +12,9 @@ endif
 all:
 	hugo server --bind="0.0.0.0" --buildDrafts --port $(PORT) --watch
 
+build:
+	hugo --environment production --gc --minify
+
 clean:
 	$(RM) -r public/ resources/
 
@@ -21,4 +24,4 @@ ping:
 	# Ping Bing (DuckDuckGo, etc) about changes in the sitemap
 	curl -sS -o /dev/null "https://www.bing.com/ping?sitemap=$(SITEMAP)"
 
-.PHONY: all clean ping
+.PHONY: all build clean ping
