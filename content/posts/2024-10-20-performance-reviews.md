@@ -71,7 +71,7 @@ I strive for a forge-agnostic solution though.
 Example for this blog:
 
 ```shell
-% git shortlog --author="Thiago Perrotta"
+% git shortlog --author="Thiago Perrotta" --since="6 months ago"  # alt: --since="2024-03-01"
 Thiago Perrotta (499):
       Initial commit
       add gitignore: go,hugo,vim
