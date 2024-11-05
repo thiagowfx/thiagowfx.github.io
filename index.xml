@@ -1,4 +1,57 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>not just serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Mon, 04 Nov 2024 11:34:36 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>VSCode: auto restart extensions</title><link>https://www.perrotta.dev/2024/11/vscode-auto-restart-extensions/</link><pubDate>Mon, 04 Nov 2024 11:34:36 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/vscode-auto-restart-extensions/</guid><description>&lt;p>Whenever I open VSCode, there are some extension updates. Every time, I need to
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>not just serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 05 Nov 2024 17:05:22 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Github Actions: multiple docker images</title><link>https://www.perrotta.dev/2024/11/github-actions-multiple-docker-images/</link><pubDate>Tue, 05 Nov 2024 17:05:22 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/github-actions-multiple-docker-images/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a monorepo on Github with multiple docker images in
+it, write a github workflow to build and push all of them.&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Given a monorepo on Github with multiple docker images in
+it, write a github workflow to build and push all of them.</p>
+<p>Here is an abridged version of the resulting workflow. The images are listed one
+by one for fine-grained control purposes, but it would also be possible to glob
+them with a single command.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Global services</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">permissions</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">id-token</span>: <span style="color:#ae81ff">write</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">contents</span>: <span style="color:#ae81ff">read</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Replace with workflow trigger conditions.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">on</span>: {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">global-services</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">${{ matrix.image }}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">strategy</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">fail-fast</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">matrix</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">include</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e"># keep-sorted start</span>
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">dockerfile</span>: <span style="color:#ae81ff">path/to/one/Dockerfile</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">image</span>: <span style="color:#ae81ff">org/one</span>
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">dockerfile</span>: <span style="color:#ae81ff">path/to/two/Dockerfile</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">image</span>: <span style="color:#ae81ff">org/two</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e"># keep-sorted end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Check out source code</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v4</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Get git SHA</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">id</span>: <span style="color:#ae81ff">git-sha</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          ./scripts/get-versions.sh
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          echo &#34;sha=$(grep &#39;^services_sha&#39; versions.yaml | cut -d&#39; &#39; -f 2)&#34; &gt;&gt; &#34;$GITHUB_OUTPUT&#34;</span>          
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">./.github/actions/setup-ecr-buildx</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">id</span>: <span style="color:#ae81ff">setup-ecr-buildx</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Build and push global service images</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">docker/build-push-action@6.9.0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">cache-from</span>: <span style="color:#ae81ff">type=gha</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">cache-to</span>: <span style="color:#ae81ff">type=gha,mode=max</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">context</span>: <span style="color:#ae81ff">path/to</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">file</span>: <span style="color:#ae81ff">${{ matrix.dockerfile }}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">provenance</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">push</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">tags</span>: <span style="color:#ae81ff">${{ steps.setup-ecr-buildx.outputs.ecr_registry }}/${{ matrix.image }}:${{ steps.git-sha.outputs.sha }}</span>
+</span></span></code></pre></div><p>A matrix strategy kicks off independent multiple build jobs all at once.</p>
+<p>Docs: <a href="https://github.com/docker/build-push-action">https://github.com/docker/build-push-action</a></p>]]></content:encoded></item><item><title>VSCode: auto restart extensions</title><link>https://www.perrotta.dev/2024/11/vscode-auto-restart-extensions/</link><pubDate>Mon, 04 Nov 2024 11:34:36 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/vscode-auto-restart-extensions/</guid><description>&lt;p>Whenever I open VSCode, there are some extension updates. Every time, I need to
 manually click &amp;ldquo;Extensions&amp;rdquo; in the left-side navigation bar and then &amp;ldquo;Restart&amp;rdquo;
 so that the upgrades take effect.&lt;/p>
 &lt;p>This should be automated.&lt;/p></description><content:encoded><![CDATA[<p>Whenever I open VSCode, there are some extension updates. Every time, I need to
@@ -604,75 +657,4 @@ example:</p>
 </span></span><span style="display:flex;"><span>% bash main.sh
 </span></span><span style="display:flex;"><span>hello world
 </span></span></code></pre></div><p><a href="https://github.com/thiagowfx/.dotfiles/blob/3645ea5811d07c9f4be3cea91c0ffaf43ba4071c/profile/.profile.d/functions.sh#L5">Here</a>
-is the definition my dotfiles.</p>]]></content:encoded></item><item><title>Tracking cheap flights from Munich</title><link>https://www.perrotta.dev/2024/10/tracking-cheap-flights-from-munich/</link><pubDate>Sun, 06 Oct 2024 00:31:23 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/tracking-cheap-flights-from-munich/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>I wanted to be notified whenever a flight deal from Munich&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> appeared. The
-destination doesn&amp;rsquo;t really matter.&lt;/p></description><content:encoded><![CDATA[<h2 id="overview">Overview</h2>
-<p>I wanted to be notified whenever a flight deal from Munich<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> appeared. The
-destination doesn&rsquo;t really matter.</p>
-<p>There are several ways to do so semi-automatically, I tried all of them at least
-once:</p>
-<ul>
-<li>follow travel blogs</li>
-<li>sign up for newsletters</li>
-<li>follow instagram pages or influencers that relay promos</li>
-<li>visit the websites from airlines directly</li>
-<li>use bots / scraping</li>
-<li>ask friends periodically</li>
-<li>date a flight attendant</li>
-</ul>
-<p>The list above is overwhelming, and I have no time for all of it. Furthermore, I
-have zero desire to inundate myself with (even) more social media posts, that
-are often empty in nature.</p>
-<p>Moreover I wanted to build a permanent and long-lasting solution on top of my
-personal infrastructure.</p>
-<p>Hence the only real options were: (i) travel blogs, (ii) newsletters, (iii)
-scraping.</p>
-<p>The first phase is implemented as a Telegram channel:
-<a href="https://t.me/bavariabudgetbirds">https://t.me/bavariabudgetbirds</a>.</p>
-<p>Whenever there are new deals my server pushes an update to the Telegram channel
-above for each of them. The deals<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> are tracked via a list of curated RSS feed
-subscriptions, which is filtered to only match keywords that are pertaining to
-Munich. It is not perfect, but it is good enough for my purposes, virtually
-marginally free to run, and needs zero maintenance.</p>
-<h2 id="technical-details">Technical Details</h2>
-<p>I have a VPS that runs <a href="https://www.alpinelinux.org/">Alpine Linux</a>. The VPS
-provider is not important.</p>
-<p>The OS runs the excellent <a href="https://miniflux.app/">Miniflux</a> app, managed via
-OpenRC. In this specific deployment, there is no <code>systemd</code>, and there is no
-virtualization (<code>docker</code>, <code>kubernetes</code>, etc). It is 100%
-<a href="https://en.wikipedia.org/wiki/KISS_principle">KISS</a>. Miniflux is actively
-developed and Alpine Linux package releases happen frequently and quickly. Even
-if they do not, I have the means to create <code>APKBUILD</code>s myself when needed
-(see previous posts).</p>
-<p>Miniflux is populated with the list of travel blogs I follow, filtering out
-non-relevant posts, polled roughly every 2 hours. There is a separate Miniflux
-user for this purpose, so that my own subscriptions do not get mingled
-in-between.</p>
-<p>I use the Miniflux integration with Telegram to ensure that new posts are
-immediately pushed to the aforementioned channel with my Telegram bot.</p>
-<p>Wishlist for the future:</p>
-<ol>
-<li>Add the ability to integrate with websites that do not support
-RSS directly and/or that block RSS readers. Examples:</li>
-</ol>
-<ul>
-<li><a href="https://lowcost.pro/route/MUC/XXX/EN/">https://lowcost.pro/route/MUC/XXX/EN/</a></li>
-<li><a href="https://www.secretflying.com/posts/category/cities-countries/germany/">https://www.secretflying.com/posts/category/cities-countries/germany/</a></li>
-<li><a href="https://www.trabber.de/en/flights-from-germany-de/">https://www.trabber.de/en/flights-from-germany-de/</a></li>
-</ul>
-<ol start="2">
-<li>Convert newsletters-only sources to RSS feeds.</li>
-</ol>
-<p>This solution can easily be generalized for any location; there is absolutely
-nothing special about Munich in this context.</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>Munich, Memmingen or Nuremberg (Nürnberg)&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>Blog posts, really.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+is the definition my dotfiles.</p>]]></content:encoded></item></channel></rss>

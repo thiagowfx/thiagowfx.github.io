@@ -1,4 +1,57 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Mon, 04 Nov 2024 11:34:36 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>VSCode: auto restart extensions</title><link>https://www.perrotta.dev/2024/11/vscode-auto-restart-extensions/</link><pubDate>Mon, 04 Nov 2024 11:34:36 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/vscode-auto-restart-extensions/</guid><description>&lt;p>Whenever I open VSCode, there are some extension updates. Every time, I need to
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 05 Nov 2024 17:05:22 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Github Actions: multiple docker images</title><link>https://www.perrotta.dev/2024/11/github-actions-multiple-docker-images/</link><pubDate>Tue, 05 Nov 2024 17:05:22 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/github-actions-multiple-docker-images/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a monorepo on Github with multiple docker images in
+it, write a github workflow to build and push all of them.&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Given a monorepo on Github with multiple docker images in
+it, write a github workflow to build and push all of them.</p>
+<p>Here is an abridged version of the resulting workflow. The images are listed one
+by one for fine-grained control purposes, but it would also be possible to glob
+them with a single command.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Global services</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">permissions</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">id-token</span>: <span style="color:#ae81ff">write</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">contents</span>: <span style="color:#ae81ff">read</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Replace with workflow trigger conditions.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">on</span>: {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">global-services</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">${{ matrix.image }}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">strategy</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">fail-fast</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">matrix</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">include</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e"># keep-sorted start</span>
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">dockerfile</span>: <span style="color:#ae81ff">path/to/one/Dockerfile</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">image</span>: <span style="color:#ae81ff">org/one</span>
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">dockerfile</span>: <span style="color:#ae81ff">path/to/two/Dockerfile</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">image</span>: <span style="color:#ae81ff">org/two</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e"># keep-sorted end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Check out source code</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v4</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Get git SHA</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">id</span>: <span style="color:#ae81ff">git-sha</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          ./scripts/get-versions.sh
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          echo &#34;sha=$(grep &#39;^services_sha&#39; versions.yaml | cut -d&#39; &#39; -f 2)&#34; &gt;&gt; &#34;$GITHUB_OUTPUT&#34;</span>          
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">./.github/actions/setup-ecr-buildx</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">id</span>: <span style="color:#ae81ff">setup-ecr-buildx</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Build and push global service images</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">docker/build-push-action@6.9.0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">cache-from</span>: <span style="color:#ae81ff">type=gha</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">cache-to</span>: <span style="color:#ae81ff">type=gha,mode=max</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">context</span>: <span style="color:#ae81ff">path/to</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">file</span>: <span style="color:#ae81ff">${{ matrix.dockerfile }}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">provenance</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">push</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">tags</span>: <span style="color:#ae81ff">${{ steps.setup-ecr-buildx.outputs.ecr_registry }}/${{ matrix.image }}:${{ steps.git-sha.outputs.sha }}</span>
+</span></span></code></pre></div><p>A matrix strategy kicks off independent multiple build jobs all at once.</p>
+<p>Docs: <a href="https://github.com/docker/build-push-action">https://github.com/docker/build-push-action</a></p>]]></content:encoded></item><item><title>VSCode: auto restart extensions</title><link>https://www.perrotta.dev/2024/11/vscode-auto-restart-extensions/</link><pubDate>Mon, 04 Nov 2024 11:34:36 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/vscode-auto-restart-extensions/</guid><description>&lt;p>Whenever I open VSCode, there are some extension updates. Every time, I need to
 manually click &amp;ldquo;Extensions&amp;rdquo; in the left-side navigation bar and then &amp;ldquo;Restart&amp;rdquo;
 so that the upgrades take effect.&lt;/p>
 &lt;p>This should be automated.&lt;/p></description><content:encoded><![CDATA[<p>Whenever I open VSCode, there are some extension updates. Every time, I need to
@@ -654,76 +707,4 @@ nothing special about Munich in this context.</p>
 <p>Then I found out that if you hold the three-dot button (the quick settings menu button) briefly after turning it on, you are prompted with a boot loader screen that resembles GRUB. In this screen it’s possible to roll back to an earlier OS version.</p>
 <p>The Steam Deck disk partitioning has two partitions (A and B), just choose the second one (i.e. not the latest one).</p>
 <p>This time upon restarting the device the boot loop was gone.</p>
-<p><strong>Credits</strong>: <a href="https://www.reddit.com/r/SteamDeck/comments/1bb5767/steam_deck_stuck_at_update_complete_launching/">https://www.reddit.com/r/SteamDeck/comments/1bb5767/steam_deck_stuck_at_update_complete_launching/</a></p>]]></content:encoded></item><item><title>★ Erratic: human-friendly google3 piper snapshots</title><link>https://www.perrotta.dev/2024/10/erratic-human-friendly-google3-piper-snapshots/</link><pubDate>Wed, 02 Oct 2024 13:33:56 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/erratic-human-friendly-google3-piper-snapshots/</guid><description>&lt;p>In the google3 codebase, when working with Piper directly (i.e. not
-Fig[-on-CitC]), I often liked to use this tool called &lt;code>erratic&lt;/code> (abbrev: &lt;code>er&lt;/code>),
-which was a 20% project of another Software Engineer&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p></description><content:encoded><![CDATA[<p>In the google3 codebase, when working with Piper directly (i.e. not
-Fig[-on-CitC]), I often liked to use this tool called <code>erratic</code> (abbrev: <code>er</code>),
-which was a 20% project of another Software Engineer<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
-<h2 id="google3-workflow">google3 workflow</h2>
-<p>The workflow is as follows:</p>
-<ul>
-<li>Make some changes: <code>g4 open</code>, <code>g4 edit</code>, etc</li>
-<li>Create a CL (ChangeList) <code>g4 change</code></li>
-</ul>
-<p>Now let&rsquo;s say you&rsquo;re anticipating some heavy refactoring, in the same CL<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>,
-that you could potentially regret and want to revert.</p>
-<p>This would be a great moment to use <code>erratic</code>. After installing it (or aliasing
-it, if using it via X20), run:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% er explain <span style="color:#e6db74">&#34;this is working perfectly before bob@ asked me to refactor it&#34;</span>
-</span></span></code></pre></div><ul>
-<li>Make additional changes</li>
-<li>Feel free to make more snapshots (checkpoints), as you see fit</li>
-</ul>
-<p>If you ever want to roll back, run <code>er list</code>. It will list all explicit
-snapshots you annotated so far. Locate the one you want to roll back to:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% er list
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">42</span> <span style="color:#e6db74">&#34;this is working perfectly before bob@ asked me to refactor it&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">78</span> <span style="color:#e6db74">&#34;second refactoring&#34;</span>
-</span></span></code></pre></div><p>Now just roll back to it:</p>
-<pre tabindex="0"><code>% er restore 42
-</code></pre><p>Sometimes you&rsquo;ll need to run <code>g4 add</code> afterwards. And we&rsquo;re done!</p>
-<p><strong>Colophon</strong>: Why use <code>erratic</code> at all, since CitC already does automatic
-periodic snapshots out-of-the-box? Because these automatic snapshots are meant
-for machines, not humans; they are not very developer-friendly. You could get
-your way around <code>rsync</code> + finding the correct timestamps to copy from, but
-that&rsquo;s not fun at all, and not a good use of time either.</p>
-<h2 id="git-workflow">git workflow</h2>
-<p>How to replicate a similar workflow in a non-Google world?</p>
-<p>For most of us, non-Google necessarily means <code>git</code>. Let&rsquo;s ignore <code>hg</code>
-(mercurial) in this context.</p>
-<p>There is not much to do, actually: <a href="https://github.blog/open-source/git/commits-are-snapshots-not-diffs/">https://github.blog/open-source/git/commits-are-snapshots-not-diffs/</a></p>
-<p><code>git</code> commits are already snapshots. The workflow is:</p>
-<ul>
-<li>Make some changes, then <code>git add</code></li>
-<li>Create a branch (<code>git switch --create</code>), commit your changes</li>
-<li>To make a snapshot, just make a new commit and annotate it (<code>git commit -m &quot;foo&quot;</code>)</li>
-<li>To list your snapshots, run <code>git rev-list $(git show-branch --merge-base HEAD)^..HEAD --pretty</code>. This will list all commits since your branch diverted.
-You could add an alias to it in your <code>~/.gitconfig</code>.</li>
-<li>To roll back, run <code>git reset --hard {commit}</code>.</li>
-</ul>
-<p><strong>Caveat</strong>: You will lose track of all commits after <code>{commit}</code>. Although it
-would still be possible to recover them with <code>git reflog</code> (in case of a
-mistake), that is not a developer-friendly workflow.</p>
-<p>Then the follow-up question is: how to roll back without losing track of
-intermediate work?</p>
-<p>One way is to create a new branch that points out to <code>{commit}</code> instead of
-hard-resetting your entire worktree:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git checkout -b mynewbranch <span style="color:#f92672">{</span>commit<span style="color:#f92672">}</span>
-</span></span></code></pre></div><p>Once you are satisfied, just delete the previous branch and then rename the
-current one to it.</p>
-<p>Another possibility is the use of <a href="https://git-scm.com/docs/git-worktree">git
-worktrees</a> to divert (spin-off) branches.</p>
-<p>This becomes a very natural workflow once you repeat it a couple of times.</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>I have gladly peer bonused him. You should <em>always</em> peer bonus those folks
-who helped you become more productive.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>Arguably you should create a separate CL for that (go/small-cls), but who
-am I to judge? Unless I am your teammate&hellip;&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+<p><strong>Credits</strong>: <a href="https://www.reddit.com/r/SteamDeck/comments/1bb5767/steam_deck_stuck_at_update_complete_launching/">https://www.reddit.com/r/SteamDeck/comments/1bb5767/steam_deck_stuck_at_update_complete_launching/</a></p>]]></content:encoded></item></channel></rss>

@@ -1,4 +1,57 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Mon, 04 Nov 2024 11:34:36 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>VSCode: auto restart extensions</title><link>https://www.perrotta.dev/2024/11/vscode-auto-restart-extensions/</link><pubDate>Mon, 04 Nov 2024 11:34:36 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/vscode-auto-restart-extensions/</guid><description>&lt;p>Whenever I open VSCode, there are some extension updates. Every time, I need to
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 05 Nov 2024 17:05:22 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Github Actions: multiple docker images</title><link>https://www.perrotta.dev/2024/11/github-actions-multiple-docker-images/</link><pubDate>Tue, 05 Nov 2024 17:05:22 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/github-actions-multiple-docker-images/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a monorepo on Github with multiple docker images in
+it, write a github workflow to build and push all of them.&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Given a monorepo on Github with multiple docker images in
+it, write a github workflow to build and push all of them.</p>
+<p>Here is an abridged version of the resulting workflow. The images are listed one
+by one for fine-grained control purposes, but it would also be possible to glob
+them with a single command.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Global services</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">permissions</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">id-token</span>: <span style="color:#ae81ff">write</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">contents</span>: <span style="color:#ae81ff">read</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Replace with workflow trigger conditions.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">on</span>: {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">global-services</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">${{ matrix.image }}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">strategy</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">fail-fast</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">matrix</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">include</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e"># keep-sorted start</span>
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">dockerfile</span>: <span style="color:#ae81ff">path/to/one/Dockerfile</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">image</span>: <span style="color:#ae81ff">org/one</span>
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">dockerfile</span>: <span style="color:#ae81ff">path/to/two/Dockerfile</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">image</span>: <span style="color:#ae81ff">org/two</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e"># keep-sorted end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Check out source code</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v4</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Get git SHA</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">id</span>: <span style="color:#ae81ff">git-sha</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          ./scripts/get-versions.sh
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          echo &#34;sha=$(grep &#39;^services_sha&#39; versions.yaml | cut -d&#39; &#39; -f 2)&#34; &gt;&gt; &#34;$GITHUB_OUTPUT&#34;</span>          
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">./.github/actions/setup-ecr-buildx</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">id</span>: <span style="color:#ae81ff">setup-ecr-buildx</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Build and push global service images</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">docker/build-push-action@6.9.0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">cache-from</span>: <span style="color:#ae81ff">type=gha</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">cache-to</span>: <span style="color:#ae81ff">type=gha,mode=max</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">context</span>: <span style="color:#ae81ff">path/to</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">file</span>: <span style="color:#ae81ff">${{ matrix.dockerfile }}</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">provenance</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">push</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">tags</span>: <span style="color:#ae81ff">${{ steps.setup-ecr-buildx.outputs.ecr_registry }}/${{ matrix.image }}:${{ steps.git-sha.outputs.sha }}</span>
+</span></span></code></pre></div><p>A matrix strategy kicks off independent multiple build jobs all at once.</p>
+<p>Docs: <a href="https://github.com/docker/build-push-action">https://github.com/docker/build-push-action</a></p>]]></content:encoded></item><item><title>VSCode: auto restart extensions</title><link>https://www.perrotta.dev/2024/11/vscode-auto-restart-extensions/</link><pubDate>Mon, 04 Nov 2024 11:34:36 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/vscode-auto-restart-extensions/</guid><description>&lt;p>Whenever I open VSCode, there are some extension updates. Every time, I need to
 manually click &amp;ldquo;Extensions&amp;rdquo; in the left-side navigation bar and then &amp;ldquo;Restart&amp;rdquo;
 so that the upgrades take effect.&lt;/p>
 &lt;p>This should be automated.&lt;/p></description><content:encoded><![CDATA[<p>Whenever I open VSCode, there are some extension updates. Every time, I need to
@@ -675,40 +728,4 @@ charts.</p>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
 </span></span><span style="display:flex;"><span>.Values.global.prometheus_scrape_interval
 </span></span><span style="display:flex;"><span>.Values.global.global_grafana_ingest_url
-</span></span></code></pre></div><p>It turns out that <code>grep</code> also has a <code>-o</code> flag with a similar behavior.</p>]]></content:encoded></item><item><title>helm: list recent chart upgrades</title><link>https://www.perrotta.dev/2024/09/helm-list-recent-chart-upgrades/</link><pubDate>Tue, 24 Sep 2024 14:21:20 +0200</pubDate><guid>https://www.perrotta.dev/2024/09/helm-list-recent-chart-upgrades/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a kubernetes cluster with many helm charts in
-different namespaces, how to use &lt;code>helm&lt;/code> to query the list of the last recently
-&amp;ldquo;touched&amp;rdquo; charts?&lt;/p>
-&lt;p>By &amp;ldquo;touched&amp;rdquo; we mean either installed (via &lt;code>helm install&lt;/code>) or upgraded (via
-&lt;code>helm upgrade&lt;/code>).&lt;/p>
-&lt;p>Something like: &lt;code>helm ls --all --sort-by updated&lt;/code>. Using &lt;code>kubectl&lt;/code> directly
-would also be OK.&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Given a kubernetes cluster with many helm charts in
-different namespaces, how to use <code>helm</code> to query the list of the last recently
-&ldquo;touched&rdquo; charts?</p>
-<p>By &ldquo;touched&rdquo; we mean either installed (via <code>helm install</code>) or upgraded (via
-<code>helm upgrade</code>).</p>
-<p>Something like: <code>helm ls --all --sort-by updated</code>. Using <code>kubectl</code> directly
-would also be OK.</p>
-<h2 id="solution">Solution</h2>
-<p>The brute force way:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>helm ls --max <span style="color:#ae81ff">99999</span> -A -o json | jq -r <span style="color:#e6db74">&#39;.[] | &#34;\(.updated)\t\(.name)&#34;&#39;</span> | sort | tail | column -t
-</span></span></code></pre></div><ul>
-<li><code>-A</code> for all namespaces</li>
-<li><code>--max 99999</code> to &ldquo;disable&rdquo; <a href="https://github.com/helm/helm/issues/3322">paging</a> (there&rsquo;s no better way as of 2024-09-24)</li>
-<li><code>jq</code> to filter out on the &ldquo;updated&rdquo; field</li>
-</ul>
-<p>Note that a sample json entry looks like the following:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;hoth-cb7f8a327&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;namespace&#34;</span>: <span style="color:#e6db74">&#34;default&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;revision&#34;</span>: <span style="color:#e6db74">&#34;2&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;updated&#34;</span>: <span style="color:#e6db74">&#34;2024-06-14 15:02:16.775174131 +0000 UTC&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#e6db74">&#34;deployed&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;chart&#34;</span>: <span style="color:#e6db74">&#34;hoth-0.1.0&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;app_version&#34;</span>: <span style="color:#e6db74">&#34;1.0.0&#34;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Sample output of the aforementioned command:</p>
-<pre tabindex="0"><code>2024-09-24  10:56:15.655674586  +0000  UTC  geonosis
-2024-09-24  10:56:15.731630075  +0000  UTC  coruscant
-2024-09-24  11:01:35.156973247  +0000  UTC  endor
-2024-09-24  11:02:30.314014351  +0000  UTC  hoth
-</code></pre>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div><p>It turns out that <code>grep</code> also has a <code>-o</code> flag with a similar behavior.</p>]]></content:encoded></item></channel></rss>
