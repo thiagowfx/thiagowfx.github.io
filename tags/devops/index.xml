@@ -1,4 +1,52 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 07 Nov 2024 14:13:17 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>jq: remove quotes from output</title><link>https://www.perrotta.dev/2024/11/jq-remove-quotes-from-output/</link><pubDate>Thu, 07 Nov 2024 14:13:17 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/jq-remove-quotes-from-output/</guid><description>Given:
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 12 Nov 2024 11:13:06 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Helm: enforce the directory name matches the chart name</title><link>https://www.perrotta.dev/2024/11/helm-enforce-the-directory-name-matches-the-chart-name/</link><pubDate>Tue, 12 Nov 2024 11:13:06 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/helm-enforce-the-directory-name-matches-the-chart-name/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a helm chart called &lt;code>foo&lt;/code>, enforce that its &lt;code>Chart.yaml&lt;/code> file lives in a directory called &lt;code>foo&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Given a helm chart called <code>foo</code>, enforce that its <code>Chart.yaml</code> file lives in a directory called <code>foo</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<h2 id="background">Background</h2>
+<p>In 2016, this <a href="https://github.com/helm/helm/pull/818/">used to be</a> the default behavior in Helm:</p>
+<blockquote>
+<p>fix(helm): produce error if package name is inconsistent</p>
+</blockquote>
+<p>In 2018, this enforcement was <a href="https://github.com/helm/helm/pull/4141">removed</a>:</p>
+<blockquote>
+<p>remove dirname constraint on helm package</p>
+</blockquote>
+<p>We would like to reintroduce this requirement in our Helm charts codebase, as a best practice, to prevent chart name collisions.</p>
+<p>What would be the most native way to accomplish that?</p>
+<p>I would probably write a git pre-commit hook if there is no native way (e.g. via some <code>helm lint</code> flag).</p>
+<h2 id="solution">Solution</h2>
+<p>Use the following script with <a href="https://pre-commit.com/">pre-commit</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check that the directory name matches the chart name in Chart.yaml.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Examples:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   - foo/Chart.yaml with &#34;name: hey-foo&#34; fails the check.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   - foo/Chart.yaml with &#34;name: foo&#34; passes the check.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Usage: $0 [path/to/chart/Chart.yaml ...]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> chart in <span style="color:#e6db74">&#34;</span>$@<span style="color:#e6db74">&#34;</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>	dirname<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>basename <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>dirname <span style="color:#e6db74">&#34;</span>$chart<span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># Remove trailing slash.</span>
+</span></span><span style="display:flex;"><span>	dirname<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>dirname%/<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># Fetch chart name from Chart.yaml.</span>
+</span></span><span style="display:flex;"><span>	chart_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>yq e <span style="color:#e6db74">&#39;.name&#39;</span> <span style="color:#e6db74">&#34;</span>$chart<span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> $dirname !<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span>$chart_name<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>		echo <span style="color:#e6db74">&#34;error: directory name &#39;</span><span style="color:#e6db74">${</span>dirname<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39; does not match chart name &#39;</span><span style="color:#e6db74">${</span>chart_name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>		exit <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span></code></pre></div><h2 id="reference">Reference</h2>
+<p>I asked and self-answered this question on <a href="https://stackoverflow.com/questions/79166730/how-to-enforce-that-the-directory-name-must-match-the-chart-name/79180650#79180650">Stack Overflow</a>.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><em>Why</em>? For ease of management, simplicity, consistency &amp; uniformity.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>jq: remove quotes from output</title><link>https://www.perrotta.dev/2024/11/jq-remove-quotes-from-output/</link><pubDate>Thu, 07 Nov 2024 14:13:17 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/jq-remove-quotes-from-output/</guid><description>Given:
 % aws eks --profile global --region us-east-1 list-clusters { &amp;#34;clusters&amp;#34;: [ &amp;#34;aws-us-east-1-global-0&amp;#34; ] } Query:
 % aws eks --profile global --region us-east-1 list-clusters | jq &amp;#39;.clusters&amp;#39; [ &amp;#34;aws-us-east-1-global-0&amp;#34; ] Further:
 % aws eks --profile global --region us-east-1 list-clusters | jq &amp;#39;.clusters[0]&amp;#39; &amp;#34;aws-us-east-1-global-0&amp;#34; What if we wanted to remove the quotes? Add -r (--raw-output):
@@ -641,76 +689,4 @@ example:</p>
 </span></span><span style="display:flex;"><span>% bash main.sh
 </span></span><span style="display:flex;"><span>hello world
 </span></span></code></pre></div><p><a href="https://github.com/thiagowfx/.dotfiles/blob/3645ea5811d07c9f4be3cea91c0ffaf43ba4071c/profile/.profile.d/functions.sh#L5">Here</a>
-is the definition my dotfiles.</p>]]></content:encoded></item><item><title>★ Erratic: human-friendly google3 piper snapshots</title><link>https://www.perrotta.dev/2024/10/erratic-human-friendly-google3-piper-snapshots/</link><pubDate>Wed, 02 Oct 2024 13:33:56 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/erratic-human-friendly-google3-piper-snapshots/</guid><description>&lt;p>In the google3 codebase, when working with Piper directly (i.e. not
-Fig[-on-CitC]), I often liked to use this tool called &lt;code>erratic&lt;/code> (abbrev: &lt;code>er&lt;/code>),
-which was a 20% project of another Software Engineer&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p></description><content:encoded><![CDATA[<p>In the google3 codebase, when working with Piper directly (i.e. not
-Fig[-on-CitC]), I often liked to use this tool called <code>erratic</code> (abbrev: <code>er</code>),
-which was a 20% project of another Software Engineer<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
-<h2 id="google3-workflow">google3 workflow</h2>
-<p>The workflow is as follows:</p>
-<ul>
-<li>Make some changes: <code>g4 open</code>, <code>g4 edit</code>, etc</li>
-<li>Create a CL (ChangeList) <code>g4 change</code></li>
-</ul>
-<p>Now let&rsquo;s say you&rsquo;re anticipating some heavy refactoring, in the same CL<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>,
-that you could potentially regret and want to revert.</p>
-<p>This would be a great moment to use <code>erratic</code>. After installing it (or aliasing
-it, if using it via X20), run:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% er explain <span style="color:#e6db74">&#34;this is working perfectly before bob@ asked me to refactor it&#34;</span>
-</span></span></code></pre></div><ul>
-<li>Make additional changes</li>
-<li>Feel free to make more snapshots (checkpoints), as you see fit</li>
-</ul>
-<p>If you ever want to roll back, run <code>er list</code>. It will list all explicit
-snapshots you annotated so far. Locate the one you want to roll back to:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% er list
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">42</span> <span style="color:#e6db74">&#34;this is working perfectly before bob@ asked me to refactor it&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">78</span> <span style="color:#e6db74">&#34;second refactoring&#34;</span>
-</span></span></code></pre></div><p>Now just roll back to it:</p>
-<pre tabindex="0"><code>% er restore 42
-</code></pre><p>Sometimes you&rsquo;ll need to run <code>g4 add</code> afterwards. And we&rsquo;re done!</p>
-<p><strong>Colophon</strong>: Why use <code>erratic</code> at all, since CitC already does automatic
-periodic snapshots out-of-the-box? Because these automatic snapshots are meant
-for machines, not humans; they are not very developer-friendly. You could get
-your way around <code>rsync</code> + finding the correct timestamps to copy from, but
-that&rsquo;s not fun at all, and not a good use of time either.</p>
-<h2 id="git-workflow">git workflow</h2>
-<p>How to replicate a similar workflow in a non-Google world?</p>
-<p>For most of us, non-Google necessarily means <code>git</code>. Let&rsquo;s ignore <code>hg</code>
-(mercurial) in this context.</p>
-<p>There is not much to do, actually: <a href="https://github.blog/open-source/git/commits-are-snapshots-not-diffs/">https://github.blog/open-source/git/commits-are-snapshots-not-diffs/</a></p>
-<p><code>git</code> commits are already snapshots. The workflow is:</p>
-<ul>
-<li>Make some changes, then <code>git add</code></li>
-<li>Create a branch (<code>git switch --create</code>), commit your changes</li>
-<li>To make a snapshot, just make a new commit and annotate it (<code>git commit -m &quot;foo&quot;</code>)</li>
-<li>To list your snapshots, run <code>git rev-list $(git show-branch --merge-base HEAD)^..HEAD --pretty</code>. This will list all commits since your branch diverted.
-You could add an alias to it in your <code>~/.gitconfig</code>.</li>
-<li>To roll back, run <code>git reset --hard {commit}</code>.</li>
-</ul>
-<p><strong>Caveat</strong>: You will lose track of all commits after <code>{commit}</code>. Although it
-would still be possible to recover them with <code>git reflog</code> (in case of a
-mistake), that is not a developer-friendly workflow.</p>
-<p>Then the follow-up question is: how to roll back without losing track of
-intermediate work?</p>
-<p>One way is to create a new branch that points out to <code>{commit}</code> instead of
-hard-resetting your entire worktree:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git checkout -b mynewbranch <span style="color:#f92672">{</span>commit<span style="color:#f92672">}</span>
-</span></span></code></pre></div><p>Once you are satisfied, just delete the previous branch and then rename the
-current one to it.</p>
-<p>Another possibility is the use of <a href="https://git-scm.com/docs/git-worktree">git
-worktrees</a> to divert (spin-off) branches.</p>
-<p>This becomes a very natural workflow once you repeat it a couple of times.</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>I have gladly peer bonused him. You should <em>always</em> peer bonus those folks
-who helped you become more productive.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>Arguably you should create a separate CL for that (go/small-cls), but who
-am I to judge? Unless I am your teammate&hellip;&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+is the definition my dotfiles.</p>]]></content:encoded></item></channel></rss>

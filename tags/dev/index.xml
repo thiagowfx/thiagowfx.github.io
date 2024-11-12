@@ -1,4 +1,52 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 07 Nov 2024 14:13:17 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>jq: remove quotes from output</title><link>https://www.perrotta.dev/2024/11/jq-remove-quotes-from-output/</link><pubDate>Thu, 07 Nov 2024 14:13:17 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/jq-remove-quotes-from-output/</guid><description>Given:
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 12 Nov 2024 11:13:06 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Helm: enforce the directory name matches the chart name</title><link>https://www.perrotta.dev/2024/11/helm-enforce-the-directory-name-matches-the-chart-name/</link><pubDate>Tue, 12 Nov 2024 11:13:06 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/helm-enforce-the-directory-name-matches-the-chart-name/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a helm chart called &lt;code>foo&lt;/code>, enforce that its &lt;code>Chart.yaml&lt;/code> file lives in a directory called &lt;code>foo&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Given a helm chart called <code>foo</code>, enforce that its <code>Chart.yaml</code> file lives in a directory called <code>foo</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<h2 id="background">Background</h2>
+<p>In 2016, this <a href="https://github.com/helm/helm/pull/818/">used to be</a> the default behavior in Helm:</p>
+<blockquote>
+<p>fix(helm): produce error if package name is inconsistent</p>
+</blockquote>
+<p>In 2018, this enforcement was <a href="https://github.com/helm/helm/pull/4141">removed</a>:</p>
+<blockquote>
+<p>remove dirname constraint on helm package</p>
+</blockquote>
+<p>We would like to reintroduce this requirement in our Helm charts codebase, as a best practice, to prevent chart name collisions.</p>
+<p>What would be the most native way to accomplish that?</p>
+<p>I would probably write a git pre-commit hook if there is no native way (e.g. via some <code>helm lint</code> flag).</p>
+<h2 id="solution">Solution</h2>
+<p>Use the following script with <a href="https://pre-commit.com/">pre-commit</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check that the directory name matches the chart name in Chart.yaml.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Examples:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   - foo/Chart.yaml with &#34;name: hey-foo&#34; fails the check.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#   - foo/Chart.yaml with &#34;name: foo&#34; passes the check.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Usage: $0 [path/to/chart/Chart.yaml ...]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> chart in <span style="color:#e6db74">&#34;</span>$@<span style="color:#e6db74">&#34;</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>	dirname<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>basename <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>dirname <span style="color:#e6db74">&#34;</span>$chart<span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># Remove trailing slash.</span>
+</span></span><span style="display:flex;"><span>	dirname<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>dirname%/<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e"># Fetch chart name from Chart.yaml.</span>
+</span></span><span style="display:flex;"><span>	chart_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>yq e <span style="color:#e6db74">&#39;.name&#39;</span> <span style="color:#e6db74">&#34;</span>$chart<span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> $dirname !<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span>$chart_name<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>		echo <span style="color:#e6db74">&#34;error: directory name &#39;</span><span style="color:#e6db74">${</span>dirname<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39; does not match chart name &#39;</span><span style="color:#e6db74">${</span>chart_name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>		exit <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span></code></pre></div><h2 id="reference">Reference</h2>
+<p>I asked and self-answered this question on <a href="https://stackoverflow.com/questions/79166730/how-to-enforce-that-the-directory-name-must-match-the-chart-name/79180650#79180650">Stack Overflow</a>.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><em>Why</em>? For ease of management, simplicity, consistency &amp; uniformity.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>jq: remove quotes from output</title><link>https://www.perrotta.dev/2024/11/jq-remove-quotes-from-output/</link><pubDate>Thu, 07 Nov 2024 14:13:17 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/jq-remove-quotes-from-output/</guid><description>Given:
 % aws eks --profile global --region us-east-1 list-clusters { &amp;#34;clusters&amp;#34;: [ &amp;#34;aws-us-east-1-global-0&amp;#34; ] } Query:
 % aws eks --profile global --region us-east-1 list-clusters | jq &amp;#39;.clusters&amp;#39; [ &amp;#34;aws-us-east-1-global-0&amp;#34; ] Further:
 % aws eks --profile global --region us-east-1 list-clusters | jq &amp;#39;.clusters[0]&amp;#39; &amp;#34;aws-us-east-1-global-0&amp;#34; What if we wanted to remove the quotes? Add -r (--raw-output):
@@ -626,36 +674,4 @@ is often used:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% printf <span style="color:#e6db74">&#39;%(%Y-%m-%d)T\n&#39;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>printf: %<span style="color:#f92672">(</span>: invalid directive
-</span></span></code></pre></div><p><strong>Source</strong>: <a href="https://blog.marco.ninja/notes/technology/linux/working-with-dates-in-bash-and-other-shells/">https://blog.marco.ninja/notes/technology/linux/working-with-dates-in-bash-and-other-shells/</a></p>]]></content:encoded></item><item><title>cdtmp: change to a temporary directory</title><link>https://www.perrotta.dev/2024/10/cdtmp-change-to-a-temporary-directory/</link><pubDate>Mon, 07 Oct 2024 10:40:37 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/cdtmp-change-to-a-temporary-directory/</guid><description>&lt;p>Sometimes I need to do random experimentation in a throwaway directory.&lt;/p>
-&lt;p>For that, I have the following &lt;code>cdtmp&lt;/code> function in my shell:&lt;/p></description><content:encoded><![CDATA[<p>Sometimes I need to do random experimentation in a throwaway directory.</p>
-<p>For that, I have the following <code>cdtmp</code> function in my shell:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cdtmp <span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	builtin cd <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>mktemp -d <span style="color:#e6db74">&#34;/tmp/</span>$USER<span style="color:#e6db74">-</span><span style="color:#e6db74">${</span>1:+$1-<span style="color:#e6db74">}</span><span style="color:#66d9ef">$(</span>date +%Y-%m-%d<span style="color:#66d9ef">)</span><span style="color:#e6db74">-XXXXXX&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">||</span> <span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>	builtin pwd
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><p>Here are two example usages:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% cdtmp
-</span></span><span style="display:flex;"><span>/tmp/thiago-2024-10-07-V3c3Na
-</span></span><span style="display:flex;"><span>thiago@thiagoperrotta-MacBook-Pro /tmp/thiago-2024-10-07-V3c3Na
-</span></span><span style="display:flex;"><span>% cdtmp devops
-</span></span><span style="display:flex;"><span>/tmp/thiago-devops-2024-10-07-P4W1fh
-</span></span></code></pre></div><p>This idea was built upon <a href="https://frantic.im/cdtmp/">Alex Kotliarskyi&rsquo;s</a>, which
-he describes as:</p>
-<blockquote>
-<p>It’s a super simple alias that creates a temporary directory and then jumps
-into it. Here are a few examples of what I use it for:</p>
-<ul>
-<li>Clone a random interesting git repo to experiment with</li>
-</ul>
-</blockquote>
-<p>I also use it for testing one-off bash, C++, golang or python scripts, for
-example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% cdtmp
-</span></span><span style="display:flex;"><span>/tmp/thiago-2024-10-07-F5aFrJ
-</span></span><span style="display:flex;"><span>thiago@thiagoperrotta-MacBook-Pro /tmp/thiago-2024-10-07-F5aFrJ
-</span></span><span style="display:flex;"><span>% vim main.sh
-</span></span><span style="display:flex;"><span>thiago@thiagoperrotta-MacBook-Pro /tmp/thiago-2024-10-07-F5aFrJ
-</span></span><span style="display:flex;"><span>% bash main.sh
-</span></span><span style="display:flex;"><span>hello world
-</span></span></code></pre></div><p><a href="https://github.com/thiagowfx/.dotfiles/blob/3645ea5811d07c9f4be3cea91c0ffaf43ba4071c/profile/.profile.d/functions.sh#L5">Here</a>
-is the definition my dotfiles.</p>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div><p><strong>Source</strong>: <a href="https://blog.marco.ninja/notes/technology/linux/working-with-dates-in-bash-and-other-shells/">https://blog.marco.ninja/notes/technology/linux/working-with-dates-in-bash-and-other-shells/</a></p>]]></content:encoded></item></channel></rss>
