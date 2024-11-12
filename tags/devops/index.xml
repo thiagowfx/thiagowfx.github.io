@@ -1,4 +1,71 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 12 Nov 2024 11:13:06 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Helm: enforce the directory name matches the chart name</title><link>https://www.perrotta.dev/2024/11/helm-enforce-the-directory-name-matches-the-chart-name/</link><pubDate>Tue, 12 Nov 2024 11:13:06 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/helm-enforce-the-directory-name-matches-the-chart-name/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a helm chart called &lt;code>foo&lt;/code>, enforce that its &lt;code>Chart.yaml&lt;/code> file lives in a directory called &lt;code>foo&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Given a helm chart called <code>foo</code>, enforce that its <code>Chart.yaml</code> file lives in a directory called <code>foo</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 12 Nov 2024 11:25:12 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>`sort` deterministically</title><link>https://www.perrotta.dev/2024/11/sort-deterministically/</link><pubDate>Tue, 12 Nov 2024 11:25:12 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/sort-deterministically/</guid><description>&lt;p>We had the following code in a CI pipeline:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>find apps/base/ -type d -exec basename &lt;span style="color:#f92672">{}&lt;/span> &lt;span style="color:#ae81ff">\;&lt;/span> | sort | sed -e &lt;span style="color:#960050;background-color:#1e0010">&amp;#39;&lt;/span>s/^/- /
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It lists all directories in &lt;code>apps/base&lt;/code>.
+We add &lt;code>sort&lt;/code> to make the output canonical.
+The &lt;code>sed&lt;/code> part is just to make an unordered list out of it.&lt;/p>
+&lt;p>There was an issue though.&lt;/p></description><content:encoded><![CDATA[<p>We had the following code in a CI pipeline:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>find apps/base/ -type d -exec basename <span style="color:#f92672">{}</span> <span style="color:#ae81ff">\;</span> | sort | sed -e <span style="color:#960050;background-color:#1e0010">&#39;</span>s/^/- /
+</span></span></code></pre></div><p>It lists all directories in <code>apps/base</code>.
+We add <code>sort</code> to make the output canonical.
+The <code>sed</code> part is just to make an unordered list out of it.</p>
+<p>There was an issue though.</p>
+<p>In my machine, and in CI (GitHub Actions), the following output was produced:</p>
+<pre tabindex="0"><code>garden-info-export
+gardenia
+</code></pre><p>I use macOS + <code>sort</code> from GNU <code>coreutils</code> via homebrew:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% which sort
+</span></span><span style="display:flex;"><span>/opt/homebrew/opt/coreutils/libexec/gnubin/sort
+</span></span><span style="display:flex;"><span>% sort --version
+</span></span><span style="display:flex;"><span>sort <span style="color:#f92672">(</span>GNU coreutils<span style="color:#f92672">)</span> 9.5
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>C<span style="color:#f92672">)</span> <span style="color:#ae81ff">2024</span> Free Software Foundation, Inc.
+</span></span><span style="display:flex;"><span>License GPLv3+: GNU GPL version <span style="color:#ae81ff">3</span> or later &lt;https://gnu.org/licenses/gpl.html&gt;.
+</span></span><span style="display:flex;"><span>This is free software: you are free to change and redistribute it.
+</span></span><span style="display:flex;"><span>There is NO WARRANTY, to the extent permitted by law.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Written by Mike Haertel and Paul Eggert.
+</span></span></code></pre></div><p>In a coworker’s machine (Ubuntu Linux), it produced the following instead:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gardenia
+</span></span><span style="display:flex;"><span>garden-info-export
+</span></span></code></pre></div><p>We had the same <code>locale</code> (<code>en_US.UTF-8</code>), and the coworker was also using <code>sort</code> from GNU <code>coreutils</code>. Puzzling.</p>
+<p>In order to force a deterministic output, I proposed to use <code>-d</code>. From <code>sort(1)</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>-d, --dictionary-order
+</span></span><span style="display:flex;"><span>	Consider only blank spaces and alphanumeric characters in comparisons.
+</span></span></code></pre></div><p>And therein reproducibility was achieved<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>I do not really know why the outputs were different even with the same <code>locale</code> (<code>LANG</code>, <code>LC_COLLATE</code>, <code>LC_ALL</code>, etc). For future reference, my current locale:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% locale
+</span></span><span style="display:flex;"><span>LANG<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en_US.UTF-8&#34;</span>
+</span></span><span style="display:flex;"><span>LC_COLLATE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en_US.UTF-8&#34;</span>
+</span></span><span style="display:flex;"><span>LC_CTYPE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en_US.UTF-8&#34;</span>
+</span></span><span style="display:flex;"><span>LC_MESSAGES<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en_US.UTF-8&#34;</span>
+</span></span><span style="display:flex;"><span>LC_MONETARY<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en_US.UTF-8&#34;</span>
+</span></span><span style="display:flex;"><span>LC_NUMERIC<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en_US.UTF-8&#34;</span>
+</span></span><span style="display:flex;"><span>LC_TIME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en_US.UTF-8&#34;</span>
+</span></span><span style="display:flex;"><span>LC_ALL<span style="color:#f92672">=</span>
+</span></span></code></pre></div><p>And my coworker’s:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ locale
+</span></span><span style="display:flex;"><span>LANG<span style="color:#f92672">=</span>en_US.UTF-8
+</span></span><span style="display:flex;"><span>LANGUAGE<span style="color:#f92672">=</span>en_US
+</span></span><span style="display:flex;"><span>LC_CTYPE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en_US.UTF-8&#34;</span>
+</span></span><span style="display:flex;"><span>LC_NUMERIC<span style="color:#f92672">=</span>en_US.UTF-8
+</span></span><span style="display:flex;"><span>LC_TIME<span style="color:#f92672">=</span>en_US.UTF-8
+</span></span><span style="display:flex;"><span>LC_COLLATE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en_US.UTF-8&#34;</span>
+</span></span><span style="display:flex;"><span>LC_MONETARY<span style="color:#f92672">=</span>en_US.UTF-8
+</span></span><span style="display:flex;"><span>LC_MESSAGES<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;en_US.UTF-8&#34;</span>
+</span></span><span style="display:flex;"><span>LC_PAPER<span style="color:#f92672">=</span>en_US.UTF-8
+</span></span><span style="display:flex;"><span>LC_NAME<span style="color:#f92672">=</span>en_US.UTF-8
+</span></span><span style="display:flex;"><span>LC_ADDRESS<span style="color:#f92672">=</span>en_US.UTF-8
+</span></span><span style="display:flex;"><span>LC_TELEPHONE<span style="color:#f92672">=</span>en_US.UTF-8
+</span></span><span style="display:flex;"><span>LC_MEASUREMENT<span style="color:#f92672">=</span>en_US.UTF-8
+</span></span><span style="display:flex;"><span>LC_IDENTIFICATION<span style="color:#f92672">=</span>en_US.UTF-8
+</span></span><span style="display:flex;"><span>LC_ALL<span style="color:#f92672">=</span>
+</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>In this case, the coworker’s version became the canonical one.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>Helm: enforce the directory name matches the chart name</title><link>https://www.perrotta.dev/2024/11/helm-enforce-the-directory-name-matches-the-chart-name/</link><pubDate>Tue, 12 Nov 2024 11:13:06 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/helm-enforce-the-directory-name-matches-the-chart-name/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a helm chart called &lt;code>foo&lt;/code>, enforce that its &lt;code>Chart.yaml&lt;/code> file lives in a directory called &lt;code>foo&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Given a helm chart called <code>foo</code>, enforce that its <code>Chart.yaml</code> file lives in a directory called <code>foo</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
 <h2 id="background">Background</h2>
 <p>In 2016, this <a href="https://github.com/helm/helm/pull/818/">used to be</a> the default behavior in Helm:</p>
 <blockquote>
@@ -657,36 +724,4 @@ is often used:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% printf <span style="color:#e6db74">&#39;%(%Y-%m-%d)T\n&#39;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>printf: %<span style="color:#f92672">(</span>: invalid directive
-</span></span></code></pre></div><p><strong>Source</strong>: <a href="https://blog.marco.ninja/notes/technology/linux/working-with-dates-in-bash-and-other-shells/">https://blog.marco.ninja/notes/technology/linux/working-with-dates-in-bash-and-other-shells/</a></p>]]></content:encoded></item><item><title>cdtmp: change to a temporary directory</title><link>https://www.perrotta.dev/2024/10/cdtmp-change-to-a-temporary-directory/</link><pubDate>Mon, 07 Oct 2024 10:40:37 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/cdtmp-change-to-a-temporary-directory/</guid><description>&lt;p>Sometimes I need to do random experimentation in a throwaway directory.&lt;/p>
-&lt;p>For that, I have the following &lt;code>cdtmp&lt;/code> function in my shell:&lt;/p></description><content:encoded><![CDATA[<p>Sometimes I need to do random experimentation in a throwaway directory.</p>
-<p>For that, I have the following <code>cdtmp</code> function in my shell:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cdtmp <span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>	builtin cd <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>mktemp -d <span style="color:#e6db74">&#34;/tmp/</span>$USER<span style="color:#e6db74">-</span><span style="color:#e6db74">${</span>1:+$1-<span style="color:#e6db74">}</span><span style="color:#66d9ef">$(</span>date +%Y-%m-%d<span style="color:#66d9ef">)</span><span style="color:#e6db74">-XXXXXX&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">||</span> <span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>	builtin pwd
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><p>Here are two example usages:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% cdtmp
-</span></span><span style="display:flex;"><span>/tmp/thiago-2024-10-07-V3c3Na
-</span></span><span style="display:flex;"><span>thiago@thiagoperrotta-MacBook-Pro /tmp/thiago-2024-10-07-V3c3Na
-</span></span><span style="display:flex;"><span>% cdtmp devops
-</span></span><span style="display:flex;"><span>/tmp/thiago-devops-2024-10-07-P4W1fh
-</span></span></code></pre></div><p>This idea was built upon <a href="https://frantic.im/cdtmp/">Alex Kotliarskyi&rsquo;s</a>, which
-he describes as:</p>
-<blockquote>
-<p>It’s a super simple alias that creates a temporary directory and then jumps
-into it. Here are a few examples of what I use it for:</p>
-<ul>
-<li>Clone a random interesting git repo to experiment with</li>
-</ul>
-</blockquote>
-<p>I also use it for testing one-off bash, C++, golang or python scripts, for
-example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% cdtmp
-</span></span><span style="display:flex;"><span>/tmp/thiago-2024-10-07-F5aFrJ
-</span></span><span style="display:flex;"><span>thiago@thiagoperrotta-MacBook-Pro /tmp/thiago-2024-10-07-F5aFrJ
-</span></span><span style="display:flex;"><span>% vim main.sh
-</span></span><span style="display:flex;"><span>thiago@thiagoperrotta-MacBook-Pro /tmp/thiago-2024-10-07-F5aFrJ
-</span></span><span style="display:flex;"><span>% bash main.sh
-</span></span><span style="display:flex;"><span>hello world
-</span></span></code></pre></div><p><a href="https://github.com/thiagowfx/.dotfiles/blob/3645ea5811d07c9f4be3cea91c0ffaf43ba4071c/profile/.profile.d/functions.sh#L5">Here</a>
-is the definition my dotfiles.</p>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div><p><strong>Source</strong>: <a href="https://blog.marco.ninja/notes/technology/linux/working-with-dates-in-bash-and-other-shells/">https://blog.marco.ninja/notes/technology/linux/working-with-dates-in-bash-and-other-shells/</a></p>]]></content:encoded></item></channel></rss>
