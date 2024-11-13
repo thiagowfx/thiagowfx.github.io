@@ -1,5 +1,5 @@
 ---
-title: "`sort` deterministically"
+title: "sort deterministically"
 date: 2024-11-12T11:25:12+01:00
 tags:
   - dev
