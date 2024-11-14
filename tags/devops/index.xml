@@ -1,4 +1,40 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 12 Nov 2024 11:25:12 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>sort deterministically</title><link>https://www.perrotta.dev/2024/11/sort-deterministically/</link><pubDate>Tue, 12 Nov 2024 11:25:12 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/sort-deterministically/</guid><description>&lt;p>We had the following code in a CI pipeline:&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 14 Nov 2024 15:05:49 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Helm: JSON schema generation</title><link>https://www.perrotta.dev/2024/11/helm-json-schema-generation/</link><pubDate>Thu, 14 Nov 2024 15:05:49 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/helm-json-schema-generation/</guid><description>&lt;p>Helm charts support the inclusion of a &lt;code>values.schema.json&lt;/code> file to validate
+&lt;code>values.yaml&lt;/code>. Documentation: &lt;a href="https://helm.sh/docs/topics/charts/#schema-files">https://helm.sh/docs/topics/charts/#schema-files&lt;/a>&lt;/p>
+&lt;p>A JSON schema is akin to defining the structure of and type-annotating a JSON
+file. It helps to &amp;ldquo;shift left&amp;rdquo; the lifecycle of your helm releases.&lt;/p>
+&lt;p>For a pre-existing &lt;code>values.yaml&lt;/code> file, it may be quite tedious to generate the
+schema from scratch, by hand.&lt;/p>
+&lt;p>&lt;strong>Can we automate this process?&lt;/strong>&lt;/p></description><content:encoded><![CDATA[<p>Helm charts support the inclusion of a <code>values.schema.json</code> file to validate
+<code>values.yaml</code>. Documentation: <a href="https://helm.sh/docs/topics/charts/#schema-files">https://helm.sh/docs/topics/charts/#schema-files</a></p>
+<p>A JSON schema is akin to defining the structure of and type-annotating a JSON
+file. It helps to &ldquo;shift left&rdquo; the lifecycle of your helm releases.</p>
+<p>For a pre-existing <code>values.yaml</code> file, it may be quite tedious to generate the
+schema from scratch, by hand.</p>
+<p><strong>Can we automate this process?</strong></p>
+<p>Of course we can.</p>
+<p>One possibility is to use GenAI / LLMs. This is out of scope of this post.</p>
+<p>Another possibility is to leverage a helm plug-in to do so.</p>
+<p>I had a good experience with <a href="https://github.com/karuppiah7890/helm-schema-gen">https://github.com/karuppiah7890/helm-schema-gen</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>helm plugin install https://github.com/karuppiah7890/helm-schema-gen.git
+</span></span><span style="display:flex;"><span>cd path/to/helm/chart
+</span></span><span style="display:flex;"><span>helm schema-gen values.yaml | tee values.schema.json
+</span></span></code></pre></div><p>Afterwards, test the generated schema with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>helm lint path/to/helm/chart
+</span></span></code></pre></div><p>Usually I need to do some follow-up edits to the generated file, including:</p>
+<ul>
+<li>add string enum types for a tighter validation of strings</li>
+<li>mark certain fields as required</li>
+<li>mark certain fields with <code>additionalProperties: &quot;false&quot;</code></li>
+<li>augment <code>[&quot;null&quot;]</code> to <code>[&quot;null&quot;, &quot;string&quot;]</code> for keys that do not have a
+default value</li>
+</ul>
+<p>It&rsquo;s worth to observe that, at the time of this publication, the following
+notice is present in the repository of the plug-in:</p>
+<blockquote>
+<p>This repository has been archived by the owner on Aug 31, 2021. It is now
+read-only.</p>
+</blockquote>
+<p>Nonetheless, it still works well.</p>]]></content:encoded></item><item><title>sort deterministically</title><link>https://www.perrotta.dev/2024/11/sort-deterministically/</link><pubDate>Tue, 12 Nov 2024 11:25:12 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/sort-deterministically/</guid><description>&lt;p>We had the following code in a CI pipeline:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>find apps/base/ -type d -exec basename &lt;span style="color:#f92672">{}&lt;/span> &lt;span style="color:#ae81ff">\;&lt;/span> | sort | sed -e &lt;span style="color:#960050;background-color:#1e0010">&amp;#39;&lt;/span>s/^/- /
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It lists all directories in &lt;code>apps/base&lt;/code>.
 We add &lt;code>sort&lt;/code> to make the output canonical.
@@ -707,21 +743,4 @@ appears in ARM builds:</p>
 <pre tabindex="0"><code>cannot use math.MaxInt64 (untyped int constant 9223372036854775807) as int value in argument to env.ParseNumFromEnv (overflows)
 </code></pre><p>Anyway, once it is merged upstream, enjoy!</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% doas apk add argocd
-</span></span></code></pre></div>]]></content:encoded></item><item><title>bash built-in date</title><link>https://www.perrotta.dev/2024/10/bash-built-in-date/</link><pubDate>Mon, 07 Oct 2024 15:12:20 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/bash-built-in-date/</guid><description>&lt;p>To format dates &lt;a href="https://www.gnu.org/software/coreutils/manual/html_node/Examples-of-date.html">GNU
-date&lt;/a>
-is often used:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ date &lt;span style="color:#e6db74">&amp;#39;+%Y-%m-%d&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2024-10-07
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It turns out bash (&amp;gt;=4.2) has this feature built-in as part of &lt;code>printf&lt;/code>:&lt;/p></description><content:encoded><![CDATA[<p>To format dates <a href="https://www.gnu.org/software/coreutils/manual/html_node/Examples-of-date.html">GNU
-date</a>
-is often used:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ date <span style="color:#e6db74">&#39;+%Y-%m-%d&#39;</span>
-</span></span><span style="display:flex;"><span>2024-10-07
-</span></span></code></pre></div><p>It turns out bash (&gt;=4.2) has this feature built-in as part of <code>printf</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ printf <span style="color:#e6db74">&#39;%(%Y-%m-%d)T\n&#39;</span>
-</span></span><span style="display:flex;"><span>2024-10-07
-</span></span></code></pre></div><p>It does not work on <code>zsh</code> though:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% printf <span style="color:#e6db74">&#39;%(%Y-%m-%d)T\n&#39;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>printf: %<span style="color:#f92672">(</span>: invalid directive
-</span></span></code></pre></div><p><strong>Source</strong>: <a href="https://blog.marco.ninja/notes/technology/linux/working-with-dates-in-bash-and-other-shells/">https://blog.marco.ninja/notes/technology/linux/working-with-dates-in-bash-and-other-shells/</a></p>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div>]]></content:encoded></item></channel></rss>

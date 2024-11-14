@@ -1,4 +1,40 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 12 Nov 2024 11:25:12 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>sort deterministically</title><link>https://www.perrotta.dev/2024/11/sort-deterministically/</link><pubDate>Tue, 12 Nov 2024 11:25:12 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/sort-deterministically/</guid><description>&lt;p>We had the following code in a CI pipeline:&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 14 Nov 2024 15:05:49 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Helm: JSON schema generation</title><link>https://www.perrotta.dev/2024/11/helm-json-schema-generation/</link><pubDate>Thu, 14 Nov 2024 15:05:49 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/helm-json-schema-generation/</guid><description>&lt;p>Helm charts support the inclusion of a &lt;code>values.schema.json&lt;/code> file to validate
+&lt;code>values.yaml&lt;/code>. Documentation: &lt;a href="https://helm.sh/docs/topics/charts/#schema-files">https://helm.sh/docs/topics/charts/#schema-files&lt;/a>&lt;/p>
+&lt;p>A JSON schema is akin to defining the structure of and type-annotating a JSON
+file. It helps to &amp;ldquo;shift left&amp;rdquo; the lifecycle of your helm releases.&lt;/p>
+&lt;p>For a pre-existing &lt;code>values.yaml&lt;/code> file, it may be quite tedious to generate the
+schema from scratch, by hand.&lt;/p>
+&lt;p>&lt;strong>Can we automate this process?&lt;/strong>&lt;/p></description><content:encoded><![CDATA[<p>Helm charts support the inclusion of a <code>values.schema.json</code> file to validate
+<code>values.yaml</code>. Documentation: <a href="https://helm.sh/docs/topics/charts/#schema-files">https://helm.sh/docs/topics/charts/#schema-files</a></p>
+<p>A JSON schema is akin to defining the structure of and type-annotating a JSON
+file. It helps to &ldquo;shift left&rdquo; the lifecycle of your helm releases.</p>
+<p>For a pre-existing <code>values.yaml</code> file, it may be quite tedious to generate the
+schema from scratch, by hand.</p>
+<p><strong>Can we automate this process?</strong></p>
+<p>Of course we can.</p>
+<p>One possibility is to use GenAI / LLMs. This is out of scope of this post.</p>
+<p>Another possibility is to leverage a helm plug-in to do so.</p>
+<p>I had a good experience with <a href="https://github.com/karuppiah7890/helm-schema-gen">https://github.com/karuppiah7890/helm-schema-gen</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>helm plugin install https://github.com/karuppiah7890/helm-schema-gen.git
+</span></span><span style="display:flex;"><span>cd path/to/helm/chart
+</span></span><span style="display:flex;"><span>helm schema-gen values.yaml | tee values.schema.json
+</span></span></code></pre></div><p>Afterwards, test the generated schema with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>helm lint path/to/helm/chart
+</span></span></code></pre></div><p>Usually I need to do some follow-up edits to the generated file, including:</p>
+<ul>
+<li>add string enum types for a tighter validation of strings</li>
+<li>mark certain fields as required</li>
+<li>mark certain fields with <code>additionalProperties: &quot;false&quot;</code></li>
+<li>augment <code>[&quot;null&quot;]</code> to <code>[&quot;null&quot;, &quot;string&quot;]</code> for keys that do not have a
+default value</li>
+</ul>
+<p>It&rsquo;s worth to observe that, at the time of this publication, the following
+notice is present in the repository of the plug-in:</p>
+<blockquote>
+<p>This repository has been archived by the owner on Aug 31, 2021. It is now
+read-only.</p>
+</blockquote>
+<p>Nonetheless, it still works well.</p>]]></content:encoded></item><item><title>sort deterministically</title><link>https://www.perrotta.dev/2024/11/sort-deterministically/</link><pubDate>Tue, 12 Nov 2024 11:25:12 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/sort-deterministically/</guid><description>&lt;p>We had the following code in a CI pipeline:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>find apps/base/ -type d -exec basename &lt;span style="color:#f92672">{}&lt;/span> &lt;span style="color:#ae81ff">\;&lt;/span> | sort | sed -e &lt;span style="color:#960050;background-color:#1e0010">&amp;#39;&lt;/span>s/^/- /
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It lists all directories in &lt;code>apps/base&lt;/code>.
 We add &lt;code>sort&lt;/code> to make the output canonical.
@@ -707,21 +743,4 @@ appears in ARM builds:</p>
 <pre tabindex="0"><code>cannot use math.MaxInt64 (untyped int constant 9223372036854775807) as int value in argument to env.ParseNumFromEnv (overflows)
 </code></pre><p>Anyway, once it is merged upstream, enjoy!</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% doas apk add argocd
-</span></span></code></pre></div>]]></content:encoded></item><item><title>Exponential Idle</title><link>https://www.perrotta.dev/2024/10/exponential-idle/</link><pubDate>Mon, 07 Oct 2024 23:26:14 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/exponential-idle/</guid><description>&lt;p>&lt;a href="https://conicgames.github.io/exponentialidle/">Exponential Idle&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>Exponential Idle is a math-inspired incremental game available on Android and iOS. Your goal is to stack up money by taking advantage of exponential growth. To do so, you have to step through time by tapping the equation or simply let the time follow its course. You can perform change of variables to accelerate the process, buy upgrades, get rewards, and unlock achievements while earning virtual money.&lt;/p>
-&lt;/blockquote></description><content:encoded><![CDATA[<p><a href="https://conicgames.github.io/exponentialidle/">Exponential Idle</a>:</p>
-<blockquote>
-<p>Exponential Idle is a math-inspired incremental game available on Android and iOS. Your goal is to stack up money by taking advantage of exponential growth. To do so, you have to step through time by tapping the equation or simply let the time follow its course. You can perform change of variables to accelerate the process, buy upgrades, get rewards, and unlock achievements while earning virtual money.</p>
-</blockquote>
-<p>I’ve been in love with this game, it is very fun and chill.
-The typography is beautiful, with LaTeX equations all over the place.</p>
-<p>It’s very similar to <a href="https://www.decisionproblem.com/paperclips/index2.html">Universal Paperclips</a>, but with an academic<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> tad.</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>As of the time of this post I am a Master’s student, and my thesis proposal has just been accepted!&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div>]]></content:encoded></item></channel></rss>
