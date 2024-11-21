@@ -1,4 +1,67 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on not just serendipity</title><link>https://www.perrotta.dev/posts/</link><description>Recent content in Posts on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 14 Nov 2024 15:05:49 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Helm: JSON schema generation</title><link>https://www.perrotta.dev/2024/11/helm-json-schema-generation/</link><pubDate>Thu, 14 Nov 2024 15:05:49 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/helm-json-schema-generation/</guid><description>&lt;p>Helm charts support the inclusion of a &lt;code>values.schema.json&lt;/code> file to validate
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on not just serendipity</title><link>https://www.perrotta.dev/posts/</link><description>Recent content in Posts on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 21 Nov 2024 12:36:35 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>pre-commit: additional dependencies in golang</title><link>https://www.perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/</link><pubDate>Thu, 21 Nov 2024 12:36:35 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/</guid><description>&lt;p>When working with &lt;a href="https://pre-commit.com/">pre-commit.com&lt;/a> and specifying
+&lt;code>language: golang&lt;/code> for a given hook, you may want to install dependencies as
+part of the hook bootstrapping process.&lt;/p></description><content:encoded><![CDATA[<p>When working with <a href="https://pre-commit.com/">pre-commit.com</a> and specifying
+<code>language: golang</code> for a given hook, you may want to install dependencies as
+part of the hook bootstrapping process.</p>
+<p>Recently I needed to do so for <a href="https://github.com/mikefarah/yq%5B%5E1%5D">https://github.com/mikefarah/yq[^1]</a>:</p>
+<p>The <code>.pre-commit-config.yaml</code> looked like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">https://github.com/mikefarah/yq</span>
+</span></span></code></pre></div><p>Context for the hook and the script: <a href="https://stackoverflow.com/q/79166730/1745064">https://stackoverflow.com/q/79166730/1745064</a>.</p>
+<p>It didn&rsquo;t work. It&rsquo;s necessary to drop the <code>https://</code> prefix.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">github.com/mikefarah/yq</span>
+</span></span></code></pre></div><p>That didn&rsquo;t work either. Then I realized I needed to specify an exact
+version<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">github.com/mikefarah/yq@v4.44.3</span>
+</span></span></code></pre></div><p>It also didn&rsquo;t work! There was an error message about the need to specify <code>/v4</code>
+in the path for whatever reason:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">github.com/mikefarah/yq/v4@v4.44.3</span>
+</span></span></code></pre></div><p>That worked! Test it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pre-commit run --all-files helm-dirname-must-match-chart-name <span style="color:#f92672">[</span>--verbose<span style="color:#f92672">]</span>
+</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><code>@latest</code> would also work. However, for the sake of reproducibility,
+pinning is more reliable.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>Helm: JSON schema generation</title><link>https://www.perrotta.dev/2024/11/helm-json-schema-generation/</link><pubDate>Thu, 14 Nov 2024 15:05:49 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/helm-json-schema-generation/</guid><description>&lt;p>Helm charts support the inclusion of a &lt;code>values.schema.json&lt;/code> file to validate
 &lt;code>values.yaml&lt;/code>. Documentation: &lt;a href="https://helm.sh/docs/topics/charts/#schema-files">https://helm.sh/docs/topics/charts/#schema-files&lt;/a>&lt;/p>
 &lt;p>A JSON schema is akin to defining the structure of and type-annotating a JSON
 file. It helps to &amp;ldquo;shift left&amp;rdquo; the lifecycle of your helm releases.&lt;/p>
@@ -703,37 +766,4 @@ means that invoking Git will not be able to accomplish this. You will have to
 continue using a shell alias.</p>
 </blockquote>
 <p>Since we cannot change directory with a git alias, then at least we can use one
-to print the repository root.</p>]]></content:encoded></item><item><title>Convert JSON to YAML</title><link>https://www.perrotta.dev/2024/10/convert-json-to-yaml/</link><pubDate>Fri, 11 Oct 2024 11:47:50 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/convert-json-to-yaml/</guid><description>&lt;p>Given a YAML file that is effectively JSON, convert it to YAML format.&lt;/p></description><content:encoded><![CDATA[<p>Given a YAML file that is effectively JSON, convert it to YAML format.</p>
-<h2 id="input">Input</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% cat file.yaml
-</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;The Big Bang Theory&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;characters&#34;</span>: <span style="color:#f92672">[</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Sheldon&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Leonard&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div><h2 id="output">Output</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% yq -i -P file.yaml
-</span></span><span style="display:flex;"><span>% cat file.yaml
-</span></span><span style="display:flex;"><span>title: The Big Bang Theory
-</span></span><span style="display:flex;"><span>characters:
-</span></span><span style="display:flex;"><span>  - name: Sheldon
-</span></span><span style="display:flex;"><span>  - name: Leonard
-</span></span></code></pre></div><p><a href="https://github.com/mikefarah/yq"><code>yq</code></a> is like <code>jq</code> for YAML.</p>
-<p><code>-i</code> is for in-place modification<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, <code>-P</code> is for pretty-printing.</p>
-<p>If you don’t know about <code>-i</code>, you can always use <a href="https://joeyh.name/code/moreutils/"><code>sponge</code></a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% yq -P file.yaml | sponge file.yaml
-</span></span></code></pre></div><p>Happy YAML’ing!</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>In this context avoid using <code>&gt;</code> output redirection because it would mangle the input file. Unless you redirect to another file, of course.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+to print the repository root.</p>]]></content:encoded></item></channel></rss>

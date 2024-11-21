@@ -1,4 +1,67 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 14 Nov 2024 15:05:49 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Helm: JSON schema generation</title><link>https://www.perrotta.dev/2024/11/helm-json-schema-generation/</link><pubDate>Thu, 14 Nov 2024 15:05:49 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/helm-json-schema-generation/</guid><description>&lt;p>Helm charts support the inclusion of a &lt;code>values.schema.json&lt;/code> file to validate
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 21 Nov 2024 12:36:35 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>pre-commit: additional dependencies in golang</title><link>https://www.perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/</link><pubDate>Thu, 21 Nov 2024 12:36:35 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/</guid><description>&lt;p>When working with &lt;a href="https://pre-commit.com/">pre-commit.com&lt;/a> and specifying
+&lt;code>language: golang&lt;/code> for a given hook, you may want to install dependencies as
+part of the hook bootstrapping process.&lt;/p></description><content:encoded><![CDATA[<p>When working with <a href="https://pre-commit.com/">pre-commit.com</a> and specifying
+<code>language: golang</code> for a given hook, you may want to install dependencies as
+part of the hook bootstrapping process.</p>
+<p>Recently I needed to do so for <a href="https://github.com/mikefarah/yq%5B%5E1%5D">https://github.com/mikefarah/yq[^1]</a>:</p>
+<p>The <code>.pre-commit-config.yaml</code> looked like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">https://github.com/mikefarah/yq</span>
+</span></span></code></pre></div><p>Context for the hook and the script: <a href="https://stackoverflow.com/q/79166730/1745064">https://stackoverflow.com/q/79166730/1745064</a>.</p>
+<p>It didn&rsquo;t work. It&rsquo;s necessary to drop the <code>https://</code> prefix.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">github.com/mikefarah/yq</span>
+</span></span></code></pre></div><p>That didn&rsquo;t work either. Then I realized I needed to specify an exact
+version<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">github.com/mikefarah/yq@v4.44.3</span>
+</span></span></code></pre></div><p>It also didn&rsquo;t work! There was an error message about the need to specify <code>/v4</code>
+in the path for whatever reason:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">github.com/mikefarah/yq/v4@v4.44.3</span>
+</span></span></code></pre></div><p>That worked! Test it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pre-commit run --all-files helm-dirname-must-match-chart-name <span style="color:#f92672">[</span>--verbose<span style="color:#f92672">]</span>
+</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><code>@latest</code> would also work. However, for the sake of reproducibility,
+pinning is more reliable.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>Helm: JSON schema generation</title><link>https://www.perrotta.dev/2024/11/helm-json-schema-generation/</link><pubDate>Thu, 14 Nov 2024 15:05:49 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/helm-json-schema-generation/</guid><description>&lt;p>Helm charts support the inclusion of a &lt;code>values.schema.json&lt;/code> file to validate
 &lt;code>values.yaml&lt;/code>. Documentation: &lt;a href="https://helm.sh/docs/topics/charts/#schema-files">https://helm.sh/docs/topics/charts/#schema-files&lt;/a>&lt;/p>
 &lt;p>A JSON schema is akin to defining the structure of and type-annotating a JSON
 file. It helps to &amp;ldquo;shift left&amp;rdquo; the lifecycle of your helm releases.&lt;/p>
@@ -724,23 +787,4 @@ alias gti=git
 </li>
 </ol>
 </div>
-]]></content:encoded></item><item><title>New APKBUILD: argocd</title><link>https://www.perrotta.dev/2024/10/new-apkbuild-argocd/</link><pubDate>Wed, 09 Oct 2024 23:03:32 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/new-apkbuild-argocd/</guid><description>&lt;p>&lt;a href="https://argo-cd.readthedocs.io/en/stable/">ArgoCD&lt;/a> is a widely used GitOps
-software for Kubernetes Continuous Delivery (see
-&lt;a href="https://github.com/argoproj/argo-cd/blob/master/USERS.md">USERS.md&lt;/a>).&lt;/p>
-&lt;p>I am quite surprised no one bothered to create an Alpine Linux package for it.&lt;/p>
-&lt;p>Until&amp;hellip;&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/73305">now&lt;/a>,
-by yours truly.&lt;/p></description><content:encoded><![CDATA[<p><a href="https://argo-cd.readthedocs.io/en/stable/">ArgoCD</a> is a widely used GitOps
-software for Kubernetes Continuous Delivery (see
-<a href="https://github.com/argoproj/argo-cd/blob/master/USERS.md">USERS.md</a>).</p>
-<p>I am quite surprised no one bothered to create an Alpine Linux package for it.</p>
-<p>Until&hellip;<a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/73305">now</a>,
-by yours truly.</p>
-<p>This <code>APKBUILD</code> took a bit longer to create than the usual.
-There were a couple of issues with <code>-buildmode=pie</code>, addressed with
-<code>export CGO_ENABLED=1</code> (via <code>make CGO_FLAG=1</code>).</p>
-<p>Also, not every architecture is compatible with it. The following error message
-appears in ARM builds:</p>
-<pre tabindex="0"><code>cannot use math.MaxInt64 (untyped int constant 9223372036854775807) as int value in argument to env.ParseNumFromEnv (overflows)
-</code></pre><p>Anyway, once it is merged upstream, enjoy!</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% doas apk add argocd
-</span></span></code></pre></div>]]></content:encoded></item></channel></rss>
+]]></content:encoded></item></channel></rss>
