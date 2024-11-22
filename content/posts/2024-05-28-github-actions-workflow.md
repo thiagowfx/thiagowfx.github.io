@@ -100,7 +100,7 @@ run.
 
 ## Putting everything together
 
-### Option 1)
+### Option 1) Via the command-line
 
 ```shell
 gh workflow run package-release-dispatch.yml --ref master -f ref=master && \
@@ -108,7 +108,7 @@ gh workflow run package-release-dispatch.yml --ref master -f ref=master && \
   gh run watch $(gh run list --workflow=package-release-dispatch.yml --json databaseId --jq '.[0].databaseId')
 ```
 
-### Option 2)
+### Option 2) Via the web browser
 
 ```shell
 gh workflow run package-release-dispatch.yml --ref master -f ref=master && \
