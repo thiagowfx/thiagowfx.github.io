@@ -11,7 +11,7 @@ A productivity booster whenever trying out new
 
 <!--more-->
 
-**Usage**: `pre-commit try-repo {git-repo}`.
+**Usage**: `pre-commit try-repo {git-repo} [--all-files]`
 
 **Example**:
 
