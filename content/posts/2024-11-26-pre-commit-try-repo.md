@@ -42,3 +42,5 @@ Previously I would manually add the `repo:` entry with `rev: HEAD` and then run
 `pre-commit run --all-files {hook-id}`, one by one, adjusting as needed.
 
 This new workflow is much faster though, and it is a native pre-commit command!
+
+Inspiration to adopt more pre-commit hooks: [all-repos.yaml](https://github.com/pre-commit/pre-commit.com/blob/master/all-repos.yaml)
