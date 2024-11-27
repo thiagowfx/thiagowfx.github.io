@@ -1,4 +1,36 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on not just serendipity</title><link>https://www.perrotta.dev/posts/</link><description>Recent content in Posts on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 26 Nov 2024 18:53:22 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>logseq: backlog</title><link>https://www.perrotta.dev/2024/11/logseq-backlog/</link><pubDate>Tue, 26 Nov 2024 18:53:22 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/logseq-backlog/</guid><description>&lt;p>Assume you use &lt;code>TODO&lt;/code> and &lt;code>DOING&lt;/code> for workflow tracking in
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on not just serendipity</title><link>https://www.perrotta.dev/posts/</link><description>Recent content in Posts on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Wed, 27 Nov 2024 11:50:58 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>bash: disable pipefail</title><link>https://www.perrotta.dev/2024/11/bash-disable-pipefail/</link><pubDate>Wed, 27 Nov 2024 11:50:58 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/bash-disable-pipefail/</guid><description>&lt;p>We often do &lt;code>set -euo pipefail&lt;/code> in shell scripts&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.
+It&amp;rsquo;s an overall good habit in defensive programming.&lt;/p>
+&lt;p>Nonetheless, sometimes the default behavior for &lt;code>pipefail&lt;/code> is desired.&lt;/p></description><content:encoded><![CDATA[<p>We often do <code>set -euo pipefail</code> in shell scripts<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.
+It&rsquo;s an overall good habit in defensive programming.</p>
+<p>Nonetheless, sometimes the default behavior for <code>pipefail</code> is desired.</p>
+<p>Recently we had an example involving <a href="https://pre-commit.com/">pre-commit.com</a>
+and <a href="https://github.com/zimbatm/mdsh"><code>mdsh</code></a>, consider this <code>README.md</code> file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-md" data-lang="md"><span style="display:flex;"><span><span style="color:#e6db74">`&gt; files=$(grep -rl &#39;/spec/sources/0/targetRevision&#39; --include=&#34;*.yaml&#34; apps/overlays | sort -d -u) &amp;&amp; if [ -z &#34;$files&#34; ]; then echo &#34;None&#34;; else echo &#34;$files&#34; | sed -e &#39;s/^/- /&#39;; fi`</span>
+</span></span></code></pre></div><p>The intention is to find all <code>.yaml</code> files that match the given string within
+the <code>apps/overlays</code> directory.</p>
+<p>The result is added to the <code>README.md</code> file with a git pre-commit hook, which
+runs <code>mdsh</code> underneath, proudly showcasing a glimpse of literate programming.</p>
+<p>What happens when there are no matches, and <code>grep</code> returns with exit code 1?</p>
+<pre tabindex="0"><code>`&gt; files=$(grep -rl &#39;/spec/sources/0/targetRevision&#39; --include=&#34;*.yaml&#34; apps/overlays | sort -d -u) &amp;&amp; if [ -z &#34;$files&#34; ]; then echo &#34;None&#34;; else echo &#34;$files&#34; | sed -e &#39;s/^/- /&#39;; fi`
+
+ERROR: some commands failed:
+
+`&gt; files=$(grep -rl &#39;/spec/syncPolicy/automated&#39; --include=&#34;*.yaml&#34; apps/overlays | sort -d -u) &amp;&amp; if [ -z &#34;$files&#34; ]; then echo &#34;None&#34;; else echo &#34;$files&#34; | sed -e &#39;s/^/- /&#39;; fi`
+failed with exit status: 1.
+</code></pre><p>Of course it fails, because <code>mdsh</code> sets <a href="https://github.com/zimbatm/mdsh/pull/63/files"><code>-o pipefail</code></a>.</p>
+<p>The desired behavior is to disable it: <code>set +o pipefail</code>. Then it works
+properly:</p>
+<pre tabindex="0"><code>&gt; set +o pipefail &amp;&amp; files=$(grep -rl &#39;/spec/syncPolicy/automated&#39; --include=&#34;*.yaml&#34; apps/overlays | sort -d -u) &amp;&amp; if [ -z &#34;$files&#34; ]; then echo &#34;None&#34;; else echo &#34;$files&#34; | sed -e &#39;s/^/- /&#39;; fi
+</code></pre><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>A
+<a href="https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425">gist</a>
+with an explanation.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>logseq: backlog</title><link>https://www.perrotta.dev/2024/11/logseq-backlog/</link><pubDate>Tue, 26 Nov 2024 18:53:22 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/logseq-backlog/</guid><description>&lt;p>Assume you use &lt;code>TODO&lt;/code> and &lt;code>DOING&lt;/code> for workflow tracking in
 &lt;a href="https://logseq.com/">Logseq&lt;/a>.&lt;/p>
 &lt;p>Assume you use an &lt;code>#instrospect&lt;/code> tag.&lt;/p>
 &lt;p>&lt;strong>Problem statement&lt;/strong>: how to define a single page / live query that aggregates
@@ -616,66 +648,4 @@ prefix in the commit message title.</p>]]></content:encoded></item><item><title>
 </span></span><span style="display:flex;"><span>docker_login <span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 9876543210.foo.ecr.us-east-1.amazonaws.com
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div>]]></content:encoded></item><item><title>Performance reviews</title><link>https://www.perrotta.dev/2024/10/performance-reviews/</link><pubDate>Sun, 20 Oct 2024 12:15:14 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/performance-reviews/</guid><description>&lt;p>During performance reviews&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>, it&amp;rsquo;s handy to obtain an overview of your
-accomplishments that are stored as artifacts in source control systems.&lt;/p></description><content:encoded><![CDATA[<p>During performance reviews<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, it&rsquo;s handy to obtain an overview of your
-accomplishments that are stored as artifacts in source control systems.</p>
-<p>Usually accomplishments for a software engineer span more than just code: design
-documents, documentation, bug triage and fixes, product health initiatives,
-tackling of technical debt, processes&hellip;the list is endless.</p>
-<p>Nonetheless in this post I&rsquo;ll focus only in contributions in the form of code.</p>
-<p>99.999% of the time this means <code>git</code> commits (and/or pull requests, if you will).</p>
-<p>Other than <code>git</code>, and the <em>very very very</em> occasional mercurial (<code>hg</code>), the only
-other VCS I used significantly was Google&rsquo;s Perforce / Piper.</p>
-<h2 id="piper">Piper</h2>
-<p>Although there are command-line tools to summarize your accomplishments, I
-find the easiest way to do so is via Critique.</p>
-<h3 id="your-cl-submissions">Your CL submissions</h3>
-<p>Use a query like:</p>
-<pre tabindex="0"><code>(author:me OR pair:me) is:submitted since:2024-01-03 to:2024-01-09
-</code></pre><p>Update <code>since</code> and <code>to</code> according to the current PERF / GRAD cycle.</p>
-<p>If you are a high-performer and/or send lots of LSCs (large-scale changes), the
-output can be noisy. Filter it out with <code>d:{description}</code> as needed.</p>
-<p>For example, to call out LSC changes in a separate section in your packet, you
-may want to exclude them from your overall contributions with <code>-d:LSC</code> or
-<code>-d:Rosie</code> or similar.</p>
-<p><code>pair</code> is for crediting pair programming.</p>
-<p><strong>Disclaimer</strong>: There is a possibility the syntax is incorrect, as I am not able
-to test it at the moment.</p>
-<h3 id="your-cl-reviews">Your CL reviews</h3>
-<pre tabindex="0"><code>r:me is:submitted since:2024-01-03 to:2024-01-09
-</code></pre><p>You&rsquo;ll likely want to call out readability reviews separately. Use something
-like <code>-cc:typescript-readability-approvers</code>.</p>
-<h2 id="git"><code>git</code></h2>
-<p>One option is to use the web UI of your forge (GitHub, GitLab, etc).</p>
-<p>I strive for a forge-agnostic solution though.</p>
-<h3 id="your-pull-requests--commits">Your pull requests / commits</h3>
-<p><a href="https://git-scm.com/docs/git-shortlog"><code>git shortlog</code></a> is your friend!</p>
-<p>Example for this blog:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git shortlog --author<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Thiago Perrotta&#34;</span> --since<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;6 months ago&#34;</span>  <span style="color:#75715e"># alt: --since=&#34;2024-03-01&#34;</span>
-</span></span><span style="display:flex;"><span>Thiago Perrotta <span style="color:#f92672">(</span>499<span style="color:#f92672">)</span>:
-</span></span><span style="display:flex;"><span>      Initial commit
-</span></span><span style="display:flex;"><span>      add gitignore: go,hugo,vim
-</span></span><span style="display:flex;"><span>      hugo: add config.toml and default archetype
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
-</span></span></code></pre></div><p>If there are multiple repositories, combine the command with <a href="https://myrepos.branchable.com/"><code>myrepos</code></a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% mr run git shortlog --author<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Thiago Perrotta&#34;</span>
-</span></span></code></pre></div><p>To filter out irrelevant commits, use <code>grep -v</code>. Example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git shortlog --author<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Thiago Perrotta&#34;</span> | grep -Ev <span style="color:#e6db74">&#39;^\s*ci|^.*pre-commit&#39;</span>
-</span></span></code></pre></div><p>&hellip;filters out commits that contain &ldquo;ci&rdquo; or &ldquo;pre-commit&rdquo; in the message summary.</p>
-<h3 id="your-pr-reviews">Your PR reviews</h3>
-<p>PR reviews are a concept from forges. From a <code>git</code> CLI perspective it would only
-be possible to do so when automation adds git tags to commits e.g. <code>Reviewed-by: Thiago Perrotta &lt;thiago@example.com&gt;</code>.</p>
-<p><a href="https://www.gerritcodereview.com/">Gerrit</a> does that.
-<a href="https://chromium-review.googlesource.com/c/chromium/src/+/5012895">Here</a> is an
-example in Chromium. In this case, one could just <code>grep</code> for <code>Reviewed-by</code> in
-<code>git log</code>.</p>
-<p>Otherwise: on GitHub, use a query such as <code>is:pr reviewed-by:@me</code> in the Pull
-Request search tab.</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>PERF, GRAD, TPG: there are all sorts of naming schemes for them.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div>]]></content:encoded></item></channel></rss>

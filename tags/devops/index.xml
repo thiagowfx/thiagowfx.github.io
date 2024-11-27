@@ -1,4 +1,36 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 26 Nov 2024 18:53:22 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>logseq: backlog</title><link>https://www.perrotta.dev/2024/11/logseq-backlog/</link><pubDate>Tue, 26 Nov 2024 18:53:22 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/logseq-backlog/</guid><description>&lt;p>Assume you use &lt;code>TODO&lt;/code> and &lt;code>DOING&lt;/code> for workflow tracking in
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Wed, 27 Nov 2024 11:50:58 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>bash: disable pipefail</title><link>https://www.perrotta.dev/2024/11/bash-disable-pipefail/</link><pubDate>Wed, 27 Nov 2024 11:50:58 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/bash-disable-pipefail/</guid><description>&lt;p>We often do &lt;code>set -euo pipefail&lt;/code> in shell scripts&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.
+It&amp;rsquo;s an overall good habit in defensive programming.&lt;/p>
+&lt;p>Nonetheless, sometimes the default behavior for &lt;code>pipefail&lt;/code> is desired.&lt;/p></description><content:encoded><![CDATA[<p>We often do <code>set -euo pipefail</code> in shell scripts<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.
+It&rsquo;s an overall good habit in defensive programming.</p>
+<p>Nonetheless, sometimes the default behavior for <code>pipefail</code> is desired.</p>
+<p>Recently we had an example involving <a href="https://pre-commit.com/">pre-commit.com</a>
+and <a href="https://github.com/zimbatm/mdsh"><code>mdsh</code></a>, consider this <code>README.md</code> file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-md" data-lang="md"><span style="display:flex;"><span><span style="color:#e6db74">`&gt; files=$(grep -rl &#39;/spec/sources/0/targetRevision&#39; --include=&#34;*.yaml&#34; apps/overlays | sort -d -u) &amp;&amp; if [ -z &#34;$files&#34; ]; then echo &#34;None&#34;; else echo &#34;$files&#34; | sed -e &#39;s/^/- /&#39;; fi`</span>
+</span></span></code></pre></div><p>The intention is to find all <code>.yaml</code> files that match the given string within
+the <code>apps/overlays</code> directory.</p>
+<p>The result is added to the <code>README.md</code> file with a git pre-commit hook, which
+runs <code>mdsh</code> underneath, proudly showcasing a glimpse of literate programming.</p>
+<p>What happens when there are no matches, and <code>grep</code> returns with exit code 1?</p>
+<pre tabindex="0"><code>`&gt; files=$(grep -rl &#39;/spec/sources/0/targetRevision&#39; --include=&#34;*.yaml&#34; apps/overlays | sort -d -u) &amp;&amp; if [ -z &#34;$files&#34; ]; then echo &#34;None&#34;; else echo &#34;$files&#34; | sed -e &#39;s/^/- /&#39;; fi`
+
+ERROR: some commands failed:
+
+`&gt; files=$(grep -rl &#39;/spec/syncPolicy/automated&#39; --include=&#34;*.yaml&#34; apps/overlays | sort -d -u) &amp;&amp; if [ -z &#34;$files&#34; ]; then echo &#34;None&#34;; else echo &#34;$files&#34; | sed -e &#39;s/^/- /&#39;; fi`
+failed with exit status: 1.
+</code></pre><p>Of course it fails, because <code>mdsh</code> sets <a href="https://github.com/zimbatm/mdsh/pull/63/files"><code>-o pipefail</code></a>.</p>
+<p>The desired behavior is to disable it: <code>set +o pipefail</code>. Then it works
+properly:</p>
+<pre tabindex="0"><code>&gt; set +o pipefail &amp;&amp; files=$(grep -rl &#39;/spec/syncPolicy/automated&#39; --include=&#34;*.yaml&#34; apps/overlays | sort -d -u) &amp;&amp; if [ -z &#34;$files&#34; ]; then echo &#34;None&#34;; else echo &#34;$files&#34; | sed -e &#39;s/^/- /&#39;; fi
+</code></pre><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>A
+<a href="https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425">gist</a>
+with an explanation.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>logseq: backlog</title><link>https://www.perrotta.dev/2024/11/logseq-backlog/</link><pubDate>Tue, 26 Nov 2024 18:53:22 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/logseq-backlog/</guid><description>&lt;p>Assume you use &lt;code>TODO&lt;/code> and &lt;code>DOING&lt;/code> for workflow tracking in
 &lt;a href="https://logseq.com/">Logseq&lt;/a>.&lt;/p>
 &lt;p>Assume you use an &lt;code>#instrospect&lt;/code> tag.&lt;/p>
 &lt;p>&lt;strong>Problem statement&lt;/strong>: how to define a single page / live query that aggregates
@@ -741,27 +773,4 @@ command, destroying many SWE-years of developed muscle memory.&#160;<a href="#fn
 <p>I should write a post about it sometime.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</div>]]></content:encoded></item><item><title>Makefile: path to root dir</title><link>https://www.perrotta.dev/2024/10/makefile-path-to-root-dir/</link><pubDate>Fri, 18 Oct 2024 14:52:44 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/makefile-path-to-root-dir/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>Makefile&lt;/code> within &lt;code>~/git/scaffolding/Makefile&lt;/code>,
-and a command that needs to run from the &lt;code>scaffolding/&lt;/code> directory, create an
-&lt;code>all&lt;/code> target that works from any directory.&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Given a <code>Makefile</code> within <code>~/git/scaffolding/Makefile</code>,
-and a command that needs to run from the <code>scaffolding/</code> directory, create an
-<code>all</code> target that works from any directory.</p>
-<p><strong>Solution</strong>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span><span style="color:#75715e"># The directory wherein the Makefile resides.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>ROOT_DIR <span style="color:#f92672">:=</span> <span style="color:#66d9ef">$(</span>patsubst %/,%,<span style="color:#66d9ef">$(</span>dir <span style="color:#66d9ef">$(</span>realpath <span style="color:#66d9ef">$(</span>lastword <span style="color:#66d9ef">$(</span>MAKEFILE_LIST<span style="color:#66d9ef">)))))</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">all</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    @echo <span style="color:#66d9ef">$(</span>ROOT_DIR<span style="color:#66d9ef">)</span>
-</span></span><span style="display:flex;"><span>	kickstart <span style="color:#66d9ef">$(</span>ROOT_DIR<span style="color:#66d9ef">)</span>/app
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">.PHONY</span><span style="color:#f92672">:</span> all
-</span></span></code></pre></div><p><strong>Explanation</strong>:</p>
-<ul>
-<li>The <code>echo</code> is used only for debugging, therefore it should be removed in prod.</li>
-<li>The <code>kickstart</code> command will properly run having <code>~/git/scaffolding</code> as <code>$PWD</code>
-whether you invoke it from <code>~/git/scaffolding</code> or from <code>~/git</code> (via <code>make -C</code>).</li>
-<li><code>pathsubst</code> is needed to remove the trailing slash (<code>/</code>) from the directory,
-so that <code>$(ROOT_DIR)/</code> does not yield a double slash, which works but it is
-ugly.</li>
-</ul>
-<p><strong>Source</strong> (adapted): <a href="https://stackoverflow.com/questions/18136918/how-to-get-current-relative-directory-of-your-makefile">https://stackoverflow.com/questions/18136918/how-to-get-current-relative-directory-of-your-makefile</a></p>]]></content:encoded></item></channel></rss>
+</div>]]></content:encoded></item></channel></rss>
