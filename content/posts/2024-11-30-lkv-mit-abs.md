@@ -17,4 +17,7 @@ Depending on where you are in Germany, it means exactly one of these:
 
 And, of course, there's [lore](https://www.chefkoch.de/forum/2,22,678383/Bestellung-LKW-mit-ABS-in-einer-Gaststaete-bzw-Kiosk.html).
 
+**Edit**: And, of course, there's a typo. Because it's much easier to write LKV
+instead of LKW.
+
 [^1]: a liver cheese roll with a bit of mustard
