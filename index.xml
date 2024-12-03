@@ -1,4 +1,63 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>not just serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 03 Dec 2024 14:29:58 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>IaC</title><link>https://www.perrotta.dev/2024/12/iac/</link><pubDate>Tue, 03 Dec 2024 14:29:58 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/iac/</guid><description>Me: So where is the Dockerfile source for that image? I can&amp;rsquo;t seem to find it in our git repos.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>not just serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 03 Dec 2024 16:41:23 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code: Day 3</title><link>https://www.perrotta.dev/2024/12/advent-of-code-day-3/</link><pubDate>Tue, 03 Dec 2024 16:41:23 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/advent-of-code-day-3/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/3">Day #3&lt;/a> puzzle.&lt;/p></description><content:encoded><![CDATA[<p>Link to <a href="https://adventofcode.com/2024/day/3">Day #3</a> puzzle.</p>
+<p>It&rsquo;s a pretty typical regex problem.
+To choose not to use regex is to endeavour in pain.</p>
+<p>The regex for part one to extract all occurrences of <code>mul</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;mul\(\d+,\d+\)&#39;</span>
+</span></span></code></pre></div><p>Note that with <code>r</code> there is no need to escape the backslashes in Python.</p>
+<p>Later on I extract the numbers with <code>r'\d+'</code>.</p>
+<p>If we really wanted we could do everything with a single regex by using
+capturing groups, however it would become less readable.</p>
+<p>Once the numbers are captured, it&rsquo;s just a matter of accumulating their product.</p>
+<p>I craft and test my regex with the support of <a href="https://regex101.com/">https://regex101.com/</a> and then
+follow up with the Python interpreter in my laptop.</p>
+<p>Part two adds two more operators, which we can easily account for with an or
+(<code>|</code>).</p>
+<p>The full solution:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> re
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]) <span style="color:#66d9ef">as</span> input:
+</span></span><span style="display:flex;"><span>        lines <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>splitlines()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    prod <span style="color:#f92672">=</span> prod_two <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> memory <span style="color:#f92672">in</span> lines:
+</span></span><span style="display:flex;"><span>        ops <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;mul\(\d+,\d+\)&#39;</span>, memory)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> op <span style="color:#f92672">in</span> ops:
+</span></span><span style="display:flex;"><span>            (f1, f2) <span style="color:#f92672">=</span> map(int, re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;\d+&#39;</span>, op))
+</span></span><span style="display:flex;"><span>            prod <span style="color:#f92672">+=</span> f1 <span style="color:#f92672">*</span> f2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part one</span>
+</span></span><span style="display:flex;"><span>    print(prod)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    enabled <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> memory <span style="color:#f92672">in</span> lines:
+</span></span><span style="display:flex;"><span>        ops <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;mul\(\d+,\d+\)|do\(\)|don&#39;t\(\)&#34;</span>, memory)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> op <span style="color:#f92672">in</span> ops:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;don&#39;t&#34;</span> <span style="color:#f92672">in</span> op:
+</span></span><span style="display:flex;"><span>                enabled <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">elif</span> <span style="color:#e6db74">&#34;do&#34;</span> <span style="color:#f92672">in</span> op:
+</span></span><span style="display:flex;"><span>                enabled <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">elif</span> <span style="color:#e6db74">&#39;mul&#39;</span> <span style="color:#f92672">in</span> op:
+</span></span><span style="display:flex;"><span>                (f1, f2) <span style="color:#f92672">=</span> map(int, re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;\d+&#39;</span>, op))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> enabled:
+</span></span><span style="display:flex;"><span>                    prod_two <span style="color:#f92672">+=</span> f1 <span style="color:#f92672">*</span> f2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part two</span>
+</span></span><span style="display:flex;"><span>    print(prod_two)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    main()
+</span></span></code></pre></div><p>I intended to use <a href="https://docs.python.org/3/whatsnew/3.10.html"><code>match</code></a> merely
+for style points however it&rsquo;s only available from Python 3.10+, thus I sticked
+with a mere <code>if-elif</code> construct.</p>]]></content:encoded></item><item><title>IaC</title><link>https://www.perrotta.dev/2024/12/iac/</link><pubDate>Tue, 03 Dec 2024 14:29:58 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/iac/</guid><description>Me: So where is the Dockerfile source for that image? I can&amp;rsquo;t seem to find it in our git repos.
 Coworker 1: links to an internal page on Confluence, which has the Dockerfile definition1
 Coworker 2: In this case IaC = Infrastructure as Confluence 😄
 to be fair, it&amp;rsquo;s a pretty old image&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description><content:encoded><![CDATA[<blockquote>
@@ -685,18 +744,4 @@ them with a single command.</p>
 </span></span><span style="display:flex;"><span>            <span style="color:#f92672">push</span>: <span style="color:#66d9ef">true</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#f92672">tags</span>: <span style="color:#ae81ff">${{ steps.setup-ecr-buildx.outputs.ecr_registry }}/${{ matrix.image }}:${{ steps.git-sha.outputs.sha }}</span>
 </span></span></code></pre></div><p>A matrix strategy kicks off independent multiple build jobs all at once.</p>
-<p>Docs: <a href="https://github.com/docker/build-push-action">https://github.com/docker/build-push-action</a></p>]]></content:encoded></item><item><title>VSCode: auto restart extensions</title><link>https://www.perrotta.dev/2024/11/vscode-auto-restart-extensions/</link><pubDate>Mon, 04 Nov 2024 11:34:36 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/vscode-auto-restart-extensions/</guid><description>&lt;p>Whenever I open VSCode, there are some extension updates. Every time, I need to
-manually click &amp;ldquo;Extensions&amp;rdquo; in the left-side navigation bar and then &amp;ldquo;Restart&amp;rdquo;
-so that the upgrades take effect.&lt;/p>
-&lt;p>This should be automated.&lt;/p></description><content:encoded><![CDATA[<p>Whenever I open VSCode, there are some extension updates. Every time, I need to
-manually click &ldquo;Extensions&rdquo; in the left-side navigation bar and then &ldquo;Restart&rdquo;
-so that the upgrades take effect.</p>
-<p>This should be automated.</p>
-<p>There is a solution: add the following to your <code>settings.json</code> (<code>Cmd + ,</code>)</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#e6db74">&#34;extensions.autoRestart&#34;</span><span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#66d9ef">true</span>
-</span></span></code></pre></div><p>Documentation:</p>
-<blockquote>
-<p>// If activated, extensions will automatically restart following an update if
-the window is not in focus.</p>
-</blockquote>
-<p><strong>Source</strong>: <a href="https://code.visualstudio.com/docs/getstarted/settings">https://code.visualstudio.com/docs/getstarted/settings</a></p>]]></content:encoded></item></channel></rss>
+<p>Docs: <a href="https://github.com/docker/build-push-action">https://github.com/docker/build-push-action</a></p>]]></content:encoded></item></channel></rss>
