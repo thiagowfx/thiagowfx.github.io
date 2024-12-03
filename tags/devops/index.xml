@@ -1,4 +1,90 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Sun, 01 Dec 2024 22:29:19 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code 2024: Day 1</title><link>https://www.perrotta.dev/2024/12/advent-of-code-2024-day-1/</link><pubDate>Sun, 01 Dec 2024 22:29:19 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/advent-of-code-2024-day-1/</guid><description>&lt;p>Refer to the &lt;a href="https://www.perrotta.dev/2022/01/advent-of-code/">previous post&lt;/a> about AoC,
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 03 Dec 2024 01:15:00 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code 2024: Day 2</title><link>https://www.perrotta.dev/2024/12/advent-of-code-2024-day-2/</link><pubDate>Tue, 03 Dec 2024 01:15:00 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/advent-of-code-2024-day-2/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/2">Day #2&lt;/a> puzzle.&lt;/p></description><content:encoded><![CDATA[<p>Link to <a href="https://adventofcode.com/2024/day/2">Day #2</a> puzzle.</p>
+<p>The first part is straightforward. It felt right to use <a href="https://docs.python.org/3/library/itertools.html#itertools.pairwise"><code>pairwise</code></a> to compute the differences between each adjacent pair:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>diffs <span style="color:#f92672">=</span> [(b <span style="color:#f92672">-</span> a) <span style="color:#66d9ef">for</span> (a,b) <span style="color:#f92672">in</span> pairwise(map(int, line<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39; &#39;</span>)))]
+</span></span></code></pre></div><p>Then we combine it with <code>all</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_safe</span>(diffs):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> all(<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">3</span> <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> diffs) <span style="color:#f92672">or</span> all(<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> diffs)
+</span></span></code></pre></div><p>Note that it is necessary to use two <code>all</code> expressions. It feels tempting to do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>all(<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">or</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> diffs)
+</span></span></code></pre></div><p>&hellip;however that&rsquo;s incorrect. For example: <code>diffs = [1, -1, 1, -1]</code> with an input
+such as <code>[1, 2, 1, 2]</code> would pass the test even though it shouldn&rsquo;t.</p>
+<p>It also feels tempting to use <code>abs()</code> but then an additional check would be
+necessary to ensure the diffs are either all positive or all negative.</p>
+<p>The second part was trickier.</p>
+<p>Initially I was doing:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>list(<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">3</span> <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> diffs)<span style="color:#f92672">.</span>count(<span style="color:#66d9ef">False</span>) <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> list(<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> diffs)<span style="color:#f92672">.</span>count(<span style="color:#66d9ef">False</span>) <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>&hellip;but then I realized I misunderstood the problem.</p>
+<p>The <code>1 2 7 8 9</code> line, whose diff is <code>[1, 5, 1, 1]</code>, illustrates it well: in
+principle it would pass the test by dropping &ldquo;5&rdquo; from the diff. However, that
+cannot be correct, because <code>2 -&gt; 8</code> is too big of a jump.</p>
+<p>The brute force way is to drop elements one by one, splitting the original list
+into two, and then checking <code>is_safe</code> in the merged sublists. That would
+require computing <code>diffs</code> every time, which would yield an <code>O(n^2)</code> solution.</p>
+<p>We can do better by pre-computing <code>diffs</code> only once, and then adding a bit of
+manipulation to reconstruct what the merged diffs would be. The end goal is to
+compute this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span>is_safe(diffs[:i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> [l[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> l[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]] <span style="color:#f92672">+</span> diffs[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:]):
+</span></span></code></pre></div><p>&hellip;i.e. the left part of <code>diffs</code>, the right part of <code>diffs</code>, and a rolling diff
+element in the middle.</p>
+<p>The full solution:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> pairwise
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]) <span style="color:#66d9ef">as</span> input:
+</span></span><span style="display:flex;"><span>        lines <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>splitlines()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    safe <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    safe_damp <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_safe</span>(diffs):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> all(<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">3</span> <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> diffs) <span style="color:#f92672">or</span> all(<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> diffs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines:
+</span></span><span style="display:flex;"><span>        l <span style="color:#f92672">=</span> list(map(int, line<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39; &#39;</span>)))
+</span></span><span style="display:flex;"><span>        diffs <span style="color:#f92672">=</span> [(b <span style="color:#f92672">-</span> a) <span style="color:#66d9ef">for</span> (a,b) <span style="color:#f92672">in</span> pairwise(l)]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        is_this_safe <span style="color:#f92672">=</span> is_safe(diffs)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> is_this_safe:
+</span></span><span style="display:flex;"><span>            safe <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            safe_damp <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(l)):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> is_safe(diffs[<span style="color:#ae81ff">1</span>:]):
+</span></span><span style="display:flex;"><span>                    safe_damp <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> len(l) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> is_safe(diffs[:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]):
+</span></span><span style="display:flex;"><span>                    safe_damp <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> is_safe(diffs[:i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> [l[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> l[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]] <span style="color:#f92672">+</span> diffs[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:]):
+</span></span><span style="display:flex;"><span>                    safe_damp <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part one</span>
+</span></span><span style="display:flex;"><span>    print(safe)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part two</span>
+</span></span><span style="display:flex;"><span>    print(safe_damp)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    main()
+</span></span></code></pre></div><p>A few notes:</p>
+<ul>
+<li>there&rsquo;s no need for <code>pairwise</code>; a plain <code>for-range</code> loop would have done the
+job just fine; <code>pairwise</code> is stylish though</li>
+<li><code>1 &lt;= n &lt;= 3</code> is syntactic sugar for <code>1 &lt;= n and n &lt;= 3</code>. Python is sweet.</li>
+<li>part two could become a bit more elegant by introducing another helper
+function</li>
+<li>naming is hard</li>
+</ul>]]></content:encoded></item><item><title>Advent of Code 2024: Day 1</title><link>https://www.perrotta.dev/2024/12/advent-of-code-2024-day-1/</link><pubDate>Sun, 01 Dec 2024 22:29:19 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/advent-of-code-2024-day-1/</guid><description>&lt;p>Refer to the &lt;a href="https://www.perrotta.dev/2022/01/advent-of-code/">previous post&lt;/a> about AoC,
 and to the &lt;a href="https://github.com/thiagowfx/adventofcode">git repository&lt;/a> with my
 solutions in Python 3.&lt;/p>
 &lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/1">Day #1&lt;/a> puzzle.&lt;/p></description><content:encoded><![CDATA[<p>Refer to the <a href="https://www.perrotta.dev/2022/01/advent-of-code/">previous post</a> about AoC,
@@ -679,66 +765,4 @@ prefix in the commit message title.</p>]]></content:encoded></item><item><title>
 </span></span><span style="display:flex;"><span>docker_login <span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 9876543210.foo.ecr.us-east-1.amazonaws.com
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
-</span></span></code></pre></div>]]></content:encoded></item><item><title>Performance reviews</title><link>https://www.perrotta.dev/2024/10/performance-reviews/</link><pubDate>Sun, 20 Oct 2024 12:15:14 +0200</pubDate><guid>https://www.perrotta.dev/2024/10/performance-reviews/</guid><description>&lt;p>During performance reviews&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>, it&amp;rsquo;s handy to obtain an overview of your
-accomplishments that are stored as artifacts in source control systems.&lt;/p></description><content:encoded><![CDATA[<p>During performance reviews<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, it&rsquo;s handy to obtain an overview of your
-accomplishments that are stored as artifacts in source control systems.</p>
-<p>Usually accomplishments for a software engineer span more than just code: design
-documents, documentation, bug triage and fixes, product health initiatives,
-tackling of technical debt, processes&hellip;the list is endless.</p>
-<p>Nonetheless in this post I&rsquo;ll focus only in contributions in the form of code.</p>
-<p>99.999% of the time this means <code>git</code> commits (and/or pull requests, if you will).</p>
-<p>Other than <code>git</code>, and the <em>very very very</em> occasional mercurial (<code>hg</code>), the only
-other VCS I used significantly was Google&rsquo;s Perforce / Piper.</p>
-<h2 id="piper">Piper</h2>
-<p>Although there are command-line tools to summarize your accomplishments, I
-find the easiest way to do so is via Critique.</p>
-<h3 id="your-cl-submissions">Your CL submissions</h3>
-<p>Use a query like:</p>
-<pre tabindex="0"><code>(author:me OR pair:me) is:submitted since:2024-01-03 to:2024-01-09
-</code></pre><p>Update <code>since</code> and <code>to</code> according to the current PERF / GRAD cycle.</p>
-<p>If you are a high-performer and/or send lots of LSCs (large-scale changes), the
-output can be noisy. Filter it out with <code>d:{description}</code> as needed.</p>
-<p>For example, to call out LSC changes in a separate section in your packet, you
-may want to exclude them from your overall contributions with <code>-d:LSC</code> or
-<code>-d:Rosie</code> or similar.</p>
-<p><code>pair</code> is for crediting pair programming.</p>
-<p><strong>Disclaimer</strong>: There is a possibility the syntax is incorrect, as I am not able
-to test it at the moment.</p>
-<h3 id="your-cl-reviews">Your CL reviews</h3>
-<pre tabindex="0"><code>r:me is:submitted since:2024-01-03 to:2024-01-09
-</code></pre><p>You&rsquo;ll likely want to call out readability reviews separately. Use something
-like <code>-cc:typescript-readability-approvers</code>.</p>
-<h2 id="git"><code>git</code></h2>
-<p>One option is to use the web UI of your forge (GitHub, GitLab, etc).</p>
-<p>I strive for a forge-agnostic solution though.</p>
-<h3 id="your-pull-requests--commits">Your pull requests / commits</h3>
-<p><a href="https://git-scm.com/docs/git-shortlog"><code>git shortlog</code></a> is your friend!</p>
-<p>Example for this blog:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git shortlog --author<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Thiago Perrotta&#34;</span> --since<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;6 months ago&#34;</span>  <span style="color:#75715e"># alt: --since=&#34;2024-03-01&#34;</span>
-</span></span><span style="display:flex;"><span>Thiago Perrotta <span style="color:#f92672">(</span>499<span style="color:#f92672">)</span>:
-</span></span><span style="display:flex;"><span>      Initial commit
-</span></span><span style="display:flex;"><span>      add gitignore: go,hugo,vim
-</span></span><span style="display:flex;"><span>      hugo: add config.toml and default archetype
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
-</span></span></code></pre></div><p>If there are multiple repositories, combine the command with <a href="https://myrepos.branchable.com/"><code>myrepos</code></a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% mr run git shortlog --author<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Thiago Perrotta&#34;</span>
-</span></span></code></pre></div><p>To filter out irrelevant commits, use <code>grep -v</code>. Example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git shortlog --author<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Thiago Perrotta&#34;</span> | grep -Ev <span style="color:#e6db74">&#39;^\s*ci|^.*pre-commit&#39;</span>
-</span></span></code></pre></div><p>&hellip;filters out commits that contain &ldquo;ci&rdquo; or &ldquo;pre-commit&rdquo; in the message summary.</p>
-<h3 id="your-pr-reviews">Your PR reviews</h3>
-<p>PR reviews are a concept from forges. From a <code>git</code> CLI perspective it would only
-be possible to do so when automation adds git tags to commits e.g. <code>Reviewed-by: Thiago Perrotta &lt;thiago@example.com&gt;</code>.</p>
-<p><a href="https://www.gerritcodereview.com/">Gerrit</a> does that.
-<a href="https://chromium-review.googlesource.com/c/chromium/src/+/5012895">Here</a> is an
-example in Chromium. In this case, one could just <code>grep</code> for <code>Reviewed-by</code> in
-<code>git log</code>.</p>
-<p>Otherwise: on GitHub, use a query such as <code>is:pr reviewed-by:@me</code> in the Pull
-Request search tab.</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>PERF, GRAD, TPG: there are all sorts of naming schemes for them.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div>]]></content:encoded></item></channel></rss>
