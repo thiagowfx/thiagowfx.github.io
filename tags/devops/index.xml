@@ -1,4 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Wed, 04 Dec 2024 13:07:28 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>atools: unpack file archives agnostically</title><link>https://www.perrotta.dev/2024/12/atools-unpack-file-archives-agnostically/</link><pubDate>Wed, 04 Dec 2024 13:07:28 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/atools-unpack-file-archives-agnostically/</guid><description>&lt;p>When downloading software from the interwebs, it can come in many popular
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 05 Dec 2024 13:05:44 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker image size</title><link>https://www.perrotta.dev/2024/12/docker-image-size/</link><pubDate>Thu, 05 Dec 2024 13:05:44 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/docker-image-size/</guid><description>&lt;p>When trying to optimize docker images in terms of size, the workflow is as
+follows:&lt;/p></description><content:encoded><![CDATA[<p>When trying to optimize docker images in terms of size, the workflow is as
+follows:</p>
+<h2 id="terminal-1">Terminal 1</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% docker build -f Dockerfile . -t argocd-download-tools
+</span></span></code></pre></div><p>&hellip;possibly paired up with <code>entr</code> or <code>fswatch</code> depending on your eagerness for
+automatic builds.</p>
+<h2 id="terminal-2">Terminal 2</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% docker image inspect argocd-download-tools | jq -r <span style="color:#e6db74">&#39;.[0].Size&#39;</span> | numfmt --to<span style="color:#f92672">=</span>iec
+</span></span><span style="display:flex;"><span>134M
+</span></span></code></pre></div><p>&hellip;possibly prepended with <code>watch</code>.</p>
+<p>I wasn&rsquo;t aware of <a href="https://man.archlinux.org/man/numfmt.1"><code>numfmt</code></a>:</p>
+<blockquote>
+<p>numfmt - Convert numbers from/to human-readable strings</p>
+</blockquote>
+<p>&hellip;instead of displaying plain bytes, it converts numbers to human-readable
+strings (à la <code>df -h</code> or <code>free -h</code>).</p>
+<p>Regarding the units: they don&rsquo;t matter much, because we are only interested in
+an approximation, no need to shave bytes off here. <code>SI</code> has 1k = 1000, whereas
+<code>IEC</code> has 1Ki = 1024.</p>]]></content:encoded></item><item><title>atools: unpack file archives agnostically</title><link>https://www.perrotta.dev/2024/12/atools-unpack-file-archives-agnostically/</link><pubDate>Wed, 04 Dec 2024 13:07:28 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/atools-unpack-file-archives-agnostically/</guid><description>&lt;p>When downloading software from the interwebs, it can come in many popular
 archive formats: &lt;code>.zip&lt;/code>, &lt;code>.tar.gz&lt;/code>, &lt;code>.tar.xz&lt;/code>, &lt;code>.rar&lt;/code>, &lt;code>.7z&lt;/code>, etc.&lt;/p>
 &lt;p>If you extract them via the CLI, normally you have to remember the right command
 and flags to pass for each different format, e.g.:&lt;/p>
@@ -743,50 +762,4 @@ so that the upgrades take effect.</p>
 <p>// If activated, extensions will automatically restart following an update if
 the window is not in focus.</p>
 </blockquote>
-<p><strong>Source</strong>: <a href="https://code.visualstudio.com/docs/getstarted/settings">https://code.visualstudio.com/docs/getstarted/settings</a></p>]]></content:encoded></item><item><title>Mermaid: rich diagrams in markdown</title><link>https://www.perrotta.dev/2024/10/mermaid-rich-diagrams-in-markdown/</link><pubDate>Mon, 28 Oct 2024 15:58:39 +0100</pubDate><guid>https://www.perrotta.dev/2024/10/mermaid-rich-diagrams-in-markdown/</guid><description>&lt;p>When writing documentation in markdown e.g. for projects stored in git, adding
-a system architecture or design diagram is a great way to boost its readability,
-especially to unfamiliar readers.&lt;/p>
-&lt;p>My favorite way to generate diagrams is with &lt;a href="https://graphviz.org/">GraphViz&lt;/a>.
-It is widely available and easy to use.&lt;/p>
-&lt;p>That said, &lt;a href="https://mermaid.js.org/">MermaidJS&lt;/a> has native integration with
-&lt;a href="https://github.blog/developer-skills/github/include-diagrams-markdown-files-mermaid/">GitHub&lt;/a>
-and &lt;a href="https://docs.gitlab.com/ee/user/markdown.html#mermaid">GitLab&lt;/a> circa &lt;a href="https://github.com/github/roadmap/issues/372">2
-years ago&lt;/a>, and that&amp;rsquo;s hard to
-beat. Graphviz, sadly, &lt;a href="https://forum.graphviz.org/t/github-adding-support-for-mermaid-diagrams/998">does
-not&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>When writing documentation in markdown e.g. for projects stored in git, adding
-a system architecture or design diagram is a great way to boost its readability,
-especially to unfamiliar readers.</p>
-<p>My favorite way to generate diagrams is with <a href="https://graphviz.org/">GraphViz</a>.
-It is widely available and easy to use.</p>
-<p>That said, <a href="https://mermaid.js.org/">MermaidJS</a> has native integration with
-<a href="https://github.blog/developer-skills/github/include-diagrams-markdown-files-mermaid/">GitHub</a>
-and <a href="https://docs.gitlab.com/ee/user/markdown.html#mermaid">GitLab</a> circa <a href="https://github.com/github/roadmap/issues/372">2
-years ago</a>, and that&rsquo;s hard to
-beat. Graphviz, sadly, <a href="https://forum.graphviz.org/t/github-adding-support-for-mermaid-diagrams/998">does
-not</a>.</p>
-<p>There is a live editor for quick prototyping and iteration: <a href="https://mermaid.live/">https://mermaid.live/</a></p>
-<p>Once you are happy with the result, you can easily embed it in markdown<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
-<pre><code>```mermaid
-flowchart TD
-A[Christmas] --&gt;|Get money| B(Go shopping)
-B --&gt; C{Let me think}
-C --&gt;|One| D[Laptop]
-C --&gt;|Two| E[iPhone]
-C --&gt;|Three| F[fa:fa-car Car]
-```
-</code></pre>
-<p>&hellip;and it will get automatically rendered in the aforementioned git forges.</p>
-<p>MermaidJS is quite intuitive to use. There is plenty of documentation for it<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>,
-e.g. for graphs / flowcharts: <a href="https://mermaid.js.org/syntax/flowchart.html">https://mermaid.js.org/syntax/flowchart.html</a>.</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>This is one of the examples in the official documentation.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>And, as increasingly common these days, you can always resort to GenAI for
-an extra push.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+<p><strong>Source</strong>: <a href="https://code.visualstudio.com/docs/getstarted/settings">https://code.visualstudio.com/docs/getstarted/settings</a></p>]]></content:encoded></item></channel></rss>

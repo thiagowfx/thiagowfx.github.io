@@ -1,4 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on not just serendipity</title><link>https://www.perrotta.dev/posts/</link><description>Recent content in Posts on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Wed, 04 Dec 2024 13:07:28 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>atools: unpack file archives agnostically</title><link>https://www.perrotta.dev/2024/12/atools-unpack-file-archives-agnostically/</link><pubDate>Wed, 04 Dec 2024 13:07:28 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/atools-unpack-file-archives-agnostically/</guid><description>&lt;p>When downloading software from the interwebs, it can come in many popular
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Posts on not just serendipity</title><link>https://www.perrotta.dev/posts/</link><description>Recent content in Posts on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 05 Dec 2024 13:05:44 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker image size</title><link>https://www.perrotta.dev/2024/12/docker-image-size/</link><pubDate>Thu, 05 Dec 2024 13:05:44 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/docker-image-size/</guid><description>&lt;p>When trying to optimize docker images in terms of size, the workflow is as
+follows:&lt;/p></description><content:encoded><![CDATA[<p>When trying to optimize docker images in terms of size, the workflow is as
+follows:</p>
+<h2 id="terminal-1">Terminal 1</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% docker build -f Dockerfile . -t argocd-download-tools
+</span></span></code></pre></div><p>&hellip;possibly paired up with <code>entr</code> or <code>fswatch</code> depending on your eagerness for
+automatic builds.</p>
+<h2 id="terminal-2">Terminal 2</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% docker image inspect argocd-download-tools | jq -r <span style="color:#e6db74">&#39;.[0].Size&#39;</span> | numfmt --to<span style="color:#f92672">=</span>iec
+</span></span><span style="display:flex;"><span>134M
+</span></span></code></pre></div><p>&hellip;possibly prepended with <code>watch</code>.</p>
+<p>I wasn&rsquo;t aware of <a href="https://man.archlinux.org/man/numfmt.1"><code>numfmt</code></a>:</p>
+<blockquote>
+<p>numfmt - Convert numbers from/to human-readable strings</p>
+</blockquote>
+<p>&hellip;instead of displaying plain bytes, it converts numbers to human-readable
+strings (à la <code>df -h</code> or <code>free -h</code>).</p>
+<p>Regarding the units: they don&rsquo;t matter much, because we are only interested in
+an approximation, no need to shave bytes off here. <code>SI</code> has 1k = 1000, whereas
+<code>IEC</code> has 1Ki = 1024.</p>]]></content:encoded></item><item><title>atools: unpack file archives agnostically</title><link>https://www.perrotta.dev/2024/12/atools-unpack-file-archives-agnostically/</link><pubDate>Wed, 04 Dec 2024 13:07:28 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/atools-unpack-file-archives-agnostically/</guid><description>&lt;p>When downloading software from the interwebs, it can come in many popular
 archive formats: &lt;code>.zip&lt;/code>, &lt;code>.tar.gz&lt;/code>, &lt;code>.tar.xz&lt;/code>, &lt;code>.rar&lt;/code>, &lt;code>.7z&lt;/code>, etc.&lt;/p>
 &lt;p>If you extract them via the CLI, normally you have to remember the right command
 and flags to pass for each different format, e.g.:&lt;/p>
@@ -720,11 +739,4 @@ gardenia
 </code></pre><p>What if we wanted to remove the quotes? Add <code>-r</code> (<code>--raw-output</code>):</p>
 <pre tabindex="0"><code>% aws eks --profile global --region us-east-1 list-clusters | jq -r &#39;.clusters[0]&#39;
 aws-us-east-1-global-0
-</code></pre>]]></content:encoded></item><item><title>Ruby: update Gemfile dependencies</title><link>https://www.perrotta.dev/2024/11/ruby-update-gemfile-dependencies/</link><pubDate>Wed, 06 Nov 2024 13:16:21 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/ruby-update-gemfile-dependencies/</guid><description>Oneshot:
-% gem update rubocop That won&amp;rsquo;t update the .gemspec file though. To do so:
-bundler update rubocop Tip: Omitting the gem name has the effect of updating all gems.</description><content:encoded><![CDATA[<p>Oneshot:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% gem update rubocop
-</span></span></code></pre></div><p>That won&rsquo;t update the <code>.gemspec</code> file though. To do so:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>bundler update rubocop
-</span></span></code></pre></div><p><strong>Tip</strong>: Omitting the gem name has the effect of updating all gems.</p>
-]]></content:encoded></item></channel></rss>
+</code></pre>]]></content:encoded></item></channel></rss>
