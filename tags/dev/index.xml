@@ -1,4 +1,176 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 05 Dec 2024 13:05:44 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker image size</title><link>https://www.perrotta.dev/2024/12/docker-image-size/</link><pubDate>Thu, 05 Dec 2024 13:05:44 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/docker-image-size/</guid><description>&lt;p>When trying to optimize docker images in terms of size, the workflow is as
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Fri, 06 Dec 2024 11:44:39 +0100</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code: Day 4</title><link>https://www.perrotta.dev/2024/12/advent-of-code-day-4/</link><pubDate>Fri, 06 Dec 2024 11:44:39 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/advent-of-code-day-4/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/4">Day #4&lt;/a> puzzle.&lt;/p></description><content:encoded><![CDATA[<p>Link to <a href="https://adventofcode.com/2024/day/4">Day #4</a> puzzle.</p>
+<p>It&rsquo;s a pretty typical 2D matrix search problem, or a graph search problem, if
+you will.</p>
+<p>The problem is naturally unraveled into the following searches:</p>
+<ul>
+<li>horizontally</li>
+<li>horizontally, reversed</li>
+<li>vertically</li>
+<li>vertically, reversed</li>
+<li>diagonally, all 4 directions (NW, NE, SW, SE)</li>
+</ul>
+<p>It&rsquo;s possible to write a single pair of for loops that addresses the general
+case. The (classic) idea is to think of all 8 compass directions to move along
+the matrix:</p>
+<ul>
+<li>(1, 0)</li>
+<li>(-1, 0)</li>
+<li>(0, 1)</li>
+<li>(0, -1)</li>
+<li>(1, 1)</li>
+<li>(-1, -1)</li>
+<li>(-1, 1)</li>
+<li>(1, -1)</li>
+</ul>
+<p>Within the inner iteration, change <code>x += dx</code> and <code>y += dy</code> (or <code>i += di</code>, <code>j += dj</code>, naming is hard). I did this many times in C++ though, and I want to write
+elegant Python code.</p>
+<p>Therefore I came up with the following solution instead, with nested list
+comprehensions:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_horizontal</span>(matrix, keyword):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sum((<span style="color:#66d9ef">True</span> <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> matrix <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(row) <span style="color:#f92672">-</span> len(keyword) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(row[i:i <span style="color:#f92672">+</span> len(keyword)]) <span style="color:#f92672">in</span> [keyword, keyword[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]]))
+</span></span></code></pre></div><p>It follows the same principle as the original intent, however it leverages
+list slices so that we can omit the <code>dx/dy</code> step.</p>
+<p>The vertical search is pretty straightforward: it is just a matter of running
+the horizontal search in the transposed matrix (<code>zip(*matrix)</code>).</p>
+<p>I must confess that using <code>zip</code> to transpose matrices always felt magical and a
+mere coincidence that it just works™. Ruby has a <code>.transpose</code> method, which is
+more readable.</p>
+<p>For the diagonal search, I couldn&rsquo;t think of an elegant list comprehension
+manner to address it. Is it even possible to &ldquo;2D slice&rdquo; in Python?</p>
+<p>After-the-fact I decided to ask ChatGPT, and it is indeed possible, but it
+requires NumPy:</p>
+<blockquote>
+<p>If a is 2-D, returns the diagonal of a with the given offset, i.e., the
+collection of elements of the form a[i, i+offset]. If a has more than two
+dimensions, then the axes specified by axis1 and axis2 are used to determine
+the 2-D sub-array whose diagonal is returned. The shape of the resulting array
+can be determined by removing axis1 and axis2 and appending an index to the
+right equal to the size of the resulting diagonals.</p>
+</blockquote>
+<p>The method call resembles <code>numpy.array([[1, 2], [3, 4]]).diagonal(offset=1)</code>,
+perhaps with the aid of <code>.flip()</code> to account for the other direction.</p>
+<p>Anyway, my plain diagonal search is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_diagonal</span>(matrix, keyword):
+</span></span><span style="display:flex;"><span>    rows <span style="color:#f92672">=</span> len(matrix)
+</span></span><span style="display:flex;"><span>    cols <span style="color:#f92672">=</span> len(matrix[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(rows):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(cols):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> i <span style="color:#f92672">+</span> len(keyword) <span style="color:#f92672">&lt;=</span> rows <span style="color:#f92672">and</span> j <span style="color:#f92672">+</span> len(keyword) <span style="color:#f92672">&lt;=</span> cols:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(matrix[i <span style="color:#f92672">+</span> k][j <span style="color:#f92672">+</span> k] <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> range(len(keyword))) <span style="color:#f92672">in</span> [keyword, keyword[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]]:
+</span></span><span style="display:flex;"><span>                    count <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> i <span style="color:#f92672">+</span> len(keyword) <span style="color:#f92672">&lt;=</span> rows <span style="color:#f92672">and</span> j <span style="color:#f92672">-</span> len(keyword) <span style="color:#f92672">&gt;=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(matrix[i <span style="color:#f92672">+</span> k][j <span style="color:#f92672">-</span> k] <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> range(len(keyword))) <span style="color:#f92672">in</span> [keyword, keyword[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]]:
+</span></span><span style="display:flex;"><span>                    count <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> count
+</span></span></code></pre></div><p>Part two is fundamentally a different problem.</p>
+<p>One way to address it is to search for all <code>'A'</code> characters, and then look
+around its &ldquo;edges&rdquo; to see if they contain exactly two <code>'M'</code> and two <code>'S'</code>, and
+that they are properly arranged:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_double_mas</span>(matrix):
+</span></span><span style="display:flex;"><span>    rows <span style="color:#f92672">=</span> len(matrix)
+</span></span><span style="display:flex;"><span>    cols <span style="color:#f92672">=</span> len(matrix[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, rows <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> matrix[i][j] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;A&#39;</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># look at a QWERTY keyboard to make sense of these variable names</span>
+</span></span><span style="display:flex;"><span>            q <span style="color:#f92672">=</span> matrix[i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>][j <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>            e <span style="color:#f92672">=</span> matrix[i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>][j <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>            z <span style="color:#f92672">=</span> matrix[i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>][j <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>            c <span style="color:#f92672">=</span> matrix[i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>][j <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>            edges <span style="color:#f92672">=</span> [q, e, z, c]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> edges<span style="color:#f92672">.</span>count(<span style="color:#e6db74">&#39;M&#39;</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">or</span> edges<span style="color:#f92672">.</span>count(<span style="color:#e6db74">&#39;S&#39;</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> q <span style="color:#f92672">==</span> e <span style="color:#f92672">or</span> q <span style="color:#f92672">==</span> z:
+</span></span><span style="display:flex;"><span>                count <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> count
+</span></span></code></pre></div><p>I couldn&rsquo;t find an opportunity for reuse of the solution from part one.</p>
+<p>The full solution:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_horizontal</span>(matrix, keyword):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sum((<span style="color:#66d9ef">True</span> <span style="color:#66d9ef">for</span> row <span style="color:#f92672">in</span> matrix <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(row) <span style="color:#f92672">-</span> len(keyword) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(row[i:i <span style="color:#f92672">+</span> len(keyword)]) <span style="color:#f92672">in</span> [keyword, keyword[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]]))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_vertical</span>(matrix, keyword):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> search_horizontal(zip(<span style="color:#f92672">*</span>matrix), keyword)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_diagonal</span>(matrix, keyword):
+</span></span><span style="display:flex;"><span>    rows <span style="color:#f92672">=</span> len(matrix)
+</span></span><span style="display:flex;"><span>    cols <span style="color:#f92672">=</span> len(matrix[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(rows):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(cols):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> i <span style="color:#f92672">+</span> len(keyword) <span style="color:#f92672">&lt;=</span> rows <span style="color:#f92672">and</span> j <span style="color:#f92672">+</span> len(keyword) <span style="color:#f92672">&lt;=</span> cols:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(matrix[i <span style="color:#f92672">+</span> k][j <span style="color:#f92672">+</span> k] <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> range(len(keyword))) <span style="color:#f92672">in</span> [keyword, keyword[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]]:
+</span></span><span style="display:flex;"><span>                    count <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> i <span style="color:#f92672">+</span> len(keyword) <span style="color:#f92672">&lt;=</span> rows <span style="color:#f92672">and</span> j <span style="color:#f92672">-</span> len(keyword) <span style="color:#f92672">&gt;=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(matrix[i <span style="color:#f92672">+</span> k][j <span style="color:#f92672">-</span> k] <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> range(len(keyword))) <span style="color:#f92672">in</span> [keyword, keyword[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]]:
+</span></span><span style="display:flex;"><span>                    count <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> count
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_double_mas</span>(matrix):
+</span></span><span style="display:flex;"><span>    rows <span style="color:#f92672">=</span> len(matrix)
+</span></span><span style="display:flex;"><span>    cols <span style="color:#f92672">=</span> len(matrix[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, rows <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> matrix[i][j] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;A&#39;</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># look at a QWERTY keyboard to make sense of these variable names</span>
+</span></span><span style="display:flex;"><span>            q <span style="color:#f92672">=</span> matrix[i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>][j <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>            e <span style="color:#f92672">=</span> matrix[i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>][j <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>            z <span style="color:#f92672">=</span> matrix[i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>][j <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>            c <span style="color:#f92672">=</span> matrix[i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>][j <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>            edges <span style="color:#f92672">=</span> [q, e, z, c]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> edges<span style="color:#f92672">.</span>count(<span style="color:#e6db74">&#39;M&#39;</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">or</span> edges<span style="color:#f92672">.</span>count(<span style="color:#e6db74">&#39;S&#39;</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> q <span style="color:#f92672">==</span> e <span style="color:#f92672">or</span> q <span style="color:#f92672">==</span> z:
+</span></span><span style="display:flex;"><span>                count <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> count
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]) <span style="color:#66d9ef">as</span> input:
+</span></span><span style="display:flex;"><span>        lines <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>splitlines()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    keyword <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;XMAS&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># [&#39;abcd&#39;, &#39;efgh&#39;, &#39;ijkl&#39;] -&gt; [[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;], [&#39;e&#39;, &#39;f&#39;, &#39;g&#39;, &#39;h&#39;], [&#39;i&#39;, &#39;j&#39;, &#39;k&#39;, &#39;l&#39;]]</span>
+</span></span><span style="display:flex;"><span>    matrix <span style="color:#f92672">=</span> [list(line) <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part one</span>
+</span></span><span style="display:flex;"><span>    print(search_horizontal(matrix, keyword) <span style="color:#f92672">+</span> search_vertical(matrix, keyword) <span style="color:#f92672">+</span> search_diagonal(matrix, keyword))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part two</span>
+</span></span><span style="display:flex;"><span>    print(search_double_mas(matrix))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    main()
+</span></span></code></pre></div>]]></content:encoded></item><item><title>Docker image size</title><link>https://www.perrotta.dev/2024/12/docker-image-size/</link><pubDate>Thu, 05 Dec 2024 13:05:44 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/docker-image-size/</guid><description>&lt;p>When trying to optimize docker images in terms of size, the workflow is as
 follows:&lt;/p></description><content:encoded><![CDATA[<p>When trying to optimize docker images in terms of size, the workflow is as
 follows:</p>
 <h2 id="terminal-1">Terminal 1</h2>
@@ -711,57 +883,4 @@ bundler update rubocop Tip: Omitting the gem name has the effect of updating all
 </span></span></code></pre></div><p>That won&rsquo;t update the <code>.gemspec</code> file though. To do so:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>bundler update rubocop
 </span></span></code></pre></div><p><strong>Tip</strong>: Omitting the gem name has the effect of updating all gems.</p>
-]]></content:encoded></item><item><title>Github Actions: multiple docker images</title><link>https://www.perrotta.dev/2024/11/github-actions-multiple-docker-images/</link><pubDate>Tue, 05 Nov 2024 17:05:22 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/github-actions-multiple-docker-images/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a monorepo on Github with multiple docker images in
-it, write a github workflow to build and push all of them.&lt;/p></description><content:encoded><![CDATA[<p><strong>Problem statement</strong>: Given a monorepo on Github with multiple docker images in
-it, write a github workflow to build and push all of them.</p>
-<p>Here is an abridged version of the resulting workflow. The images are listed one
-by one for fine-grained control purposes, but it would also be possible to glob
-them with a single command.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Global services</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">permissions</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">id-token</span>: <span style="color:#ae81ff">write</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">contents</span>: <span style="color:#ae81ff">read</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Replace with workflow trigger conditions.</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">on</span>: {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">global-services</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">${{ matrix.image }}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">strategy</span>:
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">fail-fast</span>: <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#f92672">matrix</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">include</span>:
-</span></span><span style="display:flex;"><span>          <span style="color:#75715e"># keep-sorted start</span>
-</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">dockerfile</span>: <span style="color:#ae81ff">path/to/one/Dockerfile</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">image</span>: <span style="color:#ae81ff">org/one</span>
-</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">dockerfile</span>: <span style="color:#ae81ff">path/to/two/Dockerfile</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">image</span>: <span style="color:#ae81ff">org/two</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#75715e"># keep-sorted end</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Check out source code</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v4</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Get git SHA</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">id</span>: <span style="color:#ae81ff">git-sha</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          ./scripts/get-versions.sh
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          echo &#34;sha=$(grep &#39;^services_sha&#39; versions.yaml | cut -d&#39; &#39; -f 2)&#34; &gt;&gt; &#34;$GITHUB_OUTPUT&#34;</span>          
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">./.github/actions/setup-ecr-buildx</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">id</span>: <span style="color:#ae81ff">setup-ecr-buildx</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Build and push global service images</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">docker/build-push-action@6.9.0</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">with</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">cache-from</span>: <span style="color:#ae81ff">type=gha</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">cache-to</span>: <span style="color:#ae81ff">type=gha,mode=max</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">context</span>: <span style="color:#ae81ff">path/to</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">file</span>: <span style="color:#ae81ff">${{ matrix.dockerfile }}</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">provenance</span>: <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">push</span>: <span style="color:#66d9ef">true</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">tags</span>: <span style="color:#ae81ff">${{ steps.setup-ecr-buildx.outputs.ecr_registry }}/${{ matrix.image }}:${{ steps.git-sha.outputs.sha }}</span>
-</span></span></code></pre></div><p>A matrix strategy kicks off independent multiple build jobs all at once.</p>
-<p>Docs: <a href="https://github.com/docker/build-push-action">https://github.com/docker/build-push-action</a></p>]]></content:encoded></item></channel></rss>
+]]></content:encoded></item></channel></rss>
