@@ -3,7 +3,6 @@ title: "New domain"
 date: 2024-02-04T23:27:09-03:00
 tags:
   - meta
-  - rss
   - selfhosted
 ---
 

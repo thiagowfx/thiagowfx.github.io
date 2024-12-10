@@ -3,7 +3,7 @@ title: "RSS: Follow commit updates from Github"
 date: 2022-01-14T17:15:27-05:00
 tags:
   - dev
-  - rss
+  - selfhosted
 ---
 
 It is possible to track/follow commits of `git` repositories

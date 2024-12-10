@@ -2,7 +2,7 @@
 title: "Praise for blog aggregators"
 date: 2022-02-17T21:21:23-05:00
 tags:
-  - rss
+  - selfhosted
 ---
 
 As much as I love my [Miniflux](https://miniflux.app/) setup, I've also come to

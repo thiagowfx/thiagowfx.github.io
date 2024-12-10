@@ -3,7 +3,6 @@ title: "★ Miniflux: Rolling my own RSS Reader"
 date: 2022-01-03T17:56:56-05:00
 tags:
   - linux
-  - rss
   - selfhosted
   - bestof
 ---
