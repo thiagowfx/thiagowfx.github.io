@@ -1,4 +1,22 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 10 Dec 2024 19:45:42 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker build: ignore cache</title><link>https://www.perrotta.dev/2024/12/docker-build-ignore-cache/</link><pubDate>Tue, 10 Dec 2024 19:45:42 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/docker-build-ignore-cache/</guid><description>&lt;p>To build a docker image completely from scratch, without reusing cache layers on
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 10 Dec 2024 19:52:33 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Alpine Linux 3.21</title><link>https://www.perrotta.dev/2024/12/alpine-linux-3.21/</link><pubDate>Tue, 10 Dec 2024 19:52:33 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/alpine-linux-3.21/</guid><description>&lt;p>&lt;a href="https://alpinelinux.org/posts/Alpine-3.21.0-released.html">Alpine Linux 3.21.0&lt;/a>
+got released last Thursday.&lt;/p></description><content:encoded><![CDATA[<p><a href="https://alpinelinux.org/posts/Alpine-3.21.0-released.html">Alpine Linux 3.21.0</a>
+got released last Thursday.</p>
+<p>So what? I am credited as an aports commit contributor! :-)</p>
+<p><a href="https://pkgs.alpinelinux.org/packages?name=&amp;branch=edge&amp;repo=&amp;arch=x86_64&amp;origin=&amp;flagged=&amp;maintainer=Thiago+Perrotta">Here</a>
+is a list of all the packages I currently maintain, excluding dependencies:</p>
+<ul>
+<li>argocd</li>
+<li>autotrash</li>
+<li>bkt</li>
+<li>fpp</li>
+<li>gliderlabs-sigil</li>
+<li>kubeseal</li>
+<li>tfupdate</li>
+<li>typos</li>
+<li>urlwatch</li>
+<li>yamlfmt</li>
+</ul>
+<p>&hellip;a total of <strong>10</strong> packages.</p>]]></content:encoded></item><item><title>Docker build: ignore cache</title><link>https://www.perrotta.dev/2024/12/docker-build-ignore-cache/</link><pubDate>Tue, 10 Dec 2024 19:45:42 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/docker-build-ignore-cache/</guid><description>&lt;p>To build a docker image completely from scratch, without reusing cache layers on
 your system:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker build --no-cache -f Dockerfile . -t &lt;span style="color:#f92672">{&lt;/span>image name&lt;span style="color:#f92672">}&lt;/span>:&lt;span style="color:#f92672">{&lt;/span>image tag&lt;span style="color:#f92672">}&lt;/span> --platform
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>linux/amd64
@@ -862,40 +880,4 @@ directory), just pass a slash (<code>/</code>) as its second argument:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>~/projects/company$ z foo /
 </span></span></code></pre></div><p>In the previous example, it would <em>not</em> <code>cd</code> to <code>~/Downloads</code>.</p>
 <p>There are many similar projects to <code>zoxide</code>. In the past, I used
-<a href="https://github.com/wting/autojump"><code>autojump</code></a>.</p>]]></content:encoded></item><item><title>Helm: JSON schema generation</title><link>https://www.perrotta.dev/2024/11/helm-json-schema-generation/</link><pubDate>Thu, 14 Nov 2024 15:05:49 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/helm-json-schema-generation/</guid><description>&lt;p>Helm charts support the inclusion of a &lt;code>values.schema.json&lt;/code> file to validate
-&lt;code>values.yaml&lt;/code>. Documentation: &lt;a href="https://helm.sh/docs/topics/charts/#schema-files">https://helm.sh/docs/topics/charts/#schema-files&lt;/a>&lt;/p>
-&lt;p>A JSON schema is akin to defining the structure of and type-annotating a JSON
-file. It helps to &amp;ldquo;shift left&amp;rdquo; the lifecycle of your helm releases.&lt;/p>
-&lt;p>For a pre-existing &lt;code>values.yaml&lt;/code> file, it may be quite tedious to generate the
-schema from scratch, by hand.&lt;/p>
-&lt;p>&lt;strong>Can we automate this process?&lt;/strong>&lt;/p></description><content:encoded><![CDATA[<p>Helm charts support the inclusion of a <code>values.schema.json</code> file to validate
-<code>values.yaml</code>. Documentation: <a href="https://helm.sh/docs/topics/charts/#schema-files">https://helm.sh/docs/topics/charts/#schema-files</a></p>
-<p>A JSON schema is akin to defining the structure of and type-annotating a JSON
-file. It helps to &ldquo;shift left&rdquo; the lifecycle of your helm releases.</p>
-<p>For a pre-existing <code>values.yaml</code> file, it may be quite tedious to generate the
-schema from scratch, by hand.</p>
-<p><strong>Can we automate this process?</strong></p>
-<p>Of course we can.</p>
-<p>One possibility is to use GenAI / LLMs. This is out of scope of this post.</p>
-<p>Another possibility is to leverage a helm plug-in to do so.</p>
-<p>I had a good experience with <a href="https://github.com/karuppiah7890/helm-schema-gen">https://github.com/karuppiah7890/helm-schema-gen</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>helm plugin install https://github.com/karuppiah7890/helm-schema-gen.git
-</span></span><span style="display:flex;"><span>cd path/to/helm/chart
-</span></span><span style="display:flex;"><span>helm schema-gen values.yaml | tee values.schema.json
-</span></span></code></pre></div><p>Afterwards, test the generated schema with:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>helm lint path/to/helm/chart
-</span></span></code></pre></div><p>Usually I need to do some follow-up edits to the generated file, including:</p>
-<ul>
-<li>add string enum types for a tighter validation of strings</li>
-<li>mark certain fields as required</li>
-<li>mark certain fields with <code>additionalProperties: &quot;false&quot;</code></li>
-<li>augment <code>[&quot;null&quot;]</code> to <code>[&quot;null&quot;, &quot;string&quot;]</code> for keys that do not have a
-default value</li>
-</ul>
-<p>It&rsquo;s worth to observe that, at the time of this publication, the following
-notice is present in the repository of the plug-in:</p>
-<blockquote>
-<p>This repository has been archived by the owner on Aug 31, 2021. It is now
-read-only.</p>
-</blockquote>
-<p>Nonetheless, it still works well.</p>]]></content:encoded></item></channel></rss>
+<a href="https://github.com/wting/autojump"><code>autojump</code></a>.</p>]]></content:encoded></item></channel></rss>
