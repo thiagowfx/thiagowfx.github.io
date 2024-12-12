@@ -57,7 +57,7 @@ def blink(stones):
 
 For part two we need to be cleverer. In principle the same approach would work,
 however it takes too long to process due to its exponential nature. In my laptop
-I can get up to the 42th `blink` iteration without losing my patience to wait
+I can get up to the 42nd `blink` iteration without losing my patience to wait
 even longer.
 
 The main observation to account for is that we only care about the length of the
