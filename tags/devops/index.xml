@@ -1,4 +1,131 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 12 Dec 2024 15:26:35 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code: Day 6</title><link>https://www.perrotta.dev/2024/12/advent-of-code-day-6/</link><pubDate>Thu, 12 Dec 2024 15:26:35 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/advent-of-code-day-6/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/6">Day #6&lt;/a> puzzle.&lt;/p></description><content:encoded><![CDATA[<p>Link to <a href="https://adventofcode.com/2024/day/6">Day #6</a> puzzle.</p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 12 Dec 2024 19:15:35 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code: Day 11</title><link>https://www.perrotta.dev/2024/12/advent-of-code-day-11/</link><pubDate>Thu, 12 Dec 2024 19:15:35 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/advent-of-code-day-11/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/11">Day #11&lt;/a> puzzle.&lt;/p></description><content:encoded><![CDATA[<p>Link to <a href="https://adventofcode.com/2024/day/11">Day #11</a> puzzle.</p>
+<p>Part one can be done with a simulation.</p>
+<p>It is very delightful to do it in python: lists are quite flexible, and
+converting from integers to strings and vice-versa is seamless. Counting the
+number of digits of <code>x</code> is just a matter of <code>len(str(x))</code>. In C++ it&rsquo;s a bit
+kludgier with <code>std::string(x).size()</code> and <code>std::stoi(s)</code>, but then you need to
+remember which header to import<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>I thought of using <code>reduce</code> to do <code>blink(blink(stone))...</code> and so on:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(len(reduce(<span style="color:#66d9ef">lambda</span> stone: blink(stone), range(<span style="color:#ae81ff">25</span>), stones)))
+</span></span></code></pre></div><p>&hellip;nonetheless it&rsquo;s more readable to simply use a plain <code>for-range</code> loop:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">25</span>):
+</span></span><span style="display:flex;"><span>    stones <span style="color:#f92672">=</span> blink(stones)
+</span></span><span style="display:flex;"><span>print(len(stones))
+</span></span></code></pre></div><p>The secret sauce is in <code>blink</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">blink</span>(stones):
+</span></span><span style="display:flex;"><span>    stones_next <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> stones:
+</span></span><span style="display:flex;"><span>        s <span style="color:#f92672">=</span> str(stone)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> stone <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> len(s) <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            index <span style="color:#f92672">=</span> len(s) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(int(s[:index]))
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(int(s[index:]))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(stone <span style="color:#f92672">*</span> <span style="color:#ae81ff">2024</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> stones_next
+</span></span></code></pre></div><p>For part two we need to be cleverer. In principle the same approach would work,
+however it takes too long to process due to its exponential nature. In my laptop
+I can get up to the 42th <code>blink</code> iteration without losing my patience to wait
+even longer.</p>
+<p>The main observation to account for is that we only care about the length of the
+stone sequence, hence the original task transforms into a simple 2D dynamic
+programming problem.</p>
+<p>I call:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(dp_blink(stones, <span style="color:#ae81ff">75</span>))
+</span></span></code></pre></div><p>Which is defined this way:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dp_blink</span>(stones, times):
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">from</span> functools <span style="color:#f92672">import</span> lru_cache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@lru_cache</span>(maxsize<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dp</span>(stone: int, times: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> times <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> sum([dp(stone, times <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> blink([stone])])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sum([dp(stone, times) <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> stones])
+</span></span></code></pre></div><p>The DP consists of the stone, and how many times are left for you to blink at it.</p>
+<p>The full solution:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">blink</span>(stones):
+</span></span><span style="display:flex;"><span>    stones_next <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> stones:
+</span></span><span style="display:flex;"><span>        s <span style="color:#f92672">=</span> str(stone)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> stone <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> len(s) <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            index <span style="color:#f92672">=</span> len(s) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(int(s[:index]))
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(int(s[index:]))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(stone <span style="color:#f92672">*</span> <span style="color:#ae81ff">2024</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> stones_next
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dp_blink</span>(stones, times):
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">from</span> functools <span style="color:#f92672">import</span> lru_cache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@lru_cache</span>(maxsize<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dp</span>(stone: int, times: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> times <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> sum([dp(stone, times <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> blink([stone])])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sum([dp(stone, times) <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> stones])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]) <span style="color:#66d9ef">as</span> input:
+</span></span><span style="display:flex;"><span>        lines <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>splitlines()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    stones <span style="color:#f92672">=</span> [int(stone) <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> lines[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>split()]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">25</span>):
+</span></span><span style="display:flex;"><span>        stones <span style="color:#f92672">=</span> blink(stones)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part one</span>
+</span></span><span style="display:flex;"><span>    print(len(stones))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># This is very slow, with an exponential complexity runtime.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># What did you expect?</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># for i in range(50):  # 50 = 75 - 25</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#     print(i)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#     stones = blink(stones)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># # part two</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># print(len(stones))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    stones <span style="color:#f92672">=</span> [int(stone) <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> lines[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>split()]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part two</span>
+</span></span><span style="display:flex;"><span>    print(dp_blink(stones, <span style="color:#ae81ff">75</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    main()
+</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>It&rsquo;s <code>#include &lt;string&gt;</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>Advent of Code: Day 6</title><link>https://www.perrotta.dev/2024/12/advent-of-code-day-6/</link><pubDate>Thu, 12 Dec 2024 15:26:35 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/advent-of-code-day-6/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/6">Day #6&lt;/a> puzzle.&lt;/p></description><content:encoded><![CDATA[<p>Link to <a href="https://adventofcode.com/2024/day/6">Day #6</a> puzzle.</p>
 <p>Part one is a classic 2D matrix (graph) traversal problem.</p>
 <p>To store state I created a <code>visited</code> set with the <code>(x, y)</code> coordinates.
 Alternatively I could have changed the input inplace, but I didn&rsquo;t want to deal
@@ -876,72 +1003,6 @@ copy-and-paste (maybe with <code>git apply</code>).</p>
 <p>I am using the term &ldquo;snowflake commit&rdquo; in the title but it&rsquo;s not really
 idiomatic. The meaning is roughly <em>a sand grain in the beach</em>, or <em>a
 snowflake in the snow</em>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item><item><title>pre-commit: additional dependencies in golang</title><link>https://www.perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/</link><pubDate>Thu, 21 Nov 2024 12:36:35 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/</guid><description>&lt;p>When working with &lt;a href="https://pre-commit.com/">pre-commit.com&lt;/a> and specifying
-&lt;code>language: golang&lt;/code> for a given hook, you may want to install dependencies as
-part of the hook bootstrapping process.&lt;/p></description><content:encoded><![CDATA[<p>When working with <a href="https://pre-commit.com/">pre-commit.com</a> and specifying
-<code>language: golang</code> for a given hook, you may want to install dependencies as
-part of the hook bootstrapping process.</p>
-<p>Recently I needed to do so for <a href="https://github.com/mikefarah/yq">yq</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
-<p>The <code>.pre-commit-config.yaml</code> looked like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
-</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">https://github.com/mikefarah/yq</span>
-</span></span></code></pre></div><p>Context for the hook and the script: <a href="https://stackoverflow.com/q/79166730/1745064">https://stackoverflow.com/q/79166730/1745064</a>.</p>
-<p>It didn&rsquo;t work. It&rsquo;s necessary to drop the <code>https://</code> prefix.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
-</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">github.com/mikefarah/yq</span>
-</span></span></code></pre></div><p>That didn&rsquo;t work either. Then I realized I needed to specify an exact
-version<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
-</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">github.com/mikefarah/yq@v4.44.3</span>
-</span></span></code></pre></div><p>It also didn&rsquo;t work! There was an error message about the need to specify <code>/v4</code>
-in the path for whatever reason:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
-</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">github.com/mikefarah/yq/v4@v4.44.3</span>
-</span></span></code></pre></div><p>That worked! Test it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pre-commit run --all-files helm-dirname-must-match-chart-name <span style="color:#f92672">[</span>--verbose<span style="color:#f92672">]</span>
-</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><code>yq</code> is like <code>jq</code> for YAML instead of JSON.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p><code>@latest</code> would also work. However, for the sake of reproducibility,
-pinning is more reliable.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>

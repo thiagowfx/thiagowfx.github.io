@@ -1,4 +1,131 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 12 Dec 2024 15:26:35 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code: Day 6</title><link>https://www.perrotta.dev/2024/12/advent-of-code-day-6/</link><pubDate>Thu, 12 Dec 2024 15:26:35 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/advent-of-code-day-6/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/6">Day #6&lt;/a> puzzle.&lt;/p></description><content:encoded><![CDATA[<p>Link to <a href="https://adventofcode.com/2024/day/6">Day #6</a> puzzle.</p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 12 Dec 2024 19:15:35 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code: Day 11</title><link>https://www.perrotta.dev/2024/12/advent-of-code-day-11/</link><pubDate>Thu, 12 Dec 2024 19:15:35 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/advent-of-code-day-11/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/11">Day #11&lt;/a> puzzle.&lt;/p></description><content:encoded><![CDATA[<p>Link to <a href="https://adventofcode.com/2024/day/11">Day #11</a> puzzle.</p>
+<p>Part one can be done with a simulation.</p>
+<p>It is very delightful to do it in python: lists are quite flexible, and
+converting from integers to strings and vice-versa is seamless. Counting the
+number of digits of <code>x</code> is just a matter of <code>len(str(x))</code>. In C++ it&rsquo;s a bit
+kludgier with <code>std::string(x).size()</code> and <code>std::stoi(s)</code>, but then you need to
+remember which header to import<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>I thought of using <code>reduce</code> to do <code>blink(blink(stone))...</code> and so on:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(len(reduce(<span style="color:#66d9ef">lambda</span> stone: blink(stone), range(<span style="color:#ae81ff">25</span>), stones)))
+</span></span></code></pre></div><p>&hellip;nonetheless it&rsquo;s more readable to simply use a plain <code>for-range</code> loop:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">25</span>):
+</span></span><span style="display:flex;"><span>    stones <span style="color:#f92672">=</span> blink(stones)
+</span></span><span style="display:flex;"><span>print(len(stones))
+</span></span></code></pre></div><p>The secret sauce is in <code>blink</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">blink</span>(stones):
+</span></span><span style="display:flex;"><span>    stones_next <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> stones:
+</span></span><span style="display:flex;"><span>        s <span style="color:#f92672">=</span> str(stone)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> stone <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> len(s) <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            index <span style="color:#f92672">=</span> len(s) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(int(s[:index]))
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(int(s[index:]))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(stone <span style="color:#f92672">*</span> <span style="color:#ae81ff">2024</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> stones_next
+</span></span></code></pre></div><p>For part two we need to be cleverer. In principle the same approach would work,
+however it takes too long to process due to its exponential nature. In my laptop
+I can get up to the 42th <code>blink</code> iteration without losing my patience to wait
+even longer.</p>
+<p>The main observation to account for is that we only care about the length of the
+stone sequence, hence the original task transforms into a simple 2D dynamic
+programming problem.</p>
+<p>I call:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(dp_blink(stones, <span style="color:#ae81ff">75</span>))
+</span></span></code></pre></div><p>Which is defined this way:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dp_blink</span>(stones, times):
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">from</span> functools <span style="color:#f92672">import</span> lru_cache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@lru_cache</span>(maxsize<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dp</span>(stone: int, times: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> times <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> sum([dp(stone, times <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> blink([stone])])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sum([dp(stone, times) <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> stones])
+</span></span></code></pre></div><p>The DP consists of the stone, and how many times are left for you to blink at it.</p>
+<p>The full solution:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">blink</span>(stones):
+</span></span><span style="display:flex;"><span>    stones_next <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> stones:
+</span></span><span style="display:flex;"><span>        s <span style="color:#f92672">=</span> str(stone)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> stone <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> len(s) <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            index <span style="color:#f92672">=</span> len(s) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(int(s[:index]))
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(int(s[index:]))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            stones_next<span style="color:#f92672">.</span>append(stone <span style="color:#f92672">*</span> <span style="color:#ae81ff">2024</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> stones_next
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dp_blink</span>(stones, times):
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">from</span> functools <span style="color:#f92672">import</span> lru_cache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@lru_cache</span>(maxsize<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dp</span>(stone: int, times: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> times <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> sum([dp(stone, times <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> blink([stone])])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sum([dp(stone, times) <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> stones])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]) <span style="color:#66d9ef">as</span> input:
+</span></span><span style="display:flex;"><span>        lines <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>splitlines()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    stones <span style="color:#f92672">=</span> [int(stone) <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> lines[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>split()]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">25</span>):
+</span></span><span style="display:flex;"><span>        stones <span style="color:#f92672">=</span> blink(stones)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part one</span>
+</span></span><span style="display:flex;"><span>    print(len(stones))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># This is very slow, with an exponential complexity runtime.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># What did you expect?</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># for i in range(50):  # 50 = 75 - 25</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#     print(i)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#     stones = blink(stones)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># # part two</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># print(len(stones))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    stones <span style="color:#f92672">=</span> [int(stone) <span style="color:#66d9ef">for</span> stone <span style="color:#f92672">in</span> lines[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>split()]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part two</span>
+</span></span><span style="display:flex;"><span>    print(dp_blink(stones, <span style="color:#ae81ff">75</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    main()
+</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>It&rsquo;s <code>#include &lt;string&gt;</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>Advent of Code: Day 6</title><link>https://www.perrotta.dev/2024/12/advent-of-code-day-6/</link><pubDate>Thu, 12 Dec 2024 15:26:35 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/advent-of-code-day-6/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/6">Day #6&lt;/a> puzzle.&lt;/p></description><content:encoded><![CDATA[<p>Link to <a href="https://adventofcode.com/2024/day/6">Day #6</a> puzzle.</p>
 <p>Part one is a classic 2D matrix (graph) traversal problem.</p>
 <p>To store state I created a <code>visited</code> set with the <code>(x, y)</code> coordinates.
 Alternatively I could have changed the input inplace, but I didn&rsquo;t want to deal
@@ -840,58 +967,4 @@ fd: find on steroids: https://github.com/sharkdp/fd -x: execute the given comman
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% find . -type f -name <span style="color:#e6db74">&#39;*.ts&#39;</span> | xargs chmod -x
 </span></span></code></pre></div><p>Or, with more <del>style</del> safety:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% find . -type f -name <span style="color:#e6db74">&#39;*.ts&#39;</span> -print0 | xargs -0 -n <span style="color:#ae81ff">1</span> chmod -x
-</span></span></code></pre></div>]]></content:encoded></item><item><title>git: recover a snowflake commit</title><link>https://www.perrotta.dev/2024/11/git-recover-a-snowflake-commit/</link><pubDate>Fri, 22 Nov 2024 11:51:26 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/git-recover-a-snowflake-commit/</guid><description>&lt;p>When working with &lt;code>git&lt;/code>, sometimes we make
-&lt;a href="https://en.wikipedia.org/wiki/User_error">PEBKAC&lt;/a> mistakes and end up losing a
-given checkout or commit or worktree.&lt;/p></description><content:encoded><![CDATA[<p>When working with <code>git</code>, sometimes we make
-<a href="https://en.wikipedia.org/wiki/User_error">PEBKAC</a> mistakes and end up losing a
-given checkout or commit or worktree.</p>
-<p><code>git reflog</code> can often help recover from these mistakes. It is a bit difficult
-to understand, but quite straightforward to use:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git reflog | grep <span style="color:#f92672">{</span>branch_name<span style="color:#f92672">}</span>
-</span></span></code></pre></div><p>For example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git reflog | grep -i <span style="color:#e6db74">&#39;thiagowfx/global-services&#39;</span>
-</span></span></code></pre></div><p>Enjoy a real example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git reflog | grep -i <span style="color:#e6db74">&#39;thiagowfx/global-services&#39;</span>
-</span></span><span style="display:flex;"><span>7ca9ac6de77 HEAD@<span style="color:#f92672">{</span>0<span style="color:#f92672">}</span>: checkout: moving from 8882c1a128dd2cf35aa2188def3d176c7c15d2f1 to thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>8882c1a128d HEAD@<span style="color:#f92672">{</span>1<span style="color:#f92672">}</span>: checkout: moving from thiagowfx/global-services-docker to 8882c1a12
-</span></span><span style="display:flex;"><span>7fcc128d2ea HEAD@<span style="color:#f92672">{</span>15<span style="color:#f92672">}</span>: rebase <span style="color:#f92672">(</span>finish<span style="color:#f92672">)</span>: returning to refs/heads/thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>16fcb83d888 HEAD@<span style="color:#f92672">{</span>20<span style="color:#f92672">}</span>: rebase <span style="color:#f92672">(</span>finish<span style="color:#f92672">)</span>: returning to refs/heads/thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>431509d9d0a HEAD@<span style="color:#f92672">{</span>24<span style="color:#f92672">}</span>: rebase <span style="color:#f92672">(</span>abort<span style="color:#f92672">)</span>: returning to refs/heads/thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>ee408b6e38c HEAD@<span style="color:#f92672">{</span>30<span style="color:#f92672">}</span>: checkout: moving from master to thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>3babf6588f3 HEAD@<span style="color:#f92672">{</span>55<span style="color:#f92672">}</span>: checkout: moving from thiagowfx/global-services-docker to thiagowfx/base-global-services-image-tag
-</span></span><span style="display:flex;"><span>ee408b6e38c HEAD@<span style="color:#f92672">{</span>57<span style="color:#f92672">}</span>: rebase <span style="color:#f92672">(</span>abort<span style="color:#f92672">)</span>: returning to refs/heads/thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>ee408b6e38c HEAD@<span style="color:#f92672">{</span>60<span style="color:#f92672">}</span>: checkout: moving from master to thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>3ef5b7c3844 HEAD@<span style="color:#f92672">{</span>77<span style="color:#f92672">}</span>: checkout: moving from thiagowfx/global-services-docker to thiagowfx/check-executables-have-shebangs
-</span></span><span style="display:flex;"><span>ee408b6e38c HEAD@<span style="color:#f92672">{</span>78<span style="color:#f92672">}</span>: checkout: moving from master to thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>87f6bb2d95d HEAD@<span style="color:#f92672">{</span>86<span style="color:#f92672">}</span>: checkout: moving from thiagowfx/global-services-docker to thiagowfx/actionlint
-</span></span><span style="display:flex;"><span>8d07b53fd47 HEAD@<span style="color:#f92672">{</span>89<span style="color:#f92672">}</span>: rebase <span style="color:#f92672">(</span>finish<span style="color:#f92672">)</span>: returning to refs/heads/thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>c21089ab78c HEAD@<span style="color:#f92672">{</span>95<span style="color:#f92672">}</span>: rebase <span style="color:#f92672">(</span>finish<span style="color:#f92672">)</span>: returning to refs/heads/thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>70941a98ad0 HEAD@<span style="color:#f92672">{</span>104<span style="color:#f92672">}</span>: checkout: moving from master to thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>2dd03ecdd09 HEAD@<span style="color:#f92672">{</span>149<span style="color:#f92672">}</span>: checkout: moving from thiagowfx/global-services-docker to lts13.1
-</span></span><span style="display:flex;"><span>1d62e88a8e2 HEAD@<span style="color:#f92672">{</span>151<span style="color:#f92672">}</span>: rebase <span style="color:#f92672">(</span>finish<span style="color:#f92672">)</span>: returning to refs/heads/thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>c9c2b36b058 HEAD@<span style="color:#f92672">{</span>166<span style="color:#f92672">}</span>: checkout: moving from master to thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>0faa6f637b6 HEAD@<span style="color:#f92672">{</span>281<span style="color:#f92672">}</span>: checkout: moving from thiagowfx/global-services-docker to thiagowfx/pre-commit-trailing-4
-</span></span><span style="display:flex;"><span>c9c2b36b058 HEAD@<span style="color:#f92672">{</span>282<span style="color:#f92672">}</span>: checkout: moving from master to thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>b0521a1a0f7 HEAD@<span style="color:#f92672">{</span>284<span style="color:#f92672">}</span>: checkout: moving from thiagowfx/global-services-docker to master
-</span></span><span style="display:flex;"><span>72b137aa4c7 HEAD@<span style="color:#f92672">{</span>286<span style="color:#f92672">}</span>: checkout: moving from master to thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>81ac79b0c90 HEAD@<span style="color:#f92672">{</span>316<span style="color:#f92672">}</span>: checkout: moving from thiagowfx/global-services-docker to master
-</span></span><span style="display:flex;"><span>baef8a5eda1 HEAD@<span style="color:#f92672">{</span>319<span style="color:#f92672">}</span>: rebase <span style="color:#f92672">(</span>finish<span style="color:#f92672">)</span>: returning to refs/heads/thiagowfx/global-services-docker
-</span></span><span style="display:flex;"><span>81ac79b0c90 HEAD@<span style="color:#f92672">{</span>343<span style="color:#f92672">}</span>: checkout: moving from master to thiagowfx/global-services-docker
-</span></span></code></pre></div><p>How to find the correct checkout?</p>
-<p>The easiest (albeit tedious) way is by brute-forcing your search in the output:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% git show 7ca9ac6de77
-</span></span><span style="display:flex;"><span>% git show 8882c1a128d
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>...<span style="color:#f92672">]</span>
-</span></span></code></pre></div><p>&hellip;until you find the diff you are looking for<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
-<p>From there, either <code>git checkout</code> (perhaps with the aid of <code>git worktree</code>) or
-copy-and-paste (maybe with <code>git apply</code>).</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>I am using the term &ldquo;snowflake commit&rdquo; in the title but it&rsquo;s not really
-idiomatic. The meaning is roughly <em>a sand grain in the beach</em>, or <em>a
-snowflake in the snow</em>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div>]]></content:encoded></item></channel></rss>
