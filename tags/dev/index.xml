@@ -1,4 +1,61 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 12 Dec 2024 12:34:39 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Semantic versioning constraints</title><link>https://www.perrotta.dev/2024/12/semantic-versioning-constraints/</link><pubDate>Thu, 12 Dec 2024 12:34:39 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/semantic-versioning-constraints/</guid><description>&lt;p>When working with semantic versioning a.k.a. &lt;a href="https://semver.org/">semver&lt;/a>, it&amp;rsquo;s
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Thu, 12 Dec 2024 15:26:35 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code: Day 6</title><link>https://www.perrotta.dev/2024/12/advent-of-code-day-6/</link><pubDate>Thu, 12 Dec 2024 15:26:35 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/advent-of-code-day-6/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/6">Day #6&lt;/a> puzzle.&lt;/p></description><content:encoded><![CDATA[<p>Link to <a href="https://adventofcode.com/2024/day/6">Day #6</a> puzzle.</p>
+<p>Part one is a classic 2D matrix (graph) traversal problem.</p>
+<p>To store state I created a <code>visited</code> set with the <code>(x, y)</code> coordinates.
+Alternatively I could have changed the input inplace, but I didn&rsquo;t want to deal
+with the immutability of python strings, i.e. given:</p>
+<pre tabindex="0"><code>l = [&#34;.....&#34;]
+</code></pre><p>&hellip;you can&rsquo;t simply do <code>l[0][0] = 'X'</code>, because python strings are immutable. We
+could define a new string and assign it to <code>l[0]</code>, or we could change the input
+to:</p>
+<pre tabindex="0"><code>l = [&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;]
+</code></pre><p>&hellip;so that replacing characters becomes trivial.</p>
+<p>The full solution:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find</span>(lines, c):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i, line <span style="color:#f92672">in</span> enumerate(lines):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> c <span style="color:#f92672">in</span> line:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> i, line<span style="color:#f92672">.</span>index(c)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Could not find </span><span style="color:#e6db74">{</span>c<span style="color:#e6db74">}</span><span style="color:#e6db74"> in lines&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">move</span>(pos, dir, lines, visited):
+</span></span><span style="display:flex;"><span>    dirs_clockwise <span style="color:#f92672">=</span> ((<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>), (<span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>), (<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>), (<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>        next_pos <span style="color:#f92672">=</span> pos[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> dir[<span style="color:#ae81ff">0</span>], pos[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> dir[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> next_pos[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> next_pos[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&gt;=</span> len(lines) <span style="color:#f92672">or</span> next_pos[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> next_pos[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&gt;=</span> len(lines[<span style="color:#ae81ff">0</span>]):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> lines[next_pos[<span style="color:#ae81ff">0</span>]][next_pos[<span style="color:#ae81ff">1</span>]] <span style="color:#f92672">in</span> <span style="color:#e6db74">&#39;.^&#39;</span>:
+</span></span><span style="display:flex;"><span>            pos <span style="color:#f92672">=</span> next_pos
+</span></span><span style="display:flex;"><span>            visited<span style="color:#f92672">.</span>add(pos)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> lines[next_pos[<span style="color:#ae81ff">0</span>]][next_pos[<span style="color:#ae81ff">1</span>]] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;#&#39;</span>:
+</span></span><span style="display:flex;"><span>            dir <span style="color:#f92672">=</span> dirs_clockwise[(dirs_clockwise<span style="color:#f92672">.</span>index(dir) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">4</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]) <span style="color:#66d9ef">as</span> input:
+</span></span><span style="display:flex;"><span>        lines <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>splitlines()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    pos <span style="color:#f92672">=</span> find(lines, <span style="color:#e6db74">&#39;^&#39;</span>)
+</span></span><span style="display:flex;"><span>    dir <span style="color:#f92672">=</span> (<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>)  <span style="color:#75715e"># up</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    visited <span style="color:#f92672">=</span> set((pos,))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    move(pos, dir, lines, visited)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part one</span>
+</span></span><span style="display:flex;"><span>    print(len(visited))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    main()
+</span></span></code></pre></div><p>I did not solve part two yet. I know how to do it, but my initial approach is
+too brute force to my taste. Perhaps I&rsquo;ll come up with something clever later
+on.</p>]]></content:encoded></item><item><title>Semantic versioning constraints</title><link>https://www.perrotta.dev/2024/12/semantic-versioning-constraints/</link><pubDate>Thu, 12 Dec 2024 12:34:39 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/semantic-versioning-constraints/</guid><description>&lt;p>When working with semantic versioning a.k.a. &lt;a href="https://semver.org/">semver&lt;/a>, it&amp;rsquo;s
 often useful to use range constraints&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> to express the versions you&amp;rsquo;re
 interested in.&lt;/p>
 &lt;p>The most useful ones are the tilde (&lt;code>~&lt;/code>) and the circumflex / hat / caret
@@ -835,72 +892,6 @@ copy-and-paste (maybe with <code>git apply</code>).</p>
 <p>I am using the term &ldquo;snowflake commit&rdquo; in the title but it&rsquo;s not really
 idiomatic. The meaning is roughly <em>a sand grain in the beach</em>, or <em>a
 snowflake in the snow</em>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item><item><title>pre-commit: additional dependencies in golang</title><link>https://www.perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/</link><pubDate>Thu, 21 Nov 2024 12:36:35 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/</guid><description>&lt;p>When working with &lt;a href="https://pre-commit.com/">pre-commit.com&lt;/a> and specifying
-&lt;code>language: golang&lt;/code> for a given hook, you may want to install dependencies as
-part of the hook bootstrapping process.&lt;/p></description><content:encoded><![CDATA[<p>When working with <a href="https://pre-commit.com/">pre-commit.com</a> and specifying
-<code>language: golang</code> for a given hook, you may want to install dependencies as
-part of the hook bootstrapping process.</p>
-<p>Recently I needed to do so for <a href="https://github.com/mikefarah/yq">yq</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
-<p>The <code>.pre-commit-config.yaml</code> looked like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
-</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">https://github.com/mikefarah/yq</span>
-</span></span></code></pre></div><p>Context for the hook and the script: <a href="https://stackoverflow.com/q/79166730/1745064">https://stackoverflow.com/q/79166730/1745064</a>.</p>
-<p>It didn&rsquo;t work. It&rsquo;s necessary to drop the <code>https://</code> prefix.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
-</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">github.com/mikefarah/yq</span>
-</span></span></code></pre></div><p>That didn&rsquo;t work either. Then I realized I needed to specify an exact
-version<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
-</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">github.com/mikefarah/yq@v4.44.3</span>
-</span></span></code></pre></div><p>It also didn&rsquo;t work! There was an error message about the need to specify <code>/v4</code>
-in the path for whatever reason:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
-</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">helm-dirname-must-match-chart-name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Helm chart directory name must match the chart name</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">/Chart\.(yml|yaml)$</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">ci/helm_check_match_dirname_chart_name.sh</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
-</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">github.com/mikefarah/yq/v4@v4.44.3</span>
-</span></span></code></pre></div><p>That worked! Test it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pre-commit run --all-files helm-dirname-must-match-chart-name <span style="color:#f92672">[</span>--verbose<span style="color:#f92672">]</span>
-</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><code>yq</code> is like <code>jq</code> for YAML instead of JSON.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p><code>@latest</code> would also work. However, for the sake of reproducibility,
-pinning is more reliable.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>
