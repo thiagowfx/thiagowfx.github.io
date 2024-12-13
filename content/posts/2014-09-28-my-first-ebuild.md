@@ -7,7 +7,7 @@ tags:
 
 > Ebuilds are not evil
 >
-> — <cite>Larry, the Cow</cite>
+> — _Larry, the Cow_
 
 ~~From now on, this will be my overlay repository: https://github.com/thiagowfx/overlay~~
 

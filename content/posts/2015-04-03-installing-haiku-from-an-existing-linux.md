@@ -15,7 +15,7 @@ What I most like on it is that the system is integrated with the GUI, so the end
 
 Anyway, Haiku is simple, so for me this post is more a hobby than something useful that I will use in the future; however, I find that knowing about more and more about different operating systems has its own advantages.
 
-For more, see <a href="https://www.haiku-os.org/about" target="_blank" rel="noopener">https://www.haiku-os.org/about</a>.
+For more, see https://www.haiku-os.org/about.
 
 ## Installing Haiku
 

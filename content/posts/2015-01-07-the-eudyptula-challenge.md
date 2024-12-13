@@ -28,11 +28,11 @@ And now I was ready: I subscribed to the challenge.
 
 ## The task #01
 
-Hours later, <i>little</i>[^5] acknowledged my e-mail and sent me the instructions for the first task.
+Hours later, _little_[^5] acknowledged my e-mail and sent me the instructions for the first task.
 
 > I should write my first module for the Linux Kernel.
 
-A good start. <i>I didn&#8217;t even know how to begin, oh no!</i>
+A good start. _I didn&#8217;t even know how to begin, oh no!_
 
 The task was to write a module that would write &#8216;Hello World&#8217; to the debug level log of the running kernel when loaded.
 
@@ -40,7 +40,7 @@ First, I had to install some dependencies to be able to compile a couple of C pr
 
 My first module, written in C[^6], looked like this in the end:
 
-```    c
+```c
 #include <linux/init.h>;
 #include <linux/kernel.h>;
 #include <linux/module.h>;
@@ -97,7 +97,7 @@ depends:
 vermagic:       3.17.6-1-ARCH SMP preempt mod_unload modversions
 ```
 
-After that, I&#8217;ve sent everything I should to <i>little</i>, and today I got its reply, about the second task. So, let&#8217;s go…
+After that, I&#8217;ve sent everything I should to _little_, and today I got its reply, about the second task. So, let&#8217;s go…
 
 ## What have I learned with this task?
 
@@ -105,15 +105,15 @@ After that, I&#8217;ve sent everything I should to <i>little</i>, and today I go
 - how to execute shell commands within a Makefile
 - how to use an environment variable within a Makefile
 - how to write e-mails in plain text and send them with msmtp
-- how to send attachments <b>without</b> base64 encoding[^8]
+- how to send attachments **without** base64 encoding[^8]
 - how to load, unload and get information about modules
 - modules are so dynamic and easy to load, huh? Like USB devices. I would never imagine that.
 
 [^1]: It is also a excuse for me to write something here :-)
 
 [^2]: Pun intended.
-[^3]: I can&#8217;t write this in one shot. Really. Eudi←yptull←a. <b>EUDYPTULA</b>.
-[^4]: The distro that will conquer the <a href="https://wiki.archlinux.org/index.php?title=DeveloperWiki&oldid=293327#Organization">moon</a>.
+[^3]: I can&#8217;t write this in one shot. Really. Eudi←yptull←a. **EUDYPTULA**.
+[^4]: The distro that will conquer the [moon](https://wiki.archlinux.org/index.php?title=DeveloperWiki&oldid=293327#Organization).
 [^5]: Which turned out to be a bot.
 [^6]: Damn, everything will be written in C from now on. That&#8217;s what we get with kernel programming, I guess.
 [^7]: Only lazy or paranoid Linux sysadmins will tell you otherwise 😉

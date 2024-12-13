@@ -63,8 +63,7 @@ documentation as much as possible.
   simple tasks. For example, you can format a SD card or an USB Flash Drive
   directly from ChromeOS upon running this tool — otherwise, you'd usually have
   to use another computer, with another OS to do it. It uses just a little space
-  (~100M+ or so), and it can be totally reverted with `devinstall
-  <dash><dash>uninstall`(replace <dash> with -).
+  (~100M+ or so), and it can be totally reverted with `devinstall --uninstall`
 * Switch to the [beta
   channel](https://support.google.com/chromebook/answer/1086915?hl=en) if you
   want to be slightly more into the bleeding edge — but not too much as in the

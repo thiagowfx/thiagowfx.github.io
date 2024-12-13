@@ -18,7 +18,7 @@ Esse é o método mais tradicional possível (e que me interessa) que pude const
 
 - Monte essa partição em `/mnt/gentoo`.
 
-- Continue a partir do [handbook](http:www.gentoo.org/doc/en/handbook/handbook-amd64.xml?part=1&chap=4) oficial do Gentoo – nesse caso, para a arquitetura amd64. No entanto, <b>atenção</b>. Use [esse](https:wiki.gentoo.org/wiki/Installation_alternatives) guia para perceber quais etapas de instalação e configuração são diferentes (em relação a se estivéssemos instalando pelo método oficial, a partir do live environment do gentoo), mais especificamente <b>da parte 4 à parte 6</b>.
+- Continue a partir do [handbook](http:www.gentoo.org/doc/en/handbook/handbook-amd64.xml?part=1&chap=4) oficial do Gentoo – nesse caso, para a arquitetura amd64. No entanto, **atenção**. Use [esse](https:wiki.gentoo.org/wiki/Installation_alternatives) guia para perceber quais etapas de instalação e configuração são diferentes (em relação a se estivéssemos instalando pelo método oficial, a partir do live environment do gentoo), mais especificamente **da parte 4 à parte 6**.
 
 - Baixe o `PKGBUILD` `gentoo-mirrorselect` do AUR.
 
@@ -26,7 +26,7 @@ Esse é o método mais tradicional possível (e que me interessa) que pude const
 
 - Copie o seu `/etc/resolv.conf` para `/mnt/gentoo/etc/resolv.conf`. Isso é [importante](https:bbs.archlinux.org/viewtopic.php?id=95865) para ter conectividade dentro do ambiente de chroot.
 
-- `CFLAGS` que recomendo para o `/etc/portake/make.conf` (<a href="https:forums.gentoo.org/viewtopic-t-933456-start-0.html">helper</a>):
+- `CFLAGS` que recomendo para o `/etc/portake/make.conf` ([helper](https:forums.gentoo.org/viewtopic-t-933456-start-0.html)):
 
 ```
 -march=native -O2 -pipe

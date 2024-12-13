@@ -29,7 +29,7 @@ Here's a non-exhaustive list of trusted providers:
 >
 > Type "cloudshell help" to get help on using the "cloudshell" utility.  Common
 > functionality is aliased to short commands in your shell, for example, you
-> can type "dl <filename>" at Bash prompt to download a file. Type "cloudshell
+> can type `dl <filename>` at Bash prompt to download a file. Type "cloudshell
 > aliases" to see these commands.
 >
 > Type "help" to see this message any time. Type "builtin help" to see Bash
