@@ -4,7 +4,6 @@ date: 2024-01-25T18:27:04-03:00
 tags:
   - bestof
   - dev
-  - web
 ---
 
 Let's discuss the _raison d'etre_ of [Google Chrome for

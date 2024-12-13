@@ -3,7 +3,6 @@ title: "Bypass news article paywalls"
 date: 2022-03-06T21:49:53-05:00
 tags:
   - privacy
-  - web
 ---
 
 I try to avoid websites with paywalls. If I really like the website and it

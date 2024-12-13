@@ -3,7 +3,6 @@ title: "Force captive portal to open"
 date: 2024-02-22T09:33:57+01:00
 tags:
   - macos
-  - web
 ---
 
 Sometimes, when connecting to public Wi-Fi hotposts, especially in airports and

@@ -2,7 +2,7 @@
 title: "Disallow AI scraping"
 date: 2024-08-01T00:54:55+02:00
 tags:
-  - web
+  - privacy
 ---
 
 Although there's never a guarantee, you can attempt to disallow "AI" from

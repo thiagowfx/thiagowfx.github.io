@@ -3,7 +3,7 @@ title: "Start an HTTP server ASAP"
 date: 2024-01-17T16:41:41-03:00
 tags:
   - dev
-  - web
+  - selfhosted
 ---
 
 Sometimes I need to start a local HTTP server for a quick one-off task, often

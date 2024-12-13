@@ -3,7 +3,7 @@ title: "Pipes: RSS Manipulation"
 date: 2024-07-03T21:50:24+02:00
 tags:
   - dev
-  - web
+  - selfhosted
 ---
 
 [Yahoo! Pipes](https://en.wikipedia.org/wiki/Yahoo!_Pipes) is not around

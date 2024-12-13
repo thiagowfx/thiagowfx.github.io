@@ -3,7 +3,6 @@ title: "Website fonts: just use the system font stack"
 date: 2022-02-26T12:19:37-05:00
 tags:
   - meta
-  - web
 ---
 
 When I created this blog, I pondered a lot about which typography to use. I

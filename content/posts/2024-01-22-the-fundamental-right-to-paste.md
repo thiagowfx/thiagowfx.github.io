@@ -3,7 +3,6 @@ title: "The fundamental right to paste"
 date: 2024-01-22T18:55:13-03:00
 tags:
   - dev
-  - web
 ---
 
 Some websites attempt to prevent users from pasting text (i.e. `Ctrl+V` /

@@ -3,7 +3,6 @@ title: "Send emails straight to spam"
 date: 2022-03-25T23:26:37-03:00
 tags:
   - privacy
-  - web
 ---
 
 Just tested [straight to spam](https://straight2spam.xyz) today:

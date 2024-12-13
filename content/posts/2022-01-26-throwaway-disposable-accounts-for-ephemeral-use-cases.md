@@ -3,7 +3,6 @@ title: "Throwaway accounts for ephemeral use cases"
 date: 2022-01-26T00:20:40-05:00
 tags:
   - privacy
-  - web
 ---
 
 A brief list of disposable / throwaway account resources:

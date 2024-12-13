@@ -3,7 +3,7 @@ title: "What is my IP?"
 date: 2022-02-26T17:55:38-05:00
 tags:
   - dev
-  - web
+  - devops
 ---
 
 This post contains a small handful of distinct services to query your machine
