@@ -2,7 +2,6 @@
 title: 'Installing Haiku from an existing linux'
 date: 2015-04-03T17:20:19+00:00
 tags:
-  - classics
   - linux
 ---
 

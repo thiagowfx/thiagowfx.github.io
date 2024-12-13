@@ -2,7 +2,6 @@
 title: Matroshka
 date: 2016-10-16T15:49:01-02:00
 tags:
-  - classics
   - dev
   - linux
   - portuguese

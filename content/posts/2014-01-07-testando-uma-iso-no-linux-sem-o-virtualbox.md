@@ -2,7 +2,6 @@
 title: Testando uma ISO no Linux sem o VirtualBox
 date: 2014-01-07T16:22:01+00:00
 tags:
-  - classics
   - linux
   - portuguese
 ---

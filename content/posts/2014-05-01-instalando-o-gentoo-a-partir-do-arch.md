@@ -2,7 +2,6 @@
 title: Instalando o Gentoo a partir do Arch
 date: 2014-05-01T02:20:00+00:00
 tags:
-  - classics
   - linux
   - portuguese
 ---
