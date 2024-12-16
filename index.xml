@@ -1,4 +1,48 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>not just serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Fri, 13 Dec 2024 01:16:41 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Just</title><link>https://www.perrotta.dev/2024/12/just/</link><pubDate>Fri, 13 Dec 2024 01:16:41 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/just/</guid><description>&lt;p>&lt;a href="https://github.com/casey/just">Just&lt;/a> is a command runner, a modern replacement
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>not just serendipity</title><link>https://www.perrotta.dev/</link><description>Recent content on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Mon, 16 Dec 2024 10:14:11 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes: debugging services</title><link>https://www.perrotta.dev/2024/12/kubernetes-debugging-services/</link><pubDate>Mon, 16 Dec 2024 10:14:11 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/kubernetes-debugging-services/</guid><description>&lt;p>I am deploying a new helm chart to our staging environments, and needed a way to
+ensure its dependencies in &lt;code>values.yaml&lt;/code> are properly configured.&lt;/p>
+&lt;p>From the official kubernetes
+&lt;a href="https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/">documentation&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>An issue that comes up rather frequently for new installations of Kubernetes
+is that a Service is not working properly. You&amp;rsquo;ve run your Pods through a
+Deployment (or other workload controller) and created a Service, but you get
+no response when you try to access it. This document will hopefully help you
+to figure out what&amp;rsquo;s going wrong.&lt;/p>
+&lt;/blockquote></description><content:encoded><![CDATA[<p>I am deploying a new helm chart to our staging environments, and needed a way to
+ensure its dependencies in <code>values.yaml</code> are properly configured.</p>
+<p>From the official kubernetes
+<a href="https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/">documentation</a>:</p>
+<blockquote>
+<p>An issue that comes up rather frequently for new installations of Kubernetes
+is that a Service is not working properly. You&rsquo;ve run your Pods through a
+Deployment (or other workload controller) and created a Service, but you get
+no response when you try to access it. This document will hopefully help you
+to figure out what&rsquo;s going wrong.</p>
+</blockquote>
+<h2 id="run-commands-in-a-brand-new-pod">Run commands in a brand new pod</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% kubectl run -it --rm --restart<span style="color:#f92672">=</span>Never busybox --image<span style="color:#f92672">=</span>gcr.io/google-containers/busybox sh
+</span></span></code></pre></div><p>&hellip;quite verbose, but it works reliably, spawning a basic pod with
+<a href="https://www.busybox.net/">busybox</a>.</p>
+<p>I prefer to have a package manager at my fingertips, hence <code>alpine</code> is arguably
+a better choice:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% kubectl run -it --rm --restart<span style="color:#f92672">=</span>Never busybox --image<span style="color:#f92672">=</span>alpine ash
+</span></span></code></pre></div><p>You don&rsquo;t need to remember that alpine uses <code>ash</code> by default, <code>sh</code> works as
+well. In fact:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>/ <span style="color:#75715e"># ls -al /bin | grep sh</span>
+</span></span><span style="display:flex;"><span>lrwxrwxrwx    <span style="color:#ae81ff">1</span> root     root            <span style="color:#ae81ff">12</span> Dec  <span style="color:#ae81ff">5</span> 12:17 ash -&gt; /bin/busybox
+</span></span><span style="display:flex;"><span>lrwxrwxrwx    <span style="color:#ae81ff">1</span> root     root            <span style="color:#ae81ff">12</span> Dec  <span style="color:#ae81ff">5</span> 12:17 fdflush -&gt; /bin/busybox
+</span></span><span style="display:flex;"><span>lrwxrwxrwx    <span style="color:#ae81ff">1</span> root     root            <span style="color:#ae81ff">12</span> Dec  <span style="color:#ae81ff">5</span> 12:17 sh -&gt; /bin/busybox
+</span></span></code></pre></div><p>Then I could do, for example, <code>apk update</code> + <code>apk add mtr nmap</code>.</p>
+<p>Alpine is marvellous for this because <code>apk</code> is very lightweight (and, hence,
+fast!) and the available packages from upstream are quite comprehensive.</p>
+<h2 id="run-commands-in-an-already-existing-pod">Run commands in an already existing pod</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% kubectl exec &lt;POD-NAME&gt; -c &lt;CONTAINER-NAME&gt; -- &lt;COMMAND&gt;
+</span></span></code></pre></div><p>&hellip;however you cannot choose a custom image this way. You&rsquo;re stuck with whatever
+the pod is running.</p>
+<p>The way around this is with the use of ephemeral debug containers. Newer
+versions of kubernetes have the <code>kubectl debug</code> command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% kubectl debug -it &lt;POD-NAME&gt; --image<span style="color:#f92672">=</span>alpine <span style="color:#f92672">[</span>--target<span style="color:#f92672">=</span>&lt;POD-NAME&gt;<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Happy debugging!</p>]]></content:encoded></item><item><title>★ Just</title><link>https://www.perrotta.dev/2024/12/just/</link><pubDate>Fri, 13 Dec 2024 01:16:41 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/just/</guid><description>&lt;p>&lt;a href="https://github.com/casey/just">Just&lt;/a> is a command runner, a modern replacement
 for GNU Make.&lt;/p></description><content:encoded><![CDATA[<p><a href="https://github.com/casey/just">Just</a> is a command runner, a modern replacement
 for GNU Make.</p>
 <p>It is written in Rust, has sensible defaults, and lots of syntactic sugar.
@@ -1093,20 +1137,4 @@ blog post is a snapshot. I&rsquo;ll experiment with cross-posting solutions here
 even though it duplicates the repository ones.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</div>]]></content:encoded></item><item><title>Compress a .pdf in macOS with Preview.app</title><link>https://www.perrotta.dev/2024/11/compress-a-.pdf-in-macos-with-preview.app/</link><pubDate>Sat, 30 Nov 2024 00:22:38 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/compress-a-.pdf-in-macos-with-preview.app/</guid><description>&lt;p>All hail to &lt;a href="https://support.apple.com/en-ca/guide/preview/prvw1509/mac">Apple
-Documentation&lt;/a>.&lt;/p></description><content:encoded><![CDATA[<p>All hail to <a href="https://support.apple.com/en-ca/guide/preview/prvw1509/mac">Apple
-Documentation</a>.</p>
-<p>The instructions are very simple:</p>
-<ul>
-<li>open the <code>.pdf</code> file in Preview.app</li>
-<li>export it (<code>File &gt; Export</code>)</li>
-<li>in &ldquo;quartz filter&rdquo;, select the &ldquo;reduce file size&rdquo; option</li>
-<li>save</li>
-</ul>
-<p>I observed a scanned document with ~3.3MiB of file size be compressed to
-~350KiB. Not bad! And although not very customizable, it&rsquo;s very user-friendly
-and easy to remember.</p>
-<p>The alternative would have been to use GhostScript (<code>gs</code>). For example, ChatGPT
-suggests:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% gs -sDEVICE<span style="color:#f92672">=</span>pdfwrite -dCompatibilityLevel<span style="color:#f92672">=</span>1.4 -dPDFSETTINGS<span style="color:#f92672">=</span>/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile<span style="color:#f92672">=</span>output.pdf input.pdf
-</span></span></code></pre></div>]]></content:encoded></item></channel></rss>
+</div>]]></content:encoded></item></channel></rss>
