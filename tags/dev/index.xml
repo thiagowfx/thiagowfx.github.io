@@ -1,4 +1,66 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 17 Dec 2024 16:37:16 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes: tail logs from pods with stern</title><link>https://www.perrotta.dev/2024/12/kubernetes-tail-logs-from-pods-with-stern/</link><pubDate>Tue, 17 Dec 2024 16:37:16 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/kubernetes-tail-logs-from-pods-with-stern/</guid><description>&lt;p>You can always use &lt;code>kubectl logs -n {namespace} {pod} [-c {container}] -f&lt;/code> to
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 17 Dec 2024 17:49:31 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>skopeo: operate container images and registries</title><link>https://www.perrotta.dev/2024/12/skopeo-operate-container-images-and-registries/</link><pubDate>Tue, 17 Dec 2024 17:49:31 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/skopeo-operate-container-images-and-registries/</guid><description>When working with docker and private image registries, a common workflow is to copy images from one private registry in the cloud to another. This can be done with skopeo.
+This post includes some common recipes for it.
+Usage 1) Default / Root to Staging From the default / root account registry to the staging registry:
+skopeo sync \ --src-creds &amp;#34;AWS:$(aws ecr get-login-password --region {region} --profile default)&amp;#34; \ --dest-creds &amp;#34;AWS:$(aws ecr get-login-password --region {region} --profile staging)&amp;#34; \ --override-os linux --override-arch amd64 \ --src docker --dest docker \ {account_id_root}.</description><content:encoded><![CDATA[<p>When working with <code>docker</code> and private image registries, a common workflow is to copy images from one private registry in the cloud to another. This can be done with <a href="https://github.com/containers/skopeo/"><code>skopeo</code></a>.</p>
+<p>This post includes some common recipes for it.</p>
+<h2 id="usage-1-default--root-to-staging">Usage 1) Default / Root to Staging</h2>
+<p>From the default / root account registry to the staging registry:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>skopeo sync <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --src-creds <span style="color:#e6db74">&#34;AWS:</span><span style="color:#66d9ef">$(</span>aws ecr get-login-password --region <span style="color:#f92672">{</span>region<span style="color:#f92672">}</span> --profile default<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --dest-creds <span style="color:#e6db74">&#34;AWS:</span><span style="color:#66d9ef">$(</span>aws ecr get-login-password --region <span style="color:#f92672">{</span>region<span style="color:#f92672">}</span> --profile staging<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --override-os linux --override-arch amd64 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --src docker --dest docker <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  <span style="color:#f92672">{</span>account_id_root<span style="color:#f92672">}</span>.dkr.ecr.<span style="color:#f92672">{</span>region<span style="color:#f92672">}</span>.amazonaws.com/<span style="color:#f92672">{</span>org<span style="color:#f92672">}</span>/<span style="color:#f92672">{</span>repository<span style="color:#f92672">}</span>:<span style="color:#f92672">{</span>tag<span style="color:#f92672">}</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  <span style="color:#f92672">{</span>account_id_staging<span style="color:#f92672">}</span>.dkr.ecr.<span style="color:#f92672">{</span>region<span style="color:#f92672">}</span>.amazonaws.com/<span style="color:#f92672">{</span>org<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>Example values<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
+<ul>
+<li>repository: <code>argocd-gitops-tools</code></li>
+<li>tag (version): <code>1.0.1</code></li>
+<li>region: <code>us-east-1</code></li>
+</ul>
+<h2 id="usage-2-public-to-mfa">Usage 2) Public to MFA</h2>
+<p>From a public registry to a private registry that uses MFA (multi-factor authentication).</p>
+<p>First, it’s necessary to get MFA credentials:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e"># shellcheck disable=SC2155</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>export AWS_PROFILE<span style="color:#f92672">=</span>china
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>echo -n <span style="color:#e6db74">&#34;Enter the MFA token code for your AWS China account: &#34;</span> <span style="color:#f92672">&amp;&amp;</span> read -r token
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mfa_arn<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>aws iam --profile <span style="color:#e6db74">&#34;</span>$AWS_PROFILE<span style="color:#e6db74">&#34;</span> get-user --output text --query User.Arn | sed <span style="color:#e6db74">&#39;s/:user\//:mfa\//&#39;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>credentials<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>aws --profile <span style="color:#e6db74">&#34;</span>$AWS_PROFILE<span style="color:#e6db74">&#34;</span> sts get-session-token --serial-number <span style="color:#e6db74">&#34;</span>$mfa_arn<span style="color:#e6db74">&#34;</span> --token-code <span style="color:#e6db74">&#34;</span>$token<span style="color:#e6db74">&#34;</span> --duration-seconds 86400<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;Got credentials: </span>$credentials<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>export AWS_ACCESS_KEY_ID<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>echo <span style="color:#e6db74">&#34;</span>$credentials<span style="color:#e6db74">&#34;</span> | jq -r <span style="color:#e6db74">&#39;.Credentials.AccessKeyId&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>export AWS_SECRET_ACCESS_KEY<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>echo <span style="color:#e6db74">&#34;</span>$credentials<span style="color:#e6db74">&#34;</span> | jq -r <span style="color:#e6db74">&#39;.Credentials.SecretAccessKey&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>export AWS_SESSION_TOKEN<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>echo <span style="color:#e6db74">&#34;</span>$credentials<span style="color:#e6db74">&#34;</span> | jq -r <span style="color:#e6db74">&#39;.Credentials.SessionToken&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[[</span> -n <span style="color:#e6db74">&#34;</span>$AWS_SESSION_TOKEN<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> echo <span style="color:#e6db74">&#34;Success!&#34;</span>
+</span></span></code></pre></div><p>Then we can proceed with the image sync:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>skopeo sync <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --dest-creds <span style="color:#e6db74">&#34;AWS:</span><span style="color:#66d9ef">$(</span>aws ecr get-login-password --region cn-north-1<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --override-os linux --override-arch amd64 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --src docker --dest docker <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  quay.io/argoproj/argocd:v2.12.6 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  <span style="color:#f92672">{</span>account_id_mfa<span style="color:#f92672">}</span>.dkr.ecr.cn-north-1.amazonaws.com.cn/quay.io/argoproj
+</span></span></code></pre></div><p>Notes:</p>
+<ul>
+<li>A public registry does not need authentication, hence there’s no <code>--src-creds</code>.</li>
+<li><code>--dest-creds</code> does not specify a <code>--profile</code>. Likewise, no <code>AWS_PROFILE</code> env var should be defined.</li>
+<li>In this example, China (<code>cn-north-1</code>) is an AWS account with MFA enabled.</li>
+</ul>
+<p>It’s possible to pass <code>--scoped</code> to prefix images at destination using the full source image path as scope.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>image = registry (includes the org name) + repository + tag&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded></item><item><title>Kubernetes: tail logs from pods with stern</title><link>https://www.perrotta.dev/2024/12/kubernetes-tail-logs-from-pods-with-stern/</link><pubDate>Tue, 17 Dec 2024 16:37:16 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/kubernetes-tail-logs-from-pods-with-stern/</guid><description>&lt;p>You can always use &lt;code>kubectl logs -n {namespace} {pod} [-c {container}] -f&lt;/code> to
 inspect logs from a specific pod&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p>
 &lt;p>Nonetheless that doesn&amp;rsquo;t scale when you don&amp;rsquo;t know which pod you want in the
 first place.&lt;/p></description><content:encoded><![CDATA[<p>You can always use <code>kubectl logs -n {namespace} {pod} [-c {container}] -f</code> to
@@ -1106,63 +1168,4 @@ function</li>
 <li>naming is hard</li>
 <li><code>pairwise</code> is only available from Python 3.10+. macOS 15 (Sequoia) ships with
 Python 3.9. Oh well&hellip;I needed to use the Python binary from homebrew.</li>
-</ul>]]></content:encoded></item><item><title>Advent of Code 2024: Day 1</title><link>https://www.perrotta.dev/2024/12/advent-of-code-2024-day-1/</link><pubDate>Sun, 01 Dec 2024 22:29:19 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/advent-of-code-2024-day-1/</guid><description>&lt;p>Refer to the &lt;a href="https://www.perrotta.dev/2022/01/advent-of-code/">previous post&lt;/a> about AoC,
-and to the &lt;a href="https://github.com/thiagowfx/adventofcode">git repository&lt;/a> with my
-solutions in Python 3.&lt;/p>
-&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/1">Day #1&lt;/a> puzzle.&lt;/p></description><content:encoded><![CDATA[<p>Refer to the <a href="https://www.perrotta.dev/2022/01/advent-of-code/">previous post</a> about AoC,
-and to the <a href="https://github.com/thiagowfx/adventofcode">git repository</a> with my
-solutions in Python 3.</p>
-<p>Link to <a href="https://adventofcode.com/2024/day/1">Day #1</a> puzzle.</p>
-<p>This is just a warm-up.</p>
-<p>Given two lists of integers, iterate over them and sum the absolute difference
-between each pair. <code>zip</code> + <code>sum</code> is the perfect pair<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> for the job.</p>
-<p>Part two: iterate over the left list whilst accumulating how often the element
-appears in the right list. &ldquo;How often&rdquo; has, almost always, the smell of a
-<a href="https://docs.python.org/3/library/collections.html#collections.Counter"><code>Counter</code></a>.</p>
-<p>The full solution<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> collections <span style="color:#f92672">import</span> Counter
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]) <span style="color:#66d9ef">as</span> input:
-</span></span><span style="display:flex;"><span>        lines <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>splitlines()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    left <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>    right <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines:
-</span></span><span style="display:flex;"><span>        l, r <span style="color:#f92672">=</span> map(int, line<span style="color:#f92672">.</span>split())
-</span></span><span style="display:flex;"><span>        left<span style="color:#f92672">.</span>append(l)
-</span></span><span style="display:flex;"><span>        right<span style="color:#f92672">.</span>append(r)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    left<span style="color:#f92672">.</span>sort()
-</span></span><span style="display:flex;"><span>    right<span style="color:#f92672">.</span>sort()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part one</span>
-</span></span><span style="display:flex;"><span>    print(sum(abs(l <span style="color:#f92672">-</span> r) <span style="color:#66d9ef">for</span> (l, r) <span style="color:#f92672">in</span> zip(left, right)))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    freqs <span style="color:#f92672">=</span> Counter(right)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part two</span>
-</span></span><span style="display:flex;"><span>    print(sum(l <span style="color:#f92672">*</span> freqs[l] <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> left))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
-</span></span><span style="display:flex;"><span>    main()
-</span></span></code></pre></div><div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><a href="https://www.youtube.com/watch?v=3WpdCZC9q6w">I&rsquo;m not sure I like it, And I‘m so tired of
-fighting</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2">
-<p>The git repository is ever-evolving and the source of truth, whereas the
-blog post is a snapshot. I&rsquo;ll experiment with cross-posting solutions here
-even though it duplicates the repository ones.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item></channel></rss>
+</ul>]]></content:encoded></item></channel></rss>
