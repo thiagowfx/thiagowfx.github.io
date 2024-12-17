@@ -1,4 +1,4 @@
-a# not just serendipity
+# not just serendipity
 
 [![GH Pages](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/gh-pages.yml)
 [![Pre-commit](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yml)
