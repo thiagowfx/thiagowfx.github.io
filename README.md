@@ -1,7 +1,8 @@
-# not just serendipity
+a# not just serendipity
 
-[![gh-pages](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/gh-pages.yaml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/gh-pages.yaml)
-[![pre-commit](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yaml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yaml)
+[![GH Pages](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/gh-pages.yml)
+[![Pre-commit](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yml)
+[![Pre-commit autoupadte](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit-autoupdate.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit-autoupdate.yml)
 
 This blog is managed with [`hugo`][hugo].
 
