@@ -2,7 +2,7 @@
 
 [![GH Pages](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/gh-pages.yml)
 [![Pre-commit](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yml)
-[![Pre-commit autoupadte](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit-autoupdate.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit-autoupdate.yml)
+[![Pre-commit autoupdate](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit-autoupdate.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit-autoupdate.yml)
 
 This blog is managed with [`hugo`][hugo].
 
