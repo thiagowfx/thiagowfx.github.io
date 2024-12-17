@@ -1,4 +1,39 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Mon, 16 Dec 2024 10:14:11 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes: debugging services</title><link>https://www.perrotta.dev/2024/12/kubernetes-debugging-services/</link><pubDate>Mon, 16 Dec 2024 10:14:11 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/kubernetes-debugging-services/</guid><description>&lt;p>I am deploying a new helm chart to our staging environments, and needed a way to
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Devops on not just serendipity</title><link>https://www.perrotta.dev/tags/devops/</link><description>Recent content in Devops on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 17 Dec 2024 16:37:16 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes: tail logs from pods with stern</title><link>https://www.perrotta.dev/2024/12/kubernetes-tail-logs-from-pods-with-stern/</link><pubDate>Tue, 17 Dec 2024 16:37:16 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/kubernetes-tail-logs-from-pods-with-stern/</guid><description>&lt;p>You can always use &lt;code>kubectl logs -n {namespace} {pod} [-c {container}] -f&lt;/code> to
+inspect logs from a specific pod&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p>
+&lt;p>Nonetheless that doesn&amp;rsquo;t scale when you don&amp;rsquo;t know which pod you want in the
+first place.&lt;/p></description><content:encoded><![CDATA[<p>You can always use <code>kubectl logs -n {namespace} {pod} [-c {container}] -f</code> to
+inspect logs from a specific pod<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>Nonetheless that doesn&rsquo;t scale when you don&rsquo;t know which pod you want in the
+first place.</p>
+<p>You could start with deployments, dive into replica sets, and then into
+individual pods, one by one, but&hellip; that is tedious and slow.</p>
+<p>We can do better with <a href="https://github.com/stern/stern">stern</a>:</p>
+<blockquote>
+<p>⎈ Multi pod and container log tailing for Kubernetes</p>
+</blockquote>
+<p>Usage:</p>
+<pre tabindex="0"><code>stern pod-query [flags]
+</code></pre><blockquote>
+<p>The pod-query is a regular expression or a Kubernetes resource in the form
+<!-- raw HTML omitted -->/<!-- raw HTML omitted -->.</p>
+</blockquote>
+<p>Example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% stern -n argocd argocd
+</span></span></code></pre></div><p>We can also <code>grep</code> for specific strings in log lines with <code>--include</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% stern -n argocd argocd --include level<span style="color:#f92672">=</span>error
+</span></span></code></pre></div><p>Or <code>grep -v</code> with <code>--exclude</code>.</p>
+<p>It&rsquo;s better to use <code>--include</code> / <code>--exclude</code> than to <code>| grep</code>, because it
+preserves color attributes (each pod has a different color in the aggregated
+log output).</p>
+<p>The logs stream by default (like <code>tail -f</code>, or <code>kubectl logs -f</code>).</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><code>-c</code> to specify a container within it, and <code>-f</code> to stream logs à la <code>tail -f</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded></item><item><title>Kubernetes: debugging services</title><link>https://www.perrotta.dev/2024/12/kubernetes-debugging-services/</link><pubDate>Mon, 16 Dec 2024 10:14:11 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/kubernetes-debugging-services/</guid><description>&lt;p>I am deploying a new helm chart to our staging environments, and needed a way to
 ensure its dependencies in &lt;code>values.yaml&lt;/code> are properly configured.&lt;/p>
 &lt;p>From the official kubernetes
 &lt;a href="https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/">documentation&lt;/a>:&lt;/p>
@@ -1128,38 +1163,6 @@ fighting</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink
 <p>The git repository is ever-evolving and the source of truth, whereas the
 blog post is a snapshot. I&rsquo;ll experiment with cross-posting solutions here
 even though it duplicates the repository ones.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded></item><item><title>bash: disable pipefail</title><link>https://www.perrotta.dev/2024/11/bash-disable-pipefail/</link><pubDate>Wed, 27 Nov 2024 11:50:58 +0100</pubDate><guid>https://www.perrotta.dev/2024/11/bash-disable-pipefail/</guid><description>&lt;p>We often do &lt;code>set -euo pipefail&lt;/code> in shell scripts&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.
-It&amp;rsquo;s an overall good habit in defensive programming.&lt;/p>
-&lt;p>Nonetheless, sometimes the default behavior for &lt;code>pipefail&lt;/code> is desired.&lt;/p></description><content:encoded><![CDATA[<p>We often do <code>set -euo pipefail</code> in shell scripts<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.
-It&rsquo;s an overall good habit in defensive programming.</p>
-<p>Nonetheless, sometimes the default behavior for <code>pipefail</code> is desired.</p>
-<p>Recently we had an example involving <a href="https://pre-commit.com/">pre-commit.com</a>
-and <a href="https://github.com/zimbatm/mdsh"><code>mdsh</code></a>, consider this <code>README.md</code> file:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-md" data-lang="md"><span style="display:flex;"><span><span style="color:#e6db74">`&gt; files=$(grep -rl &#39;/spec/sources/0/targetRevision&#39; --include=&#34;*.yaml&#34; apps/overlays | sort -d -u) &amp;&amp; if [ -z &#34;$files&#34; ]; then echo &#34;None&#34;; else echo &#34;$files&#34; | sed -e &#39;s/^/- /&#39;; fi`</span>
-</span></span></code></pre></div><p>The intention is to find all <code>.yaml</code> files that match the given string within
-the <code>apps/overlays</code> directory.</p>
-<p>The result is added to the <code>README.md</code> file with a git pre-commit hook, which
-runs <code>mdsh</code> underneath, proudly showcasing a glimpse of literate programming.</p>
-<p>What happens when there are no matches, and <code>grep</code> returns with exit code 1?</p>
-<pre tabindex="0"><code>`&gt; files=$(grep -rl &#39;/spec/sources/0/targetRevision&#39; --include=&#34;*.yaml&#34; apps/overlays | sort -d -u) &amp;&amp; if [ -z &#34;$files&#34; ]; then echo &#34;None&#34;; else echo &#34;$files&#34; | sed -e &#39;s/^/- /&#39;; fi`
-
-ERROR: some commands failed:
-
-`&gt; files=$(grep -rl &#39;/spec/syncPolicy/automated&#39; --include=&#34;*.yaml&#34; apps/overlays | sort -d -u) &amp;&amp; if [ -z &#34;$files&#34; ]; then echo &#34;None&#34;; else echo &#34;$files&#34; | sed -e &#39;s/^/- /&#39;; fi`
-failed with exit status: 1.
-</code></pre><p>Of course it fails, because <code>mdsh</code> sets <a href="https://github.com/zimbatm/mdsh/pull/63/files"><code>-o pipefail</code></a>.</p>
-<p>The desired behavior is to disable it: <code>set +o pipefail</code>. Then it works
-properly:</p>
-<pre tabindex="0"><code>&gt; set +o pipefail &amp;&amp; files=$(grep -rl &#39;/spec/syncPolicy/automated&#39; --include=&#34;*.yaml&#34; apps/overlays | sort -d -u) &amp;&amp; if [ -z &#34;$files&#34; ]; then echo &#34;None&#34;; else echo &#34;$files&#34; | sed -e &#39;s/^/- /&#39;; fi
-</code></pre><div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>A
-<a href="https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425">gist</a>
-with an explanation.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>]]></content:encoded></item></channel></rss>
