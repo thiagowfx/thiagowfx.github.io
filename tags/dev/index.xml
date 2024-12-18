@@ -1,4 +1,52 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 17 Dec 2024 17:49:31 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>skopeo: operate container images and registries</title><link>https://www.perrotta.dev/2024/12/skopeo-operate-container-images-and-registries/</link><pubDate>Tue, 17 Dec 2024 17:49:31 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/skopeo-operate-container-images-and-registries/</guid><description>When working with docker and private image registries, a common workflow is to copy images from one private registry in the cloud to another. This can be done with skopeo.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.124.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2024 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Tue, 17 Dec 2024 22:46:41 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>pre-commit: create hooks for unsupported tools</title><link>https://www.perrotta.dev/2024/12/pre-commit-create-hooks-for-unsupported-tools/</link><pubDate>Tue, 17 Dec 2024 22:46:41 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/pre-commit-create-hooks-for-unsupported-tools/</guid><description>&lt;p>When using &lt;a href="https://pre-commit.com/">pre-commit.com&lt;/a>, in an ideal world, every
+formatter / linter / code analyzer would have a &lt;code>.pre-commit-config.yaml&lt;/code> file
+in its repository root.&lt;/p>
+&lt;p>In the real world, that&amp;rsquo;s not always the case.&lt;/p>
+&lt;p>A recent example: &lt;a href="https://github.com/cloudflare/pint">cloudflare/pint&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>Prometheus rule linter/validator&lt;/p>
+&lt;/blockquote>
+&lt;p>It is a golang binary that lints &lt;a href="https://prometheus.io/">prometheus&lt;/a> rules.&lt;/p>
+&lt;p>Can we bridge the gap?&lt;/p></description><content:encoded><![CDATA[<p>When using <a href="https://pre-commit.com/">pre-commit.com</a>, in an ideal world, every
+formatter / linter / code analyzer would have a <code>.pre-commit-config.yaml</code> file
+in its repository root.</p>
+<p>In the real world, that&rsquo;s not always the case.</p>
+<p>A recent example: <a href="https://github.com/cloudflare/pint">cloudflare/pint</a>:</p>
+<blockquote>
+<p>Prometheus rule linter/validator</p>
+</blockquote>
+<p>It is a golang binary that lints <a href="https://prometheus.io/">prometheus</a> rules.</p>
+<p>Can we bridge the gap?</p>
+<p>The end goal is the ability to run <code>pre-commit run --all-files pint</code> in our git
+repository.</p>
+<p>For that, we&rsquo;ll need to define a local / custom hook in our
+<code>~/.pre-commit-config.yaml</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">repos</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">repo</span>: <span style="color:#ae81ff">local</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hooks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">id</span>: <span style="color:#ae81ff">pint</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Validate prometheus rules with pint</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">language</span>: <span style="color:#ae81ff">golang</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">additional_dependencies</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">github.com/cloudflare/pint/cmd/pint@v0.69.1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entry</span>: <span style="color:#ae81ff">pint --offline lint</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">types</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#ae81ff">yaml</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">files</span>: <span style="color:#ae81ff">^helm/clustermon-alerts/rules/</span>
+</span></span></code></pre></div><p>That simply works™. How did I get there? Starting with the references:</p>
+<ol>
+<li><a href="https://adamj.eu/tech/2023/02/09/pre-commit-hooks-unsupported-tools/">https://adamj.eu/tech/2023/02/09/pre-commit-hooks-unsupported-tools/</a></li>
+<li><a href="https://www.perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/">https://www.perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/</a></li>
+<li><a href="https://stackoverflow.com/questions/62974985/go-module-latest-found-but-does-not-contain-package">https://stackoverflow.com/questions/62974985/go-module-latest-found-but-does-not-contain-package</a></li>
+<li><a href="https://pkg.go.dev/github.com/cloudflare/pint@v0.69.1/cmd/pint">https://pkg.go.dev/github.com/cloudflare/pint@v0.69.1/cmd/pint</a></li>
+</ol>
+<p>The key part is <code>language: golang</code> + <code>additional_dependencies</code>.</p>
+<p>Specifying <code>additional_dependencies</code> is a bit tricky. Initially, I did:</p>
+<pre tabindex="0"><code>github.com/cloudflare/pint@v0.69.1
+</code></pre><p>&hellip;but that yields nothing. In fact:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% go run github.com/cloudflare/pint@v0.69.1
+</span></span><span style="display:flex;"><span>go: github.com/cloudflare/pint@v0.69.1: module github.com/cloudflare/pint@v0.69.1 found, but does not contain package github.com/cloudflare/pint
+</span></span></code></pre></div><p>We must always specify the module that contains the <code>main</code> function with <code>go run</code>, and that is <code>cmd/pint</code>.</p>]]></content:encoded></item><item><title>skopeo: operate container images and registries</title><link>https://www.perrotta.dev/2024/12/skopeo-operate-container-images-and-registries/</link><pubDate>Tue, 17 Dec 2024 17:49:31 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/skopeo-operate-container-images-and-registries/</guid><description>When working with docker and private image registries, a common workflow is to copy images from one private registry in the cloud to another. This can be done with skopeo.
 This post includes some common recipes for it.
 Usage 1) Default / Root to Staging From the default / root account registry to the staging registry:
 skopeo sync \ --src-creds &amp;#34;AWS:$(aws ecr get-login-password --region {region} --profile default)&amp;#34; \ --dest-creds &amp;#34;AWS:$(aws ecr get-login-password --region {region} --profile staging)&amp;#34; \ --override-os linux --override-arch amd64 \ --src docker --dest docker \ {account_id_root}.</description><content:encoded><![CDATA[<p>When working with <code>docker</code> and private image registries, a common workflow is to copy images from one private registry in the cloud to another. This can be done with <a href="https://github.com/containers/skopeo/"><code>skopeo</code></a>.</p>
@@ -1080,92 +1128,4 @@ follow up with the Python interpreter in my laptop.</p>
 </span></span><span style="display:flex;"><span>    main()
 </span></span></code></pre></div><p>I intended to use <a href="https://docs.python.org/3/whatsnew/3.10.html"><code>match</code></a> merely
 for style points however it&rsquo;s only available from Python 3.10+, thus I sticked
-with a mere <code>if-elif</code> construct.</p>]]></content:encoded></item><item><title>Advent of Code 2024: Day 2</title><link>https://www.perrotta.dev/2024/12/advent-of-code-2024-day-2/</link><pubDate>Tue, 03 Dec 2024 01:15:00 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/advent-of-code-2024-day-2/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/2">Day #2&lt;/a> puzzle.&lt;/p></description><content:encoded><![CDATA[<p>Link to <a href="https://adventofcode.com/2024/day/2">Day #2</a> puzzle.</p>
-<p>The first part is straightforward. It felt right to use <a href="https://docs.python.org/3/library/itertools.html#itertools.pairwise"><code>pairwise</code></a> to compute the differences between each adjacent pair:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>diffs <span style="color:#f92672">=</span> [(b <span style="color:#f92672">-</span> a) <span style="color:#66d9ef">for</span> (a,b) <span style="color:#f92672">in</span> pairwise(map(int, line<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39; &#39;</span>)))]
-</span></span></code></pre></div><p>Then we combine it with <code>all</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_safe</span>(diffs):
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> all(<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">3</span> <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> diffs) <span style="color:#f92672">or</span> all(<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> diffs)
-</span></span></code></pre></div><p>Note that it is necessary to use two <code>all</code> expressions. It feels tempting to do:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>all(<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">or</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> diffs)
-</span></span></code></pre></div><p>&hellip;however that&rsquo;s incorrect. For example: <code>diffs = [1, -1, 1, -1]</code> with an input
-such as <code>[1, 2, 1, 2]</code> would pass the test even though it shouldn&rsquo;t.</p>
-<p>It also feels tempting to use <code>abs()</code> but then an additional check would be
-necessary to ensure the diffs are either all positive or all negative.</p>
-<p>The second part was trickier.</p>
-<p>Initially I was doing:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>list(<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">3</span> <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> diffs)<span style="color:#f92672">.</span>count(<span style="color:#66d9ef">False</span>) <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> list(<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> diffs)<span style="color:#f92672">.</span>count(<span style="color:#66d9ef">False</span>) <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">1</span>
-</span></span></code></pre></div><p>&hellip;but then I realized I misunderstood the problem.</p>
-<p>The <code>1 2 7 8 9</code> line, whose diff is <code>[1, 5, 1, 1]</code>, illustrates it well: in
-principle it would pass the test by dropping &ldquo;5&rdquo; from the diff. However, that
-cannot be correct, because <code>2 -&gt; 8</code> is too big of a jump.</p>
-<p>The brute force way is to drop elements one by one, splitting the original list
-into two, and then checking <code>is_safe</code> in the merged sublists. That would
-require computing <code>diffs</code> every time, which would yield an <code>O(n^2)</code> solution.</p>
-<p>We can do better by pre-computing <code>diffs</code> only once, and then adding a bit of
-manipulation to reconstruct what the merged diffs would be. The end goal is to
-compute this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span>is_safe(diffs[:i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> [l[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> l[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]] <span style="color:#f92672">+</span> diffs[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:]):
-</span></span></code></pre></div><p>&hellip;i.e. the left part of <code>diffs</code>, the right part of <code>diffs</code>, and a rolling diff
-element in the middle.</p>
-<p>The full solution:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> pairwise
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]) <span style="color:#66d9ef">as</span> input:
-</span></span><span style="display:flex;"><span>        lines <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>splitlines()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    safe <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>    safe_damp <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_safe</span>(diffs):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> all(<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">3</span> <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> diffs) <span style="color:#f92672">or</span> all(<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">&lt;=</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> diffs)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines:
-</span></span><span style="display:flex;"><span>        l <span style="color:#f92672">=</span> list(map(int, line<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39; &#39;</span>)))
-</span></span><span style="display:flex;"><span>        diffs <span style="color:#f92672">=</span> [(b <span style="color:#f92672">-</span> a) <span style="color:#66d9ef">for</span> (a,b) <span style="color:#f92672">in</span> pairwise(l)]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        is_this_safe <span style="color:#f92672">=</span> is_safe(diffs)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> is_this_safe:
-</span></span><span style="display:flex;"><span>            safe <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>            safe_damp <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(l)):
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> is_safe(diffs[<span style="color:#ae81ff">1</span>:]):
-</span></span><span style="display:flex;"><span>                    safe_damp <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> len(l) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>:
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> is_safe(diffs[:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]):
-</span></span><span style="display:flex;"><span>                    safe_damp <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> is_safe(diffs[:i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> [l[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> l[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]] <span style="color:#f92672">+</span> diffs[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:]):
-</span></span><span style="display:flex;"><span>                    safe_damp <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part one</span>
-</span></span><span style="display:flex;"><span>    print(safe)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part two</span>
-</span></span><span style="display:flex;"><span>    print(safe_damp)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
-</span></span><span style="display:flex;"><span>    main()
-</span></span></code></pre></div><p>A few notes:</p>
-<ul>
-<li>there&rsquo;s no need for <code>pairwise</code>; a plain <code>for-range</code> loop would have done the
-job just fine; <code>pairwise</code> is stylish though</li>
-<li><code>1 &lt;= n &lt;= 3</code> is syntactic sugar for <code>1 &lt;= n and n &lt;= 3</code>. Python is sweet.</li>
-<li>part two could become a bit more elegant by introducing another helper
-function</li>
-<li>naming is hard</li>
-<li><code>pairwise</code> is only available from Python 3.10+. macOS 15 (Sequoia) ships with
-Python 3.9. Oh well&hellip;I needed to use the Python binary from homebrew.</li>
-</ul>]]></content:encoded></item></channel></rss>
+with a mere <code>if-elif</code> construct.</p>]]></content:encoded></item></channel></rss>
