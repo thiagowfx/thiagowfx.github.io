@@ -4,7 +4,7 @@ date: 2022-01-03T17:56:56-05:00
 tags:
   - linux
   - selfhosted
-  - bestof
+  - bestof★
 ---
 
 This article describes my experience transitioning to, setting up and using the

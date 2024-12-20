@@ -3,7 +3,7 @@ title: "★ Synchronized in Python"
 date: 2024-01-15T14:42:51-03:00
 tags:
   - dev
-  - bestof
+  - bestof★
 ---
 
 > [In Java, you can make a variable thread safe by just adding the `synchronized`

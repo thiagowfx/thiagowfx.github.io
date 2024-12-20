@@ -3,6 +3,7 @@
 title: "{{ replace .Name $today "" | humanize }}"
 date: {{ .Date }}
 tags:
+  - bestof★
   - dev
   - serenity
 ---

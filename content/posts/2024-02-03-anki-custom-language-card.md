@@ -2,7 +2,7 @@
 title: "★ Anki: custom language card"
 date: 2024-02-03T13:02:21-03:00
 tags:
-  - bestof
+  - bestof★
   - dev
 ---
 

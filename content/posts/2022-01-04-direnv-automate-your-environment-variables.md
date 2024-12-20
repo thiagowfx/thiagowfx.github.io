@@ -3,7 +3,7 @@ title: "★ Direnv: Automate your Environment Variables"
 date: 2022-01-04T00:34:07-05:00
 tags:
   - dev
-  - bestof
+  - bestof★
 ---
 
 [Direnv][direnv] is a tool to automate your shell to automatically load and unload environment variables on-the-fly, on a per-project (per-directory) basis.
