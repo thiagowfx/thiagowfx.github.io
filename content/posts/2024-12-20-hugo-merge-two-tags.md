@@ -3,7 +3,7 @@ title: "hugo: merge two tags"
 date: 2024-12-20T00:46:50-03:00
 tags:
   - dev
-  - serenity
+  - meta
 ---
 
 So far I've been using the `dev` and `devops` tags pretty much interchangeably
