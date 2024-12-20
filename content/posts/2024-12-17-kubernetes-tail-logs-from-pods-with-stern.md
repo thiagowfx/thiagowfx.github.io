@@ -30,7 +30,7 @@ stern pod-query [flags]
 ```
 
 > The pod-query is a regular expression or a Kubernetes resource in the form
-> <resource>/<name>.
+> `<resource>/<name>`.
 
 Example:
 
