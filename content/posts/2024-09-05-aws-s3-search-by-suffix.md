@@ -3,7 +3,6 @@ title: "AWS S3: search by suffix"
 date: 2024-09-05T17:09:38+02:00
 tags:
   - dev
-  - devops
 ---
 
 Given an AWS S3 bucket, how to recursively list all objects within it that match

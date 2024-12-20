@@ -3,7 +3,6 @@ title: "YAML multiline strings"
 date: 2024-09-03T11:55:53+02:00
 tags:
   - dev
-  - devops
 ---
 
 I keep forgetting what the correct syntax is.

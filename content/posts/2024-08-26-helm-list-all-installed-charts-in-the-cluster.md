@@ -3,7 +3,6 @@ title: "Helm: list all installed charts in the cluster"
 date: 2024-08-26T17:57:07+02:00
 tags:
   - dev
-  - devops
 ---
 
 In theory this ought to be really easy:

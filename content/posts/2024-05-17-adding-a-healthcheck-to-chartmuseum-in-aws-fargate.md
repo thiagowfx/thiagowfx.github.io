@@ -2,7 +2,7 @@
 title: "Adding a healthcheck to chartmuseum in AWS Fargate"
 date: 2024-05-17T11:15:09+02:00
 tags:
-  - devops
+  - dev
   - linux
 ---
 

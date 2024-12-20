@@ -3,7 +3,6 @@ title: "Helm: JSON schema generation"
 date: 2024-11-14T15:05:49+01:00
 tags:
   - dev
-  - devops
 ---
 
 Helm charts support the inclusion of a `values.schema.json` file to validate

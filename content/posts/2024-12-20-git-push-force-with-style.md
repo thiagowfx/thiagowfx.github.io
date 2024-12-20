@@ -3,7 +3,6 @@ title: "git: push --force with style"
 date: 2024-12-20T00:38:07-03:00
 tags:
   - dev
-  - devops
 ---
 
 TIL:

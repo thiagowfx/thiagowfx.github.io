@@ -3,7 +3,6 @@ title: "pre-commit: try-repo"
 date: 2024-11-26T12:26:24+01:00
 tags:
   - dev
-  - devops
 ---
 
 A productivity booster whenever trying out new

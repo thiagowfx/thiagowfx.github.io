@@ -3,7 +3,6 @@ title: "ack: match and return only the matched string"
 date: 2024-10-01T17:59:17+02:00
 tags:
   - dev
-  - devops
 ---
 
 **Context**: Helm charts use `.Values.{foo}` in `templates/` for templating from

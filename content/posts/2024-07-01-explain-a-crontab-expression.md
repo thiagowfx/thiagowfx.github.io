@@ -3,7 +3,6 @@ title: "Explain a crontab expression"
 date: 2024-07-01T18:48:47+02:00
 tags:
   - dev
-  - devops
   - linux
 ---
 

@@ -4,7 +4,6 @@ title: "{{ replace .Name $today "" | humanize }}"
 date: {{ .Date }}
 tags:
   - dev
-  - devops
   - serenity
 ---
 

@@ -3,7 +3,6 @@ title: "Finding linters"
 date: 2024-12-08T23:40:26+01:00
 tags:
   - dev
-  - devops
 ---
 
 A no-brainer and effective way to increase code quality in an organization is by

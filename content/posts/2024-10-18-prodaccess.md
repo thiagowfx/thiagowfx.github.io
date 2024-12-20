@@ -3,7 +3,6 @@ title: "★ prodaccess"
 date: 2024-10-18T14:57:27+02:00
 tags:
   - dev
-  - devops
   - bestof
 ---
 

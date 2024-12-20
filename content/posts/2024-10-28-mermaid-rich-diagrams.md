@@ -3,7 +3,6 @@ title: "Mermaid: rich diagrams in markdown"
 date: 2024-10-28T15:58:39+01:00
 tags:
   - dev
-  - devops
 ---
 
 When writing documentation in markdown e.g. for projects stored in git, adding

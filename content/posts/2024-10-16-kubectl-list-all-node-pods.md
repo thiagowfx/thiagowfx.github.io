@@ -3,7 +3,6 @@ title: "kubectl: list all node pods"
 date: 2024-10-16T12:26:24+02:00
 tags:
   - dev
-  - devops
 ---
 
 Recipe to list all pods that belong to a given node:

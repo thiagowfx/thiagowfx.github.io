@@ -3,7 +3,6 @@ title: "kubectl: get all logs from all pods"
 date: 2024-07-15T13:23:35+02:00
 tags:
   - dev
-  - devops
 ---
 
 Frequently:

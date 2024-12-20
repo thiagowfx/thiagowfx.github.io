@@ -3,7 +3,6 @@ title: "kubectl: print all secret values in plain text"
 date: 2024-08-06T13:37:31+02:00
 tags:
   - dev
-  - devops
 ---
 
 **Problem statement**: Given a [kubernetes

@@ -3,7 +3,6 @@ title: "Localhost domain"
 date: 2024-07-01T11:34:34+02:00
 tags:
   - dev
-  - devops
   - linux
 ---
 

@@ -3,7 +3,6 @@ title: "jq: remove quotes from output"
 date: 2024-11-07T14:13:17+01:00
 tags:
   - dev
-  - devops
 ---
 
 Given:

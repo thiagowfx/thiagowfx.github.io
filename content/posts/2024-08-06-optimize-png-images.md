@@ -3,7 +3,6 @@ title: "Optimize PNG images"
 date: 2024-08-06T14:39:31+02:00
 tags:
   - dev
-  - devops
 ---
 
 Before checking `.png` images into git repositories, you should optimize them –

@@ -3,7 +3,6 @@ title: "Makefile: path to root dir"
 date: 2024-10-18T14:52:44+02:00
 tags:
   - dev
-  - devops
 ---
 
 **Problem statement**: Given a `Makefile` within `~/git/scaffolding/Makefile`,

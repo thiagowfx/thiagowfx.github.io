@@ -3,7 +3,6 @@ title: "Docker build: ignore cache"
 date: 2024-12-10T19:45:42-03:00
 tags:
   - dev
-  - devops
 ---
 
 To build a docker image completely from scratch, without reusing cache layers on

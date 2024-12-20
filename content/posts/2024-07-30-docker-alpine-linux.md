@@ -3,7 +3,6 @@ title: "Docker on Alpine Linux"
 date: 2024-07-30T22:56:58+02:00
 tags:
   - dev
-  - devops
 ---
 
 In this post: how to properly start `docker` on an Alpine Linux server.

@@ -3,7 +3,6 @@ title: "Advent of Code 2024: Day 1"
 date: 2024-12-01T22:29:19+01:00
 tags:
   - dev
-  - devops
 ---
 
 Refer to the [previous post]({{< ref "2022-01-28-advent-of-code" >}}) about AoC,

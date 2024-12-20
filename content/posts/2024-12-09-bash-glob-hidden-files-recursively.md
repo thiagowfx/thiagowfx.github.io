@@ -3,7 +3,6 @@ title: "bash: glob hidden files recursively"
 date: 2024-12-09T17:53:14-03:00
 tags:
   - dev
-  - devops
 ---
 
 Assume you make a huge change to your git repository, that spawns several file

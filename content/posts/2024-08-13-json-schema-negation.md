@@ -3,7 +3,6 @@ title: "JSON schema negation"
 date: 2024-08-13T11:27:17+02:00
 tags:
   - dev
-  - devops
 ---
 
 [JSON Schema](https://json-schema.org/) is a powerful validation tool to enforce

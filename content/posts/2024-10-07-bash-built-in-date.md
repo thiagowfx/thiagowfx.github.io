@@ -3,7 +3,6 @@ title: "bash built-in date"
 date: 2024-10-07T15:12:20+02:00
 tags:
   - dev
-  - devops
 ---
 
 To format dates [GNU

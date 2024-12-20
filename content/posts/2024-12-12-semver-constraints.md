@@ -3,7 +3,6 @@ title: "Semantic versioning constraints"
 date: 2024-12-12T12:34:39-03:00
 tags:
   - dev
-  - devops
 ---
 
 When working with semantic versioning a.k.a. [semver](https://semver.org/), it's

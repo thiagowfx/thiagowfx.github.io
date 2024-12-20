@@ -3,7 +3,6 @@ title: "helm: list recent chart upgrades"
 date: 2024-09-24T14:21:20+02:00
 tags:
   - dev
-  - devops
 ---
 
 **Problem statement**: Given a kubernetes cluster with many helm charts in

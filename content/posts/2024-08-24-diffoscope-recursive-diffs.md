@@ -3,7 +3,6 @@ title: "Diffoscope: recursive diffs"
 date: 2024-08-24T01:09:42+02:00
 tags:
   - dev
-  - devops
 ---
 
 There are many ways to `diff` two individual files:

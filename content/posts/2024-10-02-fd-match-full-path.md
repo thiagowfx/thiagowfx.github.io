@@ -3,7 +3,6 @@ title: "fd: match full path"
 date: 2024-10-02T13:30:29+02:00
 tags:
   - dev
-  - devops
 ---
 
 When using [`fd(1)`](https://github.com/sharkdp/fd), only the filename is

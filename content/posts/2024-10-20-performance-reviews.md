@@ -3,7 +3,6 @@ title: "Performance reviews"
 date: 2024-10-20T12:15:14+02:00
 tags:
   - dev
-  - devops
 ---
 
 During performance reviews[^1], it's handy to obtain an overview of your

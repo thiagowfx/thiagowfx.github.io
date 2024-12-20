@@ -3,7 +3,6 @@ title: Convert JSON to YAML
 date: 2024-10-11T11:47:50+02:00
 tags:
   - dev
-  - devops
 ---
 
 Given a YAML file that is effectively JSON, convert it to YAML format.

@@ -3,7 +3,6 @@ title: "bash: disable pipefail"
 date: 2024-11-27T11:50:58+01:00
 tags:
   - dev
-  - devops
 ---
 
 We often do `set -euo pipefail` in shell scripts[^1].

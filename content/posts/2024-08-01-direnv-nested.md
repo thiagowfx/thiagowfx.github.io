@@ -3,7 +3,6 @@ title: "Direnv nested"
 date: 2024-08-01T01:02:10+02:00
 tags:
   - dev
-  - devops
 ---
 
 I covered [`direnv`]({{< ref "2022-01-04-direnv-automate-your-environment-variables" >}}) before.

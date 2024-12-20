@@ -3,7 +3,6 @@ title: "Advent of Code 2024: Day 2"
 date: 2024-12-03T01:15:00+01:00
 tags:
   - dev
-  - devops
 ---
 
 Link to [Day #2](https://adventofcode.com/2024/day/2) puzzle.

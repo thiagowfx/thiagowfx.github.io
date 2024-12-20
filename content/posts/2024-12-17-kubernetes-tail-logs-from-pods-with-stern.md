@@ -3,7 +3,6 @@ title: "Kubernetes: tail logs from pods with stern"
 date: 2024-12-17T16:37:16-03:00
 tags:
   - dev
-  - devops
 ---
 
 You can always use `kubectl logs -n {namespace} {pod} [-c {container}] -f` to

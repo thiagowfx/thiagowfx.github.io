@@ -3,7 +3,6 @@ title: "Advent of Code: Day 11"
 date: 2024-12-12T19:15:35-03:00
 tags:
   - dev
-  - devops
 ---
 
 Link to [Day #11](https://adventofcode.com/2024/day/11) puzzle.

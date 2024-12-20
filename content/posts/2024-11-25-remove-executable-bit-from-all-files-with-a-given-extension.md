@@ -3,7 +3,6 @@ title: "Remove the executable bit from all files with a given extension"
 date: 2024-11-25T11:43:20+01:00
 tags:
   - dev
-  - devops
 ---
 
 To illustrate, consider TypeScript files (`*.ts`).

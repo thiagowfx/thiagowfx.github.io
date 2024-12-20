@@ -3,7 +3,6 @@ title: "kubectl: force delete pods"
 date: 2024-10-15T13:14:40+02:00
 tags:
   - dev
-  - devops
 ---
 
 Our installation of `traefik` via `helm` got stuck today in such a way that its

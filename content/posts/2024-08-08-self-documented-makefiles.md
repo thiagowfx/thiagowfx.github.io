@@ -4,7 +4,6 @@ date: 2024-08-08T10:42:49+02:00
 tags:
   - bestof
   - dev
-  - devops
 ---
 
 `Makefile`s are often great `bash` script replacements. Instead of creating a

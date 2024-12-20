@@ -4,7 +4,6 @@ date: 2024-05-28T10:23:22+02:00
 tags:
   - bestof
   - dev
-  - devops
 ---
 
 This post exemplifies an efficient workflow to shorten the edit-refresh loop

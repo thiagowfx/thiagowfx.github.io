@@ -3,7 +3,6 @@ title: "Conventional commits"
 date: 2024-10-25T14:43:55+02:00
 tags:
   - dev
-  - devops
 ---
 
 Conventional commits: https://www.conventionalcommits.org/:

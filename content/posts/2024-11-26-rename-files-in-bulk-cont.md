@@ -3,7 +3,6 @@ title: "Rename files in bulk (cont)"
 date: 2024-11-26T11:50:06+01:00
 tags:
   - dev
-  - devops
 ---
 
 Deeper into the [rabbit hole]({{< ref "2024-06-19-rename-files-in-bulk" >}}):

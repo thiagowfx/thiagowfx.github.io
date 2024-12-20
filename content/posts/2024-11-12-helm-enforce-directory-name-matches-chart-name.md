@@ -3,7 +3,6 @@ title: "Helm: enforce the directory name matches the chart name"
 date: 2024-11-12T11:13:06+01:00
 tags:
   - dev
-  - devops
 ---
 
 **Problem statement**: Given a helm chart called `foo`, enforce that its `Chart.yaml` file lives in a directory called `foo`[^1].

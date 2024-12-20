@@ -3,7 +3,6 @@ title: "zoxide: cd within the same directory"
 date: 2024-11-15T16:03:29+01:00
 tags:
   - dev
-  - devops
 ---
 
 I am a big fan of [`zoxide`](https://github.com/ajeetdsouza/zoxide):

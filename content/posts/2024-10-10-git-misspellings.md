@@ -3,7 +3,6 @@ title: "git misspellings"
 date: 2024-10-10T13:26:57+02:00
 tags:
   - dev
-  - devops
   - serenity
 ---
 

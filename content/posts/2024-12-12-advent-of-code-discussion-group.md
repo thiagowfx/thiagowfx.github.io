@@ -3,7 +3,6 @@ title: "Advent of Code: discussion group"
 date: 2024-12-12T19:30:53-03:00
 tags:
   - dev
-  - devops
 ---
 
 Assuming you are following this year's advent of code, you are welcome to join

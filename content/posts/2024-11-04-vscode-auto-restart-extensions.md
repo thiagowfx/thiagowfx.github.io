@@ -3,7 +3,6 @@ title: "VSCode: auto restart extensions"
 date: 2024-11-04T11:34:36+01:00
 tags:
   - dev
-  - devops
 ---
 
 Whenever I open VSCode, there are some extension updates. Every time, I need to
