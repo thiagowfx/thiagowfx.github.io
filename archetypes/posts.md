@@ -3,9 +3,11 @@
 title: "{{ replace .Name $today "" | humanize }}"
 date: {{ .Date }}
 tags:
-  - bestof★
-  - dev
-  - serenity
+{{- range $plural, $terms := .Site.Taxonomies }}
+{{- range $term, $val := $terms }}
+  - {{ printf "%s" $term }}
+{{- end }}
+{{- end }}
 ---
 
 <!--more-->
