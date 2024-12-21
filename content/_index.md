@@ -1,7 +1,3 @@
----
-title: "Welcome to My Site"
----
-
 ## Thiago Perrotta (`@thiagowfx`)
 
 **serendipity** /ˌsɛr ənˈdɪp ɪ ti/ _n_
