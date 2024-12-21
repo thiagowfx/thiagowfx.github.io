@@ -9,6 +9,8 @@ tags:
 I got a new domain! This blog is now available on https://www.perrotta.dev/.
 There's also a redirect to it from https://blog.perrotta.dev/.
 
+**Update (2024-12-21)**: The canonical URL is now simply https://perrotta.dev/.
+
 <!--more-->
 
 I don't know which one I like best, so `www` is the canonical subdomain for now.

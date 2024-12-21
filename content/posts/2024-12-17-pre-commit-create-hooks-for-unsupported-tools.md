@@ -45,7 +45,7 @@ repos:
 That simply works™. How did I get there? Starting with the references:
 
 1. https://adamj.eu/tech/2023/02/09/pre-commit-hooks-unsupported-tools/
-2. https://www.perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/
+2. https://perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/
 3. https://stackoverflow.com/questions/62974985/go-module-latest-found-but-does-not-contain-package
 4. https://pkg.go.dev/github.com/cloudflare/pint@v0.69.1/cmd/pint
 

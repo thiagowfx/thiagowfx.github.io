@@ -19,6 +19,6 @@ update:
 	git submodule update --remote
 
 # Ping Google and Bing about changes in the sitemap
-ping sitemap="https://www.perrotta.dev/sitemap.xml":
+ping sitemap="https://perrotta.dev/sitemap.xml":
 	curl -sS -o /dev/null "https://www.google.com/ping?sitemap={{ sitemap }}"
 	curl -sS -o /dev/null "https://www.bing.com/ping?sitemap={{ sitemap }}"
