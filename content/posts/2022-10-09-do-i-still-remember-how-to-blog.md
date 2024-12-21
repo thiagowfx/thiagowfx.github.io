@@ -10,7 +10,7 @@ I haven't written a blog post for a couple of months now, which is a good indica
 <!--more-->
 
 First, `git clone --recurse https://github.com/thiagowfx/thiagowfx.github.io/`.
-I like to store it in `~/Projects/thiagowfx.github.io`.
+I like to store it in `~/Projects/`.
 
 To create a new post, `hugo new content/posts/2022-10-09-title-comes-here.md`.
 
