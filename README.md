@@ -6,7 +6,7 @@
 [![Pre-commit](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yml)
 <!-- keep-sorted end -->
 
-This blog is managed with [`hugo`][hugo].
+This blog is built with [`hugo`][hugo].
 
 ## LICENSE
 
