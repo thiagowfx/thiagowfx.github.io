@@ -1,4 +1,146 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.140.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2025 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Fri, 20 Dec 2024 00:46:50 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>hugo: merge two tags</title><link>https://www.perrotta.dev/2024/12/hugo-merge-two-tags/</link><pubDate>Fri, 20 Dec 2024 00:46:50 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/hugo-merge-two-tags/</guid><description>&lt;p>So far I&amp;rsquo;ve been using the &lt;code>dev&lt;/code> and &lt;code>devops&lt;/code> tags pretty much interchangeably
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Dev on not just serendipity</title><link>https://www.perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo -- 0.140.0</generator><language>en-us</language><copyright>Copyright © 2021 - 2025 Thiago Perrotta · CC BY-NC-SA 4.0 · RSS · Made with ♥ in 🇨🇦</copyright><lastBuildDate>Fri, 20 Dec 2024 22:47:51 -0300</lastBuildDate><atom:link href="https://www.perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code: Day 8</title><link>https://www.perrotta.dev/2024/12/advent-of-code-day-8/</link><pubDate>Fri, 20 Dec 2024 22:47:51 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/advent-of-code-day-8/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/8">Day #8&lt;/a> puzzle.&lt;/p></description><content:encoded><![CDATA[<p>Link to <a href="https://adventofcode.com/2024/day/8">Day #8</a> puzzle.</p>
+<p>This is a problem in a 2D grid. I like to start by making a frequency map
+(dictionary) from the frequencies to the coordinates where they occur:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#f92672">from</span> collections <span style="color:#f92672">import</span> defaultdict
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># {&#39;0&#39;: ((1,8), ...)}</span>
+</span></span><span style="display:flex;"><span>freq_map <span style="color:#f92672">=</span> defaultdict(tuple)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> x, line <span style="color:#f92672">in</span> enumerate(lines):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> y, field <span style="color:#f92672">in</span> enumerate(line):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> field<span style="color:#f92672">.</span>isalnum():
+</span></span><span style="display:flex;"><span>            freq_map[field] <span style="color:#f92672">+=</span> ((x, y),)
+</span></span></code></pre></div><p>Then it&rsquo;s just a matter of going through every coordinate pair for a given
+frequency. <code>combinations()</code> from <code>itertools</code> is great for that:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> combinations
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>antinodes <span style="color:#f92672">=</span> set()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> all_coords <span style="color:#f92672">in</span> freq_map<span style="color:#f92672">.</span>values():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> coord1, coord2 <span style="color:#f92672">in</span> combinations(all_coords, <span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>        antinodes<span style="color:#f92672">.</span>update(compute_antinodes(coord1, coord2, len(lines), len(lines[<span style="color:#ae81ff">0</span>])))
+</span></span></code></pre></div><p>The meat of the code lives in <code>compute_antinodes</code>. We need to compute two
+coordinates and check whether they are within bounds:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">within_bounds</span>(x, y, height, width):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;=</span> x <span style="color:#f92672">&lt;</span> height <span style="color:#f92672">and</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;=</span> y <span style="color:#f92672">&lt;</span> width
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">compute_antinodes</span>(coord1, coord2, height, width):
+</span></span><span style="display:flex;"><span>    x1, y1 <span style="color:#f92672">=</span> coord1
+</span></span><span style="display:flex;"><span>    x2, y2 <span style="color:#f92672">=</span> coord2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    dx <span style="color:#f92672">=</span> x2 <span style="color:#f92672">-</span> x1
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> dx <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    dy <span style="color:#f92672">=</span> y2 <span style="color:#f92672">-</span> y1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    antinodes <span style="color:#f92672">=</span> ()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (x0, y0, direction) <span style="color:#f92672">in</span> ((x1, y1, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>), (x2, y2, <span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)):
+</span></span><span style="display:flex;"><span>        x, y <span style="color:#f92672">=</span> x0 <span style="color:#f92672">+</span> direction <span style="color:#f92672">*</span> dx, y0 <span style="color:#f92672">+</span> direction <span style="color:#f92672">*</span> dy
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> within_bounds(x, y, height, width):
+</span></span><span style="display:flex;"><span>            antinodes <span style="color:#f92672">+=</span> ((x, y),)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> antinodes
+</span></span></code></pre></div><p>The <code>assert</code>ion gives us peace of mind.</p>
+<p>The answer is the number of <code>antinodes</code>.</p>
+<p>For part two, we need to extend the <code>compute_antinodes</code> logic to keep going
+until it gets out-of-bounds:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">compute_antinodes</span>(coord1, coord2, height, width, unbounded<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
+</span></span><span style="display:flex;"><span>    x1, y1 <span style="color:#f92672">=</span> coord1
+</span></span><span style="display:flex;"><span>    x2, y2 <span style="color:#f92672">=</span> coord2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    dx <span style="color:#f92672">=</span> x2 <span style="color:#f92672">-</span> x1
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> dx <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    dy <span style="color:#f92672">=</span> y2 <span style="color:#f92672">-</span> y1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> unbounded:
+</span></span><span style="display:flex;"><span>        antinodes <span style="color:#f92672">=</span> ((x1, y1), (x2, y2))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        antinodes <span style="color:#f92672">=</span> ()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (x0, y0, direction) <span style="color:#f92672">in</span> ((x1, y1, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>), (x2, y2, <span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)):
+</span></span><span style="display:flex;"><span>        steps <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>            x, y <span style="color:#f92672">=</span> x0 <span style="color:#f92672">+</span> direction <span style="color:#f92672">*</span> steps <span style="color:#f92672">*</span> dx, y0 <span style="color:#f92672">+</span> direction <span style="color:#f92672">*</span> steps <span style="color:#f92672">*</span> dy
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> within_bounds(x, y, height, width):
+</span></span><span style="display:flex;"><span>                antinodes <span style="color:#f92672">+=</span> ((x, y),)
+</span></span><span style="display:flex;"><span>                steps <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> antinodes
+</span></span></code></pre></div><p>The full solution:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> collections <span style="color:#f92672">import</span> defaultdict
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> combinations
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">within_bounds</span>(x, y, height, width):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;=</span> x <span style="color:#f92672">&lt;</span> height <span style="color:#f92672">and</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&lt;=</span> y <span style="color:#f92672">&lt;</span> width
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">compute_antinodes</span>(coord1, coord2, height, width, unbounded<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
+</span></span><span style="display:flex;"><span>    x1, y1 <span style="color:#f92672">=</span> coord1
+</span></span><span style="display:flex;"><span>    x2, y2 <span style="color:#f92672">=</span> coord2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    dx <span style="color:#f92672">=</span> x2 <span style="color:#f92672">-</span> x1
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span> dx <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    dy <span style="color:#f92672">=</span> y2 <span style="color:#f92672">-</span> y1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> unbounded:
+</span></span><span style="display:flex;"><span>        antinodes <span style="color:#f92672">=</span> ((x1, y1), (x2, y2))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        antinodes <span style="color:#f92672">=</span> ()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (x0, y0, direction) <span style="color:#f92672">in</span> ((x1, y1, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>), (x2, y2, <span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)):
+</span></span><span style="display:flex;"><span>        steps <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>            x, y <span style="color:#f92672">=</span> x0 <span style="color:#f92672">+</span> direction <span style="color:#f92672">*</span> steps <span style="color:#f92672">*</span> dx, y0 <span style="color:#f92672">+</span> direction <span style="color:#f92672">*</span> steps <span style="color:#f92672">*</span> dy
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> within_bounds(x, y, height, width):
+</span></span><span style="display:flex;"><span>                antinodes <span style="color:#f92672">+=</span> ((x, y),)
+</span></span><span style="display:flex;"><span>                steps <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> antinodes
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]) <span style="color:#66d9ef">as</span> input:
+</span></span><span style="display:flex;"><span>        lines <span style="color:#f92672">=</span> input<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>splitlines()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># {&#39;0&#39;: ((1,8), ...)}</span>
+</span></span><span style="display:flex;"><span>    freq_map <span style="color:#f92672">=</span> defaultdict(tuple)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> x, line <span style="color:#f92672">in</span> enumerate(lines):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> y, field <span style="color:#f92672">in</span> enumerate(line):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> field<span style="color:#f92672">.</span>isalnum():
+</span></span><span style="display:flex;"><span>                freq_map[field] <span style="color:#f92672">+=</span> ((x, y),)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    antinodes <span style="color:#f92672">=</span> set()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> all_coords <span style="color:#f92672">in</span> freq_map<span style="color:#f92672">.</span>values():
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> coord1, coord2 <span style="color:#f92672">in</span> combinations(all_coords, <span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>            antinodes<span style="color:#f92672">.</span>update(compute_antinodes(coord1, coord2, len(lines), len(lines[<span style="color:#ae81ff">0</span>])))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part one</span>
+</span></span><span style="display:flex;"><span>    print(len(antinodes))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    antinodes <span style="color:#f92672">=</span> set()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> all_coords <span style="color:#f92672">in</span> freq_map<span style="color:#f92672">.</span>values():
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> coord1, coord2 <span style="color:#f92672">in</span> combinations(all_coords, <span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>            antinodes<span style="color:#f92672">.</span>update(compute_antinodes(coord1, coord2, len(lines), len(lines[<span style="color:#ae81ff">0</span>]), unbounded<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># part two</span>
+</span></span><span style="display:flex;"><span>    print(len(antinodes))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    main()
+</span></span></code></pre></div><p>Instead of using tuples or coordinates all over the place, we could simply have
+modified the map inplace, and then iterated over it in the end to count the
+antinodes. I like the tuple abstraction better, and it&rsquo;s quite efficient anyway.</p>]]></content:encoded></item><item><title>hugo: merge two tags</title><link>https://www.perrotta.dev/2024/12/hugo-merge-two-tags/</link><pubDate>Fri, 20 Dec 2024 00:46:50 -0300</pubDate><guid>https://www.perrotta.dev/2024/12/hugo-merge-two-tags/</guid><description>&lt;p>So far I&amp;rsquo;ve been using the &lt;code>dev&lt;/code> and &lt;code>devops&lt;/code> tags pretty much interchangeably
 (and inconsistently) in this blog. There&amp;rsquo;s no real difference: Dev and Ops work
 overlap quite a lot. It&amp;rsquo;s time to do some house cleaning and merge them. I
 choose &lt;code>dev&lt;/code> as it is more generic / agnostic.&lt;/p></description><content:encoded><![CDATA[<p>So far I&rsquo;ve been using the <code>dev</code> and <code>devops</code> tags pretty much interchangeably
@@ -1109,23 +1251,4 @@ that they are properly arranged:</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
 </span></span><span style="display:flex;"><span>    main()
-</span></span></code></pre></div>]]></content:encoded></item><item><title>Docker image size</title><link>https://www.perrotta.dev/2024/12/docker-image-size/</link><pubDate>Thu, 05 Dec 2024 13:05:44 +0100</pubDate><guid>https://www.perrotta.dev/2024/12/docker-image-size/</guid><description>&lt;p>When trying to optimize docker images in terms of size, the workflow is as
-follows:&lt;/p></description><content:encoded><![CDATA[<p>When trying to optimize docker images in terms of size, the workflow is as
-follows:</p>
-<h2 id="terminal-1">Terminal 1</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% docker build -f Dockerfile . -t argocd-download-tools
-</span></span></code></pre></div><p>&hellip;possibly paired up with <code>entr</code> or <code>fswatch</code> depending on your eagerness for
-automatic builds.</p>
-<h2 id="terminal-2">Terminal 2</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>% docker image inspect argocd-download-tools | jq -r <span style="color:#e6db74">&#39;.[0].Size&#39;</span> | numfmt --to<span style="color:#f92672">=</span>iec
-</span></span><span style="display:flex;"><span>134M
-</span></span></code></pre></div><p>&hellip;possibly prepended with <code>watch</code>.</p>
-<p>I wasn&rsquo;t aware of <a href="https://man.archlinux.org/man/numfmt.1"><code>numfmt</code></a>:</p>
-<blockquote>
-<p>numfmt - Convert numbers from/to human-readable strings</p>
-</blockquote>
-<p>&hellip;instead of displaying plain bytes, it converts numbers to human-readable
-strings (à la <code>df -h</code> or <code>free -h</code>).</p>
-<p>Regarding the <a href="https://en.wikipedia.org/wiki/Binary_prefix">units</a>: they don&rsquo;t
-matter much, because we are only interested in an approximation, no need to
-shave bytes off here. <code>SI</code> has 1k = 1000, whereas <code>IEC</code> has 1Ki = 1024.</p>]]></content:encoded></item></channel></rss>
+</span></span></code></pre></div>]]></content:encoded></item></channel></rss>
