@@ -19,4 +19,3 @@ title: "Welcome to My Site"
 ### Licensing
 
 Content is freely available under the [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) license.
-
