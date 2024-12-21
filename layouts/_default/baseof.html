@@ -12,15 +12,15 @@
   <meta name="referrer" content="no-referrer-when-downgrade" />
 
   {{ with .OutputFormats.Get "rss" -}}
-  {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+  {{ printf `
+  <link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
   {{ end -}}
 
   {{- partial "style.html" . -}}
 
-  <!-- A partial to be overwritten by the user.
-  Simply place a custom_head.html into
-  your local /layouts/partials-directory -->
-  {{- partial "custom_head.html" . -}}
+  {{- with .Site.Params.appleTouchIcon }}
+  <link rel="apple-touch-icon" href="{{ . | absURL }}">
+  {{- end }}
 </head>
 
 <body>
@@ -30,14 +30,10 @@
   <main>
     {{- block "main" . }}{{- end }}
   </main>
-  <footer>
-    {{- partial "footer.html" . -}}
-  </footer>
 
-  <!-- A partial to be overwritten by the user.
-  Simply place a custom_body.html into
-  your local /layouts/partials-directory -->
-  {{- partial "custom_body.html" . -}}
+  <footer>
+    <span>{{ site.Copyright | markdownify }}</span>
+  </footer>
 </body>
 
 </html>
