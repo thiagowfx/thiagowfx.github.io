@@ -10,7 +10,6 @@ tags:
 This article describes my experience transitioning to, setting up and using the
 [Miniflux](https://miniflux.app/) RSS reader for the first time.
 
-<!--more-->
 
 ## Preamble
 

@@ -11,7 +11,6 @@ Recipe to list all pods that belong to a given node:
 $ kubectl get pod -o wide --field-selector spec.nodeName={node_name} -A
 ```
 
-<!--more-->
 
 **Source**: https://stackoverflow.com/questions/39231880/kubernetes-api-get-pods-on-specific-nodes
 

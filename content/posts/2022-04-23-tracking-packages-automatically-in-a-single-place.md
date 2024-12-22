@@ -7,7 +7,6 @@ tags:
 
 I was looking for a way to **track packages and parcels** (mail) for the most popular post and courier services e.g. DHL, UPS, Fedex, Canada Post, USPS, Correios, etc.
 
-<!--more-->
 
 There were only two requirements:
 

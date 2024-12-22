@@ -13,7 +13,6 @@ interactive tool.
 If files are scattered across multiple directories, consider using the
 [`rename`](https://man.archlinux.org/man/rename.1.en) utility from `util-linux`.
 
-<!--more-->
 
 A simple example to rename all `readme.md` files to `README.md` for consistency:
 

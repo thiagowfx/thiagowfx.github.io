@@ -7,7 +7,6 @@ tags:
 
 I wanted to create a new secure passphrase for my WLAN (Wi-Fi).
 
-<!--more-->
 
 It's always an option to use the password generator built into my password
 manager, however I wanted to take this opportunity to employ _Diceware_:

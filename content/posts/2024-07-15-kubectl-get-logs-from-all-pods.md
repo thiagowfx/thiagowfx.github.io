@@ -13,7 +13,6 @@ kubectl logs -n argocd argocd-repo-server-5d59975687-dxnh7
 
 But how do you know what hash to use after `server-`?
 
-<!--more-->
 
 **Option 1)**: TAB auto-completion:
 

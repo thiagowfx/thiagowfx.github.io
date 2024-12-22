@@ -7,7 +7,6 @@ tags:
 
 Link to [Day #5](https://adventofcode.com/2024/day/5) puzzle.
 
-<!--more-->
 
 It is a topological sort problem, plain and simple.
 

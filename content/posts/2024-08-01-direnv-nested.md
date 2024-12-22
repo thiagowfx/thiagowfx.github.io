@@ -9,7 +9,6 @@ I covered [`direnv`]({{< ref "2022-01-04-direnv-automate-your-environment-variab
 
 **New scenario**: Given a directory structure with two nested `.envrc`s:
 
-<!--more-->
 
 ```
 % tree -a top

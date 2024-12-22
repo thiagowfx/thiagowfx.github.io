@@ -9,7 +9,6 @@ tags:
 This post exemplifies an efficient workflow to shorten the edit-refresh loop
 when dealing with github actions.
 
-<!--more-->
 
 ## Assumptions
 

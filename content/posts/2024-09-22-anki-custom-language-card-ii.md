@@ -9,7 +9,6 @@ tags:
 This post builds upon the previous [Anki: custom language card]({{< ref
 "2024-02-03-anki-custom-language-card" >}}).
 
-<!--more-->
 
 ## Searching word boundaries
 

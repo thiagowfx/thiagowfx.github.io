@@ -10,7 +10,6 @@ It's an overall good habit in defensive programming.
 
 Nonetheless, sometimes the default behavior for `pipefail` is desired.
 
-<!--more-->
 
 Recently we had an example involving [pre-commit.com](https://pre-commit.com/)
 and [`mdsh`](https://github.com/zimbatm/mdsh), consider this `README.md` file:

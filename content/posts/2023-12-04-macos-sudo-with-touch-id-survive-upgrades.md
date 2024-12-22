@@ -13,7 +13,6 @@ This was previously covered [here]({{< ref "2022-03-21-macos-sudo-with-touch-id"
 
 Now, with macOS Sonoma, it's also possible to make this setting survive OS upgrades.
 
-<!--more-->
 
 ```shell
 % sudo cp /etc/pam.d/sudo_local{.template,}

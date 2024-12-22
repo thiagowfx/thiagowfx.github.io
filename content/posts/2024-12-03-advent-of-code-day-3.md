@@ -7,7 +7,6 @@ tags:
 
 Link to [Day #3](https://adventofcode.com/2024/day/3) puzzle.
 
-<!--more-->
 
 It's a pretty typical regex problem.
 To choose not to use regex is to endeavour in pain.

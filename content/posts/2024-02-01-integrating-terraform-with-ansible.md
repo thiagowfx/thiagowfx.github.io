@@ -15,7 +15,6 @@ This post is a follow-up of [Terraforming a Linode: hello world]({{< ref "2024-0
 Before we extensively use Ansible to configure our VPS instance, first let's
 set up a basic integration between Terraform and Ansible.
 
-<!--more-->
 
 First of all, here's an overview of where I stopped last time. There were a
 couple of lightweight modifications since then. I'll explain some of them

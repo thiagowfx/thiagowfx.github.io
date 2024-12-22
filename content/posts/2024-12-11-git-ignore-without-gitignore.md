@@ -21,7 +21,6 @@ Common examples:
 
 ...and so on.
 
-<!--more-->
 
 Is there a way to have a "personal" `.gitignore` file? Yes, in fact, many ways!
 

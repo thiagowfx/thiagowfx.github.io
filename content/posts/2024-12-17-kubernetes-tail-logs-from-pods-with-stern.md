@@ -14,7 +14,6 @@ inspect logs from a specific pod[^1].
 Nonetheless that doesn't scale when you don't know which pod you want in the
 first place.
 
-<!--more-->
 
 You could start with deployments, dive into replica sets, and then into
 individual pods, one by one, but... that is tedious and slow.

@@ -7,7 +7,6 @@ tags:
 
 In this post we will cover a few linux swap recipes.
 
-<!--more-->
 
 ## Empty swap space
 

@@ -16,7 +16,6 @@ usage)[2], Linux support is great (well, it ships with a Linux OS, right?) —
 even for most touchscreen models [citation needed] — and it is simple (as in
 KISS).
 
-<!--more-->
 
 Now, the previous paragraph sounded a little repetitive, but I'd like to focus
 on two of my previous points here:

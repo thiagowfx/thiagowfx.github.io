@@ -8,7 +8,6 @@ tags:
 **Problem statement**: Given a monorepo on Github with multiple docker images in
 it, write a github workflow to build and push all of them.
 
-<!--more-->
 
 Here is an abridged version of the resulting workflow. The images are listed one
 by one for fine-grained control purposes, but it would also be possible to glob

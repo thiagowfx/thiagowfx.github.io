@@ -13,7 +13,6 @@ tags:
 
 We can also use it to craft family trees!
 
-<!--more-->
 
 I came up with the following template:
 

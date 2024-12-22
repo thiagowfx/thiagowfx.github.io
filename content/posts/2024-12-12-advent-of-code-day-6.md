@@ -7,7 +7,6 @@ tags:
 
 Link to [Day #6](https://adventofcode.com/2024/day/6) puzzle.
 
-<!--more-->
 
 Part one is a classic 2D matrix (graph) traversal problem.
 

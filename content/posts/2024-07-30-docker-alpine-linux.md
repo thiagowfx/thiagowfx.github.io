@@ -7,7 +7,6 @@ tags:
 
 In this post: how to properly start `docker` on an Alpine Linux server.
 
-<!--more-->
 
 First, install `docker` and friends:
 

@@ -8,7 +8,6 @@ tags:
 A productivity booster whenever trying out new
 [pre-commit.com](https://pre-commit.com/) hooks from the wild:
 
-<!--more-->
 
 **Usage**: `pre-commit try-repo {git-repo} [--all-files]`
 

@@ -31,4 +31,3 @@ Note that `shopt` works in `bash`, alas not in `zsh`.
 [^2]: In theory, this is a pre-requisite: `shopt -s globstar`. In practice, it
     should be the default behavior.
 
-<!--more-->

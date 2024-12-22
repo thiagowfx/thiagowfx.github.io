@@ -11,7 +11,6 @@ tags:
 **Goal**: Return all unique values used in `templates/`. The intention for it is
 to add them all as defaults to `values.yaml`.
 
-<!--more-->
 
 First attempt:
 

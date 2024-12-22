@@ -10,7 +10,6 @@ Today I tried to use my Steam Deck to no avail.
 
 Upon turning it on, a “Downloading update (…)” splash screen would appear, then the device would quickly turn itself off, in a matter of seconds.
 
-<!--more-->
 
 Repeating this dance a couple of times yielded the same results.
 

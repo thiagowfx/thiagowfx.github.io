@@ -10,7 +10,6 @@ tags:
 keyword. Is there anything that can achieve the same results in
 Python?](https://stackoverflow.com/questions/53026622/python-equivalent-of-java-synchronized)
 
-<!--more-->
 
 Without having prior knowledge of any python libraries to do so, the primitive interface
 I would expect resembles the following:

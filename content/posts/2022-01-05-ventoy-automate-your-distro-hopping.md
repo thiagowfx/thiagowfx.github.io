@@ -15,7 +15,6 @@ From the project website, [**ventoy**][ventoy] is an:
 >
 > With ventoy, you don't need to format the disk over and over, you just need to copy the ISO/WIM/IMG/VHD(x)/EFI files to the USB drive and boot them directly.
 
-<!--more-->
 
 ## Before
 

@@ -8,7 +8,6 @@ tags:
 When trying to optimize docker images in terms of size, the workflow is as
 follows:
 
-<!--more-->
 
 ## Terminal 1
 

@@ -9,7 +9,6 @@ tags:
 Recently I needed to figure out what the IP address of my [pihole][pihole]
 instance was in my [Raspberry Pi][raspberry-pi] in my local network.
 
-<!--more-->
 
 ## Finding the Raspberry Pi
 

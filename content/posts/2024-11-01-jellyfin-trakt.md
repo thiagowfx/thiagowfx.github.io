@@ -9,7 +9,6 @@ tags:
 
 > Available for install through the plugin catalog, Trakt for Jellyfin allows you to synchronize your watch states with ease.
 
-<!--more-->
 
 I’ve been enjoying this free plug-in.
 When watching content in Jellyfin (e.g. via Android TV, or via your laptop), it automatically scrobbles[^1] TV shows and movies to your Jellyfin account.

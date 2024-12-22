@@ -13,7 +13,6 @@ For example, mine: https://github.com/thiagowfx.keys
 
 And then let's say you also use your full name on GitHub.
 
-<!--more-->
 
 ```
 % ssh whoami.filippo.io

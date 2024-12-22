@@ -19,7 +19,6 @@ aws:
   iam_role: barArn  # <-- disallow
 ```
 
-<!--more-->
 
 We can accomplish this with the following schema (`% cat values.schema.json`):
 

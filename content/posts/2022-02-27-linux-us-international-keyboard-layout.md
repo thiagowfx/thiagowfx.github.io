@@ -9,7 +9,6 @@ tags:
 I use QWERTY keyboards with a US layout. Sometimes I need to type accents or
 cedillas, and I keep forgetting how to do so, this post summarizes how to do it.
 
-<!--more-->
 
 ## Intro
 

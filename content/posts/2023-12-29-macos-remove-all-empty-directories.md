@@ -10,7 +10,6 @@ For some odd reason my [Calibre](https://calibre-ebook.com) backup to cloud
 storage had a bunch of empty directories. I've been meaning to remove them, but
 it's cumbersome to do so from the web client.
 
-<!--more-->
 
 Instead, let's do it from a local client.
 

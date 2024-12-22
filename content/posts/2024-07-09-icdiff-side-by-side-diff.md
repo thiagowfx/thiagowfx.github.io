@@ -11,7 +11,6 @@ python that comes with two sensible out-of-the-box defaults:
 - colored diff output
 - side-by-side diff
 
-<!--more-->
 
 The usual `diff` tool in Unix system has some basic color support[^1].
 Nonetheless, sometimes the output of `icdiff` is better, with little effort or

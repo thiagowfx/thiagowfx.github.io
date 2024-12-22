@@ -15,7 +15,6 @@ eW91IGFyZSBjdXJpb3VzIGFyZW50IHlvdQ==ubuntu@ubuntu:~ $
 
 But isn't this ugly? The prompt is concatenated with the output.
 
-<!--more-->
 
 It turns out `jsonpath` can emit a newline for improved readability:
 

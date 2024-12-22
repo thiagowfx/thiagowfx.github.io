@@ -9,7 +9,6 @@ When working with [pre-commit.com](https://pre-commit.com/) and specifying
 `language: golang` for a given hook, you may want to install dependencies as
 part of the hook bootstrapping process.
 
-<!--more-->
 
 Recently I needed to do so for [yq](https://github.com/mikefarah/yq)[^1]:
 

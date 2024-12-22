@@ -12,7 +12,6 @@ One negative side effect is that most binaries I execute with my shell (for
 example: `git`) are now outputting German text as well[^1]. In hindsight, this
 should have been expected.
 
-<!--more-->
 
 A simple fix is to override the environment locale with English. I made the
 following

@@ -11,7 +11,6 @@ Suppose you committed something to `git`. A few commits later, you realized you
 forgot to add something to that commit, or possibly missed a link, or even
 spotted a typo. How do you go about fixing it?
 
-<!--more-->
 
 ## Team
 

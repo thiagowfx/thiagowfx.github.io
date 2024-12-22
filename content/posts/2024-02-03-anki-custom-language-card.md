@@ -13,7 +13,6 @@ Upon reading [Fluent Forever](https://fluent-forever.com/index.html) by Gabriel
 Wyner, I got an itch to create my own Anki note template for learning
 languages.
 
-<!--more-->
 
 ## The template
 

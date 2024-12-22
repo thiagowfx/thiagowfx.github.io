@@ -9,7 +9,6 @@ When I created this blog, I pondered a lot about which typography to use. I
 kept experimenting with several fonts available in [Google
 Fonts](https://fonts.google.com/), and settled on a few favorites for websites:
 
-<!--more-->
 
 - Header fonts (sans-serif): Inter, Fira Sans, Lato
 

@@ -8,7 +8,6 @@ tags:
 
 Last year I found out about [Advent of Code][aoc].
 
-<!--more-->
 
 ## You said what?
 

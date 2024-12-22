@@ -12,7 +12,6 @@ I am a big fan of [`zoxide`](https://github.com/ajeetdsouza/zoxide):
 The idea is simple: as you keep `cd`ing during the day, it builds up a local
 database of your most frequently accessed directories.
 
-<!--more-->
 
 Perhaps you `cd` often to `~/projects/company/major/area/foo`.
 

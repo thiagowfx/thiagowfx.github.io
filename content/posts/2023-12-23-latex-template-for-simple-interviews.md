@@ -7,7 +7,6 @@ tags:
 
 Whenever I need to write out a simple document wherein content is more important than form, **LaTeX** is my preferred choice. It beats Google Docs, Microsoft Word, LibreOffice, or any other text processor for that matter.
 
-<!--more-->
 
 [Overleaf](https://www.overleaf.com/) is a solid cloud editor choice these days but I tend to prefer to have full control over my programming environment, thus for a local solution [TeXShop](https://pages.uoregon.edu/koch/texshop/) is my favorite on macOS:
 

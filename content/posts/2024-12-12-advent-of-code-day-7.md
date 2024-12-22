@@ -7,7 +7,6 @@ tags:
 
 Link to [Day #7](https://adventofcode.com/2024/day/7) puzzle.
 
-<!--more-->
 
 Part one: dynamic programming!
 

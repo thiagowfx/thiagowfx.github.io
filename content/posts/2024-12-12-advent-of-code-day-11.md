@@ -7,7 +7,6 @@ tags:
 
 Link to [Day #11](https://adventofcode.com/2024/day/11) puzzle.
 
-<!--more-->
 
 Part one can be done with a simulation.
 

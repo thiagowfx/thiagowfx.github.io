@@ -16,7 +16,6 @@ schema from scratch, by hand.
 
 **Can we automate this process?**
 
-<!--more-->
 
 Of course we can.
 

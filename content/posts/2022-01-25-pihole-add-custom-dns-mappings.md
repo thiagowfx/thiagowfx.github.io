@@ -9,7 +9,6 @@ tags:
 This post covers how to add DNS entries / mappings to a local network managed
 with [pihole][pihole].
 
-<!--more-->
 
 There are several ways to do so:
 

@@ -9,7 +9,6 @@ tags:
 
 [^1]: _Why_? For ease of management, simplicity, consistency & uniformity.
 
-<!--more-->
 
 ## Background
 

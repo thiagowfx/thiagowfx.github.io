@@ -18,7 +18,6 @@ There are at least three reasons to use DuckDuckGo as an _alternative_:
 
 The quest(ion) then becomes: How can I use mostly Google, but still have quick access to DuckDuckGo bangs?
 
-<!--more-->
 
 There are several ways to do so.
 

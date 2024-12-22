@@ -19,7 +19,6 @@ years ago](https://github.com/github/roadmap/issues/372), and that's hard to
 beat. Graphviz, sadly, [does
 not](https://forum.graphviz.org/t/github-adding-support-for-mermaid-diagrams/998).
 
-<!--more-->
 
 There is a live editor for quick prototyping and iteration: https://mermaid.live/
 

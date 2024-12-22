@@ -11,7 +11,6 @@ so that the upgrades take effect.
 
 This should be automated.
 
-<!--more-->
 
 There is a solution: add the following to your `settings.json` (`Cmd + ,`)
 

@@ -9,7 +9,6 @@ Sometimes, when connecting to public Wi-Fi hotposts, especially in airports and
 coffee shops, the captive portal gateway required to get internet access will
 simply not show up.
 
-<!--more-->
 
 The simplest way to force it to do so is to [turn the Wi-Fi off and on
 again](https://www.youtube.com/watch?v=DPqdyoTpyEs).

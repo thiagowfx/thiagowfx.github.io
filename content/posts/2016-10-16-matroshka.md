@@ -15,7 +15,6 @@ sobre a mesma.
 
 Dado um arquivo `matroshka.tar.gz`, precisávamos encontrar a *flag*.
 
-<!--more-->
 
 Não era difícil desconfiar do que esse arquivo / *chall* se tratava: matroshkas
 são aquelas bonecas russas que se encaixam umas dentro das outras. Então...de

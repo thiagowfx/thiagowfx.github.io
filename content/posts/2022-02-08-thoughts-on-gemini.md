@@ -19,7 +19,6 @@ That's too abstract though. I prefer the way [Kev Quirk](https://kevq.uk/gemini-
 
 > To put that into human-digestible form; Gemini is basically a very light, text-only alternative to HTML.
 
-<!--more-->
 
 Gemini aims to replace "lightweight HTML", but it already starts with a big barrier for entry and adoption: It's not obvious what it is by just reading its project homepage alone. This in my opinion comes off as elitist.
 

@@ -7,7 +7,6 @@ tags:
 
 [Computers are fast](https://computers-are-fast.github.io).
 
-<!--more-->
 
 > Let's find out how well you know computers! All of these programs have a variable NUMBER in them. Your mission: guess how big NUMBER needs to get before the program takes 1 second to run.
 >

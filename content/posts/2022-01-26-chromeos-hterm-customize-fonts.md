@@ -10,7 +10,6 @@ tags:
 It is a bit dull with its out-of-the-box monospace font though.
 In this post we'll learn how to customize it.
 
-<!--more-->
 
 ## Google Fonts
 

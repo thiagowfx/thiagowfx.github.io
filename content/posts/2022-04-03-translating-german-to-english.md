@@ -9,7 +9,6 @@ I've been trying to learn German on my own, without taking formal classes. I sho
 
 For now, in this post I will briefly list the resources I use to translate German to English and/or to look up the definition of German words in German.
 
-<!--more-->
 
 ## [Google Translate](https://translate.google.com/)
 

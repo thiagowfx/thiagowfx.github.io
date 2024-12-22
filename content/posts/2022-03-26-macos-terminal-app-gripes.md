@@ -10,7 +10,6 @@ tags:
 defaults. That said, I have my own gripes about it, but the list is
 surprisingly small.
 
-<!--more-->
 
 ## 1. No OSC-52 support
 

@@ -24,7 +24,6 @@ reap the benefits that Nix provides.
 For now, I am only adopting `nix-env` and `nix-shell`, with no `*.nix` config
 files. This post covers `nix-env`.
 
-<!--more-->
 
 For simplicity, think of `nix-env` as a package manager, akin to `apk`,
 `pacman`, `brew`, `apt`, `pkg`, etc.

@@ -11,7 +11,6 @@ tags:
 I wanted to be notified whenever a flight deal from Munich[^1] appeared. The
 destination doesn't really matter.
 
-<!--more-->
 
 There are several ways to do so semi-automatically, I tried all of them at least
 once:

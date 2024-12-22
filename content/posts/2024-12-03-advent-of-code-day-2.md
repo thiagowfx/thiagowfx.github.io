@@ -7,7 +7,6 @@ tags:
 
 Link to [Day #2](https://adventofcode.com/2024/day/2) puzzle.
 
-<!--more-->
 
 The first part is straightforward. It felt right to use [`pairwise`](https://docs.python.org/3/library/itertools.html#itertools.pairwise) to compute the differences between each adjacent pair:
 

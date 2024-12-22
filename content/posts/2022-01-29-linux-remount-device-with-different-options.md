@@ -7,7 +7,6 @@ tags:
 
 A few recipes for remounting linux devices / disks. It mostly boils down to running `mount -o remount` as root.
 
-<!--more-->
 
 ## Remount as read-write
 

@@ -10,7 +10,6 @@ appreciate some indie blog aggregators. They are especially handy when I feel
 like breaking out of my own bubble and/or getting the occasional serendipity dose
 to discover new blogs to follow.
 
-<!--more-->
 
 Here's a non-exhaustive list in alphabetical order:
 

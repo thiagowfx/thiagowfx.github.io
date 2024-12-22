@@ -10,7 +10,6 @@ tool, dependency / library or system-wide configuration breaking[^1].
 
 This time: the upgrade to macOS Sequoia (15.0) broke `ack` (Perl).
 
-<!--more-->
 
 ```
 % ack

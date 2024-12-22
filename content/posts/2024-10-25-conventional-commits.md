@@ -15,7 +15,6 @@ Conventional commits: https://www.conventionalcommits.org/:
 > write automated tools on top of. This convention dovetails with SemVer, by
 > describing the features, fixes, and breaking changes made in commit messages.
 
-<!--more-->
 
 It looks like the following:
 

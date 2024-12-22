@@ -7,7 +7,6 @@ tags:
 
 It occurred to me the **Large Prints** section of our local public library is a decent way to sample popular books.
 
-<!--more-->
 
 [Wikipedia](https://en.m.wikipedia.org/wiki/Large-print):
 

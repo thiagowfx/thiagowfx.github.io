@@ -9,7 +9,6 @@ tags:
 In this post we will learn how to share environment variables (e.g.
 `$GDK_SCALE`) between a system user session and X11/Xorg.
 
-<!--more-->
 
 The typical [`~/.xinitrc`][xinitrc] and/or [`~/.xprofile`][xprofile] setup in
 2020s involves some environment variable exports such as the following:

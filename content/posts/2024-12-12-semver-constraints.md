@@ -21,7 +21,6 @@ Popular software tooling that uses them include:
 - terraform
 - ruby gems (here `~>` is used instead of simply `~`)
 
-<!--more-->
 
 Sometimes I use https://jubianchi.github.io/semver-check to double-check[^3], or
 to teach teammates how the range constraints work.

@@ -7,7 +7,6 @@ tags:
 
 Link to [Day #4](https://adventofcode.com/2024/day/4) puzzle.
 
-<!--more-->
 
 It's a pretty typical 2D matrix search problem, or a graph search problem, if
 you will.

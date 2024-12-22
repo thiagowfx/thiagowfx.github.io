@@ -27,7 +27,6 @@ podman may be found in the following packages:
   <cmd:podman> podman-3.4.4-r1 x86_64 {podman} (Apache-2.0)
 ```
 
-<!--more-->
 
 ## Preamble
 

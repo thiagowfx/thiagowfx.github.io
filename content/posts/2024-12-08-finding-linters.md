@@ -10,7 +10,6 @@ the means of incorporating linters into your CI/CD pipeline.
 
 But where can you find them?
 
-<!--more-->
 
 Some sources of inspiration include curated "super-mega-hyper" linter packages,
 such as:

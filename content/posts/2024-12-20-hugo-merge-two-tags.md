@@ -11,7 +11,6 @@ So far I've been using the `dev` and `devops` tags pretty much interchangeably
 overlap quite a lot. It's time to do some house cleaning and merge them. I
 choose `dev` as it is more generic / agnostic.
 
-<!--more-->
 
 First step, use `sed` to rename all `devops` tags to `dev`:
 

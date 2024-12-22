@@ -10,7 +10,6 @@ prototyping, but often forget what the standard library method signatures are.
 
 For example, how should I invoke `subprocess.call`?
 
-<!--more-->
 
 The most straightforward action at this point is to simply [google
 it](https://www.google.com/search?q=python+subprocess.call), no shame. The first result helpfully redirects me to the official python [documentation](https://docs.python.org/3/library/subprocess.html), as one would expect.

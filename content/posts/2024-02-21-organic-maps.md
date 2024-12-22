@@ -32,4 +32,3 @@ Negative impressions:
 - do not use it for public transit, it is terrible as it does not have
   real-time data integration
 
-<!--more-->

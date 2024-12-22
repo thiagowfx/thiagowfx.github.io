@@ -9,7 +9,6 @@ tags:
 It is possible to track/follow commits of `git` repositories
 on [GitHub][github] via RSS: `https://github.com/<user>/<repo>/commits.atom`.
 
-<!--more-->
 
 For example, my dotfiles: https://github.com/thiagowfx/dotfiles/commits.atom
 

@@ -8,7 +8,6 @@ tags:
 Whenever disk space gets almost full, I like to use the following software to
 clean up (unnecessary) big files from my computers:
 
-<!--more-->
 
 ## Windows
 

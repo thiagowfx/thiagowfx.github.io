@@ -13,7 +13,6 @@ Assume you use an `#instrospect` tag.
 **Problem statement**: how to define a single page / live query that aggregates
 all of the above?
 
-<!--more-->
 
 ```logseq
 {{query (OR (task TODO DOING) [[introspect]])}}

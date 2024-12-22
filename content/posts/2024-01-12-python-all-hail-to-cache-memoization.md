@@ -8,7 +8,6 @@ tags:
 In a typical dynamic programming (DP) problem, you'll usually instantiate a
 variable to hold previously computed data (cache).
 
-<!--more-->
 
 For example, let's consider a naive implementation of the factorial function:
 

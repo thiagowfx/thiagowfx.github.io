@@ -7,7 +7,6 @@ tags:
 
 Whenever I connect/disconnect my bluetooth headphones to my Linux workstation, I need to manually switch to/off them.
 
-<!--more-->
 
 Every commercial OS I'm aware of does that automatically, including Chrome OS, macOS and Windows.
 

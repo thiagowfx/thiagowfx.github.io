@@ -7,7 +7,6 @@ tags:
 
 2022 was an amazing year for AIs.
 
-<!--more-->
 
 ## [ChatGPT][chatgpt]
 

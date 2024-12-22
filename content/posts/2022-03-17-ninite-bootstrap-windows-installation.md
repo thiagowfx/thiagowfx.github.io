@@ -9,7 +9,6 @@ Whenever I need to fully reinstall a Windows Desktop system, there are certain a
 
 In my opinion, [Ninite](https://ninite.com) is the best way to do so.
 
-<!--more-->
 
 All you need to do is to select a few checkboxes. The Ninite installer will then automatically download and install all selected applications and software, one-by-one, with sensible defaults[^1] and a decent progress report:
 

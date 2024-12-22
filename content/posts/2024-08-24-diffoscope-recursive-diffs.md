@@ -14,7 +14,6 @@ There are many ways to `diff` two individual files:
 
 But how can you `diff` two individual directories?
 
-<!--more-->
 
 Enter [`diffoscope`](https://diffoscope.org/).
 

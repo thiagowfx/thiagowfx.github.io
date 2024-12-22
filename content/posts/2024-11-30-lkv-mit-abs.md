@@ -7,7 +7,6 @@ tags:
 
 Today I learned: what is a LKV mit ABS?
 
-<!--more-->
 
 Depending on where you are in Germany, it means exactly one of these:
 

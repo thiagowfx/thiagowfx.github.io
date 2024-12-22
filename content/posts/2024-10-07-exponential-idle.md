@@ -10,7 +10,6 @@ tags:
 
 > Exponential Idle is a math-inspired incremental game available on Android and iOS. Your goal is to stack up money by taking advantage of exponential growth. To do so, you have to step through time by tapping the equation or simply let the time follow its course. You can perform change of variables to accelerate the process, buy upgrades, get rewards, and unlock achievements while earning virtual money.
 
-<!--more-->
 
 I’ve been in love with this game, it is very fun and chill.
 The typography is beautiful, with LaTeX equations all over the place.

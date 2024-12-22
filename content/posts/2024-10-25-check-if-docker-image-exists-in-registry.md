@@ -7,7 +7,6 @@ tags:
 
 Given a docker registry, image and tag, run the following command:
 
-<!--more-->
 
 ```shell
 % docker manifest inspect 9876543210.foo.ecr.us-east-1.amazonaws.com/org/image:123456789

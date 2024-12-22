@@ -18,7 +18,6 @@ $ doas apt install <foo>
 
 It's not very difficult to get used to it, however you may still find yourself writing `sudo` occasionally. This post highlights a few ways to bridge that gap.
 
-<!--more-->
 
 ## Use a shell alias
 

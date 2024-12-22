@@ -10,7 +10,6 @@ Google Chrome when working on [Chrome for Testing]({{< ref
 "2024-01-25-chrome-for-testing.md" >}}) in the Browser Automation team at
 Google:
 
-<!--more-->
 
 ```shell
 #!/bin/bash

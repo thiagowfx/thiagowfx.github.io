@@ -13,7 +13,6 @@ I have two raspberry pi[^1] units sitting idle at home, a 3B and a 4.
 For a long time I’ve been wanting to do something useful with them,
 while increasing my DevOps toolkit knowledge.
 
-<!--more-->
 
 The roadblock to do so was the most classic excuse: lack of non-interrupted time.
 

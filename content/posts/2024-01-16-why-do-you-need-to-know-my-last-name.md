@@ -9,7 +9,6 @@ Some (annoying) websites and/or mobile apps will refuse to let you proceed past
 their registration / login screen unless you provide a last name. Isn't my
 first name enough[^1]?
 
-<!--more-->
 
 There are a couple of ways to work around this:
 

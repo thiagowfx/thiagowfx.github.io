@@ -9,7 +9,6 @@ tags:
 
 It is an operating system, period. What might cause a small surprise is that it is not based either on Linux or on BSD &#8212; and yet it is (probably) runnable in your modern computer/laptop!
 
-<!--more-->
 
 What I most like on it is that the system is integrated with the GUI, so the end user gets a nice experience. This is not so common as it sounds: most Linux distributions are simply a collection of programs and utilities put together in one place, but they are not necessarily integrated &#8212; however, **you** can integrate them. This makes all the difference between user-friendly and user-centered paradigms[^1].
 

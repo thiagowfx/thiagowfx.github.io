@@ -8,7 +8,6 @@ tags:
 This post contains a small handful of distinct services to query your machine
 external IP address.
 
-<!--more-->
 
 ## [Google](https://www.google.com/search?q=what+is+my+ip)
 

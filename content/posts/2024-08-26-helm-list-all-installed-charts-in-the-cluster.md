@@ -14,7 +14,6 @@ $ helm ls -h
   -A, --all-namespaces       list releases across all namespaces
 ```
 
-<!--more-->
 
 So...one of these should work, right?
 

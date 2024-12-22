@@ -8,7 +8,6 @@ tags:
 
 > Ufw stands for Uncomplicated Firewall, and is a program for managing a netfilter firewall. It provides a command line interface and aims to be uncomplicated and easy to use.
 
-<!--more-->
 
 The firewall makes justice to its name as it is really uncomplicated, and a pleasure to set up.
 

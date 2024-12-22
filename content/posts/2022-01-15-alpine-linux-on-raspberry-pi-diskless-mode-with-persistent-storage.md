@@ -11,7 +11,6 @@ Use case: Given an Alpine Linux **diskless**[^1] installation meant for
 a Raspberry Pi setup, we would like to add a persistent storage component to it
 to make it survive across reboots.
 
-<!--more-->
 
 ## Goal
 

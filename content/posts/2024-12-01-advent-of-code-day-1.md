@@ -11,7 +11,6 @@ solutions in Python 3.
 
 Link to [Day #1](https://adventofcode.com/2024/day/1) puzzle.
 
-<!--more-->
 
 This is just a warm-up.
 

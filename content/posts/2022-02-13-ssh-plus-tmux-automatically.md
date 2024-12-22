@@ -13,7 +13,6 @@ To persist those connections, a terminal multiplexer is often used, `tmux` and `
 
 In this post I will cover a few different client-side and server-side ways to have `ssh` automatically spawn `tmux` upon connection.
 
-<!--more-->
 
 ## Option #1: Use command-line ssh flags (client-side, recommended)
 

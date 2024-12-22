@@ -10,7 +10,6 @@ tags:
 This document describes my workflow to manage `APKBUILDs` for the
 [aports][aports] repository in [Alpine Linux][alpine-linux].
 
-<!--more-->
 
 ## Disclaimer
 

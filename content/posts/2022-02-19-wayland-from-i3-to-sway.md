@@ -8,7 +8,6 @@ tags:
 
 I've been giving Wayland a try. My window manager of choice in X11/Xorg is [`i3`](https://i3wm.org/), so the natural choice in Wayland is [`sway`](https://swaywm.org/).
 
-<!--more-->
 
 ## Intro
 
