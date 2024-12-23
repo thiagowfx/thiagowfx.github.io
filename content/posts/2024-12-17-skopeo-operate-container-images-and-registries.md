@@ -1,7 +1,8 @@
 ---
-title: "skopeo: operate container images and registries"
+title: "★ skopeo: operate container images and registries"
 date: 2024-12-17T17:49:31-03:00
 tags:
+  - bestof★
   - dev
 ---
 
