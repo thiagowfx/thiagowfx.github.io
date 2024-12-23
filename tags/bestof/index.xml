@@ -30,7 +30,18 @@ in its repository root.&lt;/p>
 &lt;p>The end goal is the ability to run &lt;code>pre-commit run --all-files pint&lt;/code> in our git
 repository.&lt;/p>
 &lt;p>For that, we&amp;rsquo;ll need to define a local / custom hook in our
-&lt;code>~/.pre-commit-config.yaml&lt;/code>:&lt;/p></description></item><item><title>★ Just</title><link>https://perrotta.dev/2024/12/just/</link><pubDate>Fri, 13 Dec 2024 01:16:41 -0300</pubDate><guid>https://perrotta.dev/2024/12/just/</guid><description>&lt;p>&lt;a href="https://github.com/casey/just">Just&lt;/a> is a command runner, a modern replacement
+&lt;code>~/.pre-commit-config.yaml&lt;/code>:&lt;/p></description></item><item><title>★ skopeo: operate container images and registries</title><link>https://perrotta.dev/2024/12/skopeo-operate-container-images-and-registries/</link><pubDate>Tue, 17 Dec 2024 17:49:31 -0300</pubDate><guid>https://perrotta.dev/2024/12/skopeo-operate-container-images-and-registries/</guid><description>&lt;p>When working with &lt;code>docker&lt;/code> and private image registries, a common workflow is to copy images from one private registry in the cloud to another. This can be done with &lt;a href="https://github.com/containers/skopeo/">&lt;code>skopeo&lt;/code>&lt;/a>.&lt;/p>
+&lt;p>This post includes some common recipes for it.&lt;/p>
+&lt;h2 id="usage-1-default--root-to-staging">Usage 1) Default / Root to Staging&lt;/h2>
+&lt;p>From the default / root account registry to the staging registry:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>skopeo sync &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --src-creds &lt;span style="color:#e6db74">&amp;#34;AWS:&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>aws ecr get-login-password --region &lt;span style="color:#f92672">{&lt;/span>region&lt;span style="color:#f92672">}&lt;/span> --profile default&lt;span style="color:#66d9ef">)&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --dest-creds &lt;span style="color:#e6db74">&amp;#34;AWS:&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>aws ecr get-login-password --region &lt;span style="color:#f92672">{&lt;/span>region&lt;span style="color:#f92672">}&lt;/span> --profile staging&lt;span style="color:#66d9ef">)&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --override-os linux --override-arch amd64 &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --src docker --dest docker &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> &lt;span style="color:#f92672">{&lt;/span>account_id_root&lt;span style="color:#f92672">}&lt;/span>.dkr.ecr.&lt;span style="color:#f92672">{&lt;/span>region&lt;span style="color:#f92672">}&lt;/span>.amazonaws.com/&lt;span style="color:#f92672">{&lt;/span>org&lt;span style="color:#f92672">}&lt;/span>/&lt;span style="color:#f92672">{&lt;/span>repository&lt;span style="color:#f92672">}&lt;/span>:&lt;span style="color:#f92672">{&lt;/span>tag&lt;span style="color:#f92672">}&lt;/span> &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> &lt;span style="color:#f92672">{&lt;/span>account_id_staging&lt;span style="color:#f92672">}&lt;/span>.dkr.ecr.&lt;span style="color:#f92672">{&lt;/span>region&lt;span style="color:#f92672">}&lt;/span>.amazonaws.com/&lt;span style="color:#f92672">{&lt;/span>org&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Example values&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>:&lt;/p></description></item><item><title>★ Just</title><link>https://perrotta.dev/2024/12/just/</link><pubDate>Fri, 13 Dec 2024 01:16:41 -0300</pubDate><guid>https://perrotta.dev/2024/12/just/</guid><description>&lt;p>&lt;a href="https://github.com/casey/just">Just&lt;/a> is a command runner, a modern replacement
 for GNU Make.&lt;/p>
 &lt;p>It is written in Rust, has sensible defaults, and lots of syntactic sugar.
 A good analogy is &lt;code>fish&lt;/code> versus &lt;code>bash&lt;/code> when comparing &lt;code>just&lt;/code> to &lt;code>make&lt;/code>.&lt;/p>
@@ -248,26 +259,4 @@ never be released. A small improvement we can make is to wrap it with
 &lt;li>&lt;code>Home&lt;/code> to position the text cursor in the beginning of the line (à la &lt;code>C-a&lt;/code> in emacs)&lt;/li>
 &lt;li>&lt;code>End&lt;/code> to position the text cursor in the end of the line (à la &lt;code>C-e&lt;/code> in emacs)&lt;/li>
 &lt;/ul>
-&lt;p>The only way to provoke these effects &lt;em>out-of-the-box&lt;/em> is by pressing, respectively, the &lt;code>Cmd + Left&lt;/code> and &lt;code>Cmd + Right&lt;/code> shortcuts, as you would normally do in a Macbook laptop native keyboard.&lt;/p></description></item><item><title>★ Wayland: from i3 to sway</title><link>https://perrotta.dev/2022/02/wayland-from-i3-to-sway/</link><pubDate>Sat, 19 Feb 2022 19:18:25 -0500</pubDate><guid>https://perrotta.dev/2022/02/wayland-from-i3-to-sway/</guid><description>&lt;p>I&amp;rsquo;ve been giving Wayland a try. My window manager of choice in X11/Xorg is &lt;a href="https://i3wm.org/">&lt;code>i3&lt;/code>&lt;/a>, so the natural choice in Wayland is &lt;a href="https://swaywm.org/">&lt;code>sway&lt;/code>&lt;/a>.&lt;/p>
-&lt;h2 id="intro">Intro&lt;/h2>
-&lt;p>&lt;code>sway&lt;/code> works well with the &lt;code>i3&lt;/code> config out-of-the-box. A few adjustments were necessary for full compatibility. To maximize code reuse, I went with the following structure:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ tree ~/.config/&lt;span style="color:#f92672">{&lt;/span>i3,sway&lt;span style="color:#f92672">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>/home/typhoon/.config/i3
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>├── conf.d
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>│   └── i3.conf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>└── config
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>/home/typhoon/.config/sway
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>├── conf.d
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>│   └── sway.conf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>└── config -&amp;gt; ../../../i3/.config/i3/config
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
-&lt;li>The master config is
-&lt;a href="https://github.com/thiagowfx/.dotfiles/blob/master/i3/.config/i3/config">&lt;code>~/.config/i3/config&lt;/code>&lt;/a>.
-It is pretty standard, generated by
-&lt;a href="https://build.i3wm.org/docs/i3-config-wizard.html">&lt;code>i3-config-wizard&lt;/code>&lt;/a> with
-a few tweaks on top for my own workflow. It works for both &lt;code>i3&lt;/code> and &lt;code>sway&lt;/code>.
-The config contains this snippet:&lt;/li>
-&lt;/ul>
-&lt;pre tabindex="0">&lt;code># Load user configs if existing. Order is important.
-include conf.d/*.conf
-&lt;/code>&lt;/pre>&lt;p>The snippet allows drop-in customizations to live in &lt;code>conf.d&lt;/code>. The &lt;code>include&lt;/code> directive is a relatively &lt;a href="https://github.com/i3/i3/pull/4420">new&lt;/a> addition to the i3config syntax and it&amp;rsquo;s the main reason this setup is elegant and minimalist.&lt;/p></description></item></channel></rss>
+&lt;p>The only way to provoke these effects &lt;em>out-of-the-box&lt;/em> is by pressing, respectively, the &lt;code>Cmd + Left&lt;/code> and &lt;code>Cmd + Right&lt;/code> shortcuts, as you would normally do in a Macbook laptop native keyboard.&lt;/p></description></item></channel></rss>
