@@ -1,4 +1,39 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on not just serendipity</title><link>https://perrotta.dev/tags/linux/</link><description>Recent content in Linux on not just serendipity</description><generator>Hugo</generator><language>en-us</language><copyright>Copyright © 2021 - 2025 [Thiago Perrotta](mailto:tbperrotta@gmail.com) · [RSS](/index.xml) · a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 23 Dec 2024 21:41:38 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Unbuffer</title><link>https://perrotta.dev/2024/12/unbuffer/</link><pubDate>Mon, 23 Dec 2024 21:41:38 -0300</pubDate><guid>https://perrotta.dev/2024/12/unbuffer/</guid><description>&lt;p>The &lt;code>unbuffer&lt;/code> binary comes from the &lt;a href="https://www.nist.gov/services-resources/software/expect">expect&lt;/a> package.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on not just serendipity</title><link>https://perrotta.dev/tags/linux/</link><description>Recent content in Linux on not just serendipity</description><generator>Hugo</generator><language>en-us</language><copyright>Copyright © 2021 - 2025 [Thiago Perrotta](mailto:tbperrotta@gmail.com) · [RSS](/index.xml) · a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 23 Dec 2024 22:52:40 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Running multiple servers in a single bash script</title><link>https://perrotta.dev/2024/12/running-multiple-servers-in-a-single-bash-script/</link><pubDate>Mon, 23 Dec 2024 22:52:40 -0300</pubDate><guid>https://perrotta.dev/2024/12/running-multiple-servers-in-a-single-bash-script/</guid><description>&lt;p>Inspired by &lt;a href="https://github.com/simonw/til/blob/main/bash/multiple-servers.md">Simon
+Willison&lt;/a>&amp;rsquo;s
+TIL.&lt;/p>
+&lt;p>When I was working on the &lt;a href="https://stadia.com/">Stadia&lt;/a> Partner Portal as a
+full-stack tech lead, I wrote and maintained a &lt;code>run.sh&lt;/code> script that would start
+up our two (front-end and back-end) Boq&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> server instances.&lt;/p>
+&lt;p>It resembled the following:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cleanup&lt;span style="color:#f92672">()&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> kill $pid_fe $pid_be
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> exit &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>trap cleanup SIGINT
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>start_fe&lt;span style="color:#f92672">()&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># [...init deps...]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> boq run //java/com/google/cloudcast/&lt;span style="color:#f92672">[&lt;/span>...&lt;span style="color:#f92672">]&lt;/span>/publishing/partnerportal/ui &amp;amp;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> pid_fe&lt;span style="color:#f92672">=&lt;/span>$!
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>start_be&lt;span style="color:#f92672">()&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># [...init deps...]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> boq run //java/com/google/cloudcast/&lt;span style="color:#f92672">[&lt;/span>...&lt;span style="color:#f92672">]&lt;/span>/publishing/partnerportal &amp;amp;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> pid_be&lt;span style="color:#f92672">=&lt;/span>$!
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>start_fe
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>start_be
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>wait
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This version is heavily simplified, but that was its gist. It worked perfectly.
+Back in ~2018, it took quite a bit of trial-and-error to get it right. Now it
+seems so easy to just ask GenAI to generate it for you! Yikes. Our profession
+might get obsoleted in just a few more years to come&amp;hellip;&lt;/p></description></item><item><title>Unbuffer</title><link>https://perrotta.dev/2024/12/unbuffer/</link><pubDate>Mon, 23 Dec 2024 21:41:38 -0300</pubDate><guid>https://perrotta.dev/2024/12/unbuffer/</guid><description>&lt;p>The &lt;code>unbuffer&lt;/code> binary comes from the &lt;a href="https://www.nist.gov/services-resources/software/expect">expect&lt;/a> package.
 I didn&amp;rsquo;t realize until now that it is hosted in NIST.gov!&lt;/p>
 &lt;p>There are two scenarios in which I find &lt;code>unbuffer&lt;/code> quite helpful:&lt;/p>
 &lt;ol>
@@ -220,25 +255,4 @@ reap the benefits that Nix provides.&lt;/p></description></item><item><title>★
 &lt;p>To persist those connections, a terminal multiplexer is often used, &lt;code>tmux&lt;/code> and &lt;code>screen&lt;/code> being the two most popular ones.&lt;/p>
 &lt;p>In this post I will cover a few different client-side and server-side ways to have &lt;code>ssh&lt;/code> automatically spawn &lt;code>tmux&lt;/code> upon connection.&lt;/p>
 &lt;h2 id="option-1-use-command-line-ssh-flags-client-side-recommended">Option #1: Use command-line ssh flags (client-side, recommended)&lt;/h2>
-&lt;p>Start &lt;code>tmux&lt;/code>, forcing unicode, attaching to and/or creating a session named &lt;em>main&lt;/em>:&lt;/p></description></item><item><title>nix-shell in a nutshell</title><link>https://perrotta.dev/2022/02/nix-shell-in-a-nutshell/</link><pubDate>Thu, 10 Feb 2022 20:48:02 -0500</pubDate><guid>https://perrotta.dev/2022/02/nix-shell-in-a-nutshell/</guid><description>&lt;p>As soon as we finish installing &lt;a href="https://nixos.org/download.html">&lt;code>Nix&lt;/code>&lt;/a> on
-Darwin, we&amp;rsquo;re greeted with a call to action:&lt;/p>
-&lt;pre tabindex="0">&lt;code>Alright! We&amp;#39;re done!
-Try it! Open a new terminal, and type:
-
- $ nix-shell -p nix-info --run &amp;#34;nix-info -m&amp;#34;
-
-Thank you for using this installer. If you have any feedback or need
-help, don&amp;#39;t hesitate:
-
-You can open an issue at https://github.com/nixos/nix/issues
-&lt;/code>&lt;/pre>&lt;h2 id="hello-world-bloated">Hello world (bloated)&lt;/h2>
-&lt;p>All right then, let&amp;rsquo;s do it!&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ nix-shell -p nix-info --run &lt;span style="color:#e6db74">&amp;#34;nix-info -m&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - system: &lt;span style="color:#e6db74">`&lt;/span>&lt;span style="color:#e6db74">&amp;#34;aarch64-darwin&amp;#34;&lt;/span>&lt;span style="color:#e6db74">`&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - host os: &lt;span style="color:#e6db74">`&lt;/span>Darwin 21.3.0, macOS 12.2&lt;span style="color:#e6db74">`&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - multi-user?: &lt;span style="color:#e6db74">`&lt;/span>yes&lt;span style="color:#e6db74">`&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - sandbox: &lt;span style="color:#e6db74">`&lt;/span>no&lt;span style="color:#e6db74">`&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - version: &lt;span style="color:#e6db74">`&lt;/span>nix-env &lt;span style="color:#f92672">(&lt;/span>Nix&lt;span style="color:#f92672">)&lt;/span> 2.6.0&lt;span style="color:#e6db74">`&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - channels&lt;span style="color:#f92672">(&lt;/span>root&lt;span style="color:#f92672">)&lt;/span>: &lt;span style="color:#e6db74">`&lt;/span>&lt;span style="color:#e6db74">&amp;#34;nixpkgs&amp;#34;&lt;/span>&lt;span style="color:#e6db74">`&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - nixpkgs: &lt;span style="color:#e6db74">`&lt;/span>/nix/var/nix/profiles/per-user/root/channels/nixpkgs&lt;span style="color:#e6db74">`&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Cool, it works. Let&amp;rsquo;s break it down a bit.&lt;/p></description></item></channel></rss>
+&lt;p>Start &lt;code>tmux&lt;/code>, forcing unicode, attaching to and/or creating a session named &lt;em>main&lt;/em>:&lt;/p></description></item></channel></rss>
