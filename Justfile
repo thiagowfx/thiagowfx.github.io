@@ -1,10 +1,16 @@
+#!/usr/bin/env just --justfile
 # https://github.com/casey/just
 
 set dotenv-load
 
+_default:
+    @just --list
+
+# Start a hugo server in watch mode
 watch:
 	hugo server --buildDrafts --port ${PORT:-1313} --watch
 
+# Build the blog as in production
 build:
 	hugo --environment production --gc --minify
 
@@ -12,9 +18,11 @@ build:
 new post:
 	hugo new content/posts/`date "+%Y-%m-%d"`-{{ kebabcase(post) }}.md
 
+# Delete hugo build artifacts
 clean:
 	rm -rf public/ resources/
 
+# Update git submodules
 update:
 	git submodule update --remote
 
