@@ -4,8 +4,13 @@
 set dotenv-load
 
 # Start a hugo server in watch mode
-watch:
-	hugo server --buildDrafts --port ${PORT:-1313} --watch
+watch preview="true":
+	#!/usr/bin/env bash
+	additional_flags=()
+	if [ "{{preview}}" = "true" ]; then
+		additional_flags+=("--openBrowser" "--navigateToChanged")
+	fi
+	hugo server --buildDrafts --port ${PORT:-1313} --watch "${additional_flags[@]}"
 
 # Build the blog as in production
 build:
