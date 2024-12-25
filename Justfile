@@ -3,9 +3,6 @@
 
 set dotenv-load
 
-_default:
-    @just --list
-
 # Start a hugo server in watch mode
 watch:
 	hugo server --buildDrafts --port ${PORT:-1313} --watch
