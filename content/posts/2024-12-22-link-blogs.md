@@ -19,13 +19,13 @@ Simon Willison's "My approach to running a link blog"
 As I've been slowly shaping up the workflow of my own blog, this is the kind of
 post I appreciate to read and learn insights from.
 
-I definitely agree that "TIL Blogs" ("today I learned") are very low stakes and
-high value, thus I've been trying to get into the habit of doing so to follow
-suit.
+I definitely agree that **"TIL Blogs"** ("today I learned") are very low stakes
+and high value, thus I've been trying to get into the habit of doing so to
+follow suit.
 
-Describing about your own projects is also a great way to keep them flowing and
+**Describing about your own projects** is also a great way to keep them flowing and
 keep yourself motivated.
 
-That said, I am not a fan of "link blogs", merely because the web has an almost
-infinite number of links: it's a very deep rabbit hole to fall into. Archiving
-links in my second brain app is almost as good.
+That said, I am not a fan of **"link blogs"**, merely because the web has an
+almost infinite number of links: it's a very deep rabbit hole to fall into.
+Archiving links in my second brain app is almost as good.
