@@ -36,7 +36,7 @@ Example values[^1]:
 
 From a public registry to a private registry that uses MFA (multi-factor authentication).
 
-First, it’s necessary to get MFA credentials:
+First, it's necessary to get MFA credentials:
 
 ```shell
 #!/usr/bin/env bash
@@ -71,8 +71,8 @@ skopeo sync \
 
 Notes:
 
-- A public registry does not need authentication, hence there’s no `--src-creds`.
+- A public registry does not need authentication, hence there's no `--src-creds`.
 - `--dest-creds` does not specify a `--profile`. Likewise, no `AWS_PROFILE` env var should be defined.
 - In this example, China (`cn-north-1`) is an AWS account with MFA enabled.
 
-It’s possible to pass `--scoped` to prefix images at destination using the full source image path as scope.
+It's possible to pass `--scoped` to prefix images at destination using the full source image path as scope.

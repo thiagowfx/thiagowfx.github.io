@@ -40,7 +40,7 @@ There is NO WARRANTY, to the extent permitted by law.
 Written by Mike Haertel and Paul Eggert.
 ```
 
-In a coworker’s machine (Ubuntu Linux), it produced the following instead:
+In a coworker's machine (Ubuntu Linux), it produced the following instead:
 
 ```shell
 gardenia
@@ -72,7 +72,7 @@ LC_TIME="en_US.UTF-8"
 LC_ALL=
 ```
 
-And my coworker’s:
+And my coworker's:
 
 ```shell
 $ locale
@@ -93,4 +93,4 @@ LC_IDENTIFICATION=en_US.UTF-8
 LC_ALL=
 ```
 
-[^1]: In this case, the coworker’s version became the canonical one.
+[^1]: In this case, the coworker's version became the canonical one.

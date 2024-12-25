@@ -18,7 +18,7 @@ TIL:
 > the meantime. If the branch on the remote repository has not diverged (i.e.,
 > no new commits were pushed by others), your push will be allowed. If someone
 > else has pushed changes, the push will be rejected, ensuring you do not
-> accidentally overwrite someone else’s work.
+> accidentally overwrite someone else's work.
 
 
 [(via)](https://medium.com/@sahilsahilbhatia/git-push-force-with-lease-vs-force-ecae72601e80).

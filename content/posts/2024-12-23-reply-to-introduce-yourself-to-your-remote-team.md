@@ -9,13 +9,13 @@ tags:
 ([via](https://cassidoo.co/post/remote-intros/)) Cassidy Williams:
 
 > Something that that a few of my teams have done well is introducing themselves
-> asynchronously. It can be a hard thing to do! When you’re on a fully remote
-> team and you’re seeing everyone’s face on Zoom for the first time, it’s a
-> little nerve-wracking to figure out how to present yourself, how to “bring
-> your whole self to work,” and not be a total weirdo.
+> asynchronously. It can be a hard thing to do! When you're on a fully remote
+> team and you're seeing everyone's face on Zoom for the first time, it's a
+> little nerve-wracking to figure out how to present yourself, how to "bring
+> your whole self to work," and not be a total weirdo.
 
-> What my team at GitHub does (and what I’ve seen at a few other orgs now, it’s
-> catching on!) is we have a repository of “Human User Guides” full of details
+> What my team at GitHub does (and what I've seen at a few other orgs now, it's
+> catching on!) is we have a repository of "Human User Guides" full of details
 > about each other.
 
 User guides (go/user-guides) are a great way to introduce yourself to your team

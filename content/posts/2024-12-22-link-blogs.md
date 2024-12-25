@@ -8,9 +8,9 @@ tags:
 Simon Willison's "My approach to running a link blog"
 ([via](https://simonwillison.net/2024/Dec/22/link-blog/)):
 
-> The point of that article was to emphasize that blogging doesn’t have to be
+> The point of that article was to emphasize that blogging doesn't have to be
 > about unique insights. The value is in writing frequently and having something
-> to show for it over time—worthwhile even if you don’t attract much of an
+> to show for it over time—worthwhile even if you don't attract much of an
 > audience (or any audience at all).
 
 > In that article I proposed two categories of content that are low stakes and

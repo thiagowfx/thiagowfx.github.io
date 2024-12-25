@@ -32,7 +32,7 @@ Nowadays there are plenty of SSGs, for every programming language you can think 
 
 Conclusion: As Kev puts it:
 
-> I’m not sure if you heard, but [The Web Is F*cked](https://thewebisfucked.com) and techies everywhere are touting the Gemini protocol as its saviour. I disagree. A lot.
+> I'm not sure if you heard, but [The Web Is F*cked](https://thewebisfucked.com) and techies everywhere are touting the Gemini protocol as its saviour. I disagree. A lot.
 
 I will end this article with a praise for Gemini, courtesy of [Drew DeVault](https://drewdevault.com/2020/11/01/What-is-Gemini-anyway.html). Drew argues that:
 

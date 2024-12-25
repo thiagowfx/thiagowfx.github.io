@@ -58,7 +58,7 @@ if __name__ == '__main__':
     main()
 ```
 
-[^1]: [I'm not sure I like it, And I‘m so tired of
+[^1]: [I'm not sure I like it, And I'm so tired of
     fighting](https://www.youtube.com/watch?v=3WpdCZC9q6w)
 [^2]: The git repository is ever-evolving and the source of truth, whereas the
     blog post is a snapshot. I'll experiment with cross-posting solutions here

@@ -13,9 +13,9 @@ you can use a domain that redirects to localhost. For example:
 - http://demo.localdev.me:1313/
 
 
-> When I’m doing local development, I sometimes need a domain name that routes
-> back to localhost. I’ve long run into cases where I need subdomains and ended
-> up modifying my local hosts file. I’ve used this for a variety of situations
+> When I'm doing local development, I sometimes need a domain name that routes
+> back to localhost. I've long run into cases where I need subdomains and ended
+> up modifying my local hosts file. I've used this for a variety of situations
 > going back for a long time. From Kubernetes ingress work to web development.
 
 > `localdev.me` DNS is served through amazon. The domain name and any subdomains

@@ -7,9 +7,9 @@ tags:
 
 Just tested [straight to spam](https://straight2spam.xyz) today:
 
-> Love emails but hate people? Don’t want someone 🤡 at your party 🥳 but have to invite them 🤢 cause your mom 💁‍♀️ made you? Trust Straight 2 Spam to send your v important email 📧 straight to their spam 🗑
+> Love emails but hate people? Don't want someone 🤡 at your party 🥳 but have to invite them 🤢 cause your mom 💁‍♀️ made you? Trust Straight 2 Spam to send your v important email 📧 straight to their spam 🗑
 >
-> Click the button below👇 to copy a nasty ❌ ooey ❌ gooey ❌ spam-keyword filled invisible message 🔤 for your email that you totally sent on time ⏰ but the 🐦 dodo-brain 🧠 won't see it because they didn’t check their spam folder 📂 (Just make sure you're not in the recipient's address book 📇, or all bets are off 🙅‍♀️)
+> Click the button below👇 to copy a nasty ❌ ooey ❌ gooey ❌ spam-keyword filled invisible message 🔤 for your email that you totally sent on time ⏰ but the 🐦 dodo-brain 🧠 won't see it because they didn't check their spam folder 📂 (Just make sure you're not in the recipient's address book 📇, or all bets are off 🙅‍♀️)
 
 It works exactly as advertised:
 

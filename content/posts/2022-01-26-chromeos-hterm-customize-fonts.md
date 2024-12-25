@@ -51,7 +51,7 @@ Text font family: "IBM Plex Sans", "Fira Code", monospace
 
 From Secure Shell [FAQ][faq]:
 
-> By default, we disable ligatures. Some fonts actively enable them like macOS's Menlo (e.g. “ae” is rendered as “æ”). This messes up copying and pasting and is, arguably, not terribly legible for a terminal.
+> By default, we disable ligatures. Some fonts actively enable them like macOS's Menlo (e.g. "ae" is rendered as "æ"). This messes up copying and pasting and is, arguably, not terribly legible for a terminal.
 
 If your font supports [ligatures](https://en.wikipedia.org/wiki/Ligature_(writing)), consider enabling them:
 

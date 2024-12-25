@@ -10,7 +10,7 @@ Surely you can afford to be picky[^1] with your code fonts these days.
 Don't know where to start? https://www.codingfont.com/ ([via John
 Gruber](https://www.codingfont.com/)) is a good start:
 
-> [...] fun “tournament” from Typogram that lets you pick your favorite
+> [...] fun "tournament" from Typogram that lets you pick your favorite
 > monospaced coding font from 32 choices. One limitation is that the only
 > options are free fonts
 

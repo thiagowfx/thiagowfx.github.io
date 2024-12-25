@@ -40,12 +40,12 @@ characters:
 
 `-i` is for in-place modification[^1], `-P` is for pretty-printing.
 
-If you don’t know about `-i`, you can always use [`sponge`](https://joeyh.name/code/moreutils/):
+If you don't know about `-i`, you can always use [`sponge`](https://joeyh.name/code/moreutils/):
 
 ```shell
 % yq -P file.yaml | sponge file.yaml
 ```
 
-Happy YAML’ing!
+Happy YAML'ing!
 
 [^1]: In this context avoid using `>` output redirection because it would mangle the input file. Unless you redirect to another file, of course.
