@@ -30,18 +30,18 @@ I manage my packages with `git` plus Eli Schwartz's excellent
 $ git clone https://github.com/thiagowfx/PKGBUILDs && tree PKGBUILDs
 PKGBUILDs
 ├── bkt
-│   └── PKGBUILD
+│   └── PKGBUILD
 ├── fpp-git
-│   └── PKGBUILD
+│   └── PKGBUILD
 ├── git-crecord
-│   └── PKGBUILD
+│   └── PKGBUILD
 ├── i3a
-│   └── PKGBUILD
+│   └── PKGBUILD
 ├── LICENSE
 ├── Makefile
 ├── README.md
 ├── ttf-camingocode
-│   └── PKGBUILD
+│   └── PKGBUILD
 └── urlwatch.yml
 ```
 

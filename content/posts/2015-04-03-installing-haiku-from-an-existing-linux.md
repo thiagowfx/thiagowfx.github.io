@@ -10,11 +10,11 @@ tags:
 It is an operating system, period. What might cause a small surprise is that it is not based either on Linux or on BSD &#8212; and yet it is (probably) runnable in your modern computer/laptop!
 
 
-What I most like on it is that the system is integrated with the GUI, so the end user gets a nice experience. This is not so common as it sounds: most Linux distributions are simply a collection of programs and utilities put together in one place, but they are not necessarily integrated &#8212; however, **you** can integrate them. This makes all the difference between user-friendly and user-centered paradigms[^1].
+What I most like on it is that the system is integrated with the GUI, so the end user gets a nice experience. This is not so common as it sounds: most Linux distributions are simply a collection of programs and utilities put together in one place, but they are not necessarily integrated &#8212; however, **you** can integrate them. This makes all the difference between user-friendly and user-centered paradigms[^1].
 
 Anyway, Haiku is simple, so for me this post is more a hobby than something useful that I will use in the future; however, I find that knowing about more and more about different operating systems has its own advantages.
 
-For more, see https://www.haiku-os.org/about.
+For more, see https://www.haiku-os.org/about.
 
 ## Installing Haiku
 
@@ -38,7 +38,7 @@ $ dd if=/dev/zero of=haiku.raw bs=1 seek=506 count=4 conv=notrunc
 $ dd if=haiku.raw of=/dev/sda42 bs=1M conv=notrunc
 ```
 
-6. Make the installation _bootable_: you&#8217;ll need to compile and run the _makebootabletiny_ program, which can be downloaded from [here](https://www.haiku-os.org/guides/installing_haiku_image_disk_partition). It is a simple C program, so:
+6. Make the installation _bootable_: you&#8217;ll need to compile and run the _makebootabletiny_ program, which can be downloaded from [here](https://www.haiku-os.org/guides/installing_haiku_image_disk_partition). It is a simple C program, so:
 
 ```shell
 $ gcc makebootabletiny.c -o makebootabletiny
@@ -54,7 +54,7 @@ menuentry "Haiku OS" {
 }
 ```
 
-8. Then run as root: _grub-mkconfig -o /boot/grub/grub.cfg_
+8. Then run as root: _grub-mkconfig -o /boot/grub/grub.cfg_
 
 **Done!** Now you should be able to boot into Haiku.
 
@@ -62,6 +62,6 @@ menuentry "Haiku OS" {
 
 This post is not a review of Haiku, so I&#8217;m stopping here. However, if I write a review about Haiku, I&#8217;ll do that from Haiku 🙂.
 
-I&#8217;m just leaving this here: https://www.haiku-os.org/slideshows/haiku-1
+I&#8217;m just leaving this here: https://www.haiku-os.org/slideshows/haiku-1
 
 [^1]: By the way, Arch Linux is user-centered, which means that you&#8217;re supposed to integrate the system as you wish. If you don&#8217;t wish that then you&#8217;re screwed anyway, so go away 🙂

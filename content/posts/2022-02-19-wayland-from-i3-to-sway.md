@@ -17,11 +17,11 @@ I've been giving Wayland a try. My window manager of choice in X11/Xorg is [`i3`
 $ tree ~/.config/{i3,sway}
 /home/typhoon/.config/i3
 ├── conf.d
-│   └── i3.conf
+│   └── i3.conf
 └── config
 /home/typhoon/.config/sway
 ├── conf.d
-│   └── sway.conf
+│   └── sway.conf
 └── config -> ../../../i3/.config/i3/config
 ```
 

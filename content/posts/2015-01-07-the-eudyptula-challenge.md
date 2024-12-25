@@ -117,4 +117,4 @@ After that, I&#8217;ve sent everything I should to _little_, and today I got its
 [^5]: Which turned out to be a bot.
 [^6]: Damn, everything will be written in C from now on. That&#8217;s what we get with kernel programming, I guess.
 [^7]: Only lazy or paranoid Linux sysadmins will tell you otherwise 😉
-[^8]: This turned out to be the hardest thing of this task, yet it wasn&#8217;t even part of it.
+[^8]: This turned out to be the hardest thing of this task, yet it wasn&#8217;t even part of it.
