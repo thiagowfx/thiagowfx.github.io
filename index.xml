@@ -1,4 +1,147 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>not just serendipity</title><link>https://perrotta.dev/</link><description>Recent content on not just serendipity</description><generator>Hugo</generator><language>en-us</language><copyright>Copyright © 2021 - 2025 [Thiago Perrotta](mailto:tbperrotta@gmail.com) · [RSS](/index.xml) · a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 25 Dec 2024 02:32:55 -0300</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Picking a monospaced code font</title><link>https://perrotta.dev/2024/12/picking-a-monospaced-code-font/</link><pubDate>Wed, 25 Dec 2024 02:32:55 -0300</pubDate><guid>https://perrotta.dev/2024/12/picking-a-monospaced-code-font/</guid><description>&lt;p>Surely you can afford to be picky&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> with your code fonts these days.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>not just serendipity</title><link>https://perrotta.dev/</link><description>Recent content on not just serendipity</description><generator>Hugo</generator><language>en-us</language><copyright>Copyright © 2021 - 2025 [Thiago Perrotta](mailto:tbperrotta@gmail.com) · [RSS](/index.xml) · a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 25 Dec 2024 16:13:30 -0300</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Advent of Code: Day 17</title><link>https://perrotta.dev/2024/12/advent-of-code-day-17/</link><pubDate>Wed, 25 Dec 2024 16:13:30 -0300</pubDate><guid>https://perrotta.dev/2024/12/advent-of-code-day-17/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/17">Day #17&lt;/a> puzzle.&lt;/p>
+&lt;p>It&amp;rsquo;s a simulation problem, a quite delightful one to implement.&lt;/p>
+&lt;p>Using python data classes would have been natural, but I went full imperative in
+this one.&lt;/p>
+&lt;p>Part 2 would require clever backwards computation, and I wasn&amp;rsquo;t interested in
+doing so. I liked the approach from &lt;a href="https://todd.ginsberg.com/post/advent-of-code/2024/day17/">Todd
+Ginsberg&lt;/a>.&lt;/p>
+&lt;p>The full solution:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/usr/bin/env python3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> sys
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>():
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">with&lt;/span> open(sys&lt;span style="color:#f92672">.&lt;/span>argv[&lt;span style="color:#ae81ff">1&lt;/span>]) &lt;span style="color:#66d9ef">as&lt;/span> input:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> lines &lt;span style="color:#f92672">=&lt;/span> input&lt;span style="color:#f92672">.&lt;/span>read()&lt;span style="color:#f92672">.&lt;/span>splitlines()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> a, b, c &lt;span style="color:#f92672">=&lt;/span> [int(line&lt;span style="color:#f92672">.&lt;/span>split()[&lt;span style="color:#ae81ff">2&lt;/span>]) &lt;span style="color:#66d9ef">for&lt;/span> line &lt;span style="color:#f92672">in&lt;/span> lines[&lt;span style="color:#ae81ff">0&lt;/span>:&lt;span style="color:#ae81ff">3&lt;/span>]]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> program &lt;span style="color:#f92672">=&lt;/span> [int(op) &lt;span style="color:#66d9ef">for&lt;/span> op &lt;span style="color:#f92672">in&lt;/span> lines[&lt;span style="color:#ae81ff">4&lt;/span>]&lt;span style="color:#f92672">.&lt;/span>split()[&lt;span style="color:#ae81ff">1&lt;/span>]&lt;span style="color:#f92672">.&lt;/span>split(&lt;span style="color:#e6db74">&amp;#34;,&amp;#34;&lt;/span>)]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ip &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stdout &lt;span style="color:#f92672">=&lt;/span> []
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">combo&lt;/span>(operand):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">assert&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#f92672">&amp;lt;=&lt;/span> operand &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">7&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#f92672">&amp;lt;=&lt;/span> operand &lt;span style="color:#f92672">&amp;lt;=&lt;/span> &lt;span style="color:#ae81ff">3&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> operand
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> operand &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> a
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> operand &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> b
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> operand &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">6&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> c
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">while&lt;/span> ip &lt;span style="color:#f92672">&amp;lt;&lt;/span> len(program) &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> opcode &lt;span style="color:#f92672">=&lt;/span> program[ip]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> operand &lt;span style="color:#f92672">=&lt;/span> program[ip &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># adv, division&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> numerator &lt;span style="color:#f92672">=&lt;/span> a
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> denominator &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#f92672">**&lt;/span> combo(operand)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> a &lt;span style="color:#f92672">=&lt;/span> numerator &lt;span style="color:#f92672">//&lt;/span> denominator
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># bxl, bitwise xor&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> b &lt;span style="color:#f92672">^=&lt;/span> operand
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># bst, modulo&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> b &lt;span style="color:#f92672">=&lt;/span> combo(operand) &lt;span style="color:#f92672">%&lt;/span> &lt;span style="color:#ae81ff">8&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># jnz&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">3&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> a &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ip &lt;span style="color:#f92672">=&lt;/span> operand
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">continue&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># bxc, bitwise xor&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> b &lt;span style="color:#f92672">^=&lt;/span> c
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># out&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stdout&lt;span style="color:#f92672">.&lt;/span>append(combo(operand) &lt;span style="color:#f92672">%&lt;/span> &lt;span style="color:#ae81ff">8&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># bdv&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">6&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> numerator &lt;span style="color:#f92672">=&lt;/span> a
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> denominator &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#f92672">**&lt;/span> combo(operand)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> b &lt;span style="color:#f92672">=&lt;/span> numerator &lt;span style="color:#f92672">//&lt;/span> denominator
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># cdv&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">7&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> numerator &lt;span style="color:#f92672">=&lt;/span> a
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> denominator &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#f92672">**&lt;/span> combo(operand)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> c &lt;span style="color:#f92672">=&lt;/span> numerator &lt;span style="color:#f92672">//&lt;/span> denominator
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ip &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># part one&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;,&amp;#34;&lt;/span>&lt;span style="color:#f92672">.&lt;/span>join(map(str, stdout)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> __name__ &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;__main__&amp;#39;&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> main()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Advent of Code: Day 9</title><link>https://perrotta.dev/2024/12/advent-of-code-day-9/</link><pubDate>Wed, 25 Dec 2024 16:09:53 -0300</pubDate><guid>https://perrotta.dev/2024/12/advent-of-code-day-9/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/9">Day #9&lt;/a> puzzle.&lt;/p>
+&lt;p>A disk fragmentation problem.&lt;/p>
+&lt;p>It&amp;rsquo;s mostly an ad-hoc problem, there isn&amp;rsquo;t much commentary to make.&lt;/p>
+&lt;p>Part two was quite annoying so I simply skipped it.&lt;/p>
+&lt;p>The full solution:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/usr/bin/env python3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> sys
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">expand&lt;/span>(disk: list[int]) &lt;span style="color:#f92672">-&amp;gt;&lt;/span> str:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> output &lt;span style="color:#f92672">=&lt;/span> []
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> fill &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">True&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> d &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> n &lt;span style="color:#f92672">in&lt;/span> disk:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> fill:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> output &lt;span style="color:#f92672">+=&lt;/span> [str(s) &lt;span style="color:#66d9ef">for&lt;/span> s &lt;span style="color:#f92672">in&lt;/span> n &lt;span style="color:#f92672">*&lt;/span> [d]]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> d &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">else&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> output &lt;span style="color:#f92672">+=&lt;/span> n &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#e6db74">&amp;#39;.&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> fill &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">not&lt;/span> fill
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> output
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">defrag&lt;/span>(disk: str) &lt;span style="color:#f92672">-&amp;gt;&lt;/span> str:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> p &lt;span style="color:#f92672">=&lt;/span> expand(disk)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> left &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> right &lt;span style="color:#f92672">=&lt;/span> len(p) &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">while&lt;/span> left &lt;span style="color:#f92672">&amp;lt;&lt;/span> right:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> p[left] &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;.&amp;#39;&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> p[left], p[right] &lt;span style="color:#f92672">=&lt;/span> p[right], p[left]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> right &lt;span style="color:#f92672">-=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">while&lt;/span> p[right] &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;.&amp;#39;&lt;/span> &lt;span style="color:#f92672">and&lt;/span> left &lt;span style="color:#f92672">&amp;lt;&lt;/span> right:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> right &lt;span style="color:#f92672">-=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> left &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> p
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">checksum&lt;/span>(disk):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> total &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> i, d &lt;span style="color:#f92672">in&lt;/span> enumerate(disk):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> d &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;.&amp;#39;&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> total &lt;span style="color:#f92672">+=&lt;/span> i &lt;span style="color:#f92672">*&lt;/span> int(d)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> total
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>():
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">with&lt;/span> open(sys&lt;span style="color:#f92672">.&lt;/span>argv[&lt;span style="color:#ae81ff">1&lt;/span>]) &lt;span style="color:#66d9ef">as&lt;/span> input:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> lines &lt;span style="color:#f92672">=&lt;/span> input&lt;span style="color:#f92672">.&lt;/span>read()&lt;span style="color:#f92672">.&lt;/span>splitlines()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> disk &lt;span style="color:#f92672">=&lt;/span> [int(x) &lt;span style="color:#66d9ef">for&lt;/span> x &lt;span style="color:#f92672">in&lt;/span> lines[&lt;span style="color:#ae81ff">0&lt;/span>]]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># part one&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(checksum(defrag(disk)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> __name__ &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;__main__&amp;#39;&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> main()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Picking a monospaced code font</title><link>https://perrotta.dev/2024/12/picking-a-monospaced-code-font/</link><pubDate>Wed, 25 Dec 2024 02:32:55 -0300</pubDate><guid>https://perrotta.dev/2024/12/picking-a-monospaced-code-font/</guid><description>&lt;p>Surely you can afford to be picky&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> with your code fonts these days.&lt;/p>
 &lt;p>Don&amp;rsquo;t know where to start? &lt;a href="https://www.codingfont.com/">https://www.codingfont.com/&lt;/a> (&lt;a href="https://www.codingfont.com/">via John
 Gruber&lt;/a>) is a good start:&lt;/p>
 &lt;blockquote>
@@ -213,27 +356,4 @@ on lighthouse.&lt;/p></description></item><item><title>Advent of Code: Day 8</ti
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> field&lt;span style="color:#f92672">.&lt;/span>isalnum():
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> freq_map[field] &lt;span style="color:#f92672">+=&lt;/span> ((x, y),)
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then it&amp;rsquo;s just a matter of going through every coordinate pair for a given
-frequency. &lt;code>combinations()&lt;/code> from &lt;code>itertools&lt;/code> is great for that:&lt;/p></description></item><item><title>hugo: merge two tags</title><link>https://perrotta.dev/2024/12/hugo-merge-two-tags/</link><pubDate>Fri, 20 Dec 2024 00:46:50 -0300</pubDate><guid>https://perrotta.dev/2024/12/hugo-merge-two-tags/</guid><description>&lt;p>So far I&amp;rsquo;ve been using the &lt;code>dev&lt;/code> and &lt;code>devops&lt;/code> tags pretty much interchangeably
-(and inconsistently) in this blog. There&amp;rsquo;s no real difference: Dev and Ops work
-overlap quite a lot. It&amp;rsquo;s time to do some house cleaning and merge them. I
-choose &lt;code>dev&lt;/code> as it is more generic / agnostic.&lt;/p>
-&lt;p>First step, use &lt;code>sed&lt;/code> to rename all &lt;code>devops&lt;/code> tags to &lt;code>dev&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% ack -l -- &lt;span style="color:#e6db74">&amp;#34;^ - devops&amp;#34;&lt;/span> | xargs -n &lt;span style="color:#ae81ff">1&lt;/span> gsed -i -e &lt;span style="color:#e6db74">&amp;#39;s/^ - devops/ - dev/g&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I use &lt;code>gsed&lt;/code>, the GNU flavour of &lt;code>sed&lt;/code>, in macOS via homebrew. This is necessary
-because vanilla &lt;code>/usr/bin/sed&lt;/code> from macOS keeps littering my system with &lt;code>.-e&lt;/code>
-files, the original files before inplace modification (&lt;code>-i&lt;/code>), whereas &lt;code>gsed&lt;/code>
-doesn&amp;rsquo;t. It saves me from having to do &lt;code>rm **/*.-e&lt;/code> as an extra step.&lt;/p></description></item><item><title>git: push --force with style</title><link>https://perrotta.dev/2024/12/git-push--force-with-style/</link><pubDate>Fri, 20 Dec 2024 00:38:07 -0300</pubDate><guid>https://perrotta.dev/2024/12/git-push--force-with-style/</guid><description>&lt;p>TIL:&lt;/p>
-&lt;blockquote>
-&lt;p>&lt;code>git push --force&lt;/code>: This command forcefully pushes your changes to the remote
-branch, even if it results in overwriting or losing commits. It does not
-consider the current state of the remote branch. If someone else has pushed
-changes to the same branch in the meantime, their changes will be lost.&lt;/p>
-&lt;/blockquote>
-&lt;blockquote>
-&lt;p>&lt;code>git push --force-with-lease&lt;/code>: This command is a safer alternative to git push
-— force. It will only force push if the remote branch matches your
-expectations. It checks if someone else has pushed changes to the branch in
-the meantime. If the branch on the remote repository has not diverged (i.e.,
-no new commits were pushed by others), your push will be allowed. If someone
-else has pushed changes, the push will be rejected, ensuring you do not
-accidentally overwrite someone else&amp;rsquo;s work.&lt;/p></description></item></channel></rss>
+frequency. &lt;code>combinations()&lt;/code> from &lt;code>itertools&lt;/code> is great for that:&lt;/p></description></item></channel></rss>

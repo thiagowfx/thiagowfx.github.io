@@ -1,0 +1,171 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Advent of Code: Day 17 | not just serendipity</title>
+<meta name=title content="Advent of Code: Day 17"><meta name=description content='Link to Day #17 puzzle.
+It&rsquo;s a simulation problem, a quite delightful one to implement.
+Using python data classes would have been natural, but I went full imperative in
+this one.
+Part 2 would require clever backwards computation, and I wasn&rsquo;t interested in
+doing so. I liked the approach from Todd
+Ginsberg.
+The full solution:
+#!/usr/bin/env python3
+import sys
+
+
+def main():
+    with open(sys.argv[1]) as input:
+        lines = input.read().splitlines()
+
+    a, b, c = [int(line.split()[2]) for line in lines[0:3]]
+    program = [int(op) for op in lines[4].split()[1].split(",")]
+    ip = 0
+    stdout = []
+
+    def combo(operand):
+        assert 0 <= operand < 7
+
+        if 0 <= operand <= 3:
+            return operand
+        elif operand == 4:
+            return a
+        elif operand == 5:
+            return b
+        elif operand == 6:
+            return c
+
+    while ip < len(program) - 1:
+        opcode = program[ip]
+        operand = program[ip + 1]
+
+        # adv, division
+        if opcode == 0:
+            numerator = a
+            denominator = 2 ** combo(operand)
+            a = numerator // denominator
+        # bxl, bitwise xor
+        elif opcode == 1:
+            b ^= operand
+        # bst, modulo
+        elif opcode == 2:
+            b = combo(operand) % 8
+        # jnz
+        elif opcode == 3:
+            if a != 0:
+                ip = operand
+                continue
+        # bxc, bitwise xor
+        elif opcode == 4:
+            b ^= c
+        # out
+        elif opcode == 5:
+            stdout.append(combo(operand) % 8)
+        # bdv
+        elif opcode == 6:
+            numerator = a
+            denominator = 2 ** combo(operand)
+            b = numerator // denominator
+        # cdv
+        elif opcode == 7:
+            numerator = a
+            denominator = 2 ** combo(operand)
+            c = numerator // denominator
+
+        ip += 2
+
+    # part one
+    print(",".join(map(str, stdout)))
+
+
+if __name__ == &#39;__main__&#39;:
+    main()
+'><meta name=keywords content="dev,"><meta property="og:url" content="https://perrotta.dev/2024/12/advent-of-code-day-17/"><meta property="og:site_name" content="not just serendipity"><meta property="og:title" content="Advent of Code: Day 17"><meta property="og:description" content='Link to Day #17 puzzle.
+It’s a simulation problem, a quite delightful one to implement.
+Using python data classes would have been natural, but I went full imperative in this one.
+Part 2 would require clever backwards computation, and I wasn’t interested in doing so. I liked the approach from Todd Ginsberg.
+The full solution:
+#!/usr/bin/env python3 import sys def main(): with open(sys.argv[1]) as input: lines = input.read().splitlines() a, b, c = [int(line.split()[2]) for line in lines[0:3]] program = [int(op) for op in lines[4].split()[1].split(",")] ip = 0 stdout = [] def combo(operand): assert 0 <= operand < 7 if 0 <= operand <= 3: return operand elif operand == 4: return a elif operand == 5: return b elif operand == 6: return c while ip < len(program) - 1: opcode = program[ip] operand = program[ip + 1] # adv, division if opcode == 0: numerator = a denominator = 2 ** combo(operand) a = numerator // denominator # bxl, bitwise xor elif opcode == 1: b ^= operand # bst, modulo elif opcode == 2: b = combo(operand) % 8 # jnz elif opcode == 3: if a != 0: ip = operand continue # bxc, bitwise xor elif opcode == 4: b ^= c # out elif opcode == 5: stdout.append(combo(operand) % 8) # bdv elif opcode == 6: numerator = a denominator = 2 ** combo(operand) b = numerator // denominator # cdv elif opcode == 7: numerator = a denominator = 2 ** combo(operand) c = numerator // denominator ip += 2 # part one print(",".join(map(str, stdout))) if __name__ == &#39;__main__&#39;: main()'><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-12-25T16:13:30-03:00"><meta property="article:modified_time" content="2024-12-25T16:13:30-03:00"><meta property="article:tag" content="Dev"><meta name=twitter:card content="summary"><meta name=twitter:title content="Advent of Code: Day 17"><meta name=twitter:description content='Link to Day #17 puzzle.
+It’s a simulation problem, a quite delightful one to implement.
+Using python data classes would have been natural, but I went full imperative in this one.
+Part 2 would require clever backwards computation, and I wasn’t interested in doing so. I liked the approach from Todd Ginsberg.
+The full solution:
+#!/usr/bin/env python3 import sys def main(): with open(sys.argv[1]) as input: lines = input.read().splitlines() a, b, c = [int(line.split()[2]) for line in lines[0:3]] program = [int(op) for op in lines[4].split()[1].split(",")] ip = 0 stdout = [] def combo(operand): assert 0 <= operand < 7 if 0 <= operand <= 3: return operand elif operand == 4: return a elif operand == 5: return b elif operand == 6: return c while ip < len(program) - 1: opcode = program[ip] operand = program[ip + 1] # adv, division if opcode == 0: numerator = a denominator = 2 ** combo(operand) a = numerator // denominator # bxl, bitwise xor elif opcode == 1: b ^= operand # bst, modulo elif opcode == 2: b = combo(operand) % 8 # jnz elif opcode == 3: if a != 0: ip = operand continue # bxc, bitwise xor elif opcode == 4: b ^= c # out elif opcode == 5: stdout.append(combo(operand) % 8) # bdv elif opcode == 6: numerator = a denominator = 2 ** combo(operand) b = numerator // denominator # cdv elif opcode == 7: numerator = a denominator = 2 ** combo(operand) c = numerator // denominator ip += 2 # part one print(",".join(map(str, stdout))) if __name__ == &#39;__main__&#39;: main()'><meta itemprop=name content="Advent of Code: Day 17"><meta itemprop=description content='Link to Day #17 puzzle.
+It’s a simulation problem, a quite delightful one to implement.
+Using python data classes would have been natural, but I went full imperative in this one.
+Part 2 would require clever backwards computation, and I wasn’t interested in doing so. I liked the approach from Todd Ginsberg.
+The full solution:
+#!/usr/bin/env python3 import sys def main(): with open(sys.argv[1]) as input: lines = input.read().splitlines() a, b, c = [int(line.split()[2]) for line in lines[0:3]] program = [int(op) for op in lines[4].split()[1].split(",")] ip = 0 stdout = [] def combo(operand): assert 0 <= operand < 7 if 0 <= operand <= 3: return operand elif operand == 4: return a elif operand == 5: return b elif operand == 6: return c while ip < len(program) - 1: opcode = program[ip] operand = program[ip + 1] # adv, division if opcode == 0: numerator = a denominator = 2 ** combo(operand) a = numerator // denominator # bxl, bitwise xor elif opcode == 1: b ^= operand # bst, modulo elif opcode == 2: b = combo(operand) % 8 # jnz elif opcode == 3: if a != 0: ip = operand continue # bxc, bitwise xor elif opcode == 4: b ^= c # out elif opcode == 5: stdout.append(combo(operand) % 8) # bdv elif opcode == 6: numerator = a denominator = 2 ** combo(operand) b = numerator // denominator # cdv elif opcode == 7: numerator = a denominator = 2 ** combo(operand) c = numerator // denominator ip += 2 # part one print(",".join(map(str, stdout))) if __name__ == &#39;__main__&#39;: main()'><meta itemprop=datePublished content="2024-12-25T16:13:30-03:00"><meta itemprop=dateModified content="2024-12-25T16:13:30-03:00"><meta itemprop=wordCount content="266"><meta itemprop=keywords content="Dev"><meta name=referrer content="no-referrer-when-downgrade"><link rel="shortcut icon" href=https://perrotta.dev/favicon.ico><link rel=canonical href=https://perrotta.dev/><style>body{font-family:Crimson Pro,Vollkorn,Alegreya,Iowan Old Style,Apple Garamond,Baskerville,Times New Roman,Noto Serif,Droid Serif,Times,Source Serif Pro,serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;margin:auto;padding:20px;max-width:720px;text-align:left;background-color:#fff;word-wrap:break-word;overflow-wrap:break-word;line-height:1.5;color:#444}h1,h2,h3,h4,h5,h6,strong,b{color:#222}h1,h2,h3,h4,h5,h6,footer,nav{font-family:Inter,Fira Sans,Lato,system-ui,-apple-system,BlinkMacSystemFont,Avenir Next,Avenir,Segoe UI,Helvetica Neue,Helvetica,Ubuntu,Roboto,Noto,Cantarell,Arial,sans-serif}footer{font-size:small}a{color:#3273dc}.title{text-decoration:none;border:0}.title span{font-weight:400}nav a{margin-right:10px}textarea{width:100%;font-size:16px}input{font-size:16px}content{line-height:1.6}table{width:100%}img{max-width:100%}code{padding:2px 5px;background-color:#f2f2f2}li code,p code{font-size:small}pre code{color:#222;display:block;padding:20px;white-space:pre;font-size:14px;overflow-x:auto}code,pre{font-family:Fira Code,PT Mono,IBM Plex Mono,Menlo,Consolas,Monaco,Liberation Mono,Ubuntu Mono,Lucida Console,monospace}div.highlight pre{background-color:initial;color:initial}div.highlight code{background-color:unset;color:unset}blockquote{border-left:1px solid #999;color:#222;padding-left:20px;font-style:italic}footer{padding:25px;text-align:center}ul.blog-posts{list-style-type:none;padding:unset}ul.blog-posts li{display:flex}ul.blog-posts li span{flex:0 0 130px}ul.blog-posts li a:visited{color:#8b6fcb}@media(prefers-color-scheme:dark){body{background-color:#333;color:#ddd}h1,h2,h3,h4,h5,h6,strong,b{color:#eee}a{color:#8cc2dd}code{background-color:#444}pre code{color:#ddd}blockquote{color:#ccc}textarea,input{background-color:#252525;color:#ddd}}</style><link rel=apple-touch-icon href=https://perrotta.dev/apple-touch-icon.png></head><body><header><a href=/ class=title><h2>not just serendipity</h2></a><nav><a href=/>Home</a>
+<a href=/posts/>Blog</a>
+<a href=/tags/bestof/>★</a></nav></header><main><h1>Advent of Code: Day 17</h1><p><i><time datetime=2024-12-25 pubdate>25 Dec, 2024
+</time>• 266 words</i></p><content><p>Link to <a href=https://adventofcode.com/2024/day/17>Day #17</a> puzzle.</p><p>It&rsquo;s a simulation problem, a quite delightful one to implement.</p><p>Using python data classes would have been natural, but I went full imperative in
+this one.</p><p>Part 2 would require clever backwards computation, and I wasn&rsquo;t interested in
+doing so. I liked the approach from <a href=https://todd.ginsberg.com/post/advent-of-code/2024/day17/>Todd
+Ginsberg</a>.</p><p>The full solution:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#!/usr/bin/env python3</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> sys
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>main</span>():
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>with</span> open(sys<span style=color:#f92672>.</span>argv[<span style=color:#ae81ff>1</span>]) <span style=color:#66d9ef>as</span> input:
+</span></span><span style=display:flex><span>        lines <span style=color:#f92672>=</span> input<span style=color:#f92672>.</span>read()<span style=color:#f92672>.</span>splitlines()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    a, b, c <span style=color:#f92672>=</span> [int(line<span style=color:#f92672>.</span>split()[<span style=color:#ae81ff>2</span>]) <span style=color:#66d9ef>for</span> line <span style=color:#f92672>in</span> lines[<span style=color:#ae81ff>0</span>:<span style=color:#ae81ff>3</span>]]
+</span></span><span style=display:flex><span>    program <span style=color:#f92672>=</span> [int(op) <span style=color:#66d9ef>for</span> op <span style=color:#f92672>in</span> lines[<span style=color:#ae81ff>4</span>]<span style=color:#f92672>.</span>split()[<span style=color:#ae81ff>1</span>]<span style=color:#f92672>.</span>split(<span style=color:#e6db74>&#34;,&#34;</span>)]
+</span></span><span style=display:flex><span>    ip <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>    stdout <span style=color:#f92672>=</span> []
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>combo</span>(operand):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>assert</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>&lt;=</span> operand <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>7</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>&lt;=</span> operand <span style=color:#f92672>&lt;=</span> <span style=color:#ae81ff>3</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> operand
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>elif</span> operand <span style=color:#f92672>==</span> <span style=color:#ae81ff>4</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> a
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>elif</span> operand <span style=color:#f92672>==</span> <span style=color:#ae81ff>5</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> b
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>elif</span> operand <span style=color:#f92672>==</span> <span style=color:#ae81ff>6</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> c
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>while</span> ip <span style=color:#f92672>&lt;</span> len(program) <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>:
+</span></span><span style=display:flex><span>        opcode <span style=color:#f92672>=</span> program[ip]
+</span></span><span style=display:flex><span>        operand <span style=color:#f92672>=</span> program[ip <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e># adv, division</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> opcode <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>:
+</span></span><span style=display:flex><span>            numerator <span style=color:#f92672>=</span> a
+</span></span><span style=display:flex><span>            denominator <span style=color:#f92672>=</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>**</span> combo(operand)
+</span></span><span style=display:flex><span>            a <span style=color:#f92672>=</span> numerator <span style=color:#f92672>//</span> denominator
+</span></span><span style=display:flex><span>        <span style=color:#75715e># bxl, bitwise xor</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>elif</span> opcode <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span>:
+</span></span><span style=display:flex><span>            b <span style=color:#f92672>^=</span> operand
+</span></span><span style=display:flex><span>        <span style=color:#75715e># bst, modulo</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>elif</span> opcode <span style=color:#f92672>==</span> <span style=color:#ae81ff>2</span>:
+</span></span><span style=display:flex><span>            b <span style=color:#f92672>=</span> combo(operand) <span style=color:#f92672>%</span> <span style=color:#ae81ff>8</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e># jnz</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>elif</span> opcode <span style=color:#f92672>==</span> <span style=color:#ae81ff>3</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> a <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0</span>:
+</span></span><span style=display:flex><span>                ip <span style=color:#f92672>=</span> operand
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e># bxc, bitwise xor</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>elif</span> opcode <span style=color:#f92672>==</span> <span style=color:#ae81ff>4</span>:
+</span></span><span style=display:flex><span>            b <span style=color:#f92672>^=</span> c
+</span></span><span style=display:flex><span>        <span style=color:#75715e># out</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>elif</span> opcode <span style=color:#f92672>==</span> <span style=color:#ae81ff>5</span>:
+</span></span><span style=display:flex><span>            stdout<span style=color:#f92672>.</span>append(combo(operand) <span style=color:#f92672>%</span> <span style=color:#ae81ff>8</span>)
+</span></span><span style=display:flex><span>        <span style=color:#75715e># bdv</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>elif</span> opcode <span style=color:#f92672>==</span> <span style=color:#ae81ff>6</span>:
+</span></span><span style=display:flex><span>            numerator <span style=color:#f92672>=</span> a
+</span></span><span style=display:flex><span>            denominator <span style=color:#f92672>=</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>**</span> combo(operand)
+</span></span><span style=display:flex><span>            b <span style=color:#f92672>=</span> numerator <span style=color:#f92672>//</span> denominator
+</span></span><span style=display:flex><span>        <span style=color:#75715e># cdv</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>elif</span> opcode <span style=color:#f92672>==</span> <span style=color:#ae81ff>7</span>:
+</span></span><span style=display:flex><span>            numerator <span style=color:#f92672>=</span> a
+</span></span><span style=display:flex><span>            denominator <span style=color:#f92672>=</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>**</span> combo(operand)
+</span></span><span style=display:flex><span>            c <span style=color:#f92672>=</span> numerator <span style=color:#f92672>//</span> denominator
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        ip <span style=color:#f92672>+=</span> <span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># part one</span>
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;,&#34;</span><span style=color:#f92672>.</span>join(map(str, stdout)))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;__main__&#39;</span>:
+</span></span><span style=display:flex><span>    main()
+</span></span></code></pre></div></content><p><a href=https://perrotta.dev/tags/dev/>#dev</a></p></main><footer><span>Copyright © 2021 - 2025 <a href=mailto:tbperrotta@gmail.com>Thiago Perrotta</a> · <a href=/index.xml>RSS</a> · a fork of <a href=https://github.com/janraasch/hugo-bearblog/>hugo ʕ•ᴥ•ʔ bear</a></span></footer></body></html>
