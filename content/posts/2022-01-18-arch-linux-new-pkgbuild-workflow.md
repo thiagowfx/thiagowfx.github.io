@@ -1,5 +1,5 @@
 ---
-title: "★ Arch Linux: New PKGBUILD Workflow"
+title: "Arch Linux: New PKGBUILD Workflow"
 date: 2022-01-18T21:59:07-05:00
 tags:
   - dev

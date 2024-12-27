@@ -1,5 +1,5 @@
 ---
-title: "★ Helm: enforce the directory name matches the chart name"
+title: "Helm: enforce the directory name matches the chart name"
 date: 2024-11-12T11:13:06+01:00
 tags:
   - bestof★

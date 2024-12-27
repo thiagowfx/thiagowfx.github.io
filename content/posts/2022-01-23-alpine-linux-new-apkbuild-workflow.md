@@ -1,5 +1,5 @@
 ---
-title: "★ Alpine Linux: New APKBUILD Workflow"
+title: "Alpine Linux: New APKBUILD Workflow"
 date: 2022-01-23T19:15:02-05:00
 tags:
   - dev

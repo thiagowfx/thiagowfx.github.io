@@ -1,5 +1,5 @@
 ---
-title: "★ Wayland: from i3 to sway"
+title: "Wayland: from i3 to sway"
 date: 2022-02-19T19:18:25-05:00
 tags:
   - linux

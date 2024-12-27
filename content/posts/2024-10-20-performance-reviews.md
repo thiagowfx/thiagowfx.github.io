@@ -1,5 +1,5 @@
 ---
-title: "★ Performance reviews"
+title: "Performance reviews"
 date: 2024-10-20T12:15:14+02:00
 tags:
   - bestof★

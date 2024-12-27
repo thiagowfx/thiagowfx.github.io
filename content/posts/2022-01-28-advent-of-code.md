@@ -1,5 +1,5 @@
 ---
-title: "★ Advent of Code"
+title: "Advent of Code"
 date: 2022-01-28T17:44:00-05:00
 tags:
   - dev

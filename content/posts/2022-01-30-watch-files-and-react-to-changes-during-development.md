@@ -1,5 +1,5 @@
 ---
-title: "★ Watch files and react to changes during development"
+title: "Watch files and react to changes during development"
 date: 2022-01-30T21:32:17-05:00
 tags:
   - dev

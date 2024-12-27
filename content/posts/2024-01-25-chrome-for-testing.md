@@ -1,5 +1,5 @@
 ---
-title: "★ (Google) Chrome for Testing: reliable downloads for browser automation"
+title: "(Google) Chrome for Testing: reliable downloads for browser automation"
 date: 2024-01-25T18:27:04-03:00
 tags:
   - bestof★

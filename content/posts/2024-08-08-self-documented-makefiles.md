@@ -1,5 +1,5 @@
 ---
-title: "★ Self-documented Makefiles"
+title: "Self-documented Makefiles"
 date: 2024-08-08T10:42:49+02:00
 tags:
   - bestof★

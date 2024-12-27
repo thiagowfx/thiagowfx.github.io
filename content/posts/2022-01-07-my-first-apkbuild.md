@@ -1,5 +1,5 @@
 ---
-title: "★ My First APKBUILD"
+title: "My First APKBUILD"
 date: 2022-01-07T20:03:07-05:00
 tags:
   - linux

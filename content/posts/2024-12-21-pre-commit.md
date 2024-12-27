@@ -1,5 +1,5 @@
 ---
-title: "★ Pre-commit"
+title: "Pre-commit"
 date: 2024-12-21T23:24:23-03:00
 tags:
   - bestof★

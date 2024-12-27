@@ -1,5 +1,5 @@
 ---
-title: "★ pre-commit: create hooks for unsupported tools"
+title: "pre-commit: create hooks for unsupported tools"
 date: 2024-12-17T22:46:41-03:00
 tags:
   - bestof★

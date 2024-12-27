@@ -1,5 +1,5 @@
 ---
-title: "★ .gitignore without .gitignore"
+title: ".gitignore without .gitignore"
 date: 2024-12-11T11:44:12-03:00
 tags:
   - bestof★

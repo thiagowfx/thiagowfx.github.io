@@ -1,5 +1,5 @@
 ---
-title: "★ Integrating terraform with ansible"
+title: "Integrating terraform with ansible"
 date: 2024-02-01T14:02:28-03:00
 tags:
   - bestof★

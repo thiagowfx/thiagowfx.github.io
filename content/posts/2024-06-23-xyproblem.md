@@ -1,5 +1,5 @@
 ---
-title: "★ XY problem"
+title: "XY problem"
 date: 2024-06-23T14:50:19+02:00
 tags:
   - bestof★

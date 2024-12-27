@@ -1,5 +1,5 @@
 ---
-title: "★ Online diff tool"
+title: "Online diff tool"
 date: 2024-12-22T23:39:25-03:00
 tags:
   - bestof★

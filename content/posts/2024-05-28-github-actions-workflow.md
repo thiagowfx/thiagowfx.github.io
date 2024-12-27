@@ -1,5 +1,5 @@
 ---
-title: "★ Github actions workflow"
+title: "Github actions workflow"
 date: 2024-05-28T10:23:22+02:00
 tags:
   - bestof★
