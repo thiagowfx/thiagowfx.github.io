@@ -1,5 +1,5 @@
 ---
-title: "Advent of Code: Day 8"
+title: "Advent of Code 2024: Day 8"
 date: 2024-12-20T22:47:51-03:00
 tags:
   - aoc
