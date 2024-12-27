@@ -28,13 +28,13 @@ trap cleanup SIGINT
 
 start_fe() {
   # [...init deps...]
-  boq run //java/com/google/cloudcast/[...]/publishing/partnerportal/ui &
+  boq run //java/com/google/chrome/cloudcast/[...]/publishing/partnerportal/ui &
   pid_fe=$!
 }
 
 start_be() {
   # [...init deps...]
-  boq run //java/com/google/cloudcast/[...]/publishing/partnerportal &
+  boq run //java/com/google/chrome/cloudcast/[...]/publishing/partnerportal &
   pid_be=$!
 }
 
