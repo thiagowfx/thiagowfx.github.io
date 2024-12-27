@@ -2,6 +2,7 @@
 title: "Advent of Code: Day 3"
 date: 2024-12-03T16:41:23+01:00
 tags:
+  - aoc
   - dev
 ---
 
@@ -82,4 +83,3 @@ if __name__ == '__main__':
 I intended to use [`match`](https://docs.python.org/3/whatsnew/3.10.html) merely
 for style points however it's only available from Python 3.10+, thus I sticked
   with a mere `if-elif` construct.
-

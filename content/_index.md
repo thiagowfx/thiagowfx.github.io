@@ -1,9 +1,9 @@
-## Thiago Perrotta (`@thiagowfx`)
+### Thiago Perrotta (`@thiagowfx`)
 
 **serendipity** /ˌsɛr ənˈdɪp ɪ ti/ _n_
 **1**: an aptitude for making {desirable, valuable} discoveries by accident
 
-### Contact info
+### Contact
 
 - [email](mailto:tbperrotta@gmail.com)
 - [rss](/index.xml)

@@ -2,6 +2,7 @@
 title: "Advent of Code: Day 11"
 date: 2024-12-12T19:15:35-03:00
 tags:
+  - aoc
   - dev
 ---
 

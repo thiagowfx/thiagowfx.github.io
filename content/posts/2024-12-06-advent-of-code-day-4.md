@@ -2,6 +2,7 @@
 title: "Advent of Code: Day 4"
 date: 2024-12-06T11:44:39+01:00
 tags:
+  - aoc
   - dev
 ---
 
