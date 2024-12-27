@@ -27,6 +27,7 @@ clean:
 # Update git submodules
 update:
 	git submodule update --remote
+	pre-commit autoupdate
 
 # Ping Google and Bing about changes in the sitemap
 ping sitemap="https://perrotta.dev/sitemap.xml":
