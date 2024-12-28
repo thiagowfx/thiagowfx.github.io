@@ -1,5 +1,5 @@
 ---
-title: "Site performance with lighthouse"
+title: "Site performance with Lighthouse"
 date: 2024-12-28T05:14:38-03:00
 tags:
   - dev
@@ -22,6 +22,10 @@ It has four metrics scored from 0 to 100 each:
 - SEO
 
 I ran it against [my blog](https://pagespeed.web.dev/analysis/https-perrotta-dev/f7pfqerk0f?form_factor=mobile).
+
+My score was 100 / 83 / 96 / 100, respectively, which is quite good. It's not
+unexpected either, because I am running a static website.
+
 It offered me a couple of suggestions:
 
 > - Image elements do not have explicit width and height
@@ -29,6 +33,4 @@ It offered me a couple of suggestions:
 > - Serve static assets with an efficient cache policy 2 resources found
 > - Properly size images Potential savings of 23 KiB
 
-My score was 100 / 83 / 96 / 100, respectively, which is quite good. It's not
-unexpected either, because I am running a static website.
 I addressed most of the suggestions.
