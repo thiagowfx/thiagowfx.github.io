@@ -180,6 +180,9 @@ Cloudflare makes it easy and boring™.
 
 Once the MX record is configured, verify it's working via [WhatsMyDNS](https://www.whatsmydns.net/#MX/perrotta.dev).
 
+Verify DMARC is working via [MX
+Toolbox](https://mxtoolbox.com/SuperTool.aspx?action=dmarc%3aperrotta.dev&run=toolpage).
+
 Then create custom routing rules. If desired, add a catch-all rule.
 
 Once it is working test it by sending an email to yourself. And we're done!
