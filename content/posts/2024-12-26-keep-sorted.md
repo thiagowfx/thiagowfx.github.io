@@ -14,7 +14,7 @@ isn't always a pre-requisite for quality nor success.
 
 It started as someone's 20% project at Google. When using the internal IDE
 (legacy Cider) and/or the internal Code Review tool (legacy Critique) with the
-CI tool (Tricorder), linting warnings / errors would surface all over the place,
+CI tool, linting warnings / errors would surface all over the place,
 forcing you to address them. It was also possible to have them automatically
 fixed.
 
