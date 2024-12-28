@@ -13,7 +13,7 @@ by installing their official [chrome
 extension](https://chromewebstore.google.com/detail/chatgpt-search/ejcfepkfckglbgocfkanmcdngdijcgld).
 
 This is effectively possible because, after
-[launching](https://openai.com/index/introducing-chatgpt-search/?utm_source=chatgpt.com)
+[launching](https://openai.com/index/introducing-chatgpt-search/)
 it for a few months, this month they made it free for everyone.
 
 So far the results are impressive and almost always what I am looking for.
