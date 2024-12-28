@@ -35,4 +35,4 @@ I do not own any of them, nor plan to e.g. Apple TV or iPad or Vision Pro.
 A global block list is a much more effective way to address mass filtering out of posts than per-feed ones.
 
 
-[^]: Since `miniflux` version 2.1.4 (July 9, 2024).
+[^1]: Since `miniflux` version 2.1.4 (July 9, 2024).
