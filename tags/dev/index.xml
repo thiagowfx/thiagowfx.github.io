@@ -1,4 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on not just serendipity</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo</generator><language>en-us</language><managingEditor>notjustserendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>notjustserendipity@perrotta.dev (Thiago Perrotta)</webMaster><lastBuildDate>Sat, 28 Dec 2024 18:04:19 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Miniflux: global blocklist</title><link>https://perrotta.dev/2024/12/miniflux-global-blocklist/</link><pubDate>Sat, 28 Dec 2024 18:04:19 -0300</pubDate><author>notjustserendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/miniflux-global-blocklist/</guid><description>&lt;p>One of the best features of &lt;a href="https://miniflux.app/">miniflux&lt;/a> rolled out &lt;a href="https://github.com/miniflux/v2/blob/main/ChangeLog">this year&lt;/a>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on not just serendipity</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on not just serendipity</description><generator>Hugo</generator><language>en-us</language><managingEditor>notjustserendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>notjustserendipity@perrotta.dev (Thiago Perrotta)</webMaster><lastBuildDate>Sat, 28 Dec 2024 20:49:27 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Pin all github actions</title><link>https://perrotta.dev/2024/12/pin-all-github-actions/</link><pubDate>Sat, 28 Dec 2024 20:49:27 -0300</pubDate><author>notjustserendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/pin-all-github-actions/</guid><description>&lt;p>&lt;a href="https://cedwards.xyz/github-actions-are-an-impending-security-disaster/">via Connor&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>Since git tags can be moved arbitrarily by the author, there&amp;rsquo;s nothing stopping them going rogue and changing the Action to be malicious at any time. The author could change the code to exfiltrate the repository itself, the GITHUB_TOKEN (which in many cases can have more power than it should), or other CI/CD secrets.&lt;/p>
+&lt;/blockquote>
+&lt;p>Hence, bad:&lt;/p>
+&lt;pre tabindex="0">&lt;code>uses: actions/checkout@v4
+&lt;/code>&lt;/pre>&lt;p>Good:&lt;/p>
+&lt;pre tabindex="0">&lt;code>uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+&lt;/code>&lt;/pre>&lt;p>I find an effective way to address and enforce this practice is via &lt;a href="https://pre-commit.com/">pre-commit&lt;/a>:&lt;/p></description></item><item><title>Miniflux: global blocklist</title><link>https://perrotta.dev/2024/12/miniflux-global-blocklist/</link><pubDate>Sat, 28 Dec 2024 18:04:19 -0300</pubDate><author>notjustserendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/miniflux-global-blocklist/</guid><description>&lt;p>One of the best features of &lt;a href="https://miniflux.app/">miniflux&lt;/a> rolled out &lt;a href="https://github.com/miniflux/v2/blob/main/ChangeLog">this year&lt;/a>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>
 was the ability to globally block feed items that match certain patterns.&lt;/p>
 &lt;p>Previously it was possible to do so only in an individual feed basis.&lt;/p>
 &lt;p>The documentation lives &lt;a href="https://miniflux.app/docs/rules.html#global-filtering-rules">here&lt;/a>:&lt;/p>
@@ -374,39 +382,4 @@ in Chrome with &amp;lsquo;g&amp;rsquo;, or to DuckDuckGo with &amp;rsquo;d&amp;r
 The underscore makes it private, effectively hiding it from the list output.&lt;/li>
 &lt;/ul>
 &lt;p>The diff above is for the &lt;code>Justfile&lt;/code> used for this blog. The above change
-yields:&lt;/p></description></item><item><title>Running multiple servers in a single bash script</title><link>https://perrotta.dev/2024/12/running-multiple-servers-in-a-single-bash-script/</link><pubDate>Mon, 23 Dec 2024 22:52:40 -0300</pubDate><author>notjustserendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/running-multiple-servers-in-a-single-bash-script/</guid><description>&lt;p>Inspired by &lt;a href="https://github.com/simonw/til/blob/main/bash/multiple-servers.md">Simon
-Willison&lt;/a>&amp;rsquo;s
-TIL.&lt;/p>
-&lt;p>When I was working on the &lt;a href="https://stadia.com/">Stadia&lt;/a> Partner Portal as a
-full-stack tech lead, I wrote and maintained a &lt;code>run.sh&lt;/code> script that would start
-up our two (front-end and back-end) Boq&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> server instances.&lt;/p>
-&lt;p>It resembled the following:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/usr/bin/env bash
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cleanup&lt;span style="color:#f92672">()&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> kill $pid_fe $pid_be
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> exit &lt;span style="color:#ae81ff">0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>trap cleanup SIGINT
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>start_fe&lt;span style="color:#f92672">()&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># [...init deps...]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> boq run //java/com/google/chrome/cloudcast/&lt;span style="color:#f92672">[&lt;/span>...&lt;span style="color:#f92672">]&lt;/span>/publishing/partnerportal/ui &amp;amp;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> pid_fe&lt;span style="color:#f92672">=&lt;/span>$!
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>start_be&lt;span style="color:#f92672">()&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># [...init deps...]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> boq run //java/com/google/chrome/cloudcast/&lt;span style="color:#f92672">[&lt;/span>...&lt;span style="color:#f92672">]&lt;/span>/publishing/partnerportal &amp;amp;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> pid_be&lt;span style="color:#f92672">=&lt;/span>$!
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>start_fe
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>start_be
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>wait
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This version is heavily simplified, but that was its gist. It worked perfectly.
-Back in ~2018, it took quite a bit of trial-and-error to get it right. Now it
-seems so easy to just ask GenAI to generate it for you! Yikes. Our profession
-might get obsoleted in just a few more years to come&amp;hellip;&lt;/p></description></item></channel></rss>
+yields:&lt;/p></description></item></channel></rss>
