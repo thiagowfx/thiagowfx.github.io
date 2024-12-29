@@ -169,8 +169,9 @@ And that's all! Other useful tips:
 Use a software like [`urlwatch`][urlwatch] or [`nvchecker`][nvchecker] to track
 future upstream changes so that you can update your packages in a timely
 fashion[^4]. There's also a web service called [Release
-Monitoring][release-monitoring], part of Fedora Infra. I use `urlwatch` the
-following way:
+Monitoring][release-monitoring], part of Fedora Infra. And there's also
+https://changedetection.io/, but it's overkill for this task. I use `urlwatch`
+the following way:
 
 ```
 $ cat PKGBUILDs/urlwatch.yml
