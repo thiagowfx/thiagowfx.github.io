@@ -4,7 +4,7 @@ date: 2022-01-30T21:32:17-05:00
 tags:
   - dev
   - linux
-  - bestof★
+  - bestof
 ---
 
 This post describes some tooling usages to watch for file changes and run or reload a command whenever they happen.

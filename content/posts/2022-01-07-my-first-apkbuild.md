@@ -3,7 +3,7 @@ title: "My First APKBUILD"
 date: 2022-01-07T20:03:07-05:00
 tags:
   - linux
-  - bestof★
+  - bestof
 ---
 
 In the same spirit of my first PKGBUILD and [`Ebuild`]({{< ref "2014-09-28-my-first-ebuild" >}}), herein I will describe my first `APKBUILD`.

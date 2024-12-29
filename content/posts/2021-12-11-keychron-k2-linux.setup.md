@@ -3,7 +3,7 @@ title: 'Keychron K2: Linux Setup'
 date: 2021-12-11T20:59:21-05:00
 lastmod: "2022-01-03"
 tags:
-  - bestof★
+  - bestof
   - dev
   - linux
 ---

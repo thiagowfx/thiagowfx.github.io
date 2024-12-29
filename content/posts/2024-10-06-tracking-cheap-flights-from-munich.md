@@ -2,7 +2,7 @@
 title: "Tracking cheap flights from Munich"
 date: 2024-10-06T00:31:23+02:00
 tags:
-  - bestof★
+  - bestof
   - dev
   - serenity
 ---

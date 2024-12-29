@@ -2,7 +2,7 @@
 title: "Keychron K2: Review"
 date: 2022-01-12T18:09:38-05:00
 tags:
-  - bestof★
+  - bestof
   - dev
 ---
 

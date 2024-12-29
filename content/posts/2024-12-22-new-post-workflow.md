@@ -17,7 +17,7 @@ Hit 'G', open up the post, it looks like this:
 title: "New post workflow"
 date: 2024-12-22T22:26:46-03:00
 tags:
-  - bestof★
+  - bestof
   - dev
   - linux
   - macos

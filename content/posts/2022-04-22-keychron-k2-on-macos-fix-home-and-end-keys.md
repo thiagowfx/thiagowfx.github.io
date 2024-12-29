@@ -3,7 +3,7 @@ title: "Keychron K2 on macOS: fix Home and End keys"
 date: 2022-04-22T19:04:17-04:00
 tags:
   - macos
-  - bestof★
+  - bestof
 ---
 
 **Issue**: For whatever reason, the `Home` and `End` keys on my [Keychron K2]({{< ref "2022-01-12-keychron-k2-review" >}}) do not work as intended on macOS.

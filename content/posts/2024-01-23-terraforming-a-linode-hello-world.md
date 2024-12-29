@@ -2,7 +2,7 @@
 title: "Terraforming a Linode: hello world"
 date: 2024-01-23T23:27:04-03:00
 tags:
-  - bestof★
+  - bestof
   - dev
   - selfhosted
 ---

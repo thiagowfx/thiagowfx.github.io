@@ -2,7 +2,7 @@
 title: "Update DNS NS servers from Porkbun to Cloudflare"
 date: 2024-12-27T22:45:45-03:00
 tags:
-  - bestof★
+  - bestof
   - dev
   - privacy
   - selfhosted

@@ -2,7 +2,7 @@
 title: "Keep sorted"
 date: 2024-12-26T15:07:02-03:00
 tags:
-  - bestof★
+  - bestof
   - dev
 ---
 

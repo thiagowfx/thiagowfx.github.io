@@ -2,7 +2,7 @@
 title: "Ollama: Hello World"
 date: 2024-12-28T06:26:00-03:00
 tags:
-  - bestof★
+  - bestof
   - dev
   - privacy
   - selfhosted
