@@ -5,7 +5,7 @@
 
 ### Contact
 
-- {{< email_link >}}email{{< /email_link >}}
+- 📧 {{< email_link >}}email{{< /email_link >}}
 - [rss](/index.xml)
 - [github](https://github.com/thiagowfx)
 - [goodreads](https://goodreads.com/user/show/7873832-thiago)
