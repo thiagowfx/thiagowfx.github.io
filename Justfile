@@ -16,9 +16,13 @@ watch preview="true":
 build:
 	hugo --environment production --gc --minify
 
+# Upcoming post ideas
+draft title:
+	echo "- {{ lowercase(title) }}" >> IDEAS.md
+
 # Create a new post. Usage: `just new "advent of code day 8"`
-new post:
-	hugo new content/posts/`date "+%Y-%m-%d"`-{{ kebabcase(post) }}.md
+new title:
+	hugo new content/posts/`date "+%Y-%m-%d"`-{{ kebabcase(title) }}.md
 
 # Delete hugo build artifacts
 clean:
