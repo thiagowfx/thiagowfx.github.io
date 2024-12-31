@@ -3,3 +3,4 @@
 - fpp
 - gh
 - sourcegraph
+- mr
