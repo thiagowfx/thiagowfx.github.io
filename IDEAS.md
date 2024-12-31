@@ -1,5 +1,6 @@
 # Ideas
 
+- atuin
 - diffoscope
 - fabric
 - fpp
@@ -7,3 +8,4 @@
 - jj / sapling
 - mr
 - sourcegraph
+- starship
