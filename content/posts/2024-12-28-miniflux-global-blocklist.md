@@ -25,7 +25,7 @@ To add new terms, I add more regular expressions with an or (`|`).
 Whenever the term is a common substring, I add word boundaries with `\b`.
 The `(?i)` is to make the matching case insensitive.
 
-This approach helps me fight with information overload.
+This approach helps me fight against information overload.
 
 There are some people I like to follow via Miniflux, but I am simply not interested in some of their kinds of posts.
 
