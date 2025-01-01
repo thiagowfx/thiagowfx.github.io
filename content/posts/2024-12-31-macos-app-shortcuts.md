@@ -40,3 +40,5 @@ Type in `Edit->Paste and Match Style`, case sensitive, no spaces around the ` ->
 
 **Note**: This method doesn't work if the keyboard shortcut is already mapped within the
 app.
+
+Credits to [David Winterbottom](https://til.codeinthehole.com/posts/how-to-bind-custom-keyboard-shortcuts-to-nested-macos-menu-options/) for the idea.
