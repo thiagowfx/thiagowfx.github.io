@@ -34,3 +34,6 @@ It offered me a couple of suggestions:
 > - Properly size images Potential savings of 23 KiB
 
 I addressed most of the suggestions.
+
+Cloudflare also has a similar scan: [Cloudflare
+Radar](https://radar.cloudflare.com/scan/b274b6c2-1015-4907-aeca-30b7be8d1769/summary).
