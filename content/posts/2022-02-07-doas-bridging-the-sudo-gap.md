@@ -31,7 +31,7 @@ Caveat: Besides being an user-dependent workaround[^1], `doas` isn't really a fu
 
 ## Use a shim/wrapper (recommended)
 
-Alpine Linux provides a [`doas-sudo-shim`](https://pkgs.alpinelinux.org/package/edge/community/x86_64/doas-sudo-shim) package:
+Alpine Linux provides a [`doas-sudo-shim`](https://pkgs.alpinelinux.org/package/edge/main/x86_64/doas-sudo-shim) package:
 
 ```shell
 $ doas apk add doas-sudo-shim

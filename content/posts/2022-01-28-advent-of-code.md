@@ -35,7 +35,7 @@ My goal for 2021 was relatively less ambitious than that,  I just wanted to impr
 
 I set up a public git repository with [my solutions][myaoc] and aspired to write simple and elegant python, my only [constraint](https://frantic.im/no-constraints-no-fun/) was to limit myself to what is available in the standard library of a vanilla python3 installation in Alpine linux, with the exception of [`numpy`][numpy] which is widespread enough to deserve an entry in my [`requirements.txt`](https://github.com/thiagowfx/adventofcode/blob/master/requirements.txt), and of course devtools like debuggers, linters and auto formatters as needed.
 
-As an additional, non-programming challenge I also limited myself to only use the command line. This basically meant no IDEs[^4]. My programming environment was ultimately `ssh` to an Alpine Linux VPS + `tmux` + `vim`. To make my life easier, one of the first tasks I accomplished was to write a generic [`Makefile`](https://github.com/thiagowfx/adventofcode/blob/master/Makefile) to help me test and run my scripts. A typical invocation would look like:
+As an additional, non-programming challenge I also limited myself to only use the command line. This basically meant no IDEs[^4]. My programming environment was ultimately `ssh` to an Alpine Linux VPS + `tmux` + `vim`. To make my life easier, one of the first tasks I accomplished was to write a generic [`Makefile`](https://github.com/thiagowfx/adventofcode/blob/master/2022/Makefile) to help me test and run my scripts. A typical invocation would look like:
 
 ```shell
 $ make DEBUG=1 DAY=3
