@@ -36,7 +36,8 @@ Example values[^1]:
 
 From a public registry to a private registry that uses MFA (multi-factor authentication).
 
-First, it's necessary to get MFA credentials:
+First, it's necessary to get MFA credentials. Source the script below
+(`china.mfa.sh`):
 
 ```shell
 #!/usr/bin/env bash
@@ -57,6 +58,9 @@ export AWS_SESSION_TOKEN=$(echo "$credentials" | jq -r '.Credentials.SessionToke
 
 [[ -n "$AWS_SESSION_TOKEN" ] && echo "Success!"
 ```
+
+**Important**: It is necessary to do `source china-mfa.sh`. Doing `./china-mfa.sh`
+will **not** work.
 
 Then we can proceed with the image sync:
 
