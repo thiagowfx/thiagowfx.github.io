@@ -5,7 +5,7 @@
 
 - - -
 
-Welcome to my digital garden.
+## Welcome to my digital garden
 
 There are no ads, no affiliate links, no tracking or analytics, no guests
 or sponsored posts, and no paywall.
