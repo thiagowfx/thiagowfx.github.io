@@ -1,4 +1,4 @@
-### I am Thiago Perrotta (`@thiagowfx`) 🧑‍💻✨
+## I am Thiago Perrotta (`@thiagowfx`) 🧑‍💻✨
 
 **serendipity** /ˌsɛr ənˈdɪp ɪ ti/ _n_
 **1**: an aptitude for making {desirable, valuable} discoveries by accident
