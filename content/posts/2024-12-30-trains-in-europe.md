@@ -33,12 +33,14 @@ There's no point in searching in all of them: pick one or two and call it a day.
 
 This list is intentionally non-exhaustive.
 
+<!-- keep-sorted start -->
 - [Deutsche Bahn (DB)](https://int.bahn.de/en/) for Germany 🇩🇪
-- [ÖBB](https://www.oebb.at/en/) for Austria 🇦🇹
-- [SNCF](https://www.sncf-connect.com/en-en/) for France 🇫🇷
-- [ČD.cz](https://www.cd.cz/en/) for Czech Republic 🇨🇿
 - [NS](https://www.ns.nl/en) for the Netherlands 🇳🇱
 - [SBB](https://www.sbb.ch/en) for Switzerland 🇨🇭
+- [SNCF](https://www.sncf-connect.com/en-en/) for France 🇫🇷
+- [ÖBB](https://www.oebb.at/en/) for Austria 🇦🇹
+- [ČD.cz](https://www.cd.cz/en/) for Czech Republic 🇨🇿
+<!-- keep-sorted end -->
 
 Sometimes a given train route is cheaper in a different provider.
 For example, the _München – Praha_ route is generally cheaper on ČD than on DB.
@@ -56,7 +58,8 @@ There are several kinds of passes, some of them for travel within a single count
 
 Germany 🇩🇪:
 
-- [S-Bahn München Live](https://s-bahn-muenchen-live.de/): only for S-Bahns
+- [S-Bahn München Live](https://s-bahn-muenchen-live.de/): only for S-Bahns in
+  Munich
 - [Deutsche Bahn (DB)](https://reiseauskunft.bahn.de/bin/bhftafel.exe/en?ld=96252&country=DEU&rt=1&newrequest=yes&&country=GBR)
 - [**Bahn App**](https://bahnapp.com/): minimalist, with a superb design, better (easier to use and more reliable) than DB
 
@@ -67,6 +70,6 @@ Germany 🇩🇪:
   - Night / sleeper trains: [A guide to travel by Nightjet](https://www.seat61.com/trains-and-routes/nightjet.htm)
 - Shipping with Deutsche Bahn (DB) in Germany: [Gepäckservice für Reisegepäck](https://www.gepaeckservice-bahn.de/buchung.xhtml)
 
-Where can you go by train in 8h? [ChronoTrains](https://www.chronotrains.com/) could convince you to ride a train instead of flying:
+"Where can you go by train in 8h"? [ChronoTrains](https://www.chronotrains.com/) could convince you to ride a train instead of flying:
 
 > This map shows you how far you can travel from each station in Europe in less than 8 hours.
