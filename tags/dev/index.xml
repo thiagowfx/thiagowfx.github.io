@@ -1,6 +1,178 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 04 Jan 2025 18:36:02 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Arch Linux on macbook installation notes</title><link>https://perrotta.dev/2025/01/arch-linux-on-macbook-installation-notes/</link><pubDate>Sat, 04 Jan 2025 18:36:02 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/arch-linux-on-macbook-installation-notes/</guid><description>&lt;p>Imported from &lt;a href="https://gist.github.com/thiagowfx/">thiagowfx&lt;/a>@&amp;rsquo;s gist.&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 04 Jan 2025 18:49:58 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>FindBoost.cmake</title><link>https://perrotta.dev/2025/01/findboost.cmake/</link><pubDate>Sat, 04 Jan 2025 18:49:58 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/findboost.cmake/</guid><description>&lt;p>When I was in university I made heavy use of &lt;a href="https://cmake.org/">cmake&lt;/a> with
+C++ projects.&lt;/p>
+&lt;p>Occasionally I would also use &lt;a href="https://www.boost.org/">boost&lt;/a>.&lt;/p>
+&lt;p>At the time there was no cmake module to integrate with boost libraries. So I
+wrote my own.&lt;/p>
+&lt;p>At some point I published it to a Stack Overflow
+&lt;a href="https://stackoverflow.com/questions/28346530/cmake-automatic-boost-download-and-build-if-not-found/41130107#41130107">answer&lt;/a>,
+linking to a
+&lt;a href="https://gist.github.com/thiagowfx/970e3931387ed7db9a39709a8a130ee9">gist&lt;/a>.&lt;/p>
+&lt;p>I figured to replicate it here:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-cmake" data-lang="cmake">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># - Find Boost
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Copyright (c) 2016 Thiago Perrotta
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Permission is hereby granted, free of charge, to any person obtaining a copy of
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># this software and associated documentation files (the &amp;#34;Software&amp;#34;), to deal in
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># the Software without restriction, including without limitation the rights to
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># the Software, and to permit persons to whom the Software is furnished to do so,
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># subject to the following conditions:
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># The above copyright notice and this permission notice shall be included in all
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># copies or substantial portions of the Software.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># THE SOFTWARE IS PROVIDED &amp;#34;AS IS&amp;#34;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># This module finds if Boost is installed and determines where the
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># executables are. It sets the following variables:
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># BOOST_FOUND : boolean - system has Boost
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># BOOST_LIBRARIES : list(filepath) - the libraries needed to use Boost
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># BOOST_INCLUDE_DIRS : list(path) - the Boost include directories
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># If Boost is not found, this module downloads it according to the
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># following variables:
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># BOOST_ROOT_DIR : path - the Path where Boost will be installed on
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># BOOST_REQUESTED_VERSION : string - the Boost version to be downloaded
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># You can also specify its components:
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># find_package(Boost COMPONENTS program_options system)
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># which are stored in Boost_FIND_COMPONENTS : list(string)
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># You can also specify its behavior:
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># BOOST_USE_STATIC_LIBS : boolean (default: OFF)
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>if(&lt;span style="color:#e6db74">NOT&lt;/span> &lt;span style="color:#e6db74">Boost_FIND_COMPONENTS&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	message(&lt;span style="color:#e6db74">FATAL_ERROR&lt;/span> &lt;span style="color:#e6db74">&amp;#34;No COMPONENTS specified for Boost&amp;#34;&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>endif()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>set(&lt;span style="color:#e6db74">BOOST_USE_STATIC_LIBS&lt;/span> &lt;span style="color:#e6db74">false&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>&lt;span style="color:#75715e"># Set the library prefix and library suffix properly.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>if(&lt;span style="color:#e6db74">BOOST_USE_STATIC_LIBS&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	set(&lt;span style="color:#e6db74">CMAKE_FIND_LIBRARY_PREFIXES&lt;/span> &lt;span style="color:#f92672">${&lt;/span>CMAKE_STATIC_LIBRARY_PREFIX&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	set(&lt;span style="color:#e6db74">CMAKE_FIND_LIBRARY_SUFFIXES&lt;/span> &lt;span style="color:#f92672">${&lt;/span>CMAKE_STATIC_LIBRARY_SUFFIX&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	set(&lt;span style="color:#e6db74">LIBRARY_PREFIX&lt;/span> &lt;span style="color:#f92672">${&lt;/span>CMAKE_STATIC_LIBRARY_PREFIX&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	set(&lt;span style="color:#e6db74">LIBRARY_SUFFIX&lt;/span> &lt;span style="color:#f92672">${&lt;/span>CMAKE_STATIC_LIBRARY_SUFFIX&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>else()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	set(&lt;span style="color:#e6db74">CMAKE_FIND_LIBRARY_PREFIXES&lt;/span> &lt;span style="color:#f92672">${&lt;/span>CMAKE_SHARED_LIBRARY_PREFIX&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	set(&lt;span style="color:#e6db74">CMAKE_FIND_LIBRARY_SUFFIXES&lt;/span> &lt;span style="color:#f92672">${&lt;/span>CMAKE_SHARED_LIBRARY_SUFFIX&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	set(&lt;span style="color:#e6db74">LIBRARY_PREFIX&lt;/span> &lt;span style="color:#f92672">${&lt;/span>CMAKE_SHARED_LIBRARY_PREFIX&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	set(&lt;span style="color:#e6db74">LIBRARY_SUFFIX&lt;/span> &lt;span style="color:#f92672">${&lt;/span>CMAKE_SHARED_LIBRARY_SUFFIX&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>endif()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>&lt;span style="color:#75715e"># Create a list(string) for the build command (e.g. --with-program_options;--with-system)
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># and assigns it to BOOST_COMPONENTS_FOR_BUILD
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>foreach(&lt;span style="color:#e6db74">component&lt;/span> &lt;span style="color:#f92672">${&lt;/span>Boost_FIND_COMPONENTS&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	list(&lt;span style="color:#e6db74">APPEND&lt;/span> &lt;span style="color:#e6db74">BOOST_COMPONENTS_FOR_BUILD&lt;/span> &lt;span style="color:#e6db74">--with-&lt;/span>&lt;span style="color:#f92672">${&lt;/span>component&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>endforeach()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>&lt;span style="color:#75715e"># Create a string for the first component (e.g. boost_program_options)
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># and assigns it to Boost_FIND_COMPONENTS
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>list(&lt;span style="color:#e6db74">GET&lt;/span> &lt;span style="color:#e6db74">Boost_FIND_COMPONENTS&lt;/span> &lt;span style="color:#e6db74">0&lt;/span> &lt;span style="color:#e6db74">BOOST_FIRST_COMPONENT&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>set(&lt;span style="color:#e6db74">BOOST_FIRST_COMPONENT&lt;/span> &lt;span style="color:#e6db74">&amp;#34;boost_${BOOST_FIRST_COMPONENT}&amp;#34;&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>include(&lt;span style="color:#e6db74">FindPackageHandleStandardArgs&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>macro(&lt;span style="color:#e6db74">DO_FIND_BOOST_SYSTEM&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	find_path(&lt;span style="color:#e6db74">BOOST_INCLUDE_DIR&lt;/span> &lt;span style="color:#e6db74">boost/config.hpp&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">PATHS&lt;/span> &lt;span style="color:#e6db74">/usr/local/include&lt;/span> &lt;span style="color:#e6db74">/usr/include&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	find_library(&lt;span style="color:#e6db74">BOOST_LIBRARY&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">NAMES&lt;/span> &lt;span style="color:#f92672">${&lt;/span>BOOST_FIRST_COMPONENT&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">PATHS&lt;/span> &lt;span style="color:#e6db74">/usr/local/lib&lt;/span> &lt;span style="color:#e6db74">/usr/lib&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	FIND_PACKAGE_HANDLE_STANDARD_ARGS(&lt;span style="color:#e6db74">Boost&lt;/span> &lt;span style="color:#e6db74">DEFAULT_MSG&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">BOOST_INCLUDE_DIR&lt;/span> &lt;span style="color:#e6db74">BOOST_LIBRARY&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	set(&lt;span style="color:#e6db74">BOOST_LIBRARIES&lt;/span> &lt;span style="color:#f92672">${&lt;/span>BOOST_LIBRARY&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	set(&lt;span style="color:#e6db74">BOOST_INCLUDE_DIRS&lt;/span> &lt;span style="color:#f92672">${&lt;/span>BOOST_INCLUDE_DIR&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	mark_as_advanced(&lt;span style="color:#e6db74">BOOST_LIBRARIES&lt;/span> &lt;span style="color:#e6db74">BOOST_INCLUDE_DIRS&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>endmacro()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>macro(&lt;span style="color:#e6db74">DO_FIND_BOOST_ROOT&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	if(&lt;span style="color:#e6db74">NOT&lt;/span> &lt;span style="color:#e6db74">BOOST_ROOT_DIR&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>		message(&lt;span style="color:#e6db74">STATUS&lt;/span> &lt;span style="color:#e6db74">&amp;#34;BOOST_ROOT_DIR is not defined, using binary directory.&amp;#34;&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>		set(&lt;span style="color:#e6db74">BOOST_ROOT_DIR&lt;/span> &lt;span style="color:#f92672">${&lt;/span>CURRENT_CMAKE_BINARY_DIR&lt;span style="color:#f92672">}&lt;/span> &lt;span style="color:#e6db74">CACHE&lt;/span> &lt;span style="color:#e6db74">PATH&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	endif()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	find_path(&lt;span style="color:#e6db74">BOOST_INCLUDE_DIR&lt;/span> &lt;span style="color:#e6db74">boost/config.hpp&lt;/span> &lt;span style="color:#f92672">${&lt;/span>BOOST_ROOT_DIR&lt;span style="color:#f92672">}&lt;/span>&lt;span style="color:#e6db74">/include&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	find_library(&lt;span style="color:#e6db74">BOOST_LIBRARY&lt;/span> &lt;span style="color:#f92672">${&lt;/span>BOOST_FIRST_COMPONENT&lt;span style="color:#f92672">}&lt;/span> &lt;span style="color:#e6db74">HINTS&lt;/span> &lt;span style="color:#f92672">${&lt;/span>BOOST_ROOT_DIR&lt;span style="color:#f92672">}&lt;/span>&lt;span style="color:#e6db74">/lib&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	FIND_PACKAGE_HANDLE_STANDARD_ARGS(&lt;span style="color:#e6db74">Boost&lt;/span> &lt;span style="color:#e6db74">DEFAULT_MSG&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">BOOST_INCLUDE_DIR&lt;/span> &lt;span style="color:#e6db74">BOOST_LIBRARY&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	set(&lt;span style="color:#e6db74">BOOST_LIBRARIES&lt;/span> &lt;span style="color:#f92672">${&lt;/span>BOOST_LIBRARY&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	set(&lt;span style="color:#e6db74">BOOST_INCLUDE_DIRS&lt;/span> &lt;span style="color:#f92672">${&lt;/span>BOOST_INCLUDE_DIR&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	mark_as_advanced(&lt;span style="color:#e6db74">BOOST_LIBRARIES&lt;/span> &lt;span style="color:#e6db74">BOOST_INCLUDE_DIRS&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>endmacro()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>macro(&lt;span style="color:#e6db74">DO_FIND_BOOST_DOWNLOAD&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	if(&lt;span style="color:#e6db74">NOT&lt;/span> &lt;span style="color:#e6db74">BOOST_REQUESTED_VERSION&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>		message(&lt;span style="color:#e6db74">FATAL_ERROR&lt;/span> &lt;span style="color:#e6db74">&amp;#34;BOOST_REQUESTED_VERSION is not defined.&amp;#34;&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	endif()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	string(&lt;span style="color:#e6db74">REPLACE&lt;/span> &lt;span style="color:#e6db74">&amp;#34;.&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;_&amp;#34;&lt;/span> &lt;span style="color:#e6db74">BOOST_REQUESTED_VERSION_UNDERSCORE&lt;/span> &lt;span style="color:#f92672">${&lt;/span>BOOST_REQUESTED_VERSION&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	set(&lt;span style="color:#e6db74">BOOST_MAYBE_STATIC&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	if(&lt;span style="color:#e6db74">BOOST_USE_STATIC_LIBS&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>		set(&lt;span style="color:#e6db74">BOOST_MAYBE_STATIC&lt;/span> &lt;span style="color:#e6db74">&amp;#34;link=static&amp;#34;&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	endif()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	include(&lt;span style="color:#e6db74">ExternalProject&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	ExternalProject_Add(
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">Boost&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">URL&lt;/span> &lt;span style="color:#e6db74">https://downloads.sourceforge.net/project/boost/boost/&lt;/span>&lt;span style="color:#f92672">${&lt;/span>BOOST_REQUESTED_VERSION&lt;span style="color:#f92672">}&lt;/span>&lt;span style="color:#e6db74">/boost_&lt;/span>&lt;span style="color:#f92672">${&lt;/span>BOOST_REQUESTED_VERSION_UNDERSCORE&lt;span style="color:#f92672">}&lt;/span>&lt;span style="color:#e6db74">.zip&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">UPDATE_COMMAND&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">CONFIGURE_COMMAND&lt;/span> &lt;span style="color:#e6db74">./bootstrap.sh&lt;/span> &lt;span style="color:#e6db74">--prefix=&lt;/span>&lt;span style="color:#f92672">${&lt;/span>BOOST_ROOT_DIR&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">BUILD_COMMAND&lt;/span> &lt;span style="color:#e6db74">./b2&lt;/span> &lt;span style="color:#f92672">${&lt;/span>BOOST_MAYBE_STATIC&lt;span style="color:#f92672">}&lt;/span> &lt;span style="color:#e6db74">--prefix=&lt;/span>&lt;span style="color:#f92672">${&lt;/span>BOOST_ROOT_DIR&lt;span style="color:#f92672">}&lt;/span> &lt;span style="color:#f92672">${&lt;/span>BOOST_COMPONENTS_FOR_BUILD&lt;span style="color:#f92672">}&lt;/span> &lt;span style="color:#e6db74">install&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">BUILD_IN_SOURCE&lt;/span> &lt;span style="color:#e6db74">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">INSTALL_COMMAND&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">INSTALL_DIR&lt;/span> &lt;span style="color:#f92672">${&lt;/span>BOOST_ROOT_DIR&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	ExternalProject_Get_Property(&lt;span style="color:#e6db74">Boost&lt;/span> &lt;span style="color:#e6db74">install_dir&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	set(&lt;span style="color:#e6db74">BOOST_INCLUDE_DIRS&lt;/span> &lt;span style="color:#f92672">${&lt;/span>install_dir&lt;span style="color:#f92672">}&lt;/span>&lt;span style="color:#e6db74">/include&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	macro(&lt;span style="color:#e6db74">libraries_to_fullpath&lt;/span> &lt;span style="color:#e6db74">varname&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>		set(&lt;span style="color:#f92672">${&lt;/span>varname&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>		foreach(&lt;span style="color:#e6db74">component&lt;/span> &lt;span style="color:#f92672">${&lt;/span>Boost_FIND_COMPONENTS&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>			list(&lt;span style="color:#e6db74">APPEND&lt;/span> &lt;span style="color:#f92672">${&lt;/span>varname&lt;span style="color:#f92672">}&lt;/span> &lt;span style="color:#f92672">${&lt;/span>BOOST_ROOT_DIR&lt;span style="color:#f92672">}&lt;/span>&lt;span style="color:#e6db74">/lib/&lt;/span>&lt;span style="color:#f92672">${&lt;/span>LIBRARY_PREFIX&lt;span style="color:#f92672">}&lt;/span>&lt;span style="color:#e6db74">boost_&lt;/span>&lt;span style="color:#f92672">${&lt;/span>component&lt;span style="color:#f92672">}${&lt;/span>LIBRARY_SUFFIX&lt;span style="color:#f92672">}&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>		endforeach()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	endmacro()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	libraries_to_fullpath(&lt;span style="color:#e6db74">BOOST_LIBRARIES&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	FIND_PACKAGE_HANDLE_STANDARD_ARGS(&lt;span style="color:#e6db74">Boost&lt;/span> &lt;span style="color:#e6db74">DEFAULT_MSG&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">BOOST_INCLUDE_DIRS&lt;/span> &lt;span style="color:#e6db74">BOOST_LIBRARIES&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	mark_as_advanced(&lt;span style="color:#e6db74">BOOST_LIBRARIES&lt;/span> &lt;span style="color:#e6db74">BOOST_INCLUDE_DIRS&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>endmacro()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>if(&lt;span style="color:#e6db74">NOT&lt;/span> &lt;span style="color:#e6db74">BOOST_FOUND&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	DO_FIND_BOOST_ROOT()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>endif()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>if(&lt;span style="color:#e6db74">NOT&lt;/span> &lt;span style="color:#e6db74">BOOST_FOUND&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	DO_FIND_BOOST_SYSTEM()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>endif()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>if(&lt;span style="color:#e6db74">NOT&lt;/span> &lt;span style="color:#e6db74">BOOST_FOUND&lt;/span>)&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>	DO_FIND_BOOST_DOWNLOAD()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>endif()&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>Usage&lt;/strong>: Like any other &lt;a href="https://cmake.org/cmake/help/book/mastering-cmake/chapter/Modules.html">cmake find
+module&lt;/a>,
+with &lt;code>find_package&lt;/code>.&lt;/p></description></item><item><title>Arch Linux on macbook installation notes</title><link>https://perrotta.dev/2025/01/arch-linux-on-macbook-installation-notes/</link><pubDate>Sat, 04 Jan 2025 18:36:02 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/arch-linux-on-macbook-installation-notes/</guid><description>&lt;p>Imported from &lt;a href="https://gist.github.com/thiagowfx/">thiagowfx&lt;/a>@&amp;rsquo;s gist.&lt;/p>
 &lt;p>Arch Linux Installation Notes (Macbook, UEFI, LVM ON LUKS, swap, btrfs root and home):&lt;/p>
 &lt;h2 id="references">References&lt;/h2>
 &lt;ul>
@@ -2334,133 +2506,6 @@ a supergroup, one of its channels is &lt;code>#adventofcode&lt;/code>.&lt;/p>
 &lt;li id="fn:1">
 &lt;p>It&amp;rsquo;s a moderated group, and this invitation link will expire within 2
 weeks of the time of this post.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item><item><title>Advent of Code 2024: Day 11</title><link>https://perrotta.dev/2024/12/advent-of-code-2024-day-11/</link><pubDate>Thu, 12 Dec 2024 19:15:35 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/advent-of-code-2024-day-11/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/11">Day #11&lt;/a> puzzle.&lt;/p>
-&lt;p>Part one can be done with a simulation.&lt;/p>
-&lt;p>It is very delightful to do it in python: lists are quite flexible, and
-converting from integers to strings and vice-versa is seamless. Counting the
-number of digits of &lt;code>x&lt;/code> is just a matter of &lt;code>len(str(x))&lt;/code>. In C++ it&amp;rsquo;s a bit
-kludgier with &lt;code>std::string(x).size()&lt;/code> and &lt;code>std::stoi(s)&lt;/code>, but then you need to
-remember which header to import&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p>
-&lt;p>I thought of using &lt;code>reduce&lt;/code> to do &lt;code>blink(blink(stone))...&lt;/code> and so on:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>print(len(reduce(&lt;span style="color:#66d9ef">lambda&lt;/span> stone: blink(stone), range(&lt;span style="color:#ae81ff">25&lt;/span>), stones)))
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;nonetheless it&amp;rsquo;s more readable to simply use a plain &lt;code>for-range&lt;/code> loop:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> _ &lt;span style="color:#f92672">in&lt;/span> range(&lt;span style="color:#ae81ff">25&lt;/span>):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones &lt;span style="color:#f92672">=&lt;/span> blink(stones)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(len(stones))
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The secret sauce is in &lt;code>blink&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">blink&lt;/span>(stones):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next &lt;span style="color:#f92672">=&lt;/span> []
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> stones:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> s &lt;span style="color:#f92672">=&lt;/span> str(stone)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> stone &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(&lt;span style="color:#ae81ff">1&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> len(s) &lt;span style="color:#f92672">%&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> index &lt;span style="color:#f92672">=&lt;/span> len(s) &lt;span style="color:#f92672">//&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(int(s[:index]))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(int(s[index:]))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">else&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(stone &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#ae81ff">2024&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> stones_next
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For part two we need to be cleverer. In principle the same approach would work,
-however it takes too long to process due to its exponential nature. In my laptop
-I can get up to the 42nd &lt;code>blink&lt;/code> iteration without losing my patience to wait
-even longer.&lt;/p>
-&lt;p>The main observation to account for is that we only care about the length of the
-stone sequence, hence the original task transforms into a simple 2D dynamic
-programming problem.&lt;/p>
-&lt;p>I call:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>print(dp_blink(stones, &lt;span style="color:#ae81ff">75&lt;/span>))
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Which is defined this way:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">dp_blink&lt;/span>(stones, times):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">from&lt;/span> functools &lt;span style="color:#f92672">import&lt;/span> lru_cache
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">@lru_cache&lt;/span>(maxsize&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">None&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">dp&lt;/span>(stone: int, times: int) &lt;span style="color:#f92672">-&amp;gt;&lt;/span> int:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> times &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> sum([dp(stone, times &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>) &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> blink([stone])])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> sum([dp(stone, times) &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> stones])
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The DP consists of the stone, and how many times are left for you to blink at it.&lt;/p>
-&lt;p>The full solution:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/usr/bin/env python3&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> sys
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">blink&lt;/span>(stones):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next &lt;span style="color:#f92672">=&lt;/span> []
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> stones:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> s &lt;span style="color:#f92672">=&lt;/span> str(stone)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> stone &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(&lt;span style="color:#ae81ff">1&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> len(s) &lt;span style="color:#f92672">%&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> index &lt;span style="color:#f92672">=&lt;/span> len(s) &lt;span style="color:#f92672">//&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(int(s[:index]))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(int(s[index:]))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">else&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(stone &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#ae81ff">2024&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> stones_next
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">dp_blink&lt;/span>(stones, times):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">from&lt;/span> functools &lt;span style="color:#f92672">import&lt;/span> lru_cache
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">@lru_cache&lt;/span>(maxsize&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">None&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">dp&lt;/span>(stone: int, times: int) &lt;span style="color:#f92672">-&amp;gt;&lt;/span> int:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> times &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> sum([dp(stone, times &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>) &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> blink([stone])])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> sum([dp(stone, times) &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> stones])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>():
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">with&lt;/span> open(sys&lt;span style="color:#f92672">.&lt;/span>argv[&lt;span style="color:#ae81ff">1&lt;/span>]) &lt;span style="color:#66d9ef">as&lt;/span> input:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> lines &lt;span style="color:#f92672">=&lt;/span> input&lt;span style="color:#f92672">.&lt;/span>read()&lt;span style="color:#f92672">.&lt;/span>splitlines()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones &lt;span style="color:#f92672">=&lt;/span> [int(stone) &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> lines[&lt;span style="color:#ae81ff">0&lt;/span>]&lt;span style="color:#f92672">.&lt;/span>split()]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> _ &lt;span style="color:#f92672">in&lt;/span> range(&lt;span style="color:#ae81ff">25&lt;/span>):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones &lt;span style="color:#f92672">=&lt;/span> blink(stones)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># part one&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(len(stones))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># This is very slow, with an exponential complexity runtime.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># What did you expect?&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">#&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># for i in range(50): # 50 = 75 - 25&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># print(i)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># stones = blink(stones)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># # part two&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># print(len(stones))&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones &lt;span style="color:#f92672">=&lt;/span> [int(stone) &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> lines[&lt;span style="color:#ae81ff">0&lt;/span>]&lt;span style="color:#f92672">.&lt;/span>split()]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># part two&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(dp_blink(stones, &lt;span style="color:#ae81ff">75&lt;/span>))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> __name__ &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;__main__&amp;#39;&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> main()
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>It&amp;rsquo;s &lt;code>#include &amp;lt;string&amp;gt;&lt;/code>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
 &lt;/div></description></item></channel></rss>
