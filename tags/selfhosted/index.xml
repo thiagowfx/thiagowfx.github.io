@@ -1307,4 +1307,477 @@ work. Prefer running a DHCP server from the pihole.&lt;/p>
 &lt;ul>
 &lt;li>Static DHCP lease from the pihole itself if it&amp;rsquo;s running a DHCP server. This
 solution is a bit redundant and should only be applied as last resort.&lt;/li>
-&lt;/ul></description></item></channel></rss>
+&lt;/ul></description></item><item><title>Debian: Enable unattended upgrades</title><link>https://perrotta.dev/2022/01/debian-enable-unattended-upgrades/</link><pubDate>Sun, 16 Jan 2022 02:07:00 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2022/01/debian-enable-unattended-upgrades/</guid><description>&lt;p>Here&amp;rsquo;s how we can enable automatic (unattended) package upgrades in Debian.&lt;/p>
+&lt;h2 id="howto">Howto&lt;/h2>
+&lt;p>Install the &lt;code>unattended-upgrades&lt;/code> package with &lt;code>apt(8)&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% apt install unattended-upgrades
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The service is then enabled and started automatically:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ systemctl status unattended-upgrades
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>● unattended-upgrades.service - Unattended Upgrades Shutdown
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Loaded: loaded &lt;span style="color:#f92672">(&lt;/span>/lib/systemd/system/unattended-upgrades.service; enabled; vendor preset: enabled&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Active: active &lt;span style="color:#f92672">(&lt;/span>running&lt;span style="color:#f92672">)&lt;/span> since Sun 2022-01-16 02:05:42 EST; 35s ago
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Docs: man:unattended-upgrade&lt;span style="color:#f92672">(&lt;/span>8&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Main PID: &lt;span style="color:#ae81ff">22442&lt;/span> &lt;span style="color:#f92672">(&lt;/span>unattended-upgr&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Tasks: &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#f92672">(&lt;/span>limit: 1597&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> CPU: 516ms
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> CGroup: /system.slice/unattended-upgrades.serviceGk
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> └─22442 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>By default, only security updates are enabled. We can enable all updates by uncommenting the applicable lines:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ sudoedit /etc/apt/apt.conf.d/50unattended-upgrades
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Unattended-Upgrade::Origins-Pattern &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // Codename based matching:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // This will follow the migration of a release through different
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // archives &lt;span style="color:#f92672">(&lt;/span>e.g. from testing to stable and later oldstable&lt;span style="color:#f92672">)&lt;/span>.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // Software will be the latest available &lt;span style="color:#66d9ef">for&lt;/span> the named release,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // but the Debian release itself will not be automatically upgraded.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // &lt;span style="color:#e6db74">&amp;#34;origin=Debian,codename=&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>distro_codename&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">-updates&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // &lt;span style="color:#e6db74">&amp;#34;origin=Debian,codename=&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>distro_codename&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">-proposed-updates&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // &lt;span style="color:#e6db74">&amp;#34;origin=Debian,codename=&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>distro_codename&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">,label=Debian&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;origin=Debian,codename=&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>distro_codename&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">,label=Debian-Security&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;origin=Debian,codename=&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>distro_codename&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">-security,label=Debian-Security&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For debugging, one should run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ sudo unattended-upgrade -d
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>We could go beyond and add logging by the means of &lt;code>etckeeper&lt;/code>, just like how we did for Alpine Linux&amp;rsquo;s &lt;a href="https://perrotta.dev/2022/01/alpine-linux-apk-logs-with-etckeeper/">&lt;code>apk&lt;/code>&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% apt install etckeeper
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Reading package lists... Done
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Building dependency tree... Done
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Reading state information... Done
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>The following NEW packages will be installed:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> etckeeper
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">0&lt;/span> upgraded, &lt;span style="color:#ae81ff">1&lt;/span> newly installed, &lt;span style="color:#ae81ff">0&lt;/span> to remove and &lt;span style="color:#ae81ff">0&lt;/span> not upgraded.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Need to get 54.4 kB of archives.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>After this operation, &lt;span style="color:#ae81ff">180&lt;/span> kB of additional disk space will be used.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Get:1 http://raspbian.freemirror.org/raspbian bullseye/main armhf etckeeper all 1.18.16-1 &lt;span style="color:#f92672">[&lt;/span>54.4 kB&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Fetched 54.4 kB in 1s &lt;span style="color:#f92672">(&lt;/span>84.3 kB/s&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Preconfiguring packages ...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Selecting previously unselected package etckeeper.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">(&lt;/span>Reading database ... &lt;span style="color:#ae81ff">44403&lt;/span> files and directories currently installed.&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Preparing to unpack .../etckeeper_1.18.16-1_all.deb ...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Unpacking etckeeper &lt;span style="color:#f92672">(&lt;/span>1.18.16-1&lt;span style="color:#f92672">)&lt;/span> ...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Setting up etckeeper &lt;span style="color:#f92672">(&lt;/span>1.18.16-1&lt;span style="color:#f92672">)&lt;/span> ...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Created symlink /etc/systemd/system/multi-user.target.wants/etckeeper.timer → /lib/systemd/system/etckeeper.timer.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>etckeeper.service is a disabled or a static unit, not starting it.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>etckeeper&lt;/code> is enabled and works out-of-the-box as well:&lt;/p>
+&lt;pre tabindex="0">&lt;code>systemctl status etckeeper.timer
+● etckeeper.timer - Daily autocommit of changes in /etc directory
+ Loaded: loaded (/lib/systemd/system/etckeeper.timer; enabled; vendor preset: enabled)
+ Active: active (waiting) since Sun 2022-01-16 02:28:44 EST; 2min 36s ago
+ Trigger: Mon 2022-01-17 02:28:44 EST; 23h left
+ Triggers: ● etckeeper.service
+ Docs: man:etckeeper(8)
+&lt;/code>&lt;/pre>&lt;p>Here&amp;rsquo;s what a typical log looks like:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#f92672">(&lt;/span>cd /etc/etckeeper &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> sudo git log&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>commit 8f9f5e31d9abb833cf645825c1cbda15336818b7 &lt;span style="color:#f92672">(&lt;/span>HEAD -&amp;gt; master&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Author: root &amp;lt;root@raspberry&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Date: Sun Jan &lt;span style="color:#ae81ff">16&lt;/span> 06:25:28 &lt;span style="color:#ae81ff">2022&lt;/span> -0500
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> daily autocommit
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>commit 5a6478711a1a1198535d5062ca309afb5c99c0eb
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Author: root &amp;lt;root@raspberry&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Date: Sun Jan &lt;span style="color:#ae81ff">16&lt;/span> 02:29:01 &lt;span style="color:#ae81ff">2022&lt;/span> -0500
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Initial commit
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="references">References&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://wiki.debian.org/UnattendedUpgrades">https://wiki.debian.org/UnattendedUpgrades&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Alpine Linux on Raspberry Pi: Diskless Mode with persistent storage</title><link>https://perrotta.dev/2022/01/alpine-linux-on-raspberry-pi-diskless-mode-with-persistent-storage/</link><pubDate>Sat, 15 Jan 2022 23:18:56 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2022/01/alpine-linux-on-raspberry-pi-diskless-mode-with-persistent-storage/</guid><description>&lt;p>Use case: Given an Alpine Linux &lt;strong>diskless&lt;/strong>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> installation meant for
+a Raspberry Pi setup, we would like to add a persistent storage component to it
+to make it survive across reboots.&lt;/p>
+&lt;h2 id="goal">Goal&lt;/h2>
+&lt;p>The &lt;a href="https://wiki.alpinelinux.org/wiki/Installation">Alpine Linux Wiki&lt;/a> covers most of the installation process, hence I will only document the bits that were lacking and/or confusing therein.&lt;/p>
+&lt;p>My use case is the following:&lt;/p>
+&lt;blockquote>
+&lt;p>Given a Raspberry Pi 3B with an old 4GiB SD Card as CF storage&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>, install Alpine Linux in diskless mode. Find a way to preserve modifications in &lt;code>/etc&lt;/code> and &lt;code>/var&lt;/code>, as well as any installed packages through its &lt;code>apk&lt;/code> package manager.&lt;/p>
+&lt;/blockquote>
+&lt;p>Let&amp;rsquo;s follow the steps outlined in the wiki.&lt;/p>
+&lt;h2 id="copy-alpine-to-the-sd-card">Copy Alpine to the SD Card&lt;/h2>
+&lt;blockquote>
+&lt;p>Grab the SD card and install Alpine Linux in it.&lt;/p>
+&lt;/blockquote>
+&lt;p>Alpine provides officially supported images designed for the Raspberry Pi.&lt;/p>
+&lt;p>Most Linux distributions provide an &lt;code>.iso&lt;/code> or &lt;code>.img&lt;/code> file to be installed with a tool like &lt;a href="https://www.balena.io/etcher/">Balena Etcher&lt;/a>, &lt;a href="https://rufus.ie/en/">Rufus&lt;/a>, &lt;a href="https://www.raspberrypi.com/news/raspberry-pi-imager-imaging-utility/">&lt;strong>Raspberry Pi Imager&lt;/strong>&lt;/a> or plain &lt;code>dd&lt;/code>&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>.&lt;/p>
+&lt;p>Alpine is not like most Linux distributions: Instead, it provides a &lt;code>.tar.gz&lt;/code> archive with files that should be copied directly to the SD card. Grab the latest version (3.15 at the time of this post) from &lt;a href="https://alpinelinux.org/downloads/">https://alpinelinux.org/downloads/&lt;/a>. There are 3 options:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;code>armhf&lt;/code>: Works with all Pis, but may perform less optimally on recent versions.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>armv7&lt;/code>: Works with the Pi 3B, 32-bit.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>aarch64&lt;/code>: Works with the Pi 3B, 64-bit.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>I opted for &lt;code>aarch64&lt;/code> to make it 64-bit, but &lt;code>armv7&lt;/code> would also have worked well for my setup. In fact, Raspberry Pi OS (Debian) uses &lt;code>armv7&lt;/code> (32-bit) at the time of this writing.&lt;/p>
+&lt;p>Before copying files over, format the SD Card. As I was doing this
+from a Windows machine because it was the only one I had readily available with
+a SD card slot, I just used the native Windows Disk Management tool to do so.
+I decided to allocate a 100MB&lt;sup id="fnref:4">&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref">4&lt;/a>&lt;/sup> FAT32 partition. The rest of the SD card would be
+blank for now. Alpine is surprisingly small, 100MB was more than enough for the kernel and other needed files.&lt;/p>
+&lt;p>Once the SD card is formatted, copy the files over to it. It turns out Windows cannot extract tarballs (&lt;code>.tar.gz&lt;/code>); a tool like &lt;a href="https://www.7-zip.org/">7-zip&lt;/a> should do the job. Copy the files over to the root of the newly allocated FAT32 partition, and then safely eject the SD card.&lt;/p>
+&lt;h2 id="boot-alpine-from-the-sd-card">Boot Alpine from the SD Card&lt;/h2>
+&lt;p>The next step is to insert the SD Card into the Pi and then boot. I had some trouble in this step and eventually figured out I didn&amp;rsquo;t mark the primary FAT32 partition as bootable. Unfortunately it&amp;rsquo;s not straightforward to mark the partition as bootable from Windows. On a Linux machine there&amp;rsquo;s a wide array of tools to do so: &lt;code>fdisk&lt;/code>, &lt;code>cfdisk&lt;/code> (TUI), &lt;code>sfdisk&lt;/code> (scriptable &lt;code>fdisk&lt;/code>), &lt;code>parted&lt;/code>, &lt;code>gparted&lt;/code> (GUI) are some of them. I worked around that by installing Raspberry Pi OS on the SD card with the Raspberry Pi imager, and then overwriting it with the Alpine files. This works because the Raspberry PI OS installation marks the FAT32 partition as bootable.&lt;/p>
+&lt;h2 id="install-alpine">Install Alpine&lt;/h2>
+&lt;p>Installing Alpine is well documented in the &lt;a href="https://wiki.alpinelinux.org/wiki/Installation">wiki&lt;/a> thus it won&amp;rsquo;t be covered here. It basically comes down to invoking &lt;code>setup-alpine&lt;/code>, which then invokes other &lt;code>setup-*&lt;/code> scripts.&lt;/p>
+&lt;p>Keep in mind we&amp;rsquo;re not really &amp;ldquo;installing&amp;rdquo; Alpine as this is a diskless installation. A more accurate term here would be &amp;ldquo;configuring&amp;rdquo;.&lt;/p>
+&lt;p>Before invoking the installation script, I created a second primary partition in the SD card, set to &lt;code>ext4&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Configure networking to get working internet access.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% setup-interfaces
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Install some partitioning tools.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% apk add cfdisk e2fsprogs
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Create a second partition (mmcblk0p2) and write it.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% cfdisk /dev/mmcblk0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Format the partition as ext4.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% mkfs.ext4 /dev/mmcblk0p2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Mount the partition under /media.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% mount /dev/mmcblk0p2 /media/mmcblk0p2
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The installation is straightforward, we just need to pay attention to a few select steps:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>setup-disk&lt;/code>: Select &lt;code>none&lt;/code> to ensure a &lt;code>diskless&lt;/code> installation&lt;sup id="fnref:5">&lt;a href="#fn:5" class="footnote-ref" role="doc-noteref">5&lt;/a>&lt;/sup>.&lt;/li>
+&lt;li>&lt;code>setup-apkcache&lt;/code>: Select &lt;code>/media/mmcblk0p2/cache&lt;/code> to persist downloaded &lt;code>apk&lt;/code> packages.&lt;/li>
+&lt;li>&lt;code>setup-lbu&lt;/code>: Edit &lt;code>/etc/lbu/lbu.conf&lt;/code> and set &lt;code>LBU_MEDIA=&amp;quot;mmcblk0p2&amp;quot;&lt;/code>. Note: Do not add &lt;code>/media&lt;/code> as it is implicit.&lt;/li>
+&lt;/ul>
+&lt;p>Once the installation is complete, run &lt;code>lbu commit&lt;/code> to persist the changes in the second partition. Once you do so, a &lt;code>&amp;lt;hostname&amp;gt;.apkovl.tar.gz&lt;/code>&lt;sup id="fnref:6">&lt;a href="#fn:6" class="footnote-ref" role="doc-noteref">6&lt;/a>&lt;/sup> file should materialize on &lt;code>/media/mmcblk0p2/&lt;/code>.&lt;/p>
+&lt;p>This is a good moment to reboot. Before we do so, let&amp;rsquo;s cache the packages we had previously downloaded.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Cache packages.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% apk cache download
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% reboot
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="after-the-first-reboot">After the first reboot&lt;/h2>
+&lt;p>If everything worked as expected, once you reboot all your previously installed packages should have been preserved and automatically restored / reinstalled, as well as your modifications done to &lt;code>/etc&lt;/code>.&lt;/p>
+&lt;p>From this point on, whenever you install a new package that you want to be preserved for subsequent reboots, run &lt;code>lbu commit&lt;/code> afterwards. For example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% apk add vim
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% lbu commit
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you would like to see what is going to be committed, run &lt;code>lbu status&lt;/code> or &lt;code>lbu diff&lt;/code> before doing the actual commit. Whenever you commit, &lt;code>/media/mmcblk0p2/&amp;lt;hostname&amp;gt;.apkovl.tar.gz&lt;/code> gets overwritten with your most recent modifications.&lt;/p>
+&lt;p>It&amp;rsquo;s possible to keep more than one backup file by changing &lt;code>BACKUP_LIMIT=&lt;/code> in &lt;code>/etc/lbu/lbu.conf&lt;/code>. This is specially handy if you decide to revert to an earlier system snapshot / state later on. The stock config looks like this:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat /etc/lbu/lbu.conf
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># what cipher to use with -e option&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>DEFAULT_CIPHER&lt;span style="color:#f92672">=&lt;/span>aes-256-cbc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Uncomment the row below to encrypt config by default&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># ENCRYPTION=$DEFAULT_CIPHER&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Uncomment below to avoid &amp;lt;media&amp;gt; option to &amp;#39;lbu commit&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Can also be set to &amp;#39;floppy&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># LBU_MEDIA=usb&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Set the LBU_BACKUPDIR variable in case you prefer to save the apkovls&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># in a normal directory instead of mounting an external media.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># LBU_BACKUPDIR=/root/config-backups&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Uncomment below to let lbu make up to 3 backups&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># BACKUP_LIMIT=3&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>Tip&lt;/strong>: You can find the list of all explicitly installed packages in &lt;code>/etc/apk/world&lt;/code>.&lt;/p>
+&lt;h2 id="the-last-piece-make-var-persistent">The last piece: make /var persistent&lt;/h2>
+&lt;p>There are three natural ways that come to mind to make &lt;code>/var&lt;/code> persistent:&lt;/p>
+&lt;h3 id="a-separate-partition-or-file">A) Separate partition (or file)&lt;/h3>
+&lt;p>Instead of two partitions (FAT32 and ext4), create 3 partitions: FAT32, ext4 and ext4. Use the latter one to mount &lt;code>/var&lt;/code> on, saving this information in &lt;code>/etc/fstab&lt;/code>. The main disadvantage of this setup is that you&amp;rsquo;ll need to allocate a fixed amount of space of each of the ext4 partitions and it may be difficult to figure out how to split the space between them.&lt;/p>
+&lt;p>A variant of this approach is to just create the third partition as a file:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 500MB file&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% dd &lt;span style="color:#66d9ef">if&lt;/span>&lt;span style="color:#f92672">=&lt;/span>/dev/zero of&lt;span style="color:#f92672">=&lt;/span>/media/mmcblk0p2/var.img bs&lt;span style="color:#f92672">=&lt;/span>1M count&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">500&lt;/span> status&lt;span style="color:#f92672">=&lt;/span>progress
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% mkfs.ext4 /media/mmcblk0p2/var.img
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% mount /media/mmcblk0p2/var.img /var
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This works because the Linux kernel supports mounting files as if they were device blocks, treating them as loop devices (pseudo-devices).&lt;/p>
+&lt;p>I don&amp;rsquo;t like these approaches because they shadow the preexisting &lt;code>/var&lt;/code> from the boot media, which in turn messes up with existing services that use it such as &lt;code>cron&lt;/code>: &lt;code>% crontab -l&lt;/code> would fail. One workaround would be to mount a &lt;code>/var&lt;/code> subdirectory instead: for example, &lt;code>/var/lib/docker&lt;/code> for docker.&lt;/p>
+&lt;h3 id="b-bind-mount">B) Bind mount&lt;/h3>
+&lt;p>This one is straightforward:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% mount --bind /media/mmcblk0p2/var/lib/docker /var/lib/docker
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The actual partition lives in the SD card, however we make a bind mount under
+&lt;code>/var&lt;/code>, which is like an &lt;em>alias&lt;/em>. From &lt;a href="https://unix.stackexchange.com/questions/198590/what-is-a-bind-mount">Stack Exchange&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>A bind mount is an alternate view of a directory tree. Classically, mounting creates a view of a storage device as a directory tree. A bind mount instead takes an existing directory tree and replicates it under a different point. The directories and files in the bind mount are the same as the original. Any modification on one side is immediately reflected on the other side, since the two views show the same data.&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="c-overlay-mount">C) Overlay mount&lt;/h3>
+&lt;p>From &lt;a href="https://wiki.archlinux.org/title/Overlay_filesystem">ArchWiki&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>Overlayfs allows one, usually read-write, directory tree to be overlaid onto another, read-only directory tree. All modifications go to the upper, writable layer. This type of mechanism is most often used for live CDs but there is a wide variety of other uses.&lt;/p>
+&lt;/blockquote>
+&lt;p>It&amp;rsquo;s perfect for our use case, which uses a live bootable SD card for Alpine. It blends the preexisting, ephemeral, in-memory &lt;code>/var&lt;/code> with the persistent in-disk &lt;code>/var&lt;/code>.&lt;/p>
+&lt;p>I wanted to mount &lt;code>/var&lt;/code> directly but found it to be problematic for the same reasons mentioned earlier, therefore I just went with &lt;code>/var/lib/docker&lt;/code> instead:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Create overlay upper and work directories.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% mkdir -p /media/mmcblk0p2/var/lib/docker /media/mmcblk0p2/var/lib/docker-work
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Add mountpoint entry to fstab. Note: The work dir must be an empty directory in the same filesystem mount as the upper directory.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% echo &lt;span style="color:#e6db74">&amp;#34;overlay /var/lib/docker overlay lowerdir=/var/lib/docker,upperdir=/media/mmcblk0p2/var/lib/docker,workdir=/media/mmcblk0p2/var/lib/docker-work 0 0&amp;#34;&lt;/span> &amp;gt;&amp;gt; /etc/fstab
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Mount all fstab entries, including our newly added one.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% mount -a
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="conclusion">Conclusion&lt;/h2>
+&lt;p>I opted for the third approach, using an overlay mount, it was the most
+seamless one. A bind mount would have been fine as well.&lt;/p>
+&lt;p>The final setup works surprisingly well:&lt;/p>
+&lt;ul>
+&lt;li>Alpine Linux is very lightweight and runs mostly from RAM&lt;/li>
+&lt;li>&lt;code>apk&lt;/code> cache is persistent to the ext4 partition&lt;/li>
+&lt;li>&lt;code>/var/&lt;/code> is persistent to the ext4 partition&lt;/li>
+&lt;li>&lt;code>lbu commit&lt;/code> persists changes in &lt;code>/etc/&lt;/code> and &lt;code>/home/&lt;/code> in the ext4 partition&lt;/li>
+&lt;li>Every reboot fully resets the system sans persistent components above&lt;/li>
+&lt;/ul>
+&lt;h2 id="references">References&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://vincentserpoul.github.io/post/alpine-linux-rpi0/">https://vincentserpoul.github.io/post/alpine-linux-rpi0/&lt;/a>&lt;/li>
+&lt;li>&lt;a href="http://dahl-jacobsen.dk/tips/blog/2021-04-08-docker-on-alpine-linux/">http://dahl-jacobsen.dk/tips/blog/2021-04-08-docker-on-alpine-linux/&lt;/a>&lt;/li>
+&lt;li>&lt;a href="http://dahl-jacobsen.dk/tips/blog/2018-03-15-alpine-on-raspberry-pi/">http://dahl-jacobsen.dk/tips/blog/2018-03-15-alpine-on-raspberry-pi/&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>Running (almost) fully from RAM.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>CF = Compact disk.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:3">
+&lt;p>On Linux I&amp;rsquo;d usually opt for &lt;code>dd&lt;/code>, on Windows the Raspberry Pi Imager is a sensible choice.&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:4">
+&lt;p>100MB is overly conservative, but keep in mind I had a very small SD Card, with only 4GiB storage. 250MB or even 500MB should be a more sensible default if you have a bigger SD Card (e.g. 32GiB).&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:5">
+&lt;p>An alternative is to select &lt;code>data&lt;/code> disk mode, but it didn&amp;rsquo;t work for me.&amp;#160;&lt;a href="#fnref:5" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:6">
+&lt;p>&lt;em>ovl&lt;/em> is short for &lt;em>overlay&lt;/em>. Not to be confused with &lt;em>vol&lt;/em> for &lt;em>volume&lt;/em>.&amp;#160;&lt;a href="#fnref:6" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>RSS: Follow commit updates from Github</title><link>https://perrotta.dev/2022/01/rss-follow-commit-updates-from-github/</link><pubDate>Fri, 14 Jan 2022 17:15:27 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2022/01/rss-follow-commit-updates-from-github/</guid><description>&lt;p>It is possible to track/follow commits of &lt;code>git&lt;/code> repositories
+on &lt;a href="https://github.com/">GitHub&lt;/a> via RSS: &lt;code>https://github.com/&amp;lt;user&amp;gt;/&amp;lt;repo&amp;gt;/commits.atom&lt;/code>.&lt;/p>
+&lt;p>For example, my dotfiles: &lt;a href="https://github.com/thiagowfx/dotfiles/commits.atom">https://github.com/thiagowfx/dotfiles/commits.atom&lt;/a>&lt;/p>
+&lt;p>I am using this to keep track of &lt;a href="https://miniflux.app/">Miniflux&lt;/a>
+&lt;a href="https://github.com/miniflux/v2/commits.atom">commits&lt;/a> from
+within Miniflux itself (a RSS webapp).&lt;/p></description></item><item><title>Miniflux: Rolling my own RSS Reader</title><link>https://perrotta.dev/2022/01/miniflux-rolling-my-own-rss-reader/</link><pubDate>Mon, 03 Jan 2022 17:56:56 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2022/01/miniflux-rolling-my-own-rss-reader/</guid><description>&lt;p>This article describes my experience transitioning to, setting up and using the
+&lt;a href="https://miniflux.app/">Miniflux&lt;/a> RSS reader for the first time.&lt;/p>
+&lt;h2 id="preamble">Preamble&lt;/h2>
+&lt;p>I always kind of enjoyed following people and blogs via RSS, even though it has never been a key part of my workflow (nor of the mainstream web). That said, I am not here to convince you why RSS is great, there are good existing resources&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup> for that already.&lt;/p>
+&lt;p>Initially I had used Commafeed, Feedly and Inoreader, which are hosted solutions. They are mostly OK, especially if you only have a handful of feeds. Their free offerings are quite decent, with a limit of a hundred or so feeds. They also have mobile clients (Android, iOS) which are a must these days. I was never fully converted to them though, and my workflow therein would only last for a few weeks or months. Some common barriers were:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>their recommendations and &amp;lsquo;machine learning&amp;rsquo; fluff were a consistent source of stress, with a fear of missing out (FOMO) akin to social media. I felt pressured to keep following new blogs just like I am pressured to constantly &amp;rsquo;like&amp;rsquo; and &amp;lsquo;follow&amp;rsquo; new pages in traditional American social media.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>there was a lot of context switching: many upstream RSS feeds aren&amp;rsquo;t great, for example, by providing excerpts (summaries) only I&amp;rsquo;d always have to visit the website directly if I wanted to read full articles. This doesn&amp;rsquo;t scale well long term, attention is a precious resource and our brains aren&amp;rsquo;t great at keeping steady and focused attention if we constantly context switch. A classical feed like this is &lt;a href="http://www.aaronsw.com/2002/feeds/pgessays.rss">Paul Graham&amp;rsquo;s&lt;/a>.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>there was no ability to filter out (exclude) posts from feeds. For example, deleting posts with a certain title (Sponsor, Ad, some boring mainstream topic). A classical example is &lt;a href="https://daringfireball.net/">John Gruber&amp;rsquo;s Daring Fireball&lt;/a> sponsored posts which usually have &amp;lsquo;Sponsor&amp;rsquo; in their titles. Why do I have to manually skip these posts, why can&amp;rsquo;t I teach my RSS reader to do it automatically for me?&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>lock-in: whenever I starred/saved posts that I liked for future reference, they would be stuck in the specific cloud provider I chose.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>These were some of my gripes.&lt;/p>
+&lt;p>During those years I had also tried to self-host &lt;a href="https://tt-rss.org/">TinyTinyRSS&lt;/a> but it didn&amp;rsquo;t really last for me:&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>first, its stack is relatively bloated: hosting and maintaining a typical LAMP stack takes some considerable amount of effort — TinyTinyRSS requires a full PHP installation alongside a webserver (apache, nginx or similar) and a database. Suddenly there was a lot of complexity to maintain all that.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>second, I didn&amp;rsquo;t have any cloud resources (VPS), nor a local server in my home (e.g. a Raspberry Pi or a NUC or a NAS Appliance). An instance in my personal laptop wouldn&amp;rsquo;t really scale either as I would have needed it to be always on if I wanted to have continuous access to it (e.g. from my phone).&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>third, I wasn&amp;rsquo;t a seasoned sysadmin at the time and wasn&amp;rsquo;t really looking forward to self-host.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>Then 2020 and the COVID-19 pandemic came along with all of its imposed
+government lockdowns worldwide. Suddenly many people had a lot of free time on
+their hands.&lt;/p>
+&lt;h2 id="self-hosting-at-home">Self-hosting at home&lt;/h2>
+&lt;p>Having an &lt;a href="https://archlinux.org/">Arch Linux&lt;/a> workstation at home, it felt natural to try out Miniflux there first.&lt;/p>
+&lt;p>Miniflux has great upstream &lt;a href="https://miniflux.app/docs/installation.html#debian">documentation&lt;/a> already, therefore it&amp;rsquo;s just a matter of following it. It&amp;rsquo;s out of scope of this post to duplicate the installation process here, however I will add a bit of color regarding my initial setup.&lt;/p>
+&lt;p>&lt;strong>Disclaimer&lt;/strong>: Those instructions will probably get out-of-date at some point.&lt;/p>
+&lt;p>Thankfully there&amp;rsquo;s already a miniflux &lt;a href="https://archlinux.org/packages/community/x86_64/miniflux/">package&lt;/a> for Arch, making my job much easier. Installing miniflux alone isn&amp;rsquo;t enough though, we will also need to install a database server (PostgreSQL):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ sudo pacman -Syu miniflux postgresql
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The next step is to configure the PostgreSQL server. Refer to the upstream documentation for that, but the TL;DR is:&lt;/p>
+&lt;ul>
+&lt;li>create a &lt;code>miniflux&lt;/code> user&lt;/li>
+&lt;li>create a &lt;code>miniflux&lt;/code> database owned by the &lt;code>miniflux&lt;/code> user&lt;/li>
+&lt;li>perform a few tweaks (extension hstore)&lt;/li>
+&lt;/ul>
+&lt;p>Then configure miniflux:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ cat /etc/miniflux.conf
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Purge articles after a few days: These values are actually the default. Listed here just for reference.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>CLEANUP_ARCHIVE_READ_DAYS&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">30&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>CLEANUP_ARCHIVE_UNREAD_DAYS&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">90&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Database configuration&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>DATABASE_URL&lt;span style="color:#f92672">=&lt;/span>user&lt;span style="color:#f92672">=&lt;/span>miniflux password&lt;span style="color:#f92672">=&lt;/span>&amp;lt;password&amp;gt; dbname&lt;span style="color:#f92672">=&lt;/span>miniflux sslmode&lt;span style="color:#f92672">=&lt;/span>disable
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>RUN_MIGRATIONS&lt;span style="color:#f92672">=&lt;/span>yes
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>We will also need to create an admin user for miniflux with &lt;code>miniflux --create-admin&lt;/code>.&lt;/p>
+&lt;p>Then we start the database server and miniflux:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ sudo systemctl enable --now postgresql miniflux
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Afterwards it&amp;rsquo;s just a matter of navigating to http://localhost:8080 and logging in with your newly created admin user.&lt;/p>
+&lt;p>Miniflux is a pleasure to use, and it&amp;rsquo;s very easy to get acquainted with it.&lt;/p>
+&lt;p>It&amp;rsquo;s also possible to add custom CSS in its Settings. I added the following tweaks&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup> for improved typography:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-css" data-lang="css">&lt;span style="display:flex;">&lt;span>:&lt;span style="color:#a6e22e">root&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> --system-font-family: system-ui, &lt;span style="color:#f92672">-&lt;/span>apple-system, BlinkMacSystemFont, &lt;span style="color:#e6db74">&amp;#34;Segoe UI&amp;#34;&lt;/span>, Roboto, Helvetica, Arial, &lt;span style="color:#e6db74">&amp;#34;Noto Sans&amp;#34;&lt;/span>, &lt;span style="color:#66d9ef">sans-serif&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Apple Color Emoji&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Segoe UI Emoji&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Segoe UI Symbol&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Noto Color Emoji&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> --font-family: &lt;span style="color:#a6e22e">var&lt;/span>(&lt;span style="color:#f92672">--&lt;/span>system&lt;span style="color:#f92672">-&lt;/span>font&lt;span style="color:#f92672">-&lt;/span>family);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> --entry-content-font-family: &lt;span style="color:#a6e22e">var&lt;/span>(&lt;span style="color:#f92672">--&lt;/span>system&lt;span style="color:#f92672">-&lt;/span>font&lt;span style="color:#f92672">-&lt;/span>family);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">body&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">max-width&lt;/span>: &lt;span style="color:#ae81ff">900&lt;/span>&lt;span style="color:#66d9ef">px&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">textarea&lt;/span>&lt;span style="color:#f92672">[&lt;/span>&lt;span style="color:#f92672">name&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;custom_css&amp;#34;&lt;/span>&lt;span style="color:#f92672">]&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">min-height&lt;/span>: &lt;span style="color:#ae81ff">300&lt;/span>&lt;span style="color:#66d9ef">px&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">width&lt;/span>: &lt;span style="color:#66d9ef">-webkit-&lt;/span>&lt;span style="color:#66d9ef">fill&lt;/span>&lt;span style="color:#f92672">-&lt;/span>available;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>Update(2022-02-18)&lt;/strong>: It turns out the CSS above isn&amp;rsquo;t really needed as a system font stack is set out-of-the-box.&lt;/p>
+&lt;p>The one main limitation of running Miniflux this way is that you&amp;rsquo;ll need your workstation to be always on if you want to have continuous access to it. This means if you want to read late at night you&amp;rsquo;ll need to leave your computer on. Not only this is impractical and inconvenient, it&amp;rsquo;s also not much environmentally friendly.&lt;/p>
+&lt;p>Another limitation is that in principle you&amp;rsquo;ll only be able to access Miniflux from home, unless you take extra measures&lt;sup id="fnref:4">&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref">4&lt;/a>&lt;/sup> to make your workstation accessible from outside your home network.&lt;/p>
+&lt;h2 id="other-resources">Other resources&lt;/h2>
+&lt;p>Miniflux clients:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Miniflux web app&lt;/strong> (PWA), works well enough&lt;/li>
+&lt;li>&lt;a href="https://apps.apple.com/us/app/unread-an-rss-reader/id1363637349">Unread&lt;/a> (iOS) via Fever API, gesture based&lt;/li>
+&lt;li>&lt;a href="https://reederapp.com/">Reeder&lt;/a> (iOS) via Fever API&lt;/li>
+&lt;li>&lt;a href="https://newsboat.org/releases/2.21/docs/newsboat.html#_miniflux">newsboat&lt;/a> (CLI)&lt;/li>
+&lt;/ul>
+&lt;p>Common self-hosted alternatives to miniflux:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://freshrss.org/">FreshRSS&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://tt-rss.org/">TinyTinyRSS&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://feedbin.com/">Feedbin&lt;/a> (harder to self-host)&lt;/li>
+&lt;/ul>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a href="https://kevq.uk/please-add-rss-support-to-your-site/">https://kevq.uk/please-add-rss-support-to-your-site/&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>&lt;a href="https://laurakalbag.com/subscribe/">https://laurakalbag.com/subscribe/&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:3">
+&lt;p>&lt;a href="https://css-tricks.com/snippets/css/system-font-stack/">https://css-tricks.com/snippets/css/system-font-stack/&lt;/a>&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:4">
+&lt;p>for example: a VPN like OpenVPN, &lt;a href="https://www.wireguard.com/">Wireguard&lt;/a> or &lt;a href="https://tailscale.com/">tailscale&lt;/a>; or a tool like &lt;a href="https://ngrok.com/">ngrok&lt;/a>.&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>Ufw: Firewall</title><link>https://perrotta.dev/2021/12/ufw-firewall/</link><pubDate>Tue, 28 Dec 2021 17:14:55 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2021/12/ufw-firewall/</guid><description>&lt;blockquote>
+&lt;p>Ufw stands for Uncomplicated Firewall, and is a program for managing a netfilter firewall. It provides a command line interface and aims to be uncomplicated and easy to use.&lt;/p>
+&lt;/blockquote>
+&lt;p>The firewall makes justice to its name as it is really uncomplicated, and a pleasure to set up.&lt;/p>
+&lt;h2 id="install">Install&lt;/h2>
+&lt;p>Install and set up &lt;code>ufw&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>, which should be packaged for most linux
+distributions:&lt;/p>
+&lt;h3 id="openrc-based-alpine-linux-gentoo">OpenRC-based (Alpine Linux, Gentoo)&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Install ufw and ufw-extras&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ doas apk install ufw&lt;span style="color:#f92672">{&lt;/span>,-extras&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Enable ufw daemon&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ doas rc-update add ufw
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Start ufw daemon&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ doas rc-service ufw start
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Enable firewall&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ doas ufw enable
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="systemd-based-arch-linux-debian">Systemd-based (Arch Linux, Debian)&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Install ufw and ufw-extras&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ sudo pacman -Syu ufw&lt;span style="color:#f92672">{&lt;/span>,-extras&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Enable and start ufw daemon&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ sudo systemctl enable --now ufw
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Enable firewall&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ sudo ufw enable
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="add-rules">Add rules&lt;/h2>
+&lt;p>Firewall rules can be added with &lt;code>ufw allow [port]&lt;/code> or &lt;code>ufw allow [name]&lt;/code>.
+Named profiles (for example: ssh, http) live in &lt;code>/etc/ufw/applications.d/&lt;/code>, or you can query all of them with &lt;code>ufw app list&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% ufw app list
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Available applications:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> AIM
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Bonjour
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> CIFS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> DNS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Deluge
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> IMAP
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> IMAPS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> IPP
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> KTorrent
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Kerberos Admin
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Kerberos Full
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Kerberos KDC
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Kerberos Password
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> LDAP
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> LDAPS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> LPD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> MSN
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> MSN SSL
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Mail submission
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> NFS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> POP3
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> POP3S
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> PeopleNearby
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> SMTP
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> SSH
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Socks
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Telnet
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Transmission
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Transparent Proxy
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> VNC
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> WWW
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> WWW Cache
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> WWW Full
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> WWW Secure
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> XMPP
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Yahoo
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> qBittorrent
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> svnserve
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Ufw also supports &lt;code>ufw limit [port | name]&lt;/code> which is like &lt;code>add&lt;/code> but with the
+added ability to &amp;ldquo;deny connections from IP addresses that attempt to initiate
+6 or more connections in the last 30 seconds&amp;rdquo;. It&amp;rsquo;s a good measure to mitigate brute-force and/or DDOS attacks.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># either use named profiles&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% ufw allow http-alt
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% ufw limit ssh
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># or port numbers&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% ufw allow 8080/tcp
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% ufw limit &lt;span style="color:#ae81ff">22&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="remove-rules">Remove rules&lt;/h2>
+&lt;p>Firewall rules can be removed by merely adding &amp;lsquo;delete&amp;rsquo; between ufw and the verb.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% ufw delete allow 8080/tcp
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% ufw delete limit ssh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="check-status">Check status&lt;/h2>
+&lt;p>One status command to rule them all, &amp;ldquo;verbose&amp;rdquo; is optional:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% ufw status verbose
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Status: active
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Logging: on &lt;span style="color:#f92672">(&lt;/span>low&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Default: deny &lt;span style="color:#f92672">(&lt;/span>incoming&lt;span style="color:#f92672">)&lt;/span>, allow &lt;span style="color:#f92672">(&lt;/span>outgoing&lt;span style="color:#f92672">)&lt;/span>, disabled &lt;span style="color:#f92672">(&lt;/span>routed&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>New profiles: skip
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>To Action From
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-- ------ ----
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>22/tcp LIMIT IN Anywhere
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">8080&lt;/span> ALLOW IN Anywhere
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>22/tcp &lt;span style="color:#f92672">(&lt;/span>v6&lt;span style="color:#f92672">)&lt;/span> LIMIT IN Anywhere &lt;span style="color:#f92672">(&lt;/span>v6&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">8080&lt;/span> &lt;span style="color:#f92672">(&lt;/span>v6&lt;span style="color:#f92672">)&lt;/span> ALLOW IN Anywhere &lt;span style="color:#f92672">(&lt;/span>v6&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Ufw uses iptables under the hood. Inspect the underlying iptables rules:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% iptables -S | egrep &lt;span style="color:#e6db74">&amp;#39;\b(22|8080)\b&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-A ufw-user-input -p tcp -m tcp --dport &lt;span style="color:#ae81ff">22&lt;/span> -m conntrack --ctstate NEW -m recent --set --name DEFAULT --mask 255.255.255.255 --rsource
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-A ufw-user-input -p tcp -m tcp --dport &lt;span style="color:#ae81ff">22&lt;/span> -m conntrack --ctstate NEW -m recent --update --seconds &lt;span style="color:#ae81ff">30&lt;/span> --hitcount &lt;span style="color:#ae81ff">6&lt;/span> --name DEFAULT --mask 255.255.255.255 --rsource -j ufw-user-limit
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-A ufw-user-input -p tcp -m tcp --dport &lt;span style="color:#ae81ff">22&lt;/span> -j ufw-user-limit-accept
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-A ufw-user-input -p tcp -m tcp --dport &lt;span style="color:#ae81ff">8080&lt;/span> -j ACCEPT
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="references">References&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://help.ubuntu.com/community/UFW">https://help.ubuntu.com/community/UFW&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://wiki.archlinux.org/title/Uncomplicated_Firewall">https://wiki.archlinux.org/title/Uncomplicated_Firewall&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a href="https://github.com/xyproto/ufw-extras">&lt;code>ufw-extras&lt;/code>&lt;/a> is optional, it contains additional rules (e.g. mosh, tailscale).&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item></channel></rss>
