@@ -2,7 +2,6 @@
 title: "DevOps career progression"
 date: 2024-12-31T16:05:23-03:00
 tags:
-  - bestof
   - dev
 ---
 
