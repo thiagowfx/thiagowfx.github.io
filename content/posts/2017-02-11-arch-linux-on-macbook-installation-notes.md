@@ -1,6 +1,6 @@
 ---
 title: "Arch Linux on macbook installation notes"
-date: 2025-01-04T18:36:02-03:00
+date: 2017-02-11T18:36:02-03:00
 tags:
   - dev
   - linux
