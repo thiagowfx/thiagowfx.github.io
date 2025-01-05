@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 04 Jan 2025 23:58:11 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>iOS lockdown mode</title><link>https://perrotta.dev/2025/01/ios-lockdown-mode/</link><pubDate>Sat, 04 Jan 2025 23:58:11 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/ios-lockdown-mode/</guid><description>&lt;p>&lt;a href="https://www.dedoimedo.com/computers/iphone-lockdown-mode.html">dedoimedo&lt;/a> makes
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 05 Jan 2025 01:46:06 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>pre-commit + vim integration</title><link>https://perrotta.dev/2025/01/pre-commit--vim-integration/</link><pubDate>Sun, 05 Jan 2025 01:46:06 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/pre-commit--vim-integration/</guid><description>&lt;p>Is it possible to transparently invoke &lt;code>pre-commit&lt;/code> in the background upon saving in &lt;code>vim&lt;/code> (&lt;code>:w&lt;/code>)?&lt;/p>
+&lt;p>Initially I found this &lt;a href="https://stackoverflow.com/questions/70713450/pre-commit-results-in-vim">Stack
+Overflow&lt;/a>
+question, but it had no answer.&lt;/p>
+&lt;p>Digging a bit deeper I realized that I could do it with an &lt;code>autocmd&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-vim" data-lang="vim">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">autocmd&lt;/span> &lt;span style="color:#a6e22e">BufWritePost&lt;/span> * &lt;span style="color:#66d9ef">execute&lt;/span> &lt;span style="color:#e6db74">&amp;#39;! if [ -e $(git root)/.pre-commit-config.yaml &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 ]; then pre-commit run; fi&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>That trashes the screen upon completion. This can be resolved by invoking
+&lt;code>:redraw!&lt;/code> afterwards:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-vim" data-lang="vim">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">autocmd&lt;/span> &lt;span style="color:#a6e22e">BufWritePost&lt;/span> * &lt;span style="color:#66d9ef">execute&lt;/span> &lt;span style="color:#e6db74">&amp;#39;! if [ -e $(git root)/.pre-commit-config.yaml &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 ]; then pre-commit run; fi&amp;#39;&lt;/span> | &lt;span style="color:#a6e22e">redraw&lt;/span>!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>We can be less intrusive by prepending &lt;code>silent!&lt;/code> so that, even if the command
+fails, it doesn&amp;rsquo;t get in the way:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-vim" data-lang="vim">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">autocmd&lt;/span> &lt;span style="color:#a6e22e">BufWritePost&lt;/span> * &lt;span style="color:#a6e22e">silent&lt;/span>! &lt;span style="color:#66d9ef">execute&lt;/span> &lt;span style="color:#e6db74">&amp;#39;! if [ -e $(git root)/.pre-commit-config.yaml &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 ]; then pre-commit run; fi&amp;#39;&lt;/span> | &lt;span style="color:#a6e22e">redraw&lt;/span>!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And last but not least, ideally &lt;code>pre-commit&lt;/code> should run only on the file
+associated with the current buffer. Pass &lt;code>--files&lt;/code> to pre-commit with the &lt;code>%&lt;/code>
+argument:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-vim" data-lang="vim">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">autocmd&lt;/span> &lt;span style="color:#a6e22e">BufWritePost&lt;/span> * &lt;span style="color:#a6e22e">silent&lt;/span>! &lt;span style="color:#66d9ef">execute&lt;/span> &lt;span style="color:#e6db74">&amp;#39;! if [ -e $(git root)/.pre-commit-config.yaml &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 ]; then pre-commit run --files %; fi&amp;#39;&lt;/span> | &lt;span style="color:#a6e22e">redraw&lt;/span>!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This approach works as intended.
+There&amp;rsquo;s a brief period in which you can see &lt;code>pre-commit&lt;/code> running in the
+background. It&amp;rsquo;s arguable whether that&amp;rsquo;s a feature or a bug.&lt;/p>
+&lt;p>Ah, and &lt;code>git root&lt;/code> is simply an alias in my &lt;code>~/.gitconfig&lt;/code>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>root = rev-parse --show-toplevel`
+&lt;/code>&lt;/pre>&lt;p>Whenever there are pre-commit violations (e.g. &lt;code>end-of-file-fixer&lt;/code>) they are
+applied inplace. There&amp;rsquo;s no need to run &lt;code>:e!&lt;/code>.&lt;/p>
+&lt;p>This is bare, but I am happy.&lt;/p>
+&lt;p>Perhaps the only missing piece is to extend it in such a way it&amp;rsquo;s only executed
+in the repositories I opt into.&lt;/p>
+&lt;p>If this turns out to be too intrusive, I am thinking to switch to using a vim
+keymap e.g. &lt;code>&amp;lt;leader&amp;gt;p&lt;/code> instead of an &lt;code>autocmd&lt;/code>.&lt;/p></description></item><item><title>iOS lockdown mode</title><link>https://perrotta.dev/2025/01/ios-lockdown-mode/</link><pubDate>Sat, 04 Jan 2025 23:58:11 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/ios-lockdown-mode/</guid><description>&lt;p>&lt;a href="https://www.dedoimedo.com/computers/iphone-lockdown-mode.html">dedoimedo&lt;/a> makes
 me realize that the iOS lockdown mode is actually quite usable, even for us
 normies:&lt;/p>
 &lt;blockquote>
@@ -2375,133 +2402,6 @@ a supergroup, one of its channels is &lt;code>#adventofcode&lt;/code>.&lt;/p>
 &lt;li id="fn:1">
 &lt;p>It&amp;rsquo;s a moderated group, and this invitation link will expire within 2
 weeks of the time of this post.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item><item><title>Advent of Code 2024: Day 11</title><link>https://perrotta.dev/2024/12/advent-of-code-2024-day-11/</link><pubDate>Thu, 12 Dec 2024 19:15:35 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/advent-of-code-2024-day-11/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/11">Day #11&lt;/a> puzzle.&lt;/p>
-&lt;p>Part one can be done with a simulation.&lt;/p>
-&lt;p>It is very delightful to do it in python: lists are quite flexible, and
-converting from integers to strings and vice-versa is seamless. Counting the
-number of digits of &lt;code>x&lt;/code> is just a matter of &lt;code>len(str(x))&lt;/code>. In C++ it&amp;rsquo;s a bit
-kludgier with &lt;code>std::string(x).size()&lt;/code> and &lt;code>std::stoi(s)&lt;/code>, but then you need to
-remember which header to import&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p>
-&lt;p>I thought of using &lt;code>reduce&lt;/code> to do &lt;code>blink(blink(stone))...&lt;/code> and so on:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>print(len(reduce(&lt;span style="color:#66d9ef">lambda&lt;/span> stone: blink(stone), range(&lt;span style="color:#ae81ff">25&lt;/span>), stones)))
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;nonetheless it&amp;rsquo;s more readable to simply use a plain &lt;code>for-range&lt;/code> loop:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> _ &lt;span style="color:#f92672">in&lt;/span> range(&lt;span style="color:#ae81ff">25&lt;/span>):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones &lt;span style="color:#f92672">=&lt;/span> blink(stones)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(len(stones))
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The secret sauce is in &lt;code>blink&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">blink&lt;/span>(stones):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next &lt;span style="color:#f92672">=&lt;/span> []
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> stones:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> s &lt;span style="color:#f92672">=&lt;/span> str(stone)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> stone &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(&lt;span style="color:#ae81ff">1&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> len(s) &lt;span style="color:#f92672">%&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> index &lt;span style="color:#f92672">=&lt;/span> len(s) &lt;span style="color:#f92672">//&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(int(s[:index]))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(int(s[index:]))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">else&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(stone &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#ae81ff">2024&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> stones_next
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For part two we need to be cleverer. In principle the same approach would work,
-however it takes too long to process due to its exponential nature. In my laptop
-I can get up to the 42nd &lt;code>blink&lt;/code> iteration without losing my patience to wait
-even longer.&lt;/p>
-&lt;p>The main observation to account for is that we only care about the length of the
-stone sequence, hence the original task transforms into a simple 2D dynamic
-programming problem.&lt;/p>
-&lt;p>I call:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>print(dp_blink(stones, &lt;span style="color:#ae81ff">75&lt;/span>))
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Which is defined this way:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">dp_blink&lt;/span>(stones, times):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">from&lt;/span> functools &lt;span style="color:#f92672">import&lt;/span> lru_cache
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">@lru_cache&lt;/span>(maxsize&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">None&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">dp&lt;/span>(stone: int, times: int) &lt;span style="color:#f92672">-&amp;gt;&lt;/span> int:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> times &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> sum([dp(stone, times &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>) &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> blink([stone])])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> sum([dp(stone, times) &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> stones])
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The DP consists of the stone, and how many times are left for you to blink at it.&lt;/p>
-&lt;p>The full solution:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/usr/bin/env python3&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> sys
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">blink&lt;/span>(stones):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next &lt;span style="color:#f92672">=&lt;/span> []
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> stones:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> s &lt;span style="color:#f92672">=&lt;/span> str(stone)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> stone &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(&lt;span style="color:#ae81ff">1&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> len(s) &lt;span style="color:#f92672">%&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> index &lt;span style="color:#f92672">=&lt;/span> len(s) &lt;span style="color:#f92672">//&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(int(s[:index]))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(int(s[index:]))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">else&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones_next&lt;span style="color:#f92672">.&lt;/span>append(stone &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#ae81ff">2024&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> stones_next
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">dp_blink&lt;/span>(stones, times):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">from&lt;/span> functools &lt;span style="color:#f92672">import&lt;/span> lru_cache
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">@lru_cache&lt;/span>(maxsize&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">None&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">dp&lt;/span>(stone: int, times: int) &lt;span style="color:#f92672">-&amp;gt;&lt;/span> int:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> times &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> sum([dp(stone, times &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>) &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> blink([stone])])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> sum([dp(stone, times) &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> stones])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>():
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">with&lt;/span> open(sys&lt;span style="color:#f92672">.&lt;/span>argv[&lt;span style="color:#ae81ff">1&lt;/span>]) &lt;span style="color:#66d9ef">as&lt;/span> input:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> lines &lt;span style="color:#f92672">=&lt;/span> input&lt;span style="color:#f92672">.&lt;/span>read()&lt;span style="color:#f92672">.&lt;/span>splitlines()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones &lt;span style="color:#f92672">=&lt;/span> [int(stone) &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> lines[&lt;span style="color:#ae81ff">0&lt;/span>]&lt;span style="color:#f92672">.&lt;/span>split()]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> _ &lt;span style="color:#f92672">in&lt;/span> range(&lt;span style="color:#ae81ff">25&lt;/span>):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones &lt;span style="color:#f92672">=&lt;/span> blink(stones)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># part one&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(len(stones))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># This is very slow, with an exponential complexity runtime.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># What did you expect?&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">#&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># for i in range(50): # 50 = 75 - 25&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># print(i)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># stones = blink(stones)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># # part two&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># print(len(stones))&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stones &lt;span style="color:#f92672">=&lt;/span> [int(stone) &lt;span style="color:#66d9ef">for&lt;/span> stone &lt;span style="color:#f92672">in&lt;/span> lines[&lt;span style="color:#ae81ff">0&lt;/span>]&lt;span style="color:#f92672">.&lt;/span>split()]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># part two&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(dp_blink(stones, &lt;span style="color:#ae81ff">75&lt;/span>))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> __name__ &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;__main__&amp;#39;&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> main()
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>It&amp;rsquo;s &lt;code>#include &amp;lt;string&amp;gt;&lt;/code>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
 &lt;/div></description></item></channel></rss>
