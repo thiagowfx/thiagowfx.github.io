@@ -7,7 +7,7 @@ tags:
 ---
 
 Whenever the files are in the same directory, `vidir` from [moreutils]({{< ref
-"2022-05-01-tools-you-should-know-about-moreutils.md" >}}) is the best
+"2022-05-01-tools-you-should-know-about-moreutils" >}}) is the best
 interactive tool.
 
 If files are scattered across multiple directories, consider using the

@@ -5,7 +5,7 @@ tags:
   - dev
 ---
 
-Follow-up of [the previous post]({{< ref "2024-12-30-cookiecutter.md" >}}).
+Follow-up of [the previous post]({{< ref "2024-12-30-cookiecutter" >}}).
 
 Ever since [July 2023](https://github.com/cookiecutter/cookiecutter/pull/1881)
 it's possible to document

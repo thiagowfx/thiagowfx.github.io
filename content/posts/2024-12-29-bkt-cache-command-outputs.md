@@ -10,7 +10,7 @@ My esteemed friend [Michael Diamond](https://github.com/dimo414) wrote [`bkt`](h
 
 > bkt (pronounced "bucket") is a subprocess caching utility written in Rust.
 
-I mentioned it [previously]({{< ref "2022-01-18-arch-linux-new-pkgbuild-workflow.md" >}}) as an example on how to create a `PKGBUILD` for Arch Linux.
+I mentioned it [previously]({{< ref "2022-01-18-arch-linux-new-pkgbuild-workflow" >}}) as an example on how to create a `PKGBUILD` for Arch Linux.
 
 Here is the main use case for me:
 

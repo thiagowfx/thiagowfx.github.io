@@ -7,7 +7,7 @@ tags:
 
 I used to have the following handy script to launch a new (fresh!) instance of
 Google Chrome when working on [Chrome for Testing]({{< ref
-"2024-01-25-chrome-for-testing.md" >}}) in the Browser Automation team at
+"2024-01-25-chrome-for-testing" >}}) in the Browser Automation team at
 Google:
 
 

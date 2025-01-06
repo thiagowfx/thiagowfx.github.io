@@ -59,7 +59,7 @@ there is no `docs` metapackage:
   ([reference](https://serverfault.com/questions/1032488/alpine-linux-apk-list-out-directly-installed-packages-by-apk-add)).
 
 - **Step 4**: `combine` from [moreutils]({{< ref
-  "2022-05-01-tools-you-should-know-about-moreutils.md" >}}) is more
+  "2022-05-01-tools-you-should-know-about-moreutils" >}}) is more
   user-friendly than `comm`. I need to look up how to use `comm` every single
   time, whereas `combine` is much easier to remember.
 

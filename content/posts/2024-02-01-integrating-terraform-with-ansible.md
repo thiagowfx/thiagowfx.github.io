@@ -84,7 +84,7 @@ resource "linode_instance" "nanode" {
 I removed the token from the linode provider. Now it is supplied via the
   `LINODE_TOKEN` environment variable. In order to automatically populate that
   variable, I use [`direnv`]({{< ref
-  "2022-01-04-direnv-automate-your-environment-variables.md" >}}). There's an `.envrc` file that provides its value, like so:
+  "2022-01-04-direnv-automate-your-environment-variables" >}}). There's an `.envrc` file that provides its value, like so:
 
 ```shell
 #!/bin/sh

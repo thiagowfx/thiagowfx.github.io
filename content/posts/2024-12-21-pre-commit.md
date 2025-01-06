@@ -87,9 +87,9 @@ The definition of what a text file is lives in the [identify](https://github.com
 
 What if an extension isn't supported? Instead of using `types:`, use `file:` with a regex pattern to match, such as `\.sh$`.
 
-What if an upstream tool does not have a `.pre-commit-hooks.yaml` file? I wrote a [post]({{< ref "2024-12-17-pre-commit-create-hooks-for-unsupported-tools.md" >}}) with a workaround wherein you can define your own.
+What if an upstream tool does not have a `.pre-commit-hooks.yaml` file? I wrote a [post]({{< ref "2024-12-17-pre-commit-create-hooks-for-unsupported-tools" >}}) with a workaround wherein you can define your own.
 
-How do you try out new hooks? One way is to use [`pre-commit try-repo`]({{< ref "2024-11-26-pre-commit-try-repo.md" >}}). Another way is to add them to your config and then run each hook individually.
+How do you try out new hooks? One way is to use [`pre-commit try-repo`]({{< ref "2024-11-26-pre-commit-try-repo" >}}). Another way is to add them to your config and then run each hook individually.
 
 Are there similar tools? There's [`husky`](https://typicode.github.io/husky/), but it's too nodejs / web centric. I like `pre-commit.com` better.
 
