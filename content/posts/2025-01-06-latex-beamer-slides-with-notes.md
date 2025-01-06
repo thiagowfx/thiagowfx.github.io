@@ -5,7 +5,7 @@ tags:
   - dev
 ---
 
-([via](Andrej Bauer) from University of Ljubljana, adapted):
+([via Andrej Bauer](https://gist.github.com/andrejbauer/ac361549ac2186be0cdb) from University of Ljubljana, adapted):
 
 ```tex
 \documentclass[12pt]{beamer}
