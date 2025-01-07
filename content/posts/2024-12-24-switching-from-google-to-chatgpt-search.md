@@ -21,4 +21,7 @@ So far the results are impressive and almost always what I am looking for.
 When they are not, I can easily fall back to Google by starting my search query
 in Chrome with 'g', or to DuckDuckGo with 'd'.
 
+**Edit(2025-01-07)**:
+[OpenAI is early googling late-stage Google](https://birchtree.me/blog/openai-is-early-googling-late-stage-google/). This.
+
 [^1]: They should _really_ market it as _SearchGPT_.
