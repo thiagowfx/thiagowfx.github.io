@@ -45,7 +45,7 @@ _^bravo_
 
 Clicking `[[book]]` goes to the same page as `#book`.
 
-Why are there two forms? I don't know. But there's what I learned: it doesn't
+Why are there two forms? I don't know. But here's what I learned: it doesn't
 matter which one you choose to use, as they are effectively equivalent. For
 example, you could have written instead:
 
@@ -60,6 +60,6 @@ _^charlie_
 
 ...the effect would have been the same.
 
-The idiomatic style seems to favour the use double brackets when writing prose
-(i.e. _bravo_), and the use of hashtags when "tagging" or qualifying sentences
-(i.e. _alpha_). That said, intermixing them is harmless.
+The idiomatic style seems to favour the use of double brackets when writing
+prose (i.e. _bravo_), and the use of hashtags when "tagging" or qualifying
+sentences (i.e. _alpha_). That said, intermixing them is harmless.
