@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 07 Jan 2025 22:08:20 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>bash: distinguish between script invocation versus source</title><link>https://perrotta.dev/2025/01/bash-distinguish-between-script-invocation-versus-source/</link><pubDate>Tue, 07 Jan 2025 22:08:20 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/bash-distinguish-between-script-invocation-versus-source/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>main.sh&lt;/code> bash script that does a bunch of
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 07 Jan 2025 22:08:20 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>bash: distinguish between script invocation versus source</title><link>https://perrotta.dev/2025/01/bash-distinguish-between-script-invocation-versus-source/</link><pubDate>Tue, 07 Jan 2025 22:08:20 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/bash-distinguish-between-script-invocation-versus-source/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>main.sh&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> bash script that does a bunch of
 variable &lt;code>export&lt;/code>s:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># [...]&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export AWS_ACCESS_KEY_ID&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>echo &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$credentials&lt;span style="color:#e6db74">&amp;#34;&lt;/span> | jq -r &lt;span style="color:#e6db74">&amp;#39;.Credentials.AccessKeyId&amp;#39;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export AWS_SECRET_ACCESS_KEY&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>echo &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$credentials&lt;span style="color:#e6db74">&amp;#34;&lt;/span> | jq -r &lt;span style="color:#e6db74">&amp;#39;.Credentials.SecretAccessKey&amp;#39;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export AWS_SESSION_TOKEN&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>echo &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$credentials&lt;span style="color:#e6db74">&amp;#34;&lt;/span> | jq -r &lt;span style="color:#e6db74">&amp;#39;.Credentials.SessionToken&amp;#39;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;we want to source it so that these exported variables become available in the
-current shell context&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>:&lt;/p>
+current shell context&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ source ./main.sh
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;at the same time, we want to prevent users from invoking it:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ./main.sh
@@ -53,10 +53,47 @@ would be part of the model out-of-the-box, oneshot. &lt;em>Oh, well.&lt;/em>&lt;
 &lt;hr>
 &lt;ol>
 &lt;li id="fn:1">
-&lt;p>In this context the &lt;code>./&lt;/code> is optional and was added only for clarity.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;p>It&amp;rsquo;s for &lt;a href="https://perrotta.dev/2024/12/skopeo-operate-container-images-and-registries/">this script&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>In this context the &lt;code>./&lt;/code> is optional and was added only for clarity.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>nginx: add basic auth</title><link>https://perrotta.dev/2025/01/nginx-add-basic-auth/</link><pubDate>Tue, 07 Jan 2025 03:28:02 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/nginx-add-basic-auth/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: You want to expose a HTTPS service from your cloud VPS to
+&lt;/div></description></item><item><title>Diffing two directories</title><link>https://perrotta.dev/2025/01/diffing-two-directories/</link><pubDate>Tue, 07 Jan 2025 15:23:55 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/diffing-two-directories/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given an &amp;lsquo;alpha&amp;rsquo; directory setup with a bunch of
+configuration files (e.g. for CI/CD) that works for one cluster, and given
+another &amp;lsquo;bravo&amp;rsquo; directory for a distinct cluster, how can you compare the
+differences between both directories e.g. perhaps to reconcile them, or to make
+them consistent and uniform?&lt;/p>
+&lt;p>In this context, &lt;code>cp -r&lt;/code> or &lt;code>rsync&lt;/code> are out of scope. We do not want to clone
+one directory into another: that would have been trivial.&lt;/p>
+&lt;h1 id="diffoscope">Diffoscope&lt;/h1>
+&lt;p>Main tool: &lt;a href="https://diffoscope.org/">Diffoscope&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>In-depth comparison of files, archives, and directories.&lt;/p>
+&lt;p>diffoscope tries to get to the bottom of what makes files or directories
+different. It will recursively unpack archives of many kinds and transform
+various binary formats into more human-readable form to compare them. It can
+compare two tarballs, ISO images, or PDF just as easily.&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;code>diffoscope&lt;/code> gained a lot of popularity a few years ago, when linux
+distributions started to care about &lt;a href="https://reproducible-builds.org/">reproducible
+builds&lt;/a>. In fact, it&amp;rsquo;s highlighted in their
+&lt;a href="https://reproducible-builds.org/tools/">tools&lt;/a> page.&lt;/p>
+&lt;p>&lt;strong>Usage&lt;/strong>: Very similar to &lt;code>diff&lt;/code>. Run &lt;code>diffoscope {dir1} {dir2}&lt;/code>.&lt;/p>
+&lt;h2 id="midnight-commander">Midnight Commander&lt;/h2>
+&lt;p>The classic &lt;a href="https://midnight-commander.org/">&lt;code>mc&lt;/code>&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>GNU Midnight Commander is a visual file manager, licensed under GNU General
+Public License and therefore qualifies as Free Software. It&amp;rsquo;s a feature rich
+full-screen text mode application that allows you to copy, move and delete
+files and whole directory trees, search for files and run commands in the
+subshell. Internal viewer and editor are included.&lt;/p>
+&lt;/blockquote>
+&lt;p>It has two side-by-side panes. The idea is to navigate to a directory in each
+pane (toggle pane focus with &lt;code>Tab&lt;/code>), and then perform a visual inspection (use
+arrow keys to navigate). The effect is comparable to having two side-by-side
+&lt;code>tmux&lt;/code> panes with &lt;a href="https://github.com/ranger/ranger">&lt;code>ranger&lt;/code>&lt;/a> opened in each of
+them.&lt;/p></description></item><item><title>nginx: add basic auth</title><link>https://perrotta.dev/2025/01/nginx-add-basic-auth/</link><pubDate>Tue, 07 Jan 2025 03:28:02 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/nginx-add-basic-auth/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: You want to expose a HTTPS service from your cloud VPS to
 the public Internet. You do not wish to use a VPN (e.g.
 &lt;a href="https://tailscale.com/">tailscale&lt;/a>) to do so – which is a great way to address
 this, but it&amp;rsquo;s out of scope in this particular instance. How to proceed?&lt;/p>
@@ -2292,38 +2329,4 @@ attempt of the second command.&lt;/p>
 &lt;p>And also &lt;code>\LaTeX{}&lt;/code>&amp;hellip;&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>git: push --force with style</title><link>https://perrotta.dev/2024/12/git-push--force-with-style/</link><pubDate>Fri, 20 Dec 2024 00:38:07 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/git-push--force-with-style/</guid><description>&lt;p>TIL:&lt;/p>
-&lt;blockquote>
-&lt;p>&lt;code>git push --force&lt;/code>: This command forcefully pushes your changes to the remote
-branch, even if it results in overwriting or losing commits. It does not
-consider the current state of the remote branch. If someone else has pushed
-changes to the same branch in the meantime, their changes will be lost.&lt;/p>
-&lt;/blockquote>
-&lt;blockquote>
-&lt;p>&lt;code>git push --force-with-lease&lt;/code>: This command is a safer alternative to git push
-— force. It will only force push if the remote branch matches your
-expectations. It checks if someone else has pushed changes to the branch in
-the meantime. If the branch on the remote repository has not diverged (i.e.,
-no new commits were pushed by others), your push will be allowed. If someone
-else has pushed changes, the push will be rejected, ensuring you do not
-accidentally overwrite someone else&amp;rsquo;s work.&lt;/p>
-&lt;/blockquote>
-&lt;p>&lt;a href="https://medium.com/@sahilsahilbhatia/git-push-force-with-lease-vs-force-ecae72601e80">(via)&lt;/a>.&lt;/p>
-&lt;p>How nice! Why is &lt;code>--force-with-lease&lt;/code> not the default behavior?&lt;/p>
-&lt;p>&lt;a href="https://stackoverflow.com/questions/30542491/push-force-with-lease-by-default">Stack
-Overflow&lt;/a>
-to the rescue&amp;hellip;&lt;/p>
-&lt;blockquote>
-&lt;p>I just learned about &lt;code>git push --force-with-lease&lt;/code>. It&amp;rsquo;s pretty awesome. But,
-of course, I don&amp;rsquo;t use force that often, and so I&amp;rsquo;m worried that I might
-forget about this nifty feature the next time I need it. Is there a way to
-configure git so git push -f will automatically use &lt;code>--force-with-lease&lt;/code>
-unless I intentionally override it with &lt;code>--no-force-with-lease&lt;/code>?&lt;/p>
-&lt;/blockquote>
-&lt;p>&amp;hellip;amen, you read my mind, OP!&lt;/p>
-&lt;p>The accepted answer, to my despair:&lt;/p>
-&lt;blockquote>
-&lt;p>There currently is no way to configure git to always use force-with-lease
-instead of force. As such the next best available option is, as so often, to
-create an alias which serves this purpose.&lt;/p>
-&lt;/blockquote></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>

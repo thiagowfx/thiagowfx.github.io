@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 07 Jan 2025 22:08:20 -0300</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>bash: distinguish between script invocation versus source</title><link>https://perrotta.dev/2025/01/bash-distinguish-between-script-invocation-versus-source/</link><pubDate>Tue, 07 Jan 2025 22:08:20 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/bash-distinguish-between-script-invocation-versus-source/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>main.sh&lt;/code> bash script that does a bunch of
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 07 Jan 2025 22:08:20 -0300</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>bash: distinguish between script invocation versus source</title><link>https://perrotta.dev/2025/01/bash-distinguish-between-script-invocation-versus-source/</link><pubDate>Tue, 07 Jan 2025 22:08:20 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/bash-distinguish-between-script-invocation-versus-source/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>main.sh&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> bash script that does a bunch of
 variable &lt;code>export&lt;/code>s:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># [...]&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export AWS_ACCESS_KEY_ID&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>echo &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$credentials&lt;span style="color:#e6db74">&amp;#34;&lt;/span> | jq -r &lt;span style="color:#e6db74">&amp;#39;.Credentials.AccessKeyId&amp;#39;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export AWS_SECRET_ACCESS_KEY&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>echo &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$credentials&lt;span style="color:#e6db74">&amp;#34;&lt;/span> | jq -r &lt;span style="color:#e6db74">&amp;#39;.Credentials.SecretAccessKey&amp;#39;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export AWS_SESSION_TOKEN&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>echo &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$credentials&lt;span style="color:#e6db74">&amp;#34;&lt;/span> | jq -r &lt;span style="color:#e6db74">&amp;#39;.Credentials.SessionToken&amp;#39;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;we want to source it so that these exported variables become available in the
-current shell context&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>:&lt;/p>
+current shell context&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ source ./main.sh
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;at the same time, we want to prevent users from invoking it:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ./main.sh
@@ -53,10 +53,47 @@ would be part of the model out-of-the-box, oneshot. &lt;em>Oh, well.&lt;/em>&lt;
 &lt;hr>
 &lt;ol>
 &lt;li id="fn:1">
-&lt;p>In this context the &lt;code>./&lt;/code> is optional and was added only for clarity.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;p>It&amp;rsquo;s for &lt;a href="https://perrotta.dev/2024/12/skopeo-operate-container-images-and-registries/">this script&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>In this context the &lt;code>./&lt;/code> is optional and was added only for clarity.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>nginx: add basic auth</title><link>https://perrotta.dev/2025/01/nginx-add-basic-auth/</link><pubDate>Tue, 07 Jan 2025 03:28:02 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/nginx-add-basic-auth/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: You want to expose a HTTPS service from your cloud VPS to
+&lt;/div></description></item><item><title>Diffing two directories</title><link>https://perrotta.dev/2025/01/diffing-two-directories/</link><pubDate>Tue, 07 Jan 2025 15:23:55 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/diffing-two-directories/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given an &amp;lsquo;alpha&amp;rsquo; directory setup with a bunch of
+configuration files (e.g. for CI/CD) that works for one cluster, and given
+another &amp;lsquo;bravo&amp;rsquo; directory for a distinct cluster, how can you compare the
+differences between both directories e.g. perhaps to reconcile them, or to make
+them consistent and uniform?&lt;/p>
+&lt;p>In this context, &lt;code>cp -r&lt;/code> or &lt;code>rsync&lt;/code> are out of scope. We do not want to clone
+one directory into another: that would have been trivial.&lt;/p>
+&lt;h1 id="diffoscope">Diffoscope&lt;/h1>
+&lt;p>Main tool: &lt;a href="https://diffoscope.org/">Diffoscope&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>In-depth comparison of files, archives, and directories.&lt;/p>
+&lt;p>diffoscope tries to get to the bottom of what makes files or directories
+different. It will recursively unpack archives of many kinds and transform
+various binary formats into more human-readable form to compare them. It can
+compare two tarballs, ISO images, or PDF just as easily.&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;code>diffoscope&lt;/code> gained a lot of popularity a few years ago, when linux
+distributions started to care about &lt;a href="https://reproducible-builds.org/">reproducible
+builds&lt;/a>. In fact, it&amp;rsquo;s highlighted in their
+&lt;a href="https://reproducible-builds.org/tools/">tools&lt;/a> page.&lt;/p>
+&lt;p>&lt;strong>Usage&lt;/strong>: Very similar to &lt;code>diff&lt;/code>. Run &lt;code>diffoscope {dir1} {dir2}&lt;/code>.&lt;/p>
+&lt;h2 id="midnight-commander">Midnight Commander&lt;/h2>
+&lt;p>The classic &lt;a href="https://midnight-commander.org/">&lt;code>mc&lt;/code>&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>GNU Midnight Commander is a visual file manager, licensed under GNU General
+Public License and therefore qualifies as Free Software. It&amp;rsquo;s a feature rich
+full-screen text mode application that allows you to copy, move and delete
+files and whole directory trees, search for files and run commands in the
+subshell. Internal viewer and editor are included.&lt;/p>
+&lt;/blockquote>
+&lt;p>It has two side-by-side panes. The idea is to navigate to a directory in each
+pane (toggle pane focus with &lt;code>Tab&lt;/code>), and then perform a visual inspection (use
+arrow keys to navigate). The effect is comparable to having two side-by-side
+&lt;code>tmux&lt;/code> panes with &lt;a href="https://github.com/ranger/ranger">&lt;code>ranger&lt;/code>&lt;/a> opened in each of
+them.&lt;/p></description></item><item><title>nginx: add basic auth</title><link>https://perrotta.dev/2025/01/nginx-add-basic-auth/</link><pubDate>Tue, 07 Jan 2025 03:28:02 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/nginx-add-basic-auth/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: You want to expose a HTTPS service from your cloud VPS to
 the public Internet. You do not wish to use a VPN (e.g.
 &lt;a href="https://tailscale.com/">tailscale&lt;/a>) to do so – which is a great way to address
 this, but it&amp;rsquo;s out of scope in this particular instance. How to proceed?&lt;/p>
@@ -1922,82 +1959,4 @@ self-discover:
 &lt;a href="https://github.com/rancher-sandbox/rancher-desktop/issues/7315">rancher-sandbox/rancher-desktop#7315&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Advent of Code 2024: Day 17</title><link>https://perrotta.dev/2024/12/advent-of-code-2024-day-17/</link><pubDate>Wed, 25 Dec 2024 16:13:30 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/advent-of-code-2024-day-17/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/17">Day #17&lt;/a> puzzle.&lt;/p>
-&lt;p>It&amp;rsquo;s a simulation problem, a quite delightful one to implement.&lt;/p>
-&lt;p>Using python data classes would have been natural, but I went full imperative in
-this one.&lt;/p>
-&lt;p>Part 2 would require clever backwards computation, and I wasn&amp;rsquo;t interested in
-doing so. I liked the approach from &lt;a href="https://todd.ginsberg.com/post/advent-of-code/2024/day17/">Todd
-Ginsberg&lt;/a>.&lt;/p>
-&lt;p>The full solution:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/usr/bin/env python3&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> sys
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>():
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">with&lt;/span> open(sys&lt;span style="color:#f92672">.&lt;/span>argv[&lt;span style="color:#ae81ff">1&lt;/span>]) &lt;span style="color:#66d9ef">as&lt;/span> input:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> lines &lt;span style="color:#f92672">=&lt;/span> input&lt;span style="color:#f92672">.&lt;/span>read()&lt;span style="color:#f92672">.&lt;/span>splitlines()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> a, b, c &lt;span style="color:#f92672">=&lt;/span> [int(line&lt;span style="color:#f92672">.&lt;/span>split()[&lt;span style="color:#ae81ff">2&lt;/span>]) &lt;span style="color:#66d9ef">for&lt;/span> line &lt;span style="color:#f92672">in&lt;/span> lines[&lt;span style="color:#ae81ff">0&lt;/span>:&lt;span style="color:#ae81ff">3&lt;/span>]]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> program &lt;span style="color:#f92672">=&lt;/span> [int(op) &lt;span style="color:#66d9ef">for&lt;/span> op &lt;span style="color:#f92672">in&lt;/span> lines[&lt;span style="color:#ae81ff">4&lt;/span>]&lt;span style="color:#f92672">.&lt;/span>split()[&lt;span style="color:#ae81ff">1&lt;/span>]&lt;span style="color:#f92672">.&lt;/span>split(&lt;span style="color:#e6db74">&amp;#34;,&amp;#34;&lt;/span>)]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ip &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stdout &lt;span style="color:#f92672">=&lt;/span> []
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">combo&lt;/span>(operand):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">assert&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#f92672">&amp;lt;=&lt;/span> operand &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">7&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#f92672">&amp;lt;=&lt;/span> operand &lt;span style="color:#f92672">&amp;lt;=&lt;/span> &lt;span style="color:#ae81ff">3&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> operand
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> operand &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> a
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> operand &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> b
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> operand &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">6&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> c
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">while&lt;/span> ip &lt;span style="color:#f92672">&amp;lt;&lt;/span> len(program) &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> opcode &lt;span style="color:#f92672">=&lt;/span> program[ip]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> operand &lt;span style="color:#f92672">=&lt;/span> program[ip &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># adv, division&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> numerator &lt;span style="color:#f92672">=&lt;/span> a
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> denominator &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#f92672">**&lt;/span> combo(operand)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> a &lt;span style="color:#f92672">=&lt;/span> numerator &lt;span style="color:#f92672">//&lt;/span> denominator
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># bxl, bitwise xor&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> b &lt;span style="color:#f92672">^=&lt;/span> operand
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># bst, modulo&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> b &lt;span style="color:#f92672">=&lt;/span> combo(operand) &lt;span style="color:#f92672">%&lt;/span> &lt;span style="color:#ae81ff">8&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># jnz&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">3&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> a &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ip &lt;span style="color:#f92672">=&lt;/span> operand
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">continue&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># bxc, bitwise xor&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> b &lt;span style="color:#f92672">^=&lt;/span> c
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># out&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stdout&lt;span style="color:#f92672">.&lt;/span>append(combo(operand) &lt;span style="color:#f92672">%&lt;/span> &lt;span style="color:#ae81ff">8&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># bdv&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">6&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> numerator &lt;span style="color:#f92672">=&lt;/span> a
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> denominator &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#f92672">**&lt;/span> combo(operand)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> b &lt;span style="color:#f92672">=&lt;/span> numerator &lt;span style="color:#f92672">//&lt;/span> denominator
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># cdv&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">elif&lt;/span> opcode &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">7&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> numerator &lt;span style="color:#f92672">=&lt;/span> a
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> denominator &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#f92672">**&lt;/span> combo(operand)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> c &lt;span style="color:#f92672">=&lt;/span> numerator &lt;span style="color:#f92672">//&lt;/span> denominator
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ip &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># part one&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;,&amp;#34;&lt;/span>&lt;span style="color:#f92672">.&lt;/span>join(map(str, stdout)))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> __name__ &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;__main__&amp;#39;&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> main()
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>
