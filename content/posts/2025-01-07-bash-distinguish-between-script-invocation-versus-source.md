@@ -5,7 +5,7 @@ tags:
   - dev
 ---
 
-**Problem statement**: Given a `main.sh` bash script that does a bunch of
+**Problem statement**: Given a `main.sh`[^1] bash script that does a bunch of
 variable `export`s:
 
 ```shell
@@ -16,7 +16,7 @@ export AWS_SESSION_TOKEN=$(echo "$credentials" | jq -r '.Credentials.SessionToke
 ```
 
 ...we want to source it so that these exported variables become available in the
-current shell context[^1]:
+current shell context[^2]:
 
 ```shell
 $ source ./main.sh
@@ -87,4 +87,6 @@ that, in 2025, this "improve this script" chain-of-thought prompt reasoning
 would be part of the model out-of-the-box, oneshot. _Oh, well._
 
 
-[^1]: In this context the `./` is optional and was added only for clarity.
+[^1]: It's for [this script]({{< ref "2024-12-17-skopeo-operate-container-images-and-registries >}}).
+
+[^2]: In this context the `./` is optional and was added only for clarity.
