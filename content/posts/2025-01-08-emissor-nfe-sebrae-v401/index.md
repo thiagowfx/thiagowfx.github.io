@@ -1,6 +1,6 @@
 ---
 title: "Emissor NFE Sebrae v4.01 para emissão de notas fiscais"
-date: 2024-01-19T16:44:46-03:00
+date: 2025-01-08T00:29:46-03:00
 tags:
   - portuguese
 aliases:
