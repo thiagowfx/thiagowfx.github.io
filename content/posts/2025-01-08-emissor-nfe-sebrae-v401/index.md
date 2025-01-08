@@ -4,7 +4,7 @@ date: 2025-01-08T00:29:46-03:00
 tags:
   - portuguese
 aliases:
-  - nfe
+  - /nfe
 ---
 
 _To my English-speaking readers: this post contains Brazilian bureaucracy and
