@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 07 Jan 2025 03:28:02 -0300</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>nginx: add basic auth</title><link>https://perrotta.dev/2025/01/nginx-add-basic-auth/</link><pubDate>Tue, 07 Jan 2025 03:28:02 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/nginx-add-basic-auth/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: You want to expose a HTTPS service from your cloud VPS to
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 07 Jan 2025 22:08:20 -0300</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>bash: distinguish between script invocation versus source</title><link>https://perrotta.dev/2025/01/bash-distinguish-between-script-invocation-versus-source/</link><pubDate>Tue, 07 Jan 2025 22:08:20 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/bash-distinguish-between-script-invocation-versus-source/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>main.sh&lt;/code> bash script that does a bunch of
+variable &lt;code>export&lt;/code>s:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># [...]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export AWS_ACCESS_KEY_ID&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>echo &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$credentials&lt;span style="color:#e6db74">&amp;#34;&lt;/span> | jq -r &lt;span style="color:#e6db74">&amp;#39;.Credentials.AccessKeyId&amp;#39;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export AWS_SECRET_ACCESS_KEY&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>echo &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$credentials&lt;span style="color:#e6db74">&amp;#34;&lt;/span> | jq -r &lt;span style="color:#e6db74">&amp;#39;.Credentials.SecretAccessKey&amp;#39;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export AWS_SESSION_TOKEN&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>echo &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$credentials&lt;span style="color:#e6db74">&amp;#34;&lt;/span> | jq -r &lt;span style="color:#e6db74">&amp;#39;.Credentials.SessionToken&amp;#39;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;we want to source it so that these exported variables become available in the
+current shell context&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ source ./main.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;at the same time, we want to prevent users from invoking it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ./main.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;because, otherwise, the variables wouldn&amp;rsquo;t be exported.&lt;/p>
+&lt;p>How can we distinguish between these two forms in &lt;code>bash&lt;/code>?&lt;/p>
+&lt;p>The following snippet works in this scenario:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">[[&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$0&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>BASH_SOURCE[0]&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#f92672">]]&lt;/span>; &lt;span style="color:#66d9ef">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;error: do not invoke this script directly; instead, run \`source &lt;/span>$0&lt;span style="color:#e6db74">\`&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> exit &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The general scenario is:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">[[&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$0&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>BASH_SOURCE[0]&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#f92672">]]&lt;/span>; &lt;span style="color:#66d9ef">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;The script was invoked with ./main.sh&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;The script was invoked with source main.sh&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="llm-moment">LLM moment&lt;/h2>
+&lt;p>I got it from ChatGPT + personal amends. If you&amp;rsquo;re curious, this is the original
+snippet obtained with the first prompt:&lt;/p>
+&lt;pre tabindex="0">&lt;code>#!/bin/bash
+
+if [[ $0 = &amp;#34;$BASH_SOURCE&amp;#34; ]]; then
+ echo &amp;#34;The script was invoked with ./main.sh&amp;#34;
+else
+ echo &amp;#34;The script was invoked with source main.sh&amp;#34;
+fi
+&lt;/code>&lt;/pre>&lt;p>Out of curiosity, I asked:&lt;/p>
+&lt;blockquote>
+&lt;p>improve this script&lt;/p>
+&lt;/blockquote>
+&lt;p>To which I got:&lt;/p>
+&lt;pre tabindex="0">&lt;code>#!/bin/bash
+
+if [[ &amp;#34;${BASH_SOURCE[0]}&amp;#34; == &amp;#34;${0}&amp;#34; ]]; then
+ echo &amp;#34;The script was invoked with ./main.sh&amp;#34;
+else
+ echo &amp;#34;The script was invoked with source main.sh or . main.sh&amp;#34;
+fi
+&lt;/code>&lt;/pre>&lt;p>&amp;hellip;which is similar to my final version. Not bad! That said, you would hope
+that, in 2025, this &amp;ldquo;improve this script&amp;rdquo; chain-of-thought prompt reasoning
+would be part of the model out-of-the-box, oneshot. &lt;em>Oh, well.&lt;/em>&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>In this context the &lt;code>./&lt;/code> is optional and was added only for clarity.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>nginx: add basic auth</title><link>https://perrotta.dev/2025/01/nginx-add-basic-auth/</link><pubDate>Tue, 07 Jan 2025 03:28:02 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/nginx-add-basic-auth/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: You want to expose a HTTPS service from your cloud VPS to
 the public Internet. You do not wish to use a VPN (e.g.
 &lt;a href="https://tailscale.com/">tailscale&lt;/a>) to do so – which is a great way to address
 this, but it&amp;rsquo;s out of scope in this particular instance. How to proceed?&lt;/p>
@@ -1940,71 +1996,6 @@ Ginsberg&lt;/a>.&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># part one&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;,&amp;#34;&lt;/span>&lt;span style="color:#f92672">.&lt;/span>join(map(str, stdout)))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> __name__ &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;__main__&amp;#39;&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> main()
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Advent of Code 2024: Day 9</title><link>https://perrotta.dev/2024/12/advent-of-code-2024-day-9/</link><pubDate>Wed, 25 Dec 2024 16:09:53 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/advent-of-code-2024-day-9/</guid><description>&lt;p>Link to &lt;a href="https://adventofcode.com/2024/day/9">Day #9&lt;/a> puzzle.&lt;/p>
-&lt;p>A disk fragmentation problem.&lt;/p>
-&lt;p>It&amp;rsquo;s mostly an ad-hoc problem, there isn&amp;rsquo;t much commentary to make.&lt;/p>
-&lt;p>Part two was quite annoying so I simply skipped it.&lt;/p>
-&lt;p>The full solution:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/usr/bin/env python3&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> sys
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">expand&lt;/span>(disk: list[int]) &lt;span style="color:#f92672">-&amp;gt;&lt;/span> str:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> output &lt;span style="color:#f92672">=&lt;/span> []
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> fill &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">True&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> d &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> n &lt;span style="color:#f92672">in&lt;/span> disk:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> fill:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> output &lt;span style="color:#f92672">+=&lt;/span> [str(s) &lt;span style="color:#66d9ef">for&lt;/span> s &lt;span style="color:#f92672">in&lt;/span> n &lt;span style="color:#f92672">*&lt;/span> [d]]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> d &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">else&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> output &lt;span style="color:#f92672">+=&lt;/span> n &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#e6db74">&amp;#39;.&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> fill &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">not&lt;/span> fill
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> output
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">defrag&lt;/span>(disk: str) &lt;span style="color:#f92672">-&amp;gt;&lt;/span> str:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> p &lt;span style="color:#f92672">=&lt;/span> expand(disk)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> left &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> right &lt;span style="color:#f92672">=&lt;/span> len(p) &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">while&lt;/span> left &lt;span style="color:#f92672">&amp;lt;&lt;/span> right:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> p[left] &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;.&amp;#39;&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> p[left], p[right] &lt;span style="color:#f92672">=&lt;/span> p[right], p[left]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> right &lt;span style="color:#f92672">-=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">while&lt;/span> p[right] &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;.&amp;#39;&lt;/span> &lt;span style="color:#f92672">and&lt;/span> left &lt;span style="color:#f92672">&amp;lt;&lt;/span> right:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> right &lt;span style="color:#f92672">-=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> left &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> p
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">checksum&lt;/span>(disk):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> total &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> i, d &lt;span style="color:#f92672">in&lt;/span> enumerate(disk):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> d &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;.&amp;#39;&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> total &lt;span style="color:#f92672">+=&lt;/span> i &lt;span style="color:#f92672">*&lt;/span> int(d)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> total
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>():
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">with&lt;/span> open(sys&lt;span style="color:#f92672">.&lt;/span>argv[&lt;span style="color:#ae81ff">1&lt;/span>]) &lt;span style="color:#66d9ef">as&lt;/span> input:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> lines &lt;span style="color:#f92672">=&lt;/span> input&lt;span style="color:#f92672">.&lt;/span>read()&lt;span style="color:#f92672">.&lt;/span>splitlines()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> disk &lt;span style="color:#f92672">=&lt;/span> [int(x) &lt;span style="color:#66d9ef">for&lt;/span> x &lt;span style="color:#f92672">in&lt;/span> lines[&lt;span style="color:#ae81ff">0&lt;/span>]]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># part one&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(checksum(defrag(disk)))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> __name__ &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;__main__&amp;#39;&lt;/span>:

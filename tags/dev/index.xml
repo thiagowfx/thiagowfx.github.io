@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 07 Jan 2025 03:28:02 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>nginx: add basic auth</title><link>https://perrotta.dev/2025/01/nginx-add-basic-auth/</link><pubDate>Tue, 07 Jan 2025 03:28:02 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/nginx-add-basic-auth/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: You want to expose a HTTPS service from your cloud VPS to
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 07 Jan 2025 22:08:20 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>bash: distinguish between script invocation versus source</title><link>https://perrotta.dev/2025/01/bash-distinguish-between-script-invocation-versus-source/</link><pubDate>Tue, 07 Jan 2025 22:08:20 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/bash-distinguish-between-script-invocation-versus-source/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>main.sh&lt;/code> bash script that does a bunch of
+variable &lt;code>export&lt;/code>s:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># [...]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export AWS_ACCESS_KEY_ID&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>echo &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$credentials&lt;span style="color:#e6db74">&amp;#34;&lt;/span> | jq -r &lt;span style="color:#e6db74">&amp;#39;.Credentials.AccessKeyId&amp;#39;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export AWS_SECRET_ACCESS_KEY&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>echo &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$credentials&lt;span style="color:#e6db74">&amp;#34;&lt;/span> | jq -r &lt;span style="color:#e6db74">&amp;#39;.Credentials.SecretAccessKey&amp;#39;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export AWS_SESSION_TOKEN&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>echo &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$credentials&lt;span style="color:#e6db74">&amp;#34;&lt;/span> | jq -r &lt;span style="color:#e6db74">&amp;#39;.Credentials.SessionToken&amp;#39;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;we want to source it so that these exported variables become available in the
+current shell context&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ source ./main.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;at the same time, we want to prevent users from invoking it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ./main.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;because, otherwise, the variables wouldn&amp;rsquo;t be exported.&lt;/p>
+&lt;p>How can we distinguish between these two forms in &lt;code>bash&lt;/code>?&lt;/p>
+&lt;p>The following snippet works in this scenario:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">[[&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$0&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>BASH_SOURCE[0]&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#f92672">]]&lt;/span>; &lt;span style="color:#66d9ef">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;error: do not invoke this script directly; instead, run \`source &lt;/span>$0&lt;span style="color:#e6db74">\`&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> exit &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The general scenario is:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">[[&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$0&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>BASH_SOURCE[0]&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#f92672">]]&lt;/span>; &lt;span style="color:#66d9ef">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;The script was invoked with ./main.sh&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;The script was invoked with source main.sh&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="llm-moment">LLM moment&lt;/h2>
+&lt;p>I got it from ChatGPT + personal amends. If you&amp;rsquo;re curious, this is the original
+snippet obtained with the first prompt:&lt;/p>
+&lt;pre tabindex="0">&lt;code>#!/bin/bash
+
+if [[ $0 = &amp;#34;$BASH_SOURCE&amp;#34; ]]; then
+ echo &amp;#34;The script was invoked with ./main.sh&amp;#34;
+else
+ echo &amp;#34;The script was invoked with source main.sh&amp;#34;
+fi
+&lt;/code>&lt;/pre>&lt;p>Out of curiosity, I asked:&lt;/p>
+&lt;blockquote>
+&lt;p>improve this script&lt;/p>
+&lt;/blockquote>
+&lt;p>To which I got:&lt;/p>
+&lt;pre tabindex="0">&lt;code>#!/bin/bash
+
+if [[ &amp;#34;${BASH_SOURCE[0]}&amp;#34; == &amp;#34;${0}&amp;#34; ]]; then
+ echo &amp;#34;The script was invoked with ./main.sh&amp;#34;
+else
+ echo &amp;#34;The script was invoked with source main.sh or . main.sh&amp;#34;
+fi
+&lt;/code>&lt;/pre>&lt;p>&amp;hellip;which is similar to my final version. Not bad! That said, you would hope
+that, in 2025, this &amp;ldquo;improve this script&amp;rdquo; chain-of-thought prompt reasoning
+would be part of the model out-of-the-box, oneshot. &lt;em>Oh, well.&lt;/em>&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>In this context the &lt;code>./&lt;/code> is optional and was added only for clarity.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>nginx: add basic auth</title><link>https://perrotta.dev/2025/01/nginx-add-basic-auth/</link><pubDate>Tue, 07 Jan 2025 03:28:02 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/nginx-add-basic-auth/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: You want to expose a HTTPS service from your cloud VPS to
 the public Internet. You do not wish to use a VPN (e.g.
 &lt;a href="https://tailscale.com/">tailscale&lt;/a>) to do so – which is a great way to address
 this, but it&amp;rsquo;s out of scope in this particular instance. How to proceed?&lt;/p>
@@ -2270,43 +2326,4 @@ unless I intentionally override it with &lt;code>--no-force-with-lease&lt;/code>
 &lt;p>There currently is no way to configure git to always use force-with-lease
 instead of force. As such the next best available option is, as so often, to
 create an alias which serves this purpose.&lt;/p>
-&lt;/blockquote></description></item><item><title>pre-commit: create hooks for unsupported tools</title><link>https://perrotta.dev/2024/12/pre-commit-create-hooks-for-unsupported-tools/</link><pubDate>Tue, 17 Dec 2024 22:46:41 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/pre-commit-create-hooks-for-unsupported-tools/</guid><description>&lt;p>When using &lt;a href="https://pre-commit.com/">pre-commit.com&lt;/a>, in an ideal world, every
-formatter / linter / code analyzer would have a &lt;code>.pre-commit-config.yaml&lt;/code> file
-in its repository root.&lt;/p>
-&lt;p>In the real world, that&amp;rsquo;s not always the case.&lt;/p>
-&lt;p>A recent example: &lt;a href="https://github.com/cloudflare/pint">cloudflare/pint&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>Prometheus rule linter/validator&lt;/p>
-&lt;/blockquote>
-&lt;p>It is a golang binary that lints &lt;a href="https://prometheus.io/">prometheus&lt;/a> rules.&lt;/p>
-&lt;p>Can we bridge the gap?&lt;/p>
-&lt;p>The end goal is the ability to run &lt;code>pre-commit run --all-files pint&lt;/code> in our git
-repository.&lt;/p>
-&lt;p>For that, we&amp;rsquo;ll need to define a local / custom hook in our
-&lt;code>~/.pre-commit-config.yaml&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">repos&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">repo&lt;/span>: &lt;span style="color:#ae81ff">local&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">hooks&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">id&lt;/span>: &lt;span style="color:#ae81ff">pint&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Validate prometheus rules with pint&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">language&lt;/span>: &lt;span style="color:#ae81ff">golang&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">additional_dependencies&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">github.com/cloudflare/pint/cmd/pint@v0.69.1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">entry&lt;/span>: &lt;span style="color:#ae81ff">pint --offline lint&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">types&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">yaml&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">files&lt;/span>: &lt;span style="color:#ae81ff">^helm/clustermon-alerts/rules/&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>That simply works™. How did I get there? Starting with the references:&lt;/p>
-&lt;ol>
-&lt;li>&lt;a href="https://adamj.eu/tech/2023/02/09/pre-commit-hooks-unsupported-tools/">https://adamj.eu/tech/2023/02/09/pre-commit-hooks-unsupported-tools/&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/">https://perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://stackoverflow.com/questions/62974985/go-module-latest-found-but-does-not-contain-package">https://stackoverflow.com/questions/62974985/go-module-latest-found-but-does-not-contain-package&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://pkg.go.dev/github.com/cloudflare/pint@v0.69.1/cmd/pint">https://pkg.go.dev/github.com/cloudflare/pint@v0.69.1/cmd/pint&lt;/a>&lt;/li>
-&lt;/ol>
-&lt;p>The key part is &lt;code>language: golang&lt;/code> + &lt;code>additional_dependencies&lt;/code>.&lt;/p>
-&lt;p>Specifying &lt;code>additional_dependencies&lt;/code> is a bit tricky. Initially, I did:&lt;/p>
-&lt;pre tabindex="0">&lt;code>github.com/cloudflare/pint@v0.69.1
-&lt;/code>&lt;/pre>&lt;p>&amp;hellip;but that yields nothing. In fact:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% go run github.com/cloudflare/pint@v0.69.1
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>go: github.com/cloudflare/pint@v0.69.1: module github.com/cloudflare/pint@v0.69.1 found, but does not contain package github.com/cloudflare/pint
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>We must always specify the module that contains the &lt;code>main&lt;/code> function with &lt;code>go run&lt;/code>, and that is &lt;code>cmd/pint&lt;/code>.&lt;/p></description></item></channel></rss>
+&lt;/blockquote></description></item></channel></rss>
