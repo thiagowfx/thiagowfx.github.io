@@ -55,3 +55,23 @@ https://github.com/jmlrt/check-yamlschema:
 >
 > Parse multi-documents YAML files, look for inline schema comments, and
 > validate the documents according to their schema.
+
+The ['any'](https://json.schemastore.org/any.json) schema[^1] can be handy as an
+opt-out mechanism:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://json.schemastore.org/any.json",
+  "anyOf": [
+    { "type": "object" },
+    { "type": "array" },
+    { "type": "string" },
+    { "type": "number" },
+    { "type": "boolean" },
+    { "type": "null" }
+  ]
+}
+```
+
+[^1]: [Submitted](https://github.com/SchemaStore/schemastore/pull/3885) by yours truly.
