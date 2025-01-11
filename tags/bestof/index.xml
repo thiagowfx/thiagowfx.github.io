@@ -1,6 +1,74 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bestof on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/bestof/</link><description>Recent content in Bestof on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 01 Jan 2025 17:22:05 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>git: configure identities for work</title><link>https://perrotta.dev/2025/01/git-configure-identities-for-work/</link><pubDate>Wed, 01 Jan 2025 17:22:05 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/git-configure-identities-for-work/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given two sets of git configurations, one for personal
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 11 Jan 2025 01:48:44 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>Cloudflare: Email Workers</title><link>https://perrotta.dev/2025/01/cloudflare-email-workers/</link><pubDate>Sat, 11 Jan 2025 01:48:44 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/cloudflare-email-workers/</guid><description>&lt;p>My journey into the
+&lt;a href="https://en.wikipedia.org/wiki/Serverless_computing">serverless&lt;/a> world hereby
+starts.&lt;/p>
+&lt;p>And I am very happy to have chosen &lt;a href="https://www.cloudflare.com/">the best™
+provider&lt;/a> in the universe to delight me in this
+sweet learning curve. ✨&lt;/p>
+&lt;p>&lt;strong>Problem statement&lt;/strong>: I have my own domain, you have probably noticed that.&lt;/p>
+&lt;p>Given a specific hypothetical subdomain &lt;code>neetflex@&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> within my own domain, make
+it an email recipient that automatically forwards to both &lt;code>user1@example.com&lt;/code>
+and &lt;code>user2@example.com&lt;/code>.&lt;/p>
+&lt;p>The first attempt involves setting up an &lt;a href="https://developers.cloudflare.com/email-routing/">Email
+Routing&lt;/a> rule. The issue is
+that you can only do 1:1 mappings: &lt;code>neetflex@&lt;/code> -&amp;gt; &lt;code>user1@example.com&lt;/code>
+would work, but it is impossible to add &lt;code>user2@example.com&lt;/code> for the same
+recipient.&lt;/p>
+&lt;p>&lt;strong>Workaround&lt;/strong>: &lt;a href="https://developers.cloudflare.com/email-routing/email-workers/">Email Workers&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>With Email Workers you can leverage the power of Cloudflare Workers to
+implement any logic you need to process your emails and create complex rules.
+These rules determine what happens when you receive an email.&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;em>Aside&lt;/em>: The platform is such a delight to use, I am deeply enchanted. Their
+documentation is absolutely superb. I am getting seduced and couldn&amp;rsquo;t agree more
+with &lt;a href="https://danielmiessler.com/blog/google-has-opened-the-door-to-cloudflare">Daniel
+Miessler&lt;/a>.&lt;/p>
+&lt;p>I proceed to create an Email Worker with the following code&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-ts" data-lang="ts">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">export&lt;/span> &lt;span style="color:#66d9ef">default&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">async&lt;/span> &lt;span style="color:#a6e22e">email&lt;/span>(&lt;span style="color:#a6e22e">message&lt;/span>, &lt;span style="color:#a6e22e">env&lt;/span>, &lt;span style="color:#a6e22e">ctx&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">message&lt;/span>.&lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#f92672">!==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;info@account.neetflex.com&amp;#34;&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">address&lt;/span> &lt;span style="color:#66d9ef">of&lt;/span> [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// keep-sorted start
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#e6db74">&amp;#34;user1@example.com&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;user2@example.com&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// keep-sorted end
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> ]) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#a6e22e">message&lt;/span>.&lt;span style="color:#a6e22e">forward&lt;/span>(&lt;span style="color:#a6e22e">address&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;named &lt;code>neetflex-magic-link&lt;/code>.&lt;/p>
+&lt;p>There&amp;rsquo;s an integrated testing tool that makes it a breeze to ensure my worker
+logic works as intended.&lt;/p>
+&lt;p>Once I am satisfied with the results, I deploy the email worker.&lt;/p>
+&lt;p>&lt;strong>Final step&lt;/strong>: create an email route rule from &lt;code>neetflex@{domain}&lt;/code> to the
+aforementioned email worker. Done, profit!$!&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>.&lt;/p>
+&lt;p>At the time of this post, you can
+&lt;a href="https://developers.cloudflare.com/workers/languages/">choose&lt;/a> among JavaScript,
+TypeScript, Python and Rust to code your worker in.&lt;/p>
+&lt;p>Original idea:
+&lt;a href="https://community.cloudflare.com/t/routing-an-email-to-more-than-one-address-from-the-same-user/437169/2">source&lt;/a>
+from Cloudflare Community.&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>Don&amp;rsquo;t judge me if I am a fan of &lt;a href="https://neetcode.io/">neetcode&lt;/a>&amp;rsquo;s sense
+of humour.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>I miss(ed) programming in TypeScript! (even if only such a small snippet).&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:3">
+&lt;p>&lt;em>Literally&lt;/em>.&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>git: configure identities for work</title><link>https://perrotta.dev/2025/01/git-configure-identities-for-work/</link><pubDate>Wed, 01 Jan 2025 17:22:05 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/git-configure-identities-for-work/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given two sets of git configurations, one for personal
 projects and one for work, how can you effectively separate them?&lt;/p>
 &lt;h2 id="workflow">Workflow&lt;/h2>
 &lt;p>I like the following workflow.&lt;/p>
@@ -5005,98 +5073,4 @@ linking to a
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>endif()&lt;span style="color:#960050;background-color:#1e0010">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>Usage&lt;/strong>: Like any other &lt;a href="https://cmake.org/cmake/help/book/mastering-cmake/chapter/Modules.html">cmake find
 module&lt;/a>,
-with &lt;code>find_package&lt;/code>.&lt;/p></description></item><item><title>Keychron K2: Linux Setup</title><link>https://perrotta.dev/2021/12/keychron-k2-linux-setup/</link><pubDate>Sat, 11 Dec 2021 20:59:21 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2021/12/keychron-k2-linux-setup/</guid><description>&lt;p>I recently purchased a &lt;a href="https://www.keychron.com/products/keychron-k2-wireless-mechanical-keyboard">Keychron K2&lt;/a> mechanical keyboard. It is a 75% keyboard that has bluetooth. This article describes some quality-of-life improvements to use it with a Linux system.&lt;/p>
-&lt;p>&lt;strong>Note&lt;/strong>: Tested on Arch Linux only.&lt;/p>
-&lt;h2 id="kernel-module">Kernel Module&lt;/h2>
-&lt;p>Keychron keyboards are recognized out-of-the-box as Apple keyboards on Linux systems.&lt;/p>
-&lt;p>The corresponding kernel module is &lt;code>hid_apple&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ modinfo hid_apple
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Ensure the module is loaded within the initram for setups that use LUKS:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ grep MODULES -B &lt;span style="color:#ae81ff">1&lt;/span> /etc/mkinitcpio.conf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># hid_apple for Keychron K2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>MODULES&lt;span style="color:#f92672">=(&lt;/span>hid_apple&lt;span style="color:#f92672">)&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This works for wired mode but alas it&amp;rsquo;s not possible to use the keyboard wirelessly to type in your LUKS password unless extra steps are taken:&lt;/p>
-&lt;ul>
-&lt;li>Install the &lt;a href="https://aur.archlinux.org/packages/mkinitcpio-bluetooth/">&lt;code>mkinitcpio-bluetooth&lt;/code>&lt;/a> package, currently available in the AUR.&lt;/li>
-&lt;li>Add the &lt;code>bluetooth&lt;/code> hook to your mkinitcpio, ensuring it comes before &lt;code>encrypt&lt;/code>.&lt;/li>
-&lt;/ul>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ grep HOOKS -B &lt;span style="color:#ae81ff">1&lt;/span> /etc/mkinitcpio.conf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># bluetooth for Keychron K2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>HOOKS&lt;span style="color:#f92672">=(&lt;/span>base udev autodetect keyboard bluetooth modconf block encrypt filesystems resume fsck&lt;span style="color:#f92672">)&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
-&lt;li>Regenerate it: &lt;code>% mkinitcpio -P&lt;/code>.&lt;/li>
-&lt;/ul>
-&lt;h2 id="bluetooth">Bluetooth&lt;/h2>
-&lt;p>There are 3 bluetooth slots, corresponding to the &lt;code>1&lt;/code>, &lt;code>2&lt;/code> and &lt;code>3&lt;/code> keys.&lt;/p>
-&lt;p>To put the keyboard in pairing mode, hold &lt;code>Fn + &amp;lt;n&amp;gt;&lt;/code> for a few seconds. The key will persistently blink.
-From the computer, connect to the device named &lt;code>Keychron K2&lt;/code>. Trust the keyboard.&lt;/p>
-&lt;p>Switch slots by pressing &lt;code>Fn + &amp;lt;n&amp;gt;&lt;/code> once. There is some light feedback to indicate the switch.&lt;/p>
-&lt;p>Bluetooth works well out-of-the-box, but the keyboard automatically sleeps after 10 minutes of inactivity to save energy.
-While it is possible to disable this behavior, I find it welcome. It is a hassle though because the bluetooth device refuses to reconnect once the keyboard is awaken. The naive solution is to pair it again from scratch, but a better user experience is to change bluetooth settings:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ cat /etc/bluetooth/main.conf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>General&lt;span style="color:#f92672">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>FastConnectable&lt;span style="color:#f92672">=&lt;/span>true
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>Policy&lt;span style="color:#f92672">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>UserspaceHID&lt;span style="color:#f92672">=&lt;/span>true
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And then restart bluetooth to apply them:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% systemctl restart bluetooth
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This way the keyboard always automatically reconnects to the computer.&lt;/p>
-&lt;p>I also find it convenient to leave bluetooth enabled on startup:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Enable the bluetooth daemon.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% systemctl enable bluetooth
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Enable the bluetooth adapter.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ cat /etc/bluetooth/main.conf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>Policy&lt;span style="color:#f92672">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>AutoEnable&lt;span style="color:#f92672">=&lt;/span>true
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Finally, another tweak is to make the bluetooth adapter stay awake otherwise it may periodically disconnect:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ cat /etc/modprobe.d/btusb.conf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Turn off bluetooth autosuspend.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>options btusb enable_autosuspend&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="function-keys-and-multimedia-keys">Function Keys and Multimedia Keys&lt;/h2>
-&lt;p>The default &lt;code>fnmode&lt;/code> is set to multimedia keys:&lt;/p>
-&lt;pre tabindex="0">&lt;code>0 = disabled
-1 = normally media keys, switchable to function keys by holding Fn key (Default)
-2 = normally function keys, switchable to media keys by holding Fn key
-&lt;/code>&lt;/pre>&lt;p>I prefer to set it to function keys. One of the reasons for that is to make
-switching TTYs (Ctrl+Alt+Fn) possible. For some reason, Fn doesn&amp;rsquo;t seem to work
-in TTYs.&lt;/p>
-&lt;p>Change it in the current session only:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% echo &lt;span style="color:#ae81ff">2&lt;/span> &amp;gt;&amp;gt; /sys/module/hid_apple/parameters/fnmode
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you do not have a root shell, use &lt;code>sudo&lt;/code> / &lt;code>doas&lt;/code> + &lt;code>tee&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% echo &lt;span style="color:#ae81ff">2&lt;/span> | sudo tee /sys/module/hid_apple/parameters/fnmode
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Change it permanently:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ cat /etc/modprobe.d/hid_apple.conf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Use function keys by default. Press Fn to use multimedia keys.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>options hid_apple fnmode&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">2&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And then reload the kernel module:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% modprobe -r hid_apple &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> modprobe hid_apple
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="insert-key">Insert Key&lt;/h2>
-&lt;p>By default there is no native &lt;code>Insert&lt;/code> key. Use &lt;code>Fn + Del&lt;/code> to trigger &lt;code>Insert&lt;/code>. For example, &lt;code>Fn + Shift + Del&lt;/code> works like &lt;code>Shift + Insert&lt;/code> in X11, yielding paste selection.&lt;/p>
-&lt;h2 id="battery">Battery&lt;/h2>
-&lt;p>Check the battery level programmatically:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% pacman -S upower
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ upower --dump | grep -i keyboard -A &lt;span style="color:#ae81ff">7&lt;/span> | grep percentage
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> percentage: 71%
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This only works in bluetooth mode (not in wired mode).&lt;/p>
-&lt;h2 id="shortcuts">Shortcuts&lt;/h2>
-&lt;ul>
-&lt;li>Hold &lt;code>Fn + [1 | 2 | 3]&lt;/code> for a few seconds: Put bluetooth slot in pairing mode. The corresponding LED will persistently blink until pairing is complete.&lt;/li>
-&lt;li>&lt;code>Fn + [1 | 2 | 3]&lt;/code>: Toggle bluetooth slot. The corresponding LED will briefly blink.&lt;/li>
-&lt;li>&lt;code>Fn + b&lt;/code>: Check battery level visually. Green is more than 70%, blue is more than 30%, otherwise it will flash.&lt;/li>
-&lt;li>&lt;code>Fn + Light&lt;/code>: Toggle keyboard lights on/off.&lt;/li>
-&lt;li>&lt;code>Fn + [Left | Right]&lt;/code>: Browse keyboard light color schemes.&lt;/li>
-&lt;/ul>
-&lt;h2 id="references">References&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a href="https://wiki.archlinux.org/title/Apple_Keyboard">https://wiki.archlinux.org/title/Apple_Keyboard&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://github.com/kurgol/keychron">https://github.com/kurgol/keychron&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://gist.github.com/andrebrait/961cefe730f4a2c41f57911e6195e444">https://gist.github.com/andrebrait/961cefe730f4a2c41f57911e6195e444&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://mikeshade.com/posts/keychron-linux-function-keys/">https://mikeshade.com/posts/keychron-linux-function-keys/&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://github.com/kurgol/keychron/blob/master/k2.md">https://github.com/kurgol/keychron/blob/master/k2.md&lt;/a>&lt;/li>
-&lt;/ul></description></item></channel></rss>
+with &lt;code>find_package&lt;/code>.&lt;/p></description></item></channel></rss>

@@ -1,6 +1,74 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 11 Jan 2025 00:43:44 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>.gitkeep</title><link>https://perrotta.dev/2025/01/.gitkeep/</link><pubDate>Sat, 11 Jan 2025 00:43:44 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/.gitkeep/</guid><description>&lt;p>I&amp;rsquo;m not sure if this is well-known, so here&amp;rsquo;s a short anecdotal blog post:&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 11 Jan 2025 01:48:44 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Cloudflare: Email Workers</title><link>https://perrotta.dev/2025/01/cloudflare-email-workers/</link><pubDate>Sat, 11 Jan 2025 01:48:44 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/cloudflare-email-workers/</guid><description>&lt;p>My journey into the
+&lt;a href="https://en.wikipedia.org/wiki/Serverless_computing">serverless&lt;/a> world hereby
+starts.&lt;/p>
+&lt;p>And I am very happy to have chosen &lt;a href="https://www.cloudflare.com/">the best™
+provider&lt;/a> in the universe to delight me in this
+sweet learning curve. ✨&lt;/p>
+&lt;p>&lt;strong>Problem statement&lt;/strong>: I have my own domain, you have probably noticed that.&lt;/p>
+&lt;p>Given a specific hypothetical subdomain &lt;code>neetflex@&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> within my own domain, make
+it an email recipient that automatically forwards to both &lt;code>user1@example.com&lt;/code>
+and &lt;code>user2@example.com&lt;/code>.&lt;/p>
+&lt;p>The first attempt involves setting up an &lt;a href="https://developers.cloudflare.com/email-routing/">Email
+Routing&lt;/a> rule. The issue is
+that you can only do 1:1 mappings: &lt;code>neetflex@&lt;/code> -&amp;gt; &lt;code>user1@example.com&lt;/code>
+would work, but it is impossible to add &lt;code>user2@example.com&lt;/code> for the same
+recipient.&lt;/p>
+&lt;p>&lt;strong>Workaround&lt;/strong>: &lt;a href="https://developers.cloudflare.com/email-routing/email-workers/">Email Workers&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>With Email Workers you can leverage the power of Cloudflare Workers to
+implement any logic you need to process your emails and create complex rules.
+These rules determine what happens when you receive an email.&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;em>Aside&lt;/em>: The platform is such a delight to use, I am deeply enchanted. Their
+documentation is absolutely superb. I am getting seduced and couldn&amp;rsquo;t agree more
+with &lt;a href="https://danielmiessler.com/blog/google-has-opened-the-door-to-cloudflare">Daniel
+Miessler&lt;/a>.&lt;/p>
+&lt;p>I proceed to create an Email Worker with the following code&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-ts" data-lang="ts">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">export&lt;/span> &lt;span style="color:#66d9ef">default&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">async&lt;/span> &lt;span style="color:#a6e22e">email&lt;/span>(&lt;span style="color:#a6e22e">message&lt;/span>, &lt;span style="color:#a6e22e">env&lt;/span>, &lt;span style="color:#a6e22e">ctx&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">message&lt;/span>.&lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#f92672">!==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;info@account.neetflex.com&amp;#34;&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">address&lt;/span> &lt;span style="color:#66d9ef">of&lt;/span> [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// keep-sorted start
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#e6db74">&amp;#34;user1@example.com&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;user2@example.com&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// keep-sorted end
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> ]) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#a6e22e">message&lt;/span>.&lt;span style="color:#a6e22e">forward&lt;/span>(&lt;span style="color:#a6e22e">address&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;named &lt;code>neetflex-magic-link&lt;/code>.&lt;/p>
+&lt;p>There&amp;rsquo;s an integrated testing tool that makes it a breeze to ensure my worker
+logic works as intended.&lt;/p>
+&lt;p>Once I am satisfied with the results, I deploy the email worker.&lt;/p>
+&lt;p>&lt;strong>Final step&lt;/strong>: create an email route rule from &lt;code>neetflex@{domain}&lt;/code> to the
+aforementioned email worker. Done, profit!$!&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>.&lt;/p>
+&lt;p>At the time of this post, you can
+&lt;a href="https://developers.cloudflare.com/workers/languages/">choose&lt;/a> among JavaScript,
+TypeScript, Python and Rust to code your worker in.&lt;/p>
+&lt;p>Original idea:
+&lt;a href="https://community.cloudflare.com/t/routing-an-email-to-more-than-one-address-from-the-same-user/437169/2">source&lt;/a>
+from Cloudflare Community.&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>Don&amp;rsquo;t judge me if I am a fan of &lt;a href="https://neetcode.io/">neetcode&lt;/a>&amp;rsquo;s sense
+of humour.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>I miss(ed) programming in TypeScript! (even if only such a small snippet).&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:3">
+&lt;p>&lt;em>Literally&lt;/em>.&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>.gitkeep</title><link>https://perrotta.dev/2025/01/.gitkeep/</link><pubDate>Sat, 11 Jan 2025 00:43:44 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/.gitkeep/</guid><description>&lt;p>I&amp;rsquo;m not sure if this is well-known, so here&amp;rsquo;s a short anecdotal blog post:&lt;/p>
 &lt;p>&lt;code>git&lt;/code> cannot track empty directories.&lt;/p>
 &lt;p>I wanted to add a &lt;code>drafts/&lt;/code> folder to my blog repository, alongside a
 &lt;code>.gitignore&lt;/code> containing &lt;code>drafts/*.md&lt;/code> so that my staging posts wouldn&amp;rsquo;t be
@@ -2030,27 +2098,6 @@ post prompted me to try out Commit Mono for a bit.&lt;/p>
 &lt;li id="fn:1">
 &lt;p>These days I use &amp;ldquo;IBM Plex Mono&amp;rdquo; on VSCode. &amp;ldquo;JetBrains Mono&amp;rdquo; is also a
 solid choice.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item><item><title>Switching from Google to ChatGPT search</title><link>https://perrotta.dev/2024/12/switching-from-google-to-chatgpt-search/</link><pubDate>Tue, 24 Dec 2024 21:14:04 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/switching-from-google-to-chatgpt-search/</guid><description>&lt;p>Following the footsteps of &lt;a href="https://www.linkedin.com/posts/danielmiessler_ive-not-used-google-to-search-since-searchgpt-activity-7258159059944538113-dxZG">Daniel
-Miessler&lt;/a>,
-I have changed my default search engine in Chrome from Google to ChatGPT
-Search&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>,
-by installing their official &lt;a href="https://chromewebstore.google.com/detail/chatgpt-search/ejcfepkfckglbgocfkanmcdngdijcgld">chrome
-extension&lt;/a>.&lt;/p>
-&lt;p>This is effectively possible because, after
-&lt;a href="https://openai.com/index/introducing-chatgpt-search/">launching&lt;/a>
-it for a few months, this month they made it free for everyone.&lt;/p>
-&lt;p>So far the results are impressive and almost always what I am looking for.&lt;/p>
-&lt;p>When they are not, I can easily fall back to Google by starting my search query
-in Chrome with &amp;lsquo;g&amp;rsquo;, or to DuckDuckGo with &amp;rsquo;d&amp;rsquo;.&lt;/p>
-&lt;p>&lt;strong>Edit(2025-01-07)&lt;/strong>:
-&lt;a href="https://birchtree.me/blog/openai-is-early-googling-late-stage-google/">OpenAI is early googling late-stage Google&lt;/a>. This.&lt;/p>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>They should &lt;em>really&lt;/em> market it as &lt;em>SearchGPT&lt;/em>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
 &lt;/div></description></item></channel></rss>
