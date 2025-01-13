@@ -14,7 +14,7 @@ them consistent and uniform?
 In this context, `cp -r` or `rsync` are out of scope. We do not want to clone
 one directory into another: that would have been trivial.
 
-# Diffoscope
+## Diffoscope
 
 Main tool: [Diffoscope](https://diffoscope.org/):
 

@@ -18,15 +18,15 @@ A small collection of DevOps / SRE career resources.
 - [DevOps roadmap](https://roadmap.sh/devops) (interactive)
 - [Trilha DevOps](https://trilha.info/) (same, in Portuguese)
 
-# Resources
+## Resources
 
 - [DORA](https://dora.dev/) by Google
 
-# Books
+## Books
 
 - [SRE Books](https://sre.google/books/) by Google
 
-## Employee handbooks
+### Employee handbooks
 
 While we're here, some handy employee handbooks:
 
