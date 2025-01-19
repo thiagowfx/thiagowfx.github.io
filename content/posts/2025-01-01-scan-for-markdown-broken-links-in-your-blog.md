@@ -53,6 +53,6 @@ git repository[^1].
 It's not bullet-proof. For example, sites behind Cloudflare are reported as
 broken, even though they may not be
 ([example](https://www.secretflying.com/posts/category/cities-countries/germany/)).
-Sites that blocks bots / crawlers may also be flagged as false positives.
+Sites that block bots / crawlers may also be flagged as false positives.
 
 I added it to the list of pre-commit hooks for this site.

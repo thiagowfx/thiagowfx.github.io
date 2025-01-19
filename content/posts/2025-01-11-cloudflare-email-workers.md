@@ -18,9 +18,9 @@ sweet learning curve. ✨
 
 **Problem statement**: I have my own domain, you have probably noticed that.
 
-Given a specific hypothetical subdomain `neetflex@`[^1] within my own domain, make
-it an email recipient that automatically forwards to both `user1@example.com`
-and `user2@example.com`.
+Given a specific hypothetical email address `neetflex@`[^1] within my own
+domain, make it an email recipient that automatically forwards to both
+`user1@example.com` and `user2@example.com`.
 
 The first attempt involves setting up an [Email
 Routing](https://developers.cloudflare.com/email-routing/) rule. The issue is
