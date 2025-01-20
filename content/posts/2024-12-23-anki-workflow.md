@@ -43,3 +43,5 @@ learning.
 - https://web.archive.org/web/20210203165239/https://massimmersionapproach.com/table-of-contents/anki/low-key-anki/intro
 - https://tatsumoto.neocities.org/blog/setting-up-anki.html
 - https://controlaltbackspace.org/precise/
+- https://digitalwords.net/anki/low-key/
+- https://michaelnotebook.com/mmsw/
