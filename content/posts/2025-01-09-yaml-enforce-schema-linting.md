@@ -2,6 +2,7 @@
 title: "YAML: enforce schema linting"
 date: 2025-01-09T13:22:32-03:00
 tags:
+  - bestof
   - dev
 ---
 

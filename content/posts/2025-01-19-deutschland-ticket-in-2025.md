@@ -2,6 +2,7 @@
 title: "Deutschland Ticket in 2025"
 date: 2025-01-19T18:53:57-03:00
 tags:
+  - bestof
   - serenity
 aliases:
   - /deutschland-ticket
