@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/posts/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 05 Feb 2025 19:19:20 +0100</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Resetting an AirTag</title><link>https://perrotta.dev/2025/02/resetting-an-airtag/</link><pubDate>Wed, 05 Feb 2025 19:19:20 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/02/resetting-an-airtag/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: somehow I messed up my AirTag. It wasn&amp;rsquo;t being updated
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 07 Feb 2025 13:58:36 +0100</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>kubernetes: create a pod in pending state</title><link>https://perrotta.dev/2025/02/kubernetes-create-a-pod-in-pending-state/</link><pubDate>Fri, 07 Feb 2025 13:58:36 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/02/kubernetes-create-a-pod-in-pending-state/</guid><description>&lt;p>We are making a non-trivial change to our cluster monitoring architecture, and I
+needed to verify the new rollout is properly working in our infratesting
+environment.&lt;/p>
+&lt;p>A simple way to do so is to create a pod that never leaves the &amp;ldquo;Pending&amp;rdquo; state,
+because we have an alert (a prometheus rule) that fires whenever a pod is in
+that stack for too long (15 minutes is our threshold in most cases).&lt;/p>
+&lt;p>Use the following manifest:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">v1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Pod&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">pending-pod&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">affinity&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">podAffinity&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">requiredDuringSchedulingIgnoredDuringExecution&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">labelSelector&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">matchExpressions&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">key&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;non/existent&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">operator&lt;/span>: &lt;span style="color:#ae81ff">In&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">values&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">topologyKey&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;kubernetes.io/hostname&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">containers&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">busybox&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">busybox&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">command&lt;/span>: [&lt;span style="color:#e6db74">&amp;#39;sh&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;-c&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;echo Hello, Kubernetes! &amp;amp;&amp;amp; sleep 3600&amp;#39;&lt;/span>]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;it creates a &lt;code>pending-pod&lt;/code> in the &lt;code>default&lt;/code> namespace that should never be
+scheduled, due to its strict pod affinity rules.&lt;/p>
+&lt;p>Save it as &lt;code>pending-pod.yaml&lt;/code>, deploy it with &lt;code>kubectl apply -f pending-pod.yaml&lt;/code>.&lt;/p>
+&lt;pre tabindex="0">&lt;code>$ kubectl get pod pending-pod -w
+NAME READY STATUS RESTARTS AGE
+pending-pod 0/1 Pending 0 21s
+ pending-pod 0/1 Pending 0 65s
+pending-pod 0/1 Pending 0 74s
+pending-pod 0/1 Pending 0 2m6s
+pending-pod 0/1 Pending 0 3m8s
+pending-pod 0/1 Pending 0 4m8s
+pending-pod 0/1 Pending 0 4m18s
+&lt;/code>&lt;/pre>&lt;p>At some point the alert fires, as expected.
+And now we can roll out these changes to prod!&lt;/p></description></item><item><title>Resetting an AirTag</title><link>https://perrotta.dev/2025/02/resetting-an-airtag/</link><pubDate>Wed, 05 Feb 2025 19:19:20 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/02/resetting-an-airtag/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: somehow I messed up my AirTag. It wasn&amp;rsquo;t being updated
 any longer. &amp;ldquo;Last seen NN days ago&amp;rdquo;.&lt;/p>
 &lt;p>So I deleted it from my Apple account. It&amp;rsquo;s the
 &lt;a href="https://www.youtube.com/watch?v=nn2FB1P_Mn8">universal&lt;/a> way to fix issues,
@@ -1355,47 +1394,4 @@ with &lt;em>videogam&lt;a href="https://store.steampowered.com/app/383870/Firewa
 the impact is comparable, if not even more.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>git: configure identities for work</title><link>https://perrotta.dev/2025/01/git-configure-identities-for-work/</link><pubDate>Wed, 01 Jan 2025 17:22:05 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/git-configure-identities-for-work/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given two sets of git configurations, one for personal
-projects and one for work, how can you effectively separate them?&lt;/p>
-&lt;h2 id="workflow">Workflow&lt;/h2>
-&lt;p>I like the following workflow.&lt;/p>
-&lt;p>First, create your usual &lt;code>~/.gitconfig&lt;/code>. It will be used for your personal
-project:&lt;/p>
-&lt;pre tabindex="0">&lt;code class="language-gitconfig" data-lang="gitconfig">[user]
- name = Thiago Perrotta
- email = {personal-email}
-
-[...]
-
-# Import corp configs if any.
-[include]
- path = .gitconfig_corp
-&lt;/code>&lt;/pre>&lt;p>This config should live in your personal laptop and in your work laptop.&lt;/p>
-&lt;p>Normally I include it via my &lt;a href="https://github.com/thiagowfx/.dotfiles">.dotfiles&lt;/a>
-(git repo) i.e. with a simple &lt;code>stow git&lt;/code> away.&lt;/p>
-&lt;p>And we are done with our personal laptop.&lt;/p>
-&lt;p>Now, for the work laptop, create &lt;code>~/.gitconfig_corp&lt;/code>:&lt;/p>
-&lt;pre tabindex="0">&lt;code class="language-gitconfig" data-lang="gitconfig">[includeIf &amp;#34;gitdir:~/Orgname/**&amp;#34;]
- path = .gitconfig_orgname
-
-[includeIf &amp;#34;hasconfig:remote.*.url:git@github.com:orgname/**&amp;#34;]
- path = .gitconfig_orgname
-
-# vim: ft=gitconfig
-&lt;/code>&lt;/pre>&lt;p>The corp config is conditionally included / used in the following scenarios:&lt;/p>
-&lt;ol>
-&lt;li>whenever I am working on a git repository that lives within &lt;code>~/Orgname&lt;/code>&lt;/li>
-&lt;li>whenever the git remote of the repository I am working on is a git repository
-under the organization &lt;code>orgname&lt;/code>&lt;/li>
-&lt;/ol>
-&lt;p>This config is usually included via my corp dotfiles (named &lt;code>.dotfiles_corp&lt;/code> in
-&lt;code>git&lt;/code>), which is a separate git repository. There&amp;rsquo;s no fiddling with git
-submodules: both git repositories are cloned and managed independently.&lt;/p>
-&lt;p>And now, last but not least, is the actual git config for work:&lt;/p>
-&lt;pre tabindex="0">&lt;code class="language-gitconfig" data-lang="gitconfig">% cat ~/.gitconfig_orgname
-[user]
- name = Thiago Perrotta
- email = {work-email}
-
-# vim: ft=gitconfig
-&lt;/code>&lt;/pre>&lt;p>Inspired by &lt;a href="https://www.benji.dog/articles/git-config/">benji.dog&lt;/a>.&lt;/p></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>

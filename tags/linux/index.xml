@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/linux/</link><description>Recent content in Linux on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 30 Jan 2025 18:18:25 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>SmartTube</title><link>https://perrotta.dev/2025/01/smarttube/</link><pubDate>Thu, 30 Jan 2025 18:18:25 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/smarttube/</guid><description>&lt;p>&lt;a href="https://github.com/yuliskov/SmartTube">https://github.com/yuliskov/SmartTube&lt;/a>:&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 07 Feb 2025 13:58:36 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>kubernetes: create a pod in pending state</title><link>https://perrotta.dev/2025/02/kubernetes-create-a-pod-in-pending-state/</link><pubDate>Fri, 07 Feb 2025 13:58:36 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/02/kubernetes-create-a-pod-in-pending-state/</guid><description>&lt;p>We are making a non-trivial change to our cluster monitoring architecture, and I
+needed to verify the new rollout is properly working in our infratesting
+environment.&lt;/p>
+&lt;p>A simple way to do so is to create a pod that never leaves the &amp;ldquo;Pending&amp;rdquo; state,
+because we have an alert (a prometheus rule) that fires whenever a pod is in
+that stack for too long (15 minutes is our threshold in most cases).&lt;/p>
+&lt;p>Use the following manifest:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">v1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Pod&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">pending-pod&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">spec&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">affinity&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">podAffinity&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">requiredDuringSchedulingIgnoredDuringExecution&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">labelSelector&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">matchExpressions&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">key&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;non/existent&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">operator&lt;/span>: &lt;span style="color:#ae81ff">In&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">values&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">topologyKey&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;kubernetes.io/hostname&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">containers&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">busybox&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">busybox&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">command&lt;/span>: [&lt;span style="color:#e6db74">&amp;#39;sh&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;-c&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;echo Hello, Kubernetes! &amp;amp;&amp;amp; sleep 3600&amp;#39;&lt;/span>]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;it creates a &lt;code>pending-pod&lt;/code> in the &lt;code>default&lt;/code> namespace that should never be
+scheduled, due to its strict pod affinity rules.&lt;/p>
+&lt;p>Save it as &lt;code>pending-pod.yaml&lt;/code>, deploy it with &lt;code>kubectl apply -f pending-pod.yaml&lt;/code>.&lt;/p>
+&lt;pre tabindex="0">&lt;code>$ kubectl get pod pending-pod -w
+NAME READY STATUS RESTARTS AGE
+pending-pod 0/1 Pending 0 21s
+ pending-pod 0/1 Pending 0 65s
+pending-pod 0/1 Pending 0 74s
+pending-pod 0/1 Pending 0 2m6s
+pending-pod 0/1 Pending 0 3m8s
+pending-pod 0/1 Pending 0 4m8s
+pending-pod 0/1 Pending 0 4m18s
+&lt;/code>&lt;/pre>&lt;p>At some point the alert fires, as expected.
+And now we can roll out these changes to prod!&lt;/p></description></item><item><title>SmartTube</title><link>https://perrotta.dev/2025/01/smarttube/</link><pubDate>Thu, 30 Jan 2025 18:18:25 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/smarttube/</guid><description>&lt;p>&lt;a href="https://github.com/yuliskov/SmartTube">https://github.com/yuliskov/SmartTube&lt;/a>:&lt;/p>
 &lt;blockquote>
 &lt;p>SmartTube is an advanced player for Android TVs and TV boxes, free &amp;amp; open
 source. You can play content from different public sources.&lt;/p>
@@ -3391,122 +3430,4 @@ deletei arquivos anteriores; isso poderia ter simplificado significativamente o
 problema (e os &lt;em>sets&lt;/em> no python).&lt;/p>
 &lt;p>Ademais, uma das coisas chatas do &lt;code>arj&lt;/code> é que ele só é capaz de extrair arquivos
 que terminam em &lt;code>*.arj&lt;/code>, então fui obrigado a renomear/copiar um arquivo antes
-de tentar utilizá-lo para extrair seu conteúdo.&lt;/p></description></item><item><title>Linux goodness in your Chromebook</title><link>https://perrotta.dev/2016/09/linux-goodness-in-your-chromebook/</link><pubDate>Thu, 01 Sep 2016 16:29:07 -0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2016/09/linux-goodness-in-your-chromebook/</guid><description>&lt;p>&lt;a href="https://www.google.com.br/chromebook/">Chromebooks&lt;/a> are excellent for testing
-and playing with Linux userland[1] stuff. And, even better, (almost) every
-change you make to it can be reset back to its factory state — even in the worst
-case of completely wiping ChromeOS from your computer. As long as you don&amp;rsquo;t mess
-up with its &lt;a href="https://en.wikipedia.org/wiki/Firmware">firmware&lt;/a>, you can do
-whatever you want and still be safe. Most models are cheap, battery life is
-amazing for a cheap Linux laptop (8+ hours, depending on the device and on
-usage)[2], Linux support is great (well, it ships with a Linux OS, right?) —
-even for most touchscreen models [citation needed] — and it is simple (as in
-KISS).&lt;/p>
-&lt;p>Now, the previous paragraph sounded a little repetitive, but I&amp;rsquo;d like to focus
-on two of my previous points here:&lt;/p>
-&lt;ol>
-&lt;li>&lt;strong>You can do whatever you want and still remain safe.&lt;/strong> Yes. Indeed, you can
-reset your chromebook to its factory state with just a few clicks — this is
-still hard to do with Windows and OS X, as far as I know. I think Windows 10
-is introducing a feature to ease this process, however I am not sure about
-it yet. This is super important (and convenient!) for people playing with a
-ChromeOS device — like me. My usual way to reset the system back to &amp;ldquo;factory
-state&amp;rdquo; was, usually, to install a Linux distro with the btrfs filesystem so
-I could create a snapshot upon the installation was finished, and then
-revert back to it at anytime I wanted. However, this solution is a little
-cumbersome. The second usual solution would be to simply use a virtual
-machine, but I don&amp;rsquo;t need to reiterate that this is slow and limited in many
-ways.&lt;/li>
-&lt;li>&lt;strong>Simple&lt;/strong>. This is really important if you don&amp;rsquo;t want to have headaches in
-the long run. For starters, simplicity is always a trade-off that involves
-performance: it is hard to be simple with a core i7 CPU, so if you choose
-the KISS path, you are deliberately sacrificing some of your performance.
-Once you accept that, we can move forward: Chromebooks are very simple
-devices. They&amp;rsquo;re almost directly comparable to a tablet with a keyboard.
-Sometimes they feel like a full-featured arduino.&lt;/li>
-&lt;/ol>
-&lt;p>These were some small highlights about my decision to get one. Now here&amp;rsquo;s the
-good stuff:&lt;/p>
-&lt;h2 id="there-be-dragons">There be dragons&lt;/h2>
-&lt;p>&lt;strong>Disclaimer/Warning&lt;/strong>: these will potentially void the warranty of your device,
-and they are only recommended if you know what you&amp;rsquo;re doing. Be a good user and
-research before messing up with your system. I will provide upstream links with
-documentation as much as possible.&lt;/p>
-&lt;ul>
-&lt;li>&lt;a href="https://www.chromium.org/chromium-os/poking-around-your-chrome-os-device">Enable developer
-mode&lt;/a>
-— it&amp;rsquo;s a must; however, it weakens the security of your device. Beware and
-research! This can be totally reverted with a single keystroke (SPACE) at the
-login screen that will appear in every subsequent boot of your system.&lt;/li>
-&lt;li>&lt;a href="https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/install-software-on-base-images">dev_install&lt;/a>
-— to get fdisk, python, tmux, nano, emerge (for binaries), and so on. These
-are just a few developer tools, they won&amp;rsquo;t scale and you won&amp;rsquo;t get whatever
-package you want in your vanilla ChromeOS, however these might help a lot with
-simple tasks. For example, you can format a SD card or an USB Flash Drive
-directly from ChromeOS upon running this tool — otherwise, you&amp;rsquo;d usually have
-to use another computer, with another OS to do it. It uses just a little space
-(~100M+ or so), and it can be totally reverted with &lt;code>devinstall --uninstall&lt;/code>&lt;/li>
-&lt;li>Switch to the &lt;a href="https://support.google.com/chromebook/answer/1086915?hl=en">beta
-channel&lt;/a> if you
-want to be slightly more into the bleeding edge — but not too much as in the
-dev channel. In fact, at the time of this post, select devices in beta channel
-have support for Android apps in ChromeOS.&lt;/li>
-&lt;li>Open a new shell (crosh) with Ctrl + Alt + T. The default username is
-&amp;lsquo;chronos&amp;rsquo;, without any password.&lt;/li>
-&lt;li>User-writable locations are: /usr/local (in particular, /usr/local/bin is in
-your PATH env variable out-of-the-box (echo $PATH)), /tmp and
-/home/chronos/user/Downloads. There might be more, but these are enough.&lt;/li>
-&lt;li>You can also insert removable media (USB flash drives, SD cards), which would
-show up on /media. ChromeOS can read/write filesystems formatted as ext{2,3,4}
-and FAT{,32} at least.&lt;/li>
-&lt;/ul>
-&lt;p>These are the basics. However, you will soon find out that you cannot do too
-much with ChromeOS, even with these modifications. In this case, there are three
-options, and all of them involve getting a Linux distribution in some way:&lt;/p>
-&lt;ol>
-&lt;li>&lt;strong>(RECOMMENDED)&lt;/strong> Install a Linux distro on either a SD card or an USB Flash
-Drive and dual-boot from it. It is really easy to dual-boot, you just press
-C-d to boot from the internal eMMC / SSD, or C-u to boot from external
-storage. There&amp;rsquo;s no need to play with grub, EFI, or any (other) fancy
-bootloader. If you change your mind later on, just format your SD card:
-there is no need to change anything on ChromeOS.&lt;/li>
-&lt;li>&lt;strong>(NOT RECOMMENDED BY ME)&lt;/strong> Completely wipe ChromeOS by installing another
-Linux distribution on its place. Although it&amp;rsquo;s easy to revert this process
-through &lt;a href="https://support.google.com/chromebook/answer/1080595">recovery
-media&lt;/a>, it completely
-defeats the purpose of getting a Chromebook in the first place, especially
-now that Android apps are starting to become available on them (for
-touchscreen devices, of course).&lt;/li>
-&lt;li>&lt;strong>(PROBABLY WOULDN&amp;rsquo;T RECOMMEND, BUT YOU MAY LIKE IT)&lt;/strong> Install a chroot
-alongside your ChromeOS, such as
-&lt;a href="https://github.com/dnschneid/crouton">crouton&lt;/a>. I tried it however I hated
-it. It is very buggy and opinionated, somewhat similar to oh-my-zsh: both of
-them promise to deliver a good framework and they&amp;rsquo;re kinda large open source
-projects, however they do lots of automatic things for you, and you end up
-not knowing what is happening to your system. It opposes the Arch Linux
-philosophy, being user-friendly rather than user-centered. Some people like
-it, I won&amp;rsquo;t argue this, it can work for them; but not for me. An alternative
-would be to install a chroot manually, without the help of crouton.&lt;/li>
-&lt;/ol>
-&lt;p>I&amp;rsquo;ve chosen the first option, installing Arch Linux ARM on my Chromebook. So
-far, so good: it&amp;rsquo;s working very well. Storage is easily shared between the two
-OSes (by using the SD card). There&amp;rsquo;s more to get out of my system, and I intend
-to share new findings in this blog. &lt;strong>In particular, the most important one: to
-find an easy way (not crouton!) of running whatever Linux-compatible application
-I want from within Chrome OS, without dual-booting.&lt;/strong> I have a few ideas (well,
-it&amp;rsquo;s just a matter of creating a KISS chroot), I just want to polish them a
-little more before trying them out.&lt;/p>
-&lt;h2 id="see-also">See also&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a href="https://imgur.com/BrVVyNi">Generic Chrome OS Troubleshooter Chart v0.3&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;h2 id="footnotes">Footnotes&lt;/h2>
-&lt;ol>
-&lt;li>I wouldn&amp;rsquo;t say the same for kernel stuff though. It is not trivial to
-install a bootloader (such as grub) or to boot a custom kernel in a
-Chromebook. It&amp;rsquo;s possible indeed, it&amp;rsquo;s just not as nice or as easy as an
-average PC or Mac laptop from today, especially if you have the intention of
-keeping the upstream OS (Chrome OS) in the device.&lt;/li>
-&lt;li>People probably would cite a Macbook, a Surface Pro, or something else
-similar here. For starters, did you see how much they cost, in comparison to
-an average Chromebook? Such a comparison wouldn&amp;rsquo;t be fair.&lt;/li>
-&lt;/ol></description></item></channel></rss>
+de tentar utilizá-lo para extrair seu conteúdo.&lt;/p></description></item></channel></rss>
