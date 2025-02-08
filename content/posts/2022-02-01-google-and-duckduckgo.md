@@ -1,5 +1,5 @@
 ---
-title: "Google and Duckduckgo"
+title: "Google and DuckDuckGo"
 date: 2022-02-02T18:51:00-05:00
 tags:
   - privacy
