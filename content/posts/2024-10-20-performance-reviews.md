@@ -9,7 +9,6 @@ tags:
 During performance reviews[^1], it's handy to obtain an overview of your
 accomplishments that are stored as artifacts in source control systems.
 
-
 Usually accomplishments for a software engineer span more than just code: design
 documents, documentation, bug triage and fixes, product health initiatives,
 tackling of technical debt, processes...the list is endless.
