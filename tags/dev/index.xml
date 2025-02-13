@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 12 Feb 2025 13:57:29 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>GitHub Distributed CODEOWNERS</title><link>https://perrotta.dev/2025/02/github-distributed-codeowners/</link><pubDate>Wed, 12 Feb 2025 13:57:29 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/02/github-distributed-codeowners/</guid><description>&lt;p>We recently adopted Andrew Ring&amp;rsquo;s &amp;ldquo;Distributed CODEOWNERS&amp;rdquo;
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 13 Feb 2025 13:17:36 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: vertical-pod-autoscaler sync loop</title><link>https://perrotta.dev/2025/02/argocd-vertical-pod-autoscaler-sync-loop/</link><pubDate>Thu, 13 Feb 2025 13:17:36 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/02/argocd-vertical-pod-autoscaler-sync-loop/</guid><description>&lt;p>We&amp;rsquo;ve had a long time issue wherein our
+&lt;a href="https://artifacthub.io/packages/helm/cowboysysop/vertical-pod-autoscaler">vertical-pod-autoscaler&lt;/a>
+(VPA) ArgoCD application, deployed via its helm chart, got stuck in a sync loop.&lt;/p>
+&lt;p>More specifically: the helm chart automatically generates a self-signed
+certificate via the
+&lt;a href="https://helm.sh/docs/chart_template_guide/function_list/#genca">GenCA&lt;/a> helm
+function upon every change to our gitops repository. It turns out
+&lt;a href="https://github.com/cowboysysop/charts/blob/9527602f8f2ea59f51cd3a7d3380810ba60c39fc/charts/vertical-pod-autoscaler/README.md?plain=1#L236">this&lt;/a>
+is documented and we can see its corresponding manifest
+&lt;a href="https://github.com/cowboysysop/charts/blob/9527602f8f2ea59f51cd3a7d3380810ba60c39fc/charts/vertical-pod-autoscaler/templates/admission-controller/tls-secret.yaml#L3C1-L3C91">here&lt;/a>.&lt;/p>
+&lt;p>So that&amp;rsquo;s where the sync loop was coming from! ArgoCD was constantly reporting
+(and resolving) a diff in the admission controller secret.&lt;/p>
+&lt;p>The manifest:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">apiVersion&lt;/span>: &lt;span style="color:#ae81ff">v1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">data&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ca.crt&lt;/span>: &lt;span style="color:#ae81ff">++++++++&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tls.crt&lt;/span>: &lt;span style="color:#ae81ff">++++++++&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tls.key&lt;/span>: &lt;span style="color:#ae81ff">++++++++&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">kind&lt;/span>: &lt;span style="color:#ae81ff">Secret&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">metadata&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>[&lt;span style="color:#ae81ff">...]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">vertical-pod-autoscaler-admission-controller-tls&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">namespace&lt;/span>: &lt;span style="color:#ae81ff">kube-system&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>[&lt;span style="color:#ae81ff">...]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The problematic are all the ones under &lt;code>data:&lt;/code>.&lt;/p>
+&lt;p>I confirmed that was indeed the case in the &lt;a href="https://cloud-native.slack.com/archives/C01TSERG0KZ/p1739442822542539">CNCF
+Slack&lt;/a>
+&lt;code>#argo-cd&lt;/code>. Thanks Tim!&lt;/p>
+&lt;p>How to address it?&lt;/p>
+&lt;p>We leverage
+&lt;a href="https://argo-cd.readthedocs.io/en/stable/user-guide/diffing/">&lt;code>ignoreDifferences&lt;/code>&lt;/a>
+(c.f. &lt;a href="https://stackoverflow.com/questions/77510338/argocd-show-as-out-of-sync-on-every-push-for-auto-generate-certs-password">Stack
+Overflow&lt;/a>)
+in the ArgoCD app manifest:&lt;/p>
+&lt;pre tabindex="0">&lt;code>% git diff HEAD~2..HEAD
+diff --git apps/base/vertical-pod-autoscaler/vertical-pod-autoscaler.yaml apps/base/vertical-pod-autoscaler/vertical-pod-autoscaler.yaml
+index 92bfbcc..90d8435 100644
+--- apps/base/vertical-pod-autoscaler/vertical-pod-autoscaler.yaml
++++ apps/base/vertical-pod-autoscaler/vertical-pod-autoscaler.yaml
+@@ -34,3 +34,15 @@ spec:
+ maxDuration: 1m
+ syncOptions:
+ - CreateNamespace=true
++ - RespectIgnoreDifferences=true
++ ignoreDifferences:
++ - group: &amp;#34;&amp;#34;
++ kind: Secret
++ name: vertical-pod-autoscaler-admission-controller-tls
++ jsonPointers:
++ - /data
++ - group: apps
++ kind: Deployment
++ name: vertical-pod-autoscaler-admission-controller
++ jsonPointers:
++ - /spec/template/metadata/annotations/checksum~1tls-secret
+&lt;/code>&lt;/pre>&lt;p>In &lt;a href="https://www.rfc-editor.org/rfc/rfc6901">JSON Pointers&lt;/a> (RFC 6901), one
+escapes the slash character with a &lt;code>~1&lt;/code> (c.f. section 3 in the spec):&lt;/p>
+&lt;blockquote>
+&lt;p>Because the characters &amp;lsquo;&lt;del>&amp;rsquo; (%x7E) and &amp;lsquo;/&amp;rsquo; (%x2F) have special meanings in
+JSON Pointer, &amp;lsquo;&lt;/del>&amp;rsquo; needs to be encoded as &amp;lsquo;~0&amp;rsquo; and &amp;lsquo;/&amp;rsquo; needs to be encoded as
+&amp;lsquo;~1&amp;rsquo; when these characters appear in a reference token.&lt;/p>
+&lt;/blockquote>
+&lt;p>Problem resolved!&lt;/p>
+&lt;p>In general all helm charts that generate self-signed certificates (with &lt;code>genCA&lt;/code>)
+may experience this sync loop when used with a CD framework such as Argo.&lt;/p></description></item><item><title>GitHub Distributed CODEOWNERS</title><link>https://perrotta.dev/2025/02/github-distributed-codeowners/</link><pubDate>Wed, 12 Feb 2025 13:57:29 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/02/github-distributed-codeowners/</guid><description>&lt;p>We recently adopted Andrew Ring&amp;rsquo;s &amp;ldquo;Distributed CODEOWNERS&amp;rdquo;
 (&lt;a href="https://github.com/andrewring/github-distributed-owners">github&lt;/a>) in some
 parts of our codebase.&lt;/p>
 &lt;p>You know the concept of
@@ -1383,25 +1447,4 @@ It&amp;rsquo;s just a matter of time: the FR has lots of upvotes.&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">id&lt;/span>: &lt;span style="color:#ae81ff">oxipng&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Surely you could run it in github actions as well, if you don&amp;rsquo;t use pre-commit.com.&lt;/p>
 &lt;p>If I need to use it as an one-off, I can either run the &lt;code>oxipng&lt;/code> binary directly,
-or use a web version such as &lt;a href="https://squoosh.app/">Squoosh&lt;/a> (&lt;a href="https://github.com/simonw/til/blob/main/github-actions/oxipng.md">via Simon Willison&lt;/a>).&lt;/p></description></item><item><title>iOS safari with large fonts</title><link>https://perrotta.dev/2024/12/ios-safari-with-large-fonts/</link><pubDate>Sat, 28 Dec 2024 15:14:45 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/ios-safari-with-large-fonts/</guid><description>&lt;p>Ever since I switched my blog theme from &lt;a href="https://github.com/adityatelange/hugo-PaperMod">Hugo
-PaperMod&lt;/a> to my own based on
-&lt;a href="https://github.com/janraasch/hugo-bearblog/">bearblog&lt;/a>, I had this weird issue
-wherein some font sizes, especially within &lt;code>code&lt;/code> tags, where quite large.&lt;/p>
-&lt;p>To illustrate with a rough example:&lt;/p>
-&lt;pre>&lt;code>% ollama serve
-&lt;span style="font-size: larger;">Couldn't find '/Users/thiago.perrotta/...'&lt;/span>
-Your new public key is:
-[...]&lt;/code>&lt;/pre>
-&lt;p>This would only happen in Safari on iOS.&lt;/p>
-&lt;p>In particular, it would not happen in Safari on macOS, and it would not be
-reproducible in the mobile mode of Chrome DevTools.&lt;/p>
-&lt;p>After a bit of research, I found:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-css" data-lang="css">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">body&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#960050;background-color:#1e0010">‑webkit‑text‑size‑&lt;/span>adjust: &lt;span style="color:#ae81ff">100&lt;/span>&lt;span style="color:#66d9ef">%&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;fixes the issue perfectly. &lt;a href="https://stackoverflow.com/questions/15861093/what-does-webkit-text-size-adjust-do">Source&lt;/a>.&lt;/p>
-&lt;blockquote>
-&lt;p>It specifies that if you(author) want to resize the text when the browser
-page is zoomed. Most of the times it is better to set it to auto or 100% as
-the web browser will take care of how resizing of text is to be done.&lt;/p>
-&lt;/blockquote></description></item></channel></rss>
+or use a web version such as &lt;a href="https://squoosh.app/">Squoosh&lt;/a> (&lt;a href="https://github.com/simonw/til/blob/main/github-actions/oxipng.md">via Simon Willison&lt;/a>).&lt;/p></description></item></channel></rss>
