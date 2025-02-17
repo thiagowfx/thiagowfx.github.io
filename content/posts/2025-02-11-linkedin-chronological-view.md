@@ -6,14 +6,14 @@ tags:
   - serenity
 ---
 
-[How to Replace Linkedin’s Algorithmic Timeline](https://preslav.me/2025/01/28/howto-replace-linkedin-algorithmic-timeline/) by Preslav Rachev:
+[How to Replace Linkedin's Algorithmic Timeline](https://preslav.me/2025/01/28/howto-replace-linkedin-algorithmic-timeline/) by Preslav Rachev:
 
 > Here is a quick tip on bringing back your sanity when using LinkedIn. Whether
 > you are familiar with algorithmic timelines work or not, it has certainly come
 > to your attention that your home feed page is not chronologically organized.
-> Instead, you see posts from people and organizations that LinkedIn’s
+> Instead, you see posts from people and organizations that LinkedIn's
 > content-matching algorithms thought you might be interested in. Those are so
-> good that you’d often catch yourself scrolling, and scrolling, and scrolling,
+> good that you'd often catch yourself scrolling, and scrolling, and scrolling,
 > often, forgetting why you were there in the first place. Not only that but
 > even if you found something actually worth your attention, LinkedIn will
 > likely rearrange your feed completely the next time you open the page.
