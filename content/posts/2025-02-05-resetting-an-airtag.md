@@ -33,21 +33,21 @@ router? It turns out the answer is
 [yes](https://support.apple.com/en-us/102577):
 
 > Here's how to reset your AirTag:
-> 
+>
 > 1. Press down on the polished stainless steel battery cover of your AirTag and rotate counterclockwise until the cover stops rotating.
-> 
+>
 > 2. Remove the cover and the battery.*
-> 
+>
 > 3. Replace the battery.
-> 
+>
 > 4. Press down on the battery until you hear a sound. This sound means that the battery is connected.
-> 
+>
 > 5. When the sound finishes, repeat the process four more times, removing and replacing the battery, then pressing down on the battery until you hear a sound. You should hear a sound each time you press on the battery, for a total of five sounds. The fifth sound is different from the previous four. This indicates that the AirTag is now ready to pair.
-> 
+>
 > 6. Replace the cover by aligning the three tabs on the cover with the three slots on your AirTag.
-> 
+>
 > 7. Press down on the cover.
-> 
+>
 > 8. Rotate the cover clockwise until it stops rotating.
 
 Upon following the above procedure, the fifth time yielded a different sound.
