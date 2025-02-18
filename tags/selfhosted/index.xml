@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Selfhosted on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/selfhosted/</link><description>Recent content in Selfhosted on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 13 Feb 2025 13:17:36 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: vertical-pod-autoscaler sync loop</title><link>https://perrotta.dev/2025/02/argocd-vertical-pod-autoscaler-sync-loop/</link><pubDate>Thu, 13 Feb 2025 13:17:36 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/02/argocd-vertical-pod-autoscaler-sync-loop/</guid><description>&lt;p>We&amp;rsquo;ve had a long time issue wherein our
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 18 Feb 2025 11:33:19 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>Notify search engines of new posts</title><link>https://perrotta.dev/2025/02/notify-search-engines-of-new-posts/</link><pubDate>Tue, 18 Feb 2025 11:33:19 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/02/notify-search-engines-of-new-posts/</guid><description>&lt;p>I have the following rule in the &lt;a href="https://just.systems/man/en/">&lt;code>Justfile&lt;/code>&lt;/a> of
+this blog:&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-just" data-lang="just"># Ping Google and Bing about changes in the sitemap
+ping sitemap=&amp;#34;https://perrotta.dev/sitemap.xml&amp;#34;:
+	curl -sS -o /dev/null &amp;#34;https://www.google.com/ping?sitemap={{ sitemap }}&amp;#34;
+	curl -sS -o /dev/null &amp;#34;https://www.bing.com/ping?sitemap={{ sitemap }}&amp;#34;
+&lt;/code>&lt;/pre>&lt;p>It is invoked with &lt;code>$ just ping&lt;/code>.&lt;/p>
+&lt;p>Recently I added it to CI (github actions):&lt;/p>
+&lt;pre tabindex="0">&lt;code>steps:
+ - name: Build
+ run: just build
+ - name: Deploy
+ [...]
+ - name: Ping search engines
+ run: just ping
+&lt;/code>&lt;/pre>&lt;p>Whenever I publish a new post, a sitemap notification is triggered.&lt;/p>
+&lt;p>When writing this post, I learned this is just wishful thinking.&lt;/p>
+&lt;p>Upon visiting &lt;a href="https://google.com/ping">https://google.com/ping&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>Sitemaps ping is deprecated. See
+&lt;a href="https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping">https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping&lt;/a>.&lt;/p>
+&lt;p>Error 404&lt;/p>
+&lt;/blockquote>
+&lt;p>Deeper into the rabbit hole:&lt;/p>
+&lt;blockquote>
+&lt;p>The Sitemaps Protocol was introduced in 2005 to help search engines with the
+discovery of new URLs, and also to help with scheduling new crawls of already
+discovered URLs. It&amp;rsquo;s a wildly popular protocol that hasn&amp;rsquo;t changed for over
+15 years. While the general idea is still useful, some aspects have become
+less practical in today&amp;rsquo;s internet.&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p>To that end, we&amp;rsquo;re announcing deprecation of the sitemaps &amp;ldquo;ping&amp;rdquo; endpoint and
+providing additional recommendations for the use of the lastmod element.&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p>The sitemap protocol defines an unauthenticated REST method for submitting
+sitemaps to search engines. Our internal studies—and also other search engines
+such as Bing—tell us that at this point these unauthenticated sitemap
+submissions are not very useful. In fact, in the case of Google Search, the
+vast majority of the submissions lead to spam. To wit, we&amp;rsquo;re deprecating our
+support for sitemaps ping and the endpoint will stop functioning in 6 months.
+You can still submit your sitemaps through robots.txt and Search Console, but
+the HTTP requests (&amp;ldquo;pings&amp;rdquo;) to the deprecated REST endpoint will result in a
+404 error. Any existing code or plugins which use this endpoint will not cause
+problems for Google Search; you don&amp;rsquo;t need to make any changes (but using the
+endpoint will also not do anything useful).&lt;/p>
+&lt;/blockquote>
+&lt;p>I&amp;rsquo;ll keep pinging it anyway, the cost is virtually free. You can&amp;rsquo;t just
+&lt;a href="https://killedbygoogle.com/">deprecate&lt;/a> features people &lt;a href="https://www.hyrumslaw.com/">rely
+on&lt;/a>.&lt;/p></description></item><item><title>ArgoCD: vertical-pod-autoscaler sync loop</title><link>https://perrotta.dev/2025/02/argocd-vertical-pod-autoscaler-sync-loop/</link><pubDate>Thu, 13 Feb 2025 13:17:36 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/02/argocd-vertical-pod-autoscaler-sync-loop/</guid><description>&lt;p>We&amp;rsquo;ve had a long time issue wherein our
 &lt;a href="https://artifacthub.io/packages/helm/cowboysysop/vertical-pod-autoscaler">vertical-pod-autoscaler&lt;/a>
 (VPA) ArgoCD application, deployed via its helm chart, got stuck in a sync loop.&lt;/p>
 &lt;p>More specifically: the helm chart automatically generates a self-signed
