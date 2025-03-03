@@ -45,3 +45,4 @@ learning.
 - https://controlaltbackspace.org/precise/
 - https://digitalwords.net/anki/low-key/
 - https://michaelnotebook.com/mmsw/
+- https://borretti.me/article/effective-spaced-repetition
