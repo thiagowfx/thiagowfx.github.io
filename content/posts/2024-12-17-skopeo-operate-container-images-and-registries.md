@@ -79,4 +79,14 @@ Notes:
 - `--dest-creds` does not specify a `--profile`. Likewise, no `AWS_PROFILE` env var should be defined.
 - In this example, China (`cn-north-1`) is an AWS account with MFA enabled.
 
-It's possible to pass `--scoped` to prefix images at destination using the full source image path as scope.
+## Potpourri
+
+- It's possible to pass `--scoped` to prefix images at destination using the
+  full source image path as scope.
+- To sync multiple image architectures, pass `-a` or `--all`.
+- If syncing from/to Azure (ACR), use `az acr login`. Find the `username` in the
+  Azure portal. For example:
+
+  ```shell
+  az acr login -n {container registry name} --expose-token | jq -r '.accessToken' | skopeo login {registry} --password-stdin --username {username}
+  ```
