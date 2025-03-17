@@ -40,3 +40,10 @@ serendipity" according to a given event.
 > things in person will increase your micromarriages.
 
 Some food for thought.
+
+Meanwhile, a friend recently introduced me to the concept of [meet
+cute](https://en.wikipedia.org/wiki/Meet_cute):
+
+> A meet cute is a scene in media, in which two people meet for the first time,
+> typically under unusual, humorous, or cute circumstances, and go on to form a
+> future romantic couple.
