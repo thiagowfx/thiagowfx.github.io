@@ -12,7 +12,7 @@ approaches exist to do so.
 In the examples below, assume a NodeJS source file named `index.mjs`. It should
 be packaged into a `lambda.zip` archive.
 
-## 1) Use `null_resource`
+## 1) Use [`null_resource`](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource)
 
 ```terraform
 resource "null_resource" "build_lambda" {
@@ -41,7 +41,7 @@ resource "aws_lambda_function" "this" {
 }
 ```
 
-## 2) Use `archive_file`
+## 2) Use [`archive_file`](https://registry.terraform.io/providers/hashicorp/archive/latest/docs/resources/file)
 
 ```terraform
 data "archive_file" "lambda_zip" {
