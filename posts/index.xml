@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/posts/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 17 Mar 2025 13:42:57 +0100</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform: generate diagrams</title><link>https://perrotta.dev/2025/03/terraform-generate-diagrams/</link><pubDate>Mon, 17 Mar 2025 13:42:57 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/terraform-generate-diagrams/</guid><description>&lt;p>There are a few options to visualize a &lt;code>terraform&lt;/code> module in the form of a graph
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 17 Mar 2025 21:06:28 +0100</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform: create zip files</title><link>https://perrotta.dev/2025/03/terraform-create-zip-files/</link><pubDate>Mon, 17 Mar 2025 21:06:28 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/terraform-create-zip-files/</guid><description>&lt;p>When creating &lt;code>.zip&lt;/code> files with terraform, for example, with the purpose of
+uploading them to an &lt;a href="https://aws.amazon.com/lambda/">AWS Lambda&lt;/a>, at least two
+approaches exist to do so.&lt;/p>
+&lt;p>In the examples below, assume a NodeJS source file named &lt;code>index.mjs&lt;/code>. It should
+be packaged into a &lt;code>lambda.zip&lt;/code> archive.&lt;/p>
+&lt;h2 id="1-use-null_resource">1) Use &lt;code>null_resource&lt;/code>&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;null_resource&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;build_lambda&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">triggers&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">source_code_hash&lt;/span> = filebase64sha256(&lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>&lt;span style="color:#a6e22e">path&lt;/span>.module&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">/lambda/index.mjs&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef"> provisioner&lt;/span> &lt;span style="color:#e6db74">&amp;#34;local-exec&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">command&lt;/span> = &lt;span style="color:#f92672">&amp;lt;&amp;lt;EOF&lt;/span>&lt;span style="color:#e6db74">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> cd ${path.module}/lambda
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> zip -r lambda.zip index.mjs
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &lt;/span>&lt;span style="color:#f92672">EOF&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_lambda_function&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;this&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">function_name&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;dns-changer-delete&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">role&lt;/span> = &lt;span style="color:#a6e22e">aws_iam_role&lt;/span>.&lt;span style="color:#a6e22e">this&lt;/span>.&lt;span style="color:#a6e22e">arn&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">filename&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>&lt;span style="color:#a6e22e">path&lt;/span>.module&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">/lambda/lambda.zip&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">source_code_hash&lt;/span> = filebase64sha256(&lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>&lt;span style="color:#a6e22e">path&lt;/span>.module&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">/lambda/lambda.zip&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">handler&lt;/span> = &amp;#34;index.&lt;span style="color:#a6e22e">handler&lt;/span>&lt;span style="color:#e6db74">&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> runtime = &amp;#34;&lt;/span>&lt;span style="color:#a6e22e">nodejs22&lt;/span>.&lt;span style="color:#a6e22e">x&lt;/span>&lt;span style="color:#e6db74">&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> depends_on = [null_resource.build_lambda]
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">}
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="2-use-archive_file">2) Use &lt;code>archive_file&lt;/code>&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">data&lt;/span> &lt;span style="color:#e6db74">&amp;#34;archive_file&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;lambda_zip&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">type&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;zip&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">source_file&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>&lt;span style="color:#a6e22e">path&lt;/span>.module&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">/lambda/index.mjs&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">output_path&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>&lt;span style="color:#a6e22e">path&lt;/span>.module&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">/lambda/lambda.zip&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_lambda_function&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;this&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">function_name&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;dns-changer-delete&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Delete DNS record sets for DNS Changer&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">role&lt;/span> = &lt;span style="color:#a6e22e">aws_iam_role&lt;/span>.&lt;span style="color:#a6e22e">this&lt;/span>.&lt;span style="color:#a6e22e">arn&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">filename&lt;/span> = data.&lt;span style="color:#a6e22e">archive_file&lt;/span>.&lt;span style="color:#a6e22e">lambda_zip&lt;/span>.&lt;span style="color:#a6e22e">output_path&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">source_code_hash&lt;/span> = data.&lt;span style="color:#a6e22e">archive_file&lt;/span>.&lt;span style="color:#a6e22e">lambda_zip&lt;/span>.&lt;span style="color:#a6e22e">output_base64sha256&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">handler&lt;/span> = &amp;#34;index.&lt;span style="color:#a6e22e">handler&lt;/span>&lt;span style="color:#e6db74">&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> runtime = &amp;#34;&lt;/span>&lt;span style="color:#a6e22e">nodejs22&lt;/span>.&lt;span style="color:#a6e22e">x&lt;/span>&lt;span style="color:#e6db74">&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> depends_on = [data.archive_file.lambda_zip]
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">}
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I prefer the second approach.&lt;/p>
+&lt;p>Furthermore, it only requires one &lt;code>terraform apply&lt;/code> per file update, whereas
+the first one requires two.&lt;/p></description></item><item><title>Terraform: generate diagrams</title><link>https://perrotta.dev/2025/03/terraform-generate-diagrams/</link><pubDate>Mon, 17 Mar 2025 13:42:57 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/terraform-generate-diagrams/</guid><description>&lt;p>There are a few options to visualize a &lt;code>terraform&lt;/code> module in the form of a graph
 or diagram.&lt;/p>
 &lt;h2 id="terraform-graph-dot--graphviz">&lt;code>terraform graph&lt;/code>: dot / graphviz&lt;/h2>
 &lt;p>&lt;a href="https://developer.hashicorp.com/terraform/cli/commands/graph">&lt;code>terraform graph&lt;/code>&lt;/a> outputs a
@@ -1714,14 +1765,4 @@ the DB Navigator below your mobile phone ticket.&lt;/p>
 &lt;/blockquote>
 &amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Kindle Paperwhite: take a screenshot</title><link>https://perrotta.dev/2025/01/kindle-paperwhite-take-a-screenshot/</link><pubDate>Sun, 19 Jan 2025 04:26:30 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/kindle-paperwhite-take-a-screenshot/</guid><description>&lt;p>Today I &lt;em>incidentally&lt;/em> learned it&amp;rsquo;s possible to take a screenshot from your Kindle
-Paperwhite.&lt;/p>
-&lt;blockquote>
-&lt;p>To take a screenshot on your Kindle Paperwhite, hold your fingers on either
-the top left and bottom right corners or the top right and bottom left
-corners. You&amp;rsquo;ll see the screen flash briefly, similar to taking a screenshot
-on iPhone and iPad.&lt;/p>
-&lt;/blockquote>
-&lt;p>(&lt;a href="https://www.idownloadblog.com/2020/10/26/take-view-screenshot-kindle-paperwhite/">via&lt;/a>)&lt;/p>
-&lt;p>I figured it is possible upon connecting it to my computer and seeing a
-screenshot file there. I must have done it accidentally at some point.&lt;/p></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>

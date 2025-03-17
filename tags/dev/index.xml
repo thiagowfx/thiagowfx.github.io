@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 17 Mar 2025 13:42:57 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform: generate diagrams</title><link>https://perrotta.dev/2025/03/terraform-generate-diagrams/</link><pubDate>Mon, 17 Mar 2025 13:42:57 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/terraform-generate-diagrams/</guid><description>&lt;p>There are a few options to visualize a &lt;code>terraform&lt;/code> module in the form of a graph
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 17 Mar 2025 21:06:28 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform: create zip files</title><link>https://perrotta.dev/2025/03/terraform-create-zip-files/</link><pubDate>Mon, 17 Mar 2025 21:06:28 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/terraform-create-zip-files/</guid><description>&lt;p>When creating &lt;code>.zip&lt;/code> files with terraform, for example, with the purpose of
+uploading them to an &lt;a href="https://aws.amazon.com/lambda/">AWS Lambda&lt;/a>, at least two
+approaches exist to do so.&lt;/p>
+&lt;p>In the examples below, assume a NodeJS source file named &lt;code>index.mjs&lt;/code>. It should
+be packaged into a &lt;code>lambda.zip&lt;/code> archive.&lt;/p>
+&lt;h2 id="1-use-null_resource">1) Use &lt;code>null_resource&lt;/code>&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;null_resource&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;build_lambda&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">triggers&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">source_code_hash&lt;/span> = filebase64sha256(&lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>&lt;span style="color:#a6e22e">path&lt;/span>.module&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">/lambda/index.mjs&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef"> provisioner&lt;/span> &lt;span style="color:#e6db74">&amp;#34;local-exec&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">command&lt;/span> = &lt;span style="color:#f92672">&amp;lt;&amp;lt;EOF&lt;/span>&lt;span style="color:#e6db74">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> cd ${path.module}/lambda
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> zip -r lambda.zip index.mjs
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &lt;/span>&lt;span style="color:#f92672">EOF&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_lambda_function&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;this&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">function_name&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;dns-changer-delete&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">role&lt;/span> = &lt;span style="color:#a6e22e">aws_iam_role&lt;/span>.&lt;span style="color:#a6e22e">this&lt;/span>.&lt;span style="color:#a6e22e">arn&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">filename&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>&lt;span style="color:#a6e22e">path&lt;/span>.module&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">/lambda/lambda.zip&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">source_code_hash&lt;/span> = filebase64sha256(&lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>&lt;span style="color:#a6e22e">path&lt;/span>.module&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">/lambda/lambda.zip&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">handler&lt;/span> = &amp;#34;index.&lt;span style="color:#a6e22e">handler&lt;/span>&lt;span style="color:#e6db74">&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> runtime = &amp;#34;&lt;/span>&lt;span style="color:#a6e22e">nodejs22&lt;/span>.&lt;span style="color:#a6e22e">x&lt;/span>&lt;span style="color:#e6db74">&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> depends_on = [null_resource.build_lambda]
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">}
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="2-use-archive_file">2) Use &lt;code>archive_file&lt;/code>&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">data&lt;/span> &lt;span style="color:#e6db74">&amp;#34;archive_file&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;lambda_zip&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">type&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;zip&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">source_file&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>&lt;span style="color:#a6e22e">path&lt;/span>.module&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">/lambda/index.mjs&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">output_path&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>&lt;span style="color:#a6e22e">path&lt;/span>.module&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">/lambda/lambda.zip&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_lambda_function&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;this&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">function_name&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;dns-changer-delete&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Delete DNS record sets for DNS Changer&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">role&lt;/span> = &lt;span style="color:#a6e22e">aws_iam_role&lt;/span>.&lt;span style="color:#a6e22e">this&lt;/span>.&lt;span style="color:#a6e22e">arn&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">filename&lt;/span> = data.&lt;span style="color:#a6e22e">archive_file&lt;/span>.&lt;span style="color:#a6e22e">lambda_zip&lt;/span>.&lt;span style="color:#a6e22e">output_path&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">source_code_hash&lt;/span> = data.&lt;span style="color:#a6e22e">archive_file&lt;/span>.&lt;span style="color:#a6e22e">lambda_zip&lt;/span>.&lt;span style="color:#a6e22e">output_base64sha256&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">handler&lt;/span> = &amp;#34;index.&lt;span style="color:#a6e22e">handler&lt;/span>&lt;span style="color:#e6db74">&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> runtime = &amp;#34;&lt;/span>&lt;span style="color:#a6e22e">nodejs22&lt;/span>.&lt;span style="color:#a6e22e">x&lt;/span>&lt;span style="color:#e6db74">&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> depends_on = [data.archive_file.lambda_zip]
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">}
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I prefer the second approach.&lt;/p>
+&lt;p>Furthermore, it only requires one &lt;code>terraform apply&lt;/code> per file update, whereas
+the first one requires two.&lt;/p></description></item><item><title>Terraform: generate diagrams</title><link>https://perrotta.dev/2025/03/terraform-generate-diagrams/</link><pubDate>Mon, 17 Mar 2025 13:42:57 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/terraform-generate-diagrams/</guid><description>&lt;p>There are a few options to visualize a &lt;code>terraform&lt;/code> module in the form of a graph
 or diagram.&lt;/p>
 &lt;h2 id="terraform-graph-dot--graphviz">&lt;code>terraform graph&lt;/code>: dot / graphviz&lt;/h2>
 &lt;p>&lt;a href="https://developer.hashicorp.com/terraform/cli/commands/graph">&lt;code>terraform graph&lt;/code>&lt;/a> outputs a
@@ -1560,39 +1611,4 @@ HTTP auth creds above.&lt;/p>
 &lt;p>The beauty of this approach is that it works for any HTTPS server, as it is
 service agnostic.&lt;/p>
 &lt;p>The next level would be to integrate an SSO solution such as
-&lt;a href="https://goauthentik.io/">Authentik&lt;/a>, however it&amp;rsquo;s quite more complex.&lt;/p></description></item><item><title>Logseq: linking and backlinking</title><link>https://perrotta.dev/2025/01/logseq-linking-and-backlinking/</link><pubDate>Mon, 06 Jan 2025 22:49:44 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/logseq-linking-and-backlinking/</guid><description>&lt;p>This is the first post with the &lt;a href="https://perrotta.dev/tags/pkm/">pkm&lt;/a> tag. Run before
-it&amp;rsquo;s &lt;a href="https://en.wikipedia.org/wiki/The_Paradox_of_Choice">too late&lt;/a>!&lt;/p>
-&lt;p>Expect more of these as I find myself slowly migrating from
-&lt;a href="https://obsidian.md/">Obsidian&lt;/a> to &lt;a href="https://logseq.com/">Logseq&lt;/a>. More on that
-later.&lt;/p>
-&lt;p>When creating pages in logseq, there are &lt;strong>two&lt;/strong> basic forms to link to other pages,
-and they are essentially equivalent.&lt;/p>
-&lt;p>The first one is to use a &lt;code>#hashtag&lt;/code> (or simply &amp;rsquo;tag&amp;rsquo;). For example:&lt;/p>
-&lt;pre tabindex="0">&lt;code>Books to read in 2010:
-
-- The Hitchhiker&amp;#39;s Guide to the Galaxy by Douglas Adams #book #fiction
-- Harry Potter and the Prisoner of Azkaban by J.K. Rowling #book #fiction
-- Elite da Tropa by André Batista, Rodrigo Pimentel &amp;amp; Luiz Eduardo Soares #book #nonfiction
-&lt;/code>&lt;/pre>&lt;p>&lt;em>^alpha&lt;/em>&lt;/p>
-&lt;p>Under the hood it creates 3 pages: &lt;code>Book&lt;/code>, &lt;code>Fiction&lt;/code> and &lt;code>Nonfiction&lt;/code>. Clicking
-any of these hashtags opens up the corresponding page. In the page it&amp;rsquo;s possible
-to find a backlink to the original page / block that links to it.&lt;/p>
-&lt;p>The second one is to use double brackets. For example:&lt;/p>
-&lt;pre tabindex="0">&lt;code>- Elite da Tropa is a Brazilian [[book]] written by the ex-police officers André
- Batista and Rodrigo Pimentel together with Luiz Eduardo Soares. It was first
- published in 2006. The book originated the film Elite Squad.
- - Source: https://en.wikipedia.org/wiki/Elite_da_Tropa
-&lt;/code>&lt;/pre>&lt;p>&lt;em>^bravo&lt;/em>&lt;/p>
-&lt;p>Clicking &lt;code>[[book]]&lt;/code> goes to the same page as &lt;code>#book&lt;/code>.&lt;/p>
-&lt;p>Why are there two forms? I don&amp;rsquo;t know. But here&amp;rsquo;s what I learned: it doesn&amp;rsquo;t
-matter which one you choose to use, as they are effectively equivalent. For
-example, you could have written instead:&lt;/p>
-&lt;pre tabindex="0">&lt;code>- Elite da Tropa is a Brazilian #book written by the ex-police officers André
- Batista and Rodrigo Pimentel together with Luiz Eduardo Soares. It was first
- published in 2006. The book originated the film Elite Squad.
- - Source: https://en.wikipedia.org/wiki/Elite_da_Tropa
-&lt;/code>&lt;/pre>&lt;p>&lt;em>^charlie&lt;/em>&lt;/p>
-&lt;p>&amp;hellip;the effect would have been the same.&lt;/p>
-&lt;p>The idiomatic style seems to favour the use of double brackets when writing
-prose (i.e. &lt;em>bravo&lt;/em>), and the use of hashtags when &amp;ldquo;tagging&amp;rdquo; or qualifying
-sentences (i.e. &lt;em>alpha&lt;/em>). That said, intermixing them is harmless.&lt;/p></description></item></channel></rss>
+&lt;a href="https://goauthentik.io/">Authentik&lt;/a>, however it&amp;rsquo;s quite more complex.&lt;/p></description></item></channel></rss>
