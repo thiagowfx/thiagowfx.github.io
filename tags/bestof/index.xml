@@ -1,6 +1,131 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bestof on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/bestof/</link><description>Recent content in Bestof on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 14 Mar 2025 16:12:44 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>Filling in the gaps of the internet</title><link>https://perrotta.dev/2025/03/filling-in-the-gaps-of-the-internet/</link><pubDate>Fri, 14 Mar 2025 16:12:44 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/filling-in-the-gaps-of-the-internet/</guid><description>&lt;p>&lt;a href="https://evanhahn.com/filling-in-the-gaps-of-the-internet/">Filling in the gaps of the internet&lt;/a> by Evan Hahn:&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 19 Mar 2025 13:27:43 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>git freeze, git thaw</title><link>https://perrotta.dev/2025/03/git-freeze-git-thaw/</link><pubDate>Wed, 19 Mar 2025 13:27:43 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/git-freeze-git-thaw/</guid><description>&lt;p>Now I am becoming one of the snobs™ with the first sentence in the following
+paragraph. Here we go.&lt;/p>
+&lt;p>I had &lt;a href="https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview">Claude
+Code&lt;/a>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>
+write me a pair of &lt;code>git&lt;/code> utilities: &lt;code>git freeze&lt;/code> and &lt;code>git thaw&lt;/code>.&lt;/p>
+&lt;p>First of all: &amp;ldquo;to thaw&amp;rdquo; means &amp;ldquo;to defrost&amp;rdquo;:&lt;/p>
+&lt;blockquote>
+&lt;p>To change from a frozen solid to a liquid by gradual warming.&lt;/p>
+&lt;/blockquote>
+&lt;p>Perhaps &lt;code>git unfreeze&lt;/code> would have been more intuitive, let&amp;rsquo;s leave the
+bikeshedding to another day though.&lt;/p>
+&lt;p>What should these utilities do? They are inspired by the ones with the same name
+in Chromium
+&lt;a href="https://www.chromium.org/developers/how-tos/install-depot-tools/">depot_tools&lt;/a>.
+&lt;a href="https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html#_setting_up">Direct
+link&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;a href="https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/git-freeze.html">&lt;code>git-freeze(1)&lt;/code>&lt;/a>
+allows you to put the current branch in &amp;lsquo;suspended animation&amp;rsquo; by committing
+your changes to a specially-named commit on the top of your current branch.
+When you come back to your branch later, you can just run
+&lt;a href="https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/git-thaw.html">&lt;code>git-thaw(1)&lt;/code>&lt;/a>
+to get your work-in-progress changes back to what they were.&lt;/p>
+&lt;/blockquote>
+&lt;p>Installing
+&lt;a href="https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools.html">&lt;code>depot_tools(7)&lt;/code>&lt;/a>
+just to get these two utilities is too bloated though. The security software at
+work flagged it as malware&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>. And they didn&amp;rsquo;t even bother to package it for
+Linux distributions in the first place.&lt;/p>
+&lt;h2 id="git-freezehttpsgithubcomthiagowfxdotfilesblobmastergitbingit-freeze">&lt;a href="https://github.com/thiagowfx/.dotfiles/blob/master/git/.bin/git-freeze">&lt;code>git-freeze&lt;/code>&lt;/a>&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#75715e">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># git-freeze - Stage all files and create a git-freeze commit&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>set -e
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Check if we&amp;#39;re inside a git repository&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">[&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>git rev-parse --is-inside-work-tree 2&amp;gt;/dev/null&lt;span style="color:#66d9ef">)&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span> !&lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span> &lt;span style="color:#f92672">]&lt;/span>; &lt;span style="color:#66d9ef">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;Error: Not in a git repository&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> exit &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Stage all changes (tracked and untracked)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git add -A
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Create a commit with the freeze message&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git commit -m &lt;span style="color:#e6db74">&amp;#34;git-freeze&amp;#34;&lt;/span> -n
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#34;Git freeze created successfully&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="git-thawhttpsgithubcomthiagowfxdotfilesblobmastergitbingit-thaw">&lt;a href="https://github.com/thiagowfx/.dotfiles/blob/master/git/.bin/git-thaw">&lt;code>git-thaw&lt;/code>&lt;/a>&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#75715e">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># git-thaw - Undo a git-freeze operation&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>set -e
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Check if we&amp;#39;re inside a git repository&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">[&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>git rev-parse --is-inside-work-tree 2&amp;gt;/dev/null&lt;span style="color:#66d9ef">)&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span> !&lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span> &lt;span style="color:#f92672">]&lt;/span>; &lt;span style="color:#66d9ef">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;Error: Not in a git repository&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> exit &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Check if there&amp;#39;s at least one commit&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> ! git rev-parse --verify HEAD &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; &lt;span style="color:#66d9ef">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;Error: No commits yet&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> exit &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Check if the last commit is a git-freeze commit&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> ! git log -n &lt;span style="color:#ae81ff">1&lt;/span> --pretty&lt;span style="color:#f92672">=&lt;/span>%B | grep -q &lt;span style="color:#e6db74">&amp;#34;^git-freeze&lt;/span>$&lt;span style="color:#e6db74">&amp;#34;&lt;/span>; &lt;span style="color:#66d9ef">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;Error: Last commit is not a git-freeze commit&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> exit &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Undo the git-freeze commit&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> git rev-parse --verify HEAD^ &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; &lt;span style="color:#66d9ef">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># If there&amp;#39;s a parent commit, reset to it&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> git reset &lt;span style="color:#e6db74">&amp;#34;HEAD^&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># If it&amp;#39;s the initial commit, delete the reference and unstage everything&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> git update-ref -d HEAD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> git restore --staged .
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#34;Git freeze thawed successfully&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="post-ai-cleanup">Post-AI cleanup&lt;/h2>
+&lt;p>The only change I had to make was to add &lt;code>-n&lt;/code> to &lt;code>git commit&lt;/code> in &lt;code>git-freeze&lt;/code> so
+that pre-commit hooks would be skipped upon freeze.&lt;/p>
+&lt;h2 id="usage">Usage&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>Within an existing &lt;code>git&lt;/code> repository, do some work in a custom branch.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Decide that something else more important and/or urgent needs your attention.
+Let go of &lt;a href="https://git-scm.com/docs/git-worktree">git worktrees&lt;/a> in this
+instance.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>git freeze&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Switch to a new branch. Do whatever. Done.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>git checkout &amp;lt;your previous branch&amp;gt;&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>git thaw&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Resume your previous work. Profit.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;em>An agentic coding tool made by Anthropic. Currently in beta as a research
+preview.&lt;/em>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>In hindsight that&amp;rsquo;s not even surprising.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>Filling in the gaps of the internet</title><link>https://perrotta.dev/2025/03/filling-in-the-gaps-of-the-internet/</link><pubDate>Fri, 14 Mar 2025 16:12:44 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/filling-in-the-gaps-of-the-internet/</guid><description>&lt;p>&lt;a href="https://evanhahn.com/filling-in-the-gaps-of-the-internet/">Filling in the gaps of the internet&lt;/a> by Evan Hahn:&lt;/p>
 &lt;blockquote>
 &lt;p>Here&amp;rsquo;s a small philosophy I have about the internet:&lt;/p>
 &lt;p>I believe that it&amp;rsquo;s my duty to publish the answer to previously-unanswered
@@ -4208,66 +4333,6 @@ or Ubuntu&lt;/a>.
 In fact, this is what I did at $DAYJOB, because relying solely on Debian for
 package management is a very big limitation. I find that Nix complements the
 Debian repositories very well, the same way that it does for macOS.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item><item><title>SSH plus tmux automatically</title><link>https://perrotta.dev/2022/02/ssh-plus-tmux-automatically/</link><pubDate>Sun, 13 Feb 2022 20:20:27 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2022/02/ssh-plus-tmux-automatically/</guid><description>&lt;p>One of the most classic sysadmin/DevOps tasks is to use secure shell to connect to remote machines.&lt;/p>
-&lt;p>To persist those connections, a terminal multiplexer is often used, &lt;code>tmux&lt;/code> and &lt;code>screen&lt;/code> being the two most popular ones.&lt;/p>
-&lt;p>In this post I will cover a few different client-side and server-side ways to have &lt;code>ssh&lt;/code> automatically spawn &lt;code>tmux&lt;/code> upon connection.&lt;/p>
-&lt;h2 id="option-1-use-command-line-ssh-flags-client-side-recommended">Option #1: Use command-line ssh flags (client-side, recommended)&lt;/h2>
-&lt;p>Start &lt;code>tmux&lt;/code>, forcing unicode, attaching to and/or creating a session named &lt;em>main&lt;/em>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ssh user@host -t -- tmux -u new -A -s main
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>-u&lt;/code> is not strictly necessary, however I experienced occasional weirdness when connecting to some machines and omitting it. Some unicode characters wouldn&amp;rsquo;t be properly rendered, like the horizontal and vertical lines used to render tmux pane splits. Even though most machines should work just fine these days by supporting UTF-8 out-of-the-box, it&amp;rsquo;s safer to always include &lt;code>-u&lt;/code> just in case.&lt;/p>
-&lt;p>Tip: If it&amp;rsquo;s annoying to remember to type the full command above, consider adding an &lt;code>alias&lt;/code> in your shell config. Alternatively, use a ssh client that remembers your flags preferences such as the &lt;a href="https://chrome.google.com/webstore/detail/secure-shell/iodihamcpbpeioajjeobimgagajmlibd?hl=en">chrome secure shell&lt;/a> extension.&lt;/p>
-&lt;h2 id="option-2-use-sshconfig-client-side">Option #2: Use &lt;code>~/.ssh/config&lt;/code> (client-side)&lt;/h2>
-&lt;p>This option is very similar to the previous one, but the flags live in the ssh config rather then being specified at the command line:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ cat ~/.ssh/config
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Host *
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> RequestTTY yes
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> RemoteCommand tmux -u new -A -s main
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You don&amp;rsquo;t need to match all hosts (&lt;code>Host *&lt;/code>), if you&amp;rsquo;d rather match one or more specific hosts, refer to the ssh config syntax &lt;code>ssh_config(5)&lt;/code> to add them. A simple example would be &lt;code>Host mymachine.example.org&lt;/code>.&lt;/p>
-&lt;p>&lt;strong>Caveat&lt;/strong>: I&amp;rsquo;ve found this method interferes with &lt;code>git&lt;/code> + &lt;code>ssh&lt;/code> authentication. More specifically:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ git remote -v
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>origin	git@github.com:thiagowfx/.dotfiles.git &lt;span style="color:#f92672">(&lt;/span>fetch&lt;span style="color:#f92672">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>origin	git@github.com:thiagowfx/.dotfiles.git &lt;span style="color:#f92672">(&lt;/span>push&lt;span style="color:#f92672">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ git push
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Cannot execute command-line and remote command.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fatal: Could not read from remote repository.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Please make sure you have the correct access rights
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>and the repository exists.
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Therefore I discourage it, unless you only use it with specific hosts i.e. don&amp;rsquo;t use it with &lt;code>Host *&lt;/code>.&lt;/p>
-&lt;h2 id="option-3-use-bash_profile-or-similar-server-side-recommended">Option #3: Use &lt;code>~/.bash_profile&lt;/code> or similar (server-side, recommended)&lt;/h2>
-&lt;p>This method leverages your login shell startup config file (&lt;code>~/.bash_profile&lt;/code>, &lt;code>~/.zprofile&lt;/code>, etc) to automatically spawn &lt;code>tmux&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># This file is invoked as part of my ~/.bash_profile.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ cat ~/.profile.d/tmux_auto_ssh.sh.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Automatically spawn tmux within ssh sessions for interactive terminals.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># https://stackoverflow.com/a/43819740/1745064&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># The session is called `main`.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Create a session with PREFIX :new, rename with PREFIX $, toggle with PREFIX s.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Escape hatch:&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># ssh &amp;lt;host&amp;gt; -t -- NOTMUX=1 &amp;lt;shell&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">[&lt;/span> -z &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$NOTMUX&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#f92672">[&lt;/span> -z &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$TMUX&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#f92672">[&lt;/span> -n &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$SSH_TTY&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#f92672">[[&lt;/span> $- &lt;span style="color:#f92672">=&lt;/span>~ i &lt;span style="color:#f92672">]]&lt;/span>; &lt;span style="color:#66d9ef">then&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> tmux -u new -A -s main
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> exit
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The &lt;code>if&lt;/code> basically checks:&lt;/p>
-&lt;ul>
-&lt;li>whether we&amp;rsquo;re not already inside a tmux session (we shouldn&amp;rsquo;t be), so that we don&amp;rsquo;t nest &lt;code>tmux&lt;/code>&lt;/li>
-&lt;li>whether we&amp;rsquo;re accessing the shell via &lt;code>ssh&lt;/code> (we should be)&lt;/li>
-&lt;li>whether we&amp;rsquo;re accessing an interactive shell (we should be), so that it doesn&amp;rsquo;t interfere with oneshot &lt;code>ssh&lt;/code> commands&lt;/li>
-&lt;/ul>
-&lt;p>There&amp;rsquo;s also a escape hatch. If you want to get an interactive shell but bypass &lt;code>tmux&lt;/code> for some reason&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>, just set &lt;code>NOTMUX=1&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ssh user@host -t -- NOTMUX&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span> bash
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="final-remarks">Final remarks&lt;/h2>
-&lt;p>My favorite methods are #1 and #3, and whether I use one or the other depends whether I want to unconditionally spawn &lt;code>tmux&lt;/code> server-side, or selectively spawn &lt;code>tmux&lt;/code> client-side.&lt;/p>
-&lt;p>When using chrome secure shell (hterm) I find #1 convenient because hterm remembers your &lt;code>ssh&lt;/code> host settings. That said, in scenarios where I fully control a host and it&amp;rsquo;s not solely used for production, #3 is my favorite as it works unconditionally regardless of the client terminal emulator I am using.&lt;/p>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>For example, maybe if &lt;code>tmux&lt;/code> broke due to a recent upgrade, or if the &lt;code>~/.tmux.conf&lt;/code> is invalid.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
 &lt;/div></description></item></channel></rss>
