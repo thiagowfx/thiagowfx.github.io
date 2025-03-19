@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 18 Mar 2025 17:53:54 +0100</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Goodreads</title><link>https://perrotta.dev/2025/03/goodreads/</link><pubDate>Tue, 18 Mar 2025 17:53:54 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/goodreads/</guid><description>&lt;p>One of the most joyful aspects of using the internet is to &lt;del>stalk&lt;/del> keep track
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 19 Mar 2025 11:40:43 +0100</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform: rename resources</title><link>https://perrotta.dev/2025/03/terraform-rename-resources/</link><pubDate>Wed, 19 Mar 2025 11:40:43 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/terraform-rename-resources/</guid><description>&lt;p>Sometimes I need to make a simple refactoring rename change to a terraform
+resource that has already been applied. For example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_api_gateway_request_validator&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;delete&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Validate body, query string parameters, and headers&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">rest_api_id&lt;/span> = &lt;span style="color:#a6e22e">aws_api_gateway_rest_api&lt;/span>.&lt;span style="color:#a6e22e">this&lt;/span>.&lt;span style="color:#a6e22e">id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">validate_request_body&lt;/span> = &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">validate_request_parameters&lt;/span> = &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>to&lt;/p>
+&lt;pre tabindex="0">&lt;code>resource &amp;#34;aws_api_gateway_request_validator&amp;#34; &amp;#34;this&amp;#34; {
+ name = &amp;#34;Validate body, query string parameters, and headers&amp;#34;
+ rest_api_id = aws_api_gateway_rest_api.this.id
+ validate_request_body = true
+ validate_request_parameters = true
+}
+&lt;/code>&lt;/pre>&lt;p>The simplest way to do so is to &lt;code>terraform apply&lt;/code>. However, that incurs
+destruction + re-creation of the resource, which would incur downtime in case
+it&amp;rsquo;s already deployed in prod.&lt;/p>
+&lt;p>The best way is &lt;code>% terraform state mv aws_api_gateway_request_validator.{delete,this}&lt;/code>. In-place move, simple and
+easy.&lt;/p>
+&lt;p>When doing it at scale, running multiple &lt;code>terraform state mv&lt;/code> commands could be
+cumbersome.&lt;/p>
+&lt;p>There&amp;rsquo;s a second way, using the
+&lt;a href="https://developer.hashicorp.com/terraform/language/moved">&lt;code>moved&lt;/code>&lt;/a> block in HCL:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">moved&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">from&lt;/span> = &lt;span style="color:#a6e22e">aws_api_gateway_request_validator&lt;/span>.&lt;span style="color:#a6e22e">delete&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">to&lt;/span> = &lt;span style="color:#a6e22e">aws_api_gateway_request_validator&lt;/span>.&lt;span style="color:#a6e22e">this&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>Note&lt;/strong>: &lt;code>terraform&lt;/code> docs call this operation &amp;ldquo;move&amp;rdquo;, instead of &amp;ldquo;rename&amp;rdquo;.&lt;/p></description></item><item><title>Goodreads</title><link>https://perrotta.dev/2025/03/goodreads/</link><pubDate>Tue, 18 Mar 2025 17:53:54 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/goodreads/</guid><description>&lt;p>One of the most joyful aspects of using the internet is to &lt;del>stalk&lt;/del> keep track
 of what my friends are reading online.&lt;/p>
 &lt;p>Most of my bookworm friends have a &lt;a href="https://goodreads.com/">Goodreads&lt;/a> account,
 including &lt;a href="https://www.goodreads.com/user/show/7873832-thiago">myself&lt;/a>.
@@ -1624,18 +1652,4 @@ intended to block malware and/or adult content.&lt;/p>
 &lt;ul>
 &lt;li>Malware: &lt;code>1.1.1.2&lt;/code>, &lt;code>1.0.0.2&lt;/code>&lt;/li>
 &lt;li>Adult content: &lt;code>1.1.1.3&lt;/code>, &lt;code>1.0.0.3&lt;/code>&lt;/li>
-&lt;/ul></description></item><item><title>codespell: ignore words</title><link>https://perrotta.dev/2025/01/codespell-ignore-words/</link><pubDate>Mon, 20 Jan 2025 10:54:55 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/codespell-ignore-words/</guid><description>&lt;p>When using &lt;a href="https://github.com/codespell-project/codespell">codespell&lt;/a> to spell
-check a git repository, sometimes you may run into false positive words.&lt;/p>
-&lt;p>There are two ways to whitelist them.&lt;/p>
-&lt;p>The first one is via command-line arguments:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>codespell -L&lt;span style="color:#f92672">=&lt;/span>ist -L&lt;span style="color:#f92672">=&lt;/span>regio
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>or&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>codespell -L&lt;span style="color:#f92672">=&lt;/span>ist,regio
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The second one is with a dedicated &lt;code>.ignore-words.txt&lt;/code> file:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat .ignore-words.txt
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># keep-sorted start&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ist
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>regio
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># keep-sorted end&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% codespell -I .ignore-words.txt
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
+&lt;/ul></description></item></channel></rss>

@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 17 Mar 2025 21:06:28 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform: create zip files</title><link>https://perrotta.dev/2025/03/terraform-create-zip-files/</link><pubDate>Mon, 17 Mar 2025 21:06:28 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/terraform-create-zip-files/</guid><description>&lt;p>When creating &lt;code>.zip&lt;/code> files with terraform, for example, with the purpose of
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 19 Mar 2025 11:40:43 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform: rename resources</title><link>https://perrotta.dev/2025/03/terraform-rename-resources/</link><pubDate>Wed, 19 Mar 2025 11:40:43 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/terraform-rename-resources/</guid><description>&lt;p>Sometimes I need to make a simple refactoring rename change to a terraform
+resource that has already been applied. For example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_api_gateway_request_validator&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;delete&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Validate body, query string parameters, and headers&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">rest_api_id&lt;/span> = &lt;span style="color:#a6e22e">aws_api_gateway_rest_api&lt;/span>.&lt;span style="color:#a6e22e">this&lt;/span>.&lt;span style="color:#a6e22e">id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">validate_request_body&lt;/span> = &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">validate_request_parameters&lt;/span> = &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>to&lt;/p>
+&lt;pre tabindex="0">&lt;code>resource &amp;#34;aws_api_gateway_request_validator&amp;#34; &amp;#34;this&amp;#34; {
+ name = &amp;#34;Validate body, query string parameters, and headers&amp;#34;
+ rest_api_id = aws_api_gateway_rest_api.this.id
+ validate_request_body = true
+ validate_request_parameters = true
+}
+&lt;/code>&lt;/pre>&lt;p>The simplest way to do so is to &lt;code>terraform apply&lt;/code>. However, that incurs
+destruction + re-creation of the resource, which would incur downtime in case
+it&amp;rsquo;s already deployed in prod.&lt;/p>
+&lt;p>The best way is &lt;code>% terraform state mv aws_api_gateway_request_validator.{delete,this}&lt;/code>. In-place move, simple and
+easy.&lt;/p>
+&lt;p>When doing it at scale, running multiple &lt;code>terraform state mv&lt;/code> commands could be
+cumbersome.&lt;/p>
+&lt;p>There&amp;rsquo;s a second way, using the
+&lt;a href="https://developer.hashicorp.com/terraform/language/moved">&lt;code>moved&lt;/code>&lt;/a> block in HCL:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">moved&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">from&lt;/span> = &lt;span style="color:#a6e22e">aws_api_gateway_request_validator&lt;/span>.&lt;span style="color:#a6e22e">delete&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">to&lt;/span> = &lt;span style="color:#a6e22e">aws_api_gateway_request_validator&lt;/span>.&lt;span style="color:#a6e22e">this&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>Note&lt;/strong>: &lt;code>terraform&lt;/code> docs call this operation &amp;ldquo;move&amp;rdquo;, instead of &amp;ldquo;rename&amp;rdquo;.&lt;/p></description></item><item><title>Terraform: create zip files</title><link>https://perrotta.dev/2025/03/terraform-create-zip-files/</link><pubDate>Mon, 17 Mar 2025 21:06:28 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/terraform-create-zip-files/</guid><description>&lt;p>When creating &lt;code>.zip&lt;/code> files with terraform, for example, with the purpose of
 uploading them to an &lt;a href="https://aws.amazon.com/lambda/">AWS Lambda&lt;/a>, at least two
 approaches exist to do so.&lt;/p>
 &lt;p>In the examples below, assume a NodeJS source file named &lt;code>index.mjs&lt;/code>. It should
@@ -1587,28 +1615,4 @@ subshell. Internal viewer and editor are included.&lt;/p>
 pane (toggle pane focus with &lt;code>Tab&lt;/code>), and then perform a visual inspection (use
 arrow keys to navigate). The effect is comparable to having two side-by-side
 &lt;code>tmux&lt;/code> panes with &lt;a href="https://github.com/ranger/ranger">&lt;code>ranger&lt;/code>&lt;/a> opened in each of
-them.&lt;/p></description></item><item><title>nginx: add basic auth</title><link>https://perrotta.dev/2025/01/nginx-add-basic-auth/</link><pubDate>Tue, 07 Jan 2025 03:28:02 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/nginx-add-basic-auth/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: You want to expose a HTTPS service from your cloud VPS to
-the public Internet. You do not wish to use a VPN (e.g.
-&lt;a href="https://tailscale.com/">tailscale&lt;/a>) to do so – which is a great way to address
-this, but it&amp;rsquo;s out of scope in this particular instance. How to proceed?&lt;/p>
-&lt;p>Here&amp;rsquo;s a simple yet effective way: use / configure &lt;a href="https://nginx.org/">nginx&lt;/a>
-as a reverse proxy.&lt;/p>
-&lt;p>Then add &lt;a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication">HTTP basic
-auth&lt;/a> to it:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% doas htpasswd -c /etc/nginx/.htpasswd myuser
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The command will prompt for a password.&lt;/p>
-&lt;p>Once it&amp;rsquo;s set, add two lines to the corresponding &lt;code>server {}&lt;/code> block in your
-nginx config:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-nginx" data-lang="nginx">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">server&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[...]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">auth_basic&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Restricted&lt;/span> &lt;span style="color:#e6db74">Access&amp;#34;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">auth_basic_user_file&lt;/span> &lt;span style="color:#e6db74">/etc/nginx/.htpasswd&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[...]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And finally: run &lt;code>nginx -s reload&lt;/code>.&lt;/p>
-&lt;p>Now, whenever you navigate to that host, you&amp;rsquo;ll be prompted to enter the basic
-HTTP auth creds above.&lt;/p>
-&lt;p>The beauty of this approach is that it works for any HTTPS server, as it is
-service agnostic.&lt;/p>
-&lt;p>The next level would be to integrate an SSO solution such as
-&lt;a href="https://goauthentik.io/">Authentik&lt;/a>, however it&amp;rsquo;s quite more complex.&lt;/p></description></item></channel></rss>
+them.&lt;/p></description></item></channel></rss>
