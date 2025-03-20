@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 20 Mar 2025 13:10:52 +0100</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>My packaging policy</title><link>https://perrotta.dev/2025/03/my-packaging-policy/</link><pubDate>Thu, 20 Mar 2025 13:10:52 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/my-packaging-policy/</guid><description>&lt;p>&lt;a href="https://whynothugo.nl/journal/2022/08/13/my-packaging-policy/">My packaging policy&lt;/a> by Hugo Osvaldo Barrera:&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 20 Mar 2025 13:29:15 +0100</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>git: prefer switch over checkout</title><link>https://perrotta.dev/2025/03/git-prefer-switch-over-checkout/</link><pubDate>Thu, 20 Mar 2025 13:29:15 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/git-prefer-switch-over-checkout/</guid><description>&lt;p>&lt;a href="https://stackoverflow.com/questions/57265785/whats-the-difference-between-git-switch-and-git-checkout-branch#57266005">Preliminaries&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>What&amp;rsquo;s the difference between &amp;lsquo;git switch&amp;rsquo; and &amp;lsquo;git checkout&amp;rsquo; &lt;branch>?&lt;/p>
+&lt;p>Git 2.23 introduces a new command &lt;code>git switch&lt;/code>. After reading the
+documentation, it seems pretty much the same as &lt;code>git checkout &amp;lt;branchname&amp;gt;&lt;/code>.
+What is the difference or use case?&lt;/p>
+&lt;p>&lt;code>git switch&lt;/code> can now be used to change branches, as git checkout &lt;branchname>
+does&lt;/p>
+&lt;p>People are confused by these different ways to use git checkout, as you can
+see from the many questions regarding git checkout here on Stack Overflow. Git
+developers seem to have taken this into account.&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;a href="https://git-scm.com/docs/git-switch/2.23.0">&lt;code>git switch&lt;/code>&lt;/a> is the idiomatic way
+to switch branches these days. &lt;code>git checkout&lt;/code> can be ambiguous; not only it
+switches branches, it can also revert/reset files and directories.&lt;/p>
+&lt;p>I unexpectedly hit this ambiguity today.&lt;/p>
+&lt;p>I have this &lt;code>git bd&lt;/code> alias:&lt;/p>
+&lt;pre tabindex="0">&lt;code>% grep -E &amp;#39;(bd|default\b)&amp;#39; ~/.gitconfig
+ bd = !branch=&amp;#34;$(git branch --show-current)&amp;#34; &amp;amp;&amp;amp; git default &amp;amp;&amp;amp; git branch -D &amp;#34;${branch:-$1}&amp;#34;
+ default = !git checkout main &amp;amp;&amp;gt;/dev/null || git checkout master
+&lt;/code>&lt;/pre>&lt;p>&amp;hellip;which is short for &amp;ldquo;branch delete&amp;rdquo;.&lt;/p>
+&lt;p>&lt;strong>Example&lt;/strong>: I am working on branch &lt;code>thiagowfx/my-branch&lt;/code>, then the commit/PR is
+eventually merged. My next action is &lt;code>git bd&lt;/code>, which a) switches to the default
+branch (main or master these days) and b) deletes the previous branch.&lt;/p>
+&lt;p>This works well most of the time.&lt;/p>
+&lt;p>Today, when
+&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/81638">bumping&lt;/a>
+the &lt;code>yamlfmt&lt;/code>
+&lt;a href="https://pkgs.alpinelinux.org/package/edge/testing/x86_64/yamlfmt">package&lt;/a> for
+Alpine Linux, I was in the &lt;code>yamlfmt&lt;/code> branch and then ran &lt;code>git bd&lt;/code>.&lt;/p>
+&lt;p>That didn&amp;rsquo;t do anything. Here&amp;rsquo;s the problem:&lt;/p>
+&lt;pre tabindex="0">&lt;code>% tree -L 1
+.
+├── CODINGSTYLE.md
+├── COMMITSTYLE.md
+├── README.md
+├── community
+├── main
+├── scripts
+└── testing
+&lt;/code>&lt;/pre>&lt;p>&amp;hellip;there&amp;rsquo;s a &lt;code>main/&lt;/code> directory in the repository root.&lt;/p>
+&lt;p>Thus &lt;code>git default&lt;/code>, which calls &lt;code>git checkout main&lt;/code>, treats &lt;code>main&lt;/code> as a
+directory in this context, instead of a branch.&lt;/p>
+&lt;p>One solution is to call &lt;code>git checkout main --&lt;/code> instead, which explicitly denotes
+&lt;code>main&lt;/code> as a branch&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>. However, that&amp;rsquo;s hard to remember and it&amp;rsquo;s also
+confusing. It&amp;rsquo;s easier to simply do &lt;code>git switch main&lt;/code>.&lt;/p>
+&lt;p>So here&amp;rsquo;s my updated alias, which works as originally intended:&lt;/p>
+&lt;pre tabindex="0">&lt;code>% grep -E &amp;#39;(bd|default\b)&amp;#39; ~/.gitconfig
+ bd = !branch=&amp;#34;$(git branch --show-current)&amp;#34; &amp;amp;&amp;amp; git default &amp;amp;&amp;amp; git branch -D &amp;#34;${branch:-$1}&amp;#34;
+ default = !git switch main &amp;amp;&amp;gt;/dev/null || git switch master
+&lt;/code>&lt;/pre>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>To explicitly denote it as a directory / file, call &lt;code>git checkout -- main&lt;/code>
+instead. I use this variant often to revert file modifications back to the
+original state.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>My packaging policy</title><link>https://perrotta.dev/2025/03/my-packaging-policy/</link><pubDate>Thu, 20 Mar 2025 13:10:52 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/my-packaging-policy/</guid><description>&lt;p>&lt;a href="https://whynothugo.nl/journal/2022/08/13/my-packaging-policy/">My packaging policy&lt;/a> by Hugo Osvaldo Barrera:&lt;/p>
 &lt;blockquote>
 &lt;p>The open source sphere has continuously had a lot of discussion regarding
 packaging, and there&amp;rsquo;s often an expectation that upstream developers should
@@ -1840,8 +1899,4 @@ snippets from Raycast to a location within version control, such as
 could manage them all via text in an easy to edit format such as YAML.&lt;/p>
 &lt;p>Another snippet example: &lt;code>@@gca&lt;/code> expands to:&lt;/p>
 &lt;pre tabindex="0">&lt;code>EDITOR=vim git commit --author=&amp;#34;Thiago Perrotta &amp;lt;{my-corp-email}&amp;gt;&amp;#34;
-&lt;/code>&lt;/pre>&lt;p>I chose &lt;code>@@&lt;/code> because that&amp;rsquo;s a chord I am unlikely to type.&lt;/p></description></item><item><title>Feel free to say no</title><link>https://perrotta.dev/2025/01/feel-free-to-say-no/</link><pubDate>Wed, 29 Jan 2025 13:47:33 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/feel-free-to-say-no/</guid><description>&lt;p>We&amp;rsquo;re all so &lt;a href="https://jeanhsu.substack.com/p/ask-vs-guess-culture">different&lt;/a>, I
-think it&amp;rsquo;s common courtesy to finish a formal request with &amp;ldquo;feel free to say
-no&amp;rdquo;, especially in work environments.&lt;/p>
-&lt;p>Some people are conflict averse and/or wary of denying requests for fear of
-increasing conflicts and/or retaliation, even when it isn&amp;rsquo;t warranted.&lt;/p></description></item></channel></rss>
+&lt;/code>&lt;/pre>&lt;p>I chose &lt;code>@@&lt;/code> because that&amp;rsquo;s a chord I am unlikely to type.&lt;/p></description></item></channel></rss>
