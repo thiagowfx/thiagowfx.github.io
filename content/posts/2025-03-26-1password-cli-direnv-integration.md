@@ -72,3 +72,7 @@ Now run `terraform apply` via `op run`, as follows:
 ```shell
 op run --env-file=.env -- terraform apply
 ```
+
+## References
+
+- https://mattedwards.org/2024/01/inject-secrets-into-terraform-environment-using-1password/
