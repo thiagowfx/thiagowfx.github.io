@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bestof on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/bestof/</link><description>Recent content in Bestof on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 19 Mar 2025 13:27:43 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>git freeze, git thaw</title><link>https://perrotta.dev/2025/03/git-freeze-git-thaw/</link><pubDate>Wed, 19 Mar 2025 13:27:43 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/git-freeze-git-thaw/</guid><description>&lt;p>Now I am becoming one of the snobs™ with the first sentence in the following
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 26 Mar 2025 14:15:15 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>1password CLI + direnv integration</title><link>https://perrotta.dev/2025/03/1password-cli--direnv-integration/</link><pubDate>Wed, 26 Mar 2025 14:15:15 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/1password-cli--direnv-integration/</guid><description>&lt;p>Let&amp;rsquo;s stay you&amp;rsquo;re working on a terraform module that has a sensitive variable
+named &lt;code>api_key&lt;/code> in &lt;code>variables.tf&lt;/code>.&lt;/p>
+&lt;p>When running &lt;code>terraform apply&lt;/code>, you&amp;rsquo;ll need to supply its value. Every. Single.
+Time.&lt;/p>
+&lt;p>We can make it persistent by setting &lt;code>export TF_VAR_api_key={my value}&lt;/code>.
+However this is only persistent within the current shell.&lt;/p>
+&lt;p>To make it persistent across multiple sessions, create a &lt;code>.envrc&lt;/code> file at the
+root module:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>export TF_VAR_api_key&lt;span style="color:#f92672">={&lt;/span>my value&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then source it: &lt;code>source ~/.envrc&lt;/code>. Now you have to source it every single time
+you open a new shell.&lt;/p>
+&lt;p>We can use &lt;a href="http://direnv.net/">&lt;code>direnv&lt;/code>&lt;/a> to do so automatically. It has been
+&lt;a href="https://perrotta.dev/2022/01/direnv-automate-your-environment-variables/">previously covered&lt;/a>. But&amp;hellip;now we have
+a secret stored as plain text in our filesystem.&lt;/p>
+&lt;p>We could store it in a more secure place, like a password manager, and then have
+a mechanism automatically fetch its value.&lt;/p>
+&lt;h2 id="first-approach">First approach&lt;/h2>
+&lt;p>When using 1Password, the &lt;a href="https://developer.1password.com/docs/cli/">1Password
+CLI&lt;/a> is such a mechanism.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>export TF_VAR_api_key&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>op run --no-masking -- op read &lt;span style="color:#e6db74">&amp;#34;op://{vault name}/{entry name}/{item name}&amp;#34;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can fetch the secret reference path from 1Password:
+&lt;a href="https://developer.1password.com/docs/cli/secret-references/">docs&lt;/a>. Click &amp;ldquo;Copy
+Secret Reference&amp;rdquo; in the corresponding entry item.&lt;/p>
+&lt;h2 id="second-approach">Second approach&lt;/h2>
+&lt;p>The above is one possibility, and it works flawlessly, but there&amp;rsquo;s a second
+approach that uses &lt;code>op run&lt;/code> alone with a secret reference that is dynamically
+replaced.&lt;/p>
+&lt;p>Create an &lt;code>.env&lt;/code> file:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>TF_VAR_api_key&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;op://TechOps - Infrastructure Automation Creds/AWS DNS-Changer staging/password&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Update the &lt;code>.envrc&lt;/code> file:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>dotenv
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now run &lt;code>terraform apply&lt;/code> via &lt;code>op run&lt;/code>, as follows:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>op run --env-file&lt;span style="color:#f92672">=&lt;/span>.env -- terraform apply
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>git freeze, git thaw</title><link>https://perrotta.dev/2025/03/git-freeze-git-thaw/</link><pubDate>Wed, 19 Mar 2025 13:27:43 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/git-freeze-git-thaw/</guid><description>&lt;p>Now I am becoming one of the snobs™ with the first sentence in the following
 paragraph. Here we go.&lt;/p>
 &lt;p>I had &lt;a href="https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview">Claude
 Code&lt;/a>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>
@@ -4224,120 +4260,4 @@ video call in Wayland and you&amp;rsquo;ll run into other quirks. I have mixed f
 and wouldn&amp;rsquo;t necessarily recommend it. I wouldn&amp;rsquo;t give an anti recommendation
 either. It&amp;rsquo;s complicated&amp;hellip;even though Wayland is supposed to overcome some X11
 / Xorg limitations, as a client and without knowing its internals I fail to see
-its advantages.&lt;/p></description></item><item><title>nix-env in a nutshell for basic usage in macOS</title><link>https://perrotta.dev/2022/02/nix-env-in-a-nutshell-for-basic-usage-in-macos/</link><pubDate>Wed, 16 Feb 2022 20:48:02 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2022/02/nix-env-in-a-nutshell-for-basic-usage-in-macos/</guid><description>&lt;p>I am currently evaluating &lt;a href="https://nixos.org/download.html">Nix&lt;/a> as a
-replacement for &lt;a href="https://brew.sh">Homebrew&lt;/a> CLI apps in macOS&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.
-&lt;a href="https://wickedchicken.github.io/post/macos-nix-setup/">Others&lt;/a>
-&lt;a href="https://ianthehenry.com/posts/how-to-learn-nix/switching-from-homebrew-to-nix/">have&lt;/a>
-&lt;a href="https://ghedam.at/15490/so-tell-me-about-nix">previously&lt;/a> written about this.&lt;/p>
-&lt;p>My goal is to keep a sane learning curve and learn things on-the-fly, only as
-needed. Nix is a massive ecosystem and has so many batteries included and
-components (NixOS, NixPkgs, NixOps, Nix programming language, nix-shell,
-nix-env, nix-darwin, home-manager, &amp;hellip;). The good news is that those components
-are for the most part modular, there&amp;rsquo;s no need to adopt them all in order to
-reap the benefits that Nix provides.&lt;/p>
-&lt;p>For now, I am only adopting &lt;code>nix-env&lt;/code> and &lt;code>nix-shell&lt;/code>, with no &lt;code>*.nix&lt;/code> config
-files. This post covers &lt;code>nix-env&lt;/code>.&lt;/p>
-&lt;p>For simplicity, think of &lt;code>nix-env&lt;/code> as a package manager, akin to &lt;code>apk&lt;/code>,
-&lt;code>pacman&lt;/code>, &lt;code>brew&lt;/code>, &lt;code>apt&lt;/code>, &lt;code>pkg&lt;/code>, etc.&lt;/p>
-&lt;h2 id="install-a-package">Install a package&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ nix-env -i moreutils
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>installing &lt;span style="color:#e6db74">&amp;#39;moreutils-0.67&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>building &lt;span style="color:#e6db74">&amp;#39;/nix/store/jsp0l5ny3kx8p9lx9w9r0x159i9jjnn6-user-environment.drv&amp;#39;&lt;/span>...
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I see some guides using &lt;code>nix-env -iA&lt;/code> but &lt;code>-i&lt;/code> seems to suffice. We could
-optionally specify the &lt;code>nixpkgs.&lt;/code> prefix:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ nix-env -i nixpkgs.moreutils
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: selector &lt;span style="color:#e6db74">&amp;#39;nixpkgs.moreutils&amp;#39;&lt;/span> matches no derivations
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Oh no! Maybe that&amp;rsquo;s what the &lt;code>-A&lt;/code> is for?&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ nix-env -iA nixpkgs.moreutils
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>replacing old &lt;span style="color:#e6db74">&amp;#39;moreutils-0.67&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>installing &lt;span style="color:#e6db74">&amp;#39;moreutils-0.67&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Indeed! Apparently that &lt;code>-A&lt;/code> thing stands for attribute. The only thing I know
-is that there are both &lt;code>nixpkgs.*&lt;/code> and &lt;code>nixos.*&lt;/code>. But I don&amp;rsquo;t care about NixOS
-at this point. I&amp;rsquo;ll just ignore &lt;code>-A&lt;/code> from now on, for the time being.&lt;/p>
-&lt;h2 id="list-installed-packages">List installed packages&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ nix-env -q
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>moreutils-0.67
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Easy! This actually gets displayed in my &lt;code>less&lt;/code> pager.&lt;/p>
-&lt;h2 id="upgrade-installed-packages">Upgrade installed packages&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ nix-env -u
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Easy! At this point, I am not super confident whether that works as intended
-though. We will find out in a few days when there&amp;rsquo;s some update to one of my
-installed CLI applications. I&amp;rsquo;ve heard there&amp;rsquo;s something called nix channel to
-control that. Leaving it for another day though.&lt;/p>
-&lt;p>&lt;strong>Update(2022-02-18)&lt;/strong>: I learned that &lt;code>nix-env -u&lt;/code> is akin to &lt;code>apt upgrade&lt;/code> or
-&lt;code>apk upgrade&lt;/code>. It upgrades installed packages to newer versions but only if it
-is aware there are newer versions. To actually refresh the repositories à la
-&lt;code>apt update&lt;/code> or &lt;code>apk update&lt;/code>, use &lt;code>nix-channel --update&lt;/code>.&lt;/p>
-&lt;p>&lt;strong>Note&lt;/strong>: On macOS this needs to be &lt;code>sudo -i nix-channel --update&lt;/code>. See
-&lt;a href="https://github.com/NixOS/nix/issues/3595">issue&lt;/a>.&lt;/p>
-&lt;h2 id="uninstall-a-package">Uninstall a package&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ nix-env --uninstall moreutils
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>uninstalling &lt;span style="color:#e6db74">&amp;#39;moreutils-0.67&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>building &lt;span style="color:#e6db74">&amp;#39;/nix/store/5k8rsf4cxg4iz7cqnqirpww6r97bwnqr-user-environment.drv&amp;#39;&lt;/span>...
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Easy!&lt;/p>
-&lt;h2 id="search-for-packages">Search for packages&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ nix-env -qaP &lt;span style="color:#e6db74">&amp;#39;.*moreutils.*&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The &lt;code>.*&lt;/code> seems to be needed. It works if I omit them, but only if I write the exact package name (apparently called &amp;lsquo;derivation&amp;rsquo; in Nix):&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ nix-env -qaP moreutils
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>nixpkgs.moreutils moreutils-0.67
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If I write the wrong package name, the following happens:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ nix-env -qaP moreutil
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: selector &lt;span style="color:#e6db74">&amp;#39;moreutil&amp;#39;&lt;/span> matches no derivations, maybe you meant:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> moreutils
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It was helpful in this case, but I wouldn&amp;rsquo;t always count on that. It is a bit
-annoying that there&amp;rsquo;s no &lt;code>nix search moreutils&lt;/code> command, but it seems that
-&lt;code>nix-env&lt;/code> is very heavily tailored to use short flags, just like &lt;code>pacman&lt;/code> in
-Arch Linux. I got used to &lt;code>pacman&lt;/code>, hopefully I can get used to the &lt;code>nix-env&lt;/code>
-short flags at some point.&lt;/p>
-&lt;p>Actually I tried it out and there is a &lt;code>nix search&lt;/code> command!&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ nix search moreutils
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: experimental Nix feature &lt;span style="color:#e6db74">&amp;#39;nix-command&amp;#39;&lt;/span> is disabled; use &lt;span style="color:#e6db74">&amp;#39;--extra-experimental-features nix-command&amp;#39;&lt;/span> to override
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This isn&amp;rsquo;t very promising though. How come searching is experimental?! Anyway, I can live with the &lt;code>nix-env&lt;/code> form for now.&lt;/p>
-&lt;p>These are the 5 basic package management operations that I needed to bootstrap
-my dev environment. Without putting much effort on it, my initial list of package
-looks like this:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ nix-env -q
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>atool-0.39.0
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>bash-interactive-5.1-p12
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>coreutils-9.0
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>exa-0.10.1
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fpp-0.9.2
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fzf-0.29.0
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git-2.34.1
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>htop-3.1.2
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>hugo-0.92.0
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>jq-1.6
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>less-600
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>moreutils-0.67
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ncdu-1.16
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>perl5.34.0-ack-3.5.0
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ranger-1.9.3
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>stow-2.3.1
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>tmux-3.2a
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>tree-1.8.0
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vim-8.2.4186
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>watch-procps-3.3.16
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>wget-1.21.2
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>zoxide-0.8.0
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Those were very intuitive to find, with the exception of &lt;code>ack&lt;/code> and &lt;code>bash-interactive&lt;/code>:&lt;/p>
-&lt;ul>
-&lt;li>&lt;code>bash&lt;/code> is a bit odd because Nix splits it into two packages:
-a non-interactive version and an interactive version. I have no idea why. My
-&lt;code>~/.bashrc&lt;/code> wrecked havoc with the non-interactive version.&lt;/li>
-&lt;li>&lt;code>ack&lt;/code> is very oddly named. Really. Also: &lt;code>nix-env -i ack&lt;/code> doesn&amp;rsquo;t work, but
-&lt;code>nix-env -iA nixpkgs.ack&lt;/code> does. I suspect it will be hard to ignore &lt;code>-A&lt;/code> in
-the future.&lt;/li>
-&lt;/ul>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>Strictly speaking there&amp;rsquo;s nothing special about macOS in this context.
-The same setup can also be used in Linux distributions, for example, &lt;a href="https://ariya.io/2020/05/nix-package-manager-on-ubuntu-or-debian">Debian
-or Ubuntu&lt;/a>.
-In fact, this is what I did at $DAYJOB, because relying solely on Debian for
-package management is a very big limitation. I find that Nix complements the
-Debian repositories very well, the same way that it does for macOS.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item></channel></rss>
+its advantages.&lt;/p></description></item></channel></rss>

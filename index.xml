@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 25 Mar 2025 16:53:10 +0100</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Festering</title><link>https://perrotta.dev/2025/03/festering/</link><pubDate>Tue, 25 Mar 2025 16:53:10 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/festering/</guid><description>&lt;p>&lt;a href="https://joshuawold.com/lingering-emails/">Festering&lt;/a> by Joshua Wold (via &lt;a href="https://email-is-good.com/2025/03/24/festering/">Chris
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 26 Mar 2025 14:15:15 +0100</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>1password CLI + direnv integration</title><link>https://perrotta.dev/2025/03/1password-cli--direnv-integration/</link><pubDate>Wed, 26 Mar 2025 14:15:15 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/1password-cli--direnv-integration/</guid><description>&lt;p>Let&amp;rsquo;s stay you&amp;rsquo;re working on a terraform module that has a sensitive variable
+named &lt;code>api_key&lt;/code> in &lt;code>variables.tf&lt;/code>.&lt;/p>
+&lt;p>When running &lt;code>terraform apply&lt;/code>, you&amp;rsquo;ll need to supply its value. Every. Single.
+Time.&lt;/p>
+&lt;p>We can make it persistent by setting &lt;code>export TF_VAR_api_key={my value}&lt;/code>.
+However this is only persistent within the current shell.&lt;/p>
+&lt;p>To make it persistent across multiple sessions, create a &lt;code>.envrc&lt;/code> file at the
+root module:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>export TF_VAR_api_key&lt;span style="color:#f92672">={&lt;/span>my value&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then source it: &lt;code>source ~/.envrc&lt;/code>. Now you have to source it every single time
+you open a new shell.&lt;/p>
+&lt;p>We can use &lt;a href="http://direnv.net/">&lt;code>direnv&lt;/code>&lt;/a> to do so automatically. It has been
+&lt;a href="https://perrotta.dev/2022/01/direnv-automate-your-environment-variables/">previously covered&lt;/a>. But&amp;hellip;now we have
+a secret stored as plain text in our filesystem.&lt;/p>
+&lt;p>We could store it in a more secure place, like a password manager, and then have
+a mechanism automatically fetch its value.&lt;/p>
+&lt;h2 id="first-approach">First approach&lt;/h2>
+&lt;p>When using 1Password, the &lt;a href="https://developer.1password.com/docs/cli/">1Password
+CLI&lt;/a> is such a mechanism.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>export TF_VAR_api_key&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>op run --no-masking -- op read &lt;span style="color:#e6db74">&amp;#34;op://{vault name}/{entry name}/{item name}&amp;#34;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can fetch the secret reference path from 1Password:
+&lt;a href="https://developer.1password.com/docs/cli/secret-references/">docs&lt;/a>. Click &amp;ldquo;Copy
+Secret Reference&amp;rdquo; in the corresponding entry item.&lt;/p>
+&lt;h2 id="second-approach">Second approach&lt;/h2>
+&lt;p>The above is one possibility, and it works flawlessly, but there&amp;rsquo;s a second
+approach that uses &lt;code>op run&lt;/code> alone with a secret reference that is dynamically
+replaced.&lt;/p>
+&lt;p>Create an &lt;code>.env&lt;/code> file:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>TF_VAR_api_key&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;op://TechOps - Infrastructure Automation Creds/AWS DNS-Changer staging/password&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Update the &lt;code>.envrc&lt;/code> file:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>dotenv
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now run &lt;code>terraform apply&lt;/code> via &lt;code>op run&lt;/code>, as follows:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>op run --env-file&lt;span style="color:#f92672">=&lt;/span>.env -- terraform apply
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Disclosing AI in pull requests</title><link>https://perrotta.dev/2025/03/disclosing-ai-in-pull-requests/</link><pubDate>Wed, 26 Mar 2025 13:07:52 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/disclosing-ai-in-pull-requests/</guid><description>&lt;p>As we start to draft more PRs with the help of AI, I am thinking to adopt a
+subtle approach to signal that all (or most) of a given PR was created with the
+help of AI.&lt;/p>
+&lt;p>Perhaps by adding a &lt;code>:robot:&lt;/code> 🤖 emoji in the commit message.&lt;/p>
+&lt;p>&lt;a href="https://api.github.com/emojis">GitHub Markdown&lt;/a> will happily render &lt;code>:robot:&lt;/code>.&lt;/p>
+&lt;p>I could also add an &lt;a href="https://perrotta.dev/2025/03/create-a-git-commit-with-multiple-contributors/">attribution footer&lt;/a>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;#34;Co-authored-by: Claude &amp;lt;noreply@anthropic.com&amp;gt;&amp;#34;
+&lt;/code>&lt;/pre>&lt;p>It&amp;rsquo;s just a bit more verbose.&lt;/p>
+&lt;p>Have you thought about this?&lt;/p></description></item><item><title>Festering</title><link>https://perrotta.dev/2025/03/festering/</link><pubDate>Tue, 25 Mar 2025 16:53:10 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/festering/</guid><description>&lt;p>&lt;a href="https://joshuawold.com/lingering-emails/">Festering&lt;/a> by Joshua Wold (via &lt;a href="https://email-is-good.com/2025/03/24/festering/">Chris
 Coyier&lt;/a>):&lt;/p>
 &lt;blockquote>
 &lt;p>For at least the last fifteen years I&amp;rsquo;ve kept an inbox close to zero.
@@ -1705,86 +1749,4 @@ you the next time I log in (which is not often).&lt;/p>
 &lt;p>Could not resist the pun.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>MLC Chat: off-line LLMs in your iPhone</title><link>https://perrotta.dev/2025/02/mlc-chat-off-line-llms-in-your-iphone/</link><pubDate>Sat, 08 Feb 2025 16:26:04 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/02/mlc-chat-off-line-llms-in-your-iphone/</guid><description>&lt;p>&lt;a href="https://apps.apple.com/us/app/mlc-chat/id6448482937">MLC Chat&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>Large language models locally in phone&lt;/p>
-&lt;p>MLC Chat lets users chat with open language models locally on ipads and
-iphones. After a model is downloaded to the app, everything runs locally
-without server support, and it works without internet connections do not
-record any information.&lt;/p>
-&lt;p>Because the models run locally, it only works for the devices with sufficient
-VRAM depending on the models being used.&lt;/p>
-&lt;p>MLC Chat is part of open source project MLC LLM, with allows any language
-model to be deployed natively on a diverse set of hardware backends and native
-applications. MLC Chat is a runtime that runs different open model
-architectures on your phone. The app is intended for non-commercial purposes.
-It allows you to run open-language models downloaded from the internet. Each
-model can be subject to its respective licenses.&lt;/p>
-&lt;/blockquote>
-&lt;p>I originally heard about it last year via &lt;a href="https://simonwillison.net/">Simon
-Willison&lt;/a>.&lt;/p>
-&lt;p>I used the &lt;code>LLAMA-3.2-3B-Instruct&lt;/code> model on my iPhone 14 Pro, and it worked
-quite well&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>. The performance was quite acceptable for what I would expect of a
-local LLM on my phone in 2024-25. It takes a few seconds to initialize / warm up
-at startup.&lt;/p>
-&lt;p>A noticeable side effect: my phone heats up &lt;em>significantly&lt;/em> when using it for a
-couple of minutes. Battery drain is also perceivable.&lt;/p>
-&lt;p>The app is super simple. There&amp;rsquo;s no chat history, it&amp;rsquo;s a single conversation.&lt;/p>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>One minor annoyance: that model is quite verbose and somewhat overly
-enthusiastic. Did someone give it the personality from Microsoft Word
-Clippy?&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item><item><title>DuckDuckGo email protection</title><link>https://perrotta.dev/2025/02/duckduckgo-email-protection/</link><pubDate>Sat, 08 Feb 2025 14:50:39 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/02/duckduckgo-email-protection/</guid><description>&lt;p>One of my best discoveries this year: &lt;a href="https://duckduckgo.com/duckduckgo-help-pages/email-protection/">DuckDuckGo email
-protection&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>DuckDuckGo Email Protection is a free email forwarding service that removes
-multiple types of hidden email trackers and lets you create multiple unique
-private email addresses on the fly. Email Protection works with your current
-email account – no need to change providers or juggle multiple inboxes.&lt;/p>
-&lt;/blockquote>
-&lt;p>&lt;a href="https://perrotta.dev/2022/01/throwaway-disposable-accounts-for-ephemeral-use-cases/">Previously&lt;/a>: &lt;a href="https://10minutemail.com">https://10minutemail.com&lt;/a>, &lt;a href="https://dispostable.com">https://dispostable.com&lt;/a>, etc.&lt;/p>
-&lt;p>DuckDuckGo is (IMHO) better. Why?&lt;/p>
-&lt;ul>
-&lt;li>First of all, you can create a memorable and fixed email, which acts as an
-entrypoint. For example, &lt;code>foo@duck.com&lt;/code>. In principle you could keep using
-this email for all new services, especially when in a hurry. Emails delivered
-there get redirected to a forwarding email of your choice. Thus this
-integrates with your existing setup, and there&amp;rsquo;s no need to bypass CAPTCHAs
-just for the sake of reading emails, and you get to optionally keep them
-archived should you want to.&lt;/li>
-&lt;li>The added value comes from throwaway, disposable emails though: DuckDuckGo
-allows you to generate one-off emails in the form
-&lt;code>word1-word2-word3@duck.com&lt;/code>. You can create as many of these as you want,
-with a single click. These also get redirected to the previously specified
-forwarding email address.&lt;/li>
-&lt;li>The emails are scrubbed so to remove tracking and analytics. You get to know
-whether there were any trackers in the original email and, if yes, which ones
-were removed.&lt;/li>
-&lt;li>You can disassociate these emails at any time. It&amp;rsquo;s very easy to do so, by
-clicking a link that is embedded into each received email.&lt;/li>
-&lt;li>&lt;code>@duck.com&lt;/code> tends to be more reputable than other email services. Which means,
-chances are, it is less likely to be blocked. I ran into roadblocks many times
-when trying to use &lt;code>@dispostable.com&lt;/code> to sign up with throwaway accounts.&lt;/li>
-&lt;li>It&amp;rsquo;s completely free! A comparable service is &lt;a href="https://support.apple.com/en-ca/guide/icloud/mm9d9012c9e8/icloud">iCloud+ Hide My
-Email&lt;/a> by
-Apple, but it&amp;rsquo;s not free. Also, the Duck emails are manageable from the web,
-whereas iCloud+ can only be managed from Apple devices (as far as I know).&lt;/li>
-&lt;li>It integrates seamlessly with sign-up flows if you use its &lt;a href="https://duckduckgo.com/duckduckgo-help-pages/desktop/chrome/">Chrome
-extension&lt;/a>.
-Similar to how password managers typically integrate with sign-up forms.&lt;/li>
-&lt;li>The DuckDuckGo mobile app also supports it.&lt;/li>
-&lt;/ul>
-&lt;p>Ever since adopting this workflow I find it&amp;rsquo;s much easier to sign up to try out
-new services and/or websites, without having to use my personal email and
-worrying whether it would be possible to delete my account later on.&lt;/p>
-&lt;p>Furthermore it&amp;rsquo;s very easy to organize these emails in my client, as all I have
-to do is match emails coming from &lt;code>@duck.com&lt;/code>.&lt;/p>
-&lt;p>And I don&amp;rsquo;t have to worry about &amp;ldquo;wasting&amp;rdquo; my personal domain email address space
-with catch-all sign-ups (e.g. &lt;code>foo at perrotta . dev&lt;/code>).&lt;/p>
-&lt;p>The only downside is that it&amp;rsquo;s not possible to &lt;em>send&lt;/em> emails from these
-addresses. Therefore, it&amp;rsquo;s not an universal solution.&lt;/p></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>

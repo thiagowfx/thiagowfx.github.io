@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 24 Mar 2025 13:21:46 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>maccy: pin items</title><link>https://perrotta.dev/2025/03/maccy-pin-items/</link><pubDate>Mon, 24 Mar 2025 13:21:46 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/maccy-pin-items/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2023/12/maccy-macos-clipboard-manager/">Previously&lt;/a>.&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 26 Mar 2025 14:15:15 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>1password CLI + direnv integration</title><link>https://perrotta.dev/2025/03/1password-cli--direnv-integration/</link><pubDate>Wed, 26 Mar 2025 14:15:15 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/1password-cli--direnv-integration/</guid><description>&lt;p>Let&amp;rsquo;s stay you&amp;rsquo;re working on a terraform module that has a sensitive variable
+named &lt;code>api_key&lt;/code> in &lt;code>variables.tf&lt;/code>.&lt;/p>
+&lt;p>When running &lt;code>terraform apply&lt;/code>, you&amp;rsquo;ll need to supply its value. Every. Single.
+Time.&lt;/p>
+&lt;p>We can make it persistent by setting &lt;code>export TF_VAR_api_key={my value}&lt;/code>.
+However this is only persistent within the current shell.&lt;/p>
+&lt;p>To make it persistent across multiple sessions, create a &lt;code>.envrc&lt;/code> file at the
+root module:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>export TF_VAR_api_key&lt;span style="color:#f92672">={&lt;/span>my value&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then source it: &lt;code>source ~/.envrc&lt;/code>. Now you have to source it every single time
+you open a new shell.&lt;/p>
+&lt;p>We can use &lt;a href="http://direnv.net/">&lt;code>direnv&lt;/code>&lt;/a> to do so automatically. It has been
+&lt;a href="https://perrotta.dev/2022/01/direnv-automate-your-environment-variables/">previously covered&lt;/a>. But&amp;hellip;now we have
+a secret stored as plain text in our filesystem.&lt;/p>
+&lt;p>We could store it in a more secure place, like a password manager, and then have
+a mechanism automatically fetch its value.&lt;/p>
+&lt;h2 id="first-approach">First approach&lt;/h2>
+&lt;p>When using 1Password, the &lt;a href="https://developer.1password.com/docs/cli/">1Password
+CLI&lt;/a> is such a mechanism.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>export TF_VAR_api_key&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>op run --no-masking -- op read &lt;span style="color:#e6db74">&amp;#34;op://{vault name}/{entry name}/{item name}&amp;#34;&lt;/span>&lt;span style="color:#66d9ef">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can fetch the secret reference path from 1Password:
+&lt;a href="https://developer.1password.com/docs/cli/secret-references/">docs&lt;/a>. Click &amp;ldquo;Copy
+Secret Reference&amp;rdquo; in the corresponding entry item.&lt;/p>
+&lt;h2 id="second-approach">Second approach&lt;/h2>
+&lt;p>The above is one possibility, and it works flawlessly, but there&amp;rsquo;s a second
+approach that uses &lt;code>op run&lt;/code> alone with a secret reference that is dynamically
+replaced.&lt;/p>
+&lt;p>Create an &lt;code>.env&lt;/code> file:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>TF_VAR_api_key&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;op://TechOps - Infrastructure Automation Creds/AWS DNS-Changer staging/password&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Update the &lt;code>.envrc&lt;/code> file:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>dotenv
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now run &lt;code>terraform apply&lt;/code> via &lt;code>op run&lt;/code>, as follows:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>op run --env-file&lt;span style="color:#f92672">=&lt;/span>.env -- terraform apply
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Disclosing AI in pull requests</title><link>https://perrotta.dev/2025/03/disclosing-ai-in-pull-requests/</link><pubDate>Wed, 26 Mar 2025 13:07:52 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/disclosing-ai-in-pull-requests/</guid><description>&lt;p>As we start to draft more PRs with the help of AI, I am thinking to adopt a
+subtle approach to signal that all (or most) of a given PR was created with the
+help of AI.&lt;/p>
+&lt;p>Perhaps by adding a &lt;code>:robot:&lt;/code> 🤖 emoji in the commit message.&lt;/p>
+&lt;p>&lt;a href="https://api.github.com/emojis">GitHub Markdown&lt;/a> will happily render &lt;code>:robot:&lt;/code>.&lt;/p>
+&lt;p>I could also add an &lt;a href="https://perrotta.dev/2025/03/create-a-git-commit-with-multiple-contributors/">attribution footer&lt;/a>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;#34;Co-authored-by: Claude &amp;lt;noreply@anthropic.com&amp;gt;&amp;#34;
+&lt;/code>&lt;/pre>&lt;p>It&amp;rsquo;s just a bit more verbose.&lt;/p>
+&lt;p>Have you thought about this?&lt;/p></description></item><item><title>maccy: pin items</title><link>https://perrotta.dev/2025/03/maccy-pin-items/</link><pubDate>Mon, 24 Mar 2025 13:21:46 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/maccy-pin-items/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2023/12/maccy-macos-clipboard-manager/">Previously&lt;/a>.&lt;/p>
 &lt;p>Sometimes it&amp;rsquo;s useful to have certain code snippets be easily accessible from
 the clipboard manager.&lt;/p>
 &lt;p>As I use &lt;a href="https://github.com/p0deje/Maccy">Maccy&lt;/a>, I figured I should leverage
@@ -1751,50 +1795,4 @@ pull it into the editor window with your mouse.&lt;/p>
 &lt;/blockquote>
 &lt;p>It works indeed!&lt;/p>
 &lt;p>My previous alternative was to use the emoji picker to insert an emoji in
-another application (e.g. the Notes.app), and then manually cut and paste it.&lt;/p></description></item><item><title>Why self-answer questions in your own blog instead of Stack Overflow?</title><link>https://perrotta.dev/2025/01/why-self-answer-questions-in-your-own-blog-instead-of-stack-overflow/</link><pubDate>Thu, 09 Jan 2025 21:39:29 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/why-self-answer-questions-in-your-own-blog-instead-of-stack-overflow/</guid><description>&lt;p>I am a fan of the &lt;a href="https://stackexchange.com/">Stack Exchange&lt;/a> network, which
-includes &lt;a href="https://stackoverflow.com/">Stack Overflow&lt;/a>.&lt;/p>
-&lt;p>At the time of this post, I even link to &lt;a href="https://stackoverflow.com/users/1745064/thiagowfx">my
-profile&lt;/a> there from the
-footer of this website.&lt;/p>
-&lt;p>Nonetheless,
-&lt;a href="https://substack.evancarroll.com/p/the-erasure-of-luigi-mangione">nothing&lt;/a>
-beats &lt;a href="https://news.ycombinator.com/item?id=42642089">owning&lt;/a> your own
-&lt;a href="https://gist.github.com/hopeseekr/f522e380e35745bd5bdc3269a9f0b132">content&lt;/a>:&lt;/p>
-&lt;p>Theodore R. Smith:&lt;/p>
-&lt;blockquote>
-&lt;p>If someone with 20,000+ karma has their nicely-formatted questions closed so
-quickly, what must the newbies and rank-in-file encounter? This is probably a
-big reason why it&amp;rsquo;s declining.&lt;/p>
-&lt;/blockquote>
-&lt;p>Moderators tend to be extremely (nit)picky there, oftentimes in a way that is
-obtrusive and wielding gatekeeping, especially to newcomers.&lt;/p>
-&lt;p>It&amp;rsquo;s great when you&amp;rsquo;re under the radar and avoid them; otherwise, it can be
-quite cumbersome although, statistically speaking, it&amp;rsquo;s unlikely that you would
-encounter this experience. It only happened to me once in 12 years using the
-site – but it&amp;rsquo;s worth to note I am not much active there.&lt;/p>
-&lt;p>I am trying to post these &amp;ldquo;today I learned&amp;rdquo; posts in my own blog for a myriad of
-reasons, some of them including a) owning my content, b) not having to fight for
-the right of my own content to exist, c) not wasting time on &lt;a href="https://xkcd.com/386/">frivolous
-discussions&lt;/a> with moderators.&lt;/p>
-&lt;p>And there&amp;rsquo;s a bit of a psychological dopamine hit as well – it surely feels good
-to look back at a subset of lessons from what I have accomplished / learned,
-represented by textual blog posts.&lt;/p>
-&lt;p>In my opinion though the dopamine is only healthy because the blog is a toy
-project. If I had to commercialize it and/or have to care about viral content /
-number of readers / impressions / ad revenue then it would sooner or later feel
-burdensome and transactional.&lt;/p></description></item><item><title>ArgoCD: cache: key is missing</title><link>https://perrotta.dev/2025/01/argocd-cache-key-is-missing/</link><pubDate>Thu, 09 Jan 2025 20:20:03 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/01/argocd-cache-key-is-missing/</guid><description>&lt;p>If you experience the title error message in ArgoCD (e.g. via its web UI and/or
-in pod logs), it&amp;rsquo;s related to
-&lt;a href="https://github.com/argoproj/argo-cd/issues/5068">argo-cd#5068&lt;/a>. The full error
-message is:&lt;/p>
-&lt;pre tabindex="0">&lt;code>Unable to load data: cache: key is missing
-&lt;/code>&lt;/pre>&lt;p>As I
-&lt;a href="https://github.com/argoproj/argo-cd/issues/5068#issuecomment-2580878251">commented&lt;/a>
-in the bug, here&amp;rsquo;s how to fix it:&lt;/p>
-&lt;blockquote>
-&lt;p>The following workaround sufficed for me: &lt;code>k delete pod -n argocd argocd-application-controller-0&lt;/code>.&lt;/p>
-&lt;p>Initially I ran &lt;code>k rollout restart deployment -n argocd argocd-application-controller&lt;/code> but it didn&amp;rsquo;t work.&lt;/p>
-&lt;/blockquote>
-&lt;p>In my experience, this error only happens once, ephemerally, during ArgoCD
-bootstrapping. Once fixed it does not reoccur.&lt;/p>
-&lt;p>Another potential workaround is to disable redis / caching altogether, as ArgoCD
-can fully operate without it, but I wouldn&amp;rsquo;t recommend that.&lt;/p></description></item></channel></rss>
+another application (e.g. the Notes.app), and then manually cut and paste it.&lt;/p></description></item></channel></rss>
