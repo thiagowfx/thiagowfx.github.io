@@ -76,3 +76,4 @@ op run --env-file=.env -- terraform apply
 ## References
 
 - https://mattedwards.org/2024/01/inject-secrets-into-terraform-environment-using-1password/
+- https://nshipster.com/1password-cli/
