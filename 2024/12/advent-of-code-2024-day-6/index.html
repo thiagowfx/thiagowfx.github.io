@@ -26,49 +26,49 @@ with the immutability of python strings, i.e. given:</p><pre tabindex=0><code>l 
 </code></pre><p>&mldr;you can&rsquo;t simply do <code>l[0][0] = 'X'</code>, because python strings are immutable. We
 could define a new string and assign it to <code>l[0]</code>, or we could change the input
 to:</p><pre tabindex=0><code>l = [&#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;]
-</code></pre><p>&mldr;so that replacing characters becomes trivial.</p><p>The full solution:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#!/usr/bin/env python3</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> sys
+</code></pre><p>&mldr;so that replacing characters becomes trivial.</p><p>The full solution:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#7f848e>#!/usr/bin/env python3</span>
+</span></span><span style=display:flex><span><span style=color:#c678dd>import</span> <span style=color:#e06c75>sys</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>find</span>(lines, c):
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> i, line <span style=color:#f92672>in</span> enumerate(lines):
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> c <span style=color:#f92672>in</span> line:
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> i, line<span style=color:#f92672>.</span>index(c)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>raise</span> <span style=color:#a6e22e>ValueError</span>(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#39;Could not find </span><span style=color:#e6db74>{</span>c<span style=color:#e6db74>}</span><span style=color:#e6db74> in lines&#39;</span>)
+</span></span><span style=display:flex><span><span style=color:#c678dd>def</span> <span style=color:#61afef;font-weight:700>find</span>(<span style=color:#e06c75>lines</span>, <span style=color:#e06c75>c</span>):
+</span></span><span style=display:flex><span>    <span style=color:#c678dd>for</span> <span style=color:#e06c75>i</span>, <span style=color:#e06c75>line</span> <span style=color:#56b6c2>in</span> <span style=color:#e5c07b>enumerate</span>(<span style=color:#e06c75>lines</span>):
+</span></span><span style=display:flex><span>        <span style=color:#c678dd>if</span> <span style=color:#e06c75>c</span> <span style=color:#56b6c2>in</span> <span style=color:#e06c75>line</span>:
+</span></span><span style=display:flex><span>            <span style=color:#c678dd>return</span> <span style=color:#e06c75>i</span>, <span style=color:#e06c75>line</span><span style=color:#56b6c2>.</span><span style=color:#e06c75>index</span>(<span style=color:#e06c75>c</span>)
+</span></span><span style=display:flex><span>    <span style=color:#c678dd>raise</span> <span style=color:#e06c75>ValueError</span>(<span style=color:#98c379>f</span><span style=color:#98c379>&#39;Could not find </span><span style=color:#98c379>{</span><span style=color:#e06c75>c</span><span style=color:#98c379>}</span><span style=color:#98c379> in lines&#39;</span>)
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>move</span>(pos, dir, lines, visited):
-</span></span><span style=display:flex><span>    dirs_clockwise <span style=color:#f92672>=</span> ((<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>), (<span style=color:#ae81ff>0</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>), (<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>), (<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>))
+</span></span><span style=display:flex><span><span style=color:#c678dd>def</span> <span style=color:#61afef;font-weight:700>move</span>(<span style=color:#e06c75>pos</span>, <span style=color:#e5c07b>dir</span>, <span style=color:#e06c75>lines</span>, <span style=color:#e06c75>visited</span>):
+</span></span><span style=display:flex><span>    <span style=color:#e06c75>dirs_clockwise</span> <span style=color:#56b6c2>=</span> ((<span style=color:#d19a66>1</span>, <span style=color:#d19a66>0</span>), (<span style=color:#d19a66>0</span>, <span style=color:#56b6c2>-</span><span style=color:#d19a66>1</span>), (<span style=color:#56b6c2>-</span><span style=color:#d19a66>1</span>, <span style=color:#d19a66>0</span>), (<span style=color:#d19a66>0</span>, <span style=color:#d19a66>1</span>))
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>while</span> <span style=color:#66d9ef>True</span>:
-</span></span><span style=display:flex><span>        next_pos <span style=color:#f92672>=</span> pos[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>+</span> dir[<span style=color:#ae81ff>0</span>], pos[<span style=color:#ae81ff>1</span>] <span style=color:#f92672>+</span> dir[<span style=color:#ae81ff>1</span>]
+</span></span><span style=display:flex><span>    <span style=color:#c678dd>while</span> <span style=color:#e5c07b>True</span>:
+</span></span><span style=display:flex><span>        <span style=color:#e06c75>next_pos</span> <span style=color:#56b6c2>=</span> <span style=color:#e06c75>pos</span>[<span style=color:#d19a66>0</span>] <span style=color:#56b6c2>+</span> <span style=color:#e5c07b>dir</span>[<span style=color:#d19a66>0</span>], <span style=color:#e06c75>pos</span>[<span style=color:#d19a66>1</span>] <span style=color:#56b6c2>+</span> <span style=color:#e5c07b>dir</span>[<span style=color:#d19a66>1</span>]
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> next_pos[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>or</span> next_pos[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>&gt;=</span> len(lines) <span style=color:#f92672>or</span> next_pos[<span style=color:#ae81ff>1</span>] <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>or</span> next_pos[<span style=color:#ae81ff>1</span>] <span style=color:#f92672>&gt;=</span> len(lines[<span style=color:#ae81ff>0</span>]):
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span>        <span style=color:#c678dd>if</span> <span style=color:#e06c75>next_pos</span>[<span style=color:#d19a66>0</span>] <span style=color:#56b6c2>&lt;</span> <span style=color:#d19a66>0</span> <span style=color:#56b6c2>or</span> <span style=color:#e06c75>next_pos</span>[<span style=color:#d19a66>0</span>] <span style=color:#56b6c2>&gt;=</span> <span style=color:#e5c07b>len</span>(<span style=color:#e06c75>lines</span>) <span style=color:#56b6c2>or</span> <span style=color:#e06c75>next_pos</span>[<span style=color:#d19a66>1</span>] <span style=color:#56b6c2>&lt;</span> <span style=color:#d19a66>0</span> <span style=color:#56b6c2>or</span> <span style=color:#e06c75>next_pos</span>[<span style=color:#d19a66>1</span>] <span style=color:#56b6c2>&gt;=</span> <span style=color:#e5c07b>len</span>(<span style=color:#e06c75>lines</span>[<span style=color:#d19a66>0</span>]):
+</span></span><span style=display:flex><span>            <span style=color:#c678dd>break</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> lines[next_pos[<span style=color:#ae81ff>0</span>]][next_pos[<span style=color:#ae81ff>1</span>]] <span style=color:#f92672>in</span> <span style=color:#e6db74>&#39;.^&#39;</span>:
-</span></span><span style=display:flex><span>            pos <span style=color:#f92672>=</span> next_pos
-</span></span><span style=display:flex><span>            visited<span style=color:#f92672>.</span>add(pos)
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>elif</span> lines[next_pos[<span style=color:#ae81ff>0</span>]][next_pos[<span style=color:#ae81ff>1</span>]] <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;#&#39;</span>:
-</span></span><span style=display:flex><span>            dir <span style=color:#f92672>=</span> dirs_clockwise[(dirs_clockwise<span style=color:#f92672>.</span>index(dir) <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>) <span style=color:#f92672>%</span> <span style=color:#ae81ff>4</span>]
+</span></span><span style=display:flex><span>        <span style=color:#c678dd>if</span> <span style=color:#e06c75>lines</span>[<span style=color:#e06c75>next_pos</span>[<span style=color:#d19a66>0</span>]][<span style=color:#e06c75>next_pos</span>[<span style=color:#d19a66>1</span>]] <span style=color:#56b6c2>in</span> <span style=color:#98c379>&#39;.^&#39;</span>:
+</span></span><span style=display:flex><span>            <span style=color:#e06c75>pos</span> <span style=color:#56b6c2>=</span> <span style=color:#e06c75>next_pos</span>
+</span></span><span style=display:flex><span>            <span style=color:#e06c75>visited</span><span style=color:#56b6c2>.</span><span style=color:#e06c75>add</span>(<span style=color:#e06c75>pos</span>)
+</span></span><span style=display:flex><span>        <span style=color:#c678dd>elif</span> <span style=color:#e06c75>lines</span>[<span style=color:#e06c75>next_pos</span>[<span style=color:#d19a66>0</span>]][<span style=color:#e06c75>next_pos</span>[<span style=color:#d19a66>1</span>]] <span style=color:#56b6c2>==</span> <span style=color:#98c379>&#39;#&#39;</span>:
+</span></span><span style=display:flex><span>            <span style=color:#e5c07b>dir</span> <span style=color:#56b6c2>=</span> <span style=color:#e06c75>dirs_clockwise</span>[(<span style=color:#e06c75>dirs_clockwise</span><span style=color:#56b6c2>.</span><span style=color:#e06c75>index</span>(<span style=color:#e5c07b>dir</span>) <span style=color:#56b6c2>+</span> <span style=color:#d19a66>1</span>) <span style=color:#56b6c2>%</span> <span style=color:#d19a66>4</span>]
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>main</span>():
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>with</span> open(sys<span style=color:#f92672>.</span>argv[<span style=color:#ae81ff>1</span>]) <span style=color:#66d9ef>as</span> input:
-</span></span><span style=display:flex><span>        lines <span style=color:#f92672>=</span> input<span style=color:#f92672>.</span>read()<span style=color:#f92672>.</span>splitlines()
+</span></span><span style=display:flex><span><span style=color:#c678dd>def</span> <span style=color:#61afef;font-weight:700>main</span>():
+</span></span><span style=display:flex><span>    <span style=color:#c678dd>with</span> <span style=color:#e5c07b>open</span>(<span style=color:#e06c75>sys</span><span style=color:#56b6c2>.</span><span style=color:#e06c75>argv</span>[<span style=color:#d19a66>1</span>]) <span style=color:#c678dd>as</span> <span style=color:#e5c07b>input</span>:
+</span></span><span style=display:flex><span>        <span style=color:#e06c75>lines</span> <span style=color:#56b6c2>=</span> <span style=color:#e5c07b>input</span><span style=color:#56b6c2>.</span><span style=color:#e06c75>read</span>()<span style=color:#56b6c2>.</span><span style=color:#e06c75>splitlines</span>()
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    pos <span style=color:#f92672>=</span> find(lines, <span style=color:#e6db74>&#39;^&#39;</span>)
-</span></span><span style=display:flex><span>    dir <span style=color:#f92672>=</span> (<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>)  <span style=color:#75715e># up</span>
+</span></span><span style=display:flex><span>    <span style=color:#e06c75>pos</span> <span style=color:#56b6c2>=</span> <span style=color:#e06c75>find</span>(<span style=color:#e06c75>lines</span>, <span style=color:#98c379>&#39;^&#39;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#e5c07b>dir</span> <span style=color:#56b6c2>=</span> (<span style=color:#56b6c2>-</span><span style=color:#d19a66>1</span>, <span style=color:#d19a66>0</span>)  <span style=color:#7f848e># up</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    visited <span style=color:#f92672>=</span> set((pos,))
+</span></span><span style=display:flex><span>    <span style=color:#e06c75>visited</span> <span style=color:#56b6c2>=</span> <span style=color:#e5c07b>set</span>((<span style=color:#e06c75>pos</span>,))
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    move(pos, dir, lines, visited)
+</span></span><span style=display:flex><span>    <span style=color:#e06c75>move</span>(<span style=color:#e06c75>pos</span>, <span style=color:#e5c07b>dir</span>, <span style=color:#e06c75>lines</span>, <span style=color:#e06c75>visited</span>)
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e># part one</span>
-</span></span><span style=display:flex><span>    print(len(visited))
+</span></span><span style=display:flex><span>    <span style=color:#7f848e># part one</span>
+</span></span><span style=display:flex><span>    <span style=color:#e5c07b>print</span>(<span style=color:#e5c07b>len</span>(<span style=color:#e06c75>visited</span>))
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;__main__&#39;</span>:
-</span></span><span style=display:flex><span>    main()
+</span></span><span style=display:flex><span><span style=color:#c678dd>if</span> <span style=color:#e06c75>__name__</span> <span style=color:#56b6c2>==</span> <span style=color:#98c379>&#39;__main__&#39;</span>:
+</span></span><span style=display:flex><span>    <span style=color:#e06c75>main</span>()
 </span></span></code></pre></div><p>I did not solve part two yet. I know how to do it, but my initial approach is
 too brute force to my taste. Perhaps I&rsquo;ll come up with something clever later
 on.</p></content><div style=display:flex;justify-content:space-between><p><a href=https://perrotta.dev/tags/aoc/>#aoc</a>

@@ -40,9 +40,9 @@ YAML: enforce schema linting</h2><p><span class=pubdate-single><time datetime=20
 could <a href=https://json-schema.org/>write your own</a>.</p><p>JSON Schemas work on YAML files just fine.</p><p>Let&rsquo;s say you found a schema. For example, for <a href=https://json.schemastore.org/json-patch.json>JSON Patch</a>.</p><p>Assume this sample <code>.yaml</code> file:</p><pre tabindex=0><code>- op: remove
   path: /spec/syncPolicy/automated
 </code></pre><p>How to enforce the schema above in CI?</p><p>One approach I like is with <a href=https://github.com/redhat-developer/yaml-language-server>YAML Language
-Server</a> by Red Hat.</p><p>You start by annotating the file with the desired schema:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># yaml-language-server: $schema=https://json.schemastore.org/json-patch.json</span>
-</span></span><span style=display:flex><span>- <span style=color:#f92672>op</span>: <span style=color:#ae81ff>remove</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/spec/syncPolicy/automated</span>
+Server</a> by Red Hat.</p><p>You start by annotating the file with the desired schema:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#7f848e># yaml-language-server: $schema=https://json.schemastore.org/json-patch.json</span>
+</span></span><span style=display:flex><span>- <span style=color:#e06c75>op</span>: remove
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>path</span>: /spec/syncPolicy/automated
 </span></span></code></pre></div><p>And then you integrate it with a CI tool that is aware of it. I like
 <a href=https://pre-commit.com/>pre-commit.com</a>. Assuming you follow the pre-commit
 setup, integrate the hook:</p><pre tabindex=0><code>repos:
@@ -53,16 +53,16 @@ setup, integrate the hook:</p><pre tabindex=0><code>repos:
 </code></pre><p>Then <code>pre-commit run [--all-files] check-yamlschema</code> shall perform its job.</p><p><a href=https://github.com/jmlrt/check-yamlschema>https://github.com/jmlrt/check-yamlschema</a>:</p><blockquote><p>A CLI and pre-commit hook for jsonschema validation in YAML files with
 multiple documents</p><p>Parse multi-documents YAML files, look for inline schema comments, and
 validate the documents according to their schema.</p></blockquote><p>The <a href=https://json.schemastore.org/any.json>&lsquo;any&rsquo;</a> schema<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup> can be handy as an
-opt-out mechanism:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;$schema&#34;</span>: <span style=color:#e6db74>&#34;http://json-schema.org/draft-07/schema#&#34;</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;$id&#34;</span>: <span style=color:#e6db74>&#34;https://json.schemastore.org/any.json&#34;</span>,
-</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;anyOf&#34;</span>: [
-</span></span><span style=display:flex><span>    { <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;object&#34;</span> },
-</span></span><span style=display:flex><span>    { <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;array&#34;</span> },
-</span></span><span style=display:flex><span>    { <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;string&#34;</span> },
-</span></span><span style=display:flex><span>    { <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;number&#34;</span> },
-</span></span><span style=display:flex><span>    { <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;boolean&#34;</span> },
-</span></span><span style=display:flex><span>    { <span style=color:#f92672>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;null&#34;</span> }
+opt-out mechanism:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>&#34;$schema&#34;</span>: <span style=color:#98c379>&#34;http://json-schema.org/draft-07/schema#&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>&#34;$id&#34;</span>: <span style=color:#98c379>&#34;https://json.schemastore.org/any.json&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>&#34;anyOf&#34;</span>: [
+</span></span><span style=display:flex><span>    { <span style=color:#e06c75>&#34;type&#34;</span>: <span style=color:#98c379>&#34;object&#34;</span> },
+</span></span><span style=display:flex><span>    { <span style=color:#e06c75>&#34;type&#34;</span>: <span style=color:#98c379>&#34;array&#34;</span> },
+</span></span><span style=display:flex><span>    { <span style=color:#e06c75>&#34;type&#34;</span>: <span style=color:#98c379>&#34;string&#34;</span> },
+</span></span><span style=display:flex><span>    { <span style=color:#e06c75>&#34;type&#34;</span>: <span style=color:#98c379>&#34;number&#34;</span> },
+</span></span><span style=display:flex><span>    { <span style=color:#e06c75>&#34;type&#34;</span>: <span style=color:#98c379>&#34;boolean&#34;</span> },
+</span></span><span style=display:flex><span>    { <span style=color:#e06c75>&#34;type&#34;</span>: <span style=color:#98c379>&#34;null&#34;</span> }
 </span></span><span style=display:flex><span>  ]
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p><a href=https://github.com/SchemaStore/schemastore/pull/3885>Submitted</a> by yours truly.&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></content><div style=display:flex;justify-content:space-between><p><a href=https://perrotta.dev/tags/bestof/>#bestof</a>

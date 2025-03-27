@@ -61,48 +61,48 @@ In the examples below, assume a NodeJS source file named index.mjs. It should be
 • 1 min</span></p><content><p>When creating <code>.zip</code> files with terraform, for example, with the purpose of
 uploading them to an <a href=https://aws.amazon.com/lambda/>AWS Lambda</a>, at least two
 approaches exist to do so.</p><p>In the examples below, assume a NodeJS source file named <code>index.mjs</code>. It should
-be packaged into a <code>lambda.zip</code> archive.</p><h2 id=1-use-null_resourcehttpsregistryterraformioprovidershashicorpnulllatestdocsresourcesresource>1) Use <a href=https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource><code>null_resource</code></a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;null_resource&#34;</span> <span style=color:#e6db74>&#34;build_lambda&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>triggers</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>source_code_hash</span> = filebase64sha256(<span style=color:#e6db74>&#34;</span><span style=color:#e6db74>${</span><span style=color:#a6e22e>path</span>.module<span style=color:#e6db74>}</span><span style=color:#e6db74>/lambda/index.mjs&#34;</span>)
+be packaged into a <code>lambda.zip</code> archive.</p><h2 id=1-use-null_resourcehttpsregistryterraformioprovidershashicorpnulllatestdocsresourcesresource>1) Use <a href=https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource><code>null_resource</code></a></h2><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#c678dd>resource</span> <span style=color:#98c379>&#34;null_resource&#34;</span> <span style=color:#98c379>&#34;build_lambda&#34;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>triggers</span> = {
+</span></span><span style=display:flex><span>    <span style=color:#e06c75>source_code_hash</span> = <span style=color:#e5c07b>filebase64sha256</span>(<span style=color:#98c379>&#34;</span><span style=color:#98c379>${</span><span style=color:#e06c75>path</span>.<span style=color:#e5c07b>module</span><span style=color:#98c379>}</span><span style=color:#98c379>/lambda/index.mjs&#34;</span>)
 </span></span><span style=display:flex><span>  }
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>  provisioner</span> <span style=color:#e6db74>&#34;local-exec&#34;</span> {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>command</span> = <span style=color:#f92672>&lt;&lt;EOF</span><span style=color:#e6db74>
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>            cd ${path.module}/lambda
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>            zip -r lambda.zip index.mjs
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>        </span><span style=color:#f92672>EOF</span>
+</span></span><span style=display:flex><span><span style=color:#c678dd>
+</span></span></span><span style=display:flex><span><span style=color:#c678dd>  provisioner</span> <span style=color:#98c379>&#34;local-exec&#34;</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e06c75>command</span> = <span style=color:#56b6c2>&lt;&lt;EOF</span><span style=color:#98c379>
+</span></span></span><span style=display:flex><span><span style=color:#98c379>            cd ${path.module}/lambda
+</span></span></span><span style=display:flex><span><span style=color:#98c379>            zip -r lambda.zip index.mjs
+</span></span></span><span style=display:flex><span><span style=color:#98c379>        </span><span style=color:#56b6c2>EOF</span>
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_lambda_function&#34;</span> <span style=color:#e6db74>&#34;this&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>function_name</span> = <span style=color:#e6db74>&#34;dns-changer-delete&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>role</span>          = <span style=color:#a6e22e>aws_iam_role</span>.<span style=color:#a6e22e>this</span>.<span style=color:#a6e22e>arn</span>
+</span></span><span style=display:flex><span><span style=color:#c678dd>
+</span></span></span><span style=display:flex><span><span style=color:#c678dd>resource</span> <span style=color:#98c379>&#34;aws_lambda_function&#34;</span> <span style=color:#98c379>&#34;this&#34;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>function_name</span> = <span style=color:#98c379>&#34;dns-changer-delete&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>role</span>          = <span style=color:#e06c75>aws_iam_role</span>.<span style=color:#e06c75>this</span>.<span style=color:#e06c75>arn</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>filename</span>         = <span style=color:#e6db74>&#34;</span><span style=color:#e6db74>${</span><span style=color:#a6e22e>path</span>.module<span style=color:#e6db74>}</span><span style=color:#e6db74>/lambda/lambda.zip&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>source_code_hash</span> = filebase64sha256(<span style=color:#e6db74>&#34;</span><span style=color:#e6db74>${</span><span style=color:#a6e22e>path</span>.module<span style=color:#e6db74>}</span><span style=color:#e6db74>/lambda/lambda.zip&#34;</span>)
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>handler</span>          = &#34;index.<span style=color:#a6e22e>handler</span><span style=color:#e6db74>&#34;
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>  runtime          = &#34;</span><span style=color:#a6e22e>nodejs22</span>.<span style=color:#a6e22e>x</span><span style=color:#e6db74>&#34;
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>  depends_on = [null_resource.build_lambda]
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>}
-</span></span></span></code></pre></div><h2 id=2-use-archive_filehttpsregistryterraformioprovidershashicorparchivelatestdocsresourcesfile>2) Use <a href=https://registry.terraform.io/providers/hashicorp/archive/latest/docs/resources/file><code>archive_file</code></a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#66d9ef>data</span> <span style=color:#e6db74>&#34;archive_file&#34;</span> <span style=color:#e6db74>&#34;lambda_zip&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>type</span>        = <span style=color:#e6db74>&#34;zip&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>source_file</span> = <span style=color:#e6db74>&#34;</span><span style=color:#e6db74>${</span><span style=color:#a6e22e>path</span>.module<span style=color:#e6db74>}</span><span style=color:#e6db74>/lambda/index.mjs&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>output_path</span> = <span style=color:#e6db74>&#34;</span><span style=color:#e6db74>${</span><span style=color:#a6e22e>path</span>.module<span style=color:#e6db74>}</span><span style=color:#e6db74>/lambda/lambda.zip&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>filename</span>         = <span style=color:#98c379>&#34;</span><span style=color:#98c379>${</span><span style=color:#e06c75>path</span>.<span style=color:#e5c07b>module</span><span style=color:#98c379>}</span><span style=color:#98c379>/lambda/lambda.zip&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>source_code_hash</span> = <span style=color:#e5c07b>filebase64sha256</span>(<span style=color:#98c379>&#34;</span><span style=color:#98c379>${</span><span style=color:#e06c75>path</span>.<span style=color:#e5c07b>module</span><span style=color:#98c379>}</span><span style=color:#98c379>/lambda/lambda.zip&#34;</span>)
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>handler</span>          = <span style=color:#e5c07b>&#34;index</span>.<span style=color:#e06c75>handler</span><span style=color:#98c379>&#34;
+</span></span></span><span style=display:flex><span><span style=color:#98c379>  runtime          = &#34;</span><span style=color:#e06c75>nodejs22</span>.<span style=color:#e06c75>x</span><span style=color:#98c379>&#34;
+</span></span></span><span style=display:flex><span><span style=color:#98c379>
+</span></span></span><span style=display:flex><span><span style=color:#98c379>  depends_on = [null_resource.build_lambda]
+</span></span></span><span style=display:flex><span><span style=color:#98c379>}
+</span></span></span></code></pre></div><h2 id=2-use-archive_filehttpsregistryterraformioprovidershashicorparchivelatestdocsresourcesfile>2) Use <a href=https://registry.terraform.io/providers/hashicorp/archive/latest/docs/resources/file><code>archive_file</code></a></h2><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#c678dd>data</span> <span style=color:#98c379>&#34;archive_file&#34;</span> <span style=color:#98c379>&#34;lambda_zip&#34;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>type</span>        = <span style=color:#98c379>&#34;zip&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>source_file</span> = <span style=color:#98c379>&#34;</span><span style=color:#98c379>${</span><span style=color:#e06c75>path</span>.<span style=color:#e5c07b>module</span><span style=color:#98c379>}</span><span style=color:#98c379>/lambda/index.mjs&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>output_path</span> = <span style=color:#98c379>&#34;</span><span style=color:#98c379>${</span><span style=color:#e06c75>path</span>.<span style=color:#e5c07b>module</span><span style=color:#98c379>}</span><span style=color:#98c379>/lambda/lambda.zip&#34;</span>
 </span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_lambda_function&#34;</span> <span style=color:#e6db74>&#34;this&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>function_name</span> = <span style=color:#e6db74>&#34;dns-changer-delete&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>description</span>   = <span style=color:#e6db74>&#34;Delete DNS record sets for DNS Changer&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>role</span>          = <span style=color:#a6e22e>aws_iam_role</span>.<span style=color:#a6e22e>this</span>.<span style=color:#a6e22e>arn</span>
+</span></span><span style=display:flex><span><span style=color:#c678dd>
+</span></span></span><span style=display:flex><span><span style=color:#c678dd>resource</span> <span style=color:#98c379>&#34;aws_lambda_function&#34;</span> <span style=color:#98c379>&#34;this&#34;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>function_name</span> = <span style=color:#98c379>&#34;dns-changer-delete&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>description</span>   = <span style=color:#98c379>&#34;Delete DNS record sets for DNS Changer&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>role</span>          = <span style=color:#e06c75>aws_iam_role</span>.<span style=color:#e06c75>this</span>.<span style=color:#e06c75>arn</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>filename</span>         = data.<span style=color:#a6e22e>archive_file</span>.<span style=color:#a6e22e>lambda_zip</span>.<span style=color:#a6e22e>output_path</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>source_code_hash</span> = data.<span style=color:#a6e22e>archive_file</span>.<span style=color:#a6e22e>lambda_zip</span>.<span style=color:#a6e22e>output_base64sha256</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>handler</span>          = &#34;index.<span style=color:#a6e22e>handler</span><span style=color:#e6db74>&#34;
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>  runtime          = &#34;</span><span style=color:#a6e22e>nodejs22</span>.<span style=color:#a6e22e>x</span><span style=color:#e6db74>&#34;
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>  depends_on = [data.archive_file.lambda_zip]
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>}
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>filename</span>         = <span style=color:#e5c07b>data</span>.<span style=color:#e06c75>archive_file</span>.<span style=color:#e06c75>lambda_zip</span>.<span style=color:#e06c75>output_path</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>source_code_hash</span> = <span style=color:#e5c07b>data</span>.<span style=color:#e06c75>archive_file</span>.<span style=color:#e06c75>lambda_zip</span>.<span style=color:#e06c75>output_base64sha256</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>handler</span>          = <span style=color:#e5c07b>&#34;index</span>.<span style=color:#e06c75>handler</span><span style=color:#98c379>&#34;
+</span></span></span><span style=display:flex><span><span style=color:#98c379>  runtime          = &#34;</span><span style=color:#e06c75>nodejs22</span>.<span style=color:#e06c75>x</span><span style=color:#98c379>&#34;
+</span></span></span><span style=display:flex><span><span style=color:#98c379>
+</span></span></span><span style=display:flex><span><span style=color:#98c379>  depends_on = [data.archive_file.lambda_zip]
+</span></span></span><span style=display:flex><span><span style=color:#98c379>}
 </span></span></span></code></pre></div><p>I prefer the second approach.</p><p>Furthermore, it only requires one <code>terraform apply</code> per file update, whereas
 the first one requires two.</p></content><div style=display:flex;justify-content:space-between><p><a href=https://perrotta.dev/tags/dev/>#dev</a></p><p>Reply via <a href='mailto:serendipity@perrotta.dev?subject=Reply to: Terraform%3a%20create%20zip%20files'>email</a></p></div></main><hr><footer><span>© 2021 - 2025 Thiago Perrotta ·
 <a href=https://creativecommons.org/licenses/by-nc-sa/4.0/>some rights reserved</a> ·

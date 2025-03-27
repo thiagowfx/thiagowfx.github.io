@@ -32,64 +32,64 @@ A good analogy is <code>fish</code> versus <code>bash</code> when comparing <cod
 <a href="https://github.com/casey/just?tab=readme-ov-file">README.md</a> alone as it&rsquo;s
 quite comprehensive. There&rsquo;s also a <a href=https://just.systems/man/en/>gitbook</a>.</p><p><a href=https://til.simonwillison.net/django/just-with-django>Simon Willison</a> prompted
 me to try it out.</p><p>As an exercise I decided to convert the <code>Makefile</code> used to manage this blog into
-a <code>Justfile</code>.</p><p>The original <code>Makefile</code>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-makefile data-lang=makefile><span style=display:flex><span><span style=color:#75715e># Sitemap URL
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>SITEMAP <span style=color:#f92672>=</span> https://perrotta.dev/sitemap.xml
+a <code>Justfile</code>.</p><p>The original <code>Makefile</code>:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-makefile data-lang=makefile><span style=display:flex><span><span style=color:#7f848e># Sitemap URL
+</span></span></span><span style=display:flex><span><span style=color:#7f848e></span><span style=color:#e06c75>SITEMAP</span> <span style=color:#56b6c2>=</span> https://perrotta.dev/sitemap.xml
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># Hugo port
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>PORT <span style=color:#f92672>:=</span> <span style=color:#ae81ff>1313</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># Hugo port
+</span></span></span><span style=display:flex><span><span style=color:#7f848e></span><span style=color:#e06c75>PORT</span> <span style=color:#56b6c2>:=</span> <span style=color:#d19a66>1313</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># Abort if hugo is not installed.
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#960050;background-color:#1e0010>ifeq</span> <span style=color:#960050;background-color:#1e0010>(,</span> <span style=color:#66d9ef>$(</span>shell which hugo<span style=color:#66d9ef>)</span><span style=color:#960050;background-color:#1e0010>)</span>
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>$(</span>error &#34;No hugo in <span style=color:#66d9ef>$$</span>PATH, install it first&#34;<span style=color:#66d9ef>)</span>
-</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>endif</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># Abort if hugo is not installed.
+</span></span></span><span style=display:flex><span><span style=color:#7f848e></span>ifeq (, <span style=color:#c678dd>$(</span><span style=color:#e06c75>shell</span> <span style=color:#e06c75>which</span> <span style=color:#e06c75>hugo</span><span style=color:#c678dd>)</span>)
+</span></span><span style=display:flex><span>  <span style=color:#c678dd>$(</span><span style=color:#e06c75>error</span> &#34;<span style=color:#e06c75>No</span> <span style=color:#e06c75>hugo</span> <span style=color:#e06c75>in</span> <span style=color:#c678dd>$$</span><span style=color:#e06c75>PATH</span>, <span style=color:#e06c75>install</span> <span style=color:#e06c75>it</span> <span style=color:#e06c75>first</span>&#34;<span style=color:#c678dd>)</span>
+</span></span><span style=display:flex><span>endif
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>all</span><span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>	hugo server --bind<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;0.0.0.0&#34;</span> --buildDrafts --port <span style=color:#66d9ef>$(</span>PORT<span style=color:#66d9ef>)</span> --watch
+</span></span><span style=display:flex><span><span style=color:#61afef;font-weight:700>all</span><span style=color:#56b6c2>:</span>
+</span></span><span style=display:flex><span>	hugo server --bind<span style=color:#56b6c2>=</span><span style=color:#98c379>&#34;0.0.0.0&#34;</span> --buildDrafts --port <span style=color:#c678dd>$(</span>PORT<span style=color:#c678dd>)</span> --watch
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>build</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span><span style=color:#61afef;font-weight:700>build</span><span style=color:#56b6c2>:</span>
 </span></span><span style=display:flex><span>	hugo --environment production --gc --minify
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>clean</span><span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>	<span style=color:#66d9ef>$(</span>RM<span style=color:#66d9ef>)</span> -r public/ resources/
+</span></span><span style=display:flex><span><span style=color:#61afef;font-weight:700>clean</span><span style=color:#56b6c2>:</span>
+</span></span><span style=display:flex><span>	<span style=color:#c678dd>$(</span>RM<span style=color:#c678dd>)</span> -r public/ resources/
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>ping</span><span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>	<span style=color:#75715e># Ping Google about changes in the sitemap</span>
-</span></span><span style=display:flex><span>	curl -sS -o /dev/null <span style=color:#e6db74>&#34;https://www.google.com/ping?sitemap=</span><span style=color:#66d9ef>$(</span>SITEMAP<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span>
-</span></span><span style=display:flex><span>	<span style=color:#75715e># Ping Bing (DuckDuckGo, etc) about changes in the sitemap</span>
-</span></span><span style=display:flex><span>	curl -sS -o /dev/null <span style=color:#e6db74>&#34;https://www.bing.com/ping?sitemap=</span><span style=color:#66d9ef>$(</span>SITEMAP<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#61afef;font-weight:700>ping</span><span style=color:#56b6c2>:</span>
+</span></span><span style=display:flex><span>	<span style=color:#7f848e># Ping Google about changes in the sitemap</span>
+</span></span><span style=display:flex><span>	curl -sS -o /dev/null <span style=color:#98c379>&#34;https://www.google.com/ping?sitemap=</span><span style=color:#c678dd>$(</span>SITEMAP<span style=color:#c678dd>)</span><span style=color:#98c379>&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#7f848e># Ping Bing (DuckDuckGo, etc) about changes in the sitemap</span>
+</span></span><span style=display:flex><span>	curl -sS -o /dev/null <span style=color:#98c379>&#34;https://www.bing.com/ping?sitemap=</span><span style=color:#c678dd>$(</span>SITEMAP<span style=color:#c678dd>)</span><span style=color:#98c379>&#34;</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>.PHONY</span><span style=color:#f92672>:</span> all build clean ping
+</span></span><span style=display:flex><span><span style=color:#61afef;font-weight:700>.PHONY</span><span style=color:#56b6c2>:</span> <span style=color:#e06c75>all</span> <span style=color:#e06c75>build</span> <span style=color:#e06c75>clean</span> <span style=color:#e06c75>ping</span>
 </span></span></code></pre></div><p>Initially I asked ChatGPT to convert it to a <code>Justfile</code> but it was a disaster,
-even after a couple of iterations. Then I did it myself<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>. The <code>Justfile</code>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-justfile data-lang=justfile><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>set</span> <span style=color:#960050;background-color:#1e0010>dotenv-load</span>
+even after a couple of iterations. Then I did it myself<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>. The <code>Justfile</code>:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-justfile data-lang=justfile><span style=display:flex><span>set dotenv-load
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>watch</span><span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>	hugo server --buildDrafts --port <span style=color:#e6db74>${</span>PORT<span style=color:#66d9ef>:-</span>1313<span style=color:#e6db74>}</span> --watch
+</span></span><span style=display:flex><span><span style=color:#61afef;font-weight:700>watch</span><span style=color:#56b6c2>:</span>
+</span></span><span style=display:flex><span>	hugo server --buildDrafts --port <span style=color:#98c379>${</span><span style=color:#e06c75>PORT</span><span style=color:#c678dd>:-</span><span style=color:#e06c75>1313</span><span style=color:#98c379>}</span> --watch
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>build</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span><span style=color:#61afef;font-weight:700>build</span><span style=color:#56b6c2>:</span>
 </span></span><span style=display:flex><span>	hugo --environment production --gc --minify
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># Create a new post. Usage: `just new &#34;advent of code day 8&#34;`
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>new post</span><span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>	hugo new content/posts/<span style=color:#e6db74>`</span>date <span style=color:#e6db74>&#34;+%Y-%m-%d&#34;</span><span style=color:#e6db74>`</span>-<span style=color:#f92672>{{</span> kebabcase<span style=color:#f92672>(</span>post<span style=color:#f92672>)</span> <span style=color:#f92672>}}</span>.md
+</span></span><span style=display:flex><span><span style=color:#7f848e># Create a new post. Usage: `just new &#34;advent of code day 8&#34;`
+</span></span></span><span style=display:flex><span><span style=color:#7f848e></span><span style=color:#61afef;font-weight:700>new post</span><span style=color:#56b6c2>:</span>
+</span></span><span style=display:flex><span>	hugo new content/posts/<span style=color:#98c379>`</span>date <span style=color:#98c379>&#34;+%Y-%m-%d&#34;</span><span style=color:#98c379>`</span>-<span style=color:#56b6c2>{{</span> kebabcase<span style=color:#56b6c2>(</span>post<span style=color:#56b6c2>)</span> <span style=color:#56b6c2>}}</span>.md
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>clean</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span><span style=color:#61afef;font-weight:700>clean</span><span style=color:#56b6c2>:</span>
 </span></span><span style=display:flex><span>	rm -rf public/ resources/
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># Ping Google and Bing about changes in the sitemap
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>ping sitemap=&#34;https</span><span style=color:#f92672>:</span>//perrotta.dev/sitemap.xml&#34;:
-</span></span><span style=display:flex><span>	curl -sS -o /dev/null <span style=color:#e6db74>&#34;https://www.google.com/ping?sitemap={{ sitemap }}&#34;</span>
-</span></span><span style=display:flex><span>	curl -sS -o /dev/null <span style=color:#e6db74>&#34;https://www.bing.com/ping?sitemap={{ sitemap }}&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># Ping Google and Bing about changes in the sitemap
+</span></span></span><span style=display:flex><span><span style=color:#7f848e></span><span style=color:#61afef;font-weight:700>ping sitemap=&#34;https</span><span style=color:#56b6c2>:</span>//<span style=color:#e06c75>perrotta</span>.<span style=color:#e06c75>dev</span>/<span style=color:#e06c75>sitemap</span>.<span style=color:#e06c75>xml</span>&#34;:
+</span></span><span style=display:flex><span>	curl -sS -o /dev/null <span style=color:#98c379>&#34;https://www.google.com/ping?sitemap={{ sitemap }}&#34;</span>
+</span></span><span style=display:flex><span>	curl -sS -o /dev/null <span style=color:#98c379>&#34;https://www.bing.com/ping?sitemap={{ sitemap }}&#34;</span>
 </span></span></code></pre></div><p>The main differences:</p><ul><li>Environment variables: use <code>{{ foo }}</code> instead of <code>$(FOO)</code></li><li>Exception: environment variables loaded from <code>.env</code> (via <code>set dotenv-load</code>)
 use <code>$FOO</code> or <code>${FOO}</code> instead, like POSIX shell variables</li><li>Use <code>rm -rf</code> instead of <code>$(RM) -r</code></li><li>Rules accept parameters. Look at <code>new post</code> as an example. Example usage:
 <code>just new "advent of code day 8"</code></li><li>Run shell commands within rules with backticks. <code>$(cmd)</code> does not work.</li><li>Some handy out-of-the-box functions such as <code>kebabcase()</code>. No need to
 implement this kind of string manipulation in plain shell script!</li><li>Documentation comments above rules are recognized. They are displayed as help
 / usage text when running <code>just -l</code>. No need for hacky <a href=https://perrotta.dev/2024/08/self-documented-makefiles/>self-documented
-<code>Makefile</code></a> setups!</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>% just -l
+<code>Makefile</code></a> setups!</li></ul><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>% just -l
 </span></span><span style=display:flex><span>Available recipes:
 </span></span><span style=display:flex><span>    build
 </span></span><span style=display:flex><span>    clean
-</span></span><span style=display:flex><span>    new post <span style=color:#75715e># Create a new post. Usage: `just new &#34;advent of code day 8&#34;`</span>
-</span></span><span style=display:flex><span>    ping sitemap<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;https://perrotta.dev/sitemap.xml&#34;</span> <span style=color:#75715e># Ping Google and Bing about changes in the sitemap</span>
+</span></span><span style=display:flex><span>    new post <span style=color:#7f848e># Create a new post. Usage: `just new &#34;advent of code day 8&#34;`</span>
+</span></span><span style=display:flex><span>    ping <span style=color:#e06c75>sitemap</span><span style=color:#56b6c2>=</span><span style=color:#98c379>&#34;https://perrotta.dev/sitemap.xml&#34;</span> <span style=color:#7f848e># Ping Google and Bing about changes in the sitemap</span>
 </span></span><span style=display:flex><span>    watch
 </span></span></code></pre></div><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p>With a bit of LLM prompting in lieu of Google or Stack Overflow searches.&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></content><div style=display:flex;justify-content:space-between><p><a href=https://perrotta.dev/tags/bestof/>#bestof</a>
 <a href=https://perrotta.dev/tags/dev/>#dev</a></p><p>Reply via <a href='mailto:serendipity@perrotta.dev?subject=Reply to: Just'>email</a></p></div></main><hr><footer><span>© 2021 - 2025 Thiago Perrotta ·

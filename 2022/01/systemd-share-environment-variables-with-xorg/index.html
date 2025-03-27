@@ -30,18 +30,18 @@ systemd: share environment variables with xorg</h2><p><span class=pubdate-single
 </time>• 620 words
 • 3 min</span></p><content><p>In this post we will learn how to share environment variables (e.g.
 <code>$GDK_SCALE</code>) between a system user session and X11/Xorg.</p><p>The typical <a href=https://wiki.archlinux.org/title/Xinit><code>~/.xinitrc</code></a> and/or <a href=https://wiki.archlinux.org/title/Xprofile><code>~/.xprofile</code></a> setup in
-2020s involves some environment variable exports such as the following:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#75715e># fix java application decorations, for tiling window managers</span>
-</span></span><span style=display:flex><span>export _JAVA_AWT_WM_NONREPARENTING<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+2020s involves some environment variable exports such as the following:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#7f848e># fix java application decorations, for tiling window managers</span>
+</span></span><span style=display:flex><span><span style=color:#e5c07b>export</span> <span style=color:#e06c75>_JAVA_AWT_WM_NONREPARENTING</span><span style=color:#56b6c2>=</span><span style=color:#d19a66>1</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># make Chrome pick up proxy settings stored in gconf</span>
-</span></span><span style=display:flex><span>export DESKTOP_SESSION<span style=color:#f92672>=</span>gnome
+</span></span><span style=display:flex><span><span style=color:#7f848e># make Chrome pick up proxy settings stored in gconf</span>
+</span></span><span style=display:flex><span><span style=color:#e5c07b>export</span> <span style=color:#e06c75>DESKTOP_SESSION</span><span style=color:#56b6c2>=</span>gnome
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># HiDPI settings for GTK3+</span>
-</span></span><span style=display:flex><span>export GDK_DPI_SCALE<span style=color:#f92672>=</span>0.5
-</span></span><span style=display:flex><span>export GDK_SCALE<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># HiDPI settings for GTK3+</span>
+</span></span><span style=display:flex><span><span style=color:#e5c07b>export</span> <span style=color:#e06c75>GDK_DPI_SCALE</span><span style=color:#56b6c2>=</span>0.5
+</span></span><span style=display:flex><span><span style=color:#e5c07b>export</span> <span style=color:#e06c75>GDK_SCALE</span><span style=color:#56b6c2>=</span><span style=color:#d19a66>2</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># HiDPI settings for QT</span>
-</span></span><span style=display:flex><span>export QT_FONT_DPI<span style=color:#f92672>=</span><span style=color:#ae81ff>192</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># HiDPI settings for QT</span>
+</span></span><span style=display:flex><span><span style=color:#e5c07b>export</span> <span style=color:#e06c75>QT_FONT_DPI</span><span style=color:#56b6c2>=</span><span style=color:#d19a66>192</span>
 </span></span></code></pre></div><p>This particular set of customizations stems from my <a href=https://github.com/thiagowfx/.dotfiles>dotfiles</a> but
 there isn&rsquo;t anything special about it. I&rsquo;ll include an explanation anyway for
 completeness:</p><ul><li><p>The java setting is meant for launching certain java-based applications from
@@ -53,53 +53,53 @@ icons will appear in the screen.</p></li></ul><p>Those exports work well for gra
 window manager after it has already started, however if you decide to launch an
 application from <code>systemd</code>, those settings will not be picked up by it.</p><p>For example, if you decide to manage <a href=http://jonls.dk/redshift/><code>redshift</code></a><sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup> (more
 specifically, <code>redshift-gtk</code> which has a system tray app) from a systemd user
-session<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>, its fonts will look small.</p><p>There are several ways to address this issue.</p><p>One of them is to edit the service file directly:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ systemctl --user edit redshift-gtk
+session<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>, its fonts will look small.</p><p>There are several ways to address this issue.</p><p>One of them is to edit the service file directly:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ systemctl --user edit redshift-gtk
 </span></span></code></pre></div><p>And then add:</p><pre tabindex=0><code>[Unit]
 Environment=GDK_SCALE=2 GDK_DPI_SCALE=0.5
-</code></pre><p>Which results in:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ cat ~/.config/systemd/user/redshift-gtk.service.d/override.conf
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>Unit<span style=color:#f92672>]</span>
-</span></span><span style=display:flex><span>Environment<span style=color:#f92672>=</span>GDK_SCALE<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span> GDK_DPI_SCALE<span style=color:#f92672>=</span>0.5
-</span></span></code></pre></div><p>Which you can make effective by:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ systemctl --user daemon-reload
+</code></pre><p>Which results in:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ cat ~/.config/systemd/user/redshift-gtk.service.d/override.conf
+</span></span><span style=display:flex><span><span style=color:#56b6c2>[</span>Unit<span style=color:#56b6c2>]</span>
+</span></span><span style=display:flex><span><span style=color:#e06c75>Environment</span><span style=color:#56b6c2>=</span><span style=color:#e06c75>GDK_SCALE</span><span style=color:#56b6c2>=</span><span style=color:#d19a66>2</span> <span style=color:#e06c75>GDK_DPI_SCALE</span><span style=color:#56b6c2>=</span>0.5
+</span></span></code></pre></div><p>Which you can make effective by:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ systemctl --user daemon-reload
 </span></span><span style=display:flex><span>$ systemctl --user restart redshift-gtk
 </span></span></code></pre></div><p>I am not a fan of this approach though, because this step would need to be repeated
 to all service files you want to manage this way. There&rsquo;s a better, <a href=https://en.wikipedia.org/wiki/Don%27t_repeat_yourself>DRY</a> way to
 do so.</p><p><code>systemd</code> supports <a href=https://www.freedesktop.org/software/systemd/man/environment.d.html>environment
 files</a>
 (<code>environment.d(5)</code>). User-defined ones live in
-<code>~/.config/environment.d/*.conf</code> by default.</p><p>This means we could produce the following file:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ cat ~/.config/environment.d/user.conf
-</span></span><span style=display:flex><span><span style=color:#75715e># systemd environment.d(5) EnvironmentFile</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># https://www.freedesktop.org/software/systemd/man/environment.d.html</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># Do not use export here.</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># Alternatively</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#   systemctl --user import-environment [var1] [var2] [...]</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># Troubleshooting</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#   systemctl --user show-environment</span>
+<code>~/.config/environment.d/*.conf</code> by default.</p><p>This means we could produce the following file:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ cat ~/.config/environment.d/user.conf
+</span></span><span style=display:flex><span><span style=color:#7f848e># systemd environment.d(5) EnvironmentFile</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># https://www.freedesktop.org/software/systemd/man/environment.d.html</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e>#</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># Do not use export here.</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e>#</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># Alternatively</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e>#   systemctl --user import-environment [var1] [var2] [...]</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e>#</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># Troubleshooting</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e>#   systemctl --user show-environment</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># fix java application decorations, for tiling window managers</span>
-</span></span><span style=display:flex><span>_JAVA_AWT_WM_NONREPARENTING<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># fix java application decorations, for tiling window managers</span>
+</span></span><span style=display:flex><span><span style=color:#e06c75>_JAVA_AWT_WM_NONREPARENTING</span><span style=color:#56b6c2>=</span><span style=color:#d19a66>1</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># make Chrome pick up proxy settings stored in gconf</span>
-</span></span><span style=display:flex><span>DESKTOP_SESSION<span style=color:#f92672>=</span>gnome
+</span></span><span style=display:flex><span><span style=color:#7f848e># make Chrome pick up proxy settings stored in gconf</span>
+</span></span><span style=display:flex><span><span style=color:#e06c75>DESKTOP_SESSION</span><span style=color:#56b6c2>=</span>gnome
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># HiDPI settings for GTK3+</span>
-</span></span><span style=display:flex><span>GDK_DPI_SCALE<span style=color:#f92672>=</span>0.5
-</span></span><span style=display:flex><span>GDK_SCALE<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># HiDPI settings for GTK3+</span>
+</span></span><span style=display:flex><span><span style=color:#e06c75>GDK_DPI_SCALE</span><span style=color:#56b6c2>=</span>0.5
+</span></span><span style=display:flex><span><span style=color:#e06c75>GDK_SCALE</span><span style=color:#56b6c2>=</span><span style=color:#d19a66>2</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># HiDPI settings for QT</span>
-</span></span><span style=display:flex><span>QT_FONT_DPI<span style=color:#f92672>=</span><span style=color:#ae81ff>192</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># HiDPI settings for QT</span>
+</span></span><span style=display:flex><span><span style=color:#e06c75>QT_FONT_DPI</span><span style=color:#56b6c2>=</span><span style=color:#d19a66>192</span>
 </span></span></code></pre></div><p>Which is applied to all systemd user service files automatically, no need to
 set <code>Environment=</code> manually everywhere.</p><p>However, now we need to maintain two different files: the systemd <code>.conf</code> one
-and the xorg <code>~/.xinitrc</code> one.</p><p>One elegant way to reduce maintenance burden is, in my opinion, the follownig:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ cat ~/.xinitrc
+and the xorg <code>~/.xinitrc</code> one.</p><p>One elegant way to reduce maintenance burden is, in my opinion, the follownig:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ cat ~/.xinitrc
 </span></span><span style=display:flex><span>...
-</span></span><span style=display:flex><span><span style=color:#75715e># Parse user session environment variables.</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># This file is shared with the systemd user instance.</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># Export all variables: https://stackoverflow.com/a/30969768/1745064</span>
-</span></span><span style=display:flex><span>set -a
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span> -r ~/.config/environment.d/user.conf <span style=color:#f92672>]</span> <span style=color:#f92672>&amp;&amp;</span> . ~/.config/environment.d/user.conf
-</span></span><span style=display:flex><span>set +a
+</span></span><span style=display:flex><span><span style=color:#7f848e># Parse user session environment variables.</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># This file is shared with the systemd user instance.</span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># Export all variables: https://stackoverflow.com/a/30969768/1745064</span>
+</span></span><span style=display:flex><span><span style=color:#e5c07b>set</span> -a
+</span></span><span style=display:flex><span><span style=color:#56b6c2>[</span> -r ~/.config/environment.d/user.conf <span style=color:#56b6c2>]</span> <span style=color:#56b6c2>&amp;&amp;</span> . ~/.config/environment.d/user.conf
+</span></span><span style=display:flex><span><span style=color:#e5c07b>set</span> +a
 </span></span></code></pre></div><p>It does what you expect: the underlying shell sources the <code>*.conf</code> file as if
 you were <code>export</code>ing each variable therein.</p><p>One caveat of this setup is that you cannot define the variables
 dynamically; for example, with subshells, with external programs, or with

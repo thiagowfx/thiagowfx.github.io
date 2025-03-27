@@ -26,70 +26,70 @@ Integrating terraform with ansible</h2><p><span class=pubdate-single><time datet
 set up Miniflux in our new Linode.</p></blockquote><p>Before we extensively use Ansible to configure our VPS instance, first let&rsquo;s
 set up a basic integration between Terraform and Ansible.</p><p>First of all, here&rsquo;s an overview of where I stopped last time. There were a
 couple of lightweight modifications since then. I&rsquo;ll explain some of them
-below.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#f92672>%</span> <span style=color:#a6e22e>cat</span> var<span style=color:#a6e22e>iables</span>.<span style=color:#a6e22e>tf</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;github_username&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>type</span>    = <span style=color:#a6e22e>string</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>default</span> = <span style=color:#e6db74>&#34;thiagowfx&#34;</span>
+below.</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#56b6c2>%</span> <span style=color:#e06c75>cat</span> <span style=color:#e5c07b>var</span><span style=color:#e06c75>iables</span>.<span style=color:#e06c75>tf</span>
+</span></span><span style=display:flex><span><span style=color:#c678dd>variable</span> <span style=color:#98c379>&#34;github_username&#34;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>type</span>    = <span style=color:#e06c75>string</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>default</span> = <span style=color:#98c379>&#34;thiagowfx&#34;</span>
 </span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;linode_hostname&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>type</span>    = <span style=color:#a6e22e>string</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>default</span> = <span style=color:#e6db74>&#34;coruscant&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#c678dd>
+</span></span></span><span style=display:flex><span><span style=color:#c678dd>variable</span> <span style=color:#98c379>&#34;linode_hostname&#34;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>type</span>    = <span style=color:#e06c75>string</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>default</span> = <span style=color:#98c379>&#34;coruscant&#34;</span>
 </span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;linode_region&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>type</span>    = <span style=color:#a6e22e>string</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>default</span> = <span style=color:#e6db74>&#34;eu-central&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#c678dd>
+</span></span></span><span style=display:flex><span><span style=color:#c678dd>variable</span> <span style=color:#98c379>&#34;linode_region&#34;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>type</span>    = <span style=color:#e06c75>string</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>default</span> = <span style=color:#98c379>&#34;eu-central&#34;</span>
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>All variables were moved to a <code>variables.tf</code> file. This is to follow standard
 terraform
 <a href=https://developer.hashicorp.com/terraform/language/modules/develop/structure>conventions</a>
 / recommendations for module structures. Furthermore, it becomes easier to
-manage variables when they are all stored in a single place.</p><p>The main module file now looks like this:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#f92672>%</span> <span style=color:#a6e22e>cat</span> <span style=color:#a6e22e>main</span>.<span style=color:#a6e22e>tf</span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>terraform</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>required_providers</span> {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>http</span> = {
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>source</span> = <span style=color:#e6db74>&#34;hashicorp/http&#34;</span>
+manage variables when they are all stored in a single place.</p><p>The main module file now looks like this:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#56b6c2>%</span> <span style=color:#e06c75>cat</span> <span style=color:#e06c75>main</span>.<span style=color:#e06c75>tf</span>
+</span></span><span style=display:flex><span><span style=color:#e06c75>terraform</span> {
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>required_providers</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e06c75>http</span> = {
+</span></span><span style=display:flex><span>      <span style=color:#e06c75>source</span> = <span style=color:#98c379>&#34;hashicorp/http&#34;</span>
 </span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>linode</span> = {
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>source</span> = <span style=color:#e6db74>&#34;linode/linode&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#e06c75>linode</span> = {
+</span></span><span style=display:flex><span>      <span style=color:#e06c75>source</span> = <span style=color:#98c379>&#34;linode/linode&#34;</span>
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>provider</span> <span style=color:#e6db74>&#34;linode&#34;</span> {}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>data</span> <span style=color:#e6db74>&#34;http&#34;</span> <span style=color:#e6db74>&#34;github_keys&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>url</span> = <span style=color:#e6db74>&#34;https://api.github.com/users/</span><span style=color:#e6db74>${</span>var.<span style=color:#a6e22e>github_username</span><span style=color:#e6db74>}</span><span style=color:#e6db74>/keys&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#c678dd>
+</span></span></span><span style=display:flex><span><span style=color:#c678dd>provider</span> <span style=color:#98c379>&#34;linode&#34;</span> {}
+</span></span><span style=display:flex><span><span style=color:#c678dd>
+</span></span></span><span style=display:flex><span><span style=color:#c678dd>data</span> <span style=color:#98c379>&#34;http&#34;</span> <span style=color:#98c379>&#34;github_keys&#34;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>url</span> = <span style=color:#98c379>&#34;https://api.github.com/users/</span><span style=color:#98c379>${</span><span style=color:#e5c07b>var</span>.<span style=color:#e06c75>github_username</span><span style=color:#98c379>}</span><span style=color:#98c379>/keys&#34;</span>
 </span></span><span style=display:flex><span>}
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>locals</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>keys</span> = jsondecode(data.<span style=color:#a6e22e>http</span>.<span style=color:#a6e22e>github_keys</span>.<span style=color:#a6e22e>response_body</span>)[<span style=color:#f92672>*</span>].<span style=color:#a6e22e>key</span>
+</span></span><span style=display:flex><span><span style=color:#e06c75>locals</span> {
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>keys</span> =<span style=color:#e5c07b> jsondecode</span>(<span style=color:#e5c07b>data</span>.<span style=color:#e06c75>http</span>.<span style=color:#e06c75>github_keys</span>.<span style=color:#e06c75>response_body</span>)[<span style=color:#56b6c2>*</span>].<span style=color:#e06c75>key</span>
 </span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;linode_instance&#34;</span> <span style=color:#e6db74>&#34;nanode&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>type</span>             = <span style=color:#e6db74>&#34;g6-nanode-1&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>image</span>            = <span style=color:#e6db74>&#34;linode/alpine3.19&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>label</span>            = var.<span style=color:#a6e22e>linode_hostname</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>region</span>           = var.<span style=color:#a6e22e>linode_region</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>authorized_keys</span>  = <span style=color:#a6e22e>local</span>.<span style=color:#a6e22e>keys</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>backups_enabled</span>  = <span style=color:#e6db74>&#34;false&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>booted</span>           = <span style=color:#e6db74>&#34;true&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>watchdog_enabled</span> = <span style=color:#e6db74>&#34;true&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#c678dd>
+</span></span></span><span style=display:flex><span><span style=color:#c678dd>resource</span> <span style=color:#98c379>&#34;linode_instance&#34;</span> <span style=color:#98c379>&#34;nanode&#34;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>type</span>             = <span style=color:#98c379>&#34;g6-nanode-1&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>image</span>            = <span style=color:#98c379>&#34;linode/alpine3.19&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>label</span>            = <span style=color:#e5c07b>var</span>.<span style=color:#e06c75>linode_hostname</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>region</span>           = <span style=color:#e5c07b>var</span>.<span style=color:#e06c75>linode_region</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>authorized_keys</span>  = <span style=color:#e06c75>local</span>.<span style=color:#e06c75>keys</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>backups_enabled</span>  = <span style=color:#98c379>&#34;false&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>booted</span>           = <span style=color:#98c379>&#34;true&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>watchdog_enabled</span> = <span style=color:#98c379>&#34;true&#34;</span>
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>I removed the token from the linode provider. Now it is supplied via the
 <code>LINODE_TOKEN</code> environment variable. In order to automatically populate that
-variable, I use <a href=https://perrotta.dev/2022/01/direnv-automate-your-environment-variables/><code>direnv</code></a>. There&rsquo;s an <code>.envrc</code> file that provides its value, like so:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#75715e>#!/bin/sh
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e># terraform init</span>
+variable, I use <a href=https://perrotta.dev/2022/01/direnv-automate-your-environment-variables/><code>direnv</code></a>. There&rsquo;s an <code>.envrc</code> file that provides its value, like so:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#7f848e>#!/bin/sh
+</span></span></span><span style=display:flex><span><span style=color:#7f848e></span><span style=color:#7f848e># terraform init</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>export LINODE_TOKEN<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;my-token-here&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#e5c07b>export</span> <span style=color:#e06c75>LINODE_TOKEN</span><span style=color:#56b6c2>=</span><span style=color:#98c379>&#34;my-token-here&#34;</span>
 </span></span></code></pre></div><p>I also created a repository for this project:
 <a href=https://github.com/thiagowfx/knol>https://github.com/thiagowfx/knol</a>. That&rsquo;s enough for preliminaries, now let&rsquo;s
 go back to Ansible.</p><p>The first component we&rsquo;ll need is an Ansible
 <a href=https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html>inventory</a>
 file, containing the IP address of the host we&rsquo;ll manage. It could look like
-this:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ini data-lang=ini><span style=display:flex><span><span style=color:#66d9ef>[all]</span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>1.2.3.4 ansible_user</span><span style=color:#f92672>=</span><span style=color:#e6db74>root</span>
+this:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ini data-lang=ini><span style=display:flex><span><span style=color:#c678dd>[all]</span>
+</span></span><span style=display:flex><span><span style=color:#e06c75>1.2.3.4 ansible_user</span><span style=color:#56b6c2>=</span><span style=color:#98c379>root</span>
 </span></span></code></pre></div><p>&mldr;wherein <code>1.2.3.4</code> is the IP address of our VPS.</p><p>That said, due to the fact the VPS instance is created dynamically, maintaining
 that IP address manually would be tedious. Therefore, let&rsquo;s have Terraform
 manage it.</p><p>We can do so with a
@@ -111,41 +111,41 @@ EOF
 with the above contents.</p><p>Because the IP address is ephemeral and dynamic, we should have a
 straightforward way to see its value. A terraform
 <a href=https://developer.hashicorp.com/terraform/language/values/outputs><code>output</code></a>
-is perfect for that:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#f92672>%</span> <span style=color:#a6e22e>cat</span> <span style=color:#a6e22e>outputs</span>.<span style=color:#a6e22e>tf</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>output</span> <span style=color:#e6db74>&#34;ip_address&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>value</span> = <span style=color:#a6e22e>linode_instance</span>.<span style=color:#a6e22e>nanode</span>.<span style=color:#a6e22e>ip_address</span>
+is perfect for that:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#56b6c2>%</span> <span style=color:#e06c75>cat</span> <span style=color:#e06c75>outputs</span>.<span style=color:#e06c75>tf</span>
+</span></span><span style=display:flex><span><span style=color:#c678dd>output</span> <span style=color:#98c379>&#34;ip_address&#34;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>value</span> = <span style=color:#e06c75>linode_instance</span>.<span style=color:#e06c75>nanode</span>.<span style=color:#e06c75>ip_address</span>
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>Later on (after terraforming) we will be able to use <code>terraform output</code> to see
 the server IP address.</p><p>We have the inventory file. Now we need a
 <a href=https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html>playbook</a>.
-A playbook contains a sequence of tasks to be applied to our server.</p><p>Let&rsquo;s start with a basic playbook that just installs and starts <code>nginx</code>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>---
-</span></span><span style=display:flex><span>- <span style=color:#f92672>hosts</span>: <span style=color:#ae81ff>all</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>tasks</span>:
-</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Install the web server (nginx)</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>community.general.apk</span>:
-</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>nginx</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>state</span>: <span style=color:#ae81ff>present</span>
-</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Start the web server</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>service</span>:
-</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>nginx</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>state</span>: <span style=color:#ae81ff>started</span>
-</span></span></code></pre></div><p>Save this to a <code>playbook.yml</code> file.</p><p>After terraforming, we should now be able to run ansible:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>% ansible-playbook -i inventory.ini playbook.yml
-</span></span></code></pre></div><p>In order to make this setup more ergonomic, let&rsquo;s create a <code>Makefile</code>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Makefile data-lang=Makefile><span style=display:flex><span>TERRAFORM <span style=color:#f92672>:=</span> terraform
+A playbook contains a sequence of tasks to be applied to our server.</p><p>Let&rsquo;s start with a basic playbook that just installs and starts <code>nginx</code>:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#e06c75>---</span>
+</span></span><span style=display:flex><span>- <span style=color:#e06c75>hosts</span>: all
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>tasks</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#e06c75>name</span>: Install the web server (nginx)
+</span></span><span style=display:flex><span>      <span style=color:#e06c75>community.general.apk</span>:
+</span></span><span style=display:flex><span>        <span style=color:#e06c75>name</span>: nginx
+</span></span><span style=display:flex><span>        <span style=color:#e06c75>state</span>: present
+</span></span><span style=display:flex><span>    - <span style=color:#e06c75>name</span>: Start the web server
+</span></span><span style=display:flex><span>      <span style=color:#e06c75>service</span>:
+</span></span><span style=display:flex><span>        <span style=color:#e06c75>name</span>: nginx
+</span></span><span style=display:flex><span>        <span style=color:#e06c75>state</span>: started
+</span></span></code></pre></div><p>Save this to a <code>playbook.yml</code> file.</p><p>After terraforming, we should now be able to run ansible:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>% ansible-playbook -i inventory.ini playbook.yml
+</span></span></code></pre></div><p>In order to make this setup more ergonomic, let&rsquo;s create a <code>Makefile</code>:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Makefile data-lang=Makefile><span style=display:flex><span><span style=color:#e06c75>TERRAFORM</span> <span style=color:#56b6c2>:=</span> terraform
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>all</span><span style=color:#f92672>:</span> terraform ansible
+</span></span><span style=display:flex><span><span style=color:#61afef;font-weight:700>all</span><span style=color:#56b6c2>:</span> <span style=color:#e06c75>terraform</span> <span style=color:#e06c75>ansible</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>ansible</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span><span style=color:#61afef;font-weight:700>ansible</span><span style=color:#56b6c2>:</span>
 </span></span><span style=display:flex><span>	ansible-playbook -i inventory.ini playbook.yml
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>terraform</span><span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>	<span style=color:#66d9ef>$(</span>TERRAFORM<span style=color:#66d9ef>)</span> init
-</span></span><span style=display:flex><span>	<span style=color:#66d9ef>$(</span>TERRAFORM<span style=color:#66d9ef>)</span> plan
-</span></span><span style=display:flex><span>	<span style=color:#66d9ef>$(</span>TERRAFORM<span style=color:#66d9ef>)</span> apply
+</span></span><span style=display:flex><span><span style=color:#61afef;font-weight:700>terraform</span><span style=color:#56b6c2>:</span>
+</span></span><span style=display:flex><span>	<span style=color:#c678dd>$(</span>TERRAFORM<span style=color:#c678dd>)</span> init
+</span></span><span style=display:flex><span>	<span style=color:#c678dd>$(</span>TERRAFORM<span style=color:#c678dd>)</span> plan
+</span></span><span style=display:flex><span>	<span style=color:#c678dd>$(</span>TERRAFORM<span style=color:#c678dd>)</span> apply
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>clean</span><span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>	<span style=color:#66d9ef>$(</span>TERRAFORM<span style=color:#66d9ef>)</span> destroy
+</span></span><span style=display:flex><span><span style=color:#61afef;font-weight:700>clean</span><span style=color:#56b6c2>:</span>
+</span></span><span style=display:flex><span>	<span style=color:#c678dd>$(</span>TERRAFORM<span style=color:#c678dd>)</span> destroy
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>.PHONY</span><span style=color:#f92672>:</span> all ansible terraform clean
+</span></span><span style=display:flex><span><span style=color:#61afef;font-weight:700>.PHONY</span><span style=color:#56b6c2>:</span> <span style=color:#e06c75>all</span> <span style=color:#e06c75>ansible</span> <span style=color:#e06c75>terraform</span> <span style=color:#e06c75>clean</span>
 </span></span></code></pre></div><p>Then we can just run <code>make terraform</code> or <code>make ansible</code> for granular steps. Or
 just <code>make</code> to run everything in the right order.</p><p>I extracted the <code>terraform</code> binary to its own variable because it facilitates
 the use of <a href=https://opentofu.org/>OpenTofu</a> (a fork) in lieu of terraform.</p><p>And that&rsquo;s it for today! In a future post, we&rsquo;ll look into extending our

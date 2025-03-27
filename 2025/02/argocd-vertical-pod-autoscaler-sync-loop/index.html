@@ -29,17 +29,17 @@ function upon every change to our gitops repository. It turns out
 <a href="https://github.com/cowboysysop/charts/blob/9527602f8f2ea59f51cd3a7d3380810ba60c39fc/charts/vertical-pod-autoscaler/README.md?plain=1#L236">this</a>
 is documented and we can see its corresponding manifest
 <a href=https://github.com/cowboysysop/charts/blob/9527602f8f2ea59f51cd3a7d3380810ba60c39fc/charts/vertical-pod-autoscaler/templates/admission-controller/tls-secret.yaml#L3C1-L3C91>here</a>.</p><p>So that&rsquo;s where the sync loop was coming from! ArgoCD was constantly reporting
-(and resolving) a diff in the admission controller secret.</p><p>The manifest:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>data</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>ca.crt</span>: <span style=color:#ae81ff>++++++++</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>tls.crt</span>: <span style=color:#ae81ff>++++++++</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>tls.key</span>: <span style=color:#ae81ff>++++++++</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Secret</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
-</span></span><span style=display:flex><span>[<span style=color:#ae81ff>...]</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>vertical-pod-autoscaler-admission-controller-tls</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>namespace</span>: <span style=color:#ae81ff>kube-system</span>
-</span></span><span style=display:flex><span>[<span style=color:#ae81ff>...]</span>
+(and resolving) a diff in the admission controller secret.</p><p>The manifest:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#e06c75>apiVersion</span>: v1
+</span></span><span style=display:flex><span><span style=color:#e06c75>data</span>:
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>ca.crt</span>: ++++++++
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>tls.crt</span>: ++++++++
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>tls.key</span>: ++++++++
+</span></span><span style=display:flex><span><span style=color:#e06c75>kind</span>: Secret
+</span></span><span style=display:flex><span><span style=color:#e06c75>metadata</span>:
+</span></span><span style=display:flex><span>[...]
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>name</span>: vertical-pod-autoscaler-admission-controller-tls
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>namespace</span>: kube-system
+</span></span><span style=display:flex><span>[...]
 </span></span></code></pre></div><p>The problematic are all the ones under <code>data:</code>.</p><p>I confirmed that was indeed the case in the <a href=https://cloud-native.slack.com/archives/C01TSERG0KZ/p1739442822542539>CNCF
 Slack</a>
 <code>#argo-cd</code>. Thanks Tim!</p><p>How to address it?</p><p>We leverage

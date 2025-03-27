@@ -15,25 +15,25 @@ A simple way to do so is to create a pod that never leaves the “Pending” sta
 needed to verify the new rollout is properly working in our infratesting
 environment.</p><p>A simple way to do so is to create a pod that never leaves the &ldquo;Pending&rdquo; state,
 because we have an alert (a prometheus rule) that fires whenever a pod is in
-that stack for too long (15 minutes is our threshold in most cases).</p><p>Use the following manifest:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Pod</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>pending-pod</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>affinity</span>:
-</span></span><span style=display:flex><span>    <span style=color:#f92672>podAffinity</span>:
-</span></span><span style=display:flex><span>      <span style=color:#f92672>requiredDuringSchedulingIgnoredDuringExecution</span>:
-</span></span><span style=display:flex><span>      - <span style=color:#f92672>labelSelector</span>:
-</span></span><span style=display:flex><span>          <span style=color:#f92672>matchExpressions</span>:
-</span></span><span style=display:flex><span>          - <span style=color:#f92672>key</span>: <span style=color:#e6db74>&#34;non/existent&#34;</span>
-</span></span><span style=display:flex><span>            <span style=color:#f92672>operator</span>: <span style=color:#ae81ff>In</span>
-</span></span><span style=display:flex><span>            <span style=color:#f92672>values</span>:
-</span></span><span style=display:flex><span>            - <span style=color:#e6db74>&#34;true&#34;</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>topologyKey</span>: <span style=color:#e6db74>&#34;kubernetes.io/hostname&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>containers</span>:
-</span></span><span style=display:flex><span>  - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>busybox</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>busybox</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>command</span>: [<span style=color:#e6db74>&#39;sh&#39;</span>, <span style=color:#e6db74>&#39;-c&#39;</span>, <span style=color:#e6db74>&#39;echo Hello, Kubernetes! &amp;&amp; sleep 3600&#39;</span>]
+that stack for too long (15 minutes is our threshold in most cases).</p><p>Use the following manifest:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#e06c75>apiVersion</span>: v1
+</span></span><span style=display:flex><span><span style=color:#e06c75>kind</span>: Pod
+</span></span><span style=display:flex><span><span style=color:#e06c75>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>name</span>: pending-pod
+</span></span><span style=display:flex><span><span style=color:#e06c75>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>affinity</span>:
+</span></span><span style=display:flex><span>    <span style=color:#e06c75>podAffinity</span>:
+</span></span><span style=display:flex><span>      <span style=color:#e06c75>requiredDuringSchedulingIgnoredDuringExecution</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#e06c75>labelSelector</span>:
+</span></span><span style=display:flex><span>          <span style=color:#e06c75>matchExpressions</span>:
+</span></span><span style=display:flex><span>          - <span style=color:#e06c75>key</span>: <span style=color:#98c379>&#34;non/existent&#34;</span>
+</span></span><span style=display:flex><span>            <span style=color:#e06c75>operator</span>: In
+</span></span><span style=display:flex><span>            <span style=color:#e06c75>values</span>:
+</span></span><span style=display:flex><span>            - <span style=color:#98c379>&#34;true&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#e06c75>topologyKey</span>: <span style=color:#98c379>&#34;kubernetes.io/hostname&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#e06c75>containers</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#e06c75>name</span>: busybox
+</span></span><span style=display:flex><span>    <span style=color:#e06c75>image</span>: busybox
+</span></span><span style=display:flex><span>    <span style=color:#e06c75>command</span>: [<span style=color:#98c379>&#39;sh&#39;</span>, <span style=color:#98c379>&#39;-c&#39;</span>, <span style=color:#98c379>&#39;echo Hello, Kubernetes! &amp;&amp; sleep 3600&#39;</span>]
 </span></span></code></pre></div><p>&mldr;it creates a <code>pending-pod</code> in the <code>default</code> namespace that should never be
 scheduled, due to its strict pod affinity rules.</p><p>Save it as <code>pending-pod.yaml</code>, deploy it with <code>kubectl apply -f pending-pod.yaml</code>.</p><pre tabindex=0><code>$ kubectl get pod pending-pod -w
 NAME          READY   STATUS    RESTARTS   AGE

@@ -196,167 +196,167 @@ C++ projects.</p><p>Occasionally I would also use <a href=https://www.boost.org/
 wrote my own.</p><p>At some point I published it to a Stack Overflow
 <a href=https://stackoverflow.com/questions/28346530/cmake-automatic-boost-download-and-build-if-not-found/41130107#41130107>answer</a>,
 linking to a
-<a href=https://gist.github.com/thiagowfx/970e3931387ed7db9a39709a8a130ee9>gist</a>.</p><p>I figured to replicate it here:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cmake data-lang=cmake><span style=display:flex><span><span style=color:#75715e># - Find Boost
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#
-</span></span></span><span style=display:flex><span><span style=color:#75715e># Copyright (c) 2016 Thiago Perrotta
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#
-</span></span></span><span style=display:flex><span><span style=color:#75715e># Permission is hereby granted, free of charge, to any person obtaining a copy of
-</span></span></span><span style=display:flex><span><span style=color:#75715e># this software and associated documentation files (the &#34;Software&#34;), to deal in
-</span></span></span><span style=display:flex><span><span style=color:#75715e># the Software without restriction, including without limitation the rights to
-</span></span></span><span style=display:flex><span><span style=color:#75715e># use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-</span></span></span><span style=display:flex><span><span style=color:#75715e># the Software, and to permit persons to whom the Software is furnished to do so,
-</span></span></span><span style=display:flex><span><span style=color:#75715e># subject to the following conditions:
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#
-</span></span></span><span style=display:flex><span><span style=color:#75715e># The above copyright notice and this permission notice shall be included in all
-</span></span></span><span style=display:flex><span><span style=color:#75715e># copies or substantial portions of the Software.
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#
-</span></span></span><span style=display:flex><span><span style=color:#75715e># THE SOFTWARE IS PROVIDED &#34;AS IS&#34;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-</span></span></span><span style=display:flex><span><span style=color:#75715e># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-</span></span></span><span style=display:flex><span><span style=color:#75715e># FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-</span></span></span><span style=display:flex><span><span style=color:#75715e># COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-</span></span></span><span style=display:flex><span><span style=color:#75715e># IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-</span></span></span><span style=display:flex><span><span style=color:#75715e># CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#
-</span></span></span><span style=display:flex><span><span style=color:#75715e># This module finds if Boost is installed and determines where the
-</span></span></span><span style=display:flex><span><span style=color:#75715e># executables are. It sets the following variables:
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#  BOOST_FOUND : boolean            - system has Boost
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#  BOOST_LIBRARIES : list(filepath) - the libraries needed to use Boost
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#  BOOST_INCLUDE_DIRS : list(path)  - the Boost include directories
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#
-</span></span></span><span style=display:flex><span><span style=color:#75715e># If Boost is not found, this module downloads it according to the
-</span></span></span><span style=display:flex><span><span style=color:#75715e># following variables:
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#  BOOST_ROOT_DIR : path                - the Path where Boost will be installed on
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#  BOOST_REQUESTED_VERSION : string     - the Boost version to be downloaded
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#
-</span></span></span><span style=display:flex><span><span style=color:#75715e># You can also specify its components:
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#  find_package(Boost COMPONENTS program_options system)
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#
-</span></span></span><span style=display:flex><span><span style=color:#75715e># which are stored in Boost_FIND_COMPONENTS : list(string)
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#
-</span></span></span><span style=display:flex><span><span style=color:#75715e># You can also specify its behavior:
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#
-</span></span></span><span style=display:flex><span><span style=color:#75715e>#  BOOST_USE_STATIC_LIBS : boolean (default: OFF)
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>if(<span style=color:#e6db74>NOT</span> <span style=color:#e6db74>Boost_FIND_COMPONENTS</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	message(<span style=color:#e6db74>FATAL_ERROR</span> <span style=color:#e6db74>&#34;No COMPONENTS specified for Boost&#34;</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>endif()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>set(<span style=color:#e6db74>BOOST_USE_STATIC_LIBS</span> <span style=color:#e6db74>false</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># Set the library prefix and library suffix properly.
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>if(<span style=color:#e6db74>BOOST_USE_STATIC_LIBS</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	set(<span style=color:#e6db74>CMAKE_FIND_LIBRARY_PREFIXES</span> <span style=color:#f92672>${</span>CMAKE_STATIC_LIBRARY_PREFIX<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	set(<span style=color:#e6db74>CMAKE_FIND_LIBRARY_SUFFIXES</span> <span style=color:#f92672>${</span>CMAKE_STATIC_LIBRARY_SUFFIX<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	set(<span style=color:#e6db74>LIBRARY_PREFIX</span> <span style=color:#f92672>${</span>CMAKE_STATIC_LIBRARY_PREFIX<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	set(<span style=color:#e6db74>LIBRARY_SUFFIX</span> <span style=color:#f92672>${</span>CMAKE_STATIC_LIBRARY_SUFFIX<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>else()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	set(<span style=color:#e6db74>CMAKE_FIND_LIBRARY_PREFIXES</span> <span style=color:#f92672>${</span>CMAKE_SHARED_LIBRARY_PREFIX<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	set(<span style=color:#e6db74>CMAKE_FIND_LIBRARY_SUFFIXES</span> <span style=color:#f92672>${</span>CMAKE_SHARED_LIBRARY_SUFFIX<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	set(<span style=color:#e6db74>LIBRARY_PREFIX</span> <span style=color:#f92672>${</span>CMAKE_SHARED_LIBRARY_PREFIX<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	set(<span style=color:#e6db74>LIBRARY_SUFFIX</span> <span style=color:#f92672>${</span>CMAKE_SHARED_LIBRARY_SUFFIX<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>endif()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># Create a list(string) for the build command (e.g. --with-program_options;--with-system)
-</span></span></span><span style=display:flex><span><span style=color:#75715e># and assigns it to BOOST_COMPONENTS_FOR_BUILD
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>foreach(<span style=color:#e6db74>component</span> <span style=color:#f92672>${</span>Boost_FIND_COMPONENTS<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	list(<span style=color:#e6db74>APPEND</span> <span style=color:#e6db74>BOOST_COMPONENTS_FOR_BUILD</span> <span style=color:#e6db74>--with-</span><span style=color:#f92672>${</span>component<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>endforeach()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span><span style=color:#75715e># Create a string for the first component (e.g. boost_program_options)
-</span></span></span><span style=display:flex><span><span style=color:#75715e># and assigns it to Boost_FIND_COMPONENTS
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span>list(<span style=color:#e6db74>GET</span> <span style=color:#e6db74>Boost_FIND_COMPONENTS</span> <span style=color:#e6db74>0</span> <span style=color:#e6db74>BOOST_FIRST_COMPONENT</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>set(<span style=color:#e6db74>BOOST_FIRST_COMPONENT</span> <span style=color:#e6db74>&#34;boost_${BOOST_FIRST_COMPONENT}&#34;</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>include(<span style=color:#e6db74>FindPackageHandleStandardArgs</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>macro(<span style=color:#e6db74>DO_FIND_BOOST_SYSTEM</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	find_path(<span style=color:#e6db74>BOOST_INCLUDE_DIR</span> <span style=color:#e6db74>boost/config.hpp</span>
-</span></span><span style=display:flex><span>		<span style=color:#e6db74>PATHS</span> <span style=color:#e6db74>/usr/local/include</span> <span style=color:#e6db74>/usr/include</span>
-</span></span><span style=display:flex><span>		)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	find_library(<span style=color:#e6db74>BOOST_LIBRARY</span>
-</span></span><span style=display:flex><span>		<span style=color:#e6db74>NAMES</span> <span style=color:#f92672>${</span>BOOST_FIRST_COMPONENT<span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>		<span style=color:#e6db74>PATHS</span> <span style=color:#e6db74>/usr/local/lib</span> <span style=color:#e6db74>/usr/lib</span>
-</span></span><span style=display:flex><span>		)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	FIND_PACKAGE_HANDLE_STANDARD_ARGS(<span style=color:#e6db74>Boost</span> <span style=color:#e6db74>DEFAULT_MSG</span>
-</span></span><span style=display:flex><span>		<span style=color:#e6db74>BOOST_INCLUDE_DIR</span> <span style=color:#e6db74>BOOST_LIBRARY</span>
-</span></span><span style=display:flex><span>		)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	set(<span style=color:#e6db74>BOOST_LIBRARIES</span> <span style=color:#f92672>${</span>BOOST_LIBRARY<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	set(<span style=color:#e6db74>BOOST_INCLUDE_DIRS</span> <span style=color:#f92672>${</span>BOOST_INCLUDE_DIR<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	mark_as_advanced(<span style=color:#e6db74>BOOST_LIBRARIES</span> <span style=color:#e6db74>BOOST_INCLUDE_DIRS</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>endmacro()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>macro(<span style=color:#e6db74>DO_FIND_BOOST_ROOT</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	if(<span style=color:#e6db74>NOT</span> <span style=color:#e6db74>BOOST_ROOT_DIR</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>		message(<span style=color:#e6db74>STATUS</span> <span style=color:#e6db74>&#34;BOOST_ROOT_DIR is not defined, using binary directory.&#34;</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>		set(<span style=color:#e6db74>BOOST_ROOT_DIR</span> <span style=color:#f92672>${</span>CURRENT_CMAKE_BINARY_DIR<span style=color:#f92672>}</span> <span style=color:#e6db74>CACHE</span> <span style=color:#e6db74>PATH</span> <span style=color:#e6db74>&#34;&#34;</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	endif()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	find_path(<span style=color:#e6db74>BOOST_INCLUDE_DIR</span> <span style=color:#e6db74>boost/config.hpp</span> <span style=color:#f92672>${</span>BOOST_ROOT_DIR<span style=color:#f92672>}</span><span style=color:#e6db74>/include</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	find_library(<span style=color:#e6db74>BOOST_LIBRARY</span> <span style=color:#f92672>${</span>BOOST_FIRST_COMPONENT<span style=color:#f92672>}</span> <span style=color:#e6db74>HINTS</span> <span style=color:#f92672>${</span>BOOST_ROOT_DIR<span style=color:#f92672>}</span><span style=color:#e6db74>/lib</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	FIND_PACKAGE_HANDLE_STANDARD_ARGS(<span style=color:#e6db74>Boost</span> <span style=color:#e6db74>DEFAULT_MSG</span>
-</span></span><span style=display:flex><span>		<span style=color:#e6db74>BOOST_INCLUDE_DIR</span> <span style=color:#e6db74>BOOST_LIBRARY</span>
-</span></span><span style=display:flex><span>		)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	set(<span style=color:#e6db74>BOOST_LIBRARIES</span> <span style=color:#f92672>${</span>BOOST_LIBRARY<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	set(<span style=color:#e6db74>BOOST_INCLUDE_DIRS</span> <span style=color:#f92672>${</span>BOOST_INCLUDE_DIR<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	mark_as_advanced(<span style=color:#e6db74>BOOST_LIBRARIES</span> <span style=color:#e6db74>BOOST_INCLUDE_DIRS</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>endmacro()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>macro(<span style=color:#e6db74>DO_FIND_BOOST_DOWNLOAD</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	if(<span style=color:#e6db74>NOT</span> <span style=color:#e6db74>BOOST_REQUESTED_VERSION</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>		message(<span style=color:#e6db74>FATAL_ERROR</span> <span style=color:#e6db74>&#34;BOOST_REQUESTED_VERSION is not defined.&#34;</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	endif()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	string(<span style=color:#e6db74>REPLACE</span> <span style=color:#e6db74>&#34;.&#34;</span> <span style=color:#e6db74>&#34;_&#34;</span> <span style=color:#e6db74>BOOST_REQUESTED_VERSION_UNDERSCORE</span> <span style=color:#f92672>${</span>BOOST_REQUESTED_VERSION<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	set(<span style=color:#e6db74>BOOST_MAYBE_STATIC</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	if(<span style=color:#e6db74>BOOST_USE_STATIC_LIBS</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>		set(<span style=color:#e6db74>BOOST_MAYBE_STATIC</span> <span style=color:#e6db74>&#34;link=static&#34;</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	endif()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	include(<span style=color:#e6db74>ExternalProject</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	ExternalProject_Add(
-</span></span><span style=display:flex><span>		<span style=color:#e6db74>Boost</span>
-</span></span><span style=display:flex><span>		<span style=color:#e6db74>URL</span> <span style=color:#e6db74>https://downloads.sourceforge.net/project/boost/boost/</span><span style=color:#f92672>${</span>BOOST_REQUESTED_VERSION<span style=color:#f92672>}</span><span style=color:#e6db74>/boost_</span><span style=color:#f92672>${</span>BOOST_REQUESTED_VERSION_UNDERSCORE<span style=color:#f92672>}</span><span style=color:#e6db74>.zip</span>
-</span></span><span style=display:flex><span>		<span style=color:#e6db74>UPDATE_COMMAND</span> <span style=color:#e6db74>&#34;&#34;</span>
-</span></span><span style=display:flex><span>		<span style=color:#e6db74>CONFIGURE_COMMAND</span> <span style=color:#e6db74>./bootstrap.sh</span> <span style=color:#e6db74>--prefix=</span><span style=color:#f92672>${</span>BOOST_ROOT_DIR<span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>		<span style=color:#e6db74>BUILD_COMMAND</span> <span style=color:#e6db74>./b2</span> <span style=color:#f92672>${</span>BOOST_MAYBE_STATIC<span style=color:#f92672>}</span> <span style=color:#e6db74>--prefix=</span><span style=color:#f92672>${</span>BOOST_ROOT_DIR<span style=color:#f92672>}</span> <span style=color:#f92672>${</span>BOOST_COMPONENTS_FOR_BUILD<span style=color:#f92672>}</span> <span style=color:#e6db74>install</span>
-</span></span><span style=display:flex><span>		<span style=color:#e6db74>BUILD_IN_SOURCE</span> <span style=color:#e6db74>true</span>
-</span></span><span style=display:flex><span>		<span style=color:#e6db74>INSTALL_COMMAND</span> <span style=color:#e6db74>&#34;&#34;</span>
-</span></span><span style=display:flex><span>		<span style=color:#e6db74>INSTALL_DIR</span> <span style=color:#f92672>${</span>BOOST_ROOT_DIR<span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>		)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	ExternalProject_Get_Property(<span style=color:#e6db74>Boost</span> <span style=color:#e6db74>install_dir</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	set(<span style=color:#e6db74>BOOST_INCLUDE_DIRS</span> <span style=color:#f92672>${</span>install_dir<span style=color:#f92672>}</span><span style=color:#e6db74>/include</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	macro(<span style=color:#e6db74>libraries_to_fullpath</span> <span style=color:#e6db74>varname</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>		set(<span style=color:#f92672>${</span>varname<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>		foreach(<span style=color:#e6db74>component</span> <span style=color:#f92672>${</span>Boost_FIND_COMPONENTS<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>			list(<span style=color:#e6db74>APPEND</span> <span style=color:#f92672>${</span>varname<span style=color:#f92672>}</span> <span style=color:#f92672>${</span>BOOST_ROOT_DIR<span style=color:#f92672>}</span><span style=color:#e6db74>/lib/</span><span style=color:#f92672>${</span>LIBRARY_PREFIX<span style=color:#f92672>}</span><span style=color:#e6db74>boost_</span><span style=color:#f92672>${</span>component<span style=color:#f92672>}${</span>LIBRARY_SUFFIX<span style=color:#f92672>}</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>		endforeach()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	endmacro()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	libraries_to_fullpath(<span style=color:#e6db74>BOOST_LIBRARIES</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	FIND_PACKAGE_HANDLE_STANDARD_ARGS(<span style=color:#e6db74>Boost</span> <span style=color:#e6db74>DEFAULT_MSG</span>
-</span></span><span style=display:flex><span>		<span style=color:#e6db74>BOOST_INCLUDE_DIRS</span> <span style=color:#e6db74>BOOST_LIBRARIES</span>
-</span></span><span style=display:flex><span>		)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	mark_as_advanced(<span style=color:#e6db74>BOOST_LIBRARIES</span> <span style=color:#e6db74>BOOST_INCLUDE_DIRS</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>endmacro()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>if(<span style=color:#e6db74>NOT</span> <span style=color:#e6db74>BOOST_FOUND</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	DO_FIND_BOOST_ROOT()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>endif()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>if(<span style=color:#e6db74>NOT</span> <span style=color:#e6db74>BOOST_FOUND</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	DO_FIND_BOOST_SYSTEM()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>endif()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>if(<span style=color:#e6db74>NOT</span> <span style=color:#e6db74>BOOST_FOUND</span>)<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>	DO_FIND_BOOST_DOWNLOAD()<span style=color:#960050;background-color:#1e0010>
-</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>endif()<span style=color:#960050;background-color:#1e0010>
-</span></span></span></code></pre></div><p><strong>Usage</strong>: Like any other <a href=https://cmake.org/cmake/help/book/mastering-cmake/chapter/Modules.html>cmake find
+<a href=https://gist.github.com/thiagowfx/970e3931387ed7db9a39709a8a130ee9>gist</a>.</p><p>I figured to replicate it here:</p><div class=highlight><pre tabindex=0 style=color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cmake data-lang=cmake><span style=display:flex><span><span style=color:#7f848e># - Find Boost
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># Copyright (c) 2016 Thiago Perrotta
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># Permission is hereby granted, free of charge, to any person obtaining a copy of
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># this software and associated documentation files (the &#34;Software&#34;), to deal in
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># the Software without restriction, including without limitation the rights to
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># the Software, and to permit persons to whom the Software is furnished to do so,
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># subject to the following conditions:
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># The above copyright notice and this permission notice shall be included in all
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># copies or substantial portions of the Software.
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># THE SOFTWARE IS PROVIDED &#34;AS IS&#34;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># This module finds if Boost is installed and determines where the
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># executables are. It sets the following variables:
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#  BOOST_FOUND : boolean            - system has Boost
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#  BOOST_LIBRARIES : list(filepath) - the libraries needed to use Boost
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#  BOOST_INCLUDE_DIRS : list(path)  - the Boost include directories
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># If Boost is not found, this module downloads it according to the
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># following variables:
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#  BOOST_ROOT_DIR : path                - the Path where Boost will be installed on
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#  BOOST_REQUESTED_VERSION : string     - the Boost version to be downloaded
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># You can also specify its components:
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#  find_package(Boost COMPONENTS program_options system)
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># which are stored in Boost_FIND_COMPONENTS : list(string)
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># You can also specify its behavior:
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#
+</span></span></span><span style=display:flex><span><span style=color:#7f848e>#  BOOST_USE_STATIC_LIBS : boolean (default: OFF)
+</span></span></span><span style=display:flex><span><span style=color:#7f848e></span>
+</span></span><span style=display:flex><span><span style=color:#e5c07b>if</span>(<span style=color:#98c379>NOT</span> <span style=color:#98c379>Boost_FIND_COMPONENTS</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>message</span>(<span style=color:#98c379>FATAL_ERROR</span> <span style=color:#98c379>&#34;No COMPONENTS specified for Boost&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#e5c07b>endif</span>()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#e5c07b>set</span>(<span style=color:#98c379>BOOST_USE_STATIC_LIBS</span> <span style=color:#98c379>false</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># Set the library prefix and library suffix properly.
+</span></span></span><span style=display:flex><span><span style=color:#7f848e></span><span style=color:#e5c07b>if</span>(<span style=color:#98c379>BOOST_USE_STATIC_LIBS</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>set</span>(<span style=color:#98c379>CMAKE_FIND_LIBRARY_PREFIXES</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>CMAKE_STATIC_LIBRARY_PREFIX</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>set</span>(<span style=color:#98c379>CMAKE_FIND_LIBRARY_SUFFIXES</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>CMAKE_STATIC_LIBRARY_SUFFIX</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>set</span>(<span style=color:#98c379>LIBRARY_PREFIX</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>CMAKE_STATIC_LIBRARY_PREFIX</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>set</span>(<span style=color:#98c379>LIBRARY_SUFFIX</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>CMAKE_STATIC_LIBRARY_SUFFIX</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span><span style=color:#e5c07b>else</span>()
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>set</span>(<span style=color:#98c379>CMAKE_FIND_LIBRARY_PREFIXES</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>CMAKE_SHARED_LIBRARY_PREFIX</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>set</span>(<span style=color:#98c379>CMAKE_FIND_LIBRARY_SUFFIXES</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>CMAKE_SHARED_LIBRARY_SUFFIX</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>set</span>(<span style=color:#98c379>LIBRARY_PREFIX</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>CMAKE_SHARED_LIBRARY_PREFIX</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>set</span>(<span style=color:#98c379>LIBRARY_SUFFIX</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>CMAKE_SHARED_LIBRARY_SUFFIX</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span><span style=color:#e5c07b>endif</span>()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># Create a list(string) for the build command (e.g. --with-program_options;--with-system)
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># and assigns it to BOOST_COMPONENTS_FOR_BUILD
+</span></span></span><span style=display:flex><span><span style=color:#7f848e></span><span style=color:#e5c07b>foreach</span>(<span style=color:#98c379>component</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>Boost_FIND_COMPONENTS</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>list</span>(<span style=color:#98c379>APPEND</span> <span style=color:#98c379>BOOST_COMPONENTS_FOR_BUILD</span> <span style=color:#98c379>--with-</span><span style=color:#56b6c2>${</span><span style=color:#e06c75>component</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span><span style=color:#e5c07b>endforeach</span>()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#7f848e># Create a string for the first component (e.g. boost_program_options)
+</span></span></span><span style=display:flex><span><span style=color:#7f848e># and assigns it to Boost_FIND_COMPONENTS
+</span></span></span><span style=display:flex><span><span style=color:#7f848e></span><span style=color:#e5c07b>list</span>(<span style=color:#98c379>GET</span> <span style=color:#98c379>Boost_FIND_COMPONENTS</span> <span style=color:#98c379>0</span> <span style=color:#98c379>BOOST_FIRST_COMPONENT</span>)
+</span></span><span style=display:flex><span><span style=color:#e5c07b>set</span>(<span style=color:#98c379>BOOST_FIRST_COMPONENT</span> <span style=color:#98c379>&#34;boost_${BOOST_FIRST_COMPONENT}&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#e5c07b>include</span>(<span style=color:#98c379>FindPackageHandleStandardArgs</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#e5c07b>macro</span>(<span style=color:#98c379>DO_FIND_BOOST_SYSTEM</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>find_path</span>(<span style=color:#98c379>BOOST_INCLUDE_DIR</span> <span style=color:#98c379>boost/config.hpp</span>
+</span></span><span style=display:flex><span>		<span style=color:#98c379>PATHS</span> <span style=color:#98c379>/usr/local/include</span> <span style=color:#98c379>/usr/include</span>
+</span></span><span style=display:flex><span>		)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>find_library</span>(<span style=color:#98c379>BOOST_LIBRARY</span>
+</span></span><span style=display:flex><span>		<span style=color:#98c379>NAMES</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_FIRST_COMPONENT</span><span style=color:#56b6c2>}</span>
+</span></span><span style=display:flex><span>		<span style=color:#98c379>PATHS</span> <span style=color:#98c379>/usr/local/lib</span> <span style=color:#98c379>/usr/lib</span>
+</span></span><span style=display:flex><span>		)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>FIND_PACKAGE_HANDLE_STANDARD_ARGS</span>(<span style=color:#98c379>Boost</span> <span style=color:#98c379>DEFAULT_MSG</span>
+</span></span><span style=display:flex><span>		<span style=color:#98c379>BOOST_INCLUDE_DIR</span> <span style=color:#98c379>BOOST_LIBRARY</span>
+</span></span><span style=display:flex><span>		)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>set</span>(<span style=color:#98c379>BOOST_LIBRARIES</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_LIBRARY</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>set</span>(<span style=color:#98c379>BOOST_INCLUDE_DIRS</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_INCLUDE_DIR</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>mark_as_advanced</span>(<span style=color:#98c379>BOOST_LIBRARIES</span> <span style=color:#98c379>BOOST_INCLUDE_DIRS</span>)
+</span></span><span style=display:flex><span><span style=color:#e5c07b>endmacro</span>()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#e5c07b>macro</span>(<span style=color:#98c379>DO_FIND_BOOST_ROOT</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>if</span>(<span style=color:#98c379>NOT</span> <span style=color:#98c379>BOOST_ROOT_DIR</span>)
+</span></span><span style=display:flex><span>		<span style=color:#e5c07b>message</span>(<span style=color:#98c379>STATUS</span> <span style=color:#98c379>&#34;BOOST_ROOT_DIR is not defined, using binary directory.&#34;</span>)
+</span></span><span style=display:flex><span>		<span style=color:#e5c07b>set</span>(<span style=color:#98c379>BOOST_ROOT_DIR</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>CURRENT_CMAKE_BINARY_DIR</span><span style=color:#56b6c2>}</span> <span style=color:#98c379>CACHE</span> <span style=color:#98c379>PATH</span> <span style=color:#98c379>&#34;&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>endif</span>()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>find_path</span>(<span style=color:#98c379>BOOST_INCLUDE_DIR</span> <span style=color:#98c379>boost/config.hpp</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_ROOT_DIR</span><span style=color:#56b6c2>}</span><span style=color:#98c379>/include</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>find_library</span>(<span style=color:#98c379>BOOST_LIBRARY</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_FIRST_COMPONENT</span><span style=color:#56b6c2>}</span> <span style=color:#98c379>HINTS</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_ROOT_DIR</span><span style=color:#56b6c2>}</span><span style=color:#98c379>/lib</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>FIND_PACKAGE_HANDLE_STANDARD_ARGS</span>(<span style=color:#98c379>Boost</span> <span style=color:#98c379>DEFAULT_MSG</span>
+</span></span><span style=display:flex><span>		<span style=color:#98c379>BOOST_INCLUDE_DIR</span> <span style=color:#98c379>BOOST_LIBRARY</span>
+</span></span><span style=display:flex><span>		)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>set</span>(<span style=color:#98c379>BOOST_LIBRARIES</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_LIBRARY</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>set</span>(<span style=color:#98c379>BOOST_INCLUDE_DIRS</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_INCLUDE_DIR</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>mark_as_advanced</span>(<span style=color:#98c379>BOOST_LIBRARIES</span> <span style=color:#98c379>BOOST_INCLUDE_DIRS</span>)
+</span></span><span style=display:flex><span><span style=color:#e5c07b>endmacro</span>()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#e5c07b>macro</span>(<span style=color:#98c379>DO_FIND_BOOST_DOWNLOAD</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>if</span>(<span style=color:#98c379>NOT</span> <span style=color:#98c379>BOOST_REQUESTED_VERSION</span>)
+</span></span><span style=display:flex><span>		<span style=color:#e5c07b>message</span>(<span style=color:#98c379>FATAL_ERROR</span> <span style=color:#98c379>&#34;BOOST_REQUESTED_VERSION is not defined.&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>endif</span>()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>string</span>(<span style=color:#98c379>REPLACE</span> <span style=color:#98c379>&#34;.&#34;</span> <span style=color:#98c379>&#34;_&#34;</span> <span style=color:#98c379>BOOST_REQUESTED_VERSION_UNDERSCORE</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_REQUESTED_VERSION</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>set</span>(<span style=color:#98c379>BOOST_MAYBE_STATIC</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>if</span>(<span style=color:#98c379>BOOST_USE_STATIC_LIBS</span>)
+</span></span><span style=display:flex><span>		<span style=color:#e5c07b>set</span>(<span style=color:#98c379>BOOST_MAYBE_STATIC</span> <span style=color:#98c379>&#34;link=static&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>endif</span>()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>include</span>(<span style=color:#98c379>ExternalProject</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>ExternalProject_Add</span>(
+</span></span><span style=display:flex><span>		<span style=color:#98c379>Boost</span>
+</span></span><span style=display:flex><span>		<span style=color:#98c379>URL</span> <span style=color:#98c379>https://downloads.sourceforge.net/project/boost/boost/</span><span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_REQUESTED_VERSION</span><span style=color:#56b6c2>}</span><span style=color:#98c379>/boost_</span><span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_REQUESTED_VERSION_UNDERSCORE</span><span style=color:#56b6c2>}</span><span style=color:#98c379>.zip</span>
+</span></span><span style=display:flex><span>		<span style=color:#98c379>UPDATE_COMMAND</span> <span style=color:#98c379>&#34;&#34;</span>
+</span></span><span style=display:flex><span>		<span style=color:#98c379>CONFIGURE_COMMAND</span> <span style=color:#98c379>./bootstrap.sh</span> <span style=color:#98c379>--prefix=</span><span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_ROOT_DIR</span><span style=color:#56b6c2>}</span>
+</span></span><span style=display:flex><span>		<span style=color:#98c379>BUILD_COMMAND</span> <span style=color:#98c379>./b2</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_MAYBE_STATIC</span><span style=color:#56b6c2>}</span> <span style=color:#98c379>--prefix=</span><span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_ROOT_DIR</span><span style=color:#56b6c2>}</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_COMPONENTS_FOR_BUILD</span><span style=color:#56b6c2>}</span> <span style=color:#98c379>install</span>
+</span></span><span style=display:flex><span>		<span style=color:#98c379>BUILD_IN_SOURCE</span> <span style=color:#98c379>true</span>
+</span></span><span style=display:flex><span>		<span style=color:#98c379>INSTALL_COMMAND</span> <span style=color:#98c379>&#34;&#34;</span>
+</span></span><span style=display:flex><span>		<span style=color:#98c379>INSTALL_DIR</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_ROOT_DIR</span><span style=color:#56b6c2>}</span>
+</span></span><span style=display:flex><span>		)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>ExternalProject_Get_Property</span>(<span style=color:#98c379>Boost</span> <span style=color:#98c379>install_dir</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>set</span>(<span style=color:#98c379>BOOST_INCLUDE_DIRS</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>install_dir</span><span style=color:#56b6c2>}</span><span style=color:#98c379>/include</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>macro</span>(<span style=color:#98c379>libraries_to_fullpath</span> <span style=color:#98c379>varname</span>)
+</span></span><span style=display:flex><span>		<span style=color:#e5c07b>set</span>(<span style=color:#56b6c2>${</span><span style=color:#e06c75>varname</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span>		<span style=color:#e5c07b>foreach</span>(<span style=color:#98c379>component</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>Boost_FIND_COMPONENTS</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span>			<span style=color:#e5c07b>list</span>(<span style=color:#98c379>APPEND</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>varname</span><span style=color:#56b6c2>}</span> <span style=color:#56b6c2>${</span><span style=color:#e06c75>BOOST_ROOT_DIR</span><span style=color:#56b6c2>}</span><span style=color:#98c379>/lib/</span><span style=color:#56b6c2>${</span><span style=color:#e06c75>LIBRARY_PREFIX</span><span style=color:#56b6c2>}</span><span style=color:#98c379>boost_</span><span style=color:#56b6c2>${</span><span style=color:#e06c75>component</span><span style=color:#56b6c2>}${</span><span style=color:#e06c75>LIBRARY_SUFFIX</span><span style=color:#56b6c2>}</span>)
+</span></span><span style=display:flex><span>		<span style=color:#e5c07b>endforeach</span>()
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>endmacro</span>()
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>libraries_to_fullpath</span>(<span style=color:#98c379>BOOST_LIBRARIES</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>FIND_PACKAGE_HANDLE_STANDARD_ARGS</span>(<span style=color:#98c379>Boost</span> <span style=color:#98c379>DEFAULT_MSG</span>
+</span></span><span style=display:flex><span>		<span style=color:#98c379>BOOST_INCLUDE_DIRS</span> <span style=color:#98c379>BOOST_LIBRARIES</span>
+</span></span><span style=display:flex><span>		)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>mark_as_advanced</span>(<span style=color:#98c379>BOOST_LIBRARIES</span> <span style=color:#98c379>BOOST_INCLUDE_DIRS</span>)
+</span></span><span style=display:flex><span><span style=color:#e5c07b>endmacro</span>()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#e5c07b>if</span>(<span style=color:#98c379>NOT</span> <span style=color:#98c379>BOOST_FOUND</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>DO_FIND_BOOST_ROOT</span>()
+</span></span><span style=display:flex><span><span style=color:#e5c07b>endif</span>()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#e5c07b>if</span>(<span style=color:#98c379>NOT</span> <span style=color:#98c379>BOOST_FOUND</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>DO_FIND_BOOST_SYSTEM</span>()
+</span></span><span style=display:flex><span><span style=color:#e5c07b>endif</span>()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#e5c07b>if</span>(<span style=color:#98c379>NOT</span> <span style=color:#98c379>BOOST_FOUND</span>)
+</span></span><span style=display:flex><span>	<span style=color:#e5c07b>DO_FIND_BOOST_DOWNLOAD</span>()
+</span></span><span style=display:flex><span><span style=color:#e5c07b>endif</span>()
+</span></span></code></pre></div><p><strong>Usage</strong>: Like any other <a href=https://cmake.org/cmake/help/book/mastering-cmake/chapter/Modules.html>cmake find
 module</a>,
 with <code>find_package</code>.</p></content><div style=display:flex;justify-content:space-between><p><a href=https://perrotta.dev/tags/bestof/>#bestof</a>
 <a href=https://perrotta.dev/tags/dev/>#dev</a>
