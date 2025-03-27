@@ -48,3 +48,13 @@ activating it is just one (right) click away.
 
 Apparently I activated it more than 180 times in my personal laptop, effectively
 keeping it awake for more than 24 days.
+
+When writing this post, I just learned that I can activate it via
+[AppleScript](https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html):
+
+```shell
+% osascript -e 'tell application "Amphetamine" to start new session'
+```
+
+Now I can augment my [`prodaccess`]({{< ref "2024-10-18-prodaccess" >}}) script
+with that.
