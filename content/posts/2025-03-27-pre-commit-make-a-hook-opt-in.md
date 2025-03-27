@@ -26,6 +26,7 @@ The workaround was to make this hook opt-in.
 We can do so by adding it to the [manual stage](https://pre-commit.com/#confining-hooks-to-run-at-certain-stages):
 
 ```yaml
+repos:
   - repo: https://github.com/sbrunner/hooks
     rev: ee105bd276e163fce85744b39104ca563f923c47 # frozen: 1.4.0
     hooks:
