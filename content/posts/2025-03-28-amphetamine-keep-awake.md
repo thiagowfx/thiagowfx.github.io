@@ -47,7 +47,8 @@ For bonus productivity, configure it to always launch at login, so that
 activating it is just one (right) click away.
 
 Apparently I activated it more than 180 times in my personal laptop, effectively
-keeping it awake for more than 24 days.
+keeping it awake for more than 24 days. At work, more than 250 sessions for more
+than 8 days[^1].
 
 When writing this post, I just learned that I can activate it via
 [AppleScript](https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html):
@@ -58,3 +59,6 @@ When writing this post, I just learned that I can activate it via
 
 Now I can augment my [`prodaccess`]({{< ref "2024-10-18-prodaccess" >}}) script
 with that.
+
+
+[^1]: There is definitely something odd with these numbers.
