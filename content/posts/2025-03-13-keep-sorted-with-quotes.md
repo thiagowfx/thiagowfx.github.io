@@ -23,25 +23,7 @@ tags:
 - vault
 ```
 
-I would naturally add `keep-sorted` to it:
-
-```yaml
-# keep-sorted start
-- "pgbouncer*"
-- "rabbitmq*"
-- "redis*"
-- azure-workload-identity
-- clustermon
-- flatfile
-- kube2iam
-- mongo
-- node-local-dns
-- traefik
-- vault
-# keep-sorted end
-```
-
-But the result is not what I expected.
+I would naturally add `keep-sorted` to it, but the result is not what I expected.
 
 ```yaml
 # keep-sorted start
