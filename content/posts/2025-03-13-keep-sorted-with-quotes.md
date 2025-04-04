@@ -23,7 +23,7 @@ tags:
 - vault
 ```
 
-I would naturally add `keep-sorted` to it, but the result is not what I expected.
+I would naturally add `keep-sorted` to it, but the result is not what I expected:
 
 ```yaml
 # keep-sorted start
@@ -70,3 +70,21 @@ Only the following form worked:
 
 ...but it's a mouthful. I filed an upstream bug:
 https://github.com/google/keep-sorted/issues/76.
+
+**Edit(2025-01-04)**: Thanks Ho Man for the following suggestion:
+
+```yaml
+# keep-sorted start by_regex=\w+
+- azure-workload-identity
+- clustermon
+- flatfile
+- kube2iam
+- mongo
+- node-local-dns
+- "pgbouncer*"
+- "rabbitmq*"
+- "redis*"
+- traefik
+- vault
+# keep-sorted end
+```
