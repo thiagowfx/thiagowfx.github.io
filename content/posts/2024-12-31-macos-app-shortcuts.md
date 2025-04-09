@@ -9,8 +9,8 @@ tags:
 Let's say you want to assign a keyboard shortcut within a given app to invoke a
 menu item.
 
-To illustrate: Assume that you can to map `Cmd + Shift + X` within Logseq.app to
-"paste and match style".
+To illustrate: Assume that you want to map `Cmd + Shift + X` within `Logseq.app`
+to "paste and match style".
 
 [Apple Docs](https://support.apple.com/en-ca/guide/mac-help/mchlp2271/mac):
 
