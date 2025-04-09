@@ -15,7 +15,7 @@ in 2025:
 {command that emits warnings or errors} | claude
 ```
 
-[`claude`] is Anthropic's [Claude
+`claude` is Anthropic's [Claude
 Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview)
 CLI tool.
 
