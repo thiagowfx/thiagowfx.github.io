@@ -17,7 +17,10 @@ in 2025:
 
 `claude` is Anthropic's [Claude
 Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview)
-CLI tool.
+CLI LLM agent tool:
+
+> Learn about Claude Code, an agentic coding tool made by Anthropic. Currently
+> in beta as a research preview.
 
 There is a series of little / simple tasks I've been procrastinating (e.g.
 linter issues) that can be quickly resolved with the assistance of a LLM tool.
