@@ -1,5 +1,5 @@
 ---
-title: "Pipe to claude"
+title: "Pipe to Claude"
 date: 2025-04-09T17:56:05+02:00
 tags:
   - dev
