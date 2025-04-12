@@ -2,6 +2,7 @@
 title: "Serendipity vs Gatekeeping"
 date: 2025-04-13T01:35:29+02:00
 tags:
+  - bestof
   - serenity
 ---
 
