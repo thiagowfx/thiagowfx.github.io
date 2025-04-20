@@ -23,13 +23,13 @@ I recommend to have it for **breakfast** (it's enough!) or as an **afternoon sna
 
 The most important ingredients are **in bold**.
 
-The coolest™ ingredients are __in italics__.
+The coolest™ ingredients are _in italics_.
 
 - base (pick at least one)
   - **milk** (animal or not; prefer low-fat)
   - plain yogurt (greek, vanilla also OK)
   - high-protein yogurt
-  - __semolina pudding__
+  - _semolina pudding_
   - avoid: water
 - grains (pick at least two)
   - **oats** (steel-cut or rolled)
@@ -42,9 +42,9 @@ The coolest™ ingredients are __in italics__.
 - sweet(ener) (pick at least one)
   - **peanut butter**
   - almond butter
-  - __maple syrup__
-  - __acacia honey__
-  - __raw honey__
+  - _maple syrup_
+  - _acacia honey_
+  - _raw honey_
   - wild honey
   - vanilla extract
   - avoid: sugar / brown sugar
