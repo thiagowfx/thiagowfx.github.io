@@ -38,7 +38,6 @@ index 30aac4a2..841eac9b 100644
 -    rev: v5.0.0
 +    rev: cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b  # frozen: v5.0.0
      hooks:
-       # keep-sorted start
        - id: check-executables-have-shebangs
 @@ -41,27 +41,27 @@ repos:
            - -D .codespell-dictionary.txt
