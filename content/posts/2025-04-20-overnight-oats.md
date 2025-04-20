@@ -62,7 +62,7 @@ The coolest™ ingredients are _in italics_.
 ### The first day
 
 These are overnight oats, therefore they should ideally be prepared one day
-before your intend to consume them. The intent is to leave them simmering in the
+before you intend to consume them. The intent is to leave them simmering in the
 fridge while you're sleeping. Needless to say, it will be served **cold**.
 There's a variant of this recipe that is served hot, but it's out of scope of
 this post.
