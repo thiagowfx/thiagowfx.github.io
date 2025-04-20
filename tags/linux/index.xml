@@ -1,6 +1,81 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/linux/</link><description>Recent content in Linux on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 09 Apr 2025 17:56:05 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Pipe to Claude</title><link>https://perrotta.dev/2025/04/pipe-to-claude/</link><pubDate>Wed, 09 Apr 2025 17:56:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/pipe-to-claude/</guid><description>&lt;p>One of the most effective ways to resolve random software development problems
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 20 Apr 2025 15:12:09 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Alpine Linux: the maintainer workflow</title><link>https://perrotta.dev/2025/04/alpine-linux-the-maintainer-workflow/</link><pubDate>Sun, 20 Apr 2025 15:12:09 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/alpine-linux-the-maintainer-workflow/</guid><description>&lt;p>I maintain &lt;a href="https://pkgs.alpinelinux.org/packages?name=&amp;amp;branch=edge&amp;amp;repo=&amp;amp;arch=x86_64&amp;amp;origin=&amp;amp;flagged=&amp;amp;maintainer=Thiago+Perrotta">a couple of
+packages&lt;/a>
+on Alpine Linux.&lt;/p>
+&lt;p>Every now and then, a new software version is released, and it&amp;rsquo;s my duty&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> as an
+active package maintainer to update my packages.&lt;/p>
+&lt;p>The typical workflow looks like the following.&lt;/p>
+&lt;p>First I get an email notification from &amp;ldquo;Alpine Package DB&amp;rdquo;:&lt;/p>
+&lt;blockquote>
+&lt;p>Dear Thiago Perrotta&lt;/p>
+&lt;p>This is an automatic message send from pkgs.alpinelinux.org
+One or more of your aports have been flagged out of date based on
+Anitya monitoring system &lt;a href="https://release-monitoring.org/">https://release-monitoring.org/&lt;/a>&lt;/p>
+&lt;p>argocd current: 2.14.2-r1 new: 2.14.9&lt;/p>
+&lt;p>To update the package you can use our helper script:&lt;/p>
+&lt;p>abump aport-version&lt;/p>
+&lt;p>If the provided information is incorrect, please let us know on IRC
+or &lt;a href="mailto:alpine-infra@alpinelinux.org">alpine-infra@alpinelinux.org&lt;/a>. Thanks!&lt;/p>
+&lt;/blockquote>
+&lt;p>It&amp;rsquo;s important not to &lt;a href="https://opensource.com/business/15/12/avoid-burnout-live-happy">burn oneself
+out&lt;/a>.&lt;/p>
+&lt;p>I treat these notifications as an FYI. They &lt;em>are not&lt;/em> prompts to make me
+immediately go and update the packages&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>. For packages with frequent updates,
+like &lt;code>argocd&lt;/code>, I&amp;rsquo;ll let a few patch versions accumulate before I take action.
+Other times it is handy to batch package upgrades together so to do them all at
+once. I use my personal judgment here. At the very least, this email will
+trigger a TODO in my task list, so that it will not be forgotten. &lt;em>At some
+point&lt;/em> it will be taken care of.&lt;/p>
+&lt;p>Once I am ready to update the package, I &lt;code>ssh&lt;/code> to my Alpine Linux server. There
+is absolutely no requirement to update alpine linux packages from alpine linux,
+but it&amp;rsquo;s the most convenient to do, and I already have an alpine linux system
+anyway.&lt;/p>
+&lt;p>Then &lt;code>cd aports/&lt;/code>. This is a local git clone of the &lt;a href="https://gitlab.alpinelinux.org/alpine/aports">aports
+tree&lt;/a>
+(&lt;a href="https://wiki.alpinelinux.org/wiki/Aports_tree">wiki&lt;/a>).&lt;/p>
+&lt;p>&lt;code>git pull&lt;/code>. I tend to clean up after myself, so the last branch is likely
+already &lt;code>master&lt;/code>. But, if not, then &lt;code>git reset --hard &amp;amp;&amp;amp; git checkout master &amp;amp;&amp;amp; git pull&lt;/code>. Amen.&lt;/p>
+&lt;p>Now the real fun starts. And it&amp;rsquo;s surprisingly quick and simple, it feels like
+cheating:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% abump argocd-2.14.9
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This will update the version and checksums in the corresponding &lt;code>APKBUILD&lt;/code> and
+trigger a package build.&lt;/p>
+&lt;p>It&amp;rsquo;s sensible to check the package release notes or changelog to find potential
+incompatibilities and/or updates to the build process. It&amp;rsquo;s also sensible to
+look at the package diffs to inspect for potential malware, which is becoming
+increasingly more common these days in open source packages. &amp;ldquo;Secure your supply
+chain&amp;rdquo;, as they say it.&lt;/p>
+&lt;p>If the build completes successfully, create a new branch (&lt;code>git nb argocd&lt;/code>),
+commit, push it (&lt;code>git pushm&lt;/code>), then create a merge request (MR) on
+&lt;a href="https://gitlab.alpinelinux.org/">GitLab&lt;/a>. I normally use the Web UI to do so,
+but it&amp;rsquo;s also possible to do it with the CLI. A link to create the MR is printed
+to stdout upon pushing the branch, which makes the process even easier.&lt;/p>
+&lt;p>It could happen that the MR fails CI for some architectures (even if it works
+locally on my machine™). These errors need to be dealt with.&lt;/p>
+&lt;p>The commit message must follow a certain style. I have a pre-commit script set
+up that does it for me. It is typically in this form:&lt;/p>
+&lt;pre tabindex="0">&lt;code>testing/argocd: upgrade to 2.14.9
+&lt;/code>&lt;/pre>&lt;p>There&amp;rsquo;s a rule: only one package per merge request.&lt;/p>
+&lt;p>If there are more packages to upgrade, I run &lt;code>git bd&lt;/code> (&amp;ldquo;branch delete&amp;rdquo;) and then
+restart this process. It&amp;rsquo;s quite manageable, as I don&amp;rsquo;t maintain a lot of
+packages. Perhaps it could be further automated if there were more packages
+and/or if the package upgrades were more frequent.&lt;/p>
+&lt;p>The final MR looks like the following:
+&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/83026">!83026&lt;/a>.&lt;/p>
+&lt;p>Now I sit tight and wait for approval.&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>On a &lt;a href="https://xkcd.com/2347/">&lt;em>best-effort&lt;/em>&lt;/a> basis.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>Unless it&amp;rsquo;s a security risk or incident (e.g. whenever there&amp;rsquo;s a CVE
+associated with it).&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>Pipe to Claude</title><link>https://perrotta.dev/2025/04/pipe-to-claude/</link><pubDate>Wed, 09 Apr 2025 17:56:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/pipe-to-claude/</guid><description>&lt;p>One of the most effective ways to resolve random software development problems
 in 2025:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#e5c07b">command&lt;/span> that emits warnings or errors&lt;span style="color:#56b6c2">}&lt;/span> | claude
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>claude&lt;/code> is Anthropic&amp;rsquo;s &lt;a href="https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview">Claude
@@ -2926,121 +3001,4 @@ available for you to access.&lt;/p>
 &lt;p>&lt;strong>Tip&lt;/strong>: Replace &lt;code>https://github.com/username/repository&lt;/code> with
 &lt;code>https://github.dev/username/repository&lt;/code> to automatically open the
 repository within a github codespace. Alternatively, if you have
-github shortcuts enabled, press &lt;code>.&lt;/code> while in the repository page.&lt;/p></description></item><item><title>Ufw: Firewall</title><link>https://perrotta.dev/2021/12/ufw-firewall/</link><pubDate>Tue, 28 Dec 2021 17:14:55 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2021/12/ufw-firewall/</guid><description>&lt;blockquote>
-&lt;p>Ufw stands for Uncomplicated Firewall, and is a program for managing a netfilter firewall. It provides a command line interface and aims to be uncomplicated and easy to use.&lt;/p>
-&lt;/blockquote>
-&lt;p>The firewall makes justice to its name as it is really uncomplicated, and a pleasure to set up.&lt;/p>
-&lt;h2 id="install">Install&lt;/h2>
-&lt;p>Install and set up &lt;code>ufw&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>, which should be packaged for most linux
-distributions:&lt;/p>
-&lt;h3 id="openrc-based-alpine-linux-gentoo">OpenRC-based (Alpine Linux, Gentoo)&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Install ufw and ufw-extras&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ doas apk install ufw&lt;span style="color:#56b6c2">{&lt;/span>,-extras&lt;span style="color:#56b6c2">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Enable ufw daemon&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ doas rc-update add ufw
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Start ufw daemon&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ doas rc-service ufw start
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Enable firewall&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ doas ufw &lt;span style="color:#e5c07b">enable&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="systemd-based-arch-linux-debian">Systemd-based (Arch Linux, Debian)&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Install ufw and ufw-extras&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ sudo pacman -Syu ufw&lt;span style="color:#56b6c2">{&lt;/span>,-extras&lt;span style="color:#56b6c2">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Enable and start ufw daemon&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ sudo systemctl &lt;span style="color:#e5c07b">enable&lt;/span> --now ufw
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Enable firewall&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ sudo ufw &lt;span style="color:#e5c07b">enable&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="add-rules">Add rules&lt;/h2>
-&lt;p>Firewall rules can be added with &lt;code>ufw allow [port]&lt;/code> or &lt;code>ufw allow [name]&lt;/code>.
-Named profiles (for example: ssh, http) live in &lt;code>/etc/ufw/applications.d/&lt;/code>, or you can query all of them with &lt;code>ufw app list&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% ufw app list
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Available applications:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> AIM
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Bonjour
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> CIFS
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> DNS
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Deluge
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> IMAP
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> IMAPS
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> IPP
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> KTorrent
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Kerberos Admin
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Kerberos Full
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Kerberos KDC
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Kerberos Password
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> LDAP
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> LDAPS
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> LPD
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> MSN
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> MSN SSL
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Mail submission
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> NFS
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> POP3
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> POP3S
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> PeopleNearby
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> SMTP
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> SSH
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Socks
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Telnet
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Transmission
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Transparent Proxy
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> VNC
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> WWW
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> WWW Cache
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> WWW Full
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> WWW Secure
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> XMPP
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Yahoo
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> qBittorrent
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> svnserve
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Ufw also supports &lt;code>ufw limit [port | name]&lt;/code> which is like &lt;code>add&lt;/code> but with the
-added ability to &amp;ldquo;deny connections from IP addresses that attempt to initiate
-6 or more connections in the last 30 seconds&amp;rdquo;. It&amp;rsquo;s a good measure to mitigate brute-force and/or DDOS attacks.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># either use named profiles&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% ufw allow http-alt
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% ufw limit ssh
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># or port numbers&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% ufw allow 8080/tcp
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% ufw limit &lt;span style="color:#d19a66">22&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="remove-rules">Remove rules&lt;/h2>
-&lt;p>Firewall rules can be removed by merely adding &amp;lsquo;delete&amp;rsquo; between ufw and the verb.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% ufw delete allow 8080/tcp
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% ufw delete limit ssh
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="check-status">Check status&lt;/h2>
-&lt;p>One status command to rule them all, &amp;ldquo;verbose&amp;rdquo; is optional:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% ufw status verbose
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Status: active
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Logging: on &lt;span style="color:#56b6c2">(&lt;/span>low&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Default: deny &lt;span style="color:#56b6c2">(&lt;/span>incoming&lt;span style="color:#56b6c2">)&lt;/span>, allow &lt;span style="color:#56b6c2">(&lt;/span>outgoing&lt;span style="color:#56b6c2">)&lt;/span>, disabled &lt;span style="color:#56b6c2">(&lt;/span>routed&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>New profiles: skip
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>To Action From
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-- ------ ----
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>22/tcp LIMIT IN Anywhere
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#d19a66">8080&lt;/span> ALLOW IN Anywhere
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>22/tcp &lt;span style="color:#56b6c2">(&lt;/span>v6&lt;span style="color:#56b6c2">)&lt;/span> LIMIT IN Anywhere &lt;span style="color:#56b6c2">(&lt;/span>v6&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#d19a66">8080&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>v6&lt;span style="color:#56b6c2">)&lt;/span> ALLOW IN Anywhere &lt;span style="color:#56b6c2">(&lt;/span>v6&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Ufw uses iptables under the hood. Inspect the underlying iptables rules:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% iptables -S | egrep &lt;span style="color:#98c379">&amp;#39;\b(22|8080)\b&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-A ufw-user-input -p tcp -m tcp --dport &lt;span style="color:#d19a66">22&lt;/span> -m conntrack --ctstate NEW -m recent --set --name DEFAULT --mask 255.255.255.255 --rsource
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-A ufw-user-input -p tcp -m tcp --dport &lt;span style="color:#d19a66">22&lt;/span> -m conntrack --ctstate NEW -m recent --update --seconds &lt;span style="color:#d19a66">30&lt;/span> --hitcount &lt;span style="color:#d19a66">6&lt;/span> --name DEFAULT --mask 255.255.255.255 --rsource -j ufw-user-limit
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-A ufw-user-input -p tcp -m tcp --dport &lt;span style="color:#d19a66">22&lt;/span> -j ufw-user-limit-accept
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-A ufw-user-input -p tcp -m tcp --dport &lt;span style="color:#d19a66">8080&lt;/span> -j ACCEPT
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="references">References&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a href="https://help.ubuntu.com/community/UFW">https://help.ubuntu.com/community/UFW&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://wiki.archlinux.org/title/Uncomplicated_Firewall">https://wiki.archlinux.org/title/Uncomplicated_Firewall&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>&lt;a href="https://github.com/xyproto/ufw-extras">&lt;code>ufw-extras&lt;/code>&lt;/a> is optional, it contains additional rules (e.g. mosh, tailscale).&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item></channel></rss>
+github shortcuts enabled, press &lt;code>.&lt;/code> while in the repository page.&lt;/p></description></item></channel></rss>
