@@ -32,7 +32,7 @@ The coolest™ ingredients are _in italics_.
   - _semolina pudding_
   - avoid: water
 - grains (pick at least two)
-  - **oats** (steel-cut or rolled)
+  - **oats** (steel-cut or rolled -> auf Deutsch: Haferflocken)
   - **chia seeds**
   - flax seeds
   - hemp seeds
