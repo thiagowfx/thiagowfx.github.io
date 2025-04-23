@@ -18,7 +18,9 @@ build:
 
 # Create a new post. Usage: `just new "advent of code day 8"`
 new title:
-	hugo new content/posts/`date "+%Y-%m-%d"`-{{ kebabcase(title) }}.md
+	#!/usr/bin/env bash
+	filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+	hugo new content/posts/`date "+%Y-%m-%d"`-${filename}.md
 
 # Delete hugo build artifacts
 clean:
