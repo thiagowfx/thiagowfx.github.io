@@ -46,6 +46,8 @@ The coolest™ ingredients are _in italics_.
   - _acacia honey_
   - _raw honey_
   - wild honey
+  - date syrup
+  - **cinnamon**
   - vanilla extract
   - avoid: sugar / brown sugar
   - avoid: hazelnut butter / Nutella™
@@ -54,6 +56,7 @@ The coolest™ ingredients are _in italics_.
   - strawberries
   - raspberries
   - blueberries
+  - cherries
   - figs
   - avoid: dry figs
 
