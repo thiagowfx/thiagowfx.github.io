@@ -6,6 +6,8 @@ set dotenv-load
 # Start a hugo server in watch mode
 watch preview="true":
 	#!/usr/bin/env bash
+	set -euo pipefail
+
 	additional_flags=()
 	if [ "{{preview}}" = "true" ]; then
 		additional_flags+=("--openBrowser" "--navigateToChanged")
@@ -19,6 +21,8 @@ build:
 # Create a new post. Usage: `just new "advent of code day 8"`
 new title:
 	#!/usr/bin/env bash
+	set -euo pipefail
+
 	filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
 	hugo new content/posts/`date "+%Y-%m-%d"`-${filename}.md
 
@@ -26,12 +30,12 @@ new title:
 clean:
 	rm -rf public/ resources/
 
-# Update git submodules
-update:
-	git submodule update --remote
-	pre-commit autoupdate
-
-# Ping Google and Bing about changes in the sitemap
+# Ping search engines about changes in the sitemap
 ping sitemap="https://perrotta.dev/sitemap.xml":
 	curl -sS -o /dev/null "https://www.google.com/ping?sitemap={{ sitemap }}"
 	curl -sS -o /dev/null "https://www.bing.com/ping?sitemap={{ sitemap }}"
+
+# Update git submodules and pre-commit hooks
+update:
+	git submodule update --remote
+	pre-commit autoupdate --freeze
