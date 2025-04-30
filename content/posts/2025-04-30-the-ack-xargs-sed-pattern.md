@@ -10,9 +10,9 @@ tags:
 
 I employ this pattern almost every day:
 
-- use `ack` to search for a given string in a codebase (git repo)
-- use `xargs` to iterate through each finding
-- use `sed` to make a text transformation
+- use [`ack`](https://beyondgrep.com/) to search for a given string in a codebase (git repo)
+- use [`xargs`](https://man.archlinux.org/man/xargs.1) to iterate through each finding
+- use [`sed`](https://www.gnu.org/software/sed/manual/sed.html) to make a text transformation
 
 Example of the day:
 
