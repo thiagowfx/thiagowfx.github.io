@@ -18,7 +18,11 @@ on the web in the uphill battle against the
 [enshittification](https://en.wikipedia.org/wiki/Enshittification) of the
 internet.
 
-If you want to email me, feel free to; _in general_ I will get back to you
-(eventually).
+If you want to email me, feel free to; _typically_ I will read it and
+eventually get back to you if needed.
+
+If you have Telegram, you're welcome to join [ByteBurst
+Brigade](https://t.me/+OzLfJRhjA69iNWFh), a supergroup I host with friends to
+discuss Tech in general.
 
 [^1]: And I seemingly enjoy footnotes. Thiago Perrotta (`@thiagowfx`)
