@@ -3,6 +3,7 @@ title: "Alpine Linux: install / pin old packages"
 date: 2025-01-08T15:54:44-03:00
 tags:
   - dev
+  - linux
   - selfhosted
 ---
 
@@ -27,3 +28,5 @@ Use the `--repository` flag from `apk`!
 
 It's also important to pin the package version (`~1.6`), otherwise the latest
 one available gets installed.
+
+Replace "main" with "community" or "testing" as needed.
