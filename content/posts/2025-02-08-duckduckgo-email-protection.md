@@ -60,3 +60,5 @@ with catch-all sign-ups (e.g. `foo at perrotta . dev`).
 
 The only downside is that it's not possible to _send_ emails from these
 addresses. Therefore, it's not an universal solution.
+
+**Update(2025-05-10)**: Alternative: [Simple Login](https://simplelogin.io/) by Proton.
