@@ -12,6 +12,7 @@ A brief list of disposable / throwaway account resources:
 - https://dispostable.com/
 - https://10minutemail.com/
 - https://yadim.dismail.de/
+- https://www.mailinator.com/ (recommended by [HIBP](https://haveibeenpwned.com/))
 
 ## NAT / public URLs
 
