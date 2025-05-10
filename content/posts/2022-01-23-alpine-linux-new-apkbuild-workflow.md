@@ -131,7 +131,7 @@ First APKBUILD`]({{< ref "2022-01-07-my-first-apkbuild#build-comparison" >}}).
   `sensible-utils-doc-0.0.14-r0.apk`), however that doesn't mean it is a decent
   package yet.
 
-- Run `apkbuild-lint APKBUILD` and `abuild sanitycheck` to lint your package
+- Run `apkbuild-lint APKBUILD` and `abuild validate`[^4] to lint your package
   and catch common errors. Fix the errors, if any.
 
 ## Request feedback if needed
@@ -196,3 +196,4 @@ And that's all! Other useful tips:
 [^1]: If you use https://duckduckgo.com/, query for `!alpine sensible-utils`.
 [^2]: Package debugging is out of scope of this post.
 [^3]: In GitLab it's called Merge Request (MR). The list of all aports MRs is [here](https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests).
+[^4]: **Update(2025-05-10)**: Previously: `abuild sanitycheck`.
