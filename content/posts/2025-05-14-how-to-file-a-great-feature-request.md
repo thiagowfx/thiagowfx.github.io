@@ -45,7 +45,7 @@ time to file a ticket is a reasonable trade-off.
 Now, even if your FR is great and very reasonable[^1], there's absolutely no
 guarantee:
 
-- you will even get a reply in the first place
+- you will even get a reply in the first place[^2]
 - back-and-forth chatter will be quick and responsive
 - the maintainers / developers will agree with your sense of 'usefulness'
 - the maintainers / developers will agree with _how_ you believe it should be
@@ -57,3 +57,6 @@ _Life is hard_. Nonetheless, do not give up! Open source software is beautiful
 and serendipitous. :)
 
 [^1]: It's a subjective matter.
+
+[^2]: Sometimes it takes [more than 3
+    years](https://github.com/funtoo/keychain/issues/119).
