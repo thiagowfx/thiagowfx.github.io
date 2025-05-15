@@ -42,7 +42,7 @@ else does. Nonetheless, I'd rather post on my blog if I know the answer in
 It feels to me the best place to ask specific questions these days is wherever
 the project is developed. GitHub or GitLab issues, Discourse (BBS / forums),
 Discord[^3], Slack...and so on. There's a lot of fragmentation. Perhaps that's
-not to bad after all, but it incurs additional effort.
+not too bad after all, but it incurs additional effort.
 
 And where to ask general questions? Reddit[^3], the Fediverse™, social media,
 project-agnostic chat platforms / communities...
