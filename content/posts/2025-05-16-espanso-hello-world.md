@@ -150,7 +150,7 @@ For Raycast snippets I was using `@@` as a prefix. Espanso seems to recommend
 `:`. Let's see which one I will stick to.
 
 Also, I'd like to thank Farzad for the recommendation via email. It wasn't the
-first time I had heard from Espanso, but it has reinforced my desire to try it
+first time I had heard about Espanso, but it has reinforced my desire to try it
 out.
 
 [^1]: In order to type a plain `:helm:ls` without expansion (e.g. for this blog
