@@ -15,7 +15,7 @@ Here's a non-exhaustive list in alphabetical order:
 
 (i) Aggregation of blogs, acts as poor man's RSS feed readers that someone else manages:
 
-- [Blog Surf](https://blogsurf.io/), by [DKB](https://dkb.io/): See [about](https://blogsurf.io/about/).
+- ~~Blog Surf `https://blogsurf.io/`, by [DKB](https://dkb.io/): See about.~~ **Edit(2025-05-17)**: Now it's a [parked domain](https://en.wikipedia.org/wiki/Domain_parking).
 - [Diff Blog](https://diff.blog/): See [FAQ](https://diff.blog/FAQ/).
 
 (ii) Article submission websites, where their users can submit articles which are then upvoted (or not) by other users (_wisdom of the crowds_):
