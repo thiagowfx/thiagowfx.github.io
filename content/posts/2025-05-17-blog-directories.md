@@ -36,3 +36,5 @@ More rarely there's also the direct referral way, for example, when I become
 aware that a friend or a coworker has started a blog recently.
 
 The combination of referrals + directories is quite sustainable.
+
+[Previously]({{< ref "2022-02-17-praise-for-blog-aggregators">}}).

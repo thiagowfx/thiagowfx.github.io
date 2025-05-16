@@ -3,13 +3,13 @@ title: "Praise for blog aggregators"
 date: 2022-02-17T21:21:23-05:00
 tags:
   - selfhosted
+  - serenity
 ---
 
 As much as I love my [Miniflux](https://miniflux.app/) setup, I've also come to
 appreciate some indie blog aggregators. They are especially handy when I feel
 like breaking out of my own bubble and/or getting the occasional serendipity dose
 to discover new blogs to follow.
-
 
 Here's a non-exhaustive list in alphabetical order:
 
