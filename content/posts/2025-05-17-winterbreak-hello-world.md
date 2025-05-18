@@ -157,6 +157,19 @@ before deciding to jailbreak. [RTFM](https://en.wikipedia.org/wiki/RTFM)!
 
 Perhaps I'll write a follow-up post-jailbreaking user experience blog post.
 
+## Appendix
+
+```
+% tree Downloads
+Downloads
+├── koreader-kindlehf-v2025.04.zip
+├── kual-mrinstaller-khf.tar.xz
+├── renameotabin.zip
+├── Update_hotfix_universal.bin
+├── Update_KUALBooklet_ALLDEVICES_KS2_install.bin
+└── WinterBreak.tar.gz
+```
+
 [^1]: Yes, it's called WinterBreak because it got released during Winter (in the
     Northern hemisphere).
 
