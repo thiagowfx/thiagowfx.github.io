@@ -27,8 +27,8 @@ Tate recommends:
 
 - turn off model improvement
 - use temporary chats
-- submit a "Do not train on my content" at OpenAI's Privacy Center.
-- consider turning off "Memory".
+- submit a "Do not train on my content" at OpenAI's Privacy Center
+- consider turning off "Memory"
 
 I had the opportunity to speak with Tate once, in a virtual meeting.
 
