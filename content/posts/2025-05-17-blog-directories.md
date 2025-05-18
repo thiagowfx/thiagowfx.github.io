@@ -24,6 +24,7 @@ A few directories I like:
 - https://diff.blog/
 - https://512kb.club/
 - https://ooh.directory/
+- https://blogroll.org/
 
 I tend to visit them occasionally, whenever I crave for new content, perhaps like
 [doomscrolling](https://en.wikipedia.org/wiki/Doomscrolling) in social media.
