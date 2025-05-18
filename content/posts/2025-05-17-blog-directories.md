@@ -38,4 +38,7 @@ aware that a friend or a coworker has started a blog recently.
 
 The combination of referrals + directories is quite sustainable.
 
+See also: [How I discover new
+blogs](https://nelson.cloud/how-i-discover-new-blogs/) by Nelson Figueroa.
+
 [Previously]({{< ref "2022-02-17-praise-for-blog-aggregators">}}).
