@@ -86,7 +86,7 @@ any arguments.
 $ cat shell.nix
 { pkgs ? import <nixpkgs> {} }:
   pkgs.mkShell {
-    # nativeBuildInputs is usually what you want -- tools you need to run
+    # nativeBuildInputs is usually what you want – tools you need to run
     nativeBuildInputs = [ pkgs.buildPackages.hello ];
 }
 $ nix-shell
