@@ -26,4 +26,4 @@ Now execute it:
 Error occurred at line 7. Command: false
 ```
 
-This pattern is useful to debug failing shell scripts.
+This pattern is useful to debug failing (non-zero exit code) shell scripts.
