@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/linux/</link><description>Recent content in Linux on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 20 May 2025 16:41:00 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>kubernetes: list pending pods in daemonset</title><link>https://perrotta.dev/2025/05/kubernetes-list-pending-pods-in-daemonset/</link><pubDate>Tue, 20 May 2025 16:41:00 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/kubernetes-list-pending-pods-in-daemonset/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a DaemonSet with a couple of pods stuck in
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 22 May 2025 13:41:43 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>bash: set a trap to log errors</title><link>https://perrotta.dev/2025/05/bash-set-a-trap-to-log-errors/</link><pubDate>Thu, 22 May 2025 13:41:43 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/bash-set-a-trap-to-log-errors/</guid><description>&lt;p>Create &lt;code>main.sh&lt;/code> and mark it as executable (&lt;code>chmod +x&lt;/code>):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">&lt;/span>&lt;span style="color:#e5c07b">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Set a trap to handle errors and log them.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e5c07b">trap&lt;/span> &lt;span style="color:#98c379">&amp;#39;echo &amp;#34;Error occurred at line $LINENO. Command: $BASH_COMMAND&amp;#34;&amp;#39;&lt;/span> ERR
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e5c07b">false&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now execute it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% ./main.sh
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Error occurred at line 7. Command: &lt;span style="color:#e5c07b">false&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This pattern is useful to debug failing shell scripts.&lt;/p></description></item><item><title>kubernetes: list pending pods in daemonset</title><link>https://perrotta.dev/2025/05/kubernetes-list-pending-pods-in-daemonset/</link><pubDate>Tue, 20 May 2025 16:41:00 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/kubernetes-list-pending-pods-in-daemonset/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a DaemonSet with a couple of pods stuck in
 &amp;ldquo;Pending&amp;rdquo; state during their rollout, find out which nodes did not yet complete
 the pod initialization.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% kubectl get nodes -o name | grep -vFf &amp;lt;&lt;span style="color:#56b6c2">(&lt;/span>kubectl get pods -n &lt;span style="color:#56b6c2">{&lt;/span>namespace&lt;span style="color:#56b6c2">}&lt;/span> -l &lt;span style="color:#56b6c2">{&lt;/span>ds-label-selector&lt;span style="color:#56b6c2">}&lt;/span> -o wide --no-headers | awk &lt;span style="color:#98c379">&amp;#39;{print &amp;#34;node/&amp;#34; $7}&amp;#39;&lt;/span>&lt;span style="color:#56b6c2">)&lt;/span>
@@ -2146,116 +2157,4 @@ MR patch.&lt;/p>
 &lt;p>In GitLab it&amp;rsquo;s called Merge Request (MR). The list of all aports MRs is &lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests">here&lt;/a>.&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Introspect the local network for Pihole</title><link>https://perrotta.dev/2022/01/introspect-the-local-network-for-pihole/</link><pubDate>Sun, 23 Jan 2022 13:34:58 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2022/01/introspect-the-local-network-for-pihole/</guid><description>&lt;p>Recently I needed to figure out what the IP address of my &lt;a href="https://pi-hole.net/">pihole&lt;/a>
-instance was in my &lt;a href="https://www.raspberrypi.org/">Raspberry Pi&lt;/a> in my local network.&lt;/p>
-&lt;h2 id="finding-the-raspberry-pi">Finding the Raspberry Pi&lt;/h2>
-&lt;h3 id="nmap">nmap&lt;/h3>
-&lt;p>&lt;a href="https://nmap.org/">&lt;code>nmap&lt;/code>&lt;/a> to the rescue!&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># nmap -sS 192.168.1.1-255 | tee network.txt | less&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The relevant snippets to the pihole look like this:&lt;/p>
-&lt;pre tabindex="0">&lt;code class="language-none" data-lang="none">Nmap scan report for pi.hole (192.168.1.XX)
-Host is up (0.0052s latency).
-Not shown: 997 closed tcp ports (reset)
-PORT STATE SERVICE
-22/tcp open ssh
-53/tcp open domain
-80/tcp open http
-MAC Address: AA:AA:AA:AA:AA:AA (Raspberry Pi Foundation)
-
-Nmap scan report for pi.hole (192.168.1.YY)
-Host is up (0.0059s latency).
-Not shown: 997 closed tcp ports (reset)
-PORT STATE SERVICE
-22/tcp open ssh
-53/tcp open domain
-80/tcp open http
-MAC Address: BB:BB:BB:BB:BB:BB (Raspberry Pi Foundation)
-&lt;/code>&lt;/pre>&lt;p>There are two IP addresses, one for the ethernet interface (&lt;code>eth0&lt;/code>) and the
-other for the wifi (&lt;code>wlan0&lt;/code>). Later on I would disable the wifi interface.&lt;/p>
-&lt;p>The 3 open ports are for services you would expect in a pihole:&lt;/p>
-&lt;ul>
-&lt;li>&lt;code>ssh&lt;/code> (port 22) for remote access / debugging / troubleshooting&lt;/li>
-&lt;li>DNS server (port 53) for the &lt;code>dnsmasq&lt;/code> server that pihole uses underneath for adblocking&lt;/li>
-&lt;li>HTTP server (port 80) for the &lt;a href="http://pi.hole/admin">http://pi.hole/admin&lt;/a> web management UI&lt;/li>
-&lt;/ul>
-&lt;h3 id="ip">ip&lt;/h3>
-&lt;p>Another way is to use the &lt;code>ip&lt;/code> command. In particular, &lt;code>ip neigh&lt;/code> lists the
-neighbours, one of which should be the pihole.&lt;/p>
-&lt;h2 id="testing-the-pihole">Testing the pihole&lt;/h2>
-&lt;p>One effective way to test the pihole is to see if &lt;code>analytics.google.com&lt;/code> is
-blocked. There are several ways to do so:&lt;/p>
-&lt;ol>
-&lt;li>&lt;code>ping&lt;/code> should return a local address like &lt;code>127.0.0.1&lt;/code> or &lt;code>0.0.0.0&lt;/code>.&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ping analytics.google.com
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PING analytics.google.com &lt;span style="color:#56b6c2">(&lt;/span>127.0.0.1&lt;span style="color:#56b6c2">)&lt;/span> 56&lt;span style="color:#56b6c2">(&lt;/span>84&lt;span style="color:#56b6c2">)&lt;/span> bytes of data.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#d19a66">64&lt;/span> bytes from localhost &lt;span style="color:#56b6c2">(&lt;/span>127.0.0.1&lt;span style="color:#56b6c2">)&lt;/span>: &lt;span style="color:#e06c75">icmp_seq&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#d19a66">1&lt;/span> &lt;span style="color:#e06c75">ttl&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#d19a66">64&lt;/span> &lt;span style="color:#e06c75">time&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>0.023 ms
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#d19a66">64&lt;/span> bytes from localhost &lt;span style="color:#56b6c2">(&lt;/span>127.0.0.1&lt;span style="color:#56b6c2">)&lt;/span>: &lt;span style="color:#e06c75">icmp_seq&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#e06c75">ttl&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#d19a66">64&lt;/span> &lt;span style="color:#e06c75">time&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>0.031 ms
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>^C
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>--- analytics.google.com ping statistics ---
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#d19a66">2&lt;/span> packets transmitted, &lt;span style="color:#d19a66">2&lt;/span> received, 0% packet loss, &lt;span style="color:#e5c07b">time&lt;/span> 1002ms
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>rtt min/avg/max/mdev &lt;span style="color:#56b6c2">=&lt;/span> 0.023/0.027/0.031/0.004 ms
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="2">
-&lt;li>Ditto for a DNS lookup utility such as &lt;code>dig&lt;/code>:&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ dig +short analytics.google.com
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>0.0.0.0
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Other ways: &lt;code>drill&lt;/code>, &lt;code>host&lt;/code>, &lt;code>nslookup&lt;/code>, &lt;code>systemd-resolve&lt;/code>.&lt;/p>
-&lt;p>&lt;a href="https://d3ward.github.io/toolz/adblock.html">https://d3ward.github.io/toolz/adblock.html&lt;/a> seems to be a reasonable website to
-test whether your adblock blocklists are properly working. Alternatively, just
-visit any modern and large news corporation website, it will probably be full
-of ads.&lt;/p>
-&lt;h2 id="troubleshooting-the-pihole">Troubleshooting the pihole&lt;/h2>
-&lt;p>If DNS resolution fails from the pihole itself, run &lt;code>pihole restartdns&lt;/code>. Then
-&lt;code>ping google.com&lt;/code>. The ping should work, if it doesn&amp;rsquo;t then there&amp;rsquo;s a bigger
-problem, out of scope of this post. If the ping works now but stops working
-later on once you eventually reboot the Pi, consider triggering this command at
-startup via &lt;code>cron&lt;/code> or a systemd timer.&lt;/p>
-&lt;p>If DNS resolution works from the pihole but fails from a neighbouring device,
-double-check if the device is properly configured: its DNS should be set to the
-IP address of the pihole. Check these:&lt;/p>
-&lt;ul>
-&lt;li>&lt;code>/etc/resolv.conf&lt;/code>&lt;/li>
-&lt;li>If the system uses &lt;code>systemd-resolved&lt;/code>, run &lt;code>resolvectl&lt;/code>.&lt;/li>
-&lt;/ul>
-&lt;p>Another possibility is that the pihole might be configured to only answer
-queries from &lt;code>eth0&lt;/code>. Use the &lt;a href="http://pi.hole/admin">http://pi.hole/admin&lt;/a> interface to ensure the
-pihole is configured to answer DNS queries from the local network.&lt;/p>
-&lt;h2 id="setting-a-static-ip-in-the-pihole">Setting a static IP in the pihole&lt;/h2>
-&lt;p>There are several ways to do so, in order of recommendation:&lt;/p>
-&lt;ul>
-&lt;li>
-&lt;p>Static DHCP lease from your router. If running a modem, this will likely not
-work. Prefer running a DHCP server from the pihole.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;code>dhcpcd&lt;/code>: This is typically done as part of the standard pihole setup.&lt;/p>
-&lt;/li>
-&lt;/ul>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ cat /etc/dhcpcd.conf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># fallback to static profile on eth0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#interface eth0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#fallback static_eth0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>interface eth0
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> static &lt;span style="color:#e06c75">ip_address&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>192.168.1.XX/24
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> static &lt;span style="color:#e06c75">routers&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>192.168.1.1
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> static &lt;span style="color:#e06c75">domain_name_servers&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Note: Restart &lt;code>dhcpcd&lt;/code> to apply: &lt;code>systemctl restart dhcpcd&lt;/code>.&lt;/p>
-&lt;ul>
-&lt;li>&lt;code>/etc/network/interfaces&lt;/code> if running Raspberry Pi OS (debian):&lt;/li>
-&lt;/ul>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ sudoedit /etc/network/interfaces.d/pihole
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>auto lo
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>iface lo inet loopback
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>auto eth0
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>iface eth0 inet static
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> address 192.168.1.XX
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> netmask 255.255.255.0
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> gateway 192.168.1.1
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Note: Reconfigure debian networking to apply: &lt;code>systemctl restart networking&lt;/code>.&lt;/p>
-&lt;ul>
-&lt;li>Static DHCP lease from the pihole itself if it&amp;rsquo;s running a DHCP server. This
-solution is a bit redundant and should only be applied as last resort.&lt;/li>
-&lt;/ul></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>
