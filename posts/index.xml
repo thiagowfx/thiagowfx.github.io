@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/posts/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 23 May 2025 01:13:56 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Web browser privacy tests</title><link>https://perrotta.dev/2025/05/web-browser-privacy-tests/</link><pubDate>Fri, 23 May 2025 01:13:56 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/web-browser-privacy-tests/</guid><description>&lt;p>&lt;a href="https://privacytests.org/">Privacy Tests&lt;/a>:&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 23 May 2025 13:00:56 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>mdsh: a markdown pre-processor</title><link>https://perrotta.dev/2025/05/mdsh-a-markdown-pre-processor/</link><pubDate>Fri, 23 May 2025 13:00:56 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/mdsh-a-markdown-pre-processor/</guid><description>&lt;p>&lt;a href="https://github.com/zimbatm/mdsh">mdsh&lt;/a>, a markdown shell pre-processor;&lt;/p>
+&lt;blockquote>
+&lt;p>The mdsh project describes a Markdown language extension that can be used to
+automate some common tasks in README.md files. Quite often I find myself
+needing to embed a snippet of code or markdown from a different file. Or I
+want to show the output of a command. In both cases this can be done manually,
+but what all you had to do was run mdsh and have the file updated
+automatically?&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;code>mdsh&lt;/code> enables keeping command outputs in markdown files up-to-date.&lt;/p>
+&lt;p>It&amp;rsquo;s similar to &lt;a href="https://jupyter.org/">Jupyter Notebooks&lt;/a> (ipython
+notebooks) in Python.&lt;/p>
+&lt;h2 id="sample-usage">Sample usage&lt;/h2>
+&lt;p>List all files within the repository that satisfy certain criteria:&lt;/p>
+&lt;pre tabindex="0">&lt;code>`&amp;gt; find apps/overlays -name kustomization.yaml | cut -d&amp;#39;/&amp;#39; -f3 | sed -e &amp;#39;s/^/1. /&amp;#39; | sort -d`
+
+&amp;lt;!-- BEGIN mdsh --&amp;gt;
+1. g02
+1. g03
+1. g05
+&amp;lt;!-- END mdsh --&amp;gt;
+&lt;/code>&lt;/pre>&lt;h2 id="advanced-usage">Advanced usage&lt;/h2>
+&lt;p>List all pending action items (&lt;code>TODOs&lt;/code>) in this repository:&lt;/p>
+&lt;pre tabindex="0">&lt;code>`&amp;gt; set +o pipefail &amp;amp;&amp;amp; files=$(grep -ErHn &amp;#39;(FIXME|TODO):&amp;#39; apps | grep -iv &amp;#34;enable auto sync&amp;#34; | sort -d -u) &amp;amp;&amp;amp; if [ -z &amp;#34;$files&amp;#34; ]; then echo &amp;#34;None&amp;#34;; else echo &amp;#34;$files&amp;#34; | sed -e &amp;#39;s/^/- /&amp;#39;; fi`
+
+&amp;lt;!-- BEGIN mdsh --&amp;gt;
+- apps/base/email/email.yaml:48: # TODO: Consider moving to the base ArgoCD chart.
+- apps/base/sms/sms.yaml:58: # TODO: Consider moving to the base ArgoCD chart.
+&amp;lt;!-- END mdsh --&amp;gt;
+&lt;/code>&lt;/pre>&lt;p>It&amp;rsquo;s an inline shell expression on steroids, but there&amp;rsquo;s nothing special about
+it. In fact, you&amp;rsquo;re not limited to the shell: it&amp;rsquo;s perfectly fine to call an
+external program like &lt;code>perl&lt;/code> or &lt;code>python&lt;/code> or &lt;code>ruby&lt;/code> (e.g. to manipulate regular
+expressions).&lt;/p>
+&lt;h2 id="integration">Integration&lt;/h2>
+&lt;p>The value of &lt;code>mdsh&lt;/code> lies in keeping its output always up-to-date. There are
+multiple ways to accomplish that. The most popular ones are:&lt;/p>
+&lt;ul>
+&lt;li>via a CI job (e.g. a github action, a bitbucket pipeline)&lt;/li>
+&lt;li>via a git pre-commit hook&lt;/li>
+&lt;/ul>
+&lt;p>I prefer &lt;a href="https://pre-commit.com">pre-commit&lt;/a>.&lt;/p>
+&lt;p>A sample config looks like this (&lt;code>.pre-commit-config.yaml&lt;/code>):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">repos&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e06c75">repo&lt;/span>: https://github.com/zimbatm/mdsh.git
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">rev: 4b8c0ca49c96d1a3ffaad30788e6c4ebb60b2bbf # frozen&lt;/span>: v0.9.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">hooks&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e06c75">id&lt;/span>: mdsh
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">always_run&lt;/span>: &lt;span style="color:#e5c07b">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">files&lt;/span>: ^README.md$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Web browser privacy tests</title><link>https://perrotta.dev/2025/05/web-browser-privacy-tests/</link><pubDate>Fri, 23 May 2025 01:13:56 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/web-browser-privacy-tests/</guid><description>&lt;p>&lt;a href="https://privacytests.org/">Privacy Tests&lt;/a>:&lt;/p>
 &lt;blockquote>
 &lt;p>Most web browsers leak your identity and your browsing history, but some
 browsers are more leaky than others.&lt;/p>
@@ -1700,11 +1749,4 @@ faster for me to use the LLM tool as an initial suggestion than having to
 do the research myself from scratch.&lt;/p></description></item><item><title>Github Actions: ubuntu-latest tools</title><link>https://perrotta.dev/2025/04/github-actions-ubuntu-latest-tools/</link><pubDate>Wed, 09 Apr 2025 01:00:47 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/github-actions-ubuntu-latest-tools/</guid><description>&lt;p>Which tools are installed in the Github Actions environment for &lt;code>ubuntu-latest&lt;/code>?&lt;/p>
 &lt;p>&lt;a href="https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md">This
 repository&lt;/a>
-has the answer.&lt;/p></description></item><item><title>Against names</title><link>https://perrotta.dev/2025/04/against-names/</link><pubDate>Sun, 06 Apr 2025 12:54:04 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/against-names/</guid><description>&lt;p>&lt;a href="https://steveklabnik.com/writing/against-names/">Against Names&lt;/a> by Steve
-Klabnik:&lt;/p>
-&lt;blockquote>
-&lt;p>Specifically, if naming things is so hard… why do we insist on doing it all
-the time?&lt;/p>
-&lt;/blockquote>
-&lt;p>I&amp;rsquo;ve been meaning to convert to &lt;a href="https://github.com/jj-vcs/jj">&lt;code>jj&lt;/code>&lt;/a>. The post
-has an extra argument to do so.&lt;/p></description></item></channel></rss>
+has the answer.&lt;/p></description></item></channel></rss>
