@@ -31,9 +31,19 @@ However, most will not bother to check "invisible" unicode whitespace:
 ```
 
 There's a single whitespace character above you can easily copy. `vim` displays
-it as `<200e>`.
+it as `<200b>` – [zero-width space](https://unicode-explorer.com/c/200B).
 
-**Reference**: https://emptycharacter.com/
+Another one (`<200e>` – [left-to-right mark](https://unicode-explorer.com/c/200E)):
+
+```
+‎
+```
+
+**References**:
+
+- https://emptycharacter.com/
+- https://unicode-explorer.com/c/200B
+- https://unicode-explorer.com/c/200E
 
 [^1]: Actually, why do you even need to know my first name in the first place?
     I am just some random database primary key ID.
