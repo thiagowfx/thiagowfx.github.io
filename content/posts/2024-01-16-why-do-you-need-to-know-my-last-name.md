@@ -27,7 +27,7 @@ ASCII whitespace (' ').
 However, most will not bother to check "invisible" unicode whitespace:
 
 ```
-
+​
 ```
 
 There's a single whitespace character above you can easily copy. `vim` displays
