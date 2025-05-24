@@ -51,7 +51,7 @@ Expect](https://wiki.tcl-lang.org/page/Expect) package:
 % watch --color -- unbuffer node mytest.js
 ```
 
-The `unbuffer` solution is my favorite.
+The `unbuffer` solution is my favorite ([previously]({{< ref "2024-12-23-unbuffer" >}})).
 
 **Reference**: [Stack
 Overflow](https://stackoverflow.com/questions/3793126/colors-with-unix-command-watch).
