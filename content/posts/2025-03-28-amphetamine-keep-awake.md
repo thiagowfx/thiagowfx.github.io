@@ -4,7 +4,6 @@ date: 2025-03-28T00:14:32+01:00
 tags:
   - bestof
   - dev
-  - macos
 ---
 
 [Amphetamine](https://apps.apple.com/us/app/amphetamine/id937984704?mt=12):

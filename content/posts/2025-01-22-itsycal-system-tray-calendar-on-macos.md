@@ -3,7 +3,6 @@ title: "itsycal: system tray calendar on macOS"
 date: 2025-01-22T00:24:51-03:00
 tags:
   - dev
-  - macos
 ---
 
 Title says it all.

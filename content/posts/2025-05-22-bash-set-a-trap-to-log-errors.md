@@ -4,7 +4,6 @@ date: 2025-05-22T13:41:43+02:00
 tags:
   - dev
   - linux
-  - macos
 ---
 
 Create `main.sh` and mark it as executable (`chmod +x`):

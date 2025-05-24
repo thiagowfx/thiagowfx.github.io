@@ -4,7 +4,6 @@ date: 2025-04-25T11:59:20+02:00
 tags:
   - dev
   - linux
-  - macos
 ---
 
 **Problem statement**: Given `{cmd}` that emits lots of blank lines, delete all

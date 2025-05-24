@@ -4,7 +4,6 @@ date: 2022-02-10T20:48:02-05:00
 tags:
   - dev
   - linux
-  - macos
 ---
 
 As soon as we finish installing [`Nix`](https://nixos.org/download.html) on

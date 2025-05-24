@@ -20,7 +20,6 @@ tags:
   - bestof
   - dev
   - linux
-  - macos
   - meta
   - portuguese
   - privacy

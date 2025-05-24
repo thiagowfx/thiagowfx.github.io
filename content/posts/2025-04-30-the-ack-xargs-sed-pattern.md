@@ -5,7 +5,6 @@ tags:
   - bestof
   - dev
   - linux
-  - macos
 ---
 
 I employ this pattern almost every day:

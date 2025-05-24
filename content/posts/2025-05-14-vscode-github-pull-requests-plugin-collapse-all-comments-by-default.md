@@ -4,7 +4,6 @@ date: 2025-05-14T14:40:34+02:00
 tags:
   - dev
   - linux
-  - macos
 ---
 
 **Problem statement**: I am constantly annoyed at opening files in VSCode with

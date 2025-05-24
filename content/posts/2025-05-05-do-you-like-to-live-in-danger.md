@@ -4,7 +4,6 @@ date: 2025-05-05T18:11:23+02:00
 tags:
   - dev
   - linux
-  - macos
 ---
 
 ```shell

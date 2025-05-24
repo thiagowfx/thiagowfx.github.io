@@ -3,7 +3,6 @@ title: "AppleScript discoverability: more Amphetamine"
 date: 2025-04-01T13:32:26+02:00
 tags:
   - dev
-  - macos
 ---
 
 Previously: [Amphetamine: Keep awake]({{< ref "2025-03-28-amphetamine-keep-awake" >}}).

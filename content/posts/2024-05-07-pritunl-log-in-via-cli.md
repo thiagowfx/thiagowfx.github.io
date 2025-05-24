@@ -3,7 +3,6 @@ title: "Pritunl log in via CLI"
 date: 2024-05-07T16:03:27+02:00
 tags:
   - dev
-  - macos
 ---
 
 [Pritunl](https://pritunl.com/) is an Enterprise Distributed OpenVPN server.

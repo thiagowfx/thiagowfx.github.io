@@ -3,7 +3,6 @@ title: "macOS: remove all empty directories"
 date: 2023-12-29T02:02:19+01:00
 tags:
   - dev
-  - macos
 ---
 
 For some odd reason my [Calibre](https://calibre-ebook.com) backup to cloud

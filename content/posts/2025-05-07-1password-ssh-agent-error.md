@@ -3,7 +3,6 @@ title: "1Password SSH agent error"
 date: 2025-05-07T12:52:00+02:00
 tags:
   - dev
-  - macos
 ---
 
 A day in the life:

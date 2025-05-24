@@ -2,7 +2,6 @@
 title: "Keychron K2 on macOS: fix Home and End keys"
 date: 2022-04-22T19:04:17-04:00
 tags:
-  - macos
   - bestof
 ---
 

@@ -4,7 +4,6 @@ date: 2025-05-24T10:39:13+02:00
 tags:
   - dev
   - linux
-  - macos
 ---
 
 Today I am attending a WebAssembly workshop.
