@@ -2,12 +2,11 @@
 title: "Logseq: linking and backlinking"
 date: 2025-01-06T22:49:44-03:00
 tags:
-  - dev
-  - pkm
+  - selfhosted
 ---
 
-This is the first post with the [pkm]({{< ref "/tags/pkm" >}}) tag. Run before
-it's [too late](https://en.wikipedia.org/wiki/The_Paradox_of_Choice)!
+This is the first post about LogSeq / PKM. Run before it's [too
+late](https://en.wikipedia.org/wiki/The_Paradox_of_Choice)!
 
 Expect more of these as I find myself slowly migrating from
 [Obsidian](https://obsidian.md/) to [Logseq](https://logseq.com/). More on that

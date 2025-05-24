@@ -2,7 +2,7 @@
 title: "Logseq: aliases"
 date: 2025-03-01T15:55:20+01:00
 tags:
-  - pkm
+  - selfhosted
 ---
 
 In [Logseq](https://logseq.com/), I have an entry called "Trips".
