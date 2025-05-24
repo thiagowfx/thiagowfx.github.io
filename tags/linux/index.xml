@@ -1,6 +1,158 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/linux/</link><description>Recent content in Linux on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 24 May 2025 15:17:27 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Tailspin</title><link>https://perrotta.dev/2025/05/tailspin/</link><pubDate>Sat, 24 May 2025 15:17:27 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/tailspin/</guid><description>&lt;p>&lt;a href="https://github.com/bensadeh/tailspin">tailspin&lt;/a>:&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 24 May 2025 16:00:23 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>PostgreSQL major version upgrade on Alpine Linux</title><link>https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/</link><pubDate>Sat, 24 May 2025 16:00:23 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/</guid><description>&lt;h2 id="problem-statement">Problem statement&lt;/h2>
+&lt;p>Given Alpine Linux 3.22 running PostgreSQL 16, upgrade to PostgreSQL 17. For
+this specific example, consider a &lt;a href="https://miniflux.app/">&lt;code>miniflux&lt;/code>&lt;/a> database.&lt;/p>
+&lt;h2 id="procedure">Procedure&lt;/h2>
+&lt;p>Install PostgreSQL 17:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% doas apk add postgres
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It can coexist with &lt;code>postgres16&lt;/code>.&lt;/p>
+&lt;p>Stop the PostgreSQL daemon:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% doas service postgresql stop
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you navigate to the Miniflux server with your browser, it will fail, as
+expected:&lt;/p>
+&lt;pre tabindex="0">&lt;code>store: unable to create app session: dial tcp [::1]:5432: connect: connection refused
+&lt;/code>&lt;/pre>&lt;p>Change the PostgreSQL system version to the desired one:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% doas pg_versions set-default &lt;span style="color:#d19a66">17&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Change to the root user, for convenience, then change to the existing postgresql
+directory:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% doas su
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% &lt;span style="color:#e5c07b">cd&lt;/span> /var/lib/postgresql/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Prepare files and directories for the upgrade:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% &lt;span style="color:#e5c07b">cd&lt;/span> 16/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% mv data olddata
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% &lt;span style="color:#e5c07b">cd&lt;/span> ../
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% mkdir 17/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% &lt;span style="color:#e5c07b">cd&lt;/span> 17/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% mkdir data tmp
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% chown postgres:postgres data tmp
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Change to the &lt;code>postgres&lt;/code> user:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% su postgres
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% &lt;span style="color:#e5c07b">cd&lt;/span> tmp/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Initialize the new cluster:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% initdb -D /var/lib/postgresql/17/data --locale&lt;span style="color:#56b6c2">=&lt;/span>en_US.UTF-8 --encoding&lt;span style="color:#56b6c2">=&lt;/span>UTF8 &lt;span style="color:#56b6c2">[&lt;/span>--data-checksums&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>The files belonging to this database system will be owned by user &lt;span style="color:#98c379">&amp;#34;postgres&amp;#34;&lt;/span>.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>This user must also own the server process.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>The database cluster will be initialized with locale &lt;span style="color:#98c379">&amp;#34;en_US.UTF-8&amp;#34;&lt;/span>.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>The default text search configuration will be &lt;span style="color:#e5c07b">set&lt;/span> to &lt;span style="color:#98c379">&amp;#34;english&amp;#34;&lt;/span>.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Data page checksums are disabled.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fixing permissions on existing directory /var/lib/postgresql/17/data ... ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>creating subdirectories ... ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>selecting dynamic shared memory implementation ... posix
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>selecting default &lt;span style="color:#98c379">&amp;#34;max_connections&amp;#34;&lt;/span> ... &lt;span style="color:#d19a66">100&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>selecting default &lt;span style="color:#98c379">&amp;#34;shared_buffers&amp;#34;&lt;/span> ... 128MB
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>selecting default &lt;span style="color:#e5c07b">time&lt;/span> zone ... America/Toronto
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>creating configuration files ... ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>running bootstrap script ... ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>performing post-bootstrap initialization ... ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>syncing data to disk ... ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>initdb: warning: enabling &lt;span style="color:#98c379">&amp;#34;trust&amp;#34;&lt;/span> authentication &lt;span style="color:#c678dd">for&lt;/span> &lt;span style="color:#e5c07b">local&lt;/span> connections
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next &lt;span style="color:#e5c07b">time&lt;/span> you run initdb.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Success.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In the previous command I chose to omit &lt;code>--data-checksums&lt;/code>, otherwise I get the
+following error:&lt;/p>
+&lt;pre tabindex="0">&lt;code>old cluster does not use data checksums but the new one does
+Failure, exiting
+&lt;/code>&lt;/pre>&lt;p>Upgrade the new cluster:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% pg_upgrade -b /usr/libexec/postgresql16/ -B /usr/libexec/postgresql17/ -d /var/lib/postgresql/16/olddata/ -D /var/lib/postgresql/17/data/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Performing Consistency Checks
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-----------------------------
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Checking cluster versions ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Checking database user is the install user ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Checking database connection settings ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Checking &lt;span style="color:#c678dd">for&lt;/span> prepared transactions ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Checking &lt;span style="color:#c678dd">for&lt;/span> contrib/isn with bigint-passing mismatch ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Checking data &lt;span style="color:#e5c07b">type&lt;/span> usage ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Creating dump of global objects ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Creating dump of database schemas
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Checking &lt;span style="color:#c678dd">for&lt;/span> presence of required libraries ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Checking database user is the install user ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Checking &lt;span style="color:#c678dd">for&lt;/span> prepared transactions ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Checking &lt;span style="color:#c678dd">for&lt;/span> new cluster tablespace directories ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>If pg_upgrade fails after this point, you must re-initdb the
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>new cluster before continuing.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Performing Upgrade
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>------------------
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Setting locale and encoding &lt;span style="color:#c678dd">for&lt;/span> new cluster ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Analyzing all rows in the new cluster ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Freezing all rows in the new cluster ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Deleting files from new pg_xact ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Copying old pg_xact to new server ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Setting oldest XID &lt;span style="color:#c678dd">for&lt;/span> new cluster ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Setting next transaction ID and epoch &lt;span style="color:#c678dd">for&lt;/span> new cluster ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Deleting files from new pg_multixact/offsets ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Copying old pg_multixact/offsets to new server ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Deleting files from new pg_multixact/members ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Copying old pg_multixact/members to new server ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Setting next multixact ID and offset &lt;span style="color:#c678dd">for&lt;/span> new cluster ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Resetting WAL archives ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Setting frozenxid and minmxid counters in new cluster ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Restoring global objects in the new cluster ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Restoring database schemas in the new cluster
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Copying user relation files
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Setting next OID &lt;span style="color:#c678dd">for&lt;/span> new cluster ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Sync data directory to disk ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Creating script to delete old cluster ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Checking &lt;span style="color:#c678dd">for&lt;/span> extension updates ok
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Upgrade Complete
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>----------------
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Optimizer statistics are not transferred by pg_upgrade.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Once you start the new server, consider running:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> /usr/libexec/postgresql17/vacuumdb --all --analyze-in-stages
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Running this script will delete the old cluster&amp;#39;s data files:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ./delete_old_cluster.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now clean up:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% ^D &lt;span style="color:#7f848e"># go back to the root user&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% /var/lib/postgresql/17/tmp/delete_old_cluster.sh
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% rmdir /var/lib/postgresql/16/ &lt;span style="color:#7f848e"># it should be empty by now&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you&amp;rsquo;re curious about this script, it&amp;rsquo;s a simple one-liner:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>rm -rf &lt;span style="color:#98c379">&amp;#39;/var/lib/postgresql/16/olddata&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Finally, let&amp;rsquo;s get the cluster back up and vacuum it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% ^D &lt;span style="color:#7f848e"># go back to your main user&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% doas service postgresql start
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% doas su - postgres -c &lt;span style="color:#98c379">&amp;#39;/usr/libexec/postgresql17/vacuumdb --all --analyze-in-stages&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vacuumdb: processing database &lt;span style="color:#98c379">&amp;#34;miniflux&amp;#34;&lt;/span>: Generating minimal optimizer statistics &lt;span style="color:#56b6c2">(&lt;/span>&lt;span style="color:#d19a66">1&lt;/span> target&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vacuumdb: processing database &lt;span style="color:#98c379">&amp;#34;postgres&amp;#34;&lt;/span>: Generating minimal optimizer statistics &lt;span style="color:#56b6c2">(&lt;/span>&lt;span style="color:#d19a66">1&lt;/span> target&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vacuumdb: processing database &lt;span style="color:#98c379">&amp;#34;template1&amp;#34;&lt;/span>: Generating minimal optimizer statistics &lt;span style="color:#56b6c2">(&lt;/span>&lt;span style="color:#d19a66">1&lt;/span> target&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vacuumdb: processing database &lt;span style="color:#98c379">&amp;#34;miniflux&amp;#34;&lt;/span>: Generating medium optimizer statistics &lt;span style="color:#56b6c2">(&lt;/span>&lt;span style="color:#d19a66">10&lt;/span> targets&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vacuumdb: processing database &lt;span style="color:#98c379">&amp;#34;postgres&amp;#34;&lt;/span>: Generating medium optimizer statistics &lt;span style="color:#56b6c2">(&lt;/span>&lt;span style="color:#d19a66">10&lt;/span> targets&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vacuumdb: processing database &lt;span style="color:#98c379">&amp;#34;template1&amp;#34;&lt;/span>: Generating medium optimizer statistics &lt;span style="color:#56b6c2">(&lt;/span>&lt;span style="color:#d19a66">10&lt;/span> targets&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vacuumdb: processing database &lt;span style="color:#98c379">&amp;#34;miniflux&amp;#34;&lt;/span>: Generating default &lt;span style="color:#56b6c2">(&lt;/span>full&lt;span style="color:#56b6c2">)&lt;/span> optimizer statistics
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vacuumdb: processing database &lt;span style="color:#98c379">&amp;#34;postgres&amp;#34;&lt;/span>: Generating default &lt;span style="color:#56b6c2">(&lt;/span>full&lt;span style="color:#56b6c2">)&lt;/span> optimizer statistics
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vacuumdb: processing database &lt;span style="color:#98c379">&amp;#34;template1&amp;#34;&lt;/span>: Generating default &lt;span style="color:#56b6c2">(&lt;/span>full&lt;span style="color:#56b6c2">)&lt;/span> optimizer statistics
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>At this point, Miniflux should be working again.
+Navigate to &lt;code>/about&lt;/code> and verify its database version: &lt;code>Postgres version: 17.5&lt;/code>.&lt;/p>
+&lt;p>Last step, delete the previous package:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% doas apk del postgresql16 postgres16-contrib
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Double-check the newer version is still installed:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% apk list -I | grep postgres
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>libpq-17.5-r0 x86_64 &lt;span style="color:#56b6c2">{&lt;/span>postgresql17&lt;span style="color:#56b6c2">}&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>PostgreSQL&lt;span style="color:#56b6c2">)&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span>installed&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>postgresql-common-1.2-r1 x86_64 &lt;span style="color:#56b6c2">{&lt;/span>postgresql-common&lt;span style="color:#56b6c2">}&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>MIT&lt;span style="color:#56b6c2">)&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span>installed&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>postgresql-common-openrc-1.2-r1 x86_64 &lt;span style="color:#56b6c2">{&lt;/span>postgresql-common&lt;span style="color:#56b6c2">}&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>MIT&lt;span style="color:#56b6c2">)&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span>installed&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>postgresql-zsh-completion-5.9-r5 x86_64 &lt;span style="color:#56b6c2">{&lt;/span>zsh&lt;span style="color:#56b6c2">}&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>MIT-Modern-Variant AND GPL-2.0-only&lt;span style="color:#56b6c2">)&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span>installed&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>postgresql17-17.5-r0 x86_64 &lt;span style="color:#56b6c2">{&lt;/span>postgresql17&lt;span style="color:#56b6c2">}&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>PostgreSQL&lt;span style="color:#56b6c2">)&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span>installed&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>postgresql17-client-17.5-r0 x86_64 &lt;span style="color:#56b6c2">{&lt;/span>postgresql17&lt;span style="color:#56b6c2">}&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>PostgreSQL&lt;span style="color:#56b6c2">)&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span>installed&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>postgresql17-contrib-17.5-r0 x86_64 &lt;span style="color:#56b6c2">{&lt;/span>postgresql17&lt;span style="color:#56b6c2">}&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>PostgreSQL&lt;span style="color:#56b6c2">)&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span>installed&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>postgresql17-openrc-17.5-r0 x86_64 &lt;span style="color:#56b6c2">{&lt;/span>postgresql17&lt;span style="color:#56b6c2">}&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>PostgreSQL&lt;span style="color:#56b6c2">)&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span>installed&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And we&amp;rsquo;re done!&lt;/p>
+&lt;h2 id="references">References&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://wiki.alpinelinux.org/wiki/Postgresql">https://wiki.alpinelinux.org/wiki/Postgresql&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://beune.dev/posts/upgrade-alpine-postgresql/">https://beune.dev/posts/upgrade-alpine-postgresql/&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Tailspin</title><link>https://perrotta.dev/2025/05/tailspin/</link><pubDate>Sat, 24 May 2025 15:17:27 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/tailspin/</guid><description>&lt;p>&lt;a href="https://github.com/bensadeh/tailspin">tailspin&lt;/a>:&lt;/p>
 &lt;blockquote>
 &lt;p>&lt;code>tailspin&lt;/code> works by reading through a log file line by line, running a series
 of regexes against each line. The regexes recognize patterns you expect to
@@ -1999,19 +2151,4 @@ of the screen at night. Redshift is similar to &lt;a href="https://justgetflux.c
 &lt;p>To be truly strict, only changes to &lt;code>.go&lt;/code> files matter.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Linux: Remount device with different options</title><link>https://perrotta.dev/2022/01/linux-remount-device-with-different-options/</link><pubDate>Sat, 29 Jan 2022 23:16:04 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2022/01/linux-remount-device-with-different-options/</guid><description>&lt;p>A few recipes for remounting linux devices / disks. It mostly boils down to running &lt;code>mount -o remount&lt;/code> as root.&lt;/p>
-&lt;h2 id="remount-as-read-write">Remount as read-write&lt;/h2>
-&lt;p>If &lt;code>/dev/sdb1&lt;/code> is mounted on &lt;code>/mnt/data&lt;/code> as read-only (&lt;code>ro&lt;/code>), it could be remounted as &lt;code>rw&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% mount -o remount,rw /mnt/data
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>or&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% mount -o remount,rw /dev/sdb1
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="increase-ram-disk-size">Increase RAM disk size&lt;/h2>
-&lt;p>&lt;code>/dev/shm&lt;/code> (shared memory) is typically allocated half of the available amount of RAM in the system. For example, in my 8GB Arch Linux system:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ df -h | grep /dev/shm
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>tmpfs 3.9G 127M 3.8G 4% /dev/shm
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>To increase the amount of space allocated to it:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% mount -o remount,size&lt;span style="color:#56b6c2">=&lt;/span>8G /dev/shm
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The result:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ df -h | grep /dev/shm
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>tmpfs 8.0G 72M 8.0G 1% /dev/shm
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>
