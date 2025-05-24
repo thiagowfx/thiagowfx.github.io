@@ -66,7 +66,7 @@ Moments later there's a new commit in my corp dotfiles:
 ```
 % git show b306e31597b63007bb8c3aadb56340cdb6f52703
 commit b306e31597b63007bb8c3aadb56340cdb6f52703
-Author: Thiago Perrotta <tbperrotta@gmail.com>
+Author: Thiago Perrotta <{email redacted}>
 Date:   Tue Apr 1 13:31:33 2025 +0200
 
     better amphetamine

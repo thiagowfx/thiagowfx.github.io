@@ -15,7 +15,7 @@ A recent example in the repository of this blog:
 ```diff
 % git show
 commit 1fa93bed4d0faa9dfcdd6e554201d708baa38dbb (HEAD -> master, origin/master, origin/HEAD)
-Author: Thiago Perrotta <tbperrotta@gmail.com>
+Author: Thiago Perrotta <{email redacted}>
 Date:   Wed May 14 15:08:23 2025 +0200
 
     group dependabot updates
