@@ -54,7 +54,7 @@ giving a correct answer in the middle (whilst babbling my reasoning), my final
 grade is **zero**. Just saying.
 
 Yes, I know how an LLM works (next token prediction, tokenizer, et cetera) but
-we're in 2025 and this is a thinking models, aggressively marketed and shoveled
+we're in 2025 and this is a thinking model, aggressively marketed and shoveled
 everywhere, even when unprompted (pun intended). To say it does not meet
 expectations is an understatement.
 
