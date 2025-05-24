@@ -1,6 +1,85 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/linux/</link><description>Recent content in Linux on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 22 May 2025 13:41:43 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>bash: set a trap to log errors</title><link>https://perrotta.dev/2025/05/bash-set-a-trap-to-log-errors/</link><pubDate>Thu, 22 May 2025 13:41:43 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/bash-set-a-trap-to-log-errors/</guid><description>&lt;p>Create &lt;code>main.sh&lt;/code> and mark it as executable (&lt;code>chmod +x&lt;/code>):&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 24 May 2025 10:39:13 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>WebAssembly: hello world</title><link>https://perrotta.dev/2025/05/webassembly-hello-world/</link><pubDate>Sat, 24 May 2025 10:39:13 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/webassembly-hello-world/</guid><description>&lt;p>Today I am attending a WebAssembly workshop.&lt;/p>
+&lt;p>&lt;a href="https://webassembly.org/">WebAssembly&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>WebAssembly (abbreviated &lt;em>Wasm&lt;/em>) is a binary instruction format for a
+stack-based virtual machine. Wasm is designed as a portable compilation target
+for programming languages, enabling deployment on the web for client and
+server applications.&lt;/p>
+&lt;/blockquote>
+&lt;p>Given &lt;code>add.wat&lt;/code>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>(module
+ ;; stack/forth syntax
+ ;; looks like vanilla assembly
+ (func $add (param $a i32) (param $b i32) (result i32)
+ local.get $a
+ local.get $b
+ i32.add
+ )
+
+ ;; nested/lisp syntax
+ ;; functional, parentheses hell
+ (func $add-alt (param $a i32) (param $b i32) (result i32)
+ (i32.add
+ (local.get $a)
+ (local.get $b))
+ )
+
+ (export &amp;#34;add&amp;#34; (func $add))
+ (export &amp;#34;addAlt&amp;#34; (func $add-alt))
+)
+&lt;/code>&lt;/pre>&lt;p>&amp;hellip;it adds two integers.
+There are two implementations, they are equivalent.&lt;/p>
+&lt;p>Install dependencies:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% brew install wabt wasm-tools
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>We can compile &lt;code>.wat&lt;/code> to &lt;code>.wasm&lt;/code> with one of:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% wat2wasm add.wat
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% wasm-tools parse add.wat -o add.wasm
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now how do we consume it? Create a &lt;code>test.js&lt;/code> file:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">import&lt;/span> &lt;span style="color:#e06c75">test&lt;/span> &lt;span style="color:#e06c75">from&lt;/span> &lt;span style="color:#98c379">&amp;#34;node:test&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">import&lt;/span> &lt;span style="color:#e06c75">assert&lt;/span> &lt;span style="color:#e06c75">from&lt;/span> &lt;span style="color:#98c379">&amp;#34;node:assert&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">import&lt;/span> &lt;span style="color:#e06c75">fs&lt;/span> &lt;span style="color:#e06c75">from&lt;/span> &lt;span style="color:#98c379">&amp;#34;node:fs/promises&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">test&lt;/span>(&lt;span style="color:#98c379">&amp;#34;Instantiate add.wasm and call exported functions&amp;#34;&lt;/span>, &lt;span style="color:#c678dd">async&lt;/span> () =&amp;gt; {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">const&lt;/span> &lt;span style="color:#e06c75">bytes&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#c678dd">await&lt;/span> &lt;span style="color:#e06c75">fs&lt;/span>.&lt;span style="color:#e06c75">readFile&lt;/span>(&lt;span style="color:#98c379">&amp;#34;add.wasm&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">const&lt;/span> {&lt;span style="color:#e06c75">instance&lt;/span>} &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#c678dd">await&lt;/span> &lt;span style="color:#e06c75">WebAssembly&lt;/span>.&lt;span style="color:#e06c75">instantiate&lt;/span>(&lt;span style="color:#e06c75">bytes&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">const&lt;/span> {&lt;span style="color:#e06c75">add&lt;/span>, &lt;span style="color:#e06c75">addAlt&lt;/span>} &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">instance&lt;/span>.&lt;span style="color:#e06c75">exports&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">assert&lt;/span>.&lt;span style="color:#e06c75">equal&lt;/span>(&lt;span style="color:#e06c75">add&lt;/span>(&lt;span style="color:#d19a66">1&lt;/span>, &lt;span style="color:#d19a66">4&lt;/span>), &lt;span style="color:#d19a66">5&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">assert&lt;/span>.&lt;span style="color:#e06c75">equal&lt;/span>(&lt;span style="color:#e06c75">addAlt&lt;/span>(&lt;span style="color:#d19a66">10&lt;/span>, &lt;span style="color:#d19a66">40&lt;/span>), &lt;span style="color:#d19a66">50&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Execute it with &lt;code>node&lt;/code> (&lt;code>brew install node&lt;/code>):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% node ex0.js
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>✔ Instantiate add.wasm and call exported functions &lt;span style="color:#56b6c2">(&lt;/span>4.1875ms&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ tests &lt;span style="color:#d19a66">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ suites &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ pass &lt;span style="color:#d19a66">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ fail &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ cancelled &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ skipped &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ todo &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ duration_ms 7.125625
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Explanation:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>bytes&lt;/code> reads the &lt;code>.wasm&lt;/code> file, nothing special&lt;/li>
+&lt;li>&lt;a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/JavaScript_interface/instantiate_static">&lt;code>WebAssembly.instantiate&lt;/code>&lt;/a>:
+compile and instantiate WebAssembly code&lt;/li>
+&lt;li>access its
+&lt;a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/JavaScript_interface/Module/exports_static">&lt;code>exports&lt;/code>&lt;/a>
+field&lt;/li>
+&lt;/ul>
+&lt;h2 id="references">References&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://wasmgroundup.com/">WebAssembly from the Ground up&lt;/a> by Mariano Guerra
+&amp;amp; Patrick Dubroy
+&lt;ul>
+&lt;li>&lt;a href="https://wasmgroundup.com/workshop/">Workshop&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul></description></item><item><title>bash: set a trap to log errors</title><link>https://perrotta.dev/2025/05/bash-set-a-trap-to-log-errors/</link><pubDate>Thu, 22 May 2025 13:41:43 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/bash-set-a-trap-to-log-errors/</guid><description>&lt;p>Create &lt;code>main.sh&lt;/code> and mark it as executable (&lt;code>chmod +x&lt;/code>):&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#!/usr/bin/env bash
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">&lt;/span>&lt;span style="color:#e5c07b">set&lt;/span> -euo pipefail
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
@@ -1977,184 +2056,4 @@ there. From pihole docs:&lt;/p>
 &lt;h2 id="wrapping-up">Wrapping up&lt;/h2>
 &lt;p>Then restart pihole to apply changes:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ pihole restartdns
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Alpine Linux: New APKBUILD Workflow</title><link>https://perrotta.dev/2022/01/alpine-linux-new-apkbuild-workflow/</link><pubDate>Sun, 23 Jan 2022 19:15:02 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2022/01/alpine-linux-new-apkbuild-workflow/</guid><description>&lt;p>This document describes my workflow to manage &lt;code>APKBUILDs&lt;/code> for the
-&lt;a href="https://gitlab.alpinelinux.org/alpine/aports">aports&lt;/a> repository in &lt;a href="https://alpinelinux.org/">Alpine Linux&lt;/a>.&lt;/p>
-&lt;h2 id="disclaimer">Disclaimer&lt;/h2>
-&lt;p>First of all, this post is not a substitute to the &lt;a href="https://wiki.alpinelinux.org/wiki/Main_Page">AlpineWiki&lt;/a>
-and it will likely get outdated at some point. In particular, refer to the
-following articles for up-to-date documentation that will outlive this blog:&lt;/p>
-&lt;ul>
-&lt;li>&lt;a href="https://wiki.alpinelinux.org/wiki/APKBUILD_Reference">https://wiki.alpinelinux.org/wiki/APKBUILD_Reference&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://wiki.alpinelinux.org/wiki/Abuild_and_Helpers">https://wiki.alpinelinux.org/wiki/Abuild_and_Helpers&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://wiki.alpinelinux.org/wiki/Aports_tree">https://wiki.alpinelinux.org/wiki/Aports_tree&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package">https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;p>This article is not a tutorial, as such it assumes you already know what an
-&lt;code>APKBUILD&lt;/code> is and how to use &lt;code>abuild&lt;/code>. In particular, you should have the
-&lt;code>alpine-sdk&lt;/code>, &lt;code>atools&lt;/code> and &lt;code>spdx-licenses-list&lt;/code> packages installed in your
-system.&lt;/p>
-&lt;h2 id="structure">Structure&lt;/h2>
-&lt;p>I manage my packages with &lt;code>git&lt;/code>. Create a GitLab account on
-&lt;a href="https://gitlab.alpinelinux.org/">https://gitlab.alpinelinux.org/&lt;/a>, fork the &lt;a href="https://gitlab.alpinelinux.org/alpine/aports">&lt;code>aports&lt;/code>&lt;/a> tree, and &lt;code>git clone&lt;/code> your fork.&lt;/p>
-&lt;p>The structure follows Alpine Linux repositories:&lt;/p>
-&lt;pre tabindex="0">&lt;code>$ git clone https://gitlab.alpinelinux.org/alpine/aports.git &amp;amp;&amp;amp; tree -L 1 aports
-aports
-├── CODINGSTYLE.md
-├── COMMITSTYLE.md
-├── README.md
-├── community
-├── main
-├── non-free
-├── scripts
-├── testing
-└── unmaintained
-&lt;/code>&lt;/pre>&lt;h2 id="bootstrapping">Bootstrapping&lt;/h2>
-&lt;p>I am going to illustrate with a package I added recently, &lt;a href="https://packages.debian.org/source/sensible-utils">&lt;code>sensible-utils&lt;/code>&lt;/a>:&lt;/p>
-&lt;ul>
-&lt;li>
-&lt;p>Before you even begin, check if the package already exists, do a quick search in the &lt;a href="https://pkgs.alpinelinux.org/packages?name=sensible%2Dutils">Alpine Repositories&lt;/a>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>Start by scaffolding a new &lt;code>APKBUILD&lt;/code> from the base template:&lt;/p>
-&lt;/li>
-&lt;/ul>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#e5c07b">cd&lt;/span> aports/testing &lt;span style="color:#7f848e"># Always add new packages in testing/ first.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ newapkbuild sensible-utils
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#e5c07b">cd&lt;/span> sensible-utils
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#e06c75">$EDITOR&lt;/span> APKBUILD
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>Note&lt;/strong>: If you have a language-specific package (e.g. perl, python, rust),
-use the language-specific template instead of the base one. Run &lt;code>newapkbuild -h&lt;/code> to list available templates. There are also some &lt;code>apkbuild-*&lt;/code> helpers such
-as &lt;code>apkbuild-pypi&lt;/code> and &lt;code>apkbuild-cpan&lt;/code>.&lt;/p>
-&lt;ul>
-&lt;li>
-&lt;p>Fill in &lt;code>APKBUILD&lt;/code> metadata like &lt;code>pkgname=&lt;/code>, &lt;code>url=&lt;/code>, etc. Refer to the AlpineWiki for up-to-date best practices.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>By doing so, I produced the following &lt;code>APKBUILD&lt;/code>:&lt;/p>
-&lt;/li>
-&lt;/ul>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">pkgname&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>sensible-utils
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">pkgver&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>0.0.14
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">pkgrel&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#d19a66">0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">pkgdesc&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;Utilities for sensible alternative selection&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">url&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;https://packages.debian.org/source/sensible-utils&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">arch&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;all&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">license&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;GPL-2.0-or-later&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">makedepends&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;po4a&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">subpackages&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#e06c75">$pkgname&lt;/span>&lt;span style="color:#98c379">-doc&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">source&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;http://ftp.debian.org/debian/pool/main/s/&lt;/span>&lt;span style="color:#e06c75">$pkgname&lt;/span>&lt;span style="color:#98c379">/&lt;/span>&lt;span style="color:#98c379">${&lt;/span>&lt;span style="color:#e06c75">pkgname&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">_&lt;/span>&lt;span style="color:#e06c75">$pkgver&lt;/span>&lt;span style="color:#98c379">.tar.xz&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">builddir&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#e06c75">$srcdir&lt;/span>&lt;span style="color:#98c379">/&lt;/span>&lt;span style="color:#e06c75">$pkgname&lt;/span>&lt;span style="color:#98c379">.git&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>build&lt;span style="color:#56b6c2">()&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	./configure --prefix&lt;span style="color:#56b6c2">=&lt;/span>/usr
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	make
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>check&lt;span style="color:#56b6c2">()&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	make -k check
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>package&lt;span style="color:#56b6c2">()&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	make &lt;span style="color:#e06c75">DESTDIR&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#e06c75">$pkgdir&lt;/span>&lt;span style="color:#98c379">/&amp;#34;&lt;/span> install
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#7f848e"># only works with update-alternatives, specific to debian&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	rm &lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#e06c75">$pkgdir&lt;/span>&lt;span style="color:#98c379">/usr/bin/select-editor&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">sha512sums&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379">15ba996f811ab3a9c1f5726f35766d74aafdf925c5c2392b33c6643d6c439796a742f9d0f4625c79de640e6b5e4a6a032b768eb1bc4ac31b448f9767b0ceed44 sensible-utils_0.0.14.tar.xz
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>Note&lt;/strong>: &lt;code>$srcdir&lt;/code> refers to the &lt;code>src/&lt;/code> directory within &lt;code>sensible-utils&lt;/code>. &lt;code>$pkgdir&lt;/code>
-refers to the &lt;code>pkg/&lt;/code> directory within &lt;code>sensible-utils&lt;/code>.&lt;/p>
-&lt;p>If you&amp;rsquo;re used to Arch Linux &lt;code>PKGBUILDs&lt;/code> you&amp;rsquo;ll notice a striking similarity to
-&lt;code>APKBUILDs&lt;/code>. I highlighted a few notable differences in a previous post, &lt;a href="https://perrotta.dev/2022/01/my-first-apkbuild/#build-comparison">&lt;code>My First APKBUILD&lt;/code>&lt;/a>.&lt;/p>
-&lt;h2 id="adjustments">Adjustments&lt;/h2>
-&lt;ul>
-&lt;li>
-&lt;p>Generate the checksums with &lt;code>abuild checksum&lt;/code>. It will automatically update the &lt;code>APKBUILD&lt;/code> inplace.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>Download and extract package files with &lt;code>abuild unpack&lt;/code>.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;code>ls src/&lt;/code> and check the directory structure. Update &lt;code>$builddir&lt;/code> in your
-&lt;code>APKBUILD&lt;/code> to match it. Usually it will be &lt;code>$srcdir/$pkgname-$pkgver&lt;/code>, but
-sometimes tiny adjustments are necessary. In this case, it was
-&lt;code>$srcdir/$pkgname.git&lt;/code>.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>Then run &lt;code>abuild -r&lt;/code>. If everything goes well, your package (and subpackages,
-if any) will be successfully built&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup> in an isolated environment and placed
-in &lt;code>~/packages&lt;/code> (&lt;code>sensible-utils-0.0.14-r0.apk&lt;/code> and
-&lt;code>sensible-utils-doc-0.0.14-r0.apk&lt;/code>), however that doesn&amp;rsquo;t mean it is a decent
-package yet.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>Run &lt;code>apkbuild-lint APKBUILD&lt;/code> and &lt;code>abuild validate&lt;/code>&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup> to lint your package
-and catch common errors. Fix the errors, if any.&lt;/p>
-&lt;/li>
-&lt;/ul>
-&lt;h2 id="request-feedback-if-needed">Request feedback if needed&lt;/h2>
-&lt;p>If the package is only relevant to you, stop here. &lt;code>git commit&lt;/code>, &lt;code>git push&lt;/code>, and then you&amp;rsquo;re done. Install the package with &lt;code>doas apk add &amp;lt;pkg&amp;gt;&lt;/code>.&lt;/p>
-&lt;p>Otherwise, if the package might be potentially useful to other Alpine users, you could consider uploading it to the &lt;a href="https://gitlab.alpinelinux.org/alpine/aports">aports&lt;/a> repository.&lt;/p>
-&lt;p>Before you do so, stop for a moment and make an honest judgment whether this is a high quality package and whether you&amp;rsquo;re confident it is clean and polished enough, following the best practices documented in the Wiki. The answer doesn&amp;rsquo;t need to be positive, it&amp;rsquo;s perfectly OK to commit mistakes and everyone is a newbie at some point.&lt;/p>
-&lt;p>If the answer is negative, or if you&amp;rsquo;re new to this process and would like some help, fear no more! There are at least two decent community resources wherein to ask for help:&lt;/p>
-&lt;ol>
-&lt;li>
-&lt;p>&lt;a href="https://wiki.alpinelinux.org/wiki/Alpine_Linux:IRC">&lt;code>#alpine-devel&lt;/code> on OFTC IRC&lt;/a> Drew DeVault wrote a good &lt;a href="https://drewdevault.com/2021/11/24/A-philosophy-for-instant-messaging.html">post&lt;/a> about IRC etiquette.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;a href="https://wiki.alpinelinux.org/wiki/Alpine_Linux:Mailing_lists">&lt;code>alpine-devel&lt;/code> mailing list&lt;/a>.&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;p>If you&amp;rsquo;re part of any other community (e.g. Reddit, Discord) feel free to ask therein as well. Avoid posting everywhere though, pick one community, draft your post and then patiently wait.&lt;/p>
-&lt;h2 id="publish-your-package">Publish your package&lt;/h2>
-&lt;p>If all is well, it&amp;rsquo;s time to publish your &lt;code>APKBUILD&lt;/code>. Follow the up-to-date
-steps at
-&lt;a href="https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Code_review">https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package#Code_review&lt;/a>. There are basically two options:&lt;/p>
-&lt;ol>
-&lt;li>
-&lt;p>Send a gitlab merge request (MR). This follows the standard git forge workflow
-(GitHub / BitBucket / GitLab) wherein you fork the main repository, create
-a branch in your own clone, push it and then initiate a pull request&lt;sup id="fnref:4">&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref">4&lt;/a>&lt;/sup>.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>Alternatively, send an email with your patch to the &lt;code>aports&lt;/code> mailing list
-with &lt;a href="https://git-send-email.io/">&lt;code>git send-email&lt;/code>&lt;/a>:&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ git config sendemail.to &lt;span style="color:#98c379">&amp;#34;alpine-aports@lists.alpinelinux.org&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ git send-email -1 &lt;span style="color:#7f848e"># Implicitly uses --to=alpine-linux@lists.alpinelinux.org as set above&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>Tip&lt;/strong>: The second approach has a steep learning curve, however once you
-figure it out it&amp;rsquo;s actually faster, simpler and more streamlined. Whenever
-a new email is sent to the aports mailing list, a MR is automatically created
-on GitLab.&lt;/p>
-&lt;p>&lt;strong>Note&lt;/strong>: If you adopt the email workflow and need to send a follow-up to your
-initial patch, do not use &lt;code>--in-reply-to&lt;/code>. Instead, create a new email thread.
-This is needed because as of this post new GitLab MRs are only created when new
-email threads are created. Replies to existing email threads do not update the
-MR patch.&lt;/p>
-&lt;p>And that&amp;rsquo;s all! Other useful tips:&lt;/p>
-&lt;ul>
-&lt;li>Use &lt;a href="https://repology.org/">repology&lt;/a> to look for preexisting packages in other Linux (or even BSD) distributions, it&amp;rsquo;s very handy as a starting point if you have no idea how to package a given package. In particular, Arch Linux &lt;code>PKGBUILDs&lt;/code> are very similar to &lt;code>APKBUILDs&lt;/code>. Gentoo &lt;code>EBUILDs&lt;/code> and FreeBSD &lt;code>Makefiles&lt;/code> are also reasonable approximations.&lt;/li>
-&lt;li>Use &lt;code>abump&lt;/code> to bump pkgver in &lt;code>APKBUILD&lt;/code> files if the package gets an update to a newer upstream release.&lt;/li>
-&lt;li>Use &lt;code>apkgrel&lt;/code> to bump or reset the &lt;code>pkgrel&lt;/code> value of your &lt;code>APKBUILD&lt;/code>.&lt;/li>
-&lt;li>Use &lt;a href="https://perrotta.dev/2022/01/arch-linux-new-pkgbuild-workflow/#bonus-track-upstream">&lt;code>urlwatch&lt;/code>&lt;/a> to track upstream updates.&lt;/li>
-&lt;/ul>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>If you use &lt;a href="https://duckduckgo.com/">https://duckduckgo.com/&lt;/a>, query for &lt;code>!alpine sensible-utils&lt;/code>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;li id="fn:2">
-&lt;p>Package debugging is out of scope of this post.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;li id="fn:3">
-&lt;p>&lt;strong>Update(2025-05-10)&lt;/strong>: Previously: &lt;code>abuild sanitycheck&lt;/code>.&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;li id="fn:4">
-&lt;p>In GitLab it&amp;rsquo;s called Merge Request (MR). The list of all aports MRs is &lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests">here&lt;/a>.&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item></channel></rss>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>

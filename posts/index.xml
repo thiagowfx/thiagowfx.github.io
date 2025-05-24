@@ -1,6 +1,85 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/posts/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 23 May 2025 13:00:56 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>mdsh: a markdown pre-processor</title><link>https://perrotta.dev/2025/05/mdsh-a-markdown-pre-processor/</link><pubDate>Fri, 23 May 2025 13:00:56 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/mdsh-a-markdown-pre-processor/</guid><description>&lt;p>&lt;a href="https://github.com/zimbatm/mdsh">mdsh&lt;/a>, a markdown shell pre-processor;&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 24 May 2025 10:39:13 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>WebAssembly: hello world</title><link>https://perrotta.dev/2025/05/webassembly-hello-world/</link><pubDate>Sat, 24 May 2025 10:39:13 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/webassembly-hello-world/</guid><description>&lt;p>Today I am attending a WebAssembly workshop.&lt;/p>
+&lt;p>&lt;a href="https://webassembly.org/">WebAssembly&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>WebAssembly (abbreviated &lt;em>Wasm&lt;/em>) is a binary instruction format for a
+stack-based virtual machine. Wasm is designed as a portable compilation target
+for programming languages, enabling deployment on the web for client and
+server applications.&lt;/p>
+&lt;/blockquote>
+&lt;p>Given &lt;code>add.wat&lt;/code>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>(module
+ ;; stack/forth syntax
+ ;; looks like vanilla assembly
+ (func $add (param $a i32) (param $b i32) (result i32)
+ local.get $a
+ local.get $b
+ i32.add
+ )
+
+ ;; nested/lisp syntax
+ ;; functional, parentheses hell
+ (func $add-alt (param $a i32) (param $b i32) (result i32)
+ (i32.add
+ (local.get $a)
+ (local.get $b))
+ )
+
+ (export &amp;#34;add&amp;#34; (func $add))
+ (export &amp;#34;addAlt&amp;#34; (func $add-alt))
+)
+&lt;/code>&lt;/pre>&lt;p>&amp;hellip;it adds two integers.
+There are two implementations, they are equivalent.&lt;/p>
+&lt;p>Install dependencies:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% brew install wabt wasm-tools
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>We can compile &lt;code>.wat&lt;/code> to &lt;code>.wasm&lt;/code> with one of:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% wat2wasm add.wat
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% wasm-tools parse add.wat -o add.wasm
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now how do we consume it? Create a &lt;code>test.js&lt;/code> file:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">import&lt;/span> &lt;span style="color:#e06c75">test&lt;/span> &lt;span style="color:#e06c75">from&lt;/span> &lt;span style="color:#98c379">&amp;#34;node:test&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">import&lt;/span> &lt;span style="color:#e06c75">assert&lt;/span> &lt;span style="color:#e06c75">from&lt;/span> &lt;span style="color:#98c379">&amp;#34;node:assert&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">import&lt;/span> &lt;span style="color:#e06c75">fs&lt;/span> &lt;span style="color:#e06c75">from&lt;/span> &lt;span style="color:#98c379">&amp;#34;node:fs/promises&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">test&lt;/span>(&lt;span style="color:#98c379">&amp;#34;Instantiate add.wasm and call exported functions&amp;#34;&lt;/span>, &lt;span style="color:#c678dd">async&lt;/span> () =&amp;gt; {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">const&lt;/span> &lt;span style="color:#e06c75">bytes&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#c678dd">await&lt;/span> &lt;span style="color:#e06c75">fs&lt;/span>.&lt;span style="color:#e06c75">readFile&lt;/span>(&lt;span style="color:#98c379">&amp;#34;add.wasm&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">const&lt;/span> {&lt;span style="color:#e06c75">instance&lt;/span>} &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#c678dd">await&lt;/span> &lt;span style="color:#e06c75">WebAssembly&lt;/span>.&lt;span style="color:#e06c75">instantiate&lt;/span>(&lt;span style="color:#e06c75">bytes&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">const&lt;/span> {&lt;span style="color:#e06c75">add&lt;/span>, &lt;span style="color:#e06c75">addAlt&lt;/span>} &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">instance&lt;/span>.&lt;span style="color:#e06c75">exports&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">assert&lt;/span>.&lt;span style="color:#e06c75">equal&lt;/span>(&lt;span style="color:#e06c75">add&lt;/span>(&lt;span style="color:#d19a66">1&lt;/span>, &lt;span style="color:#d19a66">4&lt;/span>), &lt;span style="color:#d19a66">5&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">assert&lt;/span>.&lt;span style="color:#e06c75">equal&lt;/span>(&lt;span style="color:#e06c75">addAlt&lt;/span>(&lt;span style="color:#d19a66">10&lt;/span>, &lt;span style="color:#d19a66">40&lt;/span>), &lt;span style="color:#d19a66">50&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Execute it with &lt;code>node&lt;/code> (&lt;code>brew install node&lt;/code>):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% node ex0.js
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>✔ Instantiate add.wasm and call exported functions &lt;span style="color:#56b6c2">(&lt;/span>4.1875ms&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ tests &lt;span style="color:#d19a66">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ suites &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ pass &lt;span style="color:#d19a66">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ fail &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ cancelled &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ skipped &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ todo &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ℹ duration_ms 7.125625
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Explanation:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>bytes&lt;/code> reads the &lt;code>.wasm&lt;/code> file, nothing special&lt;/li>
+&lt;li>&lt;a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/JavaScript_interface/instantiate_static">&lt;code>WebAssembly.instantiate&lt;/code>&lt;/a>:
+compile and instantiate WebAssembly code&lt;/li>
+&lt;li>access its
+&lt;a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/JavaScript_interface/Module/exports_static">&lt;code>exports&lt;/code>&lt;/a>
+field&lt;/li>
+&lt;/ul>
+&lt;h2 id="references">References&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://wasmgroundup.com/">WebAssembly from the Ground up&lt;/a> by Mariano Guerra
+&amp;amp; Patrick Dubroy
+&lt;ul>
+&lt;li>&lt;a href="https://wasmgroundup.com/workshop/">Workshop&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul></description></item><item><title>mdsh: a markdown pre-processor</title><link>https://perrotta.dev/2025/05/mdsh-a-markdown-pre-processor/</link><pubDate>Fri, 23 May 2025 13:00:56 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/mdsh-a-markdown-pre-processor/</guid><description>&lt;p>&lt;a href="https://github.com/zimbatm/mdsh">mdsh&lt;/a>, a markdown shell pre-processor;&lt;/p>
 &lt;blockquote>
 &lt;p>The mdsh project describes a Markdown language extension that can be used to
 automate some common tasks in README.md files. Quite often I find myself
@@ -1746,7 +1825,4 @@ linter issues) that can be quickly resolved with the assistance of a LLM tool.&l
 &lt;p>There&amp;rsquo;s no silver bullet here: all changes need to be properly reviewed and
 tested. Nonetheless, even if the tool is wrong 50% of the time, it&amp;rsquo;s still
 faster for me to use the LLM tool as an initial suggestion than having to
-do the research myself from scratch.&lt;/p></description></item><item><title>Github Actions: ubuntu-latest tools</title><link>https://perrotta.dev/2025/04/github-actions-ubuntu-latest-tools/</link><pubDate>Wed, 09 Apr 2025 01:00:47 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/github-actions-ubuntu-latest-tools/</guid><description>&lt;p>Which tools are installed in the Github Actions environment for &lt;code>ubuntu-latest&lt;/code>?&lt;/p>
-&lt;p>&lt;a href="https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md">This
-repository&lt;/a>
-has the answer.&lt;/p></description></item></channel></rss>
+do the research myself from scratch.&lt;/p></description></item></channel></rss>
