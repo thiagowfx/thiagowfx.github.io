@@ -1,8 +1,6 @@
 #!/usr/bin/env just --justfile
 # https://github.com/casey/just
 
-set dotenv-load
-
 # Start a hugo server in watch mode
 watch preview="true":
 	#!/usr/bin/env bash
