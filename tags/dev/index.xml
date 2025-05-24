@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 24 May 2025 16:00:23 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>PostgreSQL major version upgrade on Alpine Linux</title><link>https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/</link><pubDate>Sat, 24 May 2025 16:00:23 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/</guid><description>&lt;h2 id="problem-statement">Problem statement&lt;/h2>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 24 May 2025 17:29:48 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>pre-commit: add hugo build</title><link>https://perrotta.dev/2025/05/pre-commit-add-hugo-build/</link><pubDate>Sat, 24 May 2025 17:29:48 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/pre-commit-add-hugo-build/</guid><description>&lt;p>Sometimes I make changes to this blog that yield build errors with its static
+site generator (&lt;a href="https://gohugo.io/">hugo&lt;/a>).&lt;/p>
+&lt;p>It&amp;rsquo;s trivial to spot these changes with a simple &lt;code>hugo build&lt;/code>, but &lt;a href="https://perrotta.dev/2025/03/yolo-debug-only-after-push/">I don&amp;rsquo;t always
+run it&lt;/a>.&lt;/p>
+&lt;p>Here&amp;rsquo;s what a typical error looks like:&lt;/p>
+&lt;pre tabindex="0">&lt;code>% hugo build
+Start building sites …
+hugo v0.147.5+extended+withdeploy darwin/arm64 BuildDate=2025-05-22T11:37:19Z VendorInfo=brew
+
+ERROR [en] REF_NOT_FOUND: Ref &amp;#34;nonexistent/2025-03-24-maccy-pin-items&amp;#34;: &amp;#34;/Users/tperrotta/Workspace/perrotta.dev/content/posts/2025-05-16-espanso-hello-world.md:10:14&amp;#34;: page not found
+Total in 242 ms
+Error: error building site: logged 1 error(s)
+&lt;/code>&lt;/pre>&lt;p>The same happens when invoking &lt;a href="https://just.systems/man/en/">&lt;code>just&lt;/code>&lt;/a>, as you
+would expect:&lt;/p>
+&lt;pre tabindex="0">&lt;code>% just build
+hugo --environment production --gc --minify
+Start building sites …
+hugo v0.147.5+extended+withdeploy darwin/arm64 BuildDate=2025-05-22T11:37:19Z VendorInfo=brew
+
+ERROR [en] REF_NOT_FOUND: Ref &amp;#34;nonexistent/2025-03-24-maccy-pin-items&amp;#34;: &amp;#34;/Users/tperrotta/Workspace/perrotta.dev/content/posts/2025-05-16-espanso-hello-world.md:10:14&amp;#34;: page not found
+Total in 280 ms
+Error: error building site: logged 1 error(s)
+error: Recipe `build` failed on line 17 with exit code 1
+&lt;/code>&lt;/pre>&lt;p>&lt;strong>Problem statement&lt;/strong>: catch such build errors at git pre-commit time.&lt;/p>
+&lt;p>This is trivial with a &lt;a href="https://pre-commit.com/">pre-commit.com&lt;/a> hook:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-diff" data-lang="diff">&lt;span style="display:flex;">&lt;span>Author: Thiago Perrotta &amp;lt;{email redacted}&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Date: Sat May 24 17:26:59 2025 +0200
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> pre-commit: add just build
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>diff --git .pre-commit-config.yaml .pre-commit-config.yaml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>index 60eb2022..623e135d 100644
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">--- .pre-commit-config.yaml
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">&lt;/span>&lt;span style="color:#98c379;font-weight:bold">+++ .pre-commit-config.yaml
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">&lt;/span>@@ -112,5 +112,10 @@ repos:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> language: pygrep
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> types:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - markdown
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ - id: hugo
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ name: Hugo
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ language: system
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ entry: just build
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ pass_filenames: false
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Here&amp;rsquo;s the end result:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% git commit -m &lt;span style="color:#98c379">&amp;#34;test&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Check hooks apply to the repository.............................................&lt;span style="color:#56b6c2">(&lt;/span>no files to check&lt;span style="color:#56b6c2">)&lt;/span>Skipped
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Check &lt;span style="color:#c678dd">for&lt;/span> useless excludes......................................................&lt;span style="color:#56b6c2">(&lt;/span>no files to check&lt;span style="color:#56b6c2">)&lt;/span>Skipped
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Forbid usage of UTM analytics / tracking............................................................Passed
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Hugo................................................................................................Failed
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- hook id: hugo
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#e5c07b">exit&lt;/span> code: &lt;span style="color:#d19a66">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>hugo --environment production --gc --minify
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Start building sites …
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>hugo v0.147.5+extended+withdeploy darwin/arm64 &lt;span style="color:#e06c75">BuildDate&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>2025-05-22T11:37:19Z &lt;span style="color:#e06c75">VendorInfo&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>brew
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ERROR &lt;span style="color:#56b6c2">[&lt;/span>en&lt;span style="color:#56b6c2">]&lt;/span> REF_NOT_FOUND: Ref &lt;span style="color:#98c379">&amp;#34;a/2024-12-23-unbuffer&amp;#34;&lt;/span>: &lt;span style="color:#98c379">&amp;#34;/Users/tperrotta/Workspace/perrotta.dev/content/posts/2025-05-24-watch-with-color.md:54:54&amp;#34;&lt;/span>: page not found
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Total in &lt;span style="color:#d19a66">276&lt;/span> ms
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Error: error building site: logged &lt;span style="color:#d19a66">1&lt;/span> error&lt;span style="color:#56b6c2">(&lt;/span>s&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: Recipe &lt;span style="color:#98c379">`&lt;/span>build&lt;span style="color:#98c379">`&lt;/span> failed on line &lt;span style="color:#d19a66">19&lt;/span> with &lt;span style="color:#e5c07b">exit&lt;/span> code &lt;span style="color:#d19a66">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>PostgreSQL major version upgrade on Alpine Linux</title><link>https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/</link><pubDate>Sat, 24 May 2025 16:00:23 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/</guid><description>&lt;h2 id="problem-statement">Problem statement&lt;/h2>
 &lt;p>Given Alpine Linux 3.22 running PostgreSQL 16, upgrade to PostgreSQL 17. For
 this specific example, consider a &lt;a href="https://miniflux.app/">&lt;code>miniflux&lt;/code>&lt;/a> database.&lt;/p>
 &lt;h2 id="procedure">Procedure&lt;/h2>
@@ -1513,44 +1574,4 @@ to our helm repositories.&lt;/p>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It can be then invoked like this: &lt;code>pre-commit run --all-files helm-lock --hook-stage manual&lt;/code>.&lt;/p>
 &lt;p>An alternative could have been to instruct people to set
 &lt;a href="https://pre-commit.com/#temporarily-disabling-hooks">&lt;code>SKIP=helm-lock&lt;/code>&lt;/a>, however
-&lt;a href="https://world.hey.com/jason/software-defaults-15955a8e">defaults&lt;/a> are powerful.&lt;/p></description></item><item><title>1password CLI + direnv integration</title><link>https://perrotta.dev/2025/03/1password-cli--direnv-integration/</link><pubDate>Wed, 26 Mar 2025 14:15:15 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/1password-cli--direnv-integration/</guid><description>&lt;p>Let&amp;rsquo;s stay you&amp;rsquo;re working on a terraform module that has a sensitive variable
-named &lt;code>api_key&lt;/code> in &lt;code>variables.tf&lt;/code>.&lt;/p>
-&lt;p>When running &lt;code>terraform apply&lt;/code>, you&amp;rsquo;ll need to supply its value. Every. Single.
-Time.&lt;/p>
-&lt;p>We can make it persistent by setting &lt;code>export TF_VAR_api_key={my value}&lt;/code>.
-However this is only persistent within the current shell.&lt;/p>
-&lt;p>To make it persistent across multiple sessions, create a &lt;code>.envrc&lt;/code> file at the
-root module:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#!/bin/sh
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">&lt;/span>&lt;span style="color:#e5c07b">export&lt;/span> &lt;span style="color:#e06c75">TF_VAR_api_key&lt;/span>&lt;span style="color:#56b6c2">={&lt;/span>my value&lt;span style="color:#56b6c2">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then source it: &lt;code>source ~/.envrc&lt;/code>. Now you have to source it every single time
-you open a new shell.&lt;/p>
-&lt;p>We can use &lt;a href="http://direnv.net/">&lt;code>direnv&lt;/code>&lt;/a> to do so automatically. It has been
-&lt;a href="https://perrotta.dev/2022/01/direnv-automate-your-environment-variables/">previously covered&lt;/a>. But&amp;hellip;now we have
-a secret stored as plain text in our filesystem.&lt;/p>
-&lt;p>We could store it in a more secure place, like a password manager, and then have
-a mechanism automatically fetch its value.&lt;/p>
-&lt;h2 id="first-approach">First approach&lt;/h2>
-&lt;p>When using 1Password, the &lt;a href="https://developer.1password.com/docs/cli/">1Password
-CLI&lt;/a> is such a mechanism.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#!/bin/sh
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">&lt;/span>&lt;span style="color:#e5c07b">export&lt;/span> &lt;span style="color:#e06c75">TF_VAR_api_key&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#c678dd">$(&lt;/span>op run --no-masking -- op &lt;span style="color:#e5c07b">read&lt;/span> &lt;span style="color:#98c379">&amp;#34;op://{vault name}/{entry name}/{item name}&amp;#34;&lt;/span>&lt;span style="color:#c678dd">)&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can fetch the secret reference path from 1Password:
-&lt;a href="https://developer.1password.com/docs/cli/secret-references/">docs&lt;/a>. Click &amp;ldquo;Copy
-Secret Reference&amp;rdquo; in the corresponding entry item.&lt;/p>
-&lt;h2 id="second-approach">Second approach&lt;/h2>
-&lt;p>The above is one possibility, and it works flawlessly, but there&amp;rsquo;s a second
-approach that uses &lt;code>op run&lt;/code> alone with a secret reference that is dynamically
-replaced.&lt;/p>
-&lt;p>Create an &lt;code>.env&lt;/code> file:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">TF_VAR_api_key&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;op://{vault name}/{entry name}/{item name}&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Update the &lt;code>.envrc&lt;/code> file:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#!/bin/sh
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">&lt;/span>dotenv
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now run &lt;code>terraform apply&lt;/code> via &lt;code>op run&lt;/code>, as follows:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>op run --env-file&lt;span style="color:#56b6c2">=&lt;/span>.env -- terraform apply
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="references">References&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a href="https://mattedwards.org/2024/01/inject-secrets-into-terraform-environment-using-1password/">https://mattedwards.org/2024/01/inject-secrets-into-terraform-environment-using-1password/&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://nshipster.com/1password-cli/">https://nshipster.com/1password-cli/&lt;/a>&lt;/li>
-&lt;/ul></description></item></channel></rss>
+&lt;a href="https://world.hey.com/jason/software-defaults-15955a8e">defaults&lt;/a> are powerful.&lt;/p></description></item></channel></rss>
