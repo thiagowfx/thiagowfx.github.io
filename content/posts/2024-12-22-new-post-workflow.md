@@ -21,7 +21,7 @@ tags:
   - dev
   - linux
   - meta
-  - portuguese
+  - pt
   - privacy
   - selfhosted
   - serenity

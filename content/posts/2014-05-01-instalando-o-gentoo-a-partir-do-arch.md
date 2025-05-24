@@ -3,7 +3,7 @@ title: Instalando o Gentoo a partir do Arch
 date: 2014-05-01T02:20:00+00:00
 tags:
   - linux
-  - portuguese
+  - pt
 ---
 
 **TL;DR**: pequena TODO list sobre como instalar o Gentoo. Você vai passar 90% do seu tempo olhando para **texto** dando scroll na tela (processo demorado…).

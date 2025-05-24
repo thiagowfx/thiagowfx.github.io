@@ -4,7 +4,7 @@ date: 2016-10-16T15:49:01-02:00
 tags:
   - dev
   - linux
-  - portuguese
+  - pt
 ---
 
 Recentemente participei de uma
