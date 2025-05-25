@@ -43,7 +43,7 @@ codespell................................................................iFailed
 - hook id: codespell
 - exit code: 65
 
-content/posts/2024-12-22-new-post-workflow.md:37: Comitting ==> Committing
+content/posts/2024-12-22-new-post-workflow.md:37: Committing ==> Committing
 ```
 
 I do not use AI in any way, neither to draft the posts, nor to review them

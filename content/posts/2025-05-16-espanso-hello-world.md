@@ -153,4 +153,4 @@ first time I had heard about Espanso, but it has reinforced my desire to try it
 out.
 
 [^1]: In order to type a plain `:helm:ls` without expansion (e.g. for this blog
-    post), type the folowing: `:helm:l{left arrow}{right arrow}s`.
+    post), type the following: `:helm:l{left arrow}{right arrow}s`.
