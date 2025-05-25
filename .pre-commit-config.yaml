@@ -43,6 +43,14 @@ repos:
         args:
           - -D .codespell-dictionary.txt
           - -I .codespell-ignore-words.txt
+  - repo: https://github.com/golangci/misspell
+    rev: e78f9b6cd537559a24525b6ea7e182794edfd31f # frozen: v0.7.0
+    hooks:
+      - id: misspell
+        exclude: ^content/posts/201.*
+        stages:
+          # False positives in posts in Portuguese.
+          - manual
   - repo: https://github.com/danielhoherd/pre-commit-hooks
     rev: 37614dad793bbbdea699c63c8b341ce1e2bf855a
     hooks:
@@ -79,13 +87,16 @@ repos:
       - id: fix-ligatures
       - id: fix-smartquotes
   # Only run it every once in a while.
-  # - repo: https://github.com/tcort/markdown-link-check
-  #   rev: v3.13.6
-  #   hooks:
-  #     - id: markdown-link-check
-  #       files: '^content/posts/2025-.*'
-  #       args:
-  #         - -q
+  - repo: https://github.com/tcort/markdown-link-check
+    rev: v3.13.6
+    hooks:
+      - id: markdown-link-check
+        files: '^content/posts/2025-.*'
+        args:
+          - -q
+        stages:
+          # It's an expensive hook. Only run it occasionally.
+          - manual
   - repo: local
     hooks:
       # keep-sorted start
