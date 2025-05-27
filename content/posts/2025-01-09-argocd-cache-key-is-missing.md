@@ -30,3 +30,5 @@ bootstrapping. Once fixed it does not reoccur.
 
 Another potential workaround is to disable redis / caching altogether, as ArgoCD
 can fully operate without it, but I wouldn't recommend that.
+
+See also: [#18503](https://github.com/argoproj/argo-cd/issues/18503).
