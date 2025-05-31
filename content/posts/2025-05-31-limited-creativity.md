@@ -49,5 +49,5 @@ complete.
 [^2]: Why is the title "limited creativity" if, apparently, the flow of ideas
     doesn't stop? Isn't this somewhat paradoxical? I take a practical
     standpoint: it's useless to have a myriad of ideas if they do not become
-    concrete. Virtual ideas is essentially the same as nothing. Output (or
+    concrete. Virtual ideas are essentially the same as nothing. Output (or
     deliverables, if you will) is the metric that matters most of the time.
