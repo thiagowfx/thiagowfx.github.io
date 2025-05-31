@@ -33,9 +33,10 @@ The best example that illustrates it is [that post]({{< ref
 "2024-10-13-new-series-raspberry-pi-fun-with-devops" >}}) about the Raspberry
 Pi. It never took off (and it's still in my backlog!). Another example is the
 [Kindle jailbreak]({{< ref "2025-05-17-winterbreak-hello-world" >}}) – it took
-me 4-5 months to do it. Once I started it, it took me only a few minutes to do
-it[^1]. So the major bottleneck is to kick start a project. I am very confident
-in my current skill set and knowledge for the execution once it has taken off.
+me 4-5 months to do it. Once I started it, it took me only a few minutes to
+start it[^1]. So the major bottleneck is to kick start a project. I am very
+confident in my current skill set and knowledge for the execution once it has
+taken off.
 
 What can I do in order to be more effective into converting abstract ideas into
 small, concrete and actionable items?
