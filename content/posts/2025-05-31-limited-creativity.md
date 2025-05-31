@@ -38,8 +38,8 @@ start it[^1]. So the major bottleneck is to kick start a project. I am very
 confident in my current skill set and knowledge for the execution once it has
 taken off.
 
-What can I do in order to be more effective into converting abstract ideas into
-small, concrete and actionable items?
+What can I do in order to be more effective in terms of converting abstract
+ideas into small, concrete and actionable items?
 
 The discovery journey continues[^2].
 
