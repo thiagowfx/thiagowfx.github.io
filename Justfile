@@ -3,37 +3,37 @@
 
 # Start a hugo server in watch mode
 watch preview="true":
-	#!/usr/bin/env bash
-	set -euo pipefail
+    #!/usr/bin/env bash
+    set -euo pipefail
 
-	additional_flags=()
-	if [ "{{preview}}" = "true" ]; then
-		additional_flags+=("--openBrowser" "--navigateToChanged")
-	fi
-	hugo server --buildDrafts --port ${PORT:-1313} --watch "${additional_flags[@]}"
+    additional_flags=()
+    if [ "{{ preview }}" = "true" ]; then
+    	additional_flags+=("--openBrowser" "--navigateToChanged")
+    fi
+    hugo server --buildDrafts --port ${PORT:-1313} --watch "${additional_flags[@]}"
 
 # Build the blog as in production
 build:
-	hugo --environment production --gc --minify
+    hugo --environment production --gc --minify
 
 # Create a new post. Usage: `just new "advent of code day 8"`
 new title:
-	#!/usr/bin/env bash
-	set -euo pipefail
+    #!/usr/bin/env bash
+    set -euo pipefail
 
-	filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-	hugo new content/posts/`date "+%Y-%m-%d"`-${filename}.md
+    filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+    hugo new content/posts/`date "+%Y-%m-%d"`-${filename}.md
 
 # Delete hugo build artifacts
 clean:
-	rm -rf public/ resources/
+    rm -rf public/ resources/
 
 # Ping search engines about changes in the sitemap
 ping sitemap="https://perrotta.dev/sitemap.xml":
-	curl -sS -o /dev/null "https://www.google.com/ping?sitemap={{ sitemap }}"
-	curl -sS -o /dev/null "https://www.bing.com/ping?sitemap={{ sitemap }}"
+    curl -sS -o /dev/null "https://www.google.com/ping?sitemap={{ sitemap }}"
+    curl -sS -o /dev/null "https://www.bing.com/ping?sitemap={{ sitemap }}"
 
 # Update git submodules and pre-commit hooks
 update:
-	git submodule update --remote
-	pre-commit autoupdate --freeze --jobs "$(nproc)" && pre-commit run --all-files
+    git submodule update --remote
+    pre-commit autoupdate --freeze --jobs "$(nproc)" && pre-commit run --all-files
