@@ -32,4 +32,4 @@ One solution is to sync the underlying application PDB manifest with
 [replace](https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/#replace-resource-instead-of-applying-changes).
 
 **Warning**: It's better to "sync with replace" **only** the PDB. Do not do it
-with the entire application.
+in the entire application.
