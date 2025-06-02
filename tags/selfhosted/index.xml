@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Selfhosted on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/selfhosted/</link><description>Recent content in Selfhosted on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 02 Jun 2025 12:00:05 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>PDB: minAvailable and maxUnavailable cannot be both set</title><link>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</link><pubDate>Mon, 02 Jun 2025 12:00:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</guid><description>&lt;p>In Kubernetes it&amp;rsquo;s not possible to have a &lt;a href="https://kubernetes.io/docs/tasks/run-application/configure-pdb/">&lt;code>PodDisruptionBudget&lt;/code>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 02 Jun 2025 13:03:24 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: upgrade to v3, remove helm labels</title><link>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</link><pubDate>Mon, 02 Jun 2025 13:03:24 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</guid><description>&lt;p>I am leading the effort to upgrade ArgoCD to its &lt;a href="https://blog.argoproj.io/announcing-argo-cd-v3-small-but-mighty-df05c0b39ad6">newest major version
+(v3)&lt;/a>
+across our fleet.&lt;/p>
+&lt;p>One of its &lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/upgrading/2.14-3.0/">breaking
+changes&lt;/a>
+is the removal of helm labels from argo applications, like such:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">metadata&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># [...]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">labels&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">app.kubernetes.io/managed-by&lt;/span>: Helm
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Applying a normal sync does not get rid of the label.&lt;/p>
+&lt;p>I found out that doing an one-off &lt;a href="https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/#server-side-apply">server-side apply
+sync&lt;/a>
+addresses the label removal, and it is safe to do (incurs no downtime):&lt;/p>
+&lt;blockquote>
+&lt;p>However, there are some cases where you want to use &lt;code>kubectl apply --server-side&lt;/code> over &lt;code>kubectl apply&lt;/code>:&lt;/p>
+&lt;p>[&amp;hellip;]&lt;/p>
+&lt;p>Patching of existing resources on the cluster that are not fully managed by
+Argo CD.&lt;/p>
+&lt;/blockquote>
+&lt;p>There&amp;rsquo;s no need to make the server-side apply a permanent config, i.e.:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">apiVersion&lt;/span>: argoproj.io/v1alpha1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">kind&lt;/span>: Application
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">spec&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">syncPolicy&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">syncOptions&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - ServerSideApply=true
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;though there&amp;rsquo;s no harm either in doing so.&lt;/p></description></item><item><title>PDB: minAvailable and maxUnavailable cannot be both set</title><link>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</link><pubDate>Mon, 02 Jun 2025 12:00:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</guid><description>&lt;p>In Kubernetes it&amp;rsquo;s not possible to have a &lt;a href="https://kubernetes.io/docs/tasks/run-application/configure-pdb/">&lt;code>PodDisruptionBudget&lt;/code>
 (PDB)&lt;/a> with
 both &lt;code>minAvailable&lt;/code> and &lt;code>maxUnavailable&lt;/code> set simultaneously:&lt;/p>
 &lt;pre tabindex="0">&lt;code>one or more objects failed to apply, reason: PodDisruptionBudget.policy &amp;#34;pgbouncer-pgbouncer&amp;#34; is invalid: spec: Invalid value: policy.PodDisruptionBudgetSpec{MinAvailable:(*intstr.IntOrString)(0xc02c03dd20), Selector:(*v1.LabelSelector)(0xc02c03dd40), MaxUnavailable:(*intstr.IntOrString)(0xc02c03dd60), UnhealthyPodEvictionPolicy:(*policy.UnhealthyPodEvictionPolicyType)(nil)}: minAvailable and maxUnavailable cannot be both set (retried 5 times).
@@ -2384,81 +2411,4 @@ work. Prefer running a DHCP server from the pihole.&lt;/p>
 &lt;ul>
 &lt;li>Static DHCP lease from the pihole itself if it&amp;rsquo;s running a DHCP server. This
 solution is a bit redundant and should only be applied as last resort.&lt;/li>
-&lt;/ul></description></item><item><title>Debian: Enable unattended upgrades</title><link>https://perrotta.dev/2022/01/debian-enable-unattended-upgrades/</link><pubDate>Sun, 16 Jan 2022 02:07:00 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2022/01/debian-enable-unattended-upgrades/</guid><description>&lt;p>Here&amp;rsquo;s how we can enable automatic (unattended) package upgrades in Debian.&lt;/p>
-&lt;h2 id="howto">Howto&lt;/h2>
-&lt;p>Install the &lt;code>unattended-upgrades&lt;/code> package with &lt;code>apt(8)&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% apt install unattended-upgrades
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The service is then enabled and started automatically:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ systemctl status unattended-upgrades
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>● unattended-upgrades.service - Unattended Upgrades Shutdown
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Loaded: loaded &lt;span style="color:#56b6c2">(&lt;/span>/lib/systemd/system/unattended-upgrades.service; enabled; vendor preset: enabled&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Active: active &lt;span style="color:#56b6c2">(&lt;/span>running&lt;span style="color:#56b6c2">)&lt;/span> since Sun 2022-01-16 02:05:42 EST; 35s ago
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Docs: man:unattended-upgrade&lt;span style="color:#56b6c2">(&lt;/span>8&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Main PID: &lt;span style="color:#d19a66">22442&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>unattended-upgr&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Tasks: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>limit: 1597&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> CPU: 516ms
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> CGroup: /system.slice/unattended-upgrades.serviceGk
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> └─22442 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>By default, only security updates are enabled. We can enable all updates by uncommenting the applicable lines:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ sudoedit /etc/apt/apt.conf.d/50unattended-upgrades
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Unattended-Upgrade::Origins-Pattern &lt;span style="color:#56b6c2">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // Codename based matching:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // This will follow the migration of a release through different
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // archives &lt;span style="color:#56b6c2">(&lt;/span>e.g. from testing to stable and later oldstable&lt;span style="color:#56b6c2">)&lt;/span>.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // Software will be the latest available &lt;span style="color:#c678dd">for&lt;/span> the named release,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // but the Debian release itself will not be automatically upgraded.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // &lt;span style="color:#98c379">&amp;#34;origin=Debian,codename=&lt;/span>&lt;span style="color:#98c379">${&lt;/span>&lt;span style="color:#e06c75">distro_codename&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">-updates&amp;#34;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // &lt;span style="color:#98c379">&amp;#34;origin=Debian,codename=&lt;/span>&lt;span style="color:#98c379">${&lt;/span>&lt;span style="color:#e06c75">distro_codename&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">-proposed-updates&amp;#34;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> // &lt;span style="color:#98c379">&amp;#34;origin=Debian,codename=&lt;/span>&lt;span style="color:#98c379">${&lt;/span>&lt;span style="color:#e06c75">distro_codename&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">,label=Debian&amp;#34;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;origin=Debian,codename=&lt;/span>&lt;span style="color:#98c379">${&lt;/span>&lt;span style="color:#e06c75">distro_codename&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">,label=Debian-Security&amp;#34;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;origin=Debian,codename=&lt;/span>&lt;span style="color:#98c379">${&lt;/span>&lt;span style="color:#e06c75">distro_codename&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">-security,label=Debian-Security&amp;#34;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For debugging, one should run:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ sudo unattended-upgrade -d
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>We could go beyond and add logging by the means of &lt;code>etckeeper&lt;/code>, just like how we did for Alpine Linux&amp;rsquo;s &lt;a href="https://perrotta.dev/2022/01/alpine-linux-apk-logs-with-etckeeper/">&lt;code>apk&lt;/code>&lt;/a>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% apt install etckeeper
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Reading package lists... Done
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Building dependency tree... Done
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Reading state information... Done
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>The following NEW packages will be installed:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> etckeeper
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#d19a66">0&lt;/span> upgraded, &lt;span style="color:#d19a66">1&lt;/span> newly installed, &lt;span style="color:#d19a66">0&lt;/span> to remove and &lt;span style="color:#d19a66">0&lt;/span> not upgraded.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Need to get 54.4 kB of archives.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>After this operation, &lt;span style="color:#d19a66">180&lt;/span> kB of additional disk space will be used.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Get:1 http://raspbian.freemirror.org/raspbian bullseye/main armhf etckeeper all 1.18.16-1 &lt;span style="color:#56b6c2">[&lt;/span>54.4 kB&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Fetched 54.4 kB in 1s &lt;span style="color:#56b6c2">(&lt;/span>84.3 kB/s&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Preconfiguring packages ...
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Selecting previously unselected package etckeeper.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">(&lt;/span>Reading database ... &lt;span style="color:#d19a66">44403&lt;/span> files and directories currently installed.&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Preparing to unpack .../etckeeper_1.18.16-1_all.deb ...
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Unpacking etckeeper &lt;span style="color:#56b6c2">(&lt;/span>1.18.16-1&lt;span style="color:#56b6c2">)&lt;/span> ...
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Setting up etckeeper &lt;span style="color:#56b6c2">(&lt;/span>1.18.16-1&lt;span style="color:#56b6c2">)&lt;/span> ...
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Created symlink /etc/systemd/system/multi-user.target.wants/etckeeper.timer → /lib/systemd/system/etckeeper.timer.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>etckeeper.service is a disabled or a static unit, not starting it.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>etckeeper&lt;/code> is enabled and works out-of-the-box as well:&lt;/p>
-&lt;pre tabindex="0">&lt;code>systemctl status etckeeper.timer
-● etckeeper.timer - Daily autocommit of changes in /etc directory
- Loaded: loaded (/lib/systemd/system/etckeeper.timer; enabled; vendor preset: enabled)
- Active: active (waiting) since Sun 2022-01-16 02:28:44 EST; 2min 36s ago
- Trigger: Mon 2022-01-17 02:28:44 EST; 23h left
- Triggers: ● etckeeper.service
- Docs: man:etckeeper(8)
-&lt;/code>&lt;/pre>&lt;p>Here&amp;rsquo;s what a typical log looks like:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#56b6c2">(&lt;/span>&lt;span style="color:#e5c07b">cd&lt;/span> /etc/etckeeper &lt;span style="color:#56b6c2">&amp;amp;&amp;amp;&lt;/span> sudo git log&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>commit 8f9f5e31d9abb833cf645825c1cbda15336818b7 &lt;span style="color:#56b6c2">(&lt;/span>HEAD -&amp;gt; master&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Author: root &amp;lt;root@raspberry&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Date: Sun Jan &lt;span style="color:#d19a66">16&lt;/span> 06:25:28 &lt;span style="color:#d19a66">2022&lt;/span> -0500
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> daily autocommit
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>commit 5a6478711a1a1198535d5062ca309afb5c99c0eb
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Author: root &amp;lt;root@raspberry&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Date: Sun Jan &lt;span style="color:#d19a66">16&lt;/span> 02:29:01 &lt;span style="color:#d19a66">2022&lt;/span> -0500
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Initial commit
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="references">References&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a href="https://wiki.debian.org/UnattendedUpgrades">https://wiki.debian.org/UnattendedUpgrades&lt;/a>&lt;/li>
 &lt;/ul></description></item></channel></rss>

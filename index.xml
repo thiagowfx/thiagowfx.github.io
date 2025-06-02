@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 02 Jun 2025 12:00:05 +0200</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>PDB: minAvailable and maxUnavailable cannot be both set</title><link>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</link><pubDate>Mon, 02 Jun 2025 12:00:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</guid><description>&lt;p>In Kubernetes it&amp;rsquo;s not possible to have a &lt;a href="https://kubernetes.io/docs/tasks/run-application/configure-pdb/">&lt;code>PodDisruptionBudget&lt;/code>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 02 Jun 2025 13:03:24 +0200</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: upgrade to v3, remove helm labels</title><link>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</link><pubDate>Mon, 02 Jun 2025 13:03:24 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</guid><description>&lt;p>I am leading the effort to upgrade ArgoCD to its &lt;a href="https://blog.argoproj.io/announcing-argo-cd-v3-small-but-mighty-df05c0b39ad6">newest major version
+(v3)&lt;/a>
+across our fleet.&lt;/p>
+&lt;p>One of its &lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/upgrading/2.14-3.0/">breaking
+changes&lt;/a>
+is the removal of helm labels from argo applications, like such:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">metadata&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># [...]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">labels&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">app.kubernetes.io/managed-by&lt;/span>: Helm
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Applying a normal sync does not get rid of the label.&lt;/p>
+&lt;p>I found out that doing an one-off &lt;a href="https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/#server-side-apply">server-side apply
+sync&lt;/a>
+addresses the label removal, and it is safe to do (incurs no downtime):&lt;/p>
+&lt;blockquote>
+&lt;p>However, there are some cases where you want to use &lt;code>kubectl apply --server-side&lt;/code> over &lt;code>kubectl apply&lt;/code>:&lt;/p>
+&lt;p>[&amp;hellip;]&lt;/p>
+&lt;p>Patching of existing resources on the cluster that are not fully managed by
+Argo CD.&lt;/p>
+&lt;/blockquote>
+&lt;p>There&amp;rsquo;s no need to make the server-side apply a permanent config, i.e.:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">apiVersion&lt;/span>: argoproj.io/v1alpha1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">kind&lt;/span>: Application
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">spec&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">syncPolicy&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">syncOptions&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - ServerSideApply=true
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;though there&amp;rsquo;s no harm either in doing so.&lt;/p></description></item><item><title>PDB: minAvailable and maxUnavailable cannot be both set</title><link>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</link><pubDate>Mon, 02 Jun 2025 12:00:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</guid><description>&lt;p>In Kubernetes it&amp;rsquo;s not possible to have a &lt;a href="https://kubernetes.io/docs/tasks/run-application/configure-pdb/">&lt;code>PodDisruptionBudget&lt;/code>
 (PDB)&lt;/a> with
 both &lt;code>minAvailable&lt;/code> and &lt;code>maxUnavailable&lt;/code> set simultaneously:&lt;/p>
 &lt;pre tabindex="0">&lt;code>one or more objects failed to apply, reason: PodDisruptionBudget.policy &amp;#34;pgbouncer-pgbouncer&amp;#34; is invalid: spec: Invalid value: policy.PodDisruptionBudgetSpec{MinAvailable:(*intstr.IntOrString)(0xc02c03dd20), Selector:(*v1.LabelSelector)(0xc02c03dd40), MaxUnavailable:(*intstr.IntOrString)(0xc02c03dd60), UnhealthyPodEvictionPolicy:(*policy.UnhealthyPodEvictionPolicyType)(nil)}: minAvailable and maxUnavailable cannot be both set (retried 5 times).
@@ -1759,17 +1786,4 @@ and the PR description, pass &lt;code>--fill&lt;/code>:&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> --fill-verbose Use commits msg+body &lt;span style="color:#c678dd">for&lt;/span> description
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>macOS: delete file, bypass trash</title><link>https://perrotta.dev/2025/04/macos-delete-file-bypass-trash/</link><pubDate>Fri, 25 Apr 2025 16:37:28 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/macos-delete-file-bypass-trash/</guid><description>&lt;p>To delete a file in Finder on macOS without moving it to the trash, press
 &lt;code>Option&lt;/code> + &lt;code>Command&lt;/code> + &lt;code>Delete&lt;/code> upon selecting the file.&lt;/p>
-&lt;p>When using the CLI, of course, &lt;code>rm&lt;/code> is enough.&lt;/p></description></item><item><title>Delete newlines in a pipe</title><link>https://perrotta.dev/2025/04/delete-newlines-in-a-pipe/</link><pubDate>Fri, 25 Apr 2025 11:59:20 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/delete-newlines-in-a-pipe/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given &lt;code>{cmd}&lt;/code> that emits lots of blank lines, delete all
-blank lines in a pipe.&lt;/p>
-&lt;p>The following is a very elegant (and easy to remember!) way to do so:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">{&lt;/span>cmd&lt;span style="color:#56b6c2">}&lt;/span> | awk &lt;span style="color:#98c379">&amp;#39;NF&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>From the LLM:&lt;/p>
-&lt;blockquote>
-&lt;p>When you use awk &amp;lsquo;NF&amp;rsquo;, it evaluates to true for lines where NF is greater than
-zero—that is, lines that are not empty or do not consist solely of whitespace.
-This makes it a concise way to filter out blank lines.&lt;/p>
-&lt;/blockquote>
-&lt;p>Other ways with classic tools and regular expressions:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">{&lt;/span>cmd&lt;span style="color:#56b6c2">}&lt;/span> | grep -v &lt;span style="color:#98c379">&amp;#39;^[[:space:]]*$&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">{&lt;/span>cmd&lt;span style="color:#56b6c2">}&lt;/span> | sed -e &lt;span style="color:#98c379">&amp;#39;/^[[:space:]]*$/d&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>They are just a bit harder to remember.&lt;/p></description></item></channel></rss>
+&lt;p>When using the CLI, of course, &lt;code>rm&lt;/code> is enough.&lt;/p></description></item></channel></rss>
