@@ -1,6 +1,71 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/linux/</link><description>Recent content in Linux on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 24 May 2025 16:00:23 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>PostgreSQL major version upgrade on Alpine Linux</title><link>https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/</link><pubDate>Sat, 24 May 2025 16:00:23 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/</guid><description>&lt;h2 id="problem-statement">Problem statement&lt;/h2>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 03 Jun 2025 01:36:53 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Alpine Linux packaging: track new software releases</title><link>https://perrotta.dev/2025/06/alpine-linux-packaging-track-new-software-releases/</link><pubDate>Tue, 03 Jun 2025 01:36:53 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/alpine-linux-packaging-track-new-software-releases/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: You maintain packages for a Linux distribution, for
+example, &lt;a href="https://www.alpinelinux.org/">Alpine Linux&lt;/a>. Find a way to keep track
+of new software releases, to ensure your packages are kept up-to-date.&lt;/p>
+&lt;p>The &lt;a href="https://release-monitoring.org/">Release Monitoring&lt;/a> project (codename
+&lt;em>Anitya&lt;/em>), part of the &lt;a href="https://www.fedoraproject.org/">Fedora Linux&lt;/a> distro,
+can accomplish that:&lt;/p>
+&lt;blockquote>
+&lt;p>Watch for releases of your favorite projects&lt;/p>
+&lt;p>We all have our favorite projects and we all like to use their latest versions
+with their latest features. However, it is hard to keep in touch with all of
+them and be informed when they release a new version. Anitya can help!&lt;/p>
+&lt;p>We monitor upstream releases and broadcast them on Fedora messaging bus.&lt;/p>
+&lt;/blockquote>
+&lt;p>The underlying project:&lt;/p>
+&lt;blockquote>
+&lt;p>Anitya is a release monitoring project.&lt;/p>
+&lt;p>Its goal is to regularly check if a project has made a new release. When
+Anitya discovers a new release for a project, it publishes a RabbitMQ message
+via fedora messaging. This makes it easy to integrate with Anitya and perform
+actions when a new release is created for a project. For example, the Fedora
+project runs a service called the-new-hotness which files a Bugzilla bug
+against a package when the upstream project makes a new release.&lt;/p>
+&lt;p>Anitya provides a user-friendly interface to add, edit, or browse projects.&lt;/p>
+&lt;/blockquote>
+&lt;p>Even though it is part of Fedora, we can use it for Alpine Linux just fine!&lt;/p>
+&lt;p>Recently I packaged &lt;a href="https://github.com/zizmorcore/zizmor/issues/780">zizmor&lt;/a>. I
+noticed there was no entry for it in Anitya. I added one. It&amp;rsquo;s very
+straightforward:&lt;/p>
+&lt;ul>
+&lt;li>head to &lt;a href="https://release-monitoring.org/">https://release-monitoring.org/&lt;/a>&lt;/li>
+&lt;li>ensure the project you want to monitor isn&amp;rsquo;t already present there&lt;/li>
+&lt;li>log in (e.g. via GitHub)&lt;/li>
+&lt;li>click &lt;a href="https://release-monitoring.org/project/new">add project&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>Fill in the form:&lt;/p>
+&lt;ul>
+&lt;li>Project name: zizmor&lt;/li>
+&lt;li>Homepage: &lt;a href="https://docs.zizmor.sh">https://docs.zizmor.sh&lt;/a>&lt;/li>
+&lt;li>BackEnd: GitHub&lt;/li>
+&lt;li>Version scheme: Semantic&lt;/li>
+&lt;li>Github owner/project: &lt;a href="https://github.com/zizmorcore/zizmor">zizmorcore/zizmor&lt;/a>&lt;/li>
+&lt;li>Version prefix: &lt;code>v&lt;/code>&lt;/li>
+&lt;li>Pre-release filter: &lt;code>rc&lt;/code>&lt;/li>
+&lt;li>Version filter: &lt;code>rc&lt;/code> (excludes &lt;a href="https://github.com/zizmorcore/zizmor/releases/tag/v1.8.0-rc0">&lt;code>1.8.0-rc0&lt;/code>&lt;/a>) and the like&lt;/li>
+&lt;li>Check off &amp;ldquo;check releases instead of tags&amp;rdquo;&lt;/li>
+&lt;/ul>
+&lt;p>Once the project is &lt;a href="https://release-monitoring.org/project/378497/">created&lt;/a>,
+add a new distribution mapping:&lt;/p>
+&lt;ul>
+&lt;li>Distribution: Alpine&lt;/li>
+&lt;li>Package name: &lt;a href="https://pkgs.alpinelinux.org/package/edge/testing/x86_64/zizmor">zizmor&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>And we&amp;rsquo;re done!&lt;/p>
+&lt;p>As per &lt;a href="https://pkgs.alpinelinux.org/flagging">https://pkgs.alpinelinux.org/flagging&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>Package flagging&lt;/p>
+&lt;p>Manual package flagging has been disabled in favour of automatic flagging
+based on Anitya.&lt;/p>
+&lt;p>If you want a package to be up-to-date or to inform the maintainer about the
+package status, please feel free to create a package mapping on Anitya. Once
+the mapping is made, it should automatically send an email to the maintainer
+whenever a new version is available.&lt;/p>
+&lt;p>For details on how to create a project mapping for Alpine Linux, please refer
+to the &lt;a href="https://release-monitoring.org/static/docs/user-guide.html">release monitoring
+documentation&lt;/a>.&lt;/p>
+&lt;/blockquote></description></item><item><title>PostgreSQL major version upgrade on Alpine Linux</title><link>https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/</link><pubDate>Sat, 24 May 2025 16:00:23 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/</guid><description>&lt;h2 id="problem-statement">Problem statement&lt;/h2>
 &lt;p>Given Alpine Linux 3.22 running PostgreSQL 16, upgrade to PostgreSQL 17. For
 this specific example, consider a &lt;a href="https://miniflux.app/">&lt;code>miniflux&lt;/code>&lt;/a> database.&lt;/p>
 &lt;h2 id="procedure">Procedure&lt;/h2>
@@ -2104,51 +2169,6 @@ of the screen at night. Redshift is similar to &lt;a href="https://justgetflux.c
 &lt;/li>
 &lt;li id="fn:3">
 &lt;p>For example, &lt;code>QT_FONT_DPI=$(($GDK_SCALE * 96))&lt;/code> or similar.&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item><item><title>Watch files and react to changes during development</title><link>https://perrotta.dev/2022/01/watch-files-and-react-to-changes-during-development/</link><pubDate>Sun, 30 Jan 2022 21:32:17 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2022/01/watch-files-and-react-to-changes-during-development/</guid><description>&lt;p>This post describes some tooling usages to watch for file changes and run or reload a command whenever they happen.&lt;/p>
-&lt;h2 id="context">Context&lt;/h2>
-&lt;p>I am contributing to &lt;a href="https://github.com/miniflux/v2">miniflux&lt;/a>, a minimalist and opinionated RSS reader. Miniflux&amp;rsquo;s stack is as minimalist as the app itself: It&amp;rsquo;s a Golang application that connects to a local PostgreSQL database. It has a well-documented and comprehensive &lt;a href="https://github.com/miniflux/v2/blob/master/Makefile">&lt;code>Makefile&lt;/code>&lt;/a>.&lt;/p>
-&lt;p>In order to achieve an edit-and-preview workflow for quick prototyping and local iteration, all that it&amp;rsquo;s needed is to execute &lt;code>make run&lt;/code> whenever any&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> file in the repository is changed.&lt;/p>
-&lt;p>My goal was to achieve that workflow with the least amount of friction, and with an application that is widely available in most package managers / linux distributions out there.&lt;/p>
-&lt;h2 id="option-1-entr-recommended">Option #1: entr (recommended)&lt;/h2>
-&lt;p>&lt;a href="https://eradman.com/entrproject/">&lt;code>entr(1)&lt;/code>&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>Run arbitrary commands when files change&lt;/p>
-&lt;/blockquote>
-&lt;p>The following invocation does the job:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ fd | entr -r -- make run
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>However, we could do better. From the upstream docs:&lt;/p>
-&lt;blockquote>
-&lt;p>» ag and ack offer many advantages over utilities such as find(1) or ls(1) in that they recognize files by their contents and are smart enough to skip directories such as .git&lt;/p>
-&lt;/blockquote>
-&lt;p>I am happy with &lt;code>fd&lt;/code> for this use case though. To limit &lt;code>entr&lt;/code> to &lt;code>.go&lt;/code> files only, we could do:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ fd -e go | entr -r -- make run
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It took me less than 5 minutes to install and figure out how to use &lt;code>entr&lt;/code>.&lt;/p>
-&lt;p>&lt;a href="https://schauderbasis.de/posts/entr/">This blog post&lt;/a> covers it in more detail.&lt;/p>
-&lt;h2 id="option-2-watchman">Option #2: watchman&lt;/h2>
-&lt;p>&lt;a href="https://facebook.github.io/watchman/">&lt;code>watchman&lt;/code>&lt;/a> from Facebook Open Source:&lt;/p>
-&lt;blockquote>
-&lt;p>Watchman exists to watch files and record when they change. It can also trigger actions (such as rebuilding assets) when matching files change.&lt;/p>
-&lt;/blockquote>
-&lt;p>Watchman&amp;rsquo;s workflow doesn&amp;rsquo;t seem to be very suited for this job though. It&amp;rsquo;s much more centered on subscribing to &lt;code>inotify&lt;/code> events:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e5c07b">cd&lt;/span> &amp;lt;repository root&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>watchman watch .
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;and then adding predefined actions to recompile parts of the application as they change. The official docs give an example with CSS minification:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># set up a trigger named &amp;#39;buildme&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># will run &amp;#39;minify-css&amp;#39; whenever a CSS file is changed&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>watchman -- trigger . buildme &lt;span style="color:#98c379">&amp;#39;*.css&amp;#39;&lt;/span> -- minify-css
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In this regard it seems to be more modular, and I could easily see a scenario where I would kick off several specialized triggers in a webdev project: for example, one for CSS minification, one for JS minification, another one for TypeScript compilation, etc.&lt;/p>
-&lt;p>That said, for the simple use case of triggering (and reloading) &lt;code>make run&lt;/code>, it seems overkill. I also found its &lt;a href="https://facebook.github.io/watchman/docs/install.html">official docs&lt;/a> too verbose and lacking sample usages for simple &lt;code>Makefile&lt;/code>-based projects like miniflux.&lt;/p>
-&lt;p>One caveat of &lt;a href="https://repology.org/project/watchman/versions">&lt;code>watchman&lt;/code>&lt;/a> is that it&amp;rsquo;s less widely available than &lt;a href="https://repology.org/project/entr/versions">&lt;code>entr&lt;/code>&lt;/a>. Another caveat is that recently official distributions of watchman seem to be binary only, even though watchman itself is open source.&lt;/p>
-&lt;p>It took me several minutes to figure out what&amp;rsquo;s the gist of watchman, only to realize it is more bloated than warranted.&lt;/p>
-&lt;h2 id="conclusion">Conclusion&lt;/h2>
-&lt;p>For simple projects, &lt;code>entr&lt;/code> is the way to go, hands down. For complex webdev projects, I would look into &lt;code>watchman&lt;/code> more deeply.&lt;/p>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>To be truly strict, only changes to &lt;code>.go&lt;/code> files matter.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
 &lt;/div></description></item></channel></rss>
