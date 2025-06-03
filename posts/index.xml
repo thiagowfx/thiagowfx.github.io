@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/posts/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 03 Jun 2025 01:36:53 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Alpine Linux packaging: track new software releases</title><link>https://perrotta.dev/2025/06/alpine-linux-packaging-track-new-software-releases/</link><pubDate>Tue, 03 Jun 2025 01:36:53 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/alpine-linux-packaging-track-new-software-releases/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: You maintain packages for a Linux distribution, for
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 03 Jun 2025 14:35:04 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>git pull: authentication issues</title><link>https://perrotta.dev/2025/06/git-pull-authentication-issues/</link><pubDate>Tue, 03 Jun 2025 14:35:04 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/git-pull-authentication-issues/</guid><description>&lt;p>&lt;code>git pull&lt;/code> authentication issues is &lt;em>really&lt;/em> a disguise for &lt;code>ssh&lt;/code> auth issues.&lt;/p>
+&lt;p>Today a teammate could not &lt;code>git pull&lt;/code> one of our internal repos:&lt;/p>
+&lt;pre tabindex="0">&lt;code>% git pull
+Enter passphrase for key &amp;#39;/Users/user/.ssh/id_ed25519&amp;#39;:
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+&lt;/code>&lt;/pre>&lt;p>The first thing we verified was that his public key was
+&lt;a href="https://github.com/settings/keys">added&lt;/a> to his github profile, and that the
+private key was present in &lt;code>~/.ssh/id_ed25519&lt;/code>.&lt;/p>
+&lt;p>Next, verify &lt;code>~/.ssh/config&lt;/code>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>Host github.com
+AddKeysToAgent yes
+UseKeychain yes
+IdentityFile ~/.ssh/id_ed25519
+&lt;/code>&lt;/pre>&lt;p>Looks fine. Then:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% &lt;span style="color:#e5c07b">export&lt;/span> &lt;span style="color:#e06c75">GIT_SSH_COMMAND&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;ssh -vvv&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% git pull
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>debug3: Search &lt;span style="color:#c678dd">for&lt;/span> item with query: &lt;span style="color:#56b6c2">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">acct&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;/Users/user/.ssh/id_ed25519&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">agrp&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;com.apple.ssh.passphrases&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">class&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> genp;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">labl&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;SSH: /Users/user/.ssh/id_ed25519&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">nleg&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> 1;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;r_Data&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> 1;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">svce&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> OpenSSH;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;u_AuthUI&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;u_AuthUIF&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>debug2: Unexpected keychain error &lt;span style="color:#c678dd">while&lt;/span> searching &lt;span style="color:#c678dd">for&lt;/span> an item: User interaction is not allowed.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Herein lies the error! The interaction with the system keychain in macOS was not
+successful.&lt;/p>
+&lt;p>I suggested him to remove &lt;code>AddKeysToAgent&lt;/code> and &lt;code>UseKeychain&lt;/code> from this config
+file, but that did not work either:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% git pull
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Enter passphrase &lt;span style="color:#c678dd">for&lt;/span> key &lt;span style="color:#98c379">&amp;#39;/Users/user/.ssh/id_ed25519&amp;#39;&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>debug2: no passphrase given, try next key
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>debug2: we did not send a packet, disable method
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>debug1: No more authentication methods to try.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git@github.com: Permission denied &lt;span style="color:#56b6c2">(&lt;/span>publickey&lt;span style="color:#56b6c2">)&lt;/span>.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fatal: Could not &lt;span style="color:#e5c07b">read&lt;/span> from remote repository.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Please make sure you have the correct access rights
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>and the repository exists.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The ssh key is protected with a passphrase.&lt;/p>
+&lt;p>In this case, it&amp;rsquo;s better to fix the keychain issue. We readd the two deleted
+lines.&lt;/p>
+&lt;p>Restart the &lt;code>ssh-agent&lt;/code> and readd the key there:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% &lt;span style="color:#e5c07b">eval&lt;/span> &lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#c678dd">$(&lt;/span>ssh-agent -s&lt;span style="color:#c678dd">)&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% ssh-add -K ~/.ssh/id_ed25519
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Problem resolved! &lt;code>git pull&lt;/code> works now.&lt;/p></description></item><item><title>Alpine Linux packaging: track new software releases</title><link>https://perrotta.dev/2025/06/alpine-linux-packaging-track-new-software-releases/</link><pubDate>Tue, 03 Jun 2025 01:36:53 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/alpine-linux-packaging-track-new-software-releases/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: You maintain packages for a Linux distribution, for
 example, &lt;a href="https://www.alpinelinux.org/">Alpine Linux&lt;/a>. Find a way to keep track
 of new software releases, to ensure your packages are kept up-to-date.&lt;/p>
 &lt;p>The &lt;a href="https://release-monitoring.org/">Release Monitoring&lt;/a> project (codename
@@ -1837,16 +1890,4 @@ underscores) or are long strings — YAML interpreters sometimes use the &lt;cod
 &lt;/blockquote>
 &lt;p>I surely cannot deny it&amp;rsquo;s a long key. Go blame
 &lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/reconcile/#system-level-configuration">ArgoCD&lt;/a>
-:P&lt;/p></description></item><item><title>GitHub: create a pull request from CLI</title><link>https://perrotta.dev/2025/04/github-create-a-pull-request-from-cli/</link><pubDate>Mon, 28 Apr 2025 14:12:57 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/github-create-a-pull-request-from-cli/</guid><description>&lt;p>Using the &lt;a href="https://cli.github.com/">&lt;code>gh&lt;/code>&lt;/a> tool (the official GitHub CLI tool):&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% gh pr create
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It will prompt for more information.&lt;/p>
-&lt;p>To skip all prompts and simply use the commit message to fill in the PR Title
-and the PR description, pass &lt;code>--fill&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% gh pr create --fill
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% gh pr create --help | grep -- --fill
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379">`&lt;/span>--body&lt;span style="color:#98c379">`&lt;/span> to skip this, or use &lt;span style="color:#98c379">`&lt;/span>--fill&lt;span style="color:#98c379">`&lt;/span> to autofill these values from git commits.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>alongside &lt;span style="color:#98c379">`&lt;/span>--fill&lt;span style="color:#98c379">`&lt;/span>, the values specified by &lt;span style="color:#98c379">`&lt;/span>--title&lt;span style="color:#98c379">`&lt;/span> and/or &lt;span style="color:#98c379">`&lt;/span>--body&lt;span style="color:#98c379">`&lt;/span> will
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> -f, --fill Use commit info &lt;span style="color:#c678dd">for&lt;/span> title and body
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> --fill-first Use first commit info &lt;span style="color:#c678dd">for&lt;/span> title and body
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> --fill-verbose Use commits msg+body &lt;span style="color:#c678dd">for&lt;/span> description
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
+:P&lt;/p></description></item></channel></rss>
