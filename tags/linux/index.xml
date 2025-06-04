@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/linux/</link><description>Recent content in Linux on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 04 Jun 2025 11:43:05 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Alpine Linux: package is gone?!</title><link>https://perrotta.dev/2025/06/alpine-linux-package-is-gone/</link><pubDate>Wed, 04 Jun 2025 11:43:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/alpine-linux-package-is-gone/</guid><description>&lt;p>Upon upgrading one of our Dockerfiles from Alpine Linux 3.21 to 3.22, we noticed
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 04 Jun 2025 12:37:47 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Alpine Linux: Dockerfile: install package from edge</title><link>https://perrotta.dev/2025/06/alpine-linux-dockerfile-install-package-from-edge/</link><pubDate>Wed, 04 Jun 2025 12:37:47 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/alpine-linux-dockerfile-install-package-from-edge/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>Dockerfile&lt;/code> based on a fixed release of Alpine
+Linux (e.g. &lt;code>FROM alpine:3.22&lt;/code>), install a package from &lt;code>edge&lt;/code> (i.e. a package
+that did not yet make it to a fixed release).&lt;/p>
+&lt;p>The approach is similar to package &lt;a href="https://perrotta.dev/2025/01/alpine-linux-install-/-pin-old-packages/">pinning&lt;/a>, by providing a custom
+&lt;code>--repository&lt;/code> to &lt;code>apk add&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-dockerfile" data-lang="dockerfile">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">RUN&lt;/span> apk add --no-cache --repository&lt;span style="color:#56b6c2">=&lt;/span>https://dl-cdn.alpinelinux.org/alpine/edge/testing gliderlabs-sigil vals
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Replace &amp;ldquo;testing&amp;rdquo; with &amp;ldquo;community&amp;rdquo; or &amp;ldquo;main&amp;rdquo; as needed.&lt;/p></description></item><item><title>Alpine Linux: package is gone?!</title><link>https://perrotta.dev/2025/06/alpine-linux-package-is-gone/</link><pubDate>Wed, 04 Jun 2025 11:43:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/alpine-linux-package-is-gone/</guid><description>&lt;p>Upon upgrading one of our Dockerfiles from Alpine Linux 3.21 to 3.22, we noticed
 that the &lt;code>ruby-json&lt;/code> package no longer exists:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% docker build -t myproject -f Dockerfile .
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
@@ -1985,101 +1991,6 @@ did most of the job:&lt;/p>
 &lt;ol>
 &lt;li id="fn:1">
 &lt;p>&lt;code>sponge&lt;/code> comes from the &lt;a href="https://joeyh.name/code/moreutils/">moreutils&lt;/a> package.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item><item><title>Linux swap shenanigans</title><link>https://perrotta.dev/2022/02/linux-swap-shenanigans/</link><pubDate>Tue, 01 Feb 2022 17:03:13 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2022/02/linux-swap-shenanigans/</guid><description>&lt;p>In this post we will cover a few linux swap recipes.&lt;/p>
-&lt;h2 id="empty-swap-space">Empty swap space&lt;/h2>
-&lt;p>Completely empty (&lt;em>flush&lt;/em>) swap space:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% swapoff --all &lt;span style="color:#56b6c2">&amp;amp;&amp;amp;&lt;/span> swapon --all
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="decrease-swappiness">Decrease swappiness&lt;/h2>
-&lt;p>Emptying is too extreme. Why did you get so much swap in the first place?
-A small tweak is to decrease the sensibility of the system to swap:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ cat /etc/sysctl.d/90-custom.conf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vm.swappiness&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#d19a66">20&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vm.vfs_cache_pressure&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#d19a66">50&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The default swappiness of the Linux kernel these days is 60%, which IMHO is
-quite aggressive for desktop usage. By decreasing it to 20%, our system will
-only start to swap once we use more than 80% of total RAM. In other words, only
-when there is 20% or less of free / available RAM.&lt;/p>
-&lt;p>&lt;a href="https://www.kernel.org/doc/Documentation/sysctl/vm.txt">&lt;code>vfs_cache_pressure&lt;/code>&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>This percentage value controls the tendency of the kernel to reclaim the
-memory which is used for caching of directory and inode objects.&lt;/p>
-&lt;/blockquote>
-&lt;blockquote>
-&lt;p>At the default value of vfs_cache_pressure=100 the kernel will attempt to
-reclaim dentries and inodes at a &amp;ldquo;fair&amp;rdquo; rate with respect to pagecache and
-swapcache reclaim. Decreasing vfs_cache_pressure causes the kernel to prefer
-to retain dentry and inode caches. When vfs_cache_pressure=0, the kernel will
-never reclaim dentries and inodes due to memory pressure and this can easily
-lead to out-of-memory conditions. Increasing vfs_cache_pressure beyond 100
-causes the kernel to prefer to reclaim dentries and inodes.&lt;/p>
-&lt;/blockquote>
-&lt;p>However, &lt;code>/etc/sysctl.d&lt;/code> settings will only be applied after a reboot. To apply
-them immediately, use the &lt;code>sysctl(8)&lt;/code> command:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% sudo sysctl -p /etc/sysctl.d/90-custom.conf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vm.swappiness &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#d19a66">20&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vm.vfs_cache_pressure &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#d19a66">50&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="use-a-swapfile">Use a swapfile&lt;/h2>
-&lt;p>If you find yourself with a fully partitioned disk without any dedicated swap
-partition, there&amp;rsquo;s a trick to adding swap anyway: Use a swap file! &lt;a href="https://en.wikipedia.org/wiki/Everything_is_a_file">Everything is
-a file&lt;/a> anyway!&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># https://wiki.archlinux.org/title/Swap#Swap_file&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Create the swap file: 8GiB in this case, to match our total RAM&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% dd &lt;span style="color:#c678dd">if&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>/dev/zero &lt;span style="color:#e06c75">of&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>/swapfile &lt;span style="color:#e06c75">bs&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>1M &lt;span style="color:#e06c75">count&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#d19a66">8000&lt;/span> &lt;span style="color:#e06c75">status&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>progress
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Set restricting permissions&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% chmod &lt;span style="color:#d19a66">600&lt;/span> /swapfile
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Format the ~~partition~~ file&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% mkswap /swapfile
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Activate the swap file&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% swapon /swapfile
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can check it&amp;rsquo;s working correctly by inspecting &lt;code>/proc/swaps&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat /proc/swaps
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Filename				Type		Size		Used		Priority
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>/swapfile file		8388604		0		-2
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then finally add it to your &lt;code>/etc/fstab&lt;/code> so that it is automatically mounted in subsequent boots:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># swap file&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>/swapfile none swap defaults &lt;span style="color:#d19a66">0&lt;/span> &lt;span style="color:#d19a66">0&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="add-zram-swap">Add ZRAM swap&lt;/h2>
-&lt;p>Explaining &lt;code>zram&lt;/code> is out of scope if this post, but check out the
-&lt;a href="https://wiki.archlinux.org/title/Improving_performance#zram_or_zswap">ArchWiki&lt;/a>
-or &lt;a href="https://en.wikipedia.org/wiki/Zram">Wikipedia&lt;/a>.&lt;/p>
-&lt;p>The recipe I use in Arch Linux is the &lt;a href="https://aur.archlinux.org/packages/zramswap/">&lt;code>zramswap&lt;/code>&lt;/a> package:&lt;/p>
-&lt;ol>
-&lt;li>Install the package.&lt;/li>
-&lt;li>Set desired zram swap percentage, I picked 20%:&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat /etc/zramswap.conf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">ZRAM_SIZE_PERCENT&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#d19a66">20&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="3">
-&lt;li>Enable/Start the service:&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% systemctl &lt;span style="color:#e5c07b">enable&lt;/span> --now zramswap
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% systemctl status zramswap
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>● zramswap.service - Zram-based swap &lt;span style="color:#56b6c2">(&lt;/span>compressed RAM block devices&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Loaded: loaded &lt;span style="color:#56b6c2">(&lt;/span>/usr/lib/systemd/system/zramswap.service; enabled; vendor preset: disabled&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Active: active &lt;span style="color:#56b6c2">(&lt;/span>exited&lt;span style="color:#56b6c2">)&lt;/span> since Tue 2022-02-01 16:13:37 EST; 7h ago
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Main PID: &lt;span style="color:#d19a66">582&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>&lt;span style="color:#e06c75">code&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>exited, &lt;span style="color:#e06c75">status&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>0/SUCCESS&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> CPU: 27ms
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Feb &lt;span style="color:#d19a66">01&lt;/span> 16:13:37 localhost.localdomain systemd&lt;span style="color:#56b6c2">[&lt;/span>1&lt;span style="color:#56b6c2">]&lt;/span>: Starting Zram-based swap &lt;span style="color:#56b6c2">(&lt;/span>compressed RAM block devices&lt;span style="color:#56b6c2">)&lt;/span>...
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Feb &lt;span style="color:#d19a66">01&lt;/span> 16:13:37 localhost.localdomain zramctrl&lt;span style="color:#56b6c2">[&lt;/span>627&lt;span style="color:#56b6c2">]&lt;/span>: Setting up swapspace version 1, &lt;span style="color:#e06c75">size&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> 1.5 GiB &lt;span style="color:#56b6c2">(&lt;/span>&lt;span style="color:#d19a66">1654009856&lt;/span> bytes&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Feb &lt;span style="color:#d19a66">01&lt;/span> 16:13:37 localhost.localdomain zramctrl&lt;span style="color:#56b6c2">[&lt;/span>627&lt;span style="color:#56b6c2">]&lt;/span>: &lt;span style="color:#e06c75">LABEL&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>zram0, &lt;span style="color:#e06c75">UUID&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>a39e0131-f102-4503-a1e7-a3e0ca330126
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Feb &lt;span style="color:#d19a66">01&lt;/span> 16:13:37 localhost.localdomain systemd&lt;span style="color:#56b6c2">[&lt;/span>1&lt;span style="color:#56b6c2">]&lt;/span>: Finished Zram-based swap &lt;span style="color:#56b6c2">(&lt;/span>compressed RAM block devices&lt;span style="color:#56b6c2">)&lt;/span>.
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can inspect &lt;code>/proc/swaps&lt;/code> again to check it&amp;rsquo;s working properly&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat /proc/swaps
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Filename				Type		Size		Used		Priority
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>/swapfile file		8388604		0		-2
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>/dev/zram0 partition	1615244		0		&lt;span style="color:#d19a66">100&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>zswap should have more priority than the swap file.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
 &lt;/div></description></item></channel></rss>
