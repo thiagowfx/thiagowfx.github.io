@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/posts/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 03 Jun 2025 14:35:04 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>git pull: authentication issues</title><link>https://perrotta.dev/2025/06/git-pull-authentication-issues/</link><pubDate>Tue, 03 Jun 2025 14:35:04 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/git-pull-authentication-issues/</guid><description>&lt;p>&lt;code>git pull&lt;/code> authentication issues is &lt;em>really&lt;/em> a disguise for &lt;code>ssh&lt;/code> auth issues.&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 04 Jun 2025 11:43:05 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Alpine Linux: package is gone?!</title><link>https://perrotta.dev/2025/06/alpine-linux-package-is-gone/</link><pubDate>Wed, 04 Jun 2025 11:43:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/alpine-linux-package-is-gone/</guid><description>&lt;p>Upon upgrading one of our Dockerfiles from Alpine Linux 3.21 to 3.22, we noticed
+that the &lt;code>ruby-json&lt;/code> package no longer exists:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% docker build -t myproject -f Dockerfile .
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;gt; &lt;span style="color:#56b6c2">[&lt;/span> 2/10&lt;span style="color:#56b6c2">]&lt;/span> RUN apk add --update --no-cache ruby-json&lt;span style="color:#56b6c2">=&lt;/span>~&lt;span style="color:#98c379">&amp;#34;3.4&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2.371 ERROR: unable to &lt;span style="color:#c678dd">select&lt;/span> packages:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2.371 ruby-json &lt;span style="color:#56b6c2">(&lt;/span>no such package&lt;span style="color:#56b6c2">)&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2.371 required by: world&lt;span style="color:#56b6c2">[&lt;/span>ruby-json~3.4&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Why??&lt;/p>
+&lt;p>First, look into &lt;a href="https://pkgs.alpinelinux.org/packages">Alpine Linux Packages&lt;/a>:
+&lt;a href="https://pkgs.alpinelinux.org/packages?name=ruby-json&amp;amp;branch=v3.22&amp;amp;repo=&amp;amp;arch=&amp;amp;origin=&amp;amp;flagged=&amp;amp;maintainer=">query&lt;/a>.
+Ensure to set branch to v3.22 and architecture to All. And it&amp;rsquo;s indeed not
+there anymore:&lt;/p>
+&lt;blockquote>
+&lt;p>No matching packages found&amp;hellip;&lt;/p>
+&lt;/blockquote>
+&lt;p>Next, do a bit of digging in the
+&lt;a href="https://gitlab.alpinelinux.org/alpine/aports">aports&lt;/a> repository on the &lt;a href="https://gitlab.alpinelinux.org/">Alpine
+Linux GitLab&lt;/a>:
+&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/?sort=created_date&amp;amp;state=all&amp;amp;search=ruby-json&amp;amp;first_page_size=20">query&lt;/a>.
+Search for &lt;code>ruby-json&lt;/code> in &amp;ldquo;All&amp;rdquo; Merge requests.&lt;/p>
+&lt;p>That leads to
+&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/80599">&lt;code>!80599&lt;/code>&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>community/ruby-json: remove&lt;/p>
+&lt;p>&lt;code>ruby-json&lt;/code> is already bundled with &lt;code>main/ruby&lt;/code>. The &lt;code>community/ruby-json&lt;/code>
+could never be installed due to conflicts.&lt;/p>
+&lt;/blockquote>
+&lt;p>Aha, then there&amp;rsquo;s nothing to do here. Installing the base &lt;code>ruby&lt;/code> package should
+be enough from now on.&lt;/p>
+&lt;p>&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/issues/16938">#16938&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>I think it&amp;rsquo;s safe to say community/ruby-json does literally nothing, has never been installed, and does not work.&lt;/p>
+&lt;/blockquote>
+&lt;p>Oh well.&lt;/p></description></item><item><title>git pull: authentication issues</title><link>https://perrotta.dev/2025/06/git-pull-authentication-issues/</link><pubDate>Tue, 03 Jun 2025 14:35:04 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/git-pull-authentication-issues/</guid><description>&lt;p>&lt;code>git pull&lt;/code> authentication issues is &lt;em>really&lt;/em> a disguise for &lt;code>ssh&lt;/code> auth issues.&lt;/p>
 &lt;p>Today a teammate could not &lt;code>git pull&lt;/code> one of our internal repos:&lt;/p>
 &lt;pre tabindex="0">&lt;code>% git pull
 Enter passphrase for key &amp;#39;/Users/user/.ssh/id_ed25519&amp;#39;:
@@ -1843,51 +1878,4 @@ Adding &lt;code>\b&lt;/code> (word boundaries) sometimes helps.&lt;/p>
 &lt;p>&lt;code>jq&lt;/code> is like &lt;code>sed&lt;/code> for JSON data - you can use it to slice and filter and map
 and transform structured data with the same ease that &lt;code>sed&lt;/code>, &lt;code>awk&lt;/code>, &lt;code>grep&lt;/code> and
 friends let you play with text.&lt;/p>
-&lt;/blockquote></description></item><item><title>YAML: complex keys</title><link>https://perrotta.dev/2025/04/yaml-complex-keys/</link><pubDate>Tue, 29 Apr 2025 13:06:16 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/yaml-complex-keys/</guid><description>&lt;p>&lt;strong>Today I learned&lt;/strong>: YAML complex keys (&lt;a href="https://stackoverflow.com/questions/33987316/what-is-a-complex-mapping-key-in-yaml">stack
-overflow&lt;/a>).&lt;/p>
-&lt;p>From the &lt;a href="https://yaml.org/spec/1.2.2/">spec&lt;/a>, § 2.11:&lt;/p>
-&lt;blockquote>
-&lt;p>A question mark and space (&lt;code>&amp;quot;? &amp;quot;&lt;/code>) indicate a complex mapping key. Within a
-block collection, key/value pairs can start immediately following the dash,
-colon, or question mark.&lt;/p>
-&lt;/blockquote>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>? - Detroit Tigers
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - Chicago cubs
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>: - 2001-07-23
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>? [ New York Yankees,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Atlanta Braves ]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>: [ 2001-07-02, 2001-08-12,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2001-08-14 ]
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I noticed it when saving a &lt;code>values.yaml&lt;/code> file from &lt;a href="https://helm.sh/">helm&lt;/a> in
-VSCode, which has auto-formatted it like this:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-diff" data-lang="diff">&lt;span style="display:flex;">&lt;span>diff --git a/helm/argocd/values.yaml b/helm/argocd/values.yaml
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>index b0884b26d..928c02eb3 100644
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">--- a/helm/argocd/values.yaml
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">&lt;/span>&lt;span style="color:#98c379;font-weight:bold">+++ b/helm/argocd/values.yaml
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">&lt;/span>@@ -471,10 +471,12 @@ argo-cd:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> # Do not trigger a reconciliation when the reported status of a HorizontalPodAutoscaler or ExternalSecret changes.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> # That would mean reconciling every application with a hpa every 5 seconds which is heavy on the cpu.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> # https://argo-cd.readthedocs.io/en/stable/operator-manual/reconcile/#finding-resources-to-ignore
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">- resource.customizations.ignoreResourceUpdates.autoscaling_HorizontalPodAutoscaler: |
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">&lt;/span>&lt;span style="color:#98c379;font-weight:bold">+ ? resource.customizations.ignoreResourceUpdates.autoscaling_HorizontalPodAutoscaler
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ : |
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">&lt;/span> jsonPointers:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - /status
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">- resource.customizations.ignoreResourceUpdates.external-secrets.io_ExternalSecret: |
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">&lt;/span>&lt;span style="color:#98c379;font-weight:bold">+ ? resource.customizations.ignoreResourceUpdates.external-secrets.io_ExternalSecret
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ : |
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">&lt;/span> jsonPointers:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - /status
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Initially I thought this was a mistake that would yield a parse error.
-Upon running &lt;code>helm template&lt;/code>, however, I observed it&amp;rsquo;s in fact a no-op.&lt;/p>
-&lt;p>The LLM says:&lt;/p>
-&lt;blockquote>
-&lt;p>VS Code is reformatting your YAML that way because it&amp;rsquo;s interpreting the
-structure as YAML mapping with complex keys.&lt;/p>
-&lt;p>This happens when your keys contain special characters (like dots or
-underscores) or are long strings — YAML interpreters sometimes use the &lt;code>? key :&lt;/code> value syntax to denote explicit mapping entries with complex keys.&lt;/p>
-&lt;/blockquote>
-&lt;p>I surely cannot deny it&amp;rsquo;s a long key. Go blame
-&lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/reconcile/#system-level-configuration">ArgoCD&lt;/a>
-:P&lt;/p></description></item></channel></rss>
+&lt;/blockquote></description></item></channel></rss>

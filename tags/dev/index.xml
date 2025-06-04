@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 03 Jun 2025 14:35:04 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>git pull: authentication issues</title><link>https://perrotta.dev/2025/06/git-pull-authentication-issues/</link><pubDate>Tue, 03 Jun 2025 14:35:04 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/git-pull-authentication-issues/</guid><description>&lt;p>&lt;code>git pull&lt;/code> authentication issues is &lt;em>really&lt;/em> a disguise for &lt;code>ssh&lt;/code> auth issues.&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 04 Jun 2025 11:43:05 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Alpine Linux: package is gone?!</title><link>https://perrotta.dev/2025/06/alpine-linux-package-is-gone/</link><pubDate>Wed, 04 Jun 2025 11:43:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/alpine-linux-package-is-gone/</guid><description>&lt;p>Upon upgrading one of our Dockerfiles from Alpine Linux 3.21 to 3.22, we noticed
+that the &lt;code>ruby-json&lt;/code> package no longer exists:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% docker build -t myproject -f Dockerfile .
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;gt; &lt;span style="color:#56b6c2">[&lt;/span> 2/10&lt;span style="color:#56b6c2">]&lt;/span> RUN apk add --update --no-cache ruby-json&lt;span style="color:#56b6c2">=&lt;/span>~&lt;span style="color:#98c379">&amp;#34;3.4&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2.371 ERROR: unable to &lt;span style="color:#c678dd">select&lt;/span> packages:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2.371 ruby-json &lt;span style="color:#56b6c2">(&lt;/span>no such package&lt;span style="color:#56b6c2">)&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2.371 required by: world&lt;span style="color:#56b6c2">[&lt;/span>ruby-json~3.4&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Why??&lt;/p>
+&lt;p>First, look into &lt;a href="https://pkgs.alpinelinux.org/packages">Alpine Linux Packages&lt;/a>:
+&lt;a href="https://pkgs.alpinelinux.org/packages?name=ruby-json&amp;amp;branch=v3.22&amp;amp;repo=&amp;amp;arch=&amp;amp;origin=&amp;amp;flagged=&amp;amp;maintainer=">query&lt;/a>.
+Ensure to set branch to v3.22 and architecture to All. And it&amp;rsquo;s indeed not
+there anymore:&lt;/p>
+&lt;blockquote>
+&lt;p>No matching packages found&amp;hellip;&lt;/p>
+&lt;/blockquote>
+&lt;p>Next, do a bit of digging in the
+&lt;a href="https://gitlab.alpinelinux.org/alpine/aports">aports&lt;/a> repository on the &lt;a href="https://gitlab.alpinelinux.org/">Alpine
+Linux GitLab&lt;/a>:
+&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/?sort=created_date&amp;amp;state=all&amp;amp;search=ruby-json&amp;amp;first_page_size=20">query&lt;/a>.
+Search for &lt;code>ruby-json&lt;/code> in &amp;ldquo;All&amp;rdquo; Merge requests.&lt;/p>
+&lt;p>That leads to
+&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/80599">&lt;code>!80599&lt;/code>&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>community/ruby-json: remove&lt;/p>
+&lt;p>&lt;code>ruby-json&lt;/code> is already bundled with &lt;code>main/ruby&lt;/code>. The &lt;code>community/ruby-json&lt;/code>
+could never be installed due to conflicts.&lt;/p>
+&lt;/blockquote>
+&lt;p>Aha, then there&amp;rsquo;s nothing to do here. Installing the base &lt;code>ruby&lt;/code> package should
+be enough from now on.&lt;/p>
+&lt;p>&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/issues/16938">#16938&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>I think it&amp;rsquo;s safe to say community/ruby-json does literally nothing, has never been installed, and does not work.&lt;/p>
+&lt;/blockquote>
+&lt;p>Oh well.&lt;/p></description></item><item><title>git pull: authentication issues</title><link>https://perrotta.dev/2025/06/git-pull-authentication-issues/</link><pubDate>Tue, 03 Jun 2025 14:35:04 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/git-pull-authentication-issues/</guid><description>&lt;p>&lt;code>git pull&lt;/code> authentication issues is &lt;em>really&lt;/em> a disguise for &lt;code>ssh&lt;/code> auth issues.&lt;/p>
 &lt;p>Today a teammate could not &lt;code>git pull&lt;/code> one of our internal repos:&lt;/p>
 &lt;pre tabindex="0">&lt;code>% git pull
 Enter passphrase for key &amp;#39;/Users/user/.ssh/id_ed25519&amp;#39;:
@@ -1609,7 +1644,4 @@ linter issues) that can be quickly resolved with the assistance of a LLM tool.&l
 &lt;p>There&amp;rsquo;s no silver bullet here: all changes need to be properly reviewed and
 tested. Nonetheless, even if the tool is wrong 50% of the time, it&amp;rsquo;s still
 faster for me to use the LLM tool as an initial suggestion than having to
-do the research myself from scratch.&lt;/p></description></item><item><title>Github Actions: ubuntu-latest tools</title><link>https://perrotta.dev/2025/04/github-actions-ubuntu-latest-tools/</link><pubDate>Wed, 09 Apr 2025 01:00:47 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/github-actions-ubuntu-latest-tools/</guid><description>&lt;p>Which tools are installed in the Github Actions environment for &lt;code>ubuntu-latest&lt;/code>?&lt;/p>
-&lt;p>&lt;a href="https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md">This
-repository&lt;/a>
-has the answer.&lt;/p></description></item></channel></rss>
+do the research myself from scratch.&lt;/p></description></item></channel></rss>
