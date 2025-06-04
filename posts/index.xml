@@ -289,7 +289,45 @@ concrete. Virtual ideas are essentially the same as nothing. Output (or
 deliverables, if you will) is the metric that matters most of the time.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Which book should I read next?</title><link>https://perrotta.dev/2025/05/which-book-should-i-read-next/</link><pubDate>Sat, 24 May 2025 22:54:30 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/which-book-should-i-read-next/</guid><description>&lt;p>Find your &lt;a href="https://nextread.info/">Next Read&lt;/a>:&lt;/p>
+&lt;/div></description></item><item><title>Golang fuzzing</title><link>https://perrotta.dev/2025/05/golang-fuzzing/</link><pubDate>Wed, 28 May 2025 17:37:06 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/golang-fuzzing/</guid><description>&lt;p>Given &lt;code>go.mod&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat go.mod
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>module testfuzzing
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>go 1.24.3
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Given &lt;code>fuzz_test.go&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat fuzz_test.go
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>package testfuzzing
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>import &lt;span style="color:#56b6c2">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;encoding/json&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;testing&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>func FuzzJsonIsValid&lt;span style="color:#56b6c2">(&lt;/span>f *testing.F&lt;span style="color:#56b6c2">)&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> f.Fuzz&lt;span style="color:#56b6c2">(&lt;/span>func&lt;span style="color:#56b6c2">(&lt;/span>t *testing.T, data &lt;span style="color:#56b6c2">[]&lt;/span>byte&lt;span style="color:#56b6c2">)&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> json.Valid&lt;span style="color:#56b6c2">(&lt;/span>data&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#56b6c2">})&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% go &lt;span style="color:#e5c07b">test&lt;/span> -fuzz&lt;span style="color:#56b6c2">=&lt;/span>FuzzJsonIsValid
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 0s, gathering baseline coverage: 0/325 completed
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 0s, gathering baseline coverage: 325/325 completed, now fuzzing with &lt;span style="color:#d19a66">12&lt;/span> workers
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 3s, execs: &lt;span style="color:#d19a66">1193906&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>397950/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 6s, execs: &lt;span style="color:#d19a66">2450910&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>419012/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 9s, execs: &lt;span style="color:#d19a66">3720167&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>423002/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 12s, execs: &lt;span style="color:#d19a66">4994906&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>424923/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 15s, execs: &lt;span style="color:#d19a66">6159087&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>388000/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 18s, execs: &lt;span style="color:#d19a66">7364384&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>401883/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 21s, execs: &lt;span style="color:#d19a66">8588030&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>407881/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 24s, execs: &lt;span style="color:#d19a66">9826978&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>412996/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 27s, execs: &lt;span style="color:#d19a66">11093873&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>422306/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">3&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 328&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 30s, execs: &lt;span style="color:#d19a66">12359227&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>421773/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">3&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 328&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>^Cfuzz: elapsed: 31s, execs: &lt;span style="color:#d19a66">12650530&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>403107/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">3&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 328&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PASS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok testfuzzing 31.154s
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>go &lt;span style="color:#e5c07b">test&lt;/span> -fuzz&lt;span style="color:#56b6c2">=&lt;/span>FuzzJsonIsValid 286.93s user 61.51s system 1105% cpu 31.505 total
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It&amp;rsquo;s very cool (and convenient!) that golang supports fuzzing natively, and
+integrated with its test framework. &lt;a href="https://go.dev/doc/security/fuzz/">Docs&lt;/a>.&lt;/p></description></item><item><title>Which book should I read next?</title><link>https://perrotta.dev/2025/05/which-book-should-i-read-next/</link><pubDate>Sat, 24 May 2025 22:54:30 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/which-book-should-i-read-next/</guid><description>&lt;p>Find your &lt;a href="https://nextread.info/">Next Read&lt;/a>:&lt;/p>
 &lt;blockquote>
 &lt;p>Easily discover your next read by using your GoodReads data&lt;/p>
 &lt;p>Simply upload your CSV file and explore your long list off want-to-reads. Set
@@ -1834,14 +1872,4 @@ re-shuffle. I like to avoid the same order of reports every day, so this helps
 me.&lt;/p>
 &lt;p>You can assign a timer for each member that restarts as you switch.&lt;/p>
 &lt;/blockquote>
-&lt;p>The default is 2 minutes. I like it.&lt;/p></description></item><item><title>Terminal autocorrection</title><link>https://perrotta.dev/2025/05/terminal-autocorrection/</link><pubDate>Fri, 02 May 2025 16:43:42 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/terminal-autocorrection/</guid><description>&lt;p>Appreciate this:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% gitp ushm
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>zsh: correct &lt;span style="color:#98c379">&amp;#39;gitp&amp;#39;&lt;/span> to &lt;span style="color:#98c379">&amp;#39;git&amp;#39;&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span>nyae&lt;span style="color:#56b6c2">]&lt;/span>? y
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>WARNING: You called a Git &lt;span style="color:#e5c07b">command&lt;/span> named &lt;span style="color:#98c379">&amp;#39;ushm&amp;#39;&lt;/span>, which does not exist.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Continuing in 1.0 seconds, assuming that you meant &lt;span style="color:#98c379">&amp;#39;pushm&amp;#39;&lt;/span>.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>branch &lt;span style="color:#98c379">&amp;#39;master&amp;#39;&lt;/span> &lt;span style="color:#e5c07b">set&lt;/span> up to track &lt;span style="color:#98c379">&amp;#39;origin/master&amp;#39;&lt;/span> by rebasing.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Everything up-to-date
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
-&lt;li>&lt;a href="https://hunden.linuxkompis.se/2018/08/04/spell-check-and-auto-correction-of-commands-in-zsh.html">&lt;code>zsh&lt;/code> autocorrection&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://andycarter.dev/blog/auto-correct-git-commands">&lt;code>git&lt;/code> autocorrection&lt;/a>&lt;/li>
-&lt;/ul></description></item></channel></rss>
+&lt;p>The default is 2 minutes. I like it.&lt;/p></description></item></channel></rss>

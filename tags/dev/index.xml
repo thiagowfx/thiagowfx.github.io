@@ -289,7 +289,45 @@ concrete. Virtual ideas are essentially the same as nothing. Output (or
 deliverables, if you will) is the metric that matters most of the time.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>pre-commit: add hugo build</title><link>https://perrotta.dev/2025/05/pre-commit-add-hugo-build/</link><pubDate>Sat, 24 May 2025 17:29:48 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/pre-commit-add-hugo-build/</guid><description>&lt;p>Sometimes I make changes to this blog that yield build errors with its static
+&lt;/div></description></item><item><title>Golang fuzzing</title><link>https://perrotta.dev/2025/05/golang-fuzzing/</link><pubDate>Wed, 28 May 2025 17:37:06 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/golang-fuzzing/</guid><description>&lt;p>Given &lt;code>go.mod&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat go.mod
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>module testfuzzing
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>go 1.24.3
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Given &lt;code>fuzz_test.go&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat fuzz_test.go
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>package testfuzzing
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>import &lt;span style="color:#56b6c2">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;encoding/json&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;testing&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>func FuzzJsonIsValid&lt;span style="color:#56b6c2">(&lt;/span>f *testing.F&lt;span style="color:#56b6c2">)&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> f.Fuzz&lt;span style="color:#56b6c2">(&lt;/span>func&lt;span style="color:#56b6c2">(&lt;/span>t *testing.T, data &lt;span style="color:#56b6c2">[]&lt;/span>byte&lt;span style="color:#56b6c2">)&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> json.Valid&lt;span style="color:#56b6c2">(&lt;/span>data&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#56b6c2">})&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% go &lt;span style="color:#e5c07b">test&lt;/span> -fuzz&lt;span style="color:#56b6c2">=&lt;/span>FuzzJsonIsValid
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 0s, gathering baseline coverage: 0/325 completed
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 0s, gathering baseline coverage: 325/325 completed, now fuzzing with &lt;span style="color:#d19a66">12&lt;/span> workers
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 3s, execs: &lt;span style="color:#d19a66">1193906&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>397950/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 6s, execs: &lt;span style="color:#d19a66">2450910&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>419012/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 9s, execs: &lt;span style="color:#d19a66">3720167&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>423002/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 12s, execs: &lt;span style="color:#d19a66">4994906&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>424923/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 15s, execs: &lt;span style="color:#d19a66">6159087&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>388000/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 18s, execs: &lt;span style="color:#d19a66">7364384&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>401883/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 21s, execs: &lt;span style="color:#d19a66">8588030&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>407881/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 24s, execs: &lt;span style="color:#d19a66">9826978&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>412996/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">2&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 327&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 27s, execs: &lt;span style="color:#d19a66">11093873&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>422306/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">3&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 328&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fuzz: elapsed: 30s, execs: &lt;span style="color:#d19a66">12359227&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>421773/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">3&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 328&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>^Cfuzz: elapsed: 31s, execs: &lt;span style="color:#d19a66">12650530&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>403107/sec&lt;span style="color:#56b6c2">)&lt;/span>, new interesting: &lt;span style="color:#d19a66">3&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>total: 328&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PASS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok testfuzzing 31.154s
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>go &lt;span style="color:#e5c07b">test&lt;/span> -fuzz&lt;span style="color:#56b6c2">=&lt;/span>FuzzJsonIsValid 286.93s user 61.51s system 1105% cpu 31.505 total
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It&amp;rsquo;s very cool (and convenient!) that golang supports fuzzing natively, and
+integrated with its test framework. &lt;a href="https://go.dev/doc/security/fuzz/">Docs&lt;/a>.&lt;/p></description></item><item><title>pre-commit: add hugo build</title><link>https://perrotta.dev/2025/05/pre-commit-add-hugo-build/</link><pubDate>Sat, 24 May 2025 17:29:48 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/pre-commit-add-hugo-build/</guid><description>&lt;p>Sometimes I make changes to this blog that yield build errors with its static
 site generator (&lt;a href="https://gohugo.io/">hugo&lt;/a>).&lt;/p>
 &lt;p>It&amp;rsquo;s trivial to spot these changes with a simple &lt;code>hugo build&lt;/code>, but &lt;a href="https://perrotta.dev/2025/03/yolo-debug-only-after-push/">I don&amp;rsquo;t always
 run it&lt;/a>.&lt;/p>
@@ -1606,33 +1644,4 @@ and/or if the package upgrades were more frequent.&lt;/p>
 associated with it).&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>GitHub: vacation mode</title><link>https://perrotta.dev/2025/04/github-vacation-mode/</link><pubDate>Sun, 13 Apr 2025 01:02:03 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/github-vacation-mode/</guid><description>&lt;p>&lt;a href="https://github.blog/changelog/2019-01-08-set-your-status/">Since 2019&lt;/a> GitHub
-allows setting a status on your profile page:&lt;/p>
-&lt;blockquote>
-&lt;p>You can now set your status on GitHub! Use your status to share specific
-information with only your organization, or share a status with all of GitHub!
-Optionally, you can indicate that you&amp;rsquo;re busy so your collaborators can
-determine whether to mention someone else for a quicker response.&lt;/p>
-&lt;/blockquote>
-&lt;p>&lt;a href="https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/personalizing-your-profile#setting-a-status">Documentation&lt;/a>.
-&lt;strong>TL;DR&lt;/strong>: The most practical use case is to set your profile to &amp;ldquo;Busy&amp;rdquo; whenever
-you take time off (whether it&amp;rsquo;s vacation or sick leave).&lt;/p>
-&lt;p>It&amp;rsquo;s possible to limit the status visibility to a single organization, so that
-it is not publicly visible.&lt;/p>
-&lt;p>It&amp;rsquo;s also possible to automatically clear the status after a given period (e.g.
-one week).&lt;/p>
-&lt;p>Why is this useful?&lt;/p>
-&lt;ul>
-&lt;li>signal to your teammates that you&amp;rsquo;re OOO, without leaving then wondering why
-you&amp;rsquo;re taking forever to review their PRs&lt;/li>
-&lt;li>prevent team assignments in PR reviews to automatically select you when you&amp;rsquo;re
-OOO:&lt;/li>
-&lt;/ul>
-&lt;blockquote>
-&lt;p>If you select the &amp;ldquo;Busy&amp;rdquo; option, when people @mention your username, assign
-you an issue or pull request, or request a pull request review from you, a
-note next to your username will show that you&amp;rsquo;re busy. You will also be
-excluded from automatic review assignment for pull requests assigned to any
-teams you belong to. For more information, see Managing code review settings
-for your team.&lt;/p>
-&lt;/blockquote></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>
