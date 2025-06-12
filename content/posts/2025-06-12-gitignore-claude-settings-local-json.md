@@ -23,4 +23,4 @@ The correct form is:
 +**/.claude/settings.local.json
 ```
 
-Add the `**` to account for subdirectories as well.
+Add `**` to include subdirectories as well.
