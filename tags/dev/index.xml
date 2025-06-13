@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 13 Jun 2025 21:40:01 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: custom health check for StatefulSet (OnDelete)</title><link>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</link><pubDate>Fri, 13 Jun 2025 21:40:01 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</guid><description>&lt;p>It turns out the
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 13 Jun 2025 22:34:33 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: every application in unknown state</title><link>https://perrotta.dev/2025/06/argocd-every-application-in-unknown-state/</link><pubDate>Fri, 13 Jun 2025 22:34:33 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-every-application-in-unknown-state/</guid><description>&lt;p>&lt;strong>Symptom&lt;/strong>: Every single application in the Kubernetes cluster that is managed
+by Argo is in &lt;code>Unknown&lt;/code> sync status. A disaster! 😱&lt;/p>
+&lt;p>This has only happened in one of our clusters. More specifically, in an
+&lt;a href="https://learn.microsoft.com/en-us/azure/aks/core-aks-concepts">AKS&lt;/a> cluster
+(from Microsoft Azure).&lt;/p>
+&lt;p>An observed effect:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% kubectl get --raw&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#39;/openapi/v2&amp;#39;&lt;/span> | head -c &lt;span style="color:#d19a66">200&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Error from server &lt;span style="color:#56b6c2">(&lt;/span>ServiceUnavailable&lt;span style="color:#56b6c2">)&lt;/span>: the server is currently unable to handle the request
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Aha! The Kubernetes OpenAPI server is not responding properly.
+That explains why Argo is having so much trouble to figure out the state of affairs in
+the cluster.&lt;/p>
+&lt;p>It was quite difficult to troubleshoot this issue. There are barely any
+resources about it in the open web. We filed an Azure Support ticket, but it was
+completely useless. They offered to restart&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> the OpenAPI server, but that
+didn&amp;rsquo;t help (of course it wouldn&amp;rsquo;t!).&lt;/p>
+&lt;p>Because this is a managed Kubernetes cluster, we have limited access to it,
+which includes lack of access to raw logs. The Azure portal doesn&amp;rsquo;t make it easy
+but, after digging quite deep into it, eventually we found this error message in
+the logs:&lt;/p>
+&lt;pre tabindex="0">&lt;code> {&amp;#34;pod&amp;#34;:&amp;#34;kube-apiserver-7785d59f4f-scqmp&amp;#34;,&amp;#34;stream&amp;#34;:&amp;#34;stderr&amp;#34;,&amp;#34;containerID&amp;#34;:&amp;#34;925345f6501626aa6cd40dd187d5cf57837389eec9cb39b2292fb9ae3f66242f&amp;#34;,&amp;#34;log&amp;#34;:&amp;#34;E0512 12:01:36.876768 1 handler.go:160] Error in OpenAPI handler: failed to build merge specs: unable to merge: duplicated path \/apis\/reports.kyverno.io\/v1\/clusterephemeralreports\n&amp;#34;}
+&lt;/code>&lt;/pre>&lt;p>That was the first clue! Now we know it&amp;rsquo;s related to
+&lt;a href="https://kyverno.io/">Kyverno&lt;/a>.&lt;/p>
+&lt;p>That error eventually led us to
+&lt;a href="https://github.com/kubernetes/kubernetes/issues/122668#issuecomment-2531243040">this&lt;/a>
+issue in Kubernetes:&lt;/p>
+&lt;blockquote>
+&lt;p>We have the same issue here, actually also triggered by installing the kyverno
+reports-server with both apiservices (different groups served by the same
+api-server).&lt;/p>
+&lt;/blockquote>
+&lt;p>Aha!&lt;/p>
+&lt;p>Deleting the duplicate CRDs installed by &lt;a href="https://github.com/kyverno/reports-server">kyverno reports
+server&lt;/a> has immediately resolved the
+OpenAPI server unresponsiveness. It wasn&amp;rsquo;t even necessary to restart it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% kubectl delete crd ephemeralreports.reports.kyverno.io clusterephemeralreports.reports.kyverno.io clusterpolicyreports.wgpolicyk8s.io policyreports.wgpolicyk8s.io
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;ephemeralreports.reports.kyverno.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;clusterephemeralreports.reports.kyverno.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;clusterpolicyreports.wgpolicyk8s.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;policyreports.wgpolicyk8s.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And now:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ kubectl get --raw&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#39;/openapi/v2&amp;#39;&lt;/span> | head -c &lt;span style="color:#d19a66">200&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;swagger&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;2.0&amp;#34;&lt;/span>,&lt;span style="color:#98c379">&amp;#34;info&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;title&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;Kubernetes&amp;#34;&lt;/span>,&lt;span style="color:#98c379">&amp;#34;version&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;v1.30.11&amp;#34;&lt;/span>&lt;span style="color:#56b6c2">}&lt;/span>,&lt;span style="color:#98c379">&amp;#34;paths&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;/.well-known/openid-configuration/&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;get&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;description&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;get service account issuer OpenID configuration, also known as
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>That was a tricky one! Interestingly: it has only occurred in AKS.
+&lt;a href="https://aws.amazon.com/eks/">EKS&lt;/a> was fine.&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a href="https://en.wikiquote.org/wiki/The_IT_Crowd">Hello, IT. Have you tried turning it off and on
+again?&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>ArgoCD: custom health check for StatefulSet (OnDelete)</title><link>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</link><pubDate>Fri, 13 Jun 2025 21:40:01 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</guid><description>&lt;p>It turns out the
 &lt;a href="https://github.com/argoproj/gitops-engine/blob/master/pkg/health/health_statefulset.go">built-in&lt;/a>
 health check for
 &lt;a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">StatefulSets&lt;/a>
@@ -1610,44 +1662,4 @@ me.&lt;/p>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
 &lt;li>&lt;a href="https://hunden.linuxkompis.se/2018/08/04/spell-check-and-auto-correction-of-commands-in-zsh.html">&lt;code>zsh&lt;/code> autocorrection&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://andycarter.dev/blog/auto-correct-git-commands">&lt;code>git&lt;/code> autocorrection&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>The ack + xargs + sed pattern</title><link>https://perrotta.dev/2025/04/the-ack--xargs--sed-pattern/</link><pubDate>Wed, 30 Apr 2025 16:20:24 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/the-ack--xargs--sed-pattern/</guid><description>&lt;p>I employ this pattern almost every day:&lt;/p>
-&lt;ul>
-&lt;li>use &lt;a href="https://beyondgrep.com/">&lt;code>ack&lt;/code>&lt;/a> to search for a given string in a codebase (git repo)&lt;/li>
-&lt;li>use &lt;a href="https://man.archlinux.org/man/xargs.1">&lt;code>xargs&lt;/code>&lt;/a> to iterate through each finding&lt;/li>
-&lt;li>use &lt;a href="https://www.gnu.org/software/sed/manual/sed.html">&lt;code>sed&lt;/code>&lt;/a> to make a text transformation&lt;/li>
-&lt;/ul>
-&lt;p>Example of the day:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% ack &lt;span style="color:#98c379">&amp;#34;limit: 2&amp;#34;&lt;/span> -l | xargs -n &lt;span style="color:#d19a66">1&lt;/span> gsed -i -e &lt;span style="color:#98c379">&amp;#39;s/limit: 2/limit: 5/g&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Given multiple &lt;a href="https://argo-cd.readthedocs.io/en/stable/">ArgoCD app manifests&lt;/a> in the form:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">syncPolicy&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">retry&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">limit&lt;/span>: &lt;span style="color:#d19a66">2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">backoff&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">duration&lt;/span>: 5s
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">factor&lt;/span>: &lt;span style="color:#d19a66">2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">maxDuration&lt;/span>: 1m
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Replace &lt;code>limit: 2&lt;/code> with &lt;code>limit: 5&lt;/code> in all files. That&amp;rsquo;s what the command above
-does:&lt;/p>
-&lt;ul>
-&lt;li>&lt;code>ack -l&lt;/code> lists all files that match the given pattern&lt;/li>
-&lt;li>pipe to &lt;code>xargs -n 1&lt;/code> iterates on each of them&lt;/li>
-&lt;li>&lt;code>gsed -i&lt;/code> (GNU &lt;code>sed&lt;/code>) makes a text transformation in-place&lt;/li>
-&lt;/ul>
-&lt;p>It&amp;rsquo;s not bulletproof, but it works most of the time.&lt;/p>
-&lt;p>Sometimes I use &lt;a href="https://github.com/sharkdp/fd">&lt;code>fd&lt;/code>&lt;/a> to narrow the search down
-to a file pattern. For example:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% fd -e yaml | xargs ack &lt;span style="color:#98c379">&amp;#34;limit: 2&amp;#34;&lt;/span> -l
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In this case, though, &lt;code>ack --yaml&lt;/code> would be even simpler.&lt;/p>
-&lt;p>When &lt;code>sed&lt;/code> isn&amp;rsquo;t up for the job, &lt;code>awk&lt;/code> tends to be a decent alternative.&lt;/p>
-&lt;p>Regular expression replacements aren&amp;rsquo;t always precise.
-False positives can easily take place.
-Adding &lt;code>\b&lt;/code> (word boundaries) sometimes helps.&lt;/p>
-&lt;p>Other times it&amp;rsquo;s better to use a syntax-aware tool instead of &lt;code>sed&lt;/code>.&lt;/p>
-&lt;p>For YAML, there&amp;rsquo;s &lt;a href="https://github.com/mikefarah/yq">&lt;code>yq&lt;/code>&lt;/a>.&lt;/p>
-&lt;p>For JSON, there&amp;rsquo;s &lt;a href="https://jqlang.org/">&lt;code>jq&lt;/code>&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>&lt;code>jq&lt;/code> is like &lt;code>sed&lt;/code> for JSON data - you can use it to slice and filter and map
-and transform structured data with the same ease that &lt;code>sed&lt;/code>, &lt;code>awk&lt;/code>, &lt;code>grep&lt;/code> and
-friends let you play with text.&lt;/p>
-&lt;/blockquote></description></item></channel></rss>
+&lt;/ul></description></item></channel></rss>

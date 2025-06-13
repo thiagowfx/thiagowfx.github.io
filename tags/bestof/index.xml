@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bestof on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/bestof/</link><description>Recent content in Bestof on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 13 Jun 2025 21:40:01 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: custom health check for StatefulSet (OnDelete)</title><link>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</link><pubDate>Fri, 13 Jun 2025 21:40:01 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</guid><description>&lt;p>It turns out the
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 13 Jun 2025 22:34:33 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: every application in unknown state</title><link>https://perrotta.dev/2025/06/argocd-every-application-in-unknown-state/</link><pubDate>Fri, 13 Jun 2025 22:34:33 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-every-application-in-unknown-state/</guid><description>&lt;p>&lt;strong>Symptom&lt;/strong>: Every single application in the Kubernetes cluster that is managed
+by Argo is in &lt;code>Unknown&lt;/code> sync status. A disaster! 😱&lt;/p>
+&lt;p>This has only happened in one of our clusters. More specifically, in an
+&lt;a href="https://learn.microsoft.com/en-us/azure/aks/core-aks-concepts">AKS&lt;/a> cluster
+(from Microsoft Azure).&lt;/p>
+&lt;p>An observed effect:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% kubectl get --raw&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#39;/openapi/v2&amp;#39;&lt;/span> | head -c &lt;span style="color:#d19a66">200&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Error from server &lt;span style="color:#56b6c2">(&lt;/span>ServiceUnavailable&lt;span style="color:#56b6c2">)&lt;/span>: the server is currently unable to handle the request
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Aha! The Kubernetes OpenAPI server is not responding properly.
+That explains why Argo is having so much trouble to figure out the state of affairs in
+the cluster.&lt;/p>
+&lt;p>It was quite difficult to troubleshoot this issue. There are barely any
+resources about it in the open web. We filed an Azure Support ticket, but it was
+completely useless. They offered to restart&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> the OpenAPI server, but that
+didn&amp;rsquo;t help (of course it wouldn&amp;rsquo;t!).&lt;/p>
+&lt;p>Because this is a managed Kubernetes cluster, we have limited access to it,
+which includes lack of access to raw logs. The Azure portal doesn&amp;rsquo;t make it easy
+but, after digging quite deep into it, eventually we found this error message in
+the logs:&lt;/p>
+&lt;pre tabindex="0">&lt;code> {&amp;#34;pod&amp;#34;:&amp;#34;kube-apiserver-7785d59f4f-scqmp&amp;#34;,&amp;#34;stream&amp;#34;:&amp;#34;stderr&amp;#34;,&amp;#34;containerID&amp;#34;:&amp;#34;925345f6501626aa6cd40dd187d5cf57837389eec9cb39b2292fb9ae3f66242f&amp;#34;,&amp;#34;log&amp;#34;:&amp;#34;E0512 12:01:36.876768 1 handler.go:160] Error in OpenAPI handler: failed to build merge specs: unable to merge: duplicated path \/apis\/reports.kyverno.io\/v1\/clusterephemeralreports\n&amp;#34;}
+&lt;/code>&lt;/pre>&lt;p>That was the first clue! Now we know it&amp;rsquo;s related to
+&lt;a href="https://kyverno.io/">Kyverno&lt;/a>.&lt;/p>
+&lt;p>That error eventually led us to
+&lt;a href="https://github.com/kubernetes/kubernetes/issues/122668#issuecomment-2531243040">this&lt;/a>
+issue in Kubernetes:&lt;/p>
+&lt;blockquote>
+&lt;p>We have the same issue here, actually also triggered by installing the kyverno
+reports-server with both apiservices (different groups served by the same
+api-server).&lt;/p>
+&lt;/blockquote>
+&lt;p>Aha!&lt;/p>
+&lt;p>Deleting the duplicate CRDs installed by &lt;a href="https://github.com/kyverno/reports-server">kyverno reports
+server&lt;/a> has immediately resolved the
+OpenAPI server unresponsiveness. It wasn&amp;rsquo;t even necessary to restart it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% kubectl delete crd ephemeralreports.reports.kyverno.io clusterephemeralreports.reports.kyverno.io clusterpolicyreports.wgpolicyk8s.io policyreports.wgpolicyk8s.io
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;ephemeralreports.reports.kyverno.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;clusterephemeralreports.reports.kyverno.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;clusterpolicyreports.wgpolicyk8s.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;policyreports.wgpolicyk8s.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And now:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ kubectl get --raw&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#39;/openapi/v2&amp;#39;&lt;/span> | head -c &lt;span style="color:#d19a66">200&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;swagger&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;2.0&amp;#34;&lt;/span>,&lt;span style="color:#98c379">&amp;#34;info&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;title&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;Kubernetes&amp;#34;&lt;/span>,&lt;span style="color:#98c379">&amp;#34;version&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;v1.30.11&amp;#34;&lt;/span>&lt;span style="color:#56b6c2">}&lt;/span>,&lt;span style="color:#98c379">&amp;#34;paths&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;/.well-known/openid-configuration/&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;get&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;description&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;get service account issuer OpenID configuration, also known as
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>That was a tricky one! Interestingly: it has only occurred in AKS.
+&lt;a href="https://aws.amazon.com/eks/">EKS&lt;/a> was fine.&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a href="https://en.wikiquote.org/wiki/The_IT_Crowd">Hello, IT. Have you tried turning it off and on
+again?&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>ArgoCD: custom health check for StatefulSet (OnDelete)</title><link>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</link><pubDate>Fri, 13 Jun 2025 21:40:01 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</guid><description>&lt;p>It turns out the
 &lt;a href="https://github.com/argoproj/gitops-engine/blob/master/pkg/health/health_statefulset.go">built-in&lt;/a>
 health check for
 &lt;a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">StatefulSets&lt;/a>
@@ -3641,43 +3693,4 @@ implement this kind of string manipulation in plain shell script!&lt;/li>
 &lt;p>With a bit of LLM prompting in lieu of Google or Stack Overflow searches.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>.gitignore without .gitignore</title><link>https://perrotta.dev/2024/12/.gitignore-without-.gitignore/</link><pubDate>Wed, 11 Dec 2024 11:44:12 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/.gitignore-without-.gitignore/</guid><description>&lt;p>&lt;code>.gitignore&lt;/code> is the canonical way to exclude files from your git repository.&lt;/p>
-&lt;p>In some situations, however, you may want to exclude files without adding them
-to &lt;code>.gitignore&lt;/code>, because they are only relevant to you, as opposed to your
-teammates.&lt;/p>
-&lt;p>Common examples:&lt;/p>
-&lt;ul>
-&lt;li>&lt;code>.ackrc&lt;/code>: exclude file patterns from search with &lt;code>ack&lt;/code> – not everyone in your
-team may use &lt;code>ack&lt;/code> at all&lt;/li>
-&lt;li>&lt;code>.envrc&lt;/code>: &lt;code>direnv&lt;/code> integration to automatically run a couple of commands
-whenever &lt;code>cd&lt;/code>&amp;lsquo;ing to within the repository – not everyone in your team may use
-&lt;code>direnv&lt;/code> at all&lt;/li>
-&lt;/ul>
-&lt;p>&amp;hellip;and so on.&lt;/p>
-&lt;p>Is there a way to have a &amp;ldquo;personal&amp;rdquo; &lt;code>.gitignore&lt;/code> file? Yes, in fact, many ways!&lt;/p>
-&lt;h2 id="1-per-repository">1) Per repository&lt;/h2>
-&lt;p>Use the &lt;code>.git/info/exclude&lt;/code> file instead of &lt;code>.gitignore&lt;/code>. Edits in this file are
-not tracked by version control. The documentation says:&lt;/p>
-&lt;pre tabindex="0">&lt;code># git ls-files --others --exclude-from=.git/info/exclude
-# Lines that start with &amp;#39;#&amp;#39; are comments.
-# For a project mostly in C, the following would be a good set of
-# exclude patterns (uncomment them if you want to use them):
-# *.[oa]
-# *~
-.ackrc
-.envrc
-&lt;/code>&lt;/pre>&lt;p>For example, I could add &lt;code>.ackrc&lt;/code> to it.&lt;/p>
-&lt;h2 id="2-git-update-index">2) &lt;code>git update-index&lt;/code>&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% git update-index --assume-unchanged .ackrc .envrc
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you make a mistake, it can be reversed with &lt;code>--no-assume-unchanged&lt;/code>.&lt;/p>
-&lt;h2 id="3-globally">3) Globally&lt;/h2>
-&lt;p>This approach takes effect in &lt;em>all&lt;/em> repositories.&lt;/p>
-&lt;p>Set &lt;a href="https://git-scm.com/docs/gitignore#_configuration">&lt;code>core.excludesFile&lt;/code>&lt;/a> in
-your &lt;code>~/.gitconfig&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git config --global core.excludesFile &lt;span style="color:#98c379">&amp;#39;~/.gitignore&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now populate it as you normally would your repo &lt;code>.gitignore&lt;/code>.&lt;/p>
-&lt;h2 id="references">References&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a href="https://stackoverflow.com/questions/653454/how-do-you-make-git-ignore-files-without-using-gitignore">https://stackoverflow.com/questions/653454/how-do-you-make-git-ignore-files-without-using-gitignore&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://gist.github.com/subfuzion/db7f57fff2fb6998a16c">https://gist.github.com/subfuzion/db7f57fff2fb6998a16c&lt;/a>&lt;/li>
-&lt;/ul></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>

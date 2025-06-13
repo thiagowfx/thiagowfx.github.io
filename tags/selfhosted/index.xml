@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Selfhosted on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/selfhosted/</link><description>Recent content in Selfhosted on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 13 Jun 2025 21:40:01 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: custom health check for StatefulSet (OnDelete)</title><link>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</link><pubDate>Fri, 13 Jun 2025 21:40:01 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</guid><description>&lt;p>It turns out the
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 13 Jun 2025 22:34:33 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: every application in unknown state</title><link>https://perrotta.dev/2025/06/argocd-every-application-in-unknown-state/</link><pubDate>Fri, 13 Jun 2025 22:34:33 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-every-application-in-unknown-state/</guid><description>&lt;p>&lt;strong>Symptom&lt;/strong>: Every single application in the Kubernetes cluster that is managed
+by Argo is in &lt;code>Unknown&lt;/code> sync status. A disaster! 😱&lt;/p>
+&lt;p>This has only happened in one of our clusters. More specifically, in an
+&lt;a href="https://learn.microsoft.com/en-us/azure/aks/core-aks-concepts">AKS&lt;/a> cluster
+(from Microsoft Azure).&lt;/p>
+&lt;p>An observed effect:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% kubectl get --raw&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#39;/openapi/v2&amp;#39;&lt;/span> | head -c &lt;span style="color:#d19a66">200&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Error from server &lt;span style="color:#56b6c2">(&lt;/span>ServiceUnavailable&lt;span style="color:#56b6c2">)&lt;/span>: the server is currently unable to handle the request
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Aha! The Kubernetes OpenAPI server is not responding properly.
+That explains why Argo is having so much trouble to figure out the state of affairs in
+the cluster.&lt;/p>
+&lt;p>It was quite difficult to troubleshoot this issue. There are barely any
+resources about it in the open web. We filed an Azure Support ticket, but it was
+completely useless. They offered to restart&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> the OpenAPI server, but that
+didn&amp;rsquo;t help (of course it wouldn&amp;rsquo;t!).&lt;/p>
+&lt;p>Because this is a managed Kubernetes cluster, we have limited access to it,
+which includes lack of access to raw logs. The Azure portal doesn&amp;rsquo;t make it easy
+but, after digging quite deep into it, eventually we found this error message in
+the logs:&lt;/p>
+&lt;pre tabindex="0">&lt;code> {&amp;#34;pod&amp;#34;:&amp;#34;kube-apiserver-7785d59f4f-scqmp&amp;#34;,&amp;#34;stream&amp;#34;:&amp;#34;stderr&amp;#34;,&amp;#34;containerID&amp;#34;:&amp;#34;925345f6501626aa6cd40dd187d5cf57837389eec9cb39b2292fb9ae3f66242f&amp;#34;,&amp;#34;log&amp;#34;:&amp;#34;E0512 12:01:36.876768 1 handler.go:160] Error in OpenAPI handler: failed to build merge specs: unable to merge: duplicated path \/apis\/reports.kyverno.io\/v1\/clusterephemeralreports\n&amp;#34;}
+&lt;/code>&lt;/pre>&lt;p>That was the first clue! Now we know it&amp;rsquo;s related to
+&lt;a href="https://kyverno.io/">Kyverno&lt;/a>.&lt;/p>
+&lt;p>That error eventually led us to
+&lt;a href="https://github.com/kubernetes/kubernetes/issues/122668#issuecomment-2531243040">this&lt;/a>
+issue in Kubernetes:&lt;/p>
+&lt;blockquote>
+&lt;p>We have the same issue here, actually also triggered by installing the kyverno
+reports-server with both apiservices (different groups served by the same
+api-server).&lt;/p>
+&lt;/blockquote>
+&lt;p>Aha!&lt;/p>
+&lt;p>Deleting the duplicate CRDs installed by &lt;a href="https://github.com/kyverno/reports-server">kyverno reports
+server&lt;/a> has immediately resolved the
+OpenAPI server unresponsiveness. It wasn&amp;rsquo;t even necessary to restart it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% kubectl delete crd ephemeralreports.reports.kyverno.io clusterephemeralreports.reports.kyverno.io clusterpolicyreports.wgpolicyk8s.io policyreports.wgpolicyk8s.io
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;ephemeralreports.reports.kyverno.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;clusterephemeralreports.reports.kyverno.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;clusterpolicyreports.wgpolicyk8s.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;policyreports.wgpolicyk8s.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And now:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ kubectl get --raw&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#39;/openapi/v2&amp;#39;&lt;/span> | head -c &lt;span style="color:#d19a66">200&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;swagger&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;2.0&amp;#34;&lt;/span>,&lt;span style="color:#98c379">&amp;#34;info&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;title&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;Kubernetes&amp;#34;&lt;/span>,&lt;span style="color:#98c379">&amp;#34;version&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;v1.30.11&amp;#34;&lt;/span>&lt;span style="color:#56b6c2">}&lt;/span>,&lt;span style="color:#98c379">&amp;#34;paths&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;/.well-known/openid-configuration/&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;get&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;description&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;get service account issuer OpenID configuration, also known as
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>That was a tricky one! Interestingly: it has only occurred in AKS.
+&lt;a href="https://aws.amazon.com/eks/">EKS&lt;/a> was fine.&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a href="https://en.wikiquote.org/wiki/The_IT_Crowd">Hello, IT. Have you tried turning it off and on
+again?&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>ArgoCD: custom health check for StatefulSet (OnDelete)</title><link>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</link><pubDate>Fri, 13 Jun 2025 21:40:01 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</guid><description>&lt;p>It turns out the
 &lt;a href="https://github.com/argoproj/gitops-engine/blob/master/pkg/health/health_statefulset.go">built-in&lt;/a>
 health check for
 &lt;a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">StatefulSets&lt;/a>
@@ -2294,58 +2346,6 @@ It has a lot of noise though as it includes all recent posts including the ones 
 &lt;ol>
 &lt;li id="fn:1">
 &lt;p>&lt;a href="https://repology.org/project/amfora/versions">Packaged&lt;/a> for every relevant platform out there nowadays.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item><item><title>Google and DuckDuckGo</title><link>https://perrotta.dev/2022/02/google-and-duckduckgo/</link><pubDate>Wed, 02 Feb 2022 18:51:00 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2022/02/google-and-duckduckgo/</guid><description>&lt;p>My search engine of choice is &lt;a href="https://google.com/">Google&lt;/a>, nonetheless I still enjoy &lt;a href="https://duckduckgo.com/">DuckDuckGo&lt;/a> occasionally.&lt;/p>
-&lt;p>The main reason to stick with Google is its superior quality, by the means of better search results. 20 years later, it&amp;rsquo;s still arguably the best search engine. Of course, part of the reason for that is contingent upon how much data it collects, but that&amp;rsquo;s a topic for another day&amp;hellip;&lt;/p>
-&lt;p>There are at least three reasons to use DuckDuckGo as an &lt;em>alternative&lt;/em>:&lt;/p>
-&lt;ul>
-&lt;li>it&amp;rsquo;s privacy-focused, there&amp;rsquo;s no tracking and no bubbling&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;/li>
-&lt;li>its search results stem from sources other than Google; these days, mostly from Bing&lt;/li>
-&lt;li>it has &lt;a href="https://duckduckgo.com/bang">&lt;strong>!bangs&lt;/strong>&lt;/a>, lots of them&lt;/li>
-&lt;/ul>
-&lt;p>The quest(ion) then becomes: How can I use mostly Google, but still have quick access to DuckDuckGo bangs?&lt;/p>
-&lt;p>There are several ways to do so.&lt;/p>
-&lt;h2 id="duckduckgoog">DuckDuckGoog&lt;/h2>
-&lt;p>&lt;a href="https://www.duckduckgoog.com/">DuckDuckGoog&lt;/a> is a search engine which does exactly that:&lt;/p>
-&lt;blockquote>
-&lt;p>Searches Google and !bangs DuckDuckGo. Tell your browser!&lt;/p>
-&lt;/blockquote>
-&lt;ul>
-&lt;li>If I search for &lt;code>i3&lt;/code>, it will open &lt;a href="https://www.google.com/search?q=i3">https://www.google.com/search?q=i3&lt;/a> and probably think I am interested in Intel i3 CPUs.&lt;/li>
-&lt;li>If I search for &lt;code>!aw i3&lt;/code>, using the ArchWiki bang, it opens &lt;a href="https://wiki.archlinux.org/title/I3">https://wiki.archlinux.org/title/I3&lt;/a> and goes straight to the &lt;code>i3&lt;/code> window manager page in the ArchWiki, exactly what I wanted.&lt;/li>
-&lt;li>If I search for &lt;code>!ddg i3&lt;/code>, it opens &lt;a href="https://duckduckgo.com/?q=i3">https://duckduckgo.com/?q=i3&lt;/a>, on DuckDuckGo.&lt;/li>
-&lt;/ul>
-&lt;p>Caveat: You cannot add custom search engines to Safari, therefore this method only works in other browsers (Firefox, Chrome, etc).&lt;/p>
-&lt;h3 id="self-hosted">Self-Hosted&lt;/h3>
-&lt;p>DuckDuckGoog &lt;a href="https://www.duckduckgoog.com/privacy">claims&lt;/a> to collect no data:&lt;/p>
-&lt;blockquote>
-&lt;p>It&amp;rsquo;s quite simple. DuckDuckGoog doesn&amp;rsquo;t track any queries submitted whatsoever, It simply redirects you to DuckDuckGo or Google depending on whether your search contains a !bang or not.&lt;/p>
-&lt;/blockquote>
-&lt;p>If you still don&amp;rsquo;t trust it for some reason, you could also self-host it in your own server, as it&amp;rsquo;s &lt;a href="https://github.com/mikecrittenden/duckduckgoog">open source&lt;/a>.&lt;/p>
-&lt;p>One advantage of doing so is using (and owning) your own infrastructure, which is probably more reliable in terms of bandwidth and latency than a random guy&amp;rsquo;s server in the wild.&lt;/p>
-&lt;h2 id="bang-quick-search">!Bang Quick Search&lt;/h2>
-&lt;p>&lt;a href="https://chrome.google.com/webstore/detail/bang-quick-search/kcopjlobikiakoacoadbnghpdcmngali">!Bang Quick Search&lt;/a> is a Chrome extension:&lt;/p>
-&lt;blockquote>
-&lt;p>This extension adds DuckDuckGo !bang search to chrome. You can use it from the URL bar as long as your default search engine is either google or bing (for now). You can also use it directly on google&amp;rsquo;s and bing&amp;rsquo;s websites.&lt;/p>
-&lt;/blockquote>
-&lt;p>So long as your search engine is set to either Google or Bing, it will intercept &lt;code>!bangs&lt;/code> from your query to redirect them to DuckDuckGo.&lt;/p>
-&lt;p>Tip: Use &lt;code>!ddg&lt;/code> to search on DuckDuckGo.&lt;/p>
-&lt;p>Caveat: As a Chrome extension, it obviously only works in Chrome (or any of its derivatives like Edge or Vivaldi).&lt;/p>
-&lt;h2 id="duckduckgo">DuckDuckGo&lt;/h2>
-&lt;p>Another simple way is to just use DuckDuckGo directly. Whenever you want to go to Google, just add &lt;code>!g&lt;/code> to your query.&lt;/p>
-&lt;h2 id="final-words">Final words&lt;/h2>
-&lt;p>I used all three methods in the past. My favorite one these days is the Chrome Extension because Chrome is my current browser.&lt;/p>
-&lt;p>As a fallback I find that using DuckDuckGo directly is acceptable as well, however it quickly becomes quite annoying to constantly add &lt;code>!g&lt;/code> to every query. Defaults matter.&lt;/p>
-&lt;h2 id="related">Related&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a href="https://blog.meain.io/2019/switching-to-duckduckgo/">Switching to DuckDuckGo&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>Biased search results based on your past searches.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
 &lt;/div></description></item></channel></rss>

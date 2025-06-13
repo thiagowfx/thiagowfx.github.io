@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/posts/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 13 Jun 2025 21:40:01 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: custom health check for StatefulSet (OnDelete)</title><link>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</link><pubDate>Fri, 13 Jun 2025 21:40:01 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</guid><description>&lt;p>It turns out the
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 13 Jun 2025 22:34:33 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: every application in unknown state</title><link>https://perrotta.dev/2025/06/argocd-every-application-in-unknown-state/</link><pubDate>Fri, 13 Jun 2025 22:34:33 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-every-application-in-unknown-state/</guid><description>&lt;p>&lt;strong>Symptom&lt;/strong>: Every single application in the Kubernetes cluster that is managed
+by Argo is in &lt;code>Unknown&lt;/code> sync status. A disaster! 😱&lt;/p>
+&lt;p>This has only happened in one of our clusters. More specifically, in an
+&lt;a href="https://learn.microsoft.com/en-us/azure/aks/core-aks-concepts">AKS&lt;/a> cluster
+(from Microsoft Azure).&lt;/p>
+&lt;p>An observed effect:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% kubectl get --raw&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#39;/openapi/v2&amp;#39;&lt;/span> | head -c &lt;span style="color:#d19a66">200&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Error from server &lt;span style="color:#56b6c2">(&lt;/span>ServiceUnavailable&lt;span style="color:#56b6c2">)&lt;/span>: the server is currently unable to handle the request
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Aha! The Kubernetes OpenAPI server is not responding properly.
+That explains why Argo is having so much trouble to figure out the state of affairs in
+the cluster.&lt;/p>
+&lt;p>It was quite difficult to troubleshoot this issue. There are barely any
+resources about it in the open web. We filed an Azure Support ticket, but it was
+completely useless. They offered to restart&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> the OpenAPI server, but that
+didn&amp;rsquo;t help (of course it wouldn&amp;rsquo;t!).&lt;/p>
+&lt;p>Because this is a managed Kubernetes cluster, we have limited access to it,
+which includes lack of access to raw logs. The Azure portal doesn&amp;rsquo;t make it easy
+but, after digging quite deep into it, eventually we found this error message in
+the logs:&lt;/p>
+&lt;pre tabindex="0">&lt;code> {&amp;#34;pod&amp;#34;:&amp;#34;kube-apiserver-7785d59f4f-scqmp&amp;#34;,&amp;#34;stream&amp;#34;:&amp;#34;stderr&amp;#34;,&amp;#34;containerID&amp;#34;:&amp;#34;925345f6501626aa6cd40dd187d5cf57837389eec9cb39b2292fb9ae3f66242f&amp;#34;,&amp;#34;log&amp;#34;:&amp;#34;E0512 12:01:36.876768 1 handler.go:160] Error in OpenAPI handler: failed to build merge specs: unable to merge: duplicated path \/apis\/reports.kyverno.io\/v1\/clusterephemeralreports\n&amp;#34;}
+&lt;/code>&lt;/pre>&lt;p>That was the first clue! Now we know it&amp;rsquo;s related to
+&lt;a href="https://kyverno.io/">Kyverno&lt;/a>.&lt;/p>
+&lt;p>That error eventually led us to
+&lt;a href="https://github.com/kubernetes/kubernetes/issues/122668#issuecomment-2531243040">this&lt;/a>
+issue in Kubernetes:&lt;/p>
+&lt;blockquote>
+&lt;p>We have the same issue here, actually also triggered by installing the kyverno
+reports-server with both apiservices (different groups served by the same
+api-server).&lt;/p>
+&lt;/blockquote>
+&lt;p>Aha!&lt;/p>
+&lt;p>Deleting the duplicate CRDs installed by &lt;a href="https://github.com/kyverno/reports-server">kyverno reports
+server&lt;/a> has immediately resolved the
+OpenAPI server unresponsiveness. It wasn&amp;rsquo;t even necessary to restart it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% kubectl delete crd ephemeralreports.reports.kyverno.io clusterephemeralreports.reports.kyverno.io clusterpolicyreports.wgpolicyk8s.io policyreports.wgpolicyk8s.io
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;ephemeralreports.reports.kyverno.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;clusterephemeralreports.reports.kyverno.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;clusterpolicyreports.wgpolicyk8s.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#98c379">&amp;#34;policyreports.wgpolicyk8s.io&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And now:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ kubectl get --raw&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#39;/openapi/v2&amp;#39;&lt;/span> | head -c &lt;span style="color:#d19a66">200&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;swagger&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;2.0&amp;#34;&lt;/span>,&lt;span style="color:#98c379">&amp;#34;info&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;title&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;Kubernetes&amp;#34;&lt;/span>,&lt;span style="color:#98c379">&amp;#34;version&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;v1.30.11&amp;#34;&lt;/span>&lt;span style="color:#56b6c2">}&lt;/span>,&lt;span style="color:#98c379">&amp;#34;paths&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;/.well-known/openid-configuration/&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;get&amp;#34;&lt;/span>:&lt;span style="color:#56b6c2">{&lt;/span>&lt;span style="color:#98c379">&amp;#34;description&amp;#34;&lt;/span>:&lt;span style="color:#98c379">&amp;#34;get service account issuer OpenID configuration, also known as
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>That was a tricky one! Interestingly: it has only occurred in AKS.
+&lt;a href="https://aws.amazon.com/eks/">EKS&lt;/a> was fine.&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a href="https://en.wikiquote.org/wiki/The_IT_Crowd">Hello, IT. Have you tried turning it off and on
+again?&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>ArgoCD: custom health check for StatefulSet (OnDelete)</title><link>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</link><pubDate>Fri, 13 Jun 2025 21:40:01 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</guid><description>&lt;p>It turns out the
 &lt;a href="https://github.com/argoproj/gitops-engine/blob/master/pkg/health/health_statefulset.go">built-in&lt;/a>
 health check for
 &lt;a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">StatefulSets&lt;/a>
@@ -1839,35 +1891,4 @@ principles of: owning your domain and using it as your primary online
 identity, publishing on your own site first (optionally elsewhere), and owning
 your content.&lt;/p>
 &lt;/blockquote>
-&lt;p>It is a great source of serendipity.&lt;/p></description></item><item><title>helm-secrets + vals: string interpolation</title><link>https://perrotta.dev/2025/05/helm-secrets--vals-string-interpolation/</link><pubDate>Thu, 08 May 2025 15:25:14 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/helm-secrets--vals-string-interpolation/</guid><description>&lt;p>&lt;a href="https://github.com/jkroepke/helm-secrets">helm-secrets&lt;/a> is:&lt;/p>
-&lt;blockquote>
-&lt;p>a helm plugin that helps to manage secrets with Git workflow and store them
-anywhere.&lt;/p>
-&lt;/blockquote>
-&lt;p>It uses &lt;a href="https://github.com/helmfile/vals">vals&lt;/a> underneath, which is a:&lt;/p>
-&lt;blockquote>
-&lt;p>Helm-like configuration values loader with support for various sources&lt;/p>
-&lt;/blockquote>
-&lt;p>&amp;hellip;including, in particular, &lt;a href="https://www.hashicorp.com/en/products/vault">HashiCorp Vault&lt;/a>.&lt;/p>
-&lt;p>The &lt;code>vals&lt;/code> syntax is documented
-&lt;a href="https://github.com/helmfile/vals?tab=readme-ov-file#expression-syntax">here&lt;/a>.&lt;/p>
-&lt;p>&lt;strong>Problem statement&lt;/strong>: construct a string composed of the following two vault
-entries:&lt;/p>
-&lt;ul>
-&lt;li>&lt;code>vault://kv-v2/services/common/postgres/#url&lt;/code>&lt;/li>
-&lt;li>&lt;code>vault://kv-v2/services/common/postgres/#params&lt;/code>&lt;/li>
-&lt;/ul>
-&lt;p>&amp;hellip;to yield &lt;code>{url}?{params}&lt;/code>.&lt;/p>
-&lt;p>How do we concatenate two vault entries?
-The secret is in the &lt;code>+&lt;/code>:&lt;/p>
-&lt;blockquote>
-&lt;p>Finally, the optional trailing &lt;code>+&lt;/code> is the explicit &amp;ldquo;end&amp;rdquo; of the expression.
-You usually don&amp;rsquo;t need it, as if omitted, it treats anything after &lt;code>ref+&lt;/code> and
-before the new-line or the end-of-line as an expression to be evaluated. An
-explicit &lt;code>+&lt;/code> is handy when you want to do a simple string interpolation. That
-is, &lt;code>foo ref+SECRET1+ ref+SECRET2+ bar&lt;/code> evaluates to &lt;code>foo SECRET1_VALUE SECRET2_VALUE bar&lt;/code>.&lt;/p>
-&lt;/blockquote>
-&lt;p>The final result:&lt;/p>
-&lt;pre tabindex="0">&lt;code>secrets+literal://ref+vault://kv-v2/services/common/postgres/#url+?ref+vault://kv-v2/services/common/postgres/#params
-&lt;/code>&lt;/pre>&lt;p>&amp;hellip;wherein &lt;code>secrets+literal://&lt;/code> comes from &lt;code>helm-secrets&lt;/code>. It needs to appear only
-once. &lt;code>ref+vault://&lt;/code> comes from &lt;code>vals&lt;/code>, it appears once for each vault entry.&lt;/p></description></item></channel></rss>
+&lt;p>It is a great source of serendipity.&lt;/p></description></item></channel></rss>
