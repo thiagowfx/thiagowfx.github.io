@@ -57,5 +57,5 @@ One more for **Bad** (direct messages):
 
 One more for **Good** (public messages):
 
-> **Knowledge sharing**. What you ask, you learn. What you learn, your teammates
-> also learn. Win-win!
+- **Knowledge sharing**. What you ask, you learn. What you learn, your teammates
+  also learn. Win-win!
