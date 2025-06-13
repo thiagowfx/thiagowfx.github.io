@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Selfhosted on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/selfhosted/</link><description>Recent content in Selfhosted on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 12 Jun 2025 11:51:32 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: application stuck in unknown</title><link>https://perrotta.dev/2025/06/argocd-application-stuck-in-unknown/</link><pubDate>Thu, 12 Jun 2025 11:51:32 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-application-stuck-in-unknown/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: An application in ArgoCD that was previously running
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 13 Jun 2025 21:40:01 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: custom health check for StatefulSet (OnDelete)</title><link>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</link><pubDate>Fri, 13 Jun 2025 21:40:01 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</guid><description>&lt;p>It turns out the
+&lt;a href="https://github.com/argoproj/gitops-engine/blob/master/pkg/health/health_statefulset.go">built-in&lt;/a>
+health check for
+&lt;a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">StatefulSets&lt;/a>
+in ArgoCD is not comprehensive enough.&lt;/p>
+&lt;p>It covers
+&lt;a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies">&lt;code>RollingUpdate&lt;/code>&lt;/a>
+well enough, but &lt;code>OnDelete&lt;/code> is incomplete.&lt;/p>
+&lt;p>More specifically:&lt;/p>
+&lt;p>&lt;strong>Observed&lt;/strong>: whenever you push an update to an STS whose &lt;code>.spec.updateStrategy&lt;/code>
+is &lt;code>OnDelete&lt;/code>, its health status stays as &lt;code>Healthy&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Expected&lt;/strong>: there should be an indication that the STS pods are not
+up-to-date, and hence need to be restarted to incorporate the latest changes.&lt;/p>
+&lt;p>There is &lt;a href="https://github.com/argoproj/argo-cd/issues/6527">an open bug&lt;/a>:
+&lt;code>Statefulset healthcheck does not work #6527&lt;/code> for it.&lt;/p>
+&lt;p>I managed to work around it by defining my own health check. This is an use case
+where Gen AI is helpful, though it does not shine. I could not have Gen AI
+produce a fully working health check for this scenario. Instead, I used it to
+bootstrap a basic example, then had to tweak it until it worked. This has been
+tested multiple times, I am reasonably confident it works well (some edge cases
+could be missing though).&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-lua" data-lang="lua">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">health_status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> {}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#e5c07b">nil&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Progressing&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Waiting for status to be reported&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">return&lt;/span> &lt;span style="color:#e06c75">health_status&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">strategy&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.spec&lt;/span>.&lt;span style="color:#e06c75">updateStrategy&lt;/span> &lt;span style="color:#56b6c2">and&lt;/span> &lt;span style="color:#e06c75">obj.spec&lt;/span>.&lt;span style="color:#e06c75">updateStrategy.type&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#98c379">&amp;#34;RollingUpdate&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.spec&lt;/span>.&lt;span style="color:#e06c75">replicas&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#d19a66">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">ready_replicas&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span>.&lt;span style="color:#e06c75">readyReplicas&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span>.&lt;span style="color:#e06c75">updatedReplicas&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">status_replicas&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span>.&lt;span style="color:#e06c75">replicas&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">current_revision&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span>.&lt;span style="color:#e06c75">currentRevision&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#98c379">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">update_revision&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span>.&lt;span style="color:#e06c75">updateRevision&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#98c379">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">strategy&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#98c379">&amp;#34;OnDelete&amp;#34;&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">ready_replicas&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#e06c75">status_replicas&lt;/span> &lt;span style="color:#56b6c2">and&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Healthy&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;All replicas are ready and updated (OnDelete strategy)&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">elseif&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#d19a66">0&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Degraded&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;No replicas have been updated (OnDelete strategy): 0/&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; updated. Still running an old revision!&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Progressing&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Progressing (OnDelete): &amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">ready_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">status_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; ready, &amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; updated&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">ready_replicas&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#e06c75">status_replicas&lt;/span> &lt;span style="color:#56b6c2">and&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">current_revision&lt;/span> &lt;span style="color:#56b6c2">~=&lt;/span> &lt;span style="color:#e06c75">update_revision&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Progressing&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Waiting for rollout to complete: revision mismatch (&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">current_revision&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; ≠ &amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">update_revision&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34;)&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Healthy&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;All replicas updated, ready, and revisions match&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Progressing&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;RollingUpdate progressing: &amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">ready_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">status_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; ready, &amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; updated&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">return&lt;/span> &lt;span style="color:#e06c75">health_status&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It is necessary to distinguish between &lt;code>OnDelete&lt;/code> and &lt;code>RollingUpdate&lt;/code>.&lt;/p>
+&lt;p>&lt;code>OnDelete&lt;/code> should not use &lt;code>currentRevision&lt;/code> / &lt;code>update_revision&lt;/code>, as these values
+don&amp;rsquo;t mean anything for that update strategy. This can be observed
+&lt;a href="https://github.com/argoproj/gitops-engine/blob/f8f1b61ba3fd5fcb647563db3106977e1364de31/pkg/health/health_statefulset.go#L63">upstream&lt;/a>
+as well.&lt;/p>
+&lt;p>It is easy to write / tweak the health check when you look at the live STS
+resource / manifest in the cluster. &lt;code>obj&lt;/code> refers to the STS manifest (&lt;code>kubectl get sts -o yaml&lt;/code>). The most relevant field is &lt;code>status:&lt;/code>.&lt;/p>
+&lt;p>If you deploy ArgoCD via its helm chart, add that check for &lt;code>argocd-cm&lt;/code>. The
+&lt;code>values.yaml&lt;/code> file:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">argo-cd&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">configs&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">cm&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">resource.customizations.health.apps_StatefulSet&lt;/span>: |&lt;span style="color:#98c379">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> health_status = {}
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> [...]&lt;/span> 
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This custom health check was partly inspired by a Prometheus alert we have:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">alert&lt;/span>: StatefulSetUpdateNotRolledOut
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">expr&lt;/span>: max without (revision) (kube_statefulset_status_current_revision unless kube_statefulset_status_update_revision) * (kube_statefulset_replicas != kube_statefulset_status_replicas_updated)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>How long will it take until LLMs &lt;del>steal&lt;/del> adopt this novel solution from me?&lt;/p></description></item><item><title>ArgoCD: application stuck in unknown</title><link>https://perrotta.dev/2025/06/argocd-application-stuck-in-unknown/</link><pubDate>Thu, 12 Jun 2025 11:51:32 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-application-stuck-in-unknown/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: An application in ArgoCD that was previously running
 smoothly has suddenly started to fail. Its status has changed to &amp;ldquo;Unknown&amp;rdquo;.
 The &amp;ldquo;Refresh&amp;rdquo; button is grayed out in the Argo web UI.&lt;/p>
 &lt;p>I found the following works in this scenario, which is typically a transient
@@ -2267,49 +2348,4 @@ It has a lot of noise though as it includes all recent posts including the ones 
 &lt;p>Biased search results based on your past searches.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Pihole: Add custom DNS mappings</title><link>https://perrotta.dev/2022/01/pihole-add-custom-dns-mappings/</link><pubDate>Tue, 25 Jan 2022 21:50:53 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2022/01/pihole-add-custom-dns-mappings/</guid><description>&lt;p>This post covers how to add DNS entries / mappings to a local network managed
-with &lt;a href="https://pi-hole.net/">pihole&lt;/a>.&lt;/p>
-&lt;p>There are several ways to do so:&lt;/p>
-&lt;h2 id="1-the-cli-way-etcpihole">1. The CLI way: &lt;code>/etc/pihole/&lt;/code>&lt;/h2>
-&lt;p>Edit &lt;code>/etc/pihole/custom.list&lt;/code>, set one mapping per line, just as you would for
-&lt;code>/etc/hosts&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ cat /etc/pihole/custom.list
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>127.0.0.1 localhost.corp.google.com
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>192.168.1.75 myhostname.home.arpa
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This works because &lt;code>/etc/dnsmasq.d/01-pihole.conf&lt;/code> contains
-&lt;code>addn-hosts=/etc/pihole/custom.list&lt;/code> by default.&lt;/p>
-&lt;p>From &lt;a href="https://wiki.gentoo.org/wiki/Dnsmasq#Additional_hosts_file">Gentoo Wiki&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>It is possible to refer to an (additional) hosts file to use as source for
-DNS queries. To do so, add the -H /path/to/hostsfile
-(&amp;ndash;addn-hosts=/path/to/hostsfile) command line option. It is also possible to
-pass a directory; in that case, all files inside that directory will be
-treated as additional hosts files.&lt;/p>
-&lt;/blockquote>
-&lt;h2 id="2-the-cli-way-etcdnsmasqd">2. The CLI way: &lt;code>/etc/dnsmasq.d/&lt;/code>&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ cat /etc/dnsmasq.d/03-pihole-custom-dns.conf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">address&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>/localhost.corp.google.com/127.0.0.1
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">address&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>/myhostname.home.arpa/192.168.1.75
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>From &lt;a href="https://wiki.archlinux.org/title/Dnsmasq#Override_addresses">ArchWiki&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>In some cases, such as when operating a captive portal, it can be useful
-to resolve specific domains names to a hard-coded set of addresses.
-This is done with the address config.&lt;/p>
-&lt;/blockquote>
-&lt;h2 id="3-the-web-way">3. The Web way&lt;/h2>
-&lt;p>Navigate to &lt;a href="http://pi.hole/admin/dns_records.php">http://pi.hole/admin/dns_records.php&lt;/a> and set your DNS records
-there. From pihole docs:&lt;/p>
-&lt;blockquote>
-&lt;p>The order of locally defined DNS records is:&lt;/p>
-&lt;ol>
-&lt;li>The device&amp;rsquo;s host name (&lt;code>/etc/hostname&lt;/code>) and &lt;code>pi.hole&lt;/code>&lt;/li>
-&lt;li>Configured in a config file in &lt;code>/etc/dnsmasq.d/&lt;/code>&lt;/li>
-&lt;li>Read from &lt;code>/etc/hosts&lt;/code>&lt;/li>
-&lt;li>Read from the &amp;ldquo;Local (custom) DNS&amp;rdquo; list (stored in &lt;code>/etc/pihole/custom.list&lt;/code>) (the aforementioned ways)&lt;/li>
-&lt;/ol>
-&lt;p>Only the first record will trigger an address-to-name association.&lt;/p>
-&lt;/blockquote>
-&lt;h2 id="wrapping-up">Wrapping up&lt;/h2>
-&lt;p>Then restart pihole to apply changes:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ pihole restartdns
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>

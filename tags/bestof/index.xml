@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bestof on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/bestof/</link><description>Recent content in Bestof on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 13 Jun 2025 20:01:10 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>Slack: public chats first</title><link>https://perrotta.dev/2025/06/slack-public-chats-first/</link><pubDate>Fri, 13 Jun 2025 20:01:10 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/slack-public-chats-first/</guid><description>&lt;p>&lt;a href="https://www.mooreds.com/wordpress/archives/3706">Why Public Slack Chats are Better than Direct Messages&lt;/a> by Dan Moore:&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 13 Jun 2025 21:40:01 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: custom health check for StatefulSet (OnDelete)</title><link>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</link><pubDate>Fri, 13 Jun 2025 21:40:01 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</guid><description>&lt;p>It turns out the
+&lt;a href="https://github.com/argoproj/gitops-engine/blob/master/pkg/health/health_statefulset.go">built-in&lt;/a>
+health check for
+&lt;a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">StatefulSets&lt;/a>
+in ArgoCD is not comprehensive enough.&lt;/p>
+&lt;p>It covers
+&lt;a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies">&lt;code>RollingUpdate&lt;/code>&lt;/a>
+well enough, but &lt;code>OnDelete&lt;/code> is incomplete.&lt;/p>
+&lt;p>More specifically:&lt;/p>
+&lt;p>&lt;strong>Observed&lt;/strong>: whenever you push an update to an STS whose &lt;code>.spec.updateStrategy&lt;/code>
+is &lt;code>OnDelete&lt;/code>, its health status stays as &lt;code>Healthy&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Expected&lt;/strong>: there should be an indication that the STS pods are not
+up-to-date, and hence need to be restarted to incorporate the latest changes.&lt;/p>
+&lt;p>There is &lt;a href="https://github.com/argoproj/argo-cd/issues/6527">an open bug&lt;/a>:
+&lt;code>Statefulset healthcheck does not work #6527&lt;/code> for it.&lt;/p>
+&lt;p>I managed to work around it by defining my own health check. This is an use case
+where Gen AI is helpful, though it does not shine. I could not have Gen AI
+produce a fully working health check for this scenario. Instead, I used it to
+bootstrap a basic example, then had to tweak it until it worked. This has been
+tested multiple times, I am reasonably confident it works well (some edge cases
+could be missing though).&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-lua" data-lang="lua">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">health_status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> {}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#e5c07b">nil&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Progressing&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Waiting for status to be reported&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">return&lt;/span> &lt;span style="color:#e06c75">health_status&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">strategy&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.spec&lt;/span>.&lt;span style="color:#e06c75">updateStrategy&lt;/span> &lt;span style="color:#56b6c2">and&lt;/span> &lt;span style="color:#e06c75">obj.spec&lt;/span>.&lt;span style="color:#e06c75">updateStrategy.type&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#98c379">&amp;#34;RollingUpdate&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.spec&lt;/span>.&lt;span style="color:#e06c75">replicas&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#d19a66">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">ready_replicas&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span>.&lt;span style="color:#e06c75">readyReplicas&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span>.&lt;span style="color:#e06c75">updatedReplicas&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">status_replicas&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span>.&lt;span style="color:#e06c75">replicas&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">current_revision&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span>.&lt;span style="color:#e06c75">currentRevision&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#98c379">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">update_revision&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span>.&lt;span style="color:#e06c75">updateRevision&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#98c379">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">strategy&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#98c379">&amp;#34;OnDelete&amp;#34;&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">ready_replicas&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#e06c75">status_replicas&lt;/span> &lt;span style="color:#56b6c2">and&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Healthy&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;All replicas are ready and updated (OnDelete strategy)&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">elseif&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#d19a66">0&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Degraded&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;No replicas have been updated (OnDelete strategy): 0/&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; updated. Still running an old revision!&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Progressing&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Progressing (OnDelete): &amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">ready_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">status_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; ready, &amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; updated&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">ready_replicas&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#e06c75">status_replicas&lt;/span> &lt;span style="color:#56b6c2">and&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">current_revision&lt;/span> &lt;span style="color:#56b6c2">~=&lt;/span> &lt;span style="color:#e06c75">update_revision&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Progressing&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Waiting for rollout to complete: revision mismatch (&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">current_revision&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; ≠ &amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">update_revision&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34;)&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Healthy&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;All replicas updated, ready, and revisions match&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Progressing&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;RollingUpdate progressing: &amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">ready_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">status_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; ready, &amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; updated&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">return&lt;/span> &lt;span style="color:#e06c75">health_status&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It is necessary to distinguish between &lt;code>OnDelete&lt;/code> and &lt;code>RollingUpdate&lt;/code>.&lt;/p>
+&lt;p>&lt;code>OnDelete&lt;/code> should not use &lt;code>currentRevision&lt;/code> / &lt;code>update_revision&lt;/code>, as these values
+don&amp;rsquo;t mean anything for that update strategy. This can be observed
+&lt;a href="https://github.com/argoproj/gitops-engine/blob/f8f1b61ba3fd5fcb647563db3106977e1364de31/pkg/health/health_statefulset.go#L63">upstream&lt;/a>
+as well.&lt;/p>
+&lt;p>It is easy to write / tweak the health check when you look at the live STS
+resource / manifest in the cluster. &lt;code>obj&lt;/code> refers to the STS manifest (&lt;code>kubectl get sts -o yaml&lt;/code>). The most relevant field is &lt;code>status:&lt;/code>.&lt;/p>
+&lt;p>If you deploy ArgoCD via its helm chart, add that check for &lt;code>argocd-cm&lt;/code>. The
+&lt;code>values.yaml&lt;/code> file:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">argo-cd&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">configs&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">cm&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">resource.customizations.health.apps_StatefulSet&lt;/span>: |&lt;span style="color:#98c379">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> health_status = {}
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> [...]&lt;/span> 
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This custom health check was partly inspired by a Prometheus alert we have:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">alert&lt;/span>: StatefulSetUpdateNotRolledOut
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">expr&lt;/span>: max without (revision) (kube_statefulset_status_current_revision unless kube_statefulset_status_update_revision) * (kube_statefulset_replicas != kube_statefulset_status_replicas_updated)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>How long will it take until LLMs &lt;del>steal&lt;/del> adopt this novel solution from me?&lt;/p></description></item><item><title>Slack: public chats first</title><link>https://perrotta.dev/2025/06/slack-public-chats-first/</link><pubDate>Fri, 13 Jun 2025 20:01:10 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/slack-public-chats-first/</guid><description>&lt;p>&lt;a href="https://www.mooreds.com/wordpress/archives/3706">Why Public Slack Chats are Better than Direct Messages&lt;/a> by Dan Moore:&lt;/p>
 &lt;p>&lt;strong>Bad&lt;/strong>™:&lt;/p>
 &lt;blockquote>
 &lt;p>I&amp;rsquo;ve noticed that I sometimes use direct messages when I should be asking a
@@ -3599,52 +3680,4 @@ your &lt;code>~/.gitconfig&lt;/code>:&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="https://stackoverflow.com/questions/653454/how-do-you-make-git-ignore-files-without-using-gitignore">https://stackoverflow.com/questions/653454/how-do-you-make-git-ignore-files-without-using-gitignore&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://gist.github.com/subfuzion/db7f57fff2fb6998a16c">https://gist.github.com/subfuzion/db7f57fff2fb6998a16c&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>Helm: enforce the directory name matches the chart name</title><link>https://perrotta.dev/2024/11/helm-enforce-the-directory-name-matches-the-chart-name/</link><pubDate>Tue, 12 Nov 2024 11:13:06 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/11/helm-enforce-the-directory-name-matches-the-chart-name/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a helm chart called &lt;code>foo&lt;/code>, enforce that its &lt;code>Chart.yaml&lt;/code> file lives in a directory called &lt;code>foo&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p>
-&lt;h2 id="background">Background&lt;/h2>
-&lt;p>In 2016, this &lt;a href="https://github.com/helm/helm/pull/818/">used to be&lt;/a> the default behavior in Helm:&lt;/p>
-&lt;blockquote>
-&lt;p>fix(helm): produce error if package name is inconsistent&lt;/p>
-&lt;/blockquote>
-&lt;p>In 2018, this enforcement was &lt;a href="https://github.com/helm/helm/pull/4141">removed&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>remove dirname constraint on helm package&lt;/p>
-&lt;/blockquote>
-&lt;p>We would like to reintroduce this requirement in our Helm charts codebase, as a best practice, to prevent chart name collisions.&lt;/p>
-&lt;p>What would be the most native way to accomplish that?&lt;/p>
-&lt;p>I would probably write a git pre-commit hook if there is no native way (e.g. via some &lt;code>helm lint&lt;/code> flag).&lt;/p>
-&lt;h2 id="solution">Solution&lt;/h2>
-&lt;p>Use the following script with &lt;a href="https://pre-commit.com/">pre-commit&lt;/a>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#!/usr/bin/env bash
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">&lt;/span>&lt;span style="color:#7f848e">#&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Check that the directory name matches the chart name in Chart.yaml.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Examples:&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># - foo/Chart.yaml with &amp;#34;name: hey-foo&amp;#34; fails the check.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># - foo/Chart.yaml with &amp;#34;name: foo&amp;#34; passes the check.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Usage: $0 [path/to/chart/Chart.yaml ...]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">for&lt;/span> chart in &lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#e06c75">$@&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>; &lt;span style="color:#c678dd">do&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#e06c75">dirname&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#c678dd">$(&lt;/span>basename &lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#c678dd">$(&lt;/span>dirname &lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#e06c75">$chart&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#c678dd">)&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#c678dd">)&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#7f848e"># Remove trailing slash.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#e06c75">dirname&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#98c379">${&lt;/span>&lt;span style="color:#e06c75">dirname&lt;/span>%/&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#7f848e"># Fetch chart name from Chart.yaml.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#e06c75">chart_name&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#c678dd">$(&lt;/span>yq e &lt;span style="color:#98c379">&amp;#39;.name&amp;#39;&lt;/span> &lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#e06c75">$chart&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#c678dd">)&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#56b6c2">[[&lt;/span> &lt;span style="color:#e06c75">$dirname&lt;/span> !&lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#e06c75">$chart_name&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">]]&lt;/span>; &lt;span style="color:#c678dd">then&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e5c07b">echo&lt;/span> &lt;span style="color:#98c379">&amp;#34;error: directory name &amp;#39;&lt;/span>&lt;span style="color:#98c379">${&lt;/span>&lt;span style="color:#e06c75">dirname&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">&amp;#39; does not match chart name &amp;#39;&lt;/span>&lt;span style="color:#98c379">${&lt;/span>&lt;span style="color:#e06c75">chart_name&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">&amp;#39;&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e5c07b">exit&lt;/span> &lt;span style="color:#d19a66">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#c678dd">fi&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">done&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="reference">Reference&lt;/h2>
-&lt;p>I asked and self-answered this question on &lt;a href="https://stackoverflow.com/questions/79166730/how-to-enforce-that-the-directory-name-must-match-the-chart-name/79180650#79180650">Stack Overflow&lt;/a>.&lt;/p>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>&lt;em>Why&lt;/em>? For ease of management, simplicity, consistency &amp;amp; uniformity.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item></channel></rss>
+&lt;/ul></description></item></channel></rss>

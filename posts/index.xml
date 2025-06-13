@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/posts/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 13 Jun 2025 20:01:10 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Slack: public chats first</title><link>https://perrotta.dev/2025/06/slack-public-chats-first/</link><pubDate>Fri, 13 Jun 2025 20:01:10 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/slack-public-chats-first/</guid><description>&lt;p>&lt;a href="https://www.mooreds.com/wordpress/archives/3706">Why Public Slack Chats are Better than Direct Messages&lt;/a> by Dan Moore:&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 13 Jun 2025 21:40:01 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: custom health check for StatefulSet (OnDelete)</title><link>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</link><pubDate>Fri, 13 Jun 2025 21:40:01 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</guid><description>&lt;p>It turns out the
+&lt;a href="https://github.com/argoproj/gitops-engine/blob/master/pkg/health/health_statefulset.go">built-in&lt;/a>
+health check for
+&lt;a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">StatefulSets&lt;/a>
+in ArgoCD is not comprehensive enough.&lt;/p>
+&lt;p>It covers
+&lt;a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies">&lt;code>RollingUpdate&lt;/code>&lt;/a>
+well enough, but &lt;code>OnDelete&lt;/code> is incomplete.&lt;/p>
+&lt;p>More specifically:&lt;/p>
+&lt;p>&lt;strong>Observed&lt;/strong>: whenever you push an update to an STS whose &lt;code>.spec.updateStrategy&lt;/code>
+is &lt;code>OnDelete&lt;/code>, its health status stays as &lt;code>Healthy&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Expected&lt;/strong>: there should be an indication that the STS pods are not
+up-to-date, and hence need to be restarted to incorporate the latest changes.&lt;/p>
+&lt;p>There is &lt;a href="https://github.com/argoproj/argo-cd/issues/6527">an open bug&lt;/a>:
+&lt;code>Statefulset healthcheck does not work #6527&lt;/code> for it.&lt;/p>
+&lt;p>I managed to work around it by defining my own health check. This is an use case
+where Gen AI is helpful, though it does not shine. I could not have Gen AI
+produce a fully working health check for this scenario. Instead, I used it to
+bootstrap a basic example, then had to tweak it until it worked. This has been
+tested multiple times, I am reasonably confident it works well (some edge cases
+could be missing though).&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-lua" data-lang="lua">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">health_status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> {}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#e5c07b">nil&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Progressing&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Waiting for status to be reported&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">return&lt;/span> &lt;span style="color:#e06c75">health_status&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">strategy&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.spec&lt;/span>.&lt;span style="color:#e06c75">updateStrategy&lt;/span> &lt;span style="color:#56b6c2">and&lt;/span> &lt;span style="color:#e06c75">obj.spec&lt;/span>.&lt;span style="color:#e06c75">updateStrategy.type&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#98c379">&amp;#34;RollingUpdate&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.spec&lt;/span>.&lt;span style="color:#e06c75">replicas&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#d19a66">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">ready_replicas&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span>.&lt;span style="color:#e06c75">readyReplicas&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span>.&lt;span style="color:#e06c75">updatedReplicas&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">status_replicas&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span>.&lt;span style="color:#e06c75">replicas&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#d19a66">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">current_revision&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span>.&lt;span style="color:#e06c75">currentRevision&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#98c379">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">local&lt;/span> &lt;span style="color:#e06c75">update_revision&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">obj.status&lt;/span>.&lt;span style="color:#e06c75">updateRevision&lt;/span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#98c379">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">strategy&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#98c379">&amp;#34;OnDelete&amp;#34;&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">ready_replicas&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#e06c75">status_replicas&lt;/span> &lt;span style="color:#56b6c2">and&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Healthy&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;All replicas are ready and updated (OnDelete strategy)&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">elseif&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#d19a66">0&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Degraded&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;No replicas have been updated (OnDelete strategy): 0/&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; updated. Still running an old revision!&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Progressing&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Progressing (OnDelete): &amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">ready_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">status_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; ready, &amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; updated&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">ready_replicas&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#e06c75">status_replicas&lt;/span> &lt;span style="color:#56b6c2">and&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">==&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">current_revision&lt;/span> &lt;span style="color:#56b6c2">~=&lt;/span> &lt;span style="color:#e06c75">update_revision&lt;/span> &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Progressing&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Waiting for rollout to complete: revision mismatch (&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">current_revision&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; ≠ &amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">update_revision&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34;)&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Healthy&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;All replicas updated, ready, and revisions match&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.status&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;Progressing&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">health_status.message&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;RollingUpdate progressing: &amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">ready_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">status_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; ready, &amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">updated_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#e06c75">spec_replicas&lt;/span> &lt;span style="color:#56b6c2">..&lt;/span> &lt;span style="color:#98c379">&amp;#34; updated&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">end&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">return&lt;/span> &lt;span style="color:#e06c75">health_status&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It is necessary to distinguish between &lt;code>OnDelete&lt;/code> and &lt;code>RollingUpdate&lt;/code>.&lt;/p>
+&lt;p>&lt;code>OnDelete&lt;/code> should not use &lt;code>currentRevision&lt;/code> / &lt;code>update_revision&lt;/code>, as these values
+don&amp;rsquo;t mean anything for that update strategy. This can be observed
+&lt;a href="https://github.com/argoproj/gitops-engine/blob/f8f1b61ba3fd5fcb647563db3106977e1364de31/pkg/health/health_statefulset.go#L63">upstream&lt;/a>
+as well.&lt;/p>
+&lt;p>It is easy to write / tweak the health check when you look at the live STS
+resource / manifest in the cluster. &lt;code>obj&lt;/code> refers to the STS manifest (&lt;code>kubectl get sts -o yaml&lt;/code>). The most relevant field is &lt;code>status:&lt;/code>.&lt;/p>
+&lt;p>If you deploy ArgoCD via its helm chart, add that check for &lt;code>argocd-cm&lt;/code>. The
+&lt;code>values.yaml&lt;/code> file:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">argo-cd&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">configs&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">cm&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">resource.customizations.health.apps_StatefulSet&lt;/span>: |&lt;span style="color:#98c379">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> health_status = {}
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> [...]&lt;/span> 
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This custom health check was partly inspired by a Prometheus alert we have:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">alert&lt;/span>: StatefulSetUpdateNotRolledOut
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">expr&lt;/span>: max without (revision) (kube_statefulset_status_current_revision unless kube_statefulset_status_update_revision) * (kube_statefulset_replicas != kube_statefulset_status_replicas_updated)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>How long will it take until LLMs &lt;del>steal&lt;/del> adopt this novel solution from me?&lt;/p></description></item><item><title>Slack: public chats first</title><link>https://perrotta.dev/2025/06/slack-public-chats-first/</link><pubDate>Fri, 13 Jun 2025 20:01:10 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/slack-public-chats-first/</guid><description>&lt;p>&lt;a href="https://www.mooreds.com/wordpress/archives/3706">Why Public Slack Chats are Better than Direct Messages&lt;/a> by Dan Moore:&lt;/p>
 &lt;p>&lt;strong>Bad&lt;/strong>™:&lt;/p>
 &lt;blockquote>
 &lt;p>I&amp;rsquo;ve noticed that I sometimes use direct messages when I should be asking a
@@ -1789,27 +1870,4 @@ is, &lt;code>foo ref+SECRET1+ ref+SECRET2+ bar&lt;/code> evaluates to &lt;code>f
 &lt;p>The final result:&lt;/p>
 &lt;pre tabindex="0">&lt;code>secrets+literal://ref+vault://kv-v2/services/common/postgres/#url+?ref+vault://kv-v2/services/common/postgres/#params
 &lt;/code>&lt;/pre>&lt;p>&amp;hellip;wherein &lt;code>secrets+literal://&lt;/code> comes from &lt;code>helm-secrets&lt;/code>. It needs to appear only
-once. &lt;code>ref+vault://&lt;/code> comes from &lt;code>vals&lt;/code>, it appears once for each vault entry.&lt;/p></description></item><item><title>1Password SSH agent error</title><link>https://perrotta.dev/2025/05/1password-ssh-agent-error/</link><pubDate>Wed, 07 May 2025 12:52:00 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/1password-ssh-agent-error/</guid><description>&lt;p>A day in the life:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% ssh &lt;span style="color:#56b6c2">{&lt;/span>my-server&lt;span style="color:#56b6c2">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>STDERR:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> sign_and_send_pubkey: signing failed &lt;span style="color:#c678dd">for&lt;/span> ED25519 &lt;span style="color:#98c379">&amp;#34;/Users/thiago/.ssh/id_ed25519&amp;#34;&lt;/span> from agent: agent refused operation
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> git@github.com: Permission denied &lt;span style="color:#56b6c2">(&lt;/span>publickey&lt;span style="color:#56b6c2">)&lt;/span>.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> fatal: Could not &lt;span style="color:#e5c07b">read&lt;/span> from remote repository.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Please make sure you have the correct access rights
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> and the repository exists.
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>What&amp;rsquo;s the matter?&lt;/p>
-&lt;p>My ssh config is integrated with the &lt;a href="https://developer.1password.com/docs/ssh/agent/">1Password ssh
-agent&lt;/a>:&lt;/p>
-&lt;pre tabindex="0">&lt;code>Host *
- # Use 1Password SSH agent when available
- # macOS only
- # Linux: &amp;#34;~/.1password/agent.sock&amp;#34;
- IdentityAgent &amp;#34;~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock&amp;#34;
-&lt;/code>&lt;/pre>&lt;p>&lt;strong>Solution&lt;/strong>: Ensure 1Password is unlocked, so that the agent can be used.&lt;/p>
-&lt;p>It can be unlocked from its macOS app, or from the CLI (&lt;code>op signin --account {my-account}&lt;/code>).&lt;/p></description></item></channel></rss>
+once. &lt;code>ref+vault://&lt;/code> comes from &lt;code>vals&lt;/code>, it appears once for each vault entry.&lt;/p></description></item></channel></rss>
