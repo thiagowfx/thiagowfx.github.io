@@ -50,7 +50,8 @@ screwed up) and notes (for this blog post, and also for the sake of reverting
 the process should I want to – for example, if I ever sell the device to a third
 party).
 
-Before deciding to do it, I watched [this
+Before deciding to do it, I watched
+[this](https://www.youtube.com/watch?v=hJ59M0io6zE) and [this
 video](https://www.youtube.com/watch?v=Qtk7ERwlIAk) which made me feel even more
 confident it is the outcome I was longing for. [Previously]({{< ref
 "2024-12-31-independence" >}}).
