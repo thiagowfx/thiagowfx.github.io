@@ -4,7 +4,6 @@ date: 2025-04-30T16:20:24+02:00
 tags:
   - bestof
   - dev
-  - linux
 ---
 
 I employ this pattern almost every day:

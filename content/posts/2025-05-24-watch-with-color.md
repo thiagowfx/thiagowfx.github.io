@@ -3,7 +3,6 @@ title: "watch with --color"
 date: 2025-05-24T14:40:07+02:00
 tags:
   - dev
-  - linux
 ---
 
 When using `watch(1)` to monitor program output, colors will not be emitted by

@@ -3,7 +3,6 @@ title: "ack with context"
 date: 2025-05-19T14:12:35+02:00
 tags:
   - dev
-  - linux
 ---
 
 I often use [`ack(1)`](https://beyondgrep.com/) to `grep` for text patterns in git

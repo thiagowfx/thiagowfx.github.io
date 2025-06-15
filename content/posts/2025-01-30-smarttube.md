@@ -3,7 +3,6 @@ title: "SmartTube"
 date: 2025-01-30T18:18:25+01:00
 tags:
   - dev
-  - linux
   - privacy
   - selfhosted
   - serenity

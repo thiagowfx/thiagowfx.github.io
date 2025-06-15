@@ -4,7 +4,6 @@ date: 2022-02-19T19:18:25-05:00
 tags:
   - bestof
   - dev
-  - linux
 ---
 
 I've been giving Wayland a try. My window manager of choice in X11/Xorg is [`i3`](https://i3wm.org/), so the natural choice in Wayland is [`sway`](https://swaywm.org/).

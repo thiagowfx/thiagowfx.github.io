@@ -3,7 +3,6 @@ title: "VSCode: Github Pull Requests plug-in: collapse all comments by default"
 date: 2025-05-14T14:40:34+02:00
 tags:
   - dev
-  - linux
 ---
 
 **Problem statement**: I am constantly annoyed at opening files in VSCode with

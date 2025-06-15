@@ -3,7 +3,6 @@ title: "Rename files in bulk"
 date: 2024-06-19T13:39:04+02:00
 tags:
   - dev
-  - linux
 ---
 
 Whenever the files are in the same directory, `vidir` from [moreutils]({{< ref

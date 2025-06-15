@@ -3,7 +3,6 @@ title: "Sleep forever"
 date: 2024-06-15T15:01:02+02:00
 tags:
   - dev
-  - linux
 ---
 
 The following commands will make the shell sleep indefinitely:

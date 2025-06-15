@@ -3,7 +3,6 @@ title: 'Ufw: Firewall'
 date: 2021-12-28T17:14:55-05:00
 tags:
   - dev
-  - linux
   - selfhosted
 ---
 

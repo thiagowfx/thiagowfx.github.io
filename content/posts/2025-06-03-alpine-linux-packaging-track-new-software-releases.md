@@ -4,7 +4,6 @@ date: 2025-06-03T01:36:53+02:00
 tags:
   - bestof
   - dev
-  - linux
 ---
 
 **Problem statement**: You maintain packages for a Linux distribution, for

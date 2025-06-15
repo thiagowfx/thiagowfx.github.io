@@ -3,7 +3,6 @@ title: "Localhost domain"
 date: 2024-07-01T11:34:34+02:00
 tags:
   - dev
-  - linux
 ---
 
 If you find yourself in a situation wherein http://localhost:1313 has issues,

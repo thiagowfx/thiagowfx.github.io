@@ -4,7 +4,6 @@ date: 2021-12-12T18:49:58-03:00
 tags:
   - bestof
   - dev
-  - linux
 ---
 
 When I was in university I made heavy use of [cmake](https://cmake.org/) with

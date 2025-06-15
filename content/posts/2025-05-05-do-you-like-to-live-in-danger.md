@@ -3,7 +3,6 @@ title: "Do you like to live in danger?"
 date: 2025-05-05T18:11:23+02:00
 tags:
   - dev
-  - linux
 ---
 
 ```shell

@@ -3,7 +3,6 @@ title: "Transfer bash history to zsh"
 date: 2022-02-04T21:58:50-05:00
 tags:
   - dev
-  - linux
 ---
 
 After years of using `bash` as my default interactive shell at $DAYJOB,

@@ -3,7 +3,6 @@ title: "Running multiple servers in a single bash script"
 date: 2024-12-23T22:52:40-03:00
 tags:
   - dev
-  - linux
 ---
 
 Inspired by [Simon

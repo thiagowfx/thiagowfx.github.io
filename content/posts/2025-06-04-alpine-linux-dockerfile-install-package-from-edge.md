@@ -3,7 +3,6 @@ title: "Alpine Linux: Dockerfile: install package from edge"
 date: 2025-06-04T12:37:47+02:00
 tags:
   - dev
-  - linux
 ---
 
 **Problem statement**: Given a `Dockerfile` based on a fixed release of Alpine

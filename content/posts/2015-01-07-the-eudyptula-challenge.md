@@ -3,7 +3,6 @@ title: The Eudyptula Challenge
 date: 2015-01-07T12:54:40+00:00
 tags:
   - dev
-  - linux
 ---
 
 **Update: I stopped at task 06 on February. Little seems to have stopped responding e-mails. Which is sad, because I was liking those tasks =/**

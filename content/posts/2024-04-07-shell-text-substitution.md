@@ -3,7 +3,6 @@ title: "Shell text substitution"
 date: 2024-04-07T23:13:09+02:00
 tags:
   - dev
-  - linux
 ---
 
 I learned a neat shell trick this week. In both `bash` and `zsh` you can use the

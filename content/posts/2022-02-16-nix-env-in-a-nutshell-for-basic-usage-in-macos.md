@@ -3,7 +3,6 @@ title: "nix-env in a nutshell for basic usage in macOS"
 date: 2022-02-16T20:48:02-05:00
 tags:
   - dev
-  - linux
   - bestof
 ---
 

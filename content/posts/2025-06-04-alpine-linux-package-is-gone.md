@@ -3,7 +3,6 @@ title: "Alpine Linux: package is gone?!"
 date: 2025-06-04T11:43:05+02:00
 tags:
   - dev
-  - linux
 ---
 
 Upon upgrading one of our Dockerfiles from Alpine Linux 3.21 to 3.22, we noticed

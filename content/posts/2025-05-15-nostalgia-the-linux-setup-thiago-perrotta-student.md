@@ -4,7 +4,6 @@ date: 2025-05-15T22:43:17+02:00
 tags:
   - bestof
   - dev
-  - linux
   - serenity
 ---
 

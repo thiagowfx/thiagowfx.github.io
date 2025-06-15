@@ -19,7 +19,6 @@ date: 2024-12-22T22:26:46-03:00
 tags:
   - bestof
   - dev
-  - linux
   - meta
   - pt
   - privacy

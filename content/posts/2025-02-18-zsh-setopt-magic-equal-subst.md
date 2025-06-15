@@ -3,7 +3,6 @@ title: "zsh: setopt magic_equal_subst"
 date: 2025-02-18T13:52:57+01:00
 tags:
   - dev
-  - linux
 ---
 
 **Problem statement**: Write the following command line in `zsh`:

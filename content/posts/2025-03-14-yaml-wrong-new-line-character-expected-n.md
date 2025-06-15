@@ -3,7 +3,6 @@ title: 'yaml: wrong new line character: expected \n'
 date: 2025-03-14T15:09:47+01:00
 tags:
   - dev
-  - linux
 ---
 
 Example upstream issue: https://github.com/sbaudoin/sonar-yaml/issues/24

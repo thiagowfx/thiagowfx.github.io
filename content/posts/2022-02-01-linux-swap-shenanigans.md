@@ -3,7 +3,6 @@ title: "Linux swap shenanigans"
 date: 2022-02-01T17:03:13-05:00
 tags:
   - dev
-  - linux
 ---
 
 In this post we will cover a few linux swap recipes.

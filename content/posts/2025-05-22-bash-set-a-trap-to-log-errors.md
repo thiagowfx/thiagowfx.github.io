@@ -3,7 +3,6 @@ title: "bash: set a trap to log errors"
 date: 2025-05-22T13:41:43+02:00
 tags:
   - dev
-  - linux
 ---
 
 Create `main.sh` and mark it as executable (`chmod +x`):

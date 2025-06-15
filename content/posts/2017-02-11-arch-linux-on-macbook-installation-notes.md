@@ -3,7 +3,6 @@ title: "Arch Linux on macbook installation notes"
 date: 2017-02-11T18:36:02-03:00
 tags:
   - dev
-  - linux
 ---
 
 Imported from [thiagowfx](https://gist.github.com/thiagowfx/)@'s gist.

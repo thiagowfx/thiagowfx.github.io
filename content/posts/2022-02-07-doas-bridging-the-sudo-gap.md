@@ -3,7 +3,6 @@ title: "Doas: bridging the sudo gap"
 date: 2022-02-07T14:49:03-05:00
 tags:
   - dev
-  - linux
 ---
 
 [`doas`][doas] is a lightweight and safer replacement for `sudo`. In most occasions you invoke it exactly like `sudo`:

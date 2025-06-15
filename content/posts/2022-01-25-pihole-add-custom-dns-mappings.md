@@ -3,7 +3,6 @@ title: "Pihole: Add custom DNS mappings"
 date: 2022-01-25T21:50:53-05:00
 tags:
   - dev
-  - linux
   - selfhosted
 ---
 

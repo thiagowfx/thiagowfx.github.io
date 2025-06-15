@@ -3,7 +3,6 @@ title: 'Recovery típico via USB'
 date: 2014-04-18T16:38:36+00:00
 tags:
   - dev
-  - linux
   - pt
 ---
 

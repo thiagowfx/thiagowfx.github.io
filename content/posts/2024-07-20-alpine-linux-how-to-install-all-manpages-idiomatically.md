@@ -3,7 +3,6 @@ title: "Alpine Linux: How to install all manpages (idiomatically)"
 date: 2024-07-20T16:19:53+02:00
 tags:
   - dev
-  - linux
 ---
 
 This post is a reply to

@@ -3,7 +3,6 @@ title: "apk autoupdate on alpine linux"
 date: 2024-08-18T17:32:48+02:00
 tags:
   - dev
-  - linux
 ---
 
 **Problem statement**: Upon running `doas apk upgrade` on Alpine Linux, select
