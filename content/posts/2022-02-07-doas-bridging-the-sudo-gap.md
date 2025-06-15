@@ -2,6 +2,7 @@
 title: "Doas: bridging the sudo gap"
 date: 2022-02-07T14:49:03-05:00
 tags:
+  - dev
   - linux
 ---
 

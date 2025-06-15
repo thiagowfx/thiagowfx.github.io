@@ -2,6 +2,7 @@
 title: "Linux swap shenanigans"
 date: 2022-02-01T17:03:13-05:00
 tags:
+  - dev
   - linux
 ---
 

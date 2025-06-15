@@ -2,6 +2,7 @@
 title: "Alpine Linux: apk command not found hook"
 date: 2022-01-04T16:25:51-05:00
 tags:
+  - dev
   - linux
   - bestof
 ---

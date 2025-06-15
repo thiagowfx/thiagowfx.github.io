@@ -2,6 +2,7 @@
 title: "Alpine Linux: apk logs with etckeeper"
 date: 2022-01-10T23:14:43-05:00
 tags:
+  - dev
   - linux
 ---
 

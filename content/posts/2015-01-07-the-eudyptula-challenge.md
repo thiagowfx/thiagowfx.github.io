@@ -2,6 +2,7 @@
 title: The Eudyptula Challenge
 date: 2015-01-07T12:54:40+00:00
 tags:
+  - dev
   - linux
 ---
 

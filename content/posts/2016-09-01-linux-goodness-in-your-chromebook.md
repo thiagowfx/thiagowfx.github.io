@@ -2,6 +2,7 @@
 title: Linux goodness in your Chromebook
 date: 2016-09-01T16:29:07-02:00
 tags:
+  - dev
   - linux
 ---
 

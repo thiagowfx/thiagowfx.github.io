@@ -2,6 +2,7 @@
 title: 'Ephemeral Linux Shell Access in the Cloud'
 date: 2022-01-02T00:16:28-05:00
 tags:
+  - dev
   - linux
 ---
 

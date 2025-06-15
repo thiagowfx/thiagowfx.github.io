@@ -2,6 +2,7 @@
 title: "Be aware that your public SSH keys can reveal your identity"
 date: 2024-05-03T16:46:28+02:00
 tags:
+  - dev
   - linux
   - privacy
 ---

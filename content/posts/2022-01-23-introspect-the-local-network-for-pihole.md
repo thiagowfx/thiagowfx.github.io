@@ -2,6 +2,7 @@
 title: "Introspect the local network for Pihole"
 date: 2022-01-23T13:34:58-05:00
 tags:
+  - dev
   - linux
   - selfhosted
 ---

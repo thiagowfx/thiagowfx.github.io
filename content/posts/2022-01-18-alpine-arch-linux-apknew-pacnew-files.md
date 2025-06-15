@@ -2,6 +2,7 @@
 title: "Alpine / Arch Linux: .apk-new and .pacnew files"
 date: 2022-01-18T14:25:20-05:00
 tags:
+  - dev
   - linux
 ---
 

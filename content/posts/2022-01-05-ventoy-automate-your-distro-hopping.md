@@ -2,6 +2,7 @@
 title: "Ventoy: Automate your Distro hopping"
 date: 2022-01-05T18:28:20-05:00
 tags:
+  - dev
   - linux
 ---
 

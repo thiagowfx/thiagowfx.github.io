@@ -2,6 +2,7 @@
 title: 'Linux: Auto Switch to Bluetooth Headset'
 date: 2021-12-26T15:27:12-05:00
 tags:
+  - dev
   - linux
 ---
 
