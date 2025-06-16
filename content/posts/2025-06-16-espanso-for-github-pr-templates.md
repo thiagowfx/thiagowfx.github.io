@@ -55,7 +55,7 @@ matches:
 
       Check each when they are done or confirmed to not apply. If something
       here isn't checked, this isn't ready to be merged. Seriously. You are
-      making your colleagues lives a lot easier by doing this consistently.
+      making your teammates lives a lot easier by doing this consistently.
 
       - [x] Test Plan Fully Executed
       - [x] Does not require security review or security review complete
