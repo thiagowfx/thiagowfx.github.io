@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 24 Jun 2025 17:50:31 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Resize image to make an avatar</title><link>https://perrotta.dev/2025/06/resize-image-to-make-an-avatar/</link><pubDate>Tue, 24 Jun 2025 17:50:31 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/resize-image-to-make-an-avatar/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>.png&lt;/code> image suitable to be used as a profile
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 30 Jun 2025 13:04:51 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: deployment spec.selector: field is immutable</title><link>https://perrotta.dev/2025/06/argocd-deployment-spec.selector-field-is-immutable/</link><pubDate>Mon, 30 Jun 2025 13:04:51 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-deployment-spec.selector-field-is-immutable/</guid><description>&lt;p>When using &lt;a href="https://argo-cd.readthedocs.io/en/stable/">ArgoCD&lt;/a> to manage an app,
+the Deployment manifest needs to undergo significant changes, updating its
+selector labels. When trying to sync the argocd app, we get the following error:&lt;/p>
+&lt;pre tabindex="0">&lt;code>one or more objects failed to apply, reason: error when patching &amp;#34;/dev/shm/3469418025&amp;#34;: Deployment.apps &amp;#34;myapp&amp;#34; is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:v1.LabelSelectorRequirement(nil)}: field is immutable. Retrying attempt #2 at 11:02AM.
+&lt;/code>&lt;/pre>&lt;p>This error doesn&amp;rsquo;t come directly from Argo, it is from &lt;code>kubectl apply&lt;/code>.&lt;/p>
+&lt;p>There are two ways to address it:&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Sync the argo app with the
+&lt;a href="https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/#force-sync">&amp;ldquo;force&amp;rdquo;&lt;/a>
+option enabled&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Run &lt;code>kubectl apply&lt;/code> with &lt;code>--force&lt;/code> (which is ultimately what the
+aforementioned option maps to).&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>In action (&lt;code>-w&lt;/code> is short for &lt;code>--watch&lt;/code>):&lt;/p>
+&lt;pre tabindex="0">&lt;code>% kubectl get endpoints -w
+NAME ENDPOINTS AGE
+myapp &amp;lt;none&amp;gt; 5y44d
+myapp 5y44d
+myapp 10.1.13.40:8080 5y44d
+&lt;/code>&lt;/pre></description></item><item><title>Resize image to make an avatar</title><link>https://perrotta.dev/2025/06/resize-image-to-make-an-avatar/</link><pubDate>Tue, 24 Jun 2025 17:50:31 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/resize-image-to-make-an-avatar/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>.png&lt;/code> image suitable to be used as a profile
 picture (an avatar in a forum, for example), convert it to 80x80, ensure its
 file size is under 10KiB and keep its transparency when existing. The extension
 should remain &lt;code>.png&lt;/code>.&lt;/p>
@@ -1914,16 +1937,4 @@ commits into fewer, targeted pull requests.&lt;/p>
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ - &amp;#34;*&amp;#34;
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This is better for my workflow because then I will have less pull requests to
 deal with at once, instead of having to review them one by one for each
-individual github action or git submodule bump.&lt;/p></description></item><item><title>VSCode: Github Pull Requests plug-in: collapse all comments by default</title><link>https://perrotta.dev/2025/05/vscode-github-pull-requests-plug-in-collapse-all-comments-by-default/</link><pubDate>Wed, 14 May 2025 14:40:34 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/vscode-github-pull-requests-plug-in-collapse-all-comments-by-default/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: I am constantly annoyed at opening files in VSCode with
-PR comments being automatically expanded by default and occupying precious real
-estate. Get rid of these comments!&lt;/p>
-&lt;p>&lt;a href="https://github.com/Microsoft/vscode-pull-request-github/issues/665">Github
-issue&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>From your user settings with &lt;code>&amp;quot;githubPullRequests.commentExpandState&amp;quot;&lt;/code>&lt;/p>
-&lt;/blockquote>
-&lt;p>I added the following to my &lt;code>settings.json&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">&amp;#34;githubPullRequests.commentExpandState&amp;#34;&lt;/span>: &lt;span style="color:#98c379">&amp;#34;collapseAll&amp;#34;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
+individual github action or git submodule bump.&lt;/p></description></item></channel></rss>
