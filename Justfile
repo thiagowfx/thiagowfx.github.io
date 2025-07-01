@@ -2,7 +2,7 @@
 # https://github.com/casey/just
 
 # Start a hugo server in watch mode
-watch preview="true":
+watch preview="true" *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
@@ -10,19 +10,19 @@ watch preview="true":
     if [ "{{ preview }}" = "true" ]; then
     	additional_flags+=("--openBrowser" "--navigateToChanged")
     fi
-    hugo server --buildDrafts --port ${PORT:-1313} --watch "${additional_flags[@]}"
+    hugo server --buildDrafts --port ${PORT:-1313} --watch "${additional_flags[@]}" {{ args }}
 
 # Build the blog as in production
-build:
-    hugo --environment production --gc --minify
+build *args:
+    hugo --environment production --gc --minify {{ args }}
 
 # Create a new post. Usage: `just new "advent of code day 8"`
-new title:
+new title *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
     filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-    hugo new content/posts/`date "+%Y-%m-%d"`-${filename}.md
+    hugo new content/posts/`date "+%Y-%m-%d"`-${filename}.md {{ args }}
 
 # Delete hugo build artifacts
 clean:
@@ -35,5 +35,5 @@ ping sitemap="https://perrotta.dev/sitemap.xml":
 
 # Update git submodules and pre-commit hooks
 update:
-    git submodule update --remote
+    git submodule update --remote --jobs "$(nproc)"
     pre-commit autoupdate --freeze --jobs "$(nproc)" && pre-commit run --all-files
