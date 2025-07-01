@@ -21,7 +21,7 @@ new title *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+    filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/: /-/g' | tr ' ' '-')
     hugo new content/posts/`date "+%Y-%m-%d"`-${filename}.md {{ args }}
 
 # Delete hugo build artifacts
