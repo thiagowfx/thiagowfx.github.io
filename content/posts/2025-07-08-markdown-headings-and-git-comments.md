@@ -59,4 +59,41 @@ Summary
 Provide a link to the corresponding PR in other repositories if applicable. -->
 ```
 
+**Update**: A teammate pointed out the following workaround, which is the most
+elegant of them:
+
+[`core.commentChar`](https://git-scm.com/docs/git-config#Documentation/git-config.txt-corecommentChar):
+
+> Commands such as `commit` and `tag` that let you edit messages consider a line
+> that begins with this character commented, and removes them after the editor
+> returns (default `#`).
+>
+> If set to "auto", git-commit would select a character that is not the
+> beginning character of any line in existing commit messages.
+
+And that's exactly what I did:
+
+```shell
+% git config set --global core.commentChar "auto"
+```
+
+The effect, it automatically picks `;` as the comment character:
+
+```
+## Summary
+
+<!-- Provide a clear and concise description of the changes.
+Provide a link to the corresponding PR in other repositories if applicable. -->
+
+; Please enter the commit message for your changes. Lines starting
+; with ';' will be ignored, and an empty message aborts the commit.
+;
+; On branch master
+; Your branch is up to date with 'origin/master'.
+;
+; ------------------------ >8 ------------------------
+; Do not modify or remove the line above.
+; Everything below it will be ignored.
+```
+
 [^1]: I am always forgetting whether to call them "headings" or "headers".
