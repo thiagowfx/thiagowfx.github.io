@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Selfhosted on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/selfhosted/</link><description>Recent content in Selfhosted on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 30 Jun 2025 13:04:51 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: deployment spec.selector: field is immutable</title><link>https://perrotta.dev/2025/06/argocd-deployment-spec.selector-field-is-immutable/</link><pubDate>Mon, 30 Jun 2025 13:04:51 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-deployment-spec.selector-field-is-immutable/</guid><description>&lt;p>When using &lt;a href="https://argo-cd.readthedocs.io/en/stable/">ArgoCD&lt;/a> to manage an app,
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 10 Jul 2025 11:14:29 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>pq: could not access file "$libdir/dict_snowball": No such file or directory</title><link>https://perrotta.dev/2025/07/pq-could-not-access-file-libdir/dict_snowball-no-such-file-or-directory/</link><pubDate>Thu, 10 Jul 2025 11:14:29 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/07/pq-could-not-access-file-libdir/dict_snowball-no-such-file-or-directory/</guid><description>&lt;p>My &lt;a href="http://miniflux.app/">miniflux&lt;/a> instance broke yesterday. All feeds had the
+following error:&lt;/p>
+&lt;pre tabindex="0">&lt;code>3 errors - Database error: store: unable to update entry &amp;#34;{redacted}&amp;#34;: pq: could not access file &amp;#34;$libdir/dict_snowball&amp;#34;: No such file or directory.
+&lt;/code>&lt;/pre>&lt;p>The error is from PostgreSQL (&lt;code>pq&lt;/code>).&lt;/p>
+&lt;p>I recall I did a full system upgrade yesterday (&lt;code>doas apk upgrade&lt;/code>).&lt;/p>
+&lt;p>Upon checking the logs in &lt;code>/var/log/apk.log&lt;/code>&amp;hellip;&lt;/p>
+&lt;pre tabindex="0">&lt;code>Running `apk upgrade --no-self-upgrade` at 2025-07-09 13:57:09
+apk-tools 3.0.0_rc5_git20250613-r0, compiled for x86_64.
+( 1/60) Purging postgresql-zsh-completion (5.9-r5)
+( 2/60) Purging postgresql17-contrib (17.5-r2)
+( 3/60) Purging postgresql17-openrc (17.5-r2)
+( 4/60) Purging postgresql17 (17.5-r2)
+postgresql17-17.5-r2.pre-deinstall: Executing script...
+postgresql17-17.5-r2.pre-deinstall: *
+postgresql17-17.5-r2.pre-deinstall: * You are uninstalling your default PostgreSQL version (17) which seems to be
+postgresql17-17.5-r2.pre-deinstall: * in use! If it&amp;#39;s *not* intentional and you want to preserve this version,
+postgresql17-17.5-r2.pre-deinstall: * install it explicitly: `apk add postgresql17`.
+postgresql17-17.5-r2.pre-deinstall: *
+postgresql17-17.5-r2.pre-deinstall: * Please note that to upgrade your cluster to a new major version using
+postgresql17-17.5-r2.pre-deinstall: * pg_upgrade(1), you must have both the old and new versions installed.
+postgresql17-17.5-r2.pre-deinstall: *
+ERROR: postgresql17-17.5-r2.pre-deinstall: exited with error 1
+&lt;/code>&lt;/pre>&lt;p>For whatever reason (!?), the &lt;code>postgresql17*&lt;/code> packages were removed.&lt;/p>
+&lt;p>The fix is straightforward:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% doas apk add postgresql17
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% doas service miniflux restart
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Why did it break in the first place?!&lt;/p>
+&lt;p>There&amp;rsquo;s nothing suspicious on &lt;code>postgresql17&lt;/code> in the
+&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/commits/master/main/postgresql17">aports&lt;/a>
+repo 🤷&lt;/p>
+&lt;p>What is &lt;code>dict_snowball&lt;/code>?&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;code>dict_snowball&lt;/code> is a PostgreSQL text search dictionary module that uses the
+Snowball stemming algorithms for full-text search.&lt;/p>
+&lt;/blockquote></description></item><item><title>ArgoCD: deployment spec.selector: field is immutable</title><link>https://perrotta.dev/2025/06/argocd-deployment-spec.selector-field-is-immutable/</link><pubDate>Mon, 30 Jun 2025 13:04:51 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-deployment-spec.selector-field-is-immutable/</guid><description>&lt;p>When using &lt;a href="https://argo-cd.readthedocs.io/en/stable/">ArgoCD&lt;/a> to manage an app,
 the Deployment manifest needs to undergo significant changes, updating its
 selector labels. When trying to sync the argocd app, we get the following error:&lt;/p>
 &lt;pre tabindex="0">&lt;code>one or more objects failed to apply, reason: error when patching &amp;#34;/dev/shm/3469418025&amp;#34;: Deployment.apps &amp;#34;myapp&amp;#34; is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:v1.LabelSelectorRequirement(nil)}: field is immutable. Retrying attempt #2 at 11:02AM.
@@ -2358,16 +2392,4 @@ have &lt;code>npm&lt;/code> installed on your system.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% busybox httpd -f -p &lt;span style="color:#d19a66">8080&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>httpd: applet not found
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Therefore I don&amp;rsquo;t consider it universal enough.&lt;/p>
-&lt;p>&lt;strong>Reference&lt;/strong>: &lt;a href="https://gist.github.com/willurd/5720255">https://gist.github.com/willurd/5720255&lt;/a>&lt;/p></description></item><item><title>Miniflux v2.0.36 is out</title><link>https://perrotta.dev/2022/03/miniflux-v2.0.36-is-out/</link><pubDate>Fri, 11 Mar 2022 10:30:18 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2022/03/miniflux-v2.0.36-is-out/</guid><description>&lt;p>Miniflux &lt;a href="https://miniflux.app/releases/2.0.36.html">2.0.36&lt;/a> has been released this week. This is a dear release to me because I was responsible for many of its changes:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#e06c75">PAGER&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;cat&amp;#34;&lt;/span> git shortlog --author&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;Thiago Perrotta&amp;#34;&lt;/span> 2.0.35..2.0.36
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Thiago Perrotta &lt;span style="color:#56b6c2">(&lt;/span>8&lt;span style="color:#56b6c2">)&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Add pagination on top of all entries. Closes &lt;span style="color:#7f848e">#1305.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Add links to scraper/rewrite/filtering docs when editing feeds
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Add several icons to menus according to their roles
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Add new keyboard shortcut: &lt;span style="color:#98c379">&amp;#39;M&amp;#39;&lt;/span> - toggle read/unread, go to prev item
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> refactor handleEntryStatus / goToNextListItem / goToPrevListItem
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Add &lt;span style="color:#56b6c2">(&lt;/span>+&lt;span style="color:#56b6c2">)&lt;/span> action next to Feeds to quickly add new feeds
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Add &lt;span style="color:#98c379">&amp;#39;+&amp;#39;&lt;/span> shortcut &lt;span style="color:#c678dd">for&lt;/span> new subscription page
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Gray out pagination buttons when they are not applicable
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This is the first open source project I self-host in a serious manner that I am contributing back to. It is very exciting and fulfilling, and it sparks a lot of joy in my heart.&lt;/p>
-&lt;p>I have a few other ideas for improving the miniflux user experience and functionality, while still keeping it simple and elegant. As everything else in life, time is the only constraint&amp;hellip;&lt;/p></description></item></channel></rss>
+&lt;p>&lt;strong>Reference&lt;/strong>: &lt;a href="https://gist.github.com/willurd/5720255">https://gist.github.com/willurd/5720255&lt;/a>&lt;/p></description></item></channel></rss>
