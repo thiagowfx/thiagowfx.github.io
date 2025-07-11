@@ -18,7 +18,8 @@ package:
 pipx run check-jsonschema --schemafile schema.json entry.json
 ```
 
-What if we want to do the validation via a pre-commit hook?
+What if we want to do the validation via a
+[pre-commit.com](https://pre-commit.com) hook?
 
 ```yaml
 repos:
