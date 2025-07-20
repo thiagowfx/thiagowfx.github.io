@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 11 Jul 2025 22:05:32 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>check-json-schema: pre-commit hook</title><link>https://perrotta.dev/2025/07/check-json-schema-pre-commit-hook/</link><pubDate>Fri, 11 Jul 2025 22:05:32 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/07/check-json-schema-pre-commit-hook/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: given an &lt;code>entry.json&lt;/code> file, validate it against a given
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 20 Jul 2025 10:52:11 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Alpine Linux: remove broken packages</title><link>https://perrotta.dev/2025/07/alpine-linux-remove-broken-packages/</link><pubDate>Sun, 20 Jul 2025 10:52:11 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/07/alpine-linux-remove-broken-packages/</guid><description>&lt;p>In a sunny Sunday afternoon:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% doas apk upgrade
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>WARNING: The indexes contain broken packages which might not &lt;span style="color:#c678dd">function&lt;/span> properly.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>What?! Out of nowhere?&lt;/p>
+&lt;p>I tried a couple of basic troubleshooting commands:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% doas apk update --force-refresh
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% doas apk fix
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% doas apk cache clean
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;to no avail.&lt;/p>
+&lt;p>Next idea: search engines. Virtually no results on &lt;a href="https://kagi.com/">Kagi&lt;/a>. No
+relevant results on Google either&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p>
+&lt;p>Next idea: LLMs. Nothing useful either.&lt;/p>
+&lt;p>This is novel territory! That&amp;rsquo;s what makes it fun to self-host Alpine Linux&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>.&lt;/p>
+&lt;p>My intuition tells me to start by searching their
+&lt;a href="https://gitlab.alpinelinux.org/alpine">Gitlab&lt;/a>. Eventually I got linked to
+&lt;a href="https://sourcegraph.com/github.com/alpinelinux/apk-tools/-/blob/test/solver/error11.test?L3-5">this&lt;/a>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>test/solver/error11.test:
+
+@ARGS add invalid
+@REPO error.repo
+@EXPECT
+WARNING: The indexes contain broken packages which are not installable.
+ERROR: unable to select packages:
+ invalid-1:
+ error: uninstallable
+ satisfies: world[invalid]
+&lt;/code>&lt;/pre>&lt;p>From this test file, it seems possible that there&amp;rsquo;s an invalid package in my
+&lt;code>/etc/apk/world&lt;/code>. The error message is not quite the same, but it is similar:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% wc -l /etc/apk/world
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#d19a66">293&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>There are too many packages there to hunt each of them by hand. And I didn&amp;rsquo;t
+install any new packages recently.&lt;/p>
+&lt;p>So I looked into &lt;code>apk fix --help&lt;/code> and discovered there is a &lt;code>--verbose&lt;/code> flag. I
+did not save its output, but there were five packages there:&lt;/p>
+&lt;pre tabindex="0">&lt;code>- busybox-initscripts
+- kmod-openrc
+- libacl
+- py3-pep517
+- sensible-utils
+&lt;/code>&lt;/pre>&lt;p>I ran &lt;code>doas apk del&lt;/code> to remove all of them. That was a sensible cleanup, but it
+still has not resolved the issue.&lt;/p>
+&lt;p>If I want to dive deeper into this, I&amp;rsquo;ll have to add some debugging logging to
+&lt;a href="https://sourcegraph.com/github.com/alpinelinux/apk-tools@bffc60041447cadee5b69c291df8c90eb3b8fe82/-/blob/src/database.c?L2090">&lt;code>src/database.c&lt;/code>&lt;/a>
+in &lt;code>apk-tools&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c" data-lang="c">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> (&lt;span style="color:#e06c75">db&lt;/span>&lt;span style="color:#56b6c2">-&amp;gt;&lt;/span>&lt;span style="color:#e06c75">compat_depversions&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#61afef;font-weight:bold">apk_warn&lt;/span>(&lt;span style="color:#e06c75">out&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;The indexes contain broken packages which %s.&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">db&lt;/span>&lt;span style="color:#56b6c2">-&amp;gt;&lt;/span>&lt;span style="color:#e06c75">compat_notinstallable&lt;/span> &lt;span style="color:#56b6c2">?&lt;/span> &lt;span style="color:#98c379">&amp;#34;are not installable&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">:&lt;/span> &lt;span style="color:#98c379">&amp;#34;might not function properly&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then one last thought occurred to me:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% apk --version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>apk-tools 3.0.0_rc5_git20250715-r0, compiled &lt;span style="color:#c678dd">for&lt;/span> x86_64.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Aha! I am running a release candidate version of &lt;code>apk&lt;/code>, because I am using
+Alpine Linux edge repositories:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat /etc/apk/repositories
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http://dl-cdn.alpinelinux.org/alpine/edge/main
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http://dl-cdn.alpinelinux.org/alpine/edge/community
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http://dl-cdn.alpinelinux.org/alpine/edge/testing
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>From the
+&lt;a href="https://wiki.alpinelinux.org/wiki/Draft_Release_Notes_for_Alpine_3.23.0">Wiki&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>After 5 years of development in the master branch of apk-tools, apk v3 is now
+ready for Alpine v3.23.0. This should be a safe and seamless upgrade from apk
+v2, but might has some breaking changes if you use libapk.&lt;/p>
+&lt;/blockquote>
+&lt;p>No wonder this is bleeding edge territory!&lt;/p>
+&lt;p>I would say that there&amp;rsquo;s nothing to do here, other than waiting for the next
+release of Alpine Linux (3.23) with apk-tools v3, and ignoring the warning in
+the meantime.&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>Their AI overview insists on spitting out useless information about
+Ubuntu, which is completely unrelated in this case.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>It is &lt;em>fun&lt;/em>. Right? Right?!&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>check-json-schema: pre-commit hook</title><link>https://perrotta.dev/2025/07/check-json-schema-pre-commit-hook/</link><pubDate>Fri, 11 Jul 2025 22:05:32 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/07/check-json-schema-pre-commit-hook/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: given an &lt;code>entry.json&lt;/code> file, validate it against a given
 &lt;code>schema.json&lt;/code> file (for example, found via the &lt;a href="https://www.schemastore.org/">schema
 store&lt;/a>).&lt;/p>
 &lt;p>I like the
@@ -1945,53 +2026,6 @@ out.&lt;/p>
 &lt;li id="fn:1">
 &lt;p>In order to type a plain &lt;code>:helm:ls&lt;/code> without expansion (e.g. for this blog
 post), type the following: &lt;code>:helm:l{left arrow}{right arrow}s&lt;/code>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item><item><title>Stack Overflow is almost dead</title><link>https://perrotta.dev/2025/05/stack-overflow-is-almost-dead/</link><pubDate>Thu, 15 May 2025 23:14:16 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/stack-overflow-is-almost-dead/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/01/why-self-answer-questions-in-your-own-blog-instead-of-stack-overflow/">Previously&lt;/a>.&lt;/p>
-&lt;p>&lt;a href="https://blog.pragmaticengineer.com/stack-overflow-is-almost-dead/">Stack overflow is almost dead&lt;/a>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> by Gergely Orosz:&lt;/p>
-&lt;blockquote>
-&lt;p>Four months ago, we asked Are LLMs making Stack Overflow irrelevant? Data at
-the time suggested that the answer is likely &amp;ldquo;yes:&amp;rdquo;&lt;/p>
-&lt;p>[&amp;hellip;]&lt;/p>
-&lt;p>Since then, things at Stack Overflow went from bad to worse. The volume of
-questions asked has nearly dried up, new data shows:&lt;/p>
-&lt;p>[&amp;hellip;]&lt;/p>
-&lt;p>This tallies with my memory of feeling that site moderators had gone on a
-power trip by closing legitimate questions. I stopped asking questions around
-this time because the site felt unwelcome.&lt;/p>
-&lt;p>[&amp;hellip;]&lt;/p>
-&lt;p>ChatGPT is faster and it&amp;rsquo;s trained on StackOverflow data, so the quality of
-answers is similar. Plus, ChatGPT is polite and answers all questions, in
-contrast to StackOverflow moderators.&lt;/p>
-&lt;/blockquote>
-&lt;p>A bit of politeness&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup> goes a long way, eh?&lt;/p>
-&lt;p>Where do you ask novel questions these days?&lt;/p>
-&lt;p>Stack Exchange is still my to-go site for that, but it&amp;rsquo;s starting to feel like a
-ghost town. Oftentimes I end up self-answering my own question, because no one
-else does. Nonetheless, I&amp;rsquo;d rather post on my blog if I know the answer in
-advance. The reason to post on SE is when &lt;em>I don&amp;rsquo;t know&lt;/em>.&lt;/p>
-&lt;p>It feels to me the best place to ask specific questions these days is wherever
-the project is developed. GitHub or GitLab issues, Discourse (BBS / forums),
-Discord&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>, Slack&amp;hellip;and so on. There&amp;rsquo;s a lot of fragmentation. Perhaps that&amp;rsquo;s
-not too bad after all, but it incurs additional effort.&lt;/p>
-&lt;p>And where to ask general questions? Reddit&lt;sup id="fnref1:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>, the Fediverse™, social media,
-project-agnostic chat platforms / communities&amp;hellip;&lt;/p>
-&lt;p>Perhaps one day we&amp;rsquo;ll just be able to tell our LLM agents to go out there in the
-dark corners of the Web&lt;sup id="fnref:4">&lt;a href="#fn:4" class="footnote-ref" role="doc-noteref">4&lt;/a>&lt;/sup> to ask a question for us.&lt;/p>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>I am (nit)picky. Gergely did &lt;strong>not&lt;/strong> capitalize &amp;ldquo;overflow&amp;rdquo;. &lt;em>This is plainly wrong&lt;/em>!!1! 🤷&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;li id="fn:2">
-&lt;p>🇨🇦&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;li id="fn:3">
-&lt;p>Ewwww.&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&amp;#160;&lt;a href="#fnref1:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;li id="fn:4">
-&lt;p>Will the Web even be alive by then?&amp;#160;&lt;a href="#fnref:4" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
 &lt;/div></description></item></channel></rss>

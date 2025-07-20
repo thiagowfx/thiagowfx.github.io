@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Selfhosted on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/selfhosted/</link><description>Recent content in Selfhosted on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 10 Jul 2025 11:14:29 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>pq: could not access file "$libdir/dict_snowball": No such file or directory</title><link>https://perrotta.dev/2025/07/pq-could-not-access-file-libdir/dict_snowball-no-such-file-or-directory/</link><pubDate>Thu, 10 Jul 2025 11:14:29 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/07/pq-could-not-access-file-libdir/dict_snowball-no-such-file-or-directory/</guid><description>&lt;p>My &lt;a href="http://miniflux.app/">miniflux&lt;/a> instance broke yesterday. All feeds had the
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 20 Jul 2025 10:52:11 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>Alpine Linux: remove broken packages</title><link>https://perrotta.dev/2025/07/alpine-linux-remove-broken-packages/</link><pubDate>Sun, 20 Jul 2025 10:52:11 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/07/alpine-linux-remove-broken-packages/</guid><description>&lt;p>In a sunny Sunday afternoon:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% doas apk upgrade
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>WARNING: The indexes contain broken packages which might not &lt;span style="color:#c678dd">function&lt;/span> properly.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>What?! Out of nowhere?&lt;/p>
+&lt;p>I tried a couple of basic troubleshooting commands:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% doas apk update --force-refresh
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% doas apk fix
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% doas apk cache clean
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;to no avail.&lt;/p>
+&lt;p>Next idea: search engines. Virtually no results on &lt;a href="https://kagi.com/">Kagi&lt;/a>. No
+relevant results on Google either&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p>
+&lt;p>Next idea: LLMs. Nothing useful either.&lt;/p>
+&lt;p>This is novel territory! That&amp;rsquo;s what makes it fun to self-host Alpine Linux&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>.&lt;/p>
+&lt;p>My intuition tells me to start by searching their
+&lt;a href="https://gitlab.alpinelinux.org/alpine">Gitlab&lt;/a>. Eventually I got linked to
+&lt;a href="https://sourcegraph.com/github.com/alpinelinux/apk-tools/-/blob/test/solver/error11.test?L3-5">this&lt;/a>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>test/solver/error11.test:
+
+@ARGS add invalid
+@REPO error.repo
+@EXPECT
+WARNING: The indexes contain broken packages which are not installable.
+ERROR: unable to select packages:
+ invalid-1:
+ error: uninstallable
+ satisfies: world[invalid]
+&lt;/code>&lt;/pre>&lt;p>From this test file, it seems possible that there&amp;rsquo;s an invalid package in my
+&lt;code>/etc/apk/world&lt;/code>. The error message is not quite the same, but it is similar:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% wc -l /etc/apk/world
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#d19a66">293&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>There are too many packages there to hunt each of them by hand. And I didn&amp;rsquo;t
+install any new packages recently.&lt;/p>
+&lt;p>So I looked into &lt;code>apk fix --help&lt;/code> and discovered there is a &lt;code>--verbose&lt;/code> flag. I
+did not save its output, but there were five packages there:&lt;/p>
+&lt;pre tabindex="0">&lt;code>- busybox-initscripts
+- kmod-openrc
+- libacl
+- py3-pep517
+- sensible-utils
+&lt;/code>&lt;/pre>&lt;p>I ran &lt;code>doas apk del&lt;/code> to remove all of them. That was a sensible cleanup, but it
+still has not resolved the issue.&lt;/p>
+&lt;p>If I want to dive deeper into this, I&amp;rsquo;ll have to add some debugging logging to
+&lt;a href="https://sourcegraph.com/github.com/alpinelinux/apk-tools@bffc60041447cadee5b69c291df8c90eb3b8fe82/-/blob/src/database.c?L2090">&lt;code>src/database.c&lt;/code>&lt;/a>
+in &lt;code>apk-tools&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c" data-lang="c">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> (&lt;span style="color:#e06c75">db&lt;/span>&lt;span style="color:#56b6c2">-&amp;gt;&lt;/span>&lt;span style="color:#e06c75">compat_depversions&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#61afef;font-weight:bold">apk_warn&lt;/span>(&lt;span style="color:#e06c75">out&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;The indexes contain broken packages which %s.&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">db&lt;/span>&lt;span style="color:#56b6c2">-&amp;gt;&lt;/span>&lt;span style="color:#e06c75">compat_notinstallable&lt;/span> &lt;span style="color:#56b6c2">?&lt;/span> &lt;span style="color:#98c379">&amp;#34;are not installable&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">:&lt;/span> &lt;span style="color:#98c379">&amp;#34;might not function properly&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then one last thought occurred to me:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% apk --version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>apk-tools 3.0.0_rc5_git20250715-r0, compiled &lt;span style="color:#c678dd">for&lt;/span> x86_64.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Aha! I am running a release candidate version of &lt;code>apk&lt;/code>, because I am using
+Alpine Linux edge repositories:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat /etc/apk/repositories
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http://dl-cdn.alpinelinux.org/alpine/edge/main
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http://dl-cdn.alpinelinux.org/alpine/edge/community
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http://dl-cdn.alpinelinux.org/alpine/edge/testing
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>From the
+&lt;a href="https://wiki.alpinelinux.org/wiki/Draft_Release_Notes_for_Alpine_3.23.0">Wiki&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>After 5 years of development in the master branch of apk-tools, apk v3 is now
+ready for Alpine v3.23.0. This should be a safe and seamless upgrade from apk
+v2, but might has some breaking changes if you use libapk.&lt;/p>
+&lt;/blockquote>
+&lt;p>No wonder this is bleeding edge territory!&lt;/p>
+&lt;p>I would say that there&amp;rsquo;s nothing to do here, other than waiting for the next
+release of Alpine Linux (3.23) with apk-tools v3, and ignoring the warning in
+the meantime.&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>Their AI overview insists on spitting out useless information about
+Ubuntu, which is completely unrelated in this case.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>It is &lt;em>fun&lt;/em>. Right? Right?!&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>pq: could not access file "$libdir/dict_snowball": No such file or directory</title><link>https://perrotta.dev/2025/07/pq-could-not-access-file-libdir/dict_snowball-no-such-file-or-directory/</link><pubDate>Thu, 10 Jul 2025 11:14:29 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/07/pq-could-not-access-file-libdir/dict_snowball-no-such-file-or-directory/</guid><description>&lt;p>My &lt;a href="http://miniflux.app/">miniflux&lt;/a> instance broke yesterday. All feeds had the
 following error:&lt;/p>
 &lt;pre tabindex="0">&lt;code>3 errors - Database error: store: unable to update entry &amp;#34;{redacted}&amp;#34;: pq: could not access file &amp;#34;$libdir/dict_snowball&amp;#34;: No such file or directory.
 &lt;/code>&lt;/pre>&lt;p>The error is from PostgreSQL (&lt;code>pq&lt;/code>).&lt;/p>
@@ -2342,54 +2423,4 @@ Linode.&lt;/p>
 &lt;p>Alpine Linux does not use &lt;code>systemd&lt;/code>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Start an HTTP server ASAP</title><link>https://perrotta.dev/2024/01/start-an-http-server-asap/</link><pubDate>Wed, 17 Jan 2024 16:41:41 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/01/start-an-http-server-asap/</guid><description>&lt;p>Sometimes I need to start a local HTTP server for a quick one-off task, often
-just to serve static content. It is not important which one it is, so long as I
-can do it quickly.&lt;/p>
-&lt;h2 id="option-1-use-python">Option #1: use &lt;code>python&lt;/code>&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% python3 -m http.server
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Serving HTTP on :: port &lt;span style="color:#d19a66">8000&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>http://&lt;span style="color:#56b6c2">[&lt;/span>::&lt;span style="color:#56b6c2">]&lt;/span>:8000/&lt;span style="color:#56b6c2">)&lt;/span> ...
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This is often the most universal and convenient option, as &lt;code>python&lt;/code> is widely
-available out-of-the-box.&lt;/p>
-&lt;h2 id="option-2-use-darkhttpd">Option #2: use &lt;code>darkhttpd&lt;/code>&lt;/h2>
-&lt;p>&lt;a href="https://unix4lyfe.org/darkhttpd/">&lt;code>darkhttpd&lt;/code>&lt;/a> is available &lt;a href="https://repology.org/project/darkhttpd/versions">almost
-everywhere&lt;/a>.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% darkhttpd .
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>darkhttpd/1.14, copyright &lt;span style="color:#56b6c2">(&lt;/span>c&lt;span style="color:#56b6c2">)&lt;/span> 2003-2022 Emil Mikulic.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>listening on: http://0.0.0.0:8080/
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Their own &lt;code>README&lt;/code> states:&lt;/p>
-&lt;blockquote>
-&lt;p>When you need a web server in a hurry.&lt;/p>
-&lt;/blockquote>
-&lt;p>This is the most convenient option when you are in control of a package
-manager, as it is one installation command away from your system. In
-particular, it&amp;rsquo;s available in both homebrew and nixpkgs.&lt;/p>
-&lt;h2 id="option-3-use-nodejs">Option #3: use &lt;code>nodejs&lt;/code>&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% npx http-server -p &lt;span style="color:#d19a66">8000&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Starting up http-server, serving ./
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http-server version: 14.1.1
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http-server settings:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>CORS: disabled
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Cache: &lt;span style="color:#d19a66">3600&lt;/span> seconds
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Connection Timeout: &lt;span style="color:#d19a66">120&lt;/span> seconds
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Directory Listings: visible
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>AutoIndex: visible
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Serve GZIP Files: &lt;span style="color:#e5c07b">false&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Serve Brotli Files: &lt;span style="color:#e5c07b">false&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Default File Extension: none
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Available on:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> http://127.0.0.1:8000
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Hit CTRL-C to stop the server
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you&amp;rsquo;re already within the node ecosystem, this is also just one installation
-away. I would typically not recommend this setup though if you don&amp;rsquo;t already
-have &lt;code>npm&lt;/code> installed on your system.&lt;/p>
-&lt;h2 id="option-4-use-busybox">Option #4: use &lt;code>busybox&lt;/code>&lt;/h2>
-&lt;p>This option seemed very attractive for use on Linux systems:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% busybox httpd -f -p &lt;span style="color:#d19a66">8080&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>However in an up-to-date Alpine Linux system (3.20) it does not work:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% busybox httpd -f -p &lt;span style="color:#d19a66">8080&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>httpd: applet not found
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Therefore I don&amp;rsquo;t consider it universal enough.&lt;/p>
-&lt;p>&lt;strong>Reference&lt;/strong>: &lt;a href="https://gist.github.com/willurd/5720255">https://gist.github.com/willurd/5720255&lt;/a>&lt;/p></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>
