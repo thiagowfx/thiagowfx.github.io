@@ -55,5 +55,7 @@ displays plain text instead (i.e. no formatting at all).
 Apparently some people even go further by installing [browser
 extensions](https://github.com/iamadamdev/bypass-paywalls-chrome) to do so.
 
+**Update(2025-07-20)**: https://archive.is is quite solid.
+
 Ultimately, whenever possible, prefer to access news sources from news portals
 that aren't paywalled and/or that you are a subscriber of.
