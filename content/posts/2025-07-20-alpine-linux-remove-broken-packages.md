@@ -6,7 +6,7 @@ tags:
   - selfhosted
 ---
 
-In a sunny Sunday afternoon:
+In a sunny Sunday morning:
 
 ```shell
 % doas apk upgrade
