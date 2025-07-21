@@ -21,10 +21,11 @@ Enter [blog directories](https://en.wikipedia.org/wiki/Web_directory):
 
 A few directories I like:
 
-- https://diff.blog/
-- https://512kb.club/
+- ✪ https://diff.blog/
+- ✪ https://512kb.club/
+- ✪ https://blogroll.org/
 - https://ooh.directory/
-- https://blogroll.org/
+- https://marginalia-search.com/
 
 I tend to visit them occasionally, whenever I crave for new content, perhaps like
 [doomscrolling](https://en.wikipedia.org/wiki/Doomscrolling) in social media.
