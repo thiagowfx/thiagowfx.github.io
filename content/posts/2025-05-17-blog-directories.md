@@ -19,11 +19,12 @@ Enter [blog directories](https://en.wikipedia.org/wiki/Web_directory):
 > site owners to submit their site for inclusion, and have editors review
 > submissions for fitness.
 
-A few directories I like:
+A few directories I like[^1]:
 
 - ✪ https://diff.blog/
 - ✪ https://512kb.club/
 - ✪ https://blogroll.org/
+- ✪ https://kagi.com/smallweb
 - https://ooh.directory/
 - https://marginalia-search.com/
 
@@ -43,3 +44,5 @@ See also: [How I discover new
 blogs](https://nelson.cloud/how-i-discover-new-blogs/) by Nelson Figueroa.
 
 [Previously]({{< ref "2022-02-17-praise-for-blog-aggregators">}}).
+
+[^1]: My blog is indexed in the ones marked with a ✪ star.
