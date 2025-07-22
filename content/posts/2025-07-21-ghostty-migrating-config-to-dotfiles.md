@@ -36,6 +36,12 @@ I prefer the `~/.config/ghostty` location: it is cross-platform, compatible with
 Linux as well, and I can easily add it to my
 [dotfiles](https://github.com/thiagowfx/.dotfiles/blob/master/ghostty/config).
 
+Moving the file to that location yields a no-frills migration:
+
+```shell
+% mv $HOME/Library/Application\ Support/com.mitchellh.ghostty/config $HOME/.config/ghostty/config
+```
+
 As of today, the config looks like this:
 
 ```
