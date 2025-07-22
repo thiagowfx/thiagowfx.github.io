@@ -10,13 +10,13 @@ Here's a common issue I have when blogging, when inserting a markdown link with
 
 First, blank:
 
-```
+```md
 |
 ```
 
 Then, type out the hyperlink label and prepare to insert the link:
 
-```
+```md
 [example](|
 )
 ```
@@ -25,7 +25,7 @@ Now go to another buffer (window) and copy the link (with `y` + motion).
 
 Go back to the original buffer and paste it with `p`:
 
-```
+```md
 [example](
 |https://example.com/
 )
@@ -33,14 +33,14 @@ Go back to the original buffer and paste it with `p`:
 
 Press `kJ`:
 
-```
+```md
 [example](| https://example.com/
 )
 ```
 
 Press `J` again:
 
-```
+```md
 [example](| https://example.com/)
 ```
 
@@ -79,6 +79,6 @@ When repeating the original link insertion sequence, it yields the following
 result, as desired (no spaces anywhere!):
 
 
-```
+```md
 [example](|https://example.com/)
 ```
