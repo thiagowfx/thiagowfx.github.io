@@ -35,3 +35,5 @@ I got inspired to use the [Catppuccin](https://catppuccin.com/) theme thanks to
 There's no need to customize the default font as it's [quite sensible]({{< ref
 "2024-12-25-picking-a-monospaced-code-font" >}}) (JetBrains Mono, [as
 per](https://ghostty.org/docs/config)).
+
+**Update(2025-07-22)**: You may also like: `ghostty +list-themes`.
