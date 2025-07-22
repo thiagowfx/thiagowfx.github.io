@@ -34,6 +34,12 @@ ping sitemap="https://perrotta.dev/sitemap.xml":
     curl -sS -o /dev/null "https://www.bing.com/ping?sitemap={{ sitemap }}"
 
 # Update git submodules and pre-commit hooks
-update:
+update: update-git update-pre-commit
+
+# Update git submodules
+update-git:
     git submodule update --remote --jobs "$(nproc)"
+
+# Update pre-commit hooks
+update-pre-commit:
     pre-commit autoupdate --freeze --jobs "$(nproc)" && pre-commit run --all-files
