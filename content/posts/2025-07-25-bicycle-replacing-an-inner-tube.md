@@ -59,8 +59,10 @@ then slide it alongside the tire.
 > it's not advisable for anything more than an emergency fix. Tubes and tires
 > tend to move slightly on the rim.
 
-- **Schrader**: most common, thicker
-- Presta: thinner, with a nut at its tip, more modern
+- **Schrader**: most common, thicker. Harder to deflate (need a thin, pointy
+  object to press down its inner pin).
+- Presta: thinner, with a nut at its tip, more modern. Easier to deflate (just
+  press down its tip).
 
 There's also another type called "Dunlop", it has similar thickness to
 Schrader.
