@@ -91,4 +91,8 @@ tire around it.
 Once everything is done, fill in the tube. Pay attention to how much air to pump
 in.
 
+See also: [How to change an inner
+tube](https://www.youtube.com/watch?v=hKvnaQ_9nG0) end-to-end
+([via](https://www.evanscycles.com/buying-guides/inner-tubes)).
+
 [^1]: And even sooner than [death and taxes](https://en.wikipedia.org/wiki/Meet_Joe_Black).
