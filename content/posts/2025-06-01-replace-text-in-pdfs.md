@@ -20,4 +20,5 @@ in [Trustpilot](https://www.trustpilot.com/review/pdfgear.com) (4.9 stars, 6500+
 reviews).
 
 On Linux I would probably try [Xournal++](https://xournalpp.github.io/), however
-it is really a PDF _annotation_ tool.
+it is really a PDF _annotation_ tool. It is also available on macOS: `brew
+install xournal++`.
