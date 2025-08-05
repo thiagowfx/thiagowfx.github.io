@@ -6,7 +6,8 @@ tags:
 ---
 
 Assume your organization has the [Github
-bot](https://github.com/integrations/slack) integrated with Slack, and it's
+bot](https://github.com/integrations/slack)
+[integrated](https://slack.github.com/) with Slack, and it's
 already properly configured.
 
 Assume you have a channel called `#team-reviews`.
