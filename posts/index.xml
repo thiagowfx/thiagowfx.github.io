@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/posts/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 05 Aug 2025 12:03:10 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>GitHub: set up scheduled reminders on Slack</title><link>https://perrotta.dev/2025/08/github-set-up-scheduled-reminders-on-slack/</link><pubDate>Tue, 05 Aug 2025 12:03:10 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/github-set-up-scheduled-reminders-on-slack/</guid><description>&lt;p>If your organization uses GitHub and Slack, it&amp;rsquo;s neat to have daily
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 08 Aug 2025 14:33:27 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>fd with xargs: filenames with spaces</title><link>https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/</link><pubDate>Fri, 08 Aug 2025 14:33:27 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: find all &lt;code>base/mongo&lt;/code> occurrences in &lt;code>kustomization.yaml&lt;/code>
+files in the codebase.&lt;/p>
+&lt;p>&lt;a href="https://perrotta.dev/2025/04/the-ack--xargs--sed-pattern/">My favorite approach&lt;/a>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% fd kustomization.yaml | ifne xargs -n &lt;span style="color:#d19a66">1&lt;/span> ack &lt;span style="color:#98c379">&amp;#34;base/mongo&amp;#34;&lt;/span> -l
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ack: scaffolding/cookiecutter/base/&lt;span style="color:#56b6c2">{{&lt;/span>: No such file or directory
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ack: cookiecutter.app_name: No such file or directory
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ack: &lt;span style="color:#56b6c2">}}&lt;/span>/kustomization.yaml: No such file or directory
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>But it looks horrible!&lt;/p>
+&lt;p>The problem is that there is a file named as follows:&lt;/p>
+&lt;pre tabindex="0">&lt;code>scaffolding/cookiecutter/base/{{ cookiecutter.app_name }}/kustomization.yaml
+&lt;/code>&lt;/pre>&lt;p>&amp;hellip;more specifically, the spaces are the problem. It&amp;rsquo;s easy to fix it though:&lt;/p>
+&lt;pre tabindex="0">&lt;code>% fd -0 kustomization.yaml | ifne xargs -0 -n 1 ack &amp;#34;base/mongo&amp;#34; -l
+&lt;/code>&lt;/pre>&lt;p>&amp;hellip;adding &lt;code>-0&lt;/code> to &lt;code>fd&lt;/code> instructs it to print the results null-separated (&lt;code>\0&lt;/code>)
+instead of newline (&lt;code>\n&lt;/code>) separated. And the corresponding switch in &lt;code>xargs&lt;/code>
+instructs it to expect null-separated input.&lt;/p>
+&lt;p>I especially like this approach because it&amp;rsquo;s easy to memorize.&lt;/p></description></item><item><title>GitHub: set up scheduled reminders on Slack</title><link>https://perrotta.dev/2025/08/github-set-up-scheduled-reminders-on-slack/</link><pubDate>Tue, 05 Aug 2025 12:03:10 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/github-set-up-scheduled-reminders-on-slack/</guid><description>&lt;p>If your organization uses GitHub and Slack, it&amp;rsquo;s neat to have daily
 notifications be delivered to you, to remind you of pending pull request
 reviews.&lt;/p>
 &lt;p>How to configure: start from &lt;a href="https://github.com/settings/reminders">https://github.com/settings/reminders&lt;/a>. There will be
@@ -1930,20 +1946,4 @@ Argo CD.&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">syncPolicy&lt;/span>:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">syncOptions&lt;/span>:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - ServerSideApply=true
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;though there&amp;rsquo;s no harm either in doing so.&lt;/p></description></item><item><title>PDB: minAvailable and maxUnavailable cannot be both set</title><link>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</link><pubDate>Mon, 02 Jun 2025 12:00:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</guid><description>&lt;p>In Kubernetes it&amp;rsquo;s not possible to have a &lt;a href="https://kubernetes.io/docs/tasks/run-application/configure-pdb/">&lt;code>PodDisruptionBudget&lt;/code>
-(PDB)&lt;/a> with
-both &lt;code>minAvailable&lt;/code> and &lt;code>maxUnavailable&lt;/code> set simultaneously:&lt;/p>
-&lt;pre tabindex="0">&lt;code>one or more objects failed to apply, reason: PodDisruptionBudget.policy &amp;#34;pgbouncer-pgbouncer&amp;#34; is invalid: spec: Invalid value: policy.PodDisruptionBudgetSpec{MinAvailable:(*intstr.IntOrString)(0xc02c03dd20), Selector:(*v1.LabelSelector)(0xc02c03dd40), MaxUnavailable:(*intstr.IntOrString)(0xc02c03dd60), UnhealthyPodEvictionPolicy:(*policy.UnhealthyPodEvictionPolicyType)(nil)}: minAvailable and maxUnavailable cannot be both set (retried 5 times).
-&lt;/code>&lt;/pre>&lt;p>Our manifests did not violate this rule though. Then where did the error message
-come from?&lt;/p>
-&lt;p>It turns out &lt;a href="https://argo-cd.readthedocs.io/en/stable/">ArgoCD&lt;/a> was creating an
-intermediate state containing both properties:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># [...]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">minAvailable&lt;/span>: &lt;span style="color:#d19a66">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">maxUnavailable&lt;/span>: &lt;span style="color:#d19a66">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># [...]&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>One solution is to sync the underlying application PDB manifest with
-&lt;a href="https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/#replace-resource-instead-of-applying-changes">replace&lt;/a>.&lt;/p>
-&lt;p>&lt;strong>Warning&lt;/strong>: It&amp;rsquo;s better to &amp;ldquo;sync with replace&amp;rdquo; &lt;strong>only&lt;/strong> the PDB. Do not do it
-in the entire application.&lt;/p></description></item></channel></rss>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;though there&amp;rsquo;s no harm either in doing so.&lt;/p></description></item></channel></rss>
