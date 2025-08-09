@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 08 Aug 2025 14:33:27 +0200</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>fd with xargs: filenames with spaces</title><link>https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/</link><pubDate>Fri, 08 Aug 2025 14:33:27 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: find all &lt;code>base/mongo&lt;/code> occurrences in &lt;code>kustomization.yaml&lt;/code>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 09 Aug 2025 15:24:53 +0200</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: recovery when traefik is broken</title><link>https://perrotta.dev/2025/08/argocd-recovery-when-traefik-is-broken/</link><pubDate>Sat, 09 Aug 2025 15:24:53 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/argocd-recovery-when-traefik-is-broken/</guid><description>&lt;p>It&amp;rsquo;s Friday. The best day to push to prod™.
+An internal scheduled upgrade for &lt;code>traefik&lt;/code> goes awry.
+Internal services are no longer accessible.
+HTTP requests won&amp;rsquo;t be properly routed.&lt;/p>
+&lt;p>The most sensible SRE / DevOps will simply roll it back. Roll back first,
+investigate later: it&amp;rsquo;s crucial to minimize downtime.&lt;/p>
+&lt;p>How do we roll back?
+We&amp;rsquo;re using GitOps, the most sensible approach is to make a new git commit by
+submitting a pull request.
+However, this is an emergency situation. Can we roll back faster?&lt;/p>
+&lt;p>Sure, let&amp;rsquo;s make temporary changes directly in the cluster.&lt;/p>
+&lt;p>The &lt;code>traefik&lt;/code> app is managed with ArgoCD. Let&amp;rsquo;s log in to the ArgoCD web UI and
+roll back to the previous version.&lt;/p>
+&lt;p>Oh, wait. We can&amp;rsquo;t. The ArgoCD web UI isn&amp;rsquo;t accessible, because traefik is
+broken. &lt;em>Sighs&lt;/em>.&lt;/p>
+&lt;p>Let&amp;rsquo;s use the ArgoCD CLI then.&lt;/p>
+&lt;p>Aaaah, no. The ArgoCD CLI is really a REST client for the ArgoCD API. HTTP(S) is
+not accessible, so the CLI won&amp;rsquo;t work either.&lt;/p>
+&lt;p>What&amp;rsquo;s next? A plain &lt;code>helm&lt;/code> upgrade should work. But &lt;code>helm&lt;/code> is picky and will
+refuse to touch manifests it doesn&amp;rsquo;t own. The manifests are managed by Argo.
+&lt;code>helm&lt;/code> won&amp;rsquo;t budge. Oh gosh.&lt;/p>
+&lt;p>Last option: the ArgoCD controllers are still running. We don&amp;rsquo;t need the ArgoCD
+HTTPS API to communicate with them. Let&amp;rsquo;s simply edit the k8s manifests
+directly.&lt;/p>
+&lt;p>First we patch the root app (app-of-apps pattern):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl edit app -n argocd root
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>We remove the &lt;code>automated&lt;/code> block, to effectively pause auto sync, otherwise our
+subsequent changes to traefik would be immediately reverted:&lt;/p>
+&lt;pre tabindex="0">&lt;code>spec:
+# automated:
+# prune: [..]
+# selfHeal: [...]
+&lt;/code>&lt;/pre>&lt;p>You can comment or delete the &lt;code>automated:&lt;/code> block, either is fine.&lt;/p>
+&lt;p>Next, we need to remove traefik from all application project (app project) sync
+windows, so that changes to it will be immediately applied:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl edit appproject -n argocd cluster
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The traefik entry got removed from all sync windows.&lt;/p>
+&lt;p>Now, finally, let&amp;rsquo;s instruct Argo to roll traefik back.&lt;/p>
+&lt;p>The broken version is 2.5.1, the previous working version was 2.4.1.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl edit app -n argocd traefik
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Update &lt;code>targetRevision: 2.4.1&lt;/code> under the &lt;code>helm&lt;/code> block.&lt;/p>
+&lt;p>Wait a few seconds. Observe traefik pods as they are rolling restarted:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl get deploy -n kube-system traefik -w
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Finally, all services are once again accessible!&lt;/p>
+&lt;p>From this point on, we can go back to &lt;code>git&lt;/code> and do a proper pull request revert
+to reconcile the codebase with the live cluster state.&lt;/p>
+&lt;p>This was an interesting exercise. I&amp;rsquo;m quite familiar with ArgoCD and GitOps at
+this point, and I instinctively knew what to do in this situation, without
+needing to consult the official documentation or even an LLM. I wouldn&amp;rsquo;t have
+minded doing either of these if needed, but the point is that it feels good to
+be well familiar with how a system works and how to apply your knowledge to fix
+day-to-day problems.&lt;/p></description></item><item><title>fd with xargs: filenames with spaces</title><link>https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/</link><pubDate>Fri, 08 Aug 2025 14:33:27 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: find all &lt;code>base/mongo&lt;/code> occurrences in &lt;code>kustomization.yaml&lt;/code>
 files in the codebase.&lt;/p>
 &lt;p>&lt;a href="https://perrotta.dev/2025/04/the-ack--xargs--sed-pattern/">My favorite approach&lt;/a>:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% fd kustomization.yaml | ifne xargs -n &lt;span style="color:#d19a66">1&lt;/span> ack &lt;span style="color:#98c379">&amp;#34;base/mongo&amp;#34;&lt;/span> -l
@@ -1919,31 +1970,4 @@ whenever a new version is available.&lt;/p>
 &lt;p>For details on how to create a project mapping for Alpine Linux, please refer
 to the &lt;a href="https://release-monitoring.org/static/docs/user-guide.html">release monitoring
 documentation&lt;/a>.&lt;/p>
-&lt;/blockquote></description></item><item><title>ArgoCD: upgrade to v3, remove helm labels</title><link>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</link><pubDate>Mon, 02 Jun 2025 13:03:24 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</guid><description>&lt;p>I am leading the effort to upgrade ArgoCD to its &lt;a href="https://blog.argoproj.io/announcing-argo-cd-v3-small-but-mighty-df05c0b39ad6">newest major version
-(v3)&lt;/a>
-across our fleet.&lt;/p>
-&lt;p>One of its &lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/upgrading/2.14-3.0/">breaking
-changes&lt;/a>
-is the removal of helm labels from argo applications, like such:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># [...]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">labels&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">app.kubernetes.io/managed-by&lt;/span>: Helm
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Applying a normal sync does not get rid of the label.&lt;/p>
-&lt;p>I found out that doing an one-off &lt;a href="https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/#server-side-apply">server-side apply
-sync&lt;/a>
-addresses the label removal, and it is safe to do (incurs no downtime):&lt;/p>
-&lt;blockquote>
-&lt;p>However, there are some cases where you want to use &lt;code>kubectl apply --server-side&lt;/code> over &lt;code>kubectl apply&lt;/code>:&lt;/p>
-&lt;p>[&amp;hellip;]&lt;/p>
-&lt;p>Patching of existing resources on the cluster that are not fully managed by
-Argo CD.&lt;/p>
-&lt;/blockquote>
-&lt;p>There&amp;rsquo;s no need to make the server-side apply a permanent config, i.e.:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">apiVersion&lt;/span>: argoproj.io/v1alpha1
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">kind&lt;/span>: Application
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">syncPolicy&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">syncOptions&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - ServerSideApply=true
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;though there&amp;rsquo;s no harm either in doing so.&lt;/p></description></item></channel></rss>
+&lt;/blockquote></description></item></channel></rss>

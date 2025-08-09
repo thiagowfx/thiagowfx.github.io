@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Selfhosted on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/selfhosted/</link><description>Recent content in Selfhosted on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 04 Aug 2025 11:49:16 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>terraform: bypass lock</title><link>https://perrotta.dev/2025/08/terraform-bypass-lock/</link><pubDate>Mon, 04 Aug 2025 11:49:16 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/terraform-bypass-lock/</guid><description>&lt;p>Terraform supports &lt;a href="https://developer.hashicorp.com/terraform/language/state/locking">state
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 09 Aug 2025 15:24:53 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: recovery when traefik is broken</title><link>https://perrotta.dev/2025/08/argocd-recovery-when-traefik-is-broken/</link><pubDate>Sat, 09 Aug 2025 15:24:53 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/argocd-recovery-when-traefik-is-broken/</guid><description>&lt;p>It&amp;rsquo;s Friday. The best day to push to prod™.
+An internal scheduled upgrade for &lt;code>traefik&lt;/code> goes awry.
+Internal services are no longer accessible.
+HTTP requests won&amp;rsquo;t be properly routed.&lt;/p>
+&lt;p>The most sensible SRE / DevOps will simply roll it back. Roll back first,
+investigate later: it&amp;rsquo;s crucial to minimize downtime.&lt;/p>
+&lt;p>How do we roll back?
+We&amp;rsquo;re using GitOps, the most sensible approach is to make a new git commit by
+submitting a pull request.
+However, this is an emergency situation. Can we roll back faster?&lt;/p>
+&lt;p>Sure, let&amp;rsquo;s make temporary changes directly in the cluster.&lt;/p>
+&lt;p>The &lt;code>traefik&lt;/code> app is managed with ArgoCD. Let&amp;rsquo;s log in to the ArgoCD web UI and
+roll back to the previous version.&lt;/p>
+&lt;p>Oh, wait. We can&amp;rsquo;t. The ArgoCD web UI isn&amp;rsquo;t accessible, because traefik is
+broken. &lt;em>Sighs&lt;/em>.&lt;/p>
+&lt;p>Let&amp;rsquo;s use the ArgoCD CLI then.&lt;/p>
+&lt;p>Aaaah, no. The ArgoCD CLI is really a REST client for the ArgoCD API. HTTP(S) is
+not accessible, so the CLI won&amp;rsquo;t work either.&lt;/p>
+&lt;p>What&amp;rsquo;s next? A plain &lt;code>helm&lt;/code> upgrade should work. But &lt;code>helm&lt;/code> is picky and will
+refuse to touch manifests it doesn&amp;rsquo;t own. The manifests are managed by Argo.
+&lt;code>helm&lt;/code> won&amp;rsquo;t budge. Oh gosh.&lt;/p>
+&lt;p>Last option: the ArgoCD controllers are still running. We don&amp;rsquo;t need the ArgoCD
+HTTPS API to communicate with them. Let&amp;rsquo;s simply edit the k8s manifests
+directly.&lt;/p>
+&lt;p>First we patch the root app (app-of-apps pattern):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl edit app -n argocd root
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>We remove the &lt;code>automated&lt;/code> block, to effectively pause auto sync, otherwise our
+subsequent changes to traefik would be immediately reverted:&lt;/p>
+&lt;pre tabindex="0">&lt;code>spec:
+# automated:
+# prune: [..]
+# selfHeal: [...]
+&lt;/code>&lt;/pre>&lt;p>You can comment or delete the &lt;code>automated:&lt;/code> block, either is fine.&lt;/p>
+&lt;p>Next, we need to remove traefik from all application project (app project) sync
+windows, so that changes to it will be immediately applied:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl edit appproject -n argocd cluster
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The traefik entry got removed from all sync windows.&lt;/p>
+&lt;p>Now, finally, let&amp;rsquo;s instruct Argo to roll traefik back.&lt;/p>
+&lt;p>The broken version is 2.5.1, the previous working version was 2.4.1.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl edit app -n argocd traefik
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Update &lt;code>targetRevision: 2.4.1&lt;/code> under the &lt;code>helm&lt;/code> block.&lt;/p>
+&lt;p>Wait a few seconds. Observe traefik pods as they are rolling restarted:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl get deploy -n kube-system traefik -w
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Finally, all services are once again accessible!&lt;/p>
+&lt;p>From this point on, we can go back to &lt;code>git&lt;/code> and do a proper pull request revert
+to reconcile the codebase with the live cluster state.&lt;/p>
+&lt;p>This was an interesting exercise. I&amp;rsquo;m quite familiar with ArgoCD and GitOps at
+this point, and I instinctively knew what to do in this situation, without
+needing to consult the official documentation or even an LLM. I wouldn&amp;rsquo;t have
+minded doing either of these if needed, but the point is that it feels good to
+be well familiar with how a system works and how to apply your knowledge to fix
+day-to-day problems.&lt;/p></description></item><item><title>terraform: bypass lock</title><link>https://perrotta.dev/2025/08/terraform-bypass-lock/</link><pubDate>Mon, 04 Aug 2025 11:49:16 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/terraform-bypass-lock/</guid><description>&lt;p>Terraform supports &lt;a href="https://developer.hashicorp.com/terraform/language/state/locking">state
 locking&lt;/a>:&lt;/p>
 &lt;blockquote>
 &lt;p>If supported by your backend, Terraform will lock your state for all
@@ -2163,14 +2214,4 @@ Feel free to update the RSS in your feed reader, although
 &lt;a href="https://thiagowfx.github.io/">https://thiagowfx.github.io/&lt;/a> should keep working for a little longer, until (if
 ever) I decide to migrate the static hosting off Github Pages.&lt;/p>
 &lt;p>This is a project I wanted to do since ages ago, and my goals go beyond merely
-making my blog available under it. Stay tuned for more updates.&lt;/p></description></item><item><title>WHOIS</title><link>https://perrotta.dev/2024/02/whois/</link><pubDate>Sun, 04 Feb 2024 00:20:15 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/02/whois/</guid><description>&lt;p>I got myself a brand new domain! As I play with it, expect documentation to
-be added.&lt;/p>
-&lt;p>&lt;strong>How to query the WHOIS for the domain?&lt;/strong>&lt;/p>
-&lt;ol>
-&lt;li>From the command line: &lt;code>$ whois &amp;lt;domain&amp;gt;&lt;/code>&lt;/li>
-&lt;li>From the registrar WHOIS, e.g. &lt;a href="https://porkbun.com/whois">https://porkbun.com/whois&lt;/a>, &lt;a href="https://www.gandi.net/en/domain/p/whois">https://www.gandi.net/en/domain/p/whois&lt;/a>&lt;/li>
-&lt;li>From the registry WHOIS, e.g. &lt;a href="https://lookup.icann.org/">https://lookup.icann.org/&lt;/a>, &lt;a href="https://www.registry.google/whois-lookup/">https://www.registry.google/whois-lookup/&lt;/a>&lt;/li>
-&lt;/ol>
-&lt;p>It&amp;rsquo;s a good idea to set up WHOIS privacy, so that your domain registration
-details stay private. Some registrars such as Porkbun and NearlyFreeSpeech will
-gladly offer an option for that, either for free or at a low cost, respectively.&lt;/p></description></item></channel></rss>
+making my blog available under it. Stay tuned for more updates.&lt;/p></description></item></channel></rss>
