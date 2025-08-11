@@ -15,7 +15,7 @@ triage.
 
 It turns out JIRA supports [creating issues using direct links](https://confluence.atlassian.com/jirakb/how-to-create-issues-using-direct-html-links-in-jira-159474.html).
 
-The documentation isn't the most user-friendly but, upon figuring it out, you
+The documentation isn't the most user-friendly[^3] but, upon figuring it out, you
 can build a URL such as:
 
 ```
@@ -33,7 +33,7 @@ Notes:
 - **Issue Type**: 10003 = Story, 10004 = Task. If you want another type, see
   [docs](https://support.atlassian.com/jira/kb/finding-the-id-for-issue-types-in-jira-server-or-data-center/).
 
-- Summary and Description are self-descriptive. They need to be URL-escaped.
+- **Summary** and **Description** are self-descriptive. They need to be URL-escaped.
 
 - `customfield_12345` is for...well, custom fields. For example, we have a
   custom field to track which team the work item is assigned to.
@@ -47,3 +47,5 @@ perhaps from an app such as [RayCast](https://www.raycast.com/).
     to "Work items". Do you have an issue with this?
 
 [^2]: I prefer this option. The bookmark label (name) is `+`, very mnemonic.
+
+[^3]: Google's [Issue Tracker](https://developers.google.com/issue-tracker/guides/access-ui) (_Buganizer_) supports a similar approach. For example, https://goo.gle/cftbug redirects to https://issues.chromium.org/issues/new?component=1456689&title=Chrome%20for%20Testing:%20&noWizard=true&pli=1&template=0 (I created this link back in the [CfT](https://goo.gle/chrome-for-testing) days).
