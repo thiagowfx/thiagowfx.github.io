@@ -22,7 +22,46 @@ files underneath the current directory only) it fails:&lt;/p>
 completely unnecessary. A git alias suffices. Keep it simple!&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Silence unknown callers</title><link>https://perrotta.dev/2025/08/silence-unknown-callers/</link><pubDate>Sat, 09 Aug 2025 18:11:39 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/silence-unknown-callers/</guid><description>&lt;p>I absolutely &lt;strong>never&lt;/strong> get any spam calls. This has been true for &lt;em>many and
+&lt;/div></description></item><item><title>git: --no-pager</title><link>https://perrotta.dev/2025/08/git--no-pager/</link><pubDate>Tue, 12 Aug 2025 12:21:22 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/git--no-pager/</guid><description>&lt;p>Let&amp;rsquo;s say you use color highlighting to visually inspect diffs with &lt;code>git&lt;/code>, such
+as &lt;a href="https://github.com/dandavison/delta">&lt;code>delta&lt;/code>&lt;/a> or
+&lt;a href="https://github.com/git/git/blob/master/contrib/diff-highlight/README">&lt;code>diff-highlight&lt;/code>&lt;/a>
+or &lt;a href="https://github.com/mookid/diffr">&lt;code>diffr&lt;/code>&lt;/a>.&lt;/p>
+&lt;p>&lt;strong>Implication&lt;/strong>: whenever you run &lt;code>git diff&lt;/code>, &lt;code>git show&lt;/code>, or any other &lt;code>git&lt;/code>
+command that produces a diff, it will emit colors (typically red and green).&lt;/p>
+&lt;p>Colors are great for local visual inspection, but they are terrible for sharing.
+They won&amp;rsquo;t be carried over with copy-and-paste.&lt;/p>
+&lt;p>If you intend to share diff output (e.g. to a Q&amp;amp;A site, with teammates), it&amp;rsquo;s
+better to emit &lt;code>-&lt;/code> and &lt;code>+&lt;/code>, as vanilla &lt;code>diff&lt;/code> does.&lt;/p>
+&lt;p>The easiest way to do so is to pass &lt;code>--no-pager&lt;/code> to &lt;code>git&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git --no-pager diff a83bc395
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git --no-pager show HEAD
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For example, a recent commit in my
+&lt;a href="https://github.com/thiagowfx/.dotfiles">dotfiles&lt;/a>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% git --no-pager show HEAD~1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>commit 52b1e91b0f1d93176ec768aa6158974fc401f335
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Author: Thiago Perrotta &amp;lt;&lt;span style="color:#56b6c2">{&lt;/span>redacted&lt;span style="color:#56b6c2">}&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Date: Thu Aug &lt;span style="color:#d19a66">7&lt;/span> 12:00:47 &lt;span style="color:#d19a66">2025&lt;/span> +0200
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> fix mr
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>diff --git bin/.bin/sd-world bin/.bin/sd-world
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>index c46be0e..44c0b47 &lt;span style="color:#d19a66">100755&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>--- bin/.bin/sd-world
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>+++ bin/.bin/sd-world
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@@ -58,7 +58,7 @@ &lt;span style="color:#c678dd">esac&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> run_if_exists &lt;span style="color:#98c379">&amp;#34;claude&amp;#34;&lt;/span> claude update
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#7f848e"># myrepos&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-run_if_exists &lt;span style="color:#98c379">&amp;#34;mr&amp;#34;&lt;/span> mr -d ~ update
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>+&lt;span style="color:#56b6c2">(&lt;/span>&lt;span style="color:#e5c07b">cd&lt;/span> ~ &lt;span style="color:#56b6c2">&amp;amp;&amp;amp;&lt;/span> run_if_exists &lt;span style="color:#98c379">&amp;#34;mr&amp;#34;&lt;/span> mr update&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#7f848e"># source corp updates if any&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> run_if_exists &lt;span style="color:#98c379">&amp;#34;sd-world-corp&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Note that &lt;code>--no-pager&lt;/code> is a &lt;code>git&lt;/code>-level option: it should be specified before
+the git subcommand. The following does not work:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% git show HEAD~1 --no-pager
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fatal: unrecognized argument: --no-pager
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Silence unknown callers</title><link>https://perrotta.dev/2025/08/silence-unknown-callers/</link><pubDate>Sat, 09 Aug 2025 18:11:39 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/silence-unknown-callers/</guid><description>&lt;p>I absolutely &lt;strong>never&lt;/strong> get any spam calls. This has been true for &lt;em>many and
 many&lt;/em> years now.&lt;/p>
 &lt;p>What is the formula to do so? Just be an uninteresting, boring person. Be
 invisible. !next&lt;/p>
@@ -3673,39 +3712,4 @@ blog would have sorted the list. Unless I added an exclusion rule for it,
 which seems unnecessary. Minimizing exclusions is better.&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Anki workflow</title><link>https://perrotta.dev/2024/12/anki-workflow/</link><pubDate>Mon, 23 Dec 2024 00:12:52 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/anki-workflow/</guid><description>&lt;p>I&amp;rsquo;ve been using &lt;a href="https://apps.ankiweb.net/">Anki&lt;/a> since 2-3 years ago to keep up
-with German vocabulary and grammar. I had originally started with Duolingo.&lt;/p>
-&lt;p>In the beginning my workflow was quite basic.
-Then I created &lt;a href="https://perrotta.dev/2024/02/anki-custom-language-card/">custom language&lt;/a> &lt;a href="https://perrotta.dev/2024/09/anki-custom-language-card-cont./">cards&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>After you install Anki, you need to set up a Note Type to keep your flashcards
-formatted as you like. Anki comes with a few basic Note Types, but they aren&amp;rsquo;t
-suited for learning Japanese.&lt;/p>
-&lt;/blockquote>
-&lt;p>(&lt;a href="https://tatsumoto.neocities.org/blog/setting-up-anki">via&lt;/a>). The advantage of
-creating a custom note type (language card) is that I can format it the way I
-want.&lt;/p>
-&lt;p>On top of it I tweaked my Anki deck settings to optimize it for language learning.&lt;/p>
-&lt;p>I adopted the &lt;a href="https://web.archive.org/web/20210203165239/https://massimmersionapproach.com/table-of-contents/anki/low-key-anki/intro">Low-Key Anki
-setup&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>The Low-Key Anki setup is a series of counterintuitive simplifications one can
-make to Anki&amp;rsquo;s algorithm that result in a significant boost in efficiency, as
-well as a considerable reduction in the stress associated with reviewing cards&lt;/p>
-&lt;/blockquote>
-&lt;p>Furthermore, Soren Bjornstad has helpfully written &lt;a href="https://controlaltbackspace.org/precise/">some
-tips&lt;/a> about designing flashcards
-effectively, some of which I gladly adopted.&lt;/p>
-&lt;p>And last but not least, &lt;a href="https://refold.la/roadmap/stage-1/a/anki-setup">Refold&lt;/a>
-provided me with a step-by-step breakdown on how to configure Anki for language
-learning.&lt;/p>
-&lt;h2 id="references">References&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a href="https://refold.la/roadmap/stage-1/a/anki-setup">https://refold.la/roadmap/stage-1/a/anki-setup&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://web.archive.org/web/20210203165239/https://massimmersionapproach.com/table-of-contents/anki/low-key-anki/intro">https://web.archive.org/web/20210203165239/https://massimmersionapproach.com/table-of-contents/anki/low-key-anki/intro&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://tatsumoto.neocities.org/blog/setting-up-anki.html">https://tatsumoto.neocities.org/blog/setting-up-anki.html&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://controlaltbackspace.org/precise/">https://controlaltbackspace.org/precise/&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://digitalwords.net/anki/low-key/">https://digitalwords.net/anki/low-key/&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://michaelnotebook.com/mmsw/">https://michaelnotebook.com/mmsw/&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://borretti.me/article/effective-spaced-repetition">https://borretti.me/article/effective-spaced-repetition&lt;/a>&lt;/li>
-&lt;/ul></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>

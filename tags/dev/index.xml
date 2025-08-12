@@ -22,7 +22,46 @@ files underneath the current directory only) it fails:&lt;/p>
 completely unnecessary. A git alias suffices. Keep it simple!&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>ArgoCD: app version notifications</title><link>https://perrotta.dev/2025/08/argocd-app-version-notifications/</link><pubDate>Tue, 12 Aug 2025 12:07:20 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/argocd-app-version-notifications/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: when using &lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications/">ArgoCD
+&lt;/div></description></item><item><title>git: --no-pager</title><link>https://perrotta.dev/2025/08/git--no-pager/</link><pubDate>Tue, 12 Aug 2025 12:21:22 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/git--no-pager/</guid><description>&lt;p>Let&amp;rsquo;s say you use color highlighting to visually inspect diffs with &lt;code>git&lt;/code>, such
+as &lt;a href="https://github.com/dandavison/delta">&lt;code>delta&lt;/code>&lt;/a> or
+&lt;a href="https://github.com/git/git/blob/master/contrib/diff-highlight/README">&lt;code>diff-highlight&lt;/code>&lt;/a>
+or &lt;a href="https://github.com/mookid/diffr">&lt;code>diffr&lt;/code>&lt;/a>.&lt;/p>
+&lt;p>&lt;strong>Implication&lt;/strong>: whenever you run &lt;code>git diff&lt;/code>, &lt;code>git show&lt;/code>, or any other &lt;code>git&lt;/code>
+command that produces a diff, it will emit colors (typically red and green).&lt;/p>
+&lt;p>Colors are great for local visual inspection, but they are terrible for sharing.
+They won&amp;rsquo;t be carried over with copy-and-paste.&lt;/p>
+&lt;p>If you intend to share diff output (e.g. to a Q&amp;amp;A site, with teammates), it&amp;rsquo;s
+better to emit &lt;code>-&lt;/code> and &lt;code>+&lt;/code>, as vanilla &lt;code>diff&lt;/code> does.&lt;/p>
+&lt;p>The easiest way to do so is to pass &lt;code>--no-pager&lt;/code> to &lt;code>git&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git --no-pager diff a83bc395
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git --no-pager show HEAD
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For example, a recent commit in my
+&lt;a href="https://github.com/thiagowfx/.dotfiles">dotfiles&lt;/a>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% git --no-pager show HEAD~1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>commit 52b1e91b0f1d93176ec768aa6158974fc401f335
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Author: Thiago Perrotta &amp;lt;&lt;span style="color:#56b6c2">{&lt;/span>redacted&lt;span style="color:#56b6c2">}&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Date: Thu Aug &lt;span style="color:#d19a66">7&lt;/span> 12:00:47 &lt;span style="color:#d19a66">2025&lt;/span> +0200
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> fix mr
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>diff --git bin/.bin/sd-world bin/.bin/sd-world
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>index c46be0e..44c0b47 &lt;span style="color:#d19a66">100755&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>--- bin/.bin/sd-world
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>+++ bin/.bin/sd-world
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@@ -58,7 +58,7 @@ &lt;span style="color:#c678dd">esac&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> run_if_exists &lt;span style="color:#98c379">&amp;#34;claude&amp;#34;&lt;/span> claude update
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#7f848e"># myrepos&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-run_if_exists &lt;span style="color:#98c379">&amp;#34;mr&amp;#34;&lt;/span> mr -d ~ update
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>+&lt;span style="color:#56b6c2">(&lt;/span>&lt;span style="color:#e5c07b">cd&lt;/span> ~ &lt;span style="color:#56b6c2">&amp;amp;&amp;amp;&lt;/span> run_if_exists &lt;span style="color:#98c379">&amp;#34;mr&amp;#34;&lt;/span> mr update&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#7f848e"># source corp updates if any&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> run_if_exists &lt;span style="color:#98c379">&amp;#34;sd-world-corp&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Note that &lt;code>--no-pager&lt;/code> is a &lt;code>git&lt;/code>-level option: it should be specified before
+the git subcommand. The following does not work:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% git show HEAD~1 --no-pager
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fatal: unrecognized argument: --no-pager
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>ArgoCD: app version notifications</title><link>https://perrotta.dev/2025/08/argocd-app-version-notifications/</link><pubDate>Tue, 12 Aug 2025 12:07:20 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/argocd-app-version-notifications/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: when using &lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications/">ArgoCD
 notifications&lt;/a>,
 starting off from their
 &lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications/catalog/">catalog&lt;/a>,
@@ -1810,36 +1849,4 @@ as it&amp;rsquo;s not in Homebrew. It&amp;rsquo;s also available on Windows. It 
 in &lt;a href="https://www.trustpilot.com/review/pdfgear.com">Trustpilot&lt;/a> (4.9 stars, 6500+
 reviews).&lt;/p>
 &lt;p>On Linux I would probably try &lt;a href="https://xournalpp.github.io/">Xournal++&lt;/a>, however
-it is really a PDF &lt;em>annotation&lt;/em> tool. It is also available on macOS: &lt;code>brew install xournal++&lt;/code>.&lt;/p></description></item><item><title>Kagi trial expires</title><link>https://perrotta.dev/2025/05/kagi-trial-expires/</link><pubDate>Sat, 31 May 2025 16:44:02 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/kagi-trial-expires/</guid><description>&lt;p>My Kagi trial is going to expire within 2 days.&lt;/p>
-&lt;p>&lt;a href="https://perrotta.dev/2025/05/kagi/">Previously&lt;/a>, I wrote:&lt;/p>
-&lt;blockquote>
-&lt;p>The question to ask yourself is whether it&amp;rsquo;s worth paying $10 / month for
-their professional plan, or whether DuckDuckGo is enough for you. If you can
-have your company expense them, then it&amp;rsquo;s definitely a no-brainer.&lt;/p>
-&lt;/blockquote>
-&lt;p>My company approved my request to expense it, therefore I am going to buy their
-&lt;a href="https://kagi.com/pricing">1-year Professional plan&lt;/a>.&lt;/p>
-&lt;p>Now, a few observations:&lt;/p>
-&lt;ul>
-&lt;li>
-&lt;p>Would I pay for it out of my own pocket? Probably no. It&amp;rsquo;s perfectly
-reasonable and enough for my purposes to use a blend of &lt;a href="https://perrotta.dev/2024/12/switching-from-google-to-chatgpt-search/">DuckDuckGo + ChatGPT
-Search&lt;/a>.
-That said, Kagi provides extra value to me on top of that duo; I prefer using
-it.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>Once you grow accustomed with search results without ads it&amp;rsquo;s very, very hard
-to go back. Searching on Google suddenly feels like a thing of the past. It&amp;rsquo;s
-very similar to the experience of getting used to ad-blocking software in the
-web browser and then suddenly turning them off. The Web feels messy and
-bloated.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>I did 961 searches at the time of this post, with 18 assistant interactions. I
-barely use their AI features because I prefer the OpenAI ChatGPT experience.
-Nonetheless, their AI features are occasionally handy and I find them to be
-integrated in a non-intrusive way.&lt;/p>
-&lt;/li>
-&lt;/ul>
-&lt;p>&lt;strong>TL;DR&lt;/strong>: Go for Kagi iff you can expense it. This is not a sponsored post. :)&lt;/p></description></item></channel></rss>
+it is really a PDF &lt;em>annotation&lt;/em> tool. It is also available on macOS: &lt;code>brew install xournal++&lt;/code>.&lt;/p></description></item></channel></rss>

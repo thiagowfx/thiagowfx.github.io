@@ -22,7 +22,46 @@ files underneath the current directory only) it fails:&lt;/p>
 completely unnecessary. A git alias suffices. Keep it simple!&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>ArgoCD: app version notifications</title><link>https://perrotta.dev/2025/08/argocd-app-version-notifications/</link><pubDate>Tue, 12 Aug 2025 12:07:20 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/argocd-app-version-notifications/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: when using &lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications/">ArgoCD
+&lt;/div></description></item><item><title>git: --no-pager</title><link>https://perrotta.dev/2025/08/git--no-pager/</link><pubDate>Tue, 12 Aug 2025 12:21:22 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/git--no-pager/</guid><description>&lt;p>Let&amp;rsquo;s say you use color highlighting to visually inspect diffs with &lt;code>git&lt;/code>, such
+as &lt;a href="https://github.com/dandavison/delta">&lt;code>delta&lt;/code>&lt;/a> or
+&lt;a href="https://github.com/git/git/blob/master/contrib/diff-highlight/README">&lt;code>diff-highlight&lt;/code>&lt;/a>
+or &lt;a href="https://github.com/mookid/diffr">&lt;code>diffr&lt;/code>&lt;/a>.&lt;/p>
+&lt;p>&lt;strong>Implication&lt;/strong>: whenever you run &lt;code>git diff&lt;/code>, &lt;code>git show&lt;/code>, or any other &lt;code>git&lt;/code>
+command that produces a diff, it will emit colors (typically red and green).&lt;/p>
+&lt;p>Colors are great for local visual inspection, but they are terrible for sharing.
+They won&amp;rsquo;t be carried over with copy-and-paste.&lt;/p>
+&lt;p>If you intend to share diff output (e.g. to a Q&amp;amp;A site, with teammates), it&amp;rsquo;s
+better to emit &lt;code>-&lt;/code> and &lt;code>+&lt;/code>, as vanilla &lt;code>diff&lt;/code> does.&lt;/p>
+&lt;p>The easiest way to do so is to pass &lt;code>--no-pager&lt;/code> to &lt;code>git&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git --no-pager diff a83bc395
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git --no-pager show HEAD
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For example, a recent commit in my
+&lt;a href="https://github.com/thiagowfx/.dotfiles">dotfiles&lt;/a>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% git --no-pager show HEAD~1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>commit 52b1e91b0f1d93176ec768aa6158974fc401f335
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Author: Thiago Perrotta &amp;lt;&lt;span style="color:#56b6c2">{&lt;/span>redacted&lt;span style="color:#56b6c2">}&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Date: Thu Aug &lt;span style="color:#d19a66">7&lt;/span> 12:00:47 &lt;span style="color:#d19a66">2025&lt;/span> +0200
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> fix mr
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>diff --git bin/.bin/sd-world bin/.bin/sd-world
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>index c46be0e..44c0b47 &lt;span style="color:#d19a66">100755&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>--- bin/.bin/sd-world
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>+++ bin/.bin/sd-world
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@@ -58,7 +58,7 @@ &lt;span style="color:#c678dd">esac&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> run_if_exists &lt;span style="color:#98c379">&amp;#34;claude&amp;#34;&lt;/span> claude update
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#7f848e"># myrepos&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-run_if_exists &lt;span style="color:#98c379">&amp;#34;mr&amp;#34;&lt;/span> mr -d ~ update
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>+&lt;span style="color:#56b6c2">(&lt;/span>&lt;span style="color:#e5c07b">cd&lt;/span> ~ &lt;span style="color:#56b6c2">&amp;amp;&amp;amp;&lt;/span> run_if_exists &lt;span style="color:#98c379">&amp;#34;mr&amp;#34;&lt;/span> mr update&lt;span style="color:#56b6c2">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#7f848e"># source corp updates if any&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> run_if_exists &lt;span style="color:#98c379">&amp;#34;sd-world-corp&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Note that &lt;code>--no-pager&lt;/code> is a &lt;code>git&lt;/code>-level option: it should be specified before
+the git subcommand. The following does not work:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% git show HEAD~1 --no-pager
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fatal: unrecognized argument: --no-pager
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>ArgoCD: app version notifications</title><link>https://perrotta.dev/2025/08/argocd-app-version-notifications/</link><pubDate>Tue, 12 Aug 2025 12:07:20 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/argocd-app-version-notifications/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: when using &lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications/">ArgoCD
 notifications&lt;/a>,
 starting off from their
 &lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications/catalog/">catalog&lt;/a>,
@@ -1986,10 +2025,4 @@ for the wildcard to try and match to each sequence of characters.&lt;/p>
 &lt;p>Therefore &lt;code>chartmuseum*&lt;/code> works. Or, even better: &lt;code>*chartmuseum*&lt;/code>.&lt;/p>
 &lt;p>It&amp;rsquo;s a pity, but the way forward here is to memorize that I need to add &lt;code>*&lt;/code>
 every single time.&lt;/p>
-&lt;p>Come on Atlassian, surely you can do better than this?&lt;/p></description></item><item><title>bad interpreter: perl: no such file or directory</title><link>https://perrotta.dev/2025/06/bad-interpreter-perl-no-such-file-or-directory/</link><pubDate>Sun, 08 Jun 2025 17:48:35 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/bad-interpreter-perl-no-such-file-or-directory/</guid><description>&lt;p>The full error message is:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% ack -i nmap
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>zsh: /opt/homebrew/bin/ack: bad interpreter: /opt/homebrew/opt/perl/bin/perl: no such file or directory
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This keeps happening, I am not sure why. &lt;a href="https://perrotta.dev/2024/09/life-without-ack/">Previously&lt;/a>.&lt;/p>
-&lt;p>The fix is quite simple though:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% brew reinstall perl
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
+&lt;p>Come on Atlassian, surely you can do better than this?&lt;/p></description></item></channel></rss>
