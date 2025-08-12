@@ -48,6 +48,39 @@ to &amp;ldquo;Work items&amp;rdquo;. Do you have an issue with this?&amp;#160;&l
 &lt;p>I prefer this option. The bookmark label (name) is &lt;code>+&lt;/code>, very mnemonic.&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
+&lt;/div></description></item><item><title>docker: dive into images</title><link>https://perrotta.dev/2025/08/docker-dive-into-images/</link><pubDate>Mon, 11 Aug 2025 13:20:08 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/docker-dive-into-images/</guid><description>&lt;p>Recently bitnami has &lt;a href="https://github.com/bitnami/charts/issues/35164">pulled the
+plug&lt;/a> off their public docker
+images offering&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p>
+&lt;p>We are relying on their
+&lt;a href="https://hub.docker.com/r/bitnami/kubectl">&lt;code>bitnami/kubectl&lt;/code>&lt;/a> image. Now what?&lt;/p>
+&lt;p>We could build our own, or use another upstream image. Looking at the &lt;a href="https://hub.docker.com/search?q=kubectl">Docker
+Hub&lt;/a> catalog, I was pleased to find
+&lt;a href="https://hub.docker.com/r/rancher/kubectl">&lt;code>rancher/kubectl&lt;/code>&lt;/a> (backed by SUSE)
+there.&lt;/p>
+&lt;p>This is enough for our needs.&lt;/p>
+&lt;p>It would have been trivial to build our own image otherwise if needed:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-Dockerfile" data-lang="Dockerfile">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">FROM&lt;/span>&lt;span style="color:#98c379"> alpine:3.22&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">RUN&lt;/span> apk add --no-cache kubectl
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>How can we ensure these images are equivalent, for practical purposes?&lt;/p>
+&lt;p>One way is to use &lt;a href="https://github.com/wagoodman/dive">&lt;code>dive&lt;/code>&lt;/a> to introspect
+each of them:&lt;/p>
+&lt;blockquote>
+&lt;p>A tool for exploring each layer in a docker image&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% dive bitnami/kubectl:latest
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% dive rancher/kubectl:v1.30.14
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The rancher image has 50MB in size and contains &lt;em>only&lt;/em> the &lt;code>kubectl&lt;/code> binary.
+There&amp;rsquo;s no shell, not even &lt;code>/bin/sh&lt;/code>.&lt;/p>
+&lt;p>The bitnami image has 326MB and contains a bunch of other stuff.&lt;/p>
+&lt;p>It turns out we will get some (unexpected) efficiency gains out of this
+migration!&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a href="https://en.wikipedia.org/wiki/Enshittification">&amp;ldquo;&amp;ldquo;&amp;ldquo;Recession&amp;rdquo;&amp;rdquo;&amp;rdquo;&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
 &lt;/div></description></item><item><title>Silence unknown callers</title><link>https://perrotta.dev/2025/08/silence-unknown-callers/</link><pubDate>Sat, 09 Aug 2025 18:11:39 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/silence-unknown-callers/</guid><description>&lt;p>I absolutely &lt;strong>never&lt;/strong> get any spam calls. This has been true for &lt;em>many and
 many&lt;/em> years now.&lt;/p>
 &lt;p>What is the formula to do so? Just be an uninteresting, boring person. Be
@@ -1939,39 +1972,4 @@ that did not yet make it to a fixed release).&lt;/p>
 &lt;p>The approach is similar to package &lt;a href="https://perrotta.dev/2025/01/alpine-linux-install-/-pin-old-packages/">pinning&lt;/a>, by providing a custom
 &lt;code>--repository&lt;/code> to &lt;code>apk add&lt;/code>:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-dockerfile" data-lang="dockerfile">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">RUN&lt;/span> apk add --no-cache --repository&lt;span style="color:#56b6c2">=&lt;/span>https://dl-cdn.alpinelinux.org/alpine/edge/testing gliderlabs-sigil vals
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Replace &amp;ldquo;testing&amp;rdquo; with &amp;ldquo;community&amp;rdquo; or &amp;ldquo;main&amp;rdquo; as needed.&lt;/p></description></item><item><title>Alpine Linux: package is gone?!</title><link>https://perrotta.dev/2025/06/alpine-linux-package-is-gone/</link><pubDate>Wed, 04 Jun 2025 11:43:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/alpine-linux-package-is-gone/</guid><description>&lt;p>Upon upgrading one of our Dockerfiles from Alpine Linux 3.21 to 3.22, we noticed
-that the &lt;code>ruby-json&lt;/code> package no longer exists:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% docker build -t myproject -f Dockerfile .
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;gt; &lt;span style="color:#56b6c2">[&lt;/span> 2/10&lt;span style="color:#56b6c2">]&lt;/span> RUN apk add --update --no-cache ruby-json&lt;span style="color:#56b6c2">=&lt;/span>~&lt;span style="color:#98c379">&amp;#34;3.4&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2.371 ERROR: unable to &lt;span style="color:#c678dd">select&lt;/span> packages:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2.371 ruby-json &lt;span style="color:#56b6c2">(&lt;/span>no such package&lt;span style="color:#56b6c2">)&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2.371 required by: world&lt;span style="color:#56b6c2">[&lt;/span>ruby-json~3.4&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Why??&lt;/p>
-&lt;p>First, look into &lt;a href="https://pkgs.alpinelinux.org/packages">Alpine Linux Packages&lt;/a>:
-&lt;a href="https://pkgs.alpinelinux.org/packages?name=ruby-json&amp;amp;branch=v3.22&amp;amp;repo=&amp;amp;arch=&amp;amp;origin=&amp;amp;flagged=&amp;amp;maintainer=">query&lt;/a>.
-Ensure to set branch to v3.22 and architecture to All. And it&amp;rsquo;s indeed not
-there anymore:&lt;/p>
-&lt;blockquote>
-&lt;p>No matching packages found&amp;hellip;&lt;/p>
-&lt;/blockquote>
-&lt;p>Next, do a bit of digging in the
-&lt;a href="https://gitlab.alpinelinux.org/alpine/aports">aports&lt;/a> repository on the &lt;a href="https://gitlab.alpinelinux.org/">Alpine
-Linux GitLab&lt;/a>:
-&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/?sort=created_date&amp;amp;state=all&amp;amp;search=ruby-json&amp;amp;first_page_size=20">query&lt;/a>.
-Search for &lt;code>ruby-json&lt;/code> in &amp;ldquo;All&amp;rdquo; Merge requests.&lt;/p>
-&lt;p>That leads to
-&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/80599">&lt;code>!80599&lt;/code>&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>community/ruby-json: remove&lt;/p>
-&lt;p>&lt;code>ruby-json&lt;/code> is already bundled with &lt;code>main/ruby&lt;/code>. The &lt;code>community/ruby-json&lt;/code>
-could never be installed due to conflicts.&lt;/p>
-&lt;/blockquote>
-&lt;p>Aha, then there&amp;rsquo;s nothing to do here. Installing the base &lt;code>ruby&lt;/code> package should
-be enough from now on.&lt;/p>
-&lt;p>&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/issues/16938">#16938&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>I think it&amp;rsquo;s safe to say community/ruby-json does literally nothing, has never been installed, and does not work.&lt;/p>
-&lt;/blockquote>
-&lt;p>Oh well.&lt;/p></description></item></channel></rss>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Replace &amp;ldquo;testing&amp;rdquo; with &amp;ldquo;community&amp;rdquo; or &amp;ldquo;main&amp;rdquo; as needed.&lt;/p></description></item></channel></rss>
