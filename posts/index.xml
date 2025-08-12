@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/posts/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 11 Aug 2025 14:31:09 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>JIRA: create an issue with pre-populated fields</title><link>https://perrotta.dev/2025/08/jira-create-an-issue-with-pre-populated-fields/</link><pubDate>Mon, 11 Aug 2025 14:31:09 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/jira-create-an-issue-with-pre-populated-fields/</guid><description>&lt;p>It is somewhat tedious to create issues&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> in JIRA. It is a bloated and complex web
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 12 Aug 2025 12:07:20 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>ArgoCD: app version notifications</title><link>https://perrotta.dev/2025/08/argocd-app-version-notifications/</link><pubDate>Tue, 12 Aug 2025 12:07:20 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/argocd-app-version-notifications/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: when using &lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications/">ArgoCD
+notifications&lt;/a>,
+starting off from their
+&lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications/catalog/">catalog&lt;/a>,
+print the app chart version in addition to existing information.&lt;/p>
+&lt;p>More specifically, currently, a Slack notification message from Argo looks like
+the following:&lt;/p>
+&lt;pre tabindex="0">&lt;code>Cluster 37: Application heart-of-gold is unhealthy.
+&lt;/code>&lt;/pre>&lt;p>We want to improve it to:&lt;/p>
+&lt;pre tabindex="0">&lt;code>Cluster 37: Application heart-of-gold (~1.18.3) is unhealthy.
+&lt;/code>&lt;/pre>&lt;p>The following diff (under a &lt;code>template&lt;/code> block) accomplishes that:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-diff" data-lang="diff">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">- {{if eq .serviceType &amp;#34;slack&amp;#34;}}:interrobang:{{end}} Cluster &amp;lt;{{.context.argocdUrl}}|*{{.context.clusterId}}*&amp;gt;: Application &amp;lt;{{.context.argocdUrl}}/applications/{{.app.metadata.name}}|`{{.app.metadata.name}}`&amp;gt; _sync_ by {{.app.status.operationState.operation.initiatedBy.username | default &amp;#34;_automation_&amp;#34; }} is _unknown_.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">&lt;/span>&lt;span style="color:#98c379;font-weight:bold">+ {{if eq .serviceType &amp;#34;slack&amp;#34;}}:interrobang:{{end}} Cluster &amp;lt;{{.context.argocdUrl}}|*{{.context.clusterId}}*&amp;gt;: Application &amp;lt;{{.context.argocdUrl}}/applications/{{.app.metadata.name}}|`{{.app.metadata.name}}`&amp;gt;{{if .app.spec.source.targetRevision}} ({{.app.spec.source.targetRevision}}){{else}}{{range .app.spec.sources}}{{if .targetRevision}} ({{.targetRevision}}){{break}}{{end}}{{end}}{{end}} _sync_ by {{.app.status.operationState.operation.initiatedBy.username | default &amp;#34;_automation_&amp;#34; }} is _unknown_.
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Diving into it with pretty-printing&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>:&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-gotemplate" data-lang="gotemplate">{{if .app.spec.source.targetRevision}}
+ ({{.app.spec.source.targetRevision}})
+{{else}}
+ {{range .app.spec.sources}}
+ {{if .targetRevision}}
+ ({{.targetRevision}})
+ {{break}}
+ {{end}}
+ {{end}}
+{{end}}
+&lt;/code>&lt;/pre>&lt;p>If there&amp;rsquo;s a single source in the helm chart, we extract its &lt;code>targetRevision&lt;/code>.&lt;/p>
+&lt;p>Otherwise, when using a &lt;a href="https://argo-cd.readthedocs.io/en/latest/user-guide/multiple_sources/">multi-source
+app&lt;/a>, we
+extract the first available &lt;code>targetRevision&lt;/code>.&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>These are
+&lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/GoTemplate/">golang&lt;/a>
+&lt;a href="https://pkg.go.dev/text/template">templates&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>JIRA: create an issue with pre-populated fields</title><link>https://perrotta.dev/2025/08/jira-create-an-issue-with-pre-populated-fields/</link><pubDate>Mon, 11 Aug 2025 14:31:09 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/jira-create-an-issue-with-pre-populated-fields/</guid><description>&lt;p>It is somewhat tedious to create issues&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> in JIRA. It is a bloated and complex web
 app, slow to load, with a myriad of fields to fill in.&lt;/p>
 &lt;p>Most of these input fields do not significantly change when working within a
 single team. The common exceptions are the &lt;strong>Summary&lt;/strong> (Issue title) and
@@ -1966,10 +2003,4 @@ way:&lt;/p>
 account in any of these services, in case you were wondering :-)&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Alpine Linux: Dockerfile: install package from edge</title><link>https://perrotta.dev/2025/06/alpine-linux-dockerfile-install-package-from-edge/</link><pubDate>Wed, 04 Jun 2025 12:37:47 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/alpine-linux-dockerfile-install-package-from-edge/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>Dockerfile&lt;/code> based on a fixed release of Alpine
-Linux (e.g. &lt;code>FROM alpine:3.22&lt;/code>), install a package from &lt;code>edge&lt;/code> (i.e. a package
-that did not yet make it to a fixed release).&lt;/p>
-&lt;p>The approach is similar to package &lt;a href="https://perrotta.dev/2025/01/alpine-linux-install-/-pin-old-packages/">pinning&lt;/a>, by providing a custom
-&lt;code>--repository&lt;/code> to &lt;code>apk add&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-dockerfile" data-lang="dockerfile">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">RUN&lt;/span> apk add --no-cache --repository&lt;span style="color:#56b6c2">=&lt;/span>https://dl-cdn.alpinelinux.org/alpine/edge/testing gliderlabs-sigil vals
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Replace &amp;ldquo;testing&amp;rdquo; with &amp;ldquo;community&amp;rdquo; or &amp;ldquo;main&amp;rdquo; as needed.&lt;/p></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>
