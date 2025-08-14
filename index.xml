@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 13 Aug 2025 12:02:03 +0200</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Daily log</title><link>https://perrotta.dev/2025/08/daily-log/</link><pubDate>Wed, 13 Aug 2025 12:02:03 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/daily-log/</guid><description>&lt;p>It&amp;rsquo;s easy to get distracted when using computers connected to the internet.
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 14 Aug 2025 17:46:27 +0200</lastBuildDate><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>GNU sed: follow symlinks</title><link>https://perrotta.dev/2025/08/gnu-sed-follow-symlinks/</link><pubDate>Thu, 14 Aug 2025 17:46:27 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/gnu-sed-follow-symlinks/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/">Previously&lt;/a>.&lt;/p>
+&lt;p>Today we will upgrade Terraform in the entire codebase:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>fd -e tf | ifne xargs gsed -i -e &lt;span style="color:#98c379">&amp;#39;s/required_version = &amp;#34;~&amp;gt; 1.6.6/required_version = &amp;#34;~&amp;gt; 1.10.0/g&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Easy, right?&lt;/p>
+&lt;p>During code review, a teammate has pointed out that I replaced many symlinks.
+How?! This was completely unintended!&lt;/p>
+&lt;p>Eventually I figured out the reason. From &lt;a href="https://man.archlinux.org/man/sed.1">&lt;code>sed(1)&lt;/code>&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;strong>&amp;ndash;follow-symlinks&lt;/strong>
+follow symlinks when processing in place&lt;/p>
+&lt;/blockquote>
+&lt;p>It turns out it is necessary to pass &lt;code>--follow-symlinks&lt;/code> to preserve symlinks
+when using &lt;code>-i&lt;/code> with GNU &lt;code>sed&lt;/code>.&lt;/p></description></item><item><title>Daily log</title><link>https://perrotta.dev/2025/08/daily-log/</link><pubDate>Wed, 13 Aug 2025 12:02:03 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/daily-log/</guid><description>&lt;p>It&amp;rsquo;s easy to get distracted when using computers connected to the internet.
 Like, errhmm, when you are doing your job.&lt;/p>
 &lt;p>I tend to minimize some distractions by reducing notifications and by
 turning on do not disturb on my phone. Having / using less social media also
@@ -1994,38 +2006,4 @@ repository root. &lt;code>git diff&lt;/code> still surfaces it.&lt;/p>
 &lt;p>It&amp;rsquo;s hard to quote bits from that article, just go read the whole thing.&lt;/p>
 &lt;p>Surely the optimal kind of person that one should aspire to be in 2025 and
 beyond is a hybrid between Paolo and Mario.
-&lt;a href="https://en.wikipedia.org/wiki/Wario">Pario&lt;/a>?&lt;/p></description></item><item><title>git commit: automatically add pull request template</title><link>https://perrotta.dev/2025/06/git-commit-automatically-add-pull-request-template/</link><pubDate>Thu, 12 Jun 2025 21:09:36 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/git-commit-automatically-add-pull-request-template/</guid><description>&lt;p>GitHub supports &lt;a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/creating-a-pull-request-template-for-your-repository">pull request
-templates&lt;/a>.
-Define a &lt;code>.github/PULL_REQUEST_TEMPLATE.md&lt;/code> directory in your git repo, and it
-will be automatically used when creating PRs via the GitHub web UI and via the
-CLI tool (&lt;a href="https://cli.github.com/">&lt;code>gh&lt;/code>&lt;/a>).&lt;/p>
-&lt;p>But what about commits created locally, via a plain &lt;code>git commit&lt;/code>?&lt;/p>
-&lt;p>As per &lt;a href="https://git-scm.com/docs/git-commit/2.49.0#Documentation/git-commit.txt-code--templateltfilegtcode">git
-docs&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>&lt;code>commit.template&lt;/code>&lt;/p>
-&lt;p>Specify the pathname of a file to use as the template for new commit messages.&lt;/p>
-&lt;/blockquote>
-&lt;p>Therefore, the following &lt;code>~/.gitconfig&lt;/code> works:&lt;/p>
-&lt;pre tabindex="0">&lt;code>[commit]
- template = .github/PULL_REQUEST_TEMPLATE.md
-&lt;/code>&lt;/pre>&lt;p>The file path (pathname) is relative to the git repository root.&lt;/p>
-&lt;p>However, this will fail in repositories that do not have a template:&lt;/p>
-&lt;pre tabindex="0">&lt;code>% git commit
-fatal: could not read &amp;#39;.github/PULL_REQUEST_TEMPLATE.md&amp;#39;: No such file or directory
-&lt;/code>&lt;/pre>&lt;p>There&amp;rsquo;s a workaround: use &lt;a href="https://git-scm.com/docs/git-config#_includes">&lt;code>includeIf&lt;/code>&lt;/a>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% tail -3 ~/.gitconfig
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Import corp configs if any.&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>include&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">path&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> .gitconfig_corp
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat ~/.gitconfig_corp
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>includeIf &lt;span style="color:#98c379">&amp;#34;gitdir:~/mycompany/**&amp;#34;&lt;/span>&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">path&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> .gitconfig_mycompany
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>includeIf &lt;span style="color:#98c379">&amp;#34;hasconfig:remote.*.url:git@github.com:mycompany/**&amp;#34;&lt;/span>&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">path&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> .gitconfig_mycompany
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat ~/.gitconfig_mycompany
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>commit&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">template&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> .github/PULL_REQUEST_TEMPLATE.md
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This way, the github PR template is only included for git repositories from my
-company.&lt;/p></description></item></channel></rss>
+&lt;a href="https://en.wikipedia.org/wiki/Wario">Pario&lt;/a>?&lt;/p></description></item></channel></rss>

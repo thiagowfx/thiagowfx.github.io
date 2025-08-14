@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 13 Aug 2025 12:02:03 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Daily log</title><link>https://perrotta.dev/2025/08/daily-log/</link><pubDate>Wed, 13 Aug 2025 12:02:03 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/daily-log/</guid><description>&lt;p>It&amp;rsquo;s easy to get distracted when using computers connected to the internet.
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 14 Aug 2025 17:46:27 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>GNU sed: follow symlinks</title><link>https://perrotta.dev/2025/08/gnu-sed-follow-symlinks/</link><pubDate>Thu, 14 Aug 2025 17:46:27 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/gnu-sed-follow-symlinks/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/">Previously&lt;/a>.&lt;/p>
+&lt;p>Today we will upgrade Terraform in the entire codebase:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>fd -e tf | ifne xargs gsed -i -e &lt;span style="color:#98c379">&amp;#39;s/required_version = &amp;#34;~&amp;gt; 1.6.6/required_version = &amp;#34;~&amp;gt; 1.10.0/g&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Easy, right?&lt;/p>
+&lt;p>During code review, a teammate has pointed out that I replaced many symlinks.
+How?! This was completely unintended!&lt;/p>
+&lt;p>Eventually I figured out the reason. From &lt;a href="https://man.archlinux.org/man/sed.1">&lt;code>sed(1)&lt;/code>&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;strong>&amp;ndash;follow-symlinks&lt;/strong>
+follow symlinks when processing in place&lt;/p>
+&lt;/blockquote>
+&lt;p>It turns out it is necessary to pass &lt;code>--follow-symlinks&lt;/code> to preserve symlinks
+when using &lt;code>-i&lt;/code> with GNU &lt;code>sed&lt;/code>.&lt;/p></description></item><item><title>Daily log</title><link>https://perrotta.dev/2025/08/daily-log/</link><pubDate>Wed, 13 Aug 2025 12:02:03 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/daily-log/</guid><description>&lt;p>It&amp;rsquo;s easy to get distracted when using computers connected to the internet.
 Like, errhmm, when you are doing your job.&lt;/p>
 &lt;p>I tend to minimize some distractions by reducing notifications and by
 turning on do not disturb on my phone. Having / using less social media also
@@ -1843,31 +1855,4 @@ whenever a new version is available.&lt;/p>
 &lt;p>For details on how to create a project mapping for Alpine Linux, please refer
 to the &lt;a href="https://release-monitoring.org/static/docs/user-guide.html">release monitoring
 documentation&lt;/a>.&lt;/p>
-&lt;/blockquote></description></item><item><title>ArgoCD: upgrade to v3, remove helm labels</title><link>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</link><pubDate>Mon, 02 Jun 2025 13:03:24 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</guid><description>&lt;p>I am leading the effort to upgrade ArgoCD to its &lt;a href="https://blog.argoproj.io/announcing-argo-cd-v3-small-but-mighty-df05c0b39ad6">newest major version
-(v3)&lt;/a>
-across our fleet.&lt;/p>
-&lt;p>One of its &lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/upgrading/2.14-3.0/">breaking
-changes&lt;/a>
-is the removal of helm labels from argo applications, like such:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">metadata&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># [...]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">labels&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">app.kubernetes.io/managed-by&lt;/span>: Helm
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Applying a normal sync does not get rid of the label.&lt;/p>
-&lt;p>I found out that doing an one-off &lt;a href="https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/#server-side-apply">server-side apply
-sync&lt;/a>
-addresses the label removal, and it is safe to do (incurs no downtime):&lt;/p>
-&lt;blockquote>
-&lt;p>However, there are some cases where you want to use &lt;code>kubectl apply --server-side&lt;/code> over &lt;code>kubectl apply&lt;/code>:&lt;/p>
-&lt;p>[&amp;hellip;]&lt;/p>
-&lt;p>Patching of existing resources on the cluster that are not fully managed by
-Argo CD.&lt;/p>
-&lt;/blockquote>
-&lt;p>There&amp;rsquo;s no need to make the server-side apply a permanent config, i.e.:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">apiVersion&lt;/span>: argoproj.io/v1alpha1
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">kind&lt;/span>: Application
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">spec&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">syncPolicy&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">syncOptions&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - ServerSideApply=true
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;though there&amp;rsquo;s no harm either in doing so.&lt;/p></description></item></channel></rss>
+&lt;/blockquote></description></item></channel></rss>
