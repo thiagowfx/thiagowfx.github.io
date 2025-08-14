@@ -20,7 +20,7 @@ How?! This was completely unintended!
 
 Eventually I figured out the reason. From [`sed(1)`](https://man.archlinux.org/man/sed.1):
 
-> **--follow-symlinks**
+> `--follow-symlinks`
 >   follow symlinks when processing in place
 
 It turns out it is necessary to pass `--follow-symlinks` to preserve symlinks
