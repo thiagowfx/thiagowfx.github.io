@@ -9,7 +9,7 @@ CMD sleep infinity
 Let&rsquo;s run dockerfmt (v0.3.7) in it:
 % dockerfmt Dockerfile
 ENTRYPOINT ["sleep", "infinity"]
-CMD ["sleep", "infinity"]%
+CMD ["sleep", "infinity"]
 At first glance, everything looks OK. The problem is that this transformation is not a no-op.
 Looking at the docs:
 
@@ -20,17 +20,17 @@ https://docs.docker.com/reference/dockerfile/#shell-and-exec-form
 If CMD is used to provide default arguments for the ENTRYPOINT instruction, both the CMD and ENTRYPOINT instructions should be specified in the exec form.'><meta name=keywords content="dev,"><meta property="og:url" content="https://perrotta.dev/2025/08/dockerfile-cmd-and-entrypoint-shell-and-exec-forms/"><meta property="og:site_name" content="¬ just serendipity 🍀"><meta property="og:title" content="Dockerfile: CMD and ENTRYPOINT: shell and exec forms"><meta property="og:description" content='Today I filed a github issue against the dockerfmt project, which I copy verbatim here given its surprising behavior.
 reteps/dockerfmt#33 Consider this sample Dockerfile (abridged version of a real-world scenario):
 ENTRYPOINT sleep infinity CMD sleep infinity Let’s run dockerfmt (v0.3.7) in it:
-% dockerfmt Dockerfile ENTRYPOINT ["sleep", "infinity"] CMD ["sleep", "infinity"]% At first glance, everything looks OK. The problem is that this transformation is not a no-op.
+% dockerfmt Dockerfile ENTRYPOINT ["sleep", "infinity"] CMD ["sleep", "infinity"] At first glance, everything looks OK. The problem is that this transformation is not a no-op.
 Looking at the docs:
 https://docs.docker.com/reference/dockerfile/#cmd https://docs.docker.com/reference/dockerfile/#shell-and-exec-form If CMD is used to provide default arguments for the ENTRYPOINT instruction, both the CMD and ENTRYPOINT instructions should be specified in the exec form.'><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-08-18T15:09:28+02:00"><meta property="article:modified_time" content="2025-08-18T15:09:28+02:00"><meta property="article:tag" content="Dev"><meta name=twitter:card content="summary"><meta name=twitter:title content="Dockerfile: CMD and ENTRYPOINT: shell and exec forms"><meta name=twitter:description content='Today I filed a github issue against the dockerfmt project, which I copy verbatim here given its surprising behavior.
 reteps/dockerfmt#33 Consider this sample Dockerfile (abridged version of a real-world scenario):
 ENTRYPOINT sleep infinity CMD sleep infinity Let’s run dockerfmt (v0.3.7) in it:
-% dockerfmt Dockerfile ENTRYPOINT ["sleep", "infinity"] CMD ["sleep", "infinity"]% At first glance, everything looks OK. The problem is that this transformation is not a no-op.
+% dockerfmt Dockerfile ENTRYPOINT ["sleep", "infinity"] CMD ["sleep", "infinity"] At first glance, everything looks OK. The problem is that this transformation is not a no-op.
 Looking at the docs:
 https://docs.docker.com/reference/dockerfile/#cmd https://docs.docker.com/reference/dockerfile/#shell-and-exec-form If CMD is used to provide default arguments for the ENTRYPOINT instruction, both the CMD and ENTRYPOINT instructions should be specified in the exec form.'><meta itemprop=name content="Dockerfile: CMD and ENTRYPOINT: shell and exec forms"><meta itemprop=description content='Today I filed a github issue against the dockerfmt project, which I copy verbatim here given its surprising behavior.
 reteps/dockerfmt#33 Consider this sample Dockerfile (abridged version of a real-world scenario):
 ENTRYPOINT sleep infinity CMD sleep infinity Let’s run dockerfmt (v0.3.7) in it:
-% dockerfmt Dockerfile ENTRYPOINT ["sleep", "infinity"] CMD ["sleep", "infinity"]% At first glance, everything looks OK. The problem is that this transformation is not a no-op.
+% dockerfmt Dockerfile ENTRYPOINT ["sleep", "infinity"] CMD ["sleep", "infinity"] At first glance, everything looks OK. The problem is that this transformation is not a no-op.
 Looking at the docs:
 https://docs.docker.com/reference/dockerfile/#cmd https://docs.docker.com/reference/dockerfile/#shell-and-exec-form If CMD is used to provide default arguments for the ENTRYPOINT instruction, both the CMD and ENTRYPOINT instructions should be specified in the exec form.'><meta itemprop=datePublished content="2025-08-18T15:09:28+02:00"><meta itemprop=dateModified content="2025-08-18T15:09:28+02:00"><meta itemprop=wordCount content="288"><meta itemprop=keywords content="Dev"><meta name=referrer content="no-referrer-when-downgrade"><link rel="shortcut icon" href=https://perrotta.dev/favicon.ico><link rel=canonical href=https://perrotta.dev/2025/08/dockerfile-cmd-and-entrypoint-shell-and-exec-forms/><style>:root{--color-gray:#888;--color-grayer:#666;--font-title:"Inter", "Fira Sans", "Lato", system-ui, -apple-system,
       BlinkMacSystemFont, "Avenir Next", "Avenir", "Segoe UI", "Helvetica Neue",
@@ -47,7 +47,7 @@ verbatim here given its surprising behavior.</p><h2 id=retepsdockerfmt33httpsgit
 CMD sleep infinity
 </code></pre><p>Let&rsquo;s run <code>dockerfmt</code> (v0.3.7) in it:</p><pre tabindex=0><code>% dockerfmt Dockerfile
 ENTRYPOINT [&#34;sleep&#34;, &#34;infinity&#34;]
-CMD [&#34;sleep&#34;, &#34;infinity&#34;]%
+CMD [&#34;sleep&#34;, &#34;infinity&#34;]
 </code></pre><p>At first glance, everything looks OK. The problem is that this transformation is not a no-op.</p><p>Looking at the docs:</p><ul><li><a href=https://docs.docker.com/reference/dockerfile/#cmd>https://docs.docker.com/reference/dockerfile/#cmd</a></li><li><a href=https://docs.docker.com/reference/dockerfile/#shell-and-exec-form>https://docs.docker.com/reference/dockerfile/#shell-and-exec-form</a></li></ul><blockquote><p>If CMD is used to provide default arguments for the ENTRYPOINT instruction, both the CMD and ENTRYPOINT instructions should be specified in the <a href=https://docs.docker.com/reference/dockerfile/#exec-form>exec form</a>.</p></blockquote><p>The difference is:</p><ul><li>the original code yields <code>sleep infinity</code> (correct!)</li><li>the transformed code yields <code>sleep infinity sleep infinity</code>, which is an error (sleep: <code>no such argument sleep</code>)</li></ul><p>One could argue that the original code is odd – the following would be conceptually simpler, and more idiomatic:</p><pre tabindex=0><code>ENTRYPOINT [&#34;sleep&#34;]
 CMD [&#34;infinity&#34;]
 </code></pre><p>Or even:</p><pre tabindex=0><code>ENTRYPOINT [&#34;sleep&#34;, &#34;infinity&#34;]
