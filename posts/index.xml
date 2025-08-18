@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/posts/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 14 Aug 2025 17:46:27 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>GNU sed: follow symlinks</title><link>https://perrotta.dev/2025/08/gnu-sed-follow-symlinks/</link><pubDate>Thu, 14 Aug 2025 17:46:27 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/gnu-sed-follow-symlinks/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/">Previously&lt;/a>.&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 18 Aug 2025 15:09:28 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Dockerfile: CMD and ENTRYPOINT: shell and exec forms</title><link>https://perrotta.dev/2025/08/dockerfile-cmd-and-entrypoint-shell-and-exec-forms/</link><pubDate>Mon, 18 Aug 2025 15:09:28 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/dockerfile-cmd-and-entrypoint-shell-and-exec-forms/</guid><description>&lt;p>Today I filed a github issue against the
+&lt;a href="https://github.com/reteps/dockerfmt/">&lt;code>dockerfmt&lt;/code>&lt;/a> project, which I copy
+verbatim here given its surprising behavior.&lt;/p>
+&lt;h2 id="retepsdockerfmt33httpsgithubcomretepsdockerfmtissues33">&lt;a href="https://github.com/reteps/dockerfmt/issues/33">reteps/dockerfmt#33&lt;/a>&lt;/h2>
+&lt;p>Consider this sample &lt;code>Dockerfile&lt;/code> (abridged version of a real-world scenario):&lt;/p>
+&lt;pre tabindex="0">&lt;code>ENTRYPOINT sleep infinity
+CMD sleep infinity
+&lt;/code>&lt;/pre>&lt;p>Let&amp;rsquo;s run &lt;code>dockerfmt&lt;/code> (v0.3.7) in it:&lt;/p>
+&lt;pre tabindex="0">&lt;code>% dockerfmt Dockerfile
+ENTRYPOINT [&amp;#34;sleep&amp;#34;, &amp;#34;infinity&amp;#34;]
+CMD [&amp;#34;sleep&amp;#34;, &amp;#34;infinity&amp;#34;]%
+&lt;/code>&lt;/pre>&lt;p>At first glance, everything looks OK. The problem is that this transformation is not a no-op.&lt;/p>
+&lt;p>Looking at the docs:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://docs.docker.com/reference/dockerfile/#cmd">https://docs.docker.com/reference/dockerfile/#cmd&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.docker.com/reference/dockerfile/#shell-and-exec-form">https://docs.docker.com/reference/dockerfile/#shell-and-exec-form&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>If CMD is used to provide default arguments for the ENTRYPOINT instruction, both the CMD and ENTRYPOINT instructions should be specified in the &lt;a href="https://docs.docker.com/reference/dockerfile/#exec-form">exec form&lt;/a>.&lt;/p>
+&lt;/blockquote>
+&lt;p>The difference is:&lt;/p>
+&lt;ul>
+&lt;li>the original code yields &lt;code>sleep infinity&lt;/code> (correct!)&lt;/li>
+&lt;li>the transformed code yields &lt;code>sleep infinity sleep infinity&lt;/code>, which is an error (sleep: &lt;code>no such argument sleep&lt;/code>)&lt;/li>
+&lt;/ul>
+&lt;p>One could argue that the original code is odd – the following would be conceptually simpler, and more idiomatic:&lt;/p>
+&lt;pre tabindex="0">&lt;code>ENTRYPOINT [&amp;#34;sleep&amp;#34;]
+CMD [&amp;#34;infinity&amp;#34;]
+&lt;/code>&lt;/pre>&lt;p>Or even:&lt;/p>
+&lt;pre tabindex="0">&lt;code>ENTRYPOINT [&amp;#34;sleep&amp;#34;, &amp;#34;infinity&amp;#34;]
+&lt;/code>&lt;/pre>&lt;p>Nonetheless, IMHO &lt;code>dockerfmt&lt;/code> should not change the behavior in this case.&lt;/p>
+&lt;h2 id="notes">Notes&lt;/h2>
+&lt;p>&lt;a href="https://docs.docker.com/reference/dockerfile/#shell-and-exec-form">&lt;code>shell&lt;/code> and &lt;code>exec&lt;/code>
+forms&lt;/a> have
+distinct forms:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>INSTRUCTION [&amp;quot;executable&amp;quot;, &amp;quot;param1&amp;quot;, &amp;quot;param2&amp;quot;]&lt;/code> (exec form)&lt;/li>
+&lt;li>&lt;code>INSTRUCTION command param1 param2&lt;/code> (shell form)&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>The exec form makes it possible to avoid shell string munging, and to invoke
+commands using a specific command shell, or any other executable. It uses a
+JSON array syntax, where each element in the array is a command, flag, or
+argument.&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p>The shell form is more relaxed, and emphasizes ease of use, flexibility, and
+readability. The shell form automatically uses a command shell, whereas the
+exec form does not.&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;code>dockerfmt&lt;/code>
+&lt;a href="https://github.com/reteps/dockerfmt/blob/290b5f78fbf3134024eb3366880754beee5dbe69/lib/format.go#L483">prefers&lt;/a>
+the exec form, for whatever reason.&lt;/p>
+&lt;p>There&amp;rsquo;s even a &lt;a href="https://github.com/reteps/dockerfmt/blob/290b5f78fbf3134024eb3366880754beee5dbe69/lib/format.go#L480">code
+comment&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;code>// this can technically change behavior. https://docs.docker.com/reference/dockerfile/#understand-how-cmd-and-entrypoint-interact&lt;/code>&lt;/p>
+&lt;/blockquote>
+&lt;p>Surprise surprise! The issue I reported is precisely due to a change of
+behavior.&lt;/p></description></item><item><title>GNU sed: follow symlinks</title><link>https://perrotta.dev/2025/08/gnu-sed-follow-symlinks/</link><pubDate>Thu, 14 Aug 2025 17:46:27 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/gnu-sed-follow-symlinks/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/">Previously&lt;/a>.&lt;/p>
 &lt;p>Today we will upgrade Terraform in the entire codebase:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>fd -e tf | ifne xargs gsed -i -e &lt;span style="color:#98c379">&amp;#39;s/required_version = &amp;#34;~&amp;gt; 1.6.6/required_version = &amp;#34;~&amp;gt; 1.10.0/g&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Easy, right?&lt;/p>
@@ -1998,13 +2057,4 @@ question load amongst the team.&lt;/li>
 &lt;ul>
 &lt;li>&lt;strong>Knowledge sharing&lt;/strong>. What you ask, you learn. What you learn, your teammates
 also learn. Win-win!&lt;/li>
-&lt;/ul></description></item><item><title>.gitignore .claude/settings.local.json</title><link>https://perrotta.dev/2025/06/.gitignore-.claude/settings.local.json/</link><pubDate>Thu, 12 Jun 2025 22:17:43 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/.gitignore-.claude/settings.local.json/</guid><description>&lt;p>The initial attempt:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat ~/.gitignore
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>.claude/settings.local.json
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>However, it doesn&amp;rsquo;t work when you run &lt;a href="https://www.anthropic.com/claude-code">claude
-code&lt;/a> in a subdirectory of your git
-repository root. &lt;code>git diff&lt;/code> still surfaces it.&lt;/p>
-&lt;p>The correct form is:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-diff" data-lang="diff">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">-.claude/settings.local.json
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">&lt;/span>&lt;span style="color:#98c379;font-weight:bold">+**/.claude/settings.local.json
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Add &lt;code>**&lt;/code> to include subdirectories as well.&lt;/p></description></item></channel></rss>
+&lt;/ul></description></item></channel></rss>
