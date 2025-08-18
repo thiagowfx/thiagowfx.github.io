@@ -23,7 +23,7 @@ Let's run `dockerfmt` (v0.3.7) in it:
 ```
 % dockerfmt Dockerfile
 ENTRYPOINT ["sleep", "infinity"]
-CMD ["sleep", "infinity"]%
+CMD ["sleep", "infinity"]
 ```
 
 At first glance, everything looks OK. The problem is that this transformation is not a no-op.
