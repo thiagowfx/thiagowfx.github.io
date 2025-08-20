@@ -148,9 +148,9 @@
 
             <div class="item-meta">
               <xsl:if test="author">
-                <strong>By:</strong> <xsl:value-of select="author"/> •
+                <strong>By: </strong> <xsl:value-of select="author"/> •
               </xsl:if>
-              <strong>Published:</strong> <xsl:value-of select="pubDate"/>
+              <strong>Published: </strong> <xsl:value-of select="pubDate"/>
             </div>
 
             <div class="item-description">
