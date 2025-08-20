@@ -148,7 +148,7 @@
 
             <div class="item-meta">
               <xsl:if test="author">
-                <strong>By: </strong> <xsl:value-of select="author"/> •
+                <strong>By: </strong> <a href="mailto:{substring-before(author, ' (')}"><xsl:value-of select="substring-before(substring-after(author, ' ('), ')')"/></a> •
               </xsl:if>
               <strong>Published: </strong> <xsl:value-of select="pubDate"/>
             </div>
