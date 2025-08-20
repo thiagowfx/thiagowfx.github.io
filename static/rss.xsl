@@ -8,41 +8,16 @@
         <title><xsl:value-of select="rss/channel/title"/> - RSS Feed</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" href="{substring-before(rss/channel/atom:link/@href, 'index.xml')}shared-theme.css"/>
         <style type="text/css">
-          :root {
-            --color-gray: #888;
-            --color-grayer: #666;
-            --font-title: "Inter", "Fira Sans", "Lato", system-ui, -apple-system, BlinkMacSystemFont, "Avenir Next", "Avenir", "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Cantarell, Arial, sans-serif;
-            --font-body: "Crimson Pro", "Vollkorn", "Alegreya", "Iowan Old Style", "Apple Garamond", "Baskerville", "Times New Roman", "Noto Serif", "Droid Serif", "Times", "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            --font-code: "Fira Code", "PT Mono", "IBM Plex Mono", Menlo, Consolas, Monaco, "Liberation Mono", "Ubuntu Mono", "Lucida Console", monospace;
-          }
-
-          body {
-            font-family: var(--font-body);
-            font-size: 21px;
-            line-height: 1.5;
-            color: #444;
-            max-width: 840px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fffcf0;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            -webkit-text-size-adjust: 100%;
-          }
-
           .header {
-            border-bottom: 2px solid #ddd;
+            border-bottom: 2px solid var(--border-color);
             margin-bottom: 30px;
             padding-bottom: 20px;
           }
 
           .header h1 {
-            font-family: var(--font-title);
             margin: 0;
-            color: #222;
-            font-size: 2.5rem;
-            line-height: 1.2;
           }
 
           .header p {
@@ -52,32 +27,29 @@
           }
 
           .feed-info {
-            background: #f2f2f2;
-            border: 1px solid #e0e0e0;
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
             border-radius: 5px;
             padding: 20px;
             margin-bottom: 30px;
           }
 
           .feed-info h2 {
-            font-family: var(--font-title);
             margin-top: 0;
-            color: #222;
-            line-height: 1.2;
           }
 
           .feed-url {
-            background: #fffcf0;
-            border: 1px solid #ddd;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
             padding: 10px;
             border-radius: 3px;
-            font-family: var(--font-code);
             word-break: break-all;
           }
 
           .item {
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border-color);
             padding: 20px 0;
+            opacity: 0.8;
           }
 
           .item:last-child {
@@ -85,14 +57,10 @@
           }
 
           .item h3 {
-            font-family: var(--font-title);
             margin: 0 0 10px;
-            font-size: 1.75rem;
-            line-height: 1.2;
           }
 
           .item h3 a {
-            color: #3273dc;
             text-decoration: none;
           }
 
@@ -108,7 +76,7 @@
           }
 
           .item-description {
-            color: #444;
+            color: var(--text-color);
             line-height: 1.5;
           }
 
@@ -120,79 +88,35 @@
             margin-bottom: 0;
           }
 
+          .item-description pre {
+            background: var(--code-bg);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+          }
+
+          .item-description pre code {
+            background: none;
+            padding: 0;
+          }
+
           .footer {
-            font-family: var(--font-title);
             margin-top: 40px;
             padding-top: 20px;
-            border-top: 1px solid #ddd;
+            border-top: 1px solid var(--border-color);
             text-align: center;
             color: var(--color-gray);
             font-size: smaller;
           }
 
-          .footer a {
-            color: #3273dc;
+          .footer p {
+            margin: 8px 0;
           }
 
-          @media (prefers-color-scheme: dark) {
-            body {
-              background-color: #01242e;
-              color: #ddd;
-            }
-
-            .header h1,
-            .feed-info h2,
-            .item h3 {
-              color: #eee;
-            }
-
-            .header {
-              border-bottom-color: #444;
-            }
-
-            .feed-info {
-              background: #333;
-              border-color: #444;
-            }
-
-            .feed-url {
-              background: #01242e;
-              border-color: #444;
-            }
-
-            .item {
-              border-bottom-color: #444;
-            }
-
-            .item h3 a {
-              color: #8cc2dd;
-            }
-
-            .item-description {
-              color: #ddd;
-            }
-
-            .footer {
-              border-top-color: #444;
-            }
-
-            .footer a {
-              color: #8cc2dd;
-            }
-          }
-
-          @media (max-width: 600px) {
-            body {
-              padding: 15px;
-            }
-
-            .header h1 {
-              font-size: 2rem;
-            }
-
-            .item h3 {
-              font-size: 1.5rem;
-            }
+          .footer a[href^="http"]:after {
+            content: " ↗";
+            font-size: 0.8em;
           }
         </style>
       </head>
@@ -237,11 +161,15 @@
 
         <div class="footer">
           <p>
-            Generated by <a href="https://gohugo.io/" target="_blank">Hugo</a> •
+            Generated by <a href="https://gohugo.io/">Hugo</a> •
             Last updated: <xsl:value-of select="rss/channel/lastBuildDate"/>
           </p>
           <xsl:if test="rss/channel/copyright">
-            <p><xsl:value-of select="rss/channel/copyright"/></p>
+            <p>
+              © 2021 - 2025 Thiago Perrotta ·
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">some rights reserved</a> ·
+              a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•ʔ bear</a>
+            </p>
           </xsl:if>
         </div>
       </body>
