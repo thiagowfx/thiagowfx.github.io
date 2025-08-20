@@ -18,6 +18,14 @@
 
           .header h1 {
             margin: 0;
+            display: flex;
+            align-items: center;
+            column-gap: 10px;
+          }
+
+          .header img {
+            width: 32px;
+            height: 32px;
           }
 
           .header p {
