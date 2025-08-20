@@ -9,14 +9,26 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <style type="text/css">
+          :root {
+            --color-gray: #888;
+            --color-grayer: #666;
+            --font-title: "Inter", "Fira Sans", "Lato", system-ui, -apple-system, BlinkMacSystemFont, "Avenir Next", "Avenir", "Segoe UI", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, Cantarell, Arial, sans-serif;
+            --font-body: "Crimson Pro", "Vollkorn", "Alegreya", "Iowan Old Style", "Apple Garamond", "Baskerville", "Times New Roman", "Noto Serif", "Droid Serif", "Times", "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            --font-code: "Fira Code", "PT Mono", "IBM Plex Mono", Menlo, Consolas, Monaco, "Liberation Mono", "Ubuntu Mono", "Lucida Console", monospace;
+          }
+
           body {
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
+            font-family: var(--font-body);
+            font-size: 21px;
+            line-height: 1.5;
+            color: #444;
+            max-width: 840px;
             margin: 0 auto;
             padding: 20px;
-            background: #fff;
+            background-color: #fffcf0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            -webkit-text-size-adjust: 100%;
           }
 
           .header {
@@ -26,36 +38,40 @@
           }
 
           .header h1 {
+            font-family: var(--font-title);
             margin: 0;
-            color: #2c3e50;
-            font-size: 2.2em;
+            color: #222;
+            font-size: 2.5rem;
+            line-height: 1.2;
           }
 
           .header p {
             margin: 10px 0 0;
-            color: #666;
+            color: var(--color-gray);
             font-size: 1.1em;
           }
 
           .feed-info {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
+            background: #f2f2f2;
+            border: 1px solid #e0e0e0;
             border-radius: 5px;
             padding: 20px;
             margin-bottom: 30px;
           }
 
           .feed-info h2 {
+            font-family: var(--font-title);
             margin-top: 0;
-            color: #495057;
+            color: #222;
+            line-height: 1.2;
           }
 
           .feed-url {
-            background: #fff;
-            border: 1px solid #ced4da;
+            background: #fffcf0;
+            border: 1px solid #ddd;
             padding: 10px;
             border-radius: 3px;
-            font-family: monospace;
+            font-family: var(--font-code);
             word-break: break-all;
           }
 
@@ -69,29 +85,31 @@
           }
 
           .item h3 {
+            font-family: var(--font-title);
             margin: 0 0 10px;
-            font-size: 1.4em;
+            font-size: 1.75rem;
+            line-height: 1.2;
           }
 
           .item h3 a {
-            color: #2c3e50;
+            color: #3273dc;
             text-decoration: none;
           }
 
           .item h3 a:hover {
-            color: #3498db;
             text-decoration: underline;
           }
 
           .item-meta {
-            color: #666;
+            color: var(--color-gray);
             font-size: 0.9em;
             margin-bottom: 15px;
+            font-style: italic;
           }
 
           .item-description {
-            color: #333;
-            line-height: 1.7;
+            color: #444;
+            line-height: 1.5;
           }
 
           .item-description p:first-child {
@@ -103,12 +121,64 @@
           }
 
           .footer {
+            font-family: var(--font-title);
             margin-top: 40px;
             padding-top: 20px;
             border-top: 1px solid #ddd;
             text-align: center;
-            color: #666;
-            font-size: 0.9em;
+            color: var(--color-gray);
+            font-size: smaller;
+          }
+
+          .footer a {
+            color: #3273dc;
+          }
+
+          @media (prefers-color-scheme: dark) {
+            body {
+              background-color: #01242e;
+              color: #ddd;
+            }
+
+            .header h1,
+            .feed-info h2,
+            .item h3 {
+              color: #eee;
+            }
+
+            .header {
+              border-bottom-color: #444;
+            }
+
+            .feed-info {
+              background: #333;
+              border-color: #444;
+            }
+
+            .feed-url {
+              background: #01242e;
+              border-color: #444;
+            }
+
+            .item {
+              border-bottom-color: #444;
+            }
+
+            .item h3 a {
+              color: #8cc2dd;
+            }
+
+            .item-description {
+              color: #ddd;
+            }
+
+            .footer {
+              border-top-color: #444;
+            }
+
+            .footer a {
+              color: #8cc2dd;
+            }
           }
 
           @media (max-width: 600px) {
@@ -117,11 +187,11 @@
             }
 
             .header h1 {
-              font-size: 1.8em;
+              font-size: 2rem;
             }
 
             .item h3 {
-              font-size: 1.2em;
+              font-size: 1.5rem;
             }
           }
         </style>
