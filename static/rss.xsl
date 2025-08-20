@@ -122,7 +122,10 @@
       </head>
       <body>
         <div class="header">
-          <h1><xsl:value-of select="rss/channel/title"/></h1>
+          <h1>
+            <img src="{substring-before(rss/channel/atom:link/@href, 'index.xml')}thiagowfx.png" alt="thiagowfx's avatar"/>
+            <xsl:value-of select="rss/channel/title"/>
+          </h1>
           <p><xsl:value-of select="rss/channel/description"/></p>
         </div>
 
