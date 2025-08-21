@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 20 Aug 2025 14:03:18 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>XSLT in RSS feed</title><link>https://perrotta.dev/2025/08/xslt-in-rss-feed/</link><pubDate>Wed, 20 Aug 2025 14:03:18 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/xslt-in-rss-feed/</guid><description>&lt;p>&lt;a href="https://www.jwz.org/blog/2025/08/xslt/">There&amp;rsquo;s&lt;/a>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 21 Aug 2025 13:34:27 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes: list all ImagePullBackOff container images</title><link>https://perrotta.dev/2025/08/kubernetes-list-all-imagepullbackoff-container-images/</link><pubDate>Thu, 21 Aug 2025 13:34:27 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/kubernetes-list-all-imagepullbackoff-container-images/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong> Upgrade the
+&lt;a href="https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack">&lt;code>kube-prometheus-stack&lt;/code>&lt;/a>
+helm chart in &lt;a href="https://portal.azure.cn/">Azure China&lt;/a> to the latest version.
+&lt;em>Side effect&lt;/em>: Many container images are now missing from our internal
+&lt;a href="https://azure.microsoft.com/en-us/products/container-registry">ACR&lt;/a> (Azure
+Container Registry). They need to be synced with &lt;a href="https://github.com/containers/skopeo">&lt;code>skopeo&lt;/code>&lt;/a>.&lt;/p>
+&lt;p>Which images need to be synced? Use the command below, it is quite readable&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl get pods --all-namespaces -o json | jq -r &lt;span style="color:#98c379">&amp;#39;.items[] | select(any(.status.containerStatuses[]; .state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;)) | .metadata.namespace + &amp;#34;/&amp;#34; + .metadata.name + &amp;#34;\t&amp;#34; + ( [.status.containerStatuses[] | select(.state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;).image] | join(&amp;#34;, &amp;#34;) )&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Sample run:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ubuntu@universe:~ $ kubectl get pods --all-namespaces -o json | jq -r &lt;span style="color:#98c379">&amp;#39;.items[]
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> | select(any(.status.containerStatuses[]; .state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;))
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> | .metadata.namespace + &amp;#34;/&amp;#34; + .metadata.name + &amp;#34;\t&amp;#34; +
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> ( [.status.containerStatuses[] | select(.state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;).image] | join(&amp;#34;, &amp;#34;) )&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>monitoring/clustermon-kube-prometheus-operator-67c8b6c87c-w72km &lt;span style="color:#56b6c2">{&lt;/span>my-registry-name&lt;span style="color:#56b6c2">}&lt;/span>.azurecr.cn/quay.io/prometheus-operator/prometheus-operator:v0.83.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>monitoring/clustermon-prometheus-node-exporter-v7bpt &lt;span style="color:#56b6c2">{&lt;/span>my-registry-name&lt;span style="color:#56b6c2">}&lt;/span>.azurecr.cn/quay.io/prometheus/node-exporter:v1.9.1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>How to &lt;code>skopeo&lt;/code>? First, log in:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e5c07b">echo&lt;/span> -n &lt;span style="color:#98c379">&amp;#34;{password}&amp;#34;&lt;/span> | skopeo login &lt;span style="color:#56b6c2">{&lt;/span>my-registry-name&lt;span style="color:#56b6c2">}&lt;/span>.azurecr.cn --password-stdin --username &lt;span style="color:#56b6c2">{&lt;/span>my-username&lt;span style="color:#56b6c2">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>How do you get these credentials? Log in to the Azure China Portal, find the ACR
+resource, navigate to Settings &amp;gt; Access keys.&lt;/p>
+&lt;p>Then sync each image&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% skopeo sync &lt;span style="color:#98c379">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379">&lt;/span> --override-os linux --override-arch amd64 &lt;span style="color:#98c379">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379">&lt;/span> --src docker --dest docker &lt;span style="color:#98c379">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379">&lt;/span> quay.io/prometheus/node-exporter:v1.9.1 &lt;span style="color:#98c379">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379">&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span>my-registry-name&lt;span style="color:#56b6c2">}&lt;/span>.azurecr.cn/quay.io/prometheus
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>I cannot promise I am able to craft this by hand without looking up man
+pages or getting assistance from an LLM. &lt;em>C&amp;rsquo;est la vie&lt;/em>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>If there are many images, consider using an
+&lt;a href="https://www.gnu.org/software/bash/manual/html_node/Arrays.html">array&lt;/a> +
+&lt;code>for&lt;/code> loop.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>XSLT in RSS feed</title><link>https://perrotta.dev/2025/08/xslt-in-rss-feed/</link><pubDate>Wed, 20 Aug 2025 14:03:18 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/xslt-in-rss-feed/</guid><description>&lt;p>&lt;a href="https://www.jwz.org/blog/2025/08/xslt/">There&amp;rsquo;s&lt;/a>
 &lt;a href="https://simonwillison.net/2025/Aug/19/xslt/#atom-everything">some&lt;/a>
 &lt;a href="https://www.osnews.com/story/143123/google-is-killing-the-open-web/">buzz&lt;/a>
 &lt;a href="https://wok.oblomov.eu/tecnologia/google-killing-open-web/">around&lt;/a>
@@ -1788,10 +1826,4 @@ way:&lt;/p>
 account in any of these services, in case you were wondering :-)&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Alpine Linux: Dockerfile: install package from edge</title><link>https://perrotta.dev/2025/06/alpine-linux-dockerfile-install-package-from-edge/</link><pubDate>Wed, 04 Jun 2025 12:37:47 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/alpine-linux-dockerfile-install-package-from-edge/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a &lt;code>Dockerfile&lt;/code> based on a fixed release of Alpine
-Linux (e.g. &lt;code>FROM alpine:3.22&lt;/code>), install a package from &lt;code>edge&lt;/code> (i.e. a package
-that did not yet make it to a fixed release).&lt;/p>
-&lt;p>The approach is similar to package &lt;a href="https://perrotta.dev/2025/01/alpine-linux-install-/-pin-old-packages/">pinning&lt;/a>, by providing a custom
-&lt;code>--repository&lt;/code> to &lt;code>apk add&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-dockerfile" data-lang="dockerfile">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">RUN&lt;/span> apk add --no-cache --repository&lt;span style="color:#56b6c2">=&lt;/span>https://dl-cdn.alpinelinux.org/alpine/edge/testing gliderlabs-sigil vals
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Replace &amp;ldquo;testing&amp;rdquo; with &amp;ldquo;community&amp;rdquo; or &amp;ldquo;main&amp;rdquo; as needed.&lt;/p></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>
