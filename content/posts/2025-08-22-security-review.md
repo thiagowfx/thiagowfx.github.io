@@ -15,7 +15,7 @@ Anthropic, [Automated Security Reviews in Claude Code
 Of course, there are also
 [docs](https://github.com/anthropics/claude-code-security-review/tree/main?tab=readme-ov-file#security-review-slash-command).
 
-It is merely a [glorified
+It is merely a [glorified system
 prompt](https://github.com/anthropics/claude-code-security-review/blob/main/.claude/commands/security-review.md?plain=1),
 which is exactly what I expected:
 
