@@ -60,6 +60,7 @@ Germany 🇩🇪:
 
 - [S-Bahn München Live](https://s-bahn-muenchen-live.de/): only for S-Bahns in
   Munich
+  - ⚠️ [Construction changes](https://www.s-bahn-muenchen.de/fahren/baustellen)
 - [Deutsche Bahn (DB)](https://reiseauskunft.bahn.de/bin/bhftafel.exe/en?ld=96252&country=DEU&rt=1&newrequest=yes&&country=GBR)
 - [**Bahn App**](https://bahnapp.com/): minimalist, with a superb design, better (easier to use and more reliable) than DB
 
