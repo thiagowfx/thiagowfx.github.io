@@ -35,7 +35,7 @@ The coolest™ ingredients are _in italics_.
   - avoid: water
 - grains (pick at least two)
   - **oats** (steel-cut or rolled -> auf Deutsch: Haferflocken)
-  - **chia seeds**
+  - **chia seeds** (let them _soak_)
   - flax seeds
   - hemp seeds
   - avoid[^1]: quick oats
