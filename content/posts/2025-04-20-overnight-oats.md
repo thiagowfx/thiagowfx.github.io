@@ -29,6 +29,8 @@ The coolest™ ingredients are _in italics_.
   - **milk** (animal or not; prefer low-fat)
   - plain yogurt (greek, vanilla also OK)
   - high-protein yogurt
+  - skyr
+  - speisequark
   - _semolina pudding_
   - avoid: water
 - grains (pick at least two)
