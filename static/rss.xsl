@@ -8,7 +8,7 @@
         <title><xsl:value-of select="rss/channel/title"/> - RSS Feed</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link rel="stylesheet" href="{substring-before(rss/channel/atom:link/@href, 'index.xml')}theme.css"/>
+        <link rel="stylesheet" href="/theme.css"/>
         <style type="text/css">
           .header {
             border-bottom: 2px solid var(--border-color);
@@ -131,7 +131,7 @@
       <body>
         <div class="header">
           <h1>
-            <img src="{substring-before(rss/channel/atom:link/@href, 'index.xml')}thiagowfx.png" alt="thiagowfx's avatar"/>
+            <img src="/thiagowfx.png" alt="thiagowfx's avatar"/>
             <xsl:value-of select="rss/channel/title"/>
           </h1>
           <p><xsl:value-of select="rss/channel/description"/></p>
