@@ -40,3 +40,5 @@ You can preview all themes [here](https://skins.midnight-commander.org/).
 
 There are lots of jokes about how to quit `vim`, but do you know how to quit
 `mc`? Press `F10` or type `exit<CR>`.
+
+[Credits](https://www.youtube.com/watch?v=I973iH79G-A).
