@@ -5,7 +5,7 @@ tags:
   - dev
 ---
 
-[Midnight commander](https://midnight-commander.org/):
+GNU [Midnight commander](https://midnight-commander.org/):
 
 > is a visual, dual-pane file manager. It is released under the GNU General
 > Public License and therefore qualifies as Free Software.
