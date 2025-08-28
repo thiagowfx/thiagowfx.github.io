@@ -26,7 +26,13 @@ The only diff is `.Content` instead of `.Summary` for full-text RSS feeds.
 {{- if .IsHome }}{{ $pctx = .Site }}{{ end }}
 {{- $pages := slice }}
 {{- if or $.IsHome $.IsSection }}
-{{- $pages = $pctx.RegularPages }}
+{{- $filteredPages := slice }}
+{{- range $pctx.RegularPages }}
+  {{- if not (in .Params.tags "coding") }}
+    {{- $filteredPages = $filteredPages | append . }}
+  {{- end }}
+{{- end }}
+{{- $pages = $filteredPages }}
 {{- else }}
 {{- $pages = $pctx.Pages }}
 {{- end }}

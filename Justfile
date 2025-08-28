@@ -24,6 +24,14 @@ new title *args:
     filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/: /-/g' | tr ' ' '-')
     hugo new content/posts/`date "+%Y-%m-%d"`-${filename}.md {{ args }}
 
+# Create a new coding post. Usage: `just code "leetcode #1"`.
+code title *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/: /-/g' | tr ' ' '-')
+    hugo new --kind coding content/posts/`date "+%Y-%m-%d"`-${filename}.md {{ args }}
+
 # Delete hugo build artifacts
 clean:
     rm -rf public/ resources/

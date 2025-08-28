@@ -1,14 +1,25 @@
 {{- define "main" }}
 <content>
+  {{- $pages := .Pages }}
+  {{- if not .Data.Singular }}
+    {{- $filteredPages := slice }}
+    {{- range .Pages }}
+      {{- if not (in .Params.tags "coding") }}
+        {{- $filteredPages = $filteredPages | append . }}
+      {{- end }}
+    {{- end }}
+    {{- $pages = $filteredPages }}
+  {{- end }}
+
   <h2 id="posts">
     {{- if .Data.Singular }} Posts tagged with #{{ .Name }} ({{ len .Pages }})
-    {{- else }} All Posts ({{ len .Pages }}) {{- end }}
+    {{- else }} All Posts ({{ len $pages }}) {{- end }}
     <sup>(<a href='{{ (.OutputFormats.Get "RSS").Permalink }}'>rss</a>)</sup>
   </h2>
 
 
   {{ $currentYear := now.Year | printf "%d" }}
-  {{ $pagesGroupedByYear := .Pages.GroupByDate "2006" }}
+  {{ $pagesGroupedByYear := $pages.GroupByDate "2006" }}
 
   {{ if not $pagesGroupedByYear }}
     <ul class="blog-posts">
