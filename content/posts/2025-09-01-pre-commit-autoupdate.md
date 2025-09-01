@@ -22,7 +22,7 @@ So far I've been working around it by manually reverting undesired updates, but
 that is super tedious and inefficient.
 
 Today I discovered a small utility,
-[`pre-commit-autoupdate`](https://pypi.org/project/pre-commit-update/), which
+[`pre-commit-update`](https://pypi.org/project/pre-commit-update/), which
 explicitly supports that and was created precisely because of the limitation of
 the original subcommand:
 
