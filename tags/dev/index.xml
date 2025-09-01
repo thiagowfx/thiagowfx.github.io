@@ -33,7 +33,28 @@ GNOME system to find the correct files and the dates they where deleted.&lt;/p>
 &lt;a href="https://man.archlinux.org/man/shred.1">illusion&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>helm: diff manifests</title><link>https://perrotta.dev/2025/08/helm-diff-manifests/</link><pubDate>Thu, 28 Aug 2025 17:57:32 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/helm-diff-manifests/</guid><description>&lt;p>Lately I&amp;rsquo;ve been employing (with great success) the following pattern in order
+&lt;/div></description></item><item><title>pre-commit: autoupdate</title><link>https://perrotta.dev/2025/09/pre-commit-autoupdate/</link><pubDate>Mon, 01 Sep 2025 12:05:52 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/pre-commit-autoupdate/</guid><description>&lt;p>When using &lt;a href="https://pre-commit.com/">&lt;code>pre-commit&lt;/code>&lt;/a>, you can take advantage of
+its built-in &lt;code>pre-commit autoupdate&lt;/code> command to keep your hook dependencies
+up-to-date.&lt;/p>
+&lt;p>There&amp;rsquo;s one major drawback of adopting it ubiquitously: it is virtually
+&lt;a href="https://stackoverflow.com/questions/74232399/is-it-possible-that-pre-commit-autoupdate-skips-a-single-linter">impossible&lt;/a>
+to instruct it to skip certain repositories.&lt;/p>
+&lt;p>It wouldn&amp;rsquo;t be hard to update it to ignore hook dependencies with skip byline
+comments, but its author &lt;a href="https://stackoverflow.com/a/74240674/1745064">isn&amp;rsquo;t
+keen&lt;/a> on implementing support for
+it.&lt;/p>
+&lt;p>So far I&amp;rsquo;ve been working around it by manually reverting undesired updates, but
+that is super tedious and inefficient.&lt;/p>
+&lt;p>Today I discovered a small utility,
+&lt;a href="https://pypi.org/project/pre-commit-update/">&lt;code>pre-commit-autoupdate&lt;/code>&lt;/a>, which
+explicitly supports that and was created precisely because of the limitation of
+the original subcommand:&lt;/p>
+&lt;blockquote>
+&lt;p>pre-commit-update was created because there is no easy way to update your
+hooks by using pre-commit autoupdate as it is not versatile enough.&lt;/p>
+&lt;/blockquote>
+&lt;p>The tool (which is thankfully also written in Python, for uniformity) supports a
+config file to skip certain hooks from &lt;code>autoupdate&lt;/code>.&lt;/p></description></item><item><title>helm: diff manifests</title><link>https://perrotta.dev/2025/08/helm-diff-manifests/</link><pubDate>Thu, 28 Aug 2025 17:57:32 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/helm-diff-manifests/</guid><description>&lt;p>Lately I&amp;rsquo;ve been employing (with great success) the following pattern in order
 to test whether changes to helm charts are harmless (and expected):&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e5c07b">cd&lt;/span> path/to/my/helm/chart
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git checkout origin/master &lt;span style="color:#7f848e"># or main&lt;/span>
@@ -1666,35 +1687,4 @@ manually every single time. Of course, I still need to update the JIRA ticket
 and the test plan in each PR.&lt;/p>
 &lt;p>Each repository has its own template. I use the repo name as the trigger. For
 example: to trigger the template expansion for &lt;code>https://github.com/corp/foo&lt;/code>,
-map it to &lt;code>:github:foo&lt;/code>.&lt;/p></description></item><item><title>Diffoscope: exclude directory metadata</title><link>https://perrotta.dev/2025/06/diffoscope-exclude-directory-metadata/</link><pubDate>Mon, 16 Jun 2025 11:58:02 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/diffoscope-exclude-directory-metadata/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2024/08/diffoscope-recursive-diffs/">Previously&lt;/a>,
-&lt;a href="https://perrotta.dev/2024/08/diffoscope-recursive-diffs/">previously&lt;/a>.&lt;/p>
-&lt;p>If you simply run &lt;code>diffoscope dir1/ dir2/&lt;/code>, a lot of noise could be added to the
-output due to metadata such as timestamps:&lt;/p>
-&lt;pre tabindex="0">&lt;code>│ --- dir1/foo.yaml
-│ ├── +++ dir2/foo.yaml
-│ │ ├── stat {}
-│ │ │ @@ -1,8 +1,8 @@
-│ │ │
-│ │ │ Size: 314 Blocks: 8 IO Block: 4096 regular file
-│ │ │ Device: 1,17 Links: 1
-│ │ │ Access: (0644/-rw-r--r--) Uid: ( 501/thiago.perrotta) Gid: ( 20/ staff)
-│ │ │
-│ │ │ +Modify: 2025-06-16 09:53:55.107373563 +0000
-│ │ │ -Modify: 2025-04-04 14:37:59.032398559 +0000
-│ │ --- dir1/bar.yaml
-│ ├── +++ dir2/bar.yaml
-│ │ ├── stat {}
-│ │ │ @@ -1,8 +1,8 @@
-│ │ │
-│ │ │ Size: 444 Blocks: 8 IO Block: 4096 regular file
-│ │ │ Device: 1,17 Links: 1
-│ │ │ Access: (0644/-rw-r--r--) Uid: ( 501/thiago.perrotta) Gid: ( 20/ staff)
-│ │ │
-│ │ │ +Modify: 2025-06-16 09:53:55.107527976 +0000
-│ │ │ -Modify: 2025-03-05 13:37:47.461442994 +0000
-&lt;/code>&lt;/pre>&lt;p>These timestamps are relevant in the context of &lt;a href="https://reproducible-builds.org/">reproducible
-builds&lt;/a>, however we don&amp;rsquo;t particularly care
-about them when we&amp;rsquo;re merely interested in diffing directory and file contents.&lt;/p>
-&lt;p>Thankfully, &lt;code>diffoscope&lt;/code> has a flag to ignore these:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>diffoscope dir1/ dir2/ --exclude-directory-metadata&lt;span style="color:#56b6c2">=&lt;/span>yes
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
+map it to &lt;code>:github:foo&lt;/code>.&lt;/p></description></item></channel></rss>

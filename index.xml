@@ -33,7 +33,28 @@ GNOME system to find the correct files and the dates they where deleted.&lt;/p>
 &lt;a href="https://man.archlinux.org/man/shred.1">illusion&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>'It's never a good time'</title><link>https://perrotta.dev/2025/08/its-never-a-good-time/</link><pubDate>Fri, 29 Aug 2025 11:55:44 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/its-never-a-good-time/</guid><description>&lt;p>When is the best time&amp;hellip;&lt;/p>
+&lt;/div></description></item><item><title>pre-commit: autoupdate</title><link>https://perrotta.dev/2025/09/pre-commit-autoupdate/</link><pubDate>Mon, 01 Sep 2025 12:05:52 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/pre-commit-autoupdate/</guid><description>&lt;p>When using &lt;a href="https://pre-commit.com/">&lt;code>pre-commit&lt;/code>&lt;/a>, you can take advantage of
+its built-in &lt;code>pre-commit autoupdate&lt;/code> command to keep your hook dependencies
+up-to-date.&lt;/p>
+&lt;p>There&amp;rsquo;s one major drawback of adopting it ubiquitously: it is virtually
+&lt;a href="https://stackoverflow.com/questions/74232399/is-it-possible-that-pre-commit-autoupdate-skips-a-single-linter">impossible&lt;/a>
+to instruct it to skip certain repositories.&lt;/p>
+&lt;p>It wouldn&amp;rsquo;t be hard to update it to ignore hook dependencies with skip byline
+comments, but its author &lt;a href="https://stackoverflow.com/a/74240674/1745064">isn&amp;rsquo;t
+keen&lt;/a> on implementing support for
+it.&lt;/p>
+&lt;p>So far I&amp;rsquo;ve been working around it by manually reverting undesired updates, but
+that is super tedious and inefficient.&lt;/p>
+&lt;p>Today I discovered a small utility,
+&lt;a href="https://pypi.org/project/pre-commit-update/">&lt;code>pre-commit-autoupdate&lt;/code>&lt;/a>, which
+explicitly supports that and was created precisely because of the limitation of
+the original subcommand:&lt;/p>
+&lt;blockquote>
+&lt;p>pre-commit-update was created because there is no easy way to update your
+hooks by using pre-commit autoupdate as it is not versatile enough.&lt;/p>
+&lt;/blockquote>
+&lt;p>The tool (which is thankfully also written in Python, for uniformity) supports a
+config file to skip certain hooks from &lt;code>autoupdate&lt;/code>.&lt;/p></description></item><item><title>'It's never a good time'</title><link>https://perrotta.dev/2025/08/its-never-a-good-time/</link><pubDate>Fri, 29 Aug 2025 11:55:44 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/its-never-a-good-time/</guid><description>&lt;p>When is the best time&amp;hellip;&lt;/p>
 &lt;ul>
 &lt;li>to move countries?&lt;/li>
 &lt;li>to have a baby?&lt;/li>
@@ -1598,38 +1619,4 @@ that I couldn&amp;rsquo;t find any pre-existing open source hook that accomplish
 task. The entire repository was developed with AI assistance (&lt;a href="https://www.anthropic.com/claude-code">Claude
 Code&lt;/a>), but I wasn&amp;rsquo;t satisfied with
 out-of-the-box defaults; I had to heavily modify it to shape it to my taste –
-which was achieved with a mix of follow-up prompting and local edits.&lt;/p></description></item><item><title>pq: could not access file "$libdir/dict_snowball": No such file or directory</title><link>https://perrotta.dev/2025/07/pq-could-not-access-file-libdir/dict_snowball-no-such-file-or-directory/</link><pubDate>Thu, 10 Jul 2025 11:14:29 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/07/pq-could-not-access-file-libdir/dict_snowball-no-such-file-or-directory/</guid><description>&lt;p>My &lt;a href="http://miniflux.app/">miniflux&lt;/a> instance broke yesterday. All feeds had the
-following error:&lt;/p>
-&lt;pre tabindex="0">&lt;code>3 errors - Database error: store: unable to update entry &amp;#34;{redacted}&amp;#34;: pq: could not access file &amp;#34;$libdir/dict_snowball&amp;#34;: No such file or directory.
-&lt;/code>&lt;/pre>&lt;p>The error is from PostgreSQL (&lt;code>pq&lt;/code>).&lt;/p>
-&lt;p>I recall I did a full system upgrade yesterday (&lt;code>doas apk upgrade&lt;/code>).&lt;/p>
-&lt;p>Upon checking the logs in &lt;code>/var/log/apk.log&lt;/code>&amp;hellip;&lt;/p>
-&lt;pre tabindex="0">&lt;code>Running `apk upgrade --no-self-upgrade` at 2025-07-09 13:57:09
-apk-tools 3.0.0_rc5_git20250613-r0, compiled for x86_64.
-( 1/60) Purging postgresql-zsh-completion (5.9-r5)
-( 2/60) Purging postgresql17-contrib (17.5-r2)
-( 3/60) Purging postgresql17-openrc (17.5-r2)
-( 4/60) Purging postgresql17 (17.5-r2)
-postgresql17-17.5-r2.pre-deinstall: Executing script...
-postgresql17-17.5-r2.pre-deinstall: *
-postgresql17-17.5-r2.pre-deinstall: * You are uninstalling your default PostgreSQL version (17) which seems to be
-postgresql17-17.5-r2.pre-deinstall: * in use! If it&amp;#39;s *not* intentional and you want to preserve this version,
-postgresql17-17.5-r2.pre-deinstall: * install it explicitly: `apk add postgresql17`.
-postgresql17-17.5-r2.pre-deinstall: *
-postgresql17-17.5-r2.pre-deinstall: * Please note that to upgrade your cluster to a new major version using
-postgresql17-17.5-r2.pre-deinstall: * pg_upgrade(1), you must have both the old and new versions installed.
-postgresql17-17.5-r2.pre-deinstall: *
-ERROR: postgresql17-17.5-r2.pre-deinstall: exited with error 1
-&lt;/code>&lt;/pre>&lt;p>For whatever reason (!?), the &lt;code>postgresql17*&lt;/code> packages were removed.&lt;/p>
-&lt;p>The fix is straightforward:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% doas apk add postgresql17
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% doas service miniflux restart
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Why did it break in the first place?!&lt;/p>
-&lt;p>There&amp;rsquo;s nothing suspicious on &lt;code>postgresql17&lt;/code> in the
-&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/commits/master/main/postgresql17">aports&lt;/a>
-repo 🤷&lt;/p>
-&lt;p>What is &lt;code>dict_snowball&lt;/code>?&lt;/p>
-&lt;blockquote>
-&lt;p>&lt;code>dict_snowball&lt;/code> is a PostgreSQL text search dictionary module that uses the
-Snowball stemming algorithms for full-text search.&lt;/p>
-&lt;/blockquote></description></item></channel></rss>
+which was achieved with a mix of follow-up prompting and local edits.&lt;/p></description></item></channel></rss>
