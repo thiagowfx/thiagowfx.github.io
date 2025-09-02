@@ -1,5 +1,5 @@
 ---
-title: "Leetcode #88: Merge Sorted Array"
+title: "LeetCode #88: Merge Sorted Array"
 date: 2025-09-02T23:51:51+02:00
 tags:
   - coding
