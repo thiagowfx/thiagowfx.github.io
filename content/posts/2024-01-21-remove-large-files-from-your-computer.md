@@ -34,3 +34,14 @@ installation command away from your favorite package manager. Usage:
 ```shell
 % ncdu /
 ```
+
+**Update(2025-09-02):** [diskonaut](https://github.com/imsnif/diskonaut):
+
+> Terminal disk space navigator 🔭
+
+```
+% diskonaut /
+```
+
+Wherein `ncdu` uses a tree, ranger-style representation and `diskonaut` uses a
+visual block representation.
