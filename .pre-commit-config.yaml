@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://json.schemastore.org/pre-commit-config.json
+# yaml-language-server: $schema=schemas/pre-commit-config.json
 #
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
@@ -23,7 +23,6 @@ ci:
   autoupdate_schedule: monthly
   skip:
     # missing deps: just, hugo
-    - check-yamlschema
     - hugo
     - just-format
 repos:
@@ -166,4 +165,15 @@ repos:
         language: system
         entry: just build
         pass_filenames: false
+      - id: update-schemas
+        name: Update local JSON schemas
+        language: system
+        entry: |-
+          set -e
+          curl -sL -o schemas/hugo.json https://json.schemastore.org/hugo.json
+          curl -sL -o schemas/pre-commit-config.json https://json.schemastore.org/pre-commit-config.json
+          curl -sL -o schemas/talismanrc.json https://raw.githubusercontent.com/thoughtworks/talisman/main/examples/schema-store-talismanrc.json
+        pass_filenames: false
+        stages:
+          - manual
         # keep-sorted end
