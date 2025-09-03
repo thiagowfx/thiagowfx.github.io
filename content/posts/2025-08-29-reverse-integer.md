@@ -54,3 +54,30 @@ assert lstrip('0023', '0') == '23'
 assert lstrip('', '0') == ''
 assert lstrip('23', '0') == '23'
 ```
+
+## integer space
+
+Let's do it without converting the input to a string.
+
+```python
+class Solution:
+    def reverse(self, x: int) -> int:
+        a = 0
+        is_minus = x < 0
+        n = abs(x)
+
+        while n > 0:
+            a *= 10      # 0 -> 30 -> 320
+            a += n % 10  # 3 -> 32 -> 321
+
+            # OR: a = 10 * a + n % 10
+
+            n //= 10
+
+        a = (-1 if is_minus else +1) * a
+
+        if -2**31 <= a <= 2**31 - 1:
+            return a
+        else:
+            return 0
+```
