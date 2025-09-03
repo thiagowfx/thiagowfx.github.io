@@ -1,11 +1,11 @@
 ---
-title: "LeetCode #7: Reverse integer"
+title: "LeetCode #7: Reverse Integer"
 date: 2025-08-29T02:17:23+02:00
 tags:
   - coding
 ---
 
-[LeetCode #7](https://leetcode.com/problems/reverse-integer/):
+[LeetCode #7: Reverse Integer](https://leetcode.com/problems/reverse-integer/):
 
 > Given a signed 32-bit integer x, return x with its digits reversed. If
 > reversing x causes the value to go outside the signed 32-bit integer range
