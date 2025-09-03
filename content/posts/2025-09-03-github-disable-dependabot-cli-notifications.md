@@ -23,6 +23,8 @@ These are simply non-actionable by our team; we have a dedicated security team
 to look into these matters. Even worse: the constant output makes us accustomed
 to it, until it becomes background noise.
 
-GitHub allows us to [disable] these CLI notifications: Settings > Notifications
+GitHub allows us to
+[disable](https://docs.github.com/en/code-security/dependabot/dependabot-alerts/configuring-notifications-for-dependabot-alerts#configuring-notifications-for-dependabot-alerts)
+these CLI notifications: Settings > Notifications
 > System > "Dependabot alerts: New vulnerabilities" > "Notify me": "on GitHub"
 > only.
