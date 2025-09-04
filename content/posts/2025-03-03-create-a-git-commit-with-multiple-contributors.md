@@ -5,9 +5,9 @@ tags:
   - dev
 ---
 
-* **Step 1**: Create a commit / pull request as usual.
-* **Step 2**: Collaborate 🪄. Different people push to the same remote branch.
-* **Step 3**: Once it's done, add as many git footer elements as needed, like in
+- **Step 1**: Create a commit / pull request as usual.
+- **Step 2**: Collaborate 🪄. Different people push to the same remote branch.
+- **Step 3**: Once it's done, add as many git footer elements as needed, like in
   the following commit message example:
 
 ```

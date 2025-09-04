@@ -103,16 +103,16 @@ the day. For example, the updated entry for biceps becomes `* Biceps: 12 -> 14`.
 I never liked to go to the gym, but now I am starting to enjoy it, because I
 feel this approach brings many self-motivating benefits:
 
-* there's a detailed record of every single workout that I do, down to the day
+- there's a detailed record of every single workout that I do, down to the day
   and the exercise / weight in each set. These entries are psychologically
   powerful, they motivate me more than smartwatches and/or gym / workouts apps
-* the progression ensures I am consistent and pick up where I left off in the
+- the progression ensures I am consistent and pick up where I left off in the
   previous session. There's no need to guess any longer which weight to use, I
   know exactly which one to use, and whether it was difficult or easy last time
   (as I also track this information in the reference).
-* reduced risk of injury as I am increasing the weights slowly, and being
+- reduced risk of injury as I am increasing the weights slowly, and being
   mindful of the ones that incur a lot of stress and/or strain on my muscles
-* ability to track goals and be realistic about them, and even estimate when
+- ability to track goals and be realistic about them, and even estimate when
   I'll be able to reach them, based on historical progression.
 
 I tried to use gym apps before, but they were never effective. They are often
