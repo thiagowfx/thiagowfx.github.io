@@ -71,5 +71,3 @@ This was also a typical [xyproblem]({{< ref "2024-06-23-xyproblem" >}}) example:
 
 - What is the end goal? "I want to install all man pages for the installed
   packages on my system".
-
-

@@ -170,5 +170,3 @@ _Auf wiederlesen!_
     month to the end of the calendar month. The best way to do this is to use
     our Aboportal (subscription portal) or the "Cancel subscription" function in
     the DB Navigator below your mobile phone ticket.
-
-

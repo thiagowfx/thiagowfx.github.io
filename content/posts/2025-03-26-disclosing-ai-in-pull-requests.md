@@ -22,4 +22,3 @@ I could also add an [attribution footer]({{< ref "2025-03-03-create-a-git-commit
 It's just a bit more verbose.
 
 Have you thought about this?
-

@@ -34,4 +34,3 @@ However, maybe you didn't know you can also use [Google Chrome](https://www.goog
 - Hit `Enter`.
 
 You will then be prompted where you want to save your screenshot. Profit!
-

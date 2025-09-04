@@ -43,4 +43,3 @@ Sources:
 
 - https://github.blog/changelog/2023-12-14-new-markdown-extension-alerts-provide-distinctive-styling-for-significant-content/
 - https://github.com/orgs/community/discussions/16925
-

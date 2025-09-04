@@ -11,4 +11,3 @@ conference room, instead of typing `aaa-bbbb-ccc`, you can type just
 `aaabbbbccc`, i.e. the original meeting ID without the dashes.
 
 It saves a bit of time!
-
