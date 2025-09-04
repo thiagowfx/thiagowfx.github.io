@@ -15,7 +15,7 @@ GNU [Midnight commander](https://midnight-commander.org/):
 > for files, and execute commands in the subshell. Internal viewer, editor and
 > diff viewer are included.
 
-![](https://midnight-commander.org/img/mc-screenshot-cropped.png)
+![midnight commander](https://midnight-commander.org/img/mc-screenshot-cropped.png)
 
 It's available virtually [everywhere](https://repology.org/project/mc/versions).
 
