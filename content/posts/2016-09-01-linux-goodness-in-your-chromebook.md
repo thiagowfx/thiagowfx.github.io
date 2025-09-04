@@ -20,25 +20,25 @@ KISS).
 Now, the previous paragraph sounded a little repetitive, but I'd like to focus
 on two of my previous points here:
 
-1.  **You can do whatever you want and still remain safe.** Yes. Indeed, you can
-    reset your chromebook to its factory state with just a few clicks — this is
-    still hard to do with Windows and OS X, as far as I know. I think Windows 10
-    is introducing a feature to ease this process, however I am not sure about
-    it yet. This is super important (and convenient!) for people playing with a
-    ChromeOS device — like me. My usual way to reset the system back to "factory
-    state" was, usually, to install a Linux distro with the btrfs filesystem so
-    I could create a snapshot upon the installation was finished, and then
-    revert back to it at anytime I wanted. However, this solution is a little
-    cumbersome. The second usual solution would be to simply use a virtual
-    machine, but I don't need to reiterate that this is slow and limited in many
-    ways.
-1.  **Simple**. This is really important if you don't want to have headaches in
-    the long run. For starters, simplicity is always a trade-off that involves
-    performance: it is hard to be simple with a core i7 CPU, so if you choose
-    the KISS path, you are deliberately sacrificing some of your performance.
-    Once you accept that, we can move forward: Chromebooks are very simple
-    devices. They're almost directly comparable to a tablet with a keyboard.
-    Sometimes they feel like a full-featured arduino.
+1. **You can do whatever you want and still remain safe.** Yes. Indeed, you can
+   reset your chromebook to its factory state with just a few clicks — this is
+   still hard to do with Windows and OS X, as far as I know. I think Windows 10
+   is introducing a feature to ease this process, however I am not sure about it
+   yet. This is super important (and convenient!) for people playing with a
+   ChromeOS device — like me. My usual way to reset the system back to "factory
+   state" was, usually, to install a Linux distro with the btrfs filesystem so I
+   could create a snapshot upon the installation was finished, and then revert
+   back to it at anytime I wanted. However, this solution is a little
+   cumbersome. The second usual solution would be to simply use a virtual
+   machine, but I don't need to reiterate that this is slow and limited in many
+   ways.
+1. **Simple**. This is really important if you don't want to have headaches in
+   the long run. For starters, simplicity is always a trade-off that involves
+   performance: it is hard to be simple with a core i7 CPU, so if you choose the
+   KISS path, you are deliberately sacrificing some of your performance. Once
+   you accept that, we can move forward: Chromebooks are very simple devices.
+   They're almost directly comparable to a tablet with a keyboard. Sometimes
+   they feel like a full-featured arduino.
 
 These were some small highlights about my decision to get one. Now here's the
 good stuff:
@@ -81,29 +81,29 @@ These are the basics. However, you will soon find out that you cannot do too
 much with ChromeOS, even with these modifications. In this case, there are three
 options, and all of them involve getting a Linux distribution in some way:
 
-1.  **(RECOMMENDED)** Install a Linux distro on either a SD card or an USB Flash
-    Drive and dual-boot from it. It is really easy to dual-boot, you just press
-    C-d to boot from the internal eMMC / SSD, or C-u to boot from external
-    storage. There's no need to play with grub, EFI, or any (other) fancy
-    bootloader. If you change your mind later on, just format your SD card:
-    there is no need to change anything on ChromeOS.
-1.  **(NOT RECOMMENDED BY ME)** Completely wipe ChromeOS by installing another
-    Linux distribution on its place. Although it's easy to revert this process
-    through [recovery
-    media](https://support.google.com/chromebook/answer/1080595), it completely
-    defeats the purpose of getting a Chromebook in the first place, especially
-    now that Android apps are starting to become available on them (for
-    touchscreen devices, of course).
-1.  **(PROBABLY WOULDN'T RECOMMEND, BUT YOU MAY LIKE IT)** Install a chroot
-    alongside your ChromeOS, such as
-    [crouton](https://github.com/dnschneid/crouton). I tried it however I hated
-    it. It is very buggy and opinionated, somewhat similar to oh-my-zsh: both of
-    them promise to deliver a good framework and they're kinda large open source
-    projects, however they do lots of automatic things for you, and you end up
-    not knowing what is happening to your system. It opposes the Arch Linux
-    philosophy, being user-friendly rather than user-centered. Some people like
-    it, I won't argue this, it can work for them; but not for me. An alternative
-    would be to install a chroot manually, without the help of crouton.
+1. **(RECOMMENDED)** Install a Linux distro on either a SD card or an USB Flash
+   Drive and dual-boot from it. It is really easy to dual-boot, you just press
+   C-d to boot from the internal eMMC / SSD, or C-u to boot from external
+   storage. There's no need to play with grub, EFI, or any (other) fancy
+   bootloader. If you change your mind later on, just format your SD card: there
+   is no need to change anything on ChromeOS.
+1. **(NOT RECOMMENDED BY ME)** Completely wipe ChromeOS by installing another
+   Linux distribution on its place. Although it's easy to revert this process
+   through [recovery
+   media](https://support.google.com/chromebook/answer/1080595), it completely
+   defeats the purpose of getting a Chromebook in the first place, especially
+   now that Android apps are starting to become available on them (for
+   touchscreen devices, of course).
+1. **(PROBABLY WOULDN'T RECOMMEND, BUT YOU MAY LIKE IT)** Install a chroot
+   alongside your ChromeOS, such as
+   [crouton](https://github.com/dnschneid/crouton). I tried it however I hated
+   it. It is very buggy and opinionated, somewhat similar to oh-my-zsh: both of
+   them promise to deliver a good framework and they're kinda large open source
+   projects, however they do lots of automatic things for you, and you end up
+   not knowing what is happening to your system. It opposes the Arch Linux
+   philosophy, being user-friendly rather than user-centered. Some people like
+   it, I won't argue this, it can work for them; but not for me. An alternative
+   would be to install a chroot manually, without the help of crouton.
 
 I've chosen the first option, installing Arch Linux ARM on my Chromebook. So
 far, so good: it's working very well. Storage is easily shared between the two
@@ -120,11 +120,11 @@ little more before trying them out.
 
 ## Footnotes
 
-1.  I wouldn't say the same for kernel stuff though. It is not trivial to
-    install a bootloader (such as grub) or to boot a custom kernel in a
-    Chromebook. It's possible indeed, it's just not as nice or as easy as an
-    average PC or Mac laptop from today, especially if you have the intention of
-    keeping the upstream OS (Chrome OS) in the device.
-1.  People probably would cite a Macbook, a Surface Pro, or something else
-    similar here. For starters, did you see how much they cost, in comparison to
-    an average Chromebook? Such a comparison wouldn't be fair.
+1. I wouldn't say the same for kernel stuff though. It is not trivial to install
+   a bootloader (such as grub) or to boot a custom kernel in a Chromebook. It's
+   possible indeed, it's just not as nice or as easy as an average PC or Mac
+   laptop from today, especially if you have the intention of keeping the
+   upstream OS (Chrome OS) in the device.
+1. People probably would cite a Macbook, a Surface Pro, or something else
+   similar here. For starters, did you see how much they cost, in comparison to
+   an average Chromebook? Such a comparison wouldn't be fair.
