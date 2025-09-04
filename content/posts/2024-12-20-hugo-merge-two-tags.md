@@ -23,7 +23,7 @@ because vanilla `/usr/bin/sed` from macOS keeps littering my system with `.-e`
 files, the original files before inplace modification (`-i`), whereas `gsed`
 doesn't. It saves me from having to do `rm **/*.-e` as an extra step.
 
-Then delete one of two `  - dev` occurrences in a row:
+Then delete one of two `- dev` occurrences in a row:
 
 ```shell
 % ack -l -- "^  - dev"  | xargs -n 1 gsed -i -e '/^  - dev/{N;s/\n  - dev//;}'
