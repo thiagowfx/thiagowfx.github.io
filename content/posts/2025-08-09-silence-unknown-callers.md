@@ -60,7 +60,7 @@ doesn't need to entail emergencies only. Note that this only works if this is a
 small list. If you decide that you love everyone (noble!), then you'll need a
 two-tier love system to decide who you love the most.
 
-## 3) Protect your Crown Jewels!
+## 3) Protect your Crown Jewels
 
 Tate Jarrow, [Protect your Crown
 Jewels!](https://web.archive.org/web/20230204060013/https://onlinesafety.substack.com/p/protect-your-crown-jewels):

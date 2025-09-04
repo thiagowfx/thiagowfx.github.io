@@ -9,7 +9,7 @@ tags:
 This is a follow-up post of [Keychron K2: Linux Setup]({{< ref "2021-12-11-keychron-k2-linux.setup" >}}). The previous post focused on the configuration of the keyboard, this one focuses on its user experience from the point of view of a Software Engineer.
 
 
-## Previously...
+## Previously
 
 My first (and previous) mechanical keyboard was a [Logitech G610 Orion
 Red][logitech-g610][^1]. It's a full wired keyboard with Cherry MX Red switches
@@ -35,7 +35,7 @@ ergonomic and/or fully programmable (QMK firmware) keyboards, like the Kinesis
 Advantage and/or the Ergodox EZ[^3]. Even though the G915 TKL is rock solid, it
 didn't have any fancy features to justify that investment.
 
-## The quest for the _perfect_ keyboard...
+## The quest for the _perfect_ keyboard
 
 I then proceeded to outsource my luck to the wisdom of the crowds, by asking
 for recommendations in a mailing list at $DAYJOB, giving them a subset of the
