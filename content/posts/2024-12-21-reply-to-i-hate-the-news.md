@@ -27,9 +27,9 @@ way or another.
 
 [...]
 
->  My life does not seem to be impoverished for it; indeed, I think it has been
->  greatly enhanced. But I haven't found many other people who are willing to
->  take the plunge.
+> My life does not seem to be impoverished for it; indeed, I think it has been
+> greatly enhanced. But I haven't found many other people who are willing to
+> take the plunge.
 
 How relevant these words of wisdom still are!
 
