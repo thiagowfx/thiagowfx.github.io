@@ -71,7 +71,7 @@ Jewels!](https://web.archive.org/web/20230204060013/https://onlinesafety.substac
 > easily and quickly — so start there.
 
 I rarely hand out my main phone number when signing up for various online
-accounts. I don't want to be reachable in the first place (see guideline #1), so
+accounts. I don't want to be reachable in the first place (see guideline 1)), so
 why expose my number to third parties?
 
 I have a second phone number that I use only for chat apps (WhatsApp, Telegram,
@@ -82,12 +82,12 @@ do not work.
 
 - - -
 
-#3 is the most important. There was a point in my life when I would use my main
+3) is the most important. There was a point in my life when I would use my main
 phone number for everything. Then I kept getting spam phone calls (and texts). I
-would still ignore them anyway (#1) – it feels that I've been doing so since
+would still ignore them anyway (1)) – it feels that I've been doing so since
 forever – but it was annoying to get spammed.
 
-It's never too late to do #3: you can always get a new phone number and start
+It's never too late to do 3): you can always get a new phone number and start
 over.
 
 
