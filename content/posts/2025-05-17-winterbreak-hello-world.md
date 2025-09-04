@@ -16,8 +16,8 @@ via the excellent
 [MobileRead](https://www.mobileread.com/forums/showthread.php?t=365372) forums:
 
 > I am proud to present the culmination of over a year of procrastination:
-> WinterBreak WinterBreak is a new jailbreak which works on ANY KINDLE* (from
-> the K5) on ANY FIRMWARE*
+> WinterBreak WinterBreak is a new jailbreak which works on ANY KINDLE (from
+> the K5) on ANY FIRMWARE
 
 Life happens though, and only now I got time to do so.
 
