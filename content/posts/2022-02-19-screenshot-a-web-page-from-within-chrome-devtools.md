@@ -14,7 +14,7 @@ on.
 - **Windows**: [Snipping
   tool](https://support.microsoft.com/en-us/windows/use-snipping-tool-to-capture-screenshots-00246869-1843-655f-f220-97299b865f6b)
   or hit the _PrintScreen_ key
-- **Linux**: [`scrot`]() or something from your Desktop Environment (DE) such as
+- **Linux**: [`scrot`](https://github.com/resurrecting-open-source-projects/scrot) or something from your Desktop Environment (DE) such as
   `xfce4-screenshooter`. For a full-featured one, I'd recommend
   [`flameshot`](https://flameshot.org/) (first) or
   [`shutter`](https://shutter-project.org/) (second). For Wayland people seem
