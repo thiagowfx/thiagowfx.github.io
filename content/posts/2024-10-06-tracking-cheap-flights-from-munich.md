@@ -69,9 +69,9 @@ Wishlist for the future:
 1. Add the ability to integrate with websites that do not support
 RSS directly and/or that block RSS readers. Examples:
 
-  - https://lowcost.pro/route/MUC/XXX/EN/
-  - https://www.secretflying.com/posts/category/cities-countries/germany/
-  - https://www.trabber.de/en/flights-from-germany-de/
+- https://lowcost.pro/route/MUC/XXX/EN/
+- https://www.secretflying.com/posts/category/cities-countries/germany/
+- https://www.trabber.de/en/flights-from-germany-de/
 
 2. Convert newsletters-only sources to RSS feeds.
 

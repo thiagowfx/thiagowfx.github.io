@@ -13,7 +13,6 @@ I have two raspberry pi[^1] units sitting idle at home, a 3B and a 4.
 For a long time I've been wanting to do something useful with them,
 while increasing my DevOps toolkit knowledge.
 
-
 The roadblock to do so was the most classic excuse: lack of non-interrupted time.
 
 There's plenty of motivation, and ideas. These will likely _never_ run out, any time soon.
@@ -80,7 +79,7 @@ If Raspberry Pi support is considered experimental, I would avoid the trouble at
 Stopping briefly here for a moment, the following list comes to mind, using [DistroWatch](https://distrowatch.com/) and [Linux Distribution timeline](https://en.m.wikipedia.org/wiki/File:Linux_Distribution_Timeline.svg) as an aid:
 
 - Debian
-	- RaspberryPi OS
+  - RaspberryPi OS
 - Ubuntu
 - Fedora
 - openSUSE
