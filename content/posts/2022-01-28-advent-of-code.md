@@ -45,7 +45,7 @@ $ make DEBUG=1 DAY=3
 
 Was the experience worth it? **Definitely yes**! Even though I only completed ~8 puzzles out of the 25 ones due to having my attention split with another project I was working on at the time, the thematic submarine puzzles were hella fun and I learned a lot of python 3 on the way.
 
-A few highlights of what I learned *and used* from my python `2to3` transition were f-strings / string interpolation (`print(f'The sum is {sum}')`), "everything is an iterator now" even `map` and `range`, the standard library is awesome and sometimes you stumble upon useful abstractions like `Counter` and `defaultdict`, `sort` is different now (`key` instead of comparison function), this `pdb` debugger thingy, among other topics I can't remember at the moment. I realized the only concept that was previously familiar was the different syntax of the `print` function (you have to use parentheses now).
+A few highlights of what I learned _and used_ from my python `2to3` transition were f-strings / string interpolation (`print(f'The sum is {sum}')`), "everything is an iterator now" even `map` and `range`, the standard library is awesome and sometimes you stumble upon useful abstractions like `Counter` and `defaultdict`, `sort` is different now (`key` instead of comparison function), this `pdb` debugger thingy, among other topics I can't remember at the moment. I realized the only concept that was previously familiar was the different syntax of the `print` function (you have to use parentheses now).
 
 In terms of workflow, I also learned that virtual environments are now
 supported natively[^5] (`python -m venv`), [`direnv`]({{< ref "2022-01-04-direnv-automate-your-environment-variables" >}}) is an amazing tool to

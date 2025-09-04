@@ -51,7 +51,7 @@ Then sync each image[^2]:
 ```
 
 [^1]: I cannot promise I am able to craft this by hand without looking up man
-    pages or getting assistance from an LLM. _C'est la vie_.
+    pages or getting assistance from an LLM. *C'est la vie*.
 
 [^2]: If there are many images, consider using an
     [array](https://www.gnu.org/software/bash/manual/html_node/Arrays.html) +
