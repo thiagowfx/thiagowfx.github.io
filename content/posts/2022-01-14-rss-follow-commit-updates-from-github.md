@@ -6,17 +6,12 @@ tags:
   - selfhosted
 ---
 
-It is possible to track/follow commits of `git` repositories
-on [GitHub][github] via RSS: `https://github.com/<user>/<repo>/commits.atom`.
+It is possible to track/follow commits of `git` repositories on
+[GitHub](https://github.com/) via RSS:
+`https://github.com/<user>/<repo>/commits.atom`.
 
+For example, [my dotfiles](https://github.com/thiagowfx/dotfiles/commits.atom).
 
-For example, my dotfiles: https://github.com/thiagowfx/dotfiles/commits.atom
-
-I am using this to keep track of [Miniflux][miniflux]
+I am using this to keep track of [Miniflux](https://miniflux.app/)
 [commits](https://github.com/miniflux/v2/commits.atom) from
 within Miniflux itself (a RSS webapp).
-
-
-[dotfiles-rss]: https://github.com/thiagowfx/dotfiles/commits.atom
-[github]: https://github.com/
-[miniflux]: https://miniflux.app/
