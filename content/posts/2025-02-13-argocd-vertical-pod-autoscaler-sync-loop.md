@@ -78,11 +78,11 @@ index 92bfbcc..90d8435 100644
 In [JSON Pointers](https://www.rfc-editor.org/rfc/rfc6901) (RFC 6901), one
 escapes the slash character with a `~1` (c.f. section 3 in the spec):
 
->  ```
->  Because the characters '~' (%x7E) and '/' (%x2F) have special meanings in
->  JSON Pointer, '~' needs to be encoded as '~0' and '/' needs to be encoded as
->  '~1' when these characters appear in a reference token.
->  ```
+> ```
+> Because the characters '~' (%x7E) and '/' (%x2F) have special meanings in
+> JSON Pointer, '~' needs to be encoded as '~0' and '/' needs to be encoded as
+> '~1' when these characters appear in a reference token.
+> ```
 
 Problem resolved!
 

@@ -18,10 +18,12 @@ manual:
 
 > To add words to your own word list:
 >
-> zg       Add word under the cursor as a good word to the first
->          name in 'spellfile'.  A count may precede the command
->          to indicate the entry in 'spellfile' to be used.  A
->          count of two uses the second entry.
+> zg
+>
+> Add word under the cursor as a good word to the first
+> name in 'spellfile'.  A count may precede the command
+> to indicate the entry in 'spellfile' to be used.  A
+> count of two uses the second entry.
 
 Once you do so, you'll see feedback text in the status bar:
 
