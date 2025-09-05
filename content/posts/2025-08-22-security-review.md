@@ -5,8 +5,7 @@ tags:
   - dev
 ---
 
-Anthropic, [Automated Security Reviews in Claude Code
-](https://support.anthropic.com/en/articles/11932705-automated-security-reviews-in-claude-code):
+Anthropic, [Automated Security Reviews in Claude Code](https://support.anthropic.com/en/articles/11932705-automated-security-reviews-in-claude-code):
 
 > Claude Code now includes automated security review features to help you
 > identify and fix vulnerabilities in your code. This guide explains how to use
