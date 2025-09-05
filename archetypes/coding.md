@@ -6,5 +6,7 @@ tags:
   - coding
 ---
 
+[{{ replace .Name $today "" | humanize }}](#):
+
 ```python
 ```
