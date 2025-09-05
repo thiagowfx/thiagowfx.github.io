@@ -59,22 +59,27 @@ AoC enjoys a lot of popularity and zeitgeist, especially during times of the COV
 There's so much information that it's impossible to stay on top of everything. Here is a small list of repositories that I followed this year, most of those are acquaintances/friends and/or stumbled upon Twitter:
 
 C++:
+
 - https://github.com/riuri/adventofcode
 
 Python:
+
 - https://github.com/sjvrijn/AdventofCode
 - https://github.com/oomenn/AOC
 
 Rust:
+
 - https://github.com/dimo414/advent-2021
 - https://github.com/mfs/aoc
 
 **Edit (2024-08-06)**: Additions from 2022:
 
 C++:
+
 - https://github.com/eariassoto/advent-of-code-cpp
 
 Python:
+
 - https://github.com/achrafmam2/adventofcode
 - https://github.com/mcerdeiro/aoc2022
 
