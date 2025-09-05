@@ -17,9 +17,9 @@ For more, see https://www.haiku-os.org/about.
 
 ## Installing Haiku
 
-**Note:** most of those instructions come from [here](https://www.haiku-os.org/guides/installing_haiku_image_disk_partition). Also, thanks David Couzelis for kindly giving me some advice and pointing me out to them.
+**Note:** most of those instructions come from [the Haiku installation guide](https://www.haiku-os.org/guides/installing_haiku_image_disk_partition). Also, thanks David Couzelis for kindly giving me some advice and pointing me out to them.
 
-1. Get Haiku. You can do it either from [here](https://www.haiku-os.org/get-haiku), or get nightly releases from [here](http://download.haiku-os.org/nightly-images/x86_gcc2_hybrid/). I personally recommend the nightly releases; I first installed the latest non-nightly one, but later on I discovered that is was very old (circa 2012): it didn&#8217;t even have a package manager.
+1. Get Haiku. You can do it either from [the official download page](https://www.haiku-os.org/get-haiku), or get nightly releases from [the nightly builds page](http://download.haiku-os.org/nightly-images/x86_gcc2_hybrid/). I personally recommend the nightly releases; I first installed the latest non-nightly one, but later on I discovered that is was very old (circa 2012): it didn&#8217;t even have a package manager.
 2. Which image should you download? In this post, I am assuming we&#8217;ll install Haiku directly to a (real) disk, so I&#8217;m downloading the **raw** image. Actually, the **anyboot** image can also be downloaded &#8212; and this is the one you will get if you opted for a non-nightly version; however, the anyboot image will be converted to a raw one in step 3 before we proceed. So, skip the next step if you downloaded the raw image.
 3. Got your anyboot image? Now, convert it to raw (run this from a bash compatible shell):
 
@@ -37,7 +37,7 @@ $ dd if=/dev/zero of=haiku.raw bs=1 seek=506 count=4 conv=notrunc
 $ dd if=haiku.raw of=/dev/sda42 bs=1M conv=notrunc
 ```
 
-6. Make the installation _bootable_: you&#8217;ll need to compile and run the _makebootabletiny_ program, which can be downloaded from [here](https://www.haiku-os.org/guides/installing_haiku_image_disk_partition). It is a simple C program, so:
+6. Make the installation _bootable_: you&#8217;ll need to compile and run the _makebootabletiny_ program, which can be downloaded from [the Haiku installation guide](https://www.haiku-os.org/guides/installing_haiku_image_disk_partition). It is a simple C program, so:
 
 ```shell
 $ gcc makebootabletiny.c -o makebootabletiny
