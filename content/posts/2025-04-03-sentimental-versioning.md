@@ -8,6 +8,7 @@ tags:
 [Sentimental Versioning](https://github.com/dominictarr/sentimental-versioning):
 
 > ## TeX and Metafont
+>
 > ### by Donald Knuth
 >
 > In his seminal text layout system, TeX, and his equally
