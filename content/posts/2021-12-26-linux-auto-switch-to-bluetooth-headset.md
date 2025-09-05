@@ -7,7 +7,6 @@ tags:
 
 Whenever I connect/disconnect my bluetooth headphones to my Linux workstation, I need to manually switch to/off them.
 
-
 Every commercial OS I'm aware of does that automatically, including Chrome OS, macOS and Windows.
 
 To automate this behavior on Linux, it depends whether we're using PulseAudio or Pipewire. It boils down to loading the `module-switch-on-connect` pulseaudio module.

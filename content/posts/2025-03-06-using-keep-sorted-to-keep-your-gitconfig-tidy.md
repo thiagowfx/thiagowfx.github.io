@@ -133,7 +133,6 @@ It turns out all we have to do is a little bit of tweaking:
 
 How nice!
 
-
 [^1]: Can you even imagine? Having original ideas? In 2025? Without LLMs?! Is
     this even real??
 

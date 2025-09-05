@@ -8,7 +8,6 @@ tags:
 
 **TL;DR**: pequena TODO list sobre como instalar o Gentoo. Você vai passar 90% do seu tempo olhando para **texto** dando scroll na tela (processo demorado…).
 
-
 Esse é o método mais tradicional possível (e que me interessa) que pude constatar. Adapte-o para as suas próprias necessidades:
 
 - Boote em um ambiente com o Arch (na verdade, você pode fazer isso a partir de qualquer distro decente).

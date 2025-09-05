@@ -117,7 +117,6 @@ I would say that there's nothing to do here, other than waiting for the next
 release of Alpine Linux (3.23) with apk-tools v3, and ignoring the warning in
 the meantime.
 
-
 [^1]: Their AI overview insists on spitting out useless information about
     Ubuntu, which is completely unrelated in this case.
 

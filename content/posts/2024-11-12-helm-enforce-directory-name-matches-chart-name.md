@@ -10,7 +10,6 @@ tags:
 
 [^1]: _Why_? For ease of management, simplicity, consistency & uniformity.
 
-
 ## Background
 
 In 2016, this [used to be](https://github.com/helm/helm/pull/818/) the default behavior in Helm:

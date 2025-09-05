@@ -33,9 +33,7 @@ better.
 
 As a side note, blog posts yield the same benefit. The more the merrier!
 
-
 **Reference**: https://simonwillison.net/2025/May/26/notes/
-
 
 [^1]: Your periodic reminder that "teammates" sounds much better than
     "colleagues". Or you can use "coworkers" too. Though I tend to use

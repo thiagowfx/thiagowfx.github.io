@@ -44,7 +44,6 @@ from Raycast snippets.
 It's available on all major OSes (Windows, Linux, macOS). I am testing it on
 macOS. Installation:
 
-
 ```shell
 % brew install espanso
 ```

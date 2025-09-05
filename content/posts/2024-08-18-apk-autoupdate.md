@@ -9,7 +9,6 @@ tags:
 packages with binaries backed by system services should be automatically
 restarted.
 
-
 Deb-based systems have
 [`checkrestart(8)`](https://manpages.debian.org/bookworm/debian-goodies/checkrestart.8.en.html).
 

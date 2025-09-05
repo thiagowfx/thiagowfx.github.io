@@ -11,7 +11,6 @@ tags:
 >
 > Lightweight. Open source. No fluff.
 
-
 **Shortcut**: `Cmd + Shift + C` to open a clipboard menu with all your recently
 copied items, plus a search bar for quick grepping.
 

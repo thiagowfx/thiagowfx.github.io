@@ -17,7 +17,6 @@ unknown territory.
 
 However, in Alpine Linux, there is a better way.
 
-
 ## Solution
 
 There is a `docs` metapackage:

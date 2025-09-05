@@ -9,7 +9,6 @@ tags:
 It is a bit dull with its out-of-the-box monospace font though.
 In this post we'll learn how to customize it.
 
-
 ## Google Fonts
 
 The easiest way to customize the Secure Shell extension to use a custom font is to select one from [Google Fonts][google-fonts].

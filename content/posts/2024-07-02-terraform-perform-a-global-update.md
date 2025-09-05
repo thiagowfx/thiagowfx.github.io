@@ -8,7 +8,6 @@ tags:
 Given a `terraform/modules` directory tree, we would like to globally update the
 minimum required terraform version in all modules.
 
-
 - Option 1: Use `ack` or `fd` + `sed`.
 - Option 2: Use [`tfupdate`](https://github.com/minamijoyo/tfupdate), which can
   be installed via `homebrew` or your favorite package manager (c.f.

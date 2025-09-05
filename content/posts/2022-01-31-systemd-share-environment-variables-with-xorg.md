@@ -9,7 +9,6 @@ tags:
 In this post we will learn how to share environment variables (e.g.
 `$GDK_SCALE`) between a system user session and X11/Xorg.
 
-
 The typical [`~/.xinitrc`][xinitrc] and/or [`~/.xprofile`][xprofile] setup in
 2020s involves some environment variable exports such as the following:
 
@@ -147,7 +146,6 @@ Ultimately though you end up with only one file to manage, which is the systemd 
 [KISS][kiss]™.
 
 {{< figure align="center" src="https://imgs.xkcd.com/comics/x11.png" link="https://xkcd.com/963/" alt="Thomas Jefferson thought that every law and every constitution should be torn down and rewritten from scratch every nineteen years--which means X is overdue." attr="XKCD Courtesy of Randall Munroe" >}}
-
 
 [dotfiles]: https://github.com/thiagowfx/.dotfiles
 [dry]: https://en.wikipedia.org/wiki/Don%27t_repeat_yourself

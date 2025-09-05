@@ -41,7 +41,6 @@ Notes:
 Bookmark the URL for quick access from your web browser bookmarks bar[^2], or
 perhaps from an app such as [RayCast](https://www.raycast.com/).
 
-
 [^1]: "Issues" were [recently
     renamed](https://community.atlassian.com/forums/Jira-articles/It-s-here-Work-is-the-new-collective-term-for-all-items-you/ba-p/2954892)
     to "Work items". Do you have an issue with this?

@@ -7,7 +7,6 @@ tags:
 
 Not everything is available via RSS. However, there are some decent workarounds in a few situations.
 
-
 ## Newsletters
 
 Some blogs and authors refuse to provide RSS feeds to their websites. Instead, they will only provide newsletters.
@@ -51,6 +50,5 @@ For more RSS bridges and resources, see:
 - https://github.com/AboutRSS/ALL-about-RSS
 
 **Disclaimer**: I do not endorse these lists of resources. Use them at your own risk.
-
 
 [^1]: The last slash isn't strictly necessary: https://www.reddit.com/r/archlinux.rss is also valid.

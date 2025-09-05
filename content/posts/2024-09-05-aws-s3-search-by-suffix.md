@@ -8,7 +8,6 @@ tags:
 Given an AWS S3 bucket, how to recursively list all objects within it that match
 a given suffix?
 
-
 The following example searches for all objects that end with `thiagowfx`.
 
 ```shell

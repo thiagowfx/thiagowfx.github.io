@@ -36,6 +36,5 @@ ligou?](https://qualempresameligou.com.br/):
 > receba chamada de um número que desconheça, e este pertencer a uma Pessoa
 > Jurídica, poderá identificar a empresa que te ligou.
 
-
 [^1]: Caso as empresas continuem violando o seu direito, mesmo após a inclusão
     na lista, é possível realizar uma reclamação na própria plataforma.

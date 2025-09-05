@@ -11,7 +11,6 @@ matched by default.
 To match the full path, use `-p`. It is often useful to combine it with `--type
 file`.
 
-
 ```shell
 % fd -p clustermon --type file
 apps/base/clustermon/clustermon.yaml

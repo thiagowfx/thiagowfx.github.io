@@ -90,6 +90,5 @@ forever – but it was annoying to get spammed.
 It's never too late to do 3): you can always get a new phone number and start
 over.
 
-
 [^1]: [Hermit](https://pcaro.es/hermit/): One of my favorite monospace fonts,
     mind you.

@@ -13,7 +13,6 @@ tags:
 
 We can also use it to craft family trees!
 
-
 I came up with the following template:
 
 ```graphviz

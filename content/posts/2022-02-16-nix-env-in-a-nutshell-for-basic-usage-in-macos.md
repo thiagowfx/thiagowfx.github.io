@@ -22,7 +22,6 @@ reap the benefits that Nix provides.
 For now, I am only adopting `nix-env` and `nix-shell`, with no `*.nix` config
 files. This post covers `nix-env`.
 
-
 For simplicity, think of `nix-env` as a package manager, akin to `apk`,
 `pacman`, `brew`, `apt`, `pkg`, etc.
 
@@ -166,7 +165,6 @@ Those were very intuitive to find, with the exception of `ack` and `bash-interac
 - `ack` is very oddly named. Really. Also: `nix-env -i ack` doesn't work, but
   `nix-env -iA nixpkgs.ack` does. I suspect it will be hard to ignore `-A` in
   the future.
-
 
 [^1]: Strictly speaking there's nothing special about macOS in this context.
   The same setup can also be used in Linux distributions, for example, [Debian

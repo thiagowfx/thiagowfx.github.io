@@ -8,7 +8,6 @@ tags:
 
 > Ufw stands for Uncomplicated Firewall, and is a program for managing a netfilter firewall. It provides a command line interface and aims to be uncomplicated and easy to use.
 
-
 The firewall makes justice to its name as it is really uncomplicated, and a pleasure to set up.
 
 ## Install
@@ -149,6 +148,5 @@ Ufw uses iptables under the hood. Inspect the underlying iptables rules:
 
 - https://help.ubuntu.com/community/UFW
 - https://wiki.archlinux.org/title/Uncomplicated_Firewall
-
 
 [^1]: [`ufw-extras`](https://github.com/xyproto/ufw-extras) is optional, it contains additional rules (e.g. mosh, tailscale).

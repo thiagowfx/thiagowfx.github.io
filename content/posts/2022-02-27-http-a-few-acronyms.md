@@ -7,7 +7,6 @@ tags:
 
 I keep forgetting these, so I wrote a small summary for my own reference.
 
-
 ## HSTS
 
 [Wikipedia — HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security):
@@ -39,7 +38,6 @@ through HSTS, some popular ones are `.app` and `.dev`.
 
 `HSTS` is fire-and-forget, you'll usually only need to worry about it once,
 when configuring a SSL certificate (HTTPS) for your domain or subdomains.
-
 
 ## CSP
 
@@ -75,7 +73,6 @@ Content-Security-Policy: default-src 'self'; img-src https://*; child-src 'none'
 [miniflux](https://github.com/miniflux/v2/issues/748) to fetch resources
 (fonts) from another domain (Google Fonts).
 
-
 ## CORS
 
 [Wikipedia — CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing):
@@ -93,7 +90,6 @@ Access-Control-Allow-Origin: http://example.com:8080
 
 `CORS` is something to worry about at the application level. For example,
 https://keep.google.com/ ⟷ https://google.com/ cookies.
-
 
 ## CSRF
 

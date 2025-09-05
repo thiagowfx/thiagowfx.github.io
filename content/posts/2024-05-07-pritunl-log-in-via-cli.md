@@ -12,7 +12,6 @@ log in every day is quite tedious.
 
 Let's automate it so that we can connect to the VPN with a single command.
 
-
 In order to fetch the credentials in this example in a secure manner, we'll be
 using 1password. [`pass`](https://www.passwordstore.org/) would have worked just
 as fine.

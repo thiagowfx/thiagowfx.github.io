@@ -7,7 +7,6 @@ tags:
 
 Given, for example, `0 0 * * *`, how do you figure out when it will run?
 
-
 - Option 1: Read the docs! The [ArchWiki](https://wiki.archlinux.org/title/Cron)
   is frequently a great reference. Alternatively, use your favorite search
   engine.

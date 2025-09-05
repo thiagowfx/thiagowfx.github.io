@@ -108,6 +108,5 @@ Just leave them in the fridge for _at least_ one hour.
 my memory and experience. Consume (pun intended!) this information at your own
 risk.
 
-
 [^1]: What triggers _"avoid"_ is one of: (i) experience, (ii) moral, or (iii)
     diet.

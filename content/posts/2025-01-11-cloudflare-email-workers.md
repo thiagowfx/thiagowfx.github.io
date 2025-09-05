@@ -70,7 +70,6 @@ Once I am satisfied with the results, I deploy the email worker.
 **Final step**: create an email route rule from `neetflex@{domain}` to the
 aforementioned email worker. Done, profit!$![^3].
 
-
 At the time of this post, you can
 [choose](https://developers.cloudflare.com/workers/languages/) among JavaScript,
 TypeScript, Python and Rust to code your worker in.
@@ -78,7 +77,6 @@ TypeScript, Python and Rust to code your worker in.
 Original idea:
 [source](https://community.cloudflare.com/t/routing-an-email-to-more-than-one-address-from-the-same-user/437169/2)
 from Cloudflare Community.
-
 
 [^1]: Don't judge me if I am a fan of [neetcode](https://neetcode.io/)'s sense
     of humour.

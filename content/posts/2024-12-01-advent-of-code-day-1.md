@@ -12,7 +12,6 @@ solutions in Python 3.
 
 Link to [Day #1](https://adventofcode.com/2024/day/1) puzzle.
 
-
 This is just a warm-up.
 
 Given two lists of integers, iterate over them and sum the absolute difference
@@ -29,7 +28,6 @@ The full solution[^2]:
 import sys
 
 from collections import Counter
-
 
 def main():
     with open(sys.argv[1]) as input:
@@ -53,7 +51,6 @@ def main():
 
     # part two
     print(sum(l * freqs[l] for l in left))
-
 
 if __name__ == '__main__':
     main()

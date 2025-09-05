@@ -10,7 +10,6 @@ tags:
 
 Here are some of my favorites with example usages. Obviously this post isn't a manual which would have been a disservice to the community; refer to the upstream man pages for detailed instructions.
 
-
 ## sponge
 
 > sponge(1) - soak up standard input and write to a file

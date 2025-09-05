@@ -77,5 +77,4 @@ quite elegant, should we ever deem it as a long-term "solution". I suppose that
 a [Hammerspoon](https://www.hammerspoon.org/) spoon would also be elegant in
 this context.
 
-
 [^1]: It could simply be placebo, as far as I'm concerned...

@@ -46,5 +46,4 @@ a gift instead of a cash payment.
 > After five nights, 45 percent would already be expecting some form of payment,
 > so to be safe, you may want to offer sooner if you are the guest
 
-
 [^1]: Unless, perhaps, if they are significantly different.

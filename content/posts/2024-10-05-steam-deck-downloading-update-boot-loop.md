@@ -9,7 +9,6 @@ Today I tried to use my Steam Deck to no avail.
 
 Upon turning it on, a "Downloading update (…)" splash screen would appear, then the device would quickly turn itself off, in a matter of seconds.
 
-
 Repeating this dance a couple of times yielded the same results.
 
 Then I found out that if you hold the three-dot button (the quick settings menu button) briefly after turning it on, you are prompted with a boot loader screen that resembles GRUB. In this screen it's possible to roll back to an earlier OS version.

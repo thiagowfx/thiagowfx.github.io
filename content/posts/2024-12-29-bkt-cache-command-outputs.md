@@ -39,7 +39,6 @@ The cache duration can be defined with the `--ttl` flag. One day or one week or 
 
 And then I should talk about [`mlr`](https://github.com/johnkerl/miller) (Miller) another day...
 
-
 [^1]: In Rust™. And with a [domain hack](https://en.wikipedia.org/wiki/Domain_hack).
 [^2]: Especially if, like me, you like to often close your tabs to tidy up (whether browser or terminal ones).
 [^3]: `pp` stands for pretty-print.

@@ -16,7 +16,6 @@ $ date '+%Y-%m-%d'
 
 It turns out bash (>=4.2) has this feature built-in as part of `printf`:
 
-
 ```shell
 $ printf '%(%Y-%m-%d)T\n'
 2024-10-07

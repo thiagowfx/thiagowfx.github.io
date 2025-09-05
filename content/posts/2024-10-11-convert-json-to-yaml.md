@@ -7,7 +7,6 @@ tags:
 
 Given a YAML file that is effectively JSON, convert it to YAML format.
 
-
 ## Input
 
 ```shell

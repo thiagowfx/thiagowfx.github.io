@@ -148,7 +148,6 @@ Or, even: s/BigTech/any company whatsoever
 The only bit I'll add: motivation / passion / enthusiasm does matter, and makes
 a huge difference. That's a topic for another post though.
 
-
 [^1]: For some reason he chose to omit naming the company, even though it's
     pretty obvious to find it out as he uses his real / full name, go figure 🤷.
     That said, as good [blogging

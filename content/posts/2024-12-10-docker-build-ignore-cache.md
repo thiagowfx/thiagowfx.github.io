@@ -13,7 +13,6 @@ docker build --no-cache -f Dockerfile . -t {image name}:{image tag} --platform
 linux/amd64
 ```
 
-
 - Pass an explicit platform in case e.g. you're building on a Mac M1 (arm64)
   with the intent of running it on Linux in the cloud (amd64 typically).
 - The docker image full specification is: image =

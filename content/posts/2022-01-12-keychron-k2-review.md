@@ -8,7 +8,6 @@ tags:
 
 This is a follow-up post of [Keychron K2: Linux Setup]({{< ref "2021-12-11-keychron-k2-linux.setup" >}}). The previous post focused on the configuration of the keyboard, this one focuses on its user experience from the point of view of a Software Engineer.
 
-
 ## Previously
 
 My first (and previous) mechanical keyboard was a [Logitech G610 Orion
@@ -107,7 +106,6 @@ issues with my previous keyboard where some of its keycaps would easily fall
 off it when moving it within my backpack. I do not have this issue with the
 Keychron.
 
-
 ## Future
 
 Mechanical keyboards are meant to last. I do not intend to upgrade it any time
@@ -127,7 +125,6 @@ I am not particularly attracted to custom keycaps, they are cute but not my cup
 of tea. And I also do not see the appeal of hot swappable keycaps. I can
 understand why some folks appreciate those features, customizability is
 powerful, but for me it's less stressful to keep things simple.
-
 
 [logitech-g610]: https://www.logitech.com/assets/64198/g610-orion-red.pdf
 [logitech-g915-tkl]: https://www.logitechg.com/en-ca/products/gaming-keyboards/g915-tkl-wireless.html

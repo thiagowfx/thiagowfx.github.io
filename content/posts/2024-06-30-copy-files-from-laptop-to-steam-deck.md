@@ -7,7 +7,6 @@ tags:
 
 Let's say the files you want to copy are in `~/Downloads`.
 
-
 Start a local HTTP server on your laptop:
 
 ```

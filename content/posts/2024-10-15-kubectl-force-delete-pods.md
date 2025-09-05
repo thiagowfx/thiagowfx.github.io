@@ -10,7 +10,6 @@ pods did not terminate, even with successive `kubectl delete`.
 
 `--force` did not work either :mildshock:
 
-
 `--grace-period=0` (alongside `--force`) did the trick:
 
 ```shell

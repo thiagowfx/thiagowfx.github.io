@@ -10,7 +10,6 @@ Sometimes I need to start a local HTTP server for a quick one-off task, often
 just to serve static content. It is not important which one it is, so long as I
 can do it quickly.
 
-
 ## Option #1: use `python`
 
 ```shell

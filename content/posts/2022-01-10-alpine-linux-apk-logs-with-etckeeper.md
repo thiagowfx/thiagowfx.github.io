@@ -8,7 +8,6 @@ tags:
 `apk(8)` is the Alpine Linux package manager. Surprisingly, it lacks native
 logs. In this post we will learn how to work around this limitation.
 
-
 In a distribution like Arch Linux that uses `pacman(8)`, one would typically
 find logs in `/var/log/pacman.log`. You would expect Alpine Linux to follow
 suit and provide some `/var/log/apk.log` or similar, however that's not the
@@ -88,7 +87,6 @@ Date:   Tue Jan 11 00:00:24 2022 -0500
     +py3-jinja2-3.0.3-r0
     +py3-jinja2-doc-3.0.3-r0
 ```
-
 
 [etckeeper]: https://etckeeper.branchable.com/
 [repo]: https://pkgs.alpinelinux.org/packages?name=etckeeper

@@ -121,7 +121,6 @@ class Solution:
               del nums[i]
 ```
 
-
 [^1]: In Python, there's generally no need to use `for i in range(len(v))`. In general,
     it's more elegant to use `for i, el in enumerate(v)`. Even if you don't
     care about the element: `for i, _ in enumerate(v)`. If you don't care about

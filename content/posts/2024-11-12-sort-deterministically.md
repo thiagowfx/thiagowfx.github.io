@@ -17,7 +17,6 @@ The `sed` part is just to make an unordered list out of it.
 
 There was an issue though.
 
-
 In my machine, and in CI (GitHub Actions), the following output was produced:
 
 ```

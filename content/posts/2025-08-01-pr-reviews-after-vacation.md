@@ -45,5 +45,4 @@ Then the Master added: "What is urgent code that never landed?"
 
 An instant later, the novice was enlightened.
 
-
 [^1]: _Prompt_: Write an "unix koan" out of this.

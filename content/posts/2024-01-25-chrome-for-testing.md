@@ -11,7 +11,6 @@ Testing](https://developer.chrome.com/blog/chrome-for-testing), a project I was
 the Tech Lead of during my tenure on the Chrome Tooling / Browser Automation team
 at Google.
 
-
 [Once upon a time, a few (debugging) mistakes
 ago](https://www.youtube.com/watch?v=9y4A15WCGdc), web developers would run
 (web) integration tests with [WebDriver

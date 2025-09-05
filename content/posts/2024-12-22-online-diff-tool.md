@@ -37,7 +37,6 @@ Julia Evans has recently recommended
 
 At Google we had an internally hosted one at `http://diff/` (or was it `go/diff`?).
 
-
 [^1]: If you're only able to hold one at a time, you should definitely upgrade
     your workflow to using a clipboard manager, you're missing out. For macOS,
     see my [previous post]({{< ref "2023-12-02-maccy-macos-clipboard-manager"

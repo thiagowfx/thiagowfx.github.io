@@ -61,7 +61,6 @@ or months at a time ephemerally, and this tends to work well for me.
 
 As a side effect, I added a link to my profile at the footer of this site.
 
-
 [^1]: Not 100% correct as I left only one post, which doubles down as (i)
     nostalgia / melancholy for the good ol' times and (ii) verification /
     creditworthiness i.e. makes my account appear more authentic as it has at

@@ -15,7 +15,6 @@ From the project website, [**ventoy**][ventoy] is an:
 >
 > With ventoy, you don't need to format the disk over and over, you just need to copy the ISO/WIM/IMG/VHD(x)/EFI files to the USB drive and boot them directly.
 
-
 ## Before
 
 The typical linux desktop user workflow to try out new distros[^vm] is to:
@@ -56,7 +55,6 @@ Ventoy is **magic**. It allows you to carry a single USB stick with all of your 
 The full list of supported systems is [here](https://www.ventoy.net/en/isolist.html).
 
 If you need some inspiration to fill in your Ventoy USB stick, head over to [distrowatch](https://distrowatch.com/).
-
 
 [ventoy]: https://www.ventoy.net/en/index.html
 

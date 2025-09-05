@@ -21,7 +21,6 @@ The first thing I went after was a decent and updated Linux distro; doing the ch
 
 Next: a good text editor. Wait…why not two? I am using vim to compose e-mails, and emacs to write code.
 
-
 What&#8217;s next? Oh yes…a decent `sendmail` program. It is not mandatory to have one of those, but it eases a lot the process of writing e-mail in plain text. I grabbed `msmtp` plus its MTA. Writing a config file for it is pretty straightforward.
 
 And now I was ready: I subscribed to the challenge.

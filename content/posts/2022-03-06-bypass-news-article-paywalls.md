@@ -20,7 +20,6 @@ There are several ways to access those as one-offs. I will add a disclaimer
 that I do not publicly endorse any of those methods, they are just mentioned
 for educational purposes.
 
-
 The most typical way is to open an incognito tab or window in your browser with
 the desired URL. This works because many paywalls are often implemented with
 browser cookies.

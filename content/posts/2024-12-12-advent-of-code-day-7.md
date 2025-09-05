@@ -8,7 +8,6 @@ tags:
 
 Link to [Day #7](https://adventofcode.com/2024/day/7) puzzle.
 
-
 Part one: dynamic programming!
 
 ```python
@@ -72,7 +71,6 @@ def calibrate_one(test_value, operands):
 
     return dp_calibrate(operands[0], 1)
 
-
 def calibrate_two(test_value, operands):
 
     @lru_cache(maxsize=None)
@@ -86,7 +84,6 @@ def calibrate_two(test_value, operands):
         return dp_calibrate(acc + operands[index], index + 1) or dp_calibrate(acc * operands[index], index + 1) or dp_calibrate(int(str(acc) + str(operands[index])), index + 1)
 
     return dp_calibrate(operands[0], 1)
-
 
 def main():
     with open(sys.argv[1]) as input:
@@ -110,7 +107,6 @@ def main():
 
     # part two
     print(total_two)
-
 
 if __name__ == '__main__':
     main()

@@ -10,7 +10,6 @@ prototyping, but often forget what the standard library method signatures are.
 
 For example, how should I invoke `subprocess.call`?
 
-
 The most straightforward action at this point is to simply [google
 it](https://www.google.com/search?q=python+subprocess.call), no shame. The first result helpfully redirects me to the official python [documentation](https://docs.python.org/3/library/subprocess.html), as one would expect.
 
@@ -149,7 +148,6 @@ Both `bpython` and `ipython` are excellent tools to enhance the user experience
 within the python interpreter, being great for quick prototyping,
 experimentation or exploration. `bpython` seems a bit more user-friendly and
 intuitive upon first usage, `ipython` takes a bit getting used to.
-
 
 [^1]: [`fish`](https://fishshell.com/) shell and [`zsh-autosuggestions`](https://github.com/zsh-users/zsh-autosuggestions) users should know what I'm talking about.
 [^2]: `ipython` has been around for longer and these days there's the whole Jupyter Notebook ecosystem around it.

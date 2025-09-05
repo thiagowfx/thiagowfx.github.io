@@ -60,5 +60,4 @@ When writing this post, I just learned that I can activate it via
 Now I can augment my [`prodaccess`]({{< ref "2024-10-18-prodaccess" >}}) script
 with that.
 
-
 [^1]: There is definitely something odd with these numbers.

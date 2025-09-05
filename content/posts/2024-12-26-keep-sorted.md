@@ -203,7 +203,6 @@ disciplined conventions / practices.
 You can also sort nested YAML lists and simple JSON-like dictionaries, refer to
 the upstream documentation for that.
 
-
 [^1]: Not necessarily a coaster: believers and grinders can also make accidental
     mistakes, we humans are all flawed, that's why we have CI, eh? That said, in
     my experience, coasters don't care as much about canonical, elegant or

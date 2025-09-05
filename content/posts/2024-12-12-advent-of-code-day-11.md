@@ -8,7 +8,6 @@ tags:
 
 Link to [Day #11](https://adventofcode.com/2024/day/11) puzzle.
 
-
 Part one can be done with a simulation.
 
 It is very delightful to do it in python: lists are quite flexible, and
@@ -124,7 +123,6 @@ def dp_blink(stones, times):
 
     return sum([dp(stone, times) for stone in stones])
 
-
 def main():
     with open(sys.argv[1]) as input:
         lines = input.read().splitlines()
@@ -151,7 +149,6 @@ def main():
 
     # part two
     print(dp_blink(stones, 75))
-
 
 if __name__ == '__main__':
     main()

@@ -7,7 +7,6 @@ tags:
 
 In this post we will cover a few linux swap recipes.
 
-
 ## Empty swap space
 
 Completely empty (_flush_) swap space:

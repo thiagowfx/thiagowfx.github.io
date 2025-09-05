@@ -46,5 +46,4 @@ The bitnami image has 326MB and contains a bunch of other stuff.
 It turns out we will get some (unexpected) efficiency gains out of this
 migration!
 
-
 [^1]: ["""Recession"""](https://en.wikipedia.org/wiki/Enshittification).

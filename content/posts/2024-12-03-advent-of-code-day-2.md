@@ -8,7 +8,6 @@ tags:
 
 Link to [Day #2](https://adventofcode.com/2024/day/2) puzzle.
 
-
 The first part is straightforward. It felt right to use [`pairwise`](https://docs.python.org/3/library/itertools.html#itertools.pairwise) to compute the differences between each adjacent pair:
 
 ```python
@@ -71,7 +70,6 @@ import sys
 
 from itertools import pairwise
 
-
 def main():
     with open(sys.argv[1]) as input:
         lines = input.read().splitlines()
@@ -111,7 +109,6 @@ def main():
 
     # part two
     print(safe_damp)
-
 
 if __name__ == '__main__':
     main()

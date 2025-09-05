@@ -19,7 +19,6 @@ That's too abstract though. I prefer the way [Kev Quirk](https://kevq.uk/gemini-
 
 > To put that into human-digestible form; Gemini is basically a very light, text-only alternative to HTML.
 
-
 Gemini aims to replace "lightweight HTML", but it already starts with a big barrier for entry and adoption: It's not obvious what it is by just reading its project homepage alone. This in my opinion comes off as elitist.
 
 Furthermore, you need a custom piece of software in order to consume the so-called gemini _capsules_ (a fancy name for what's the equivalent of a plain-text [SSG](https://jamstack.org/generators/) website).
@@ -41,6 +40,5 @@ I will end this article with a praise for Gemini, courtesy of [Drew DeVault](htt
 Fine, but the beloved plain duo of HTML + CSS still works just fine. There's no need to create a new, difficult-to-use protocol to _force_ people to keep things simple. Unless you just wanna have fun and treat it like a toy or learning project; then go for it. Nothing wrong with that.
 
 My interest for Gemini ends as soon as this post is published. Q.E.D.
-
 
 [^1]: [Packaged](https://repology.org/project/amfora/versions) for every relevant platform out there nowadays.

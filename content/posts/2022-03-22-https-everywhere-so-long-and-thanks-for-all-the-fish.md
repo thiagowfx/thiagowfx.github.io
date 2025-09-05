@@ -7,7 +7,6 @@ tags:
 
 EFF's[^1] [HTTPS Everywhere](https://chrome.google.com/webstore/detail/https-everywhere/gcbommkclmclpchllfjekcdonpmejbdp) is a browser extension available for all major browsers that automatically upgrades HTTP to HTTPS on supported websites.
 
-
 Other than adblocking, it's one of the first extensions I add to a fresh browser installation.
 
 Today I learned it is apparently not needed anymore. Both Google Chrome and Firefox have settings these days to perform exactly the same functionality of the extension.

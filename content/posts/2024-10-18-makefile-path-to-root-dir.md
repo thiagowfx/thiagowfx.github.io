@@ -9,7 +9,6 @@ tags:
 and a command that needs to run from the `scaffolding/` directory, create an
 `all` target that works from any directory.
 
-
 **Solution**:
 
 ```make

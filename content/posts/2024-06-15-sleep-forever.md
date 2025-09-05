@@ -7,7 +7,6 @@ tags:
 
 The following commands will make the shell sleep indefinitely:
 
-
 ```shell
 sleep inf
 ```

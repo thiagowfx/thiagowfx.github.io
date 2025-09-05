@@ -9,7 +9,6 @@ tags:
 [Yahoo! Pipes](https://en.wikipedia.org/wiki/Yahoo!_Pipes) is not around
 anymore, however there is a modern replacement for it: https://www.pipes.digital/.
 
-
 It was on Hacker News recently: https://news.ycombinator.com/item?id=40841980
 
 Here is a practical use case for it: to filter out unwanted episodes from

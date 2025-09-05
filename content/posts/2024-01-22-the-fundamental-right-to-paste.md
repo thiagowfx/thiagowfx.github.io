@@ -11,7 +11,6 @@ Some websites attempt to prevent users from pasting text (i.e. `Ctrl+V` /
 It serves no purpose in most cases other than hindering accessibility and
 increasing annoyance for users.
 
-
 It is relatively easy to bypass most trivial blocks with plain JavaScript. Open a DevTools console (`Option + Cmd + I` in Google Chrome on macOS), then paste in the following snippet:
 
 ```javascript

@@ -35,5 +35,4 @@ The conclusion is: IKEA is like the
 [ArchWiki](https://wiki.archlinux.org/title/Main_page) of assembling furniture.
 Even when assembling models from other manufacturers, it will surely help you!
 
-
 [^1]: No need to link to it from here though.

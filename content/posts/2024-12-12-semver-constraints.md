@@ -21,10 +21,8 @@ Popular software tooling that uses them include:
 - terraform
 - ruby gems (here `~>` is used instead of simply `~`)
 
-
 Sometimes I use https://jubianchi.github.io/semver-check to double-check[^3], or
 to teach teammates how the range constraints work.
-
 
 [^1]: Or constraint ranges? 🤔
 [^2]: In Portuguese we say "acento circunflexo" (circumflex accent). In English,

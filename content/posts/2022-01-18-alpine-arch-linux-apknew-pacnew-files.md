@@ -8,7 +8,6 @@ tags:
 As packages are upgraded over time, updated configs files under `/etc` may
 arise. Different package managers treat this issue differently.
 
-
 ## Alpine Linux
 
 `apk` creates `.apk-new` files, which can be located and merged by running

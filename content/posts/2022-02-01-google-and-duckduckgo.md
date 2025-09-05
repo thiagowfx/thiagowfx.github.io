@@ -18,7 +18,6 @@ There are at least three reasons to use DuckDuckGo as an _alternative_:
 
 The quest(ion) then becomes: How can I use mostly Google, but still have quick access to DuckDuckGo bangs?
 
-
 There are several ways to do so.
 
 ## DuckDuckGoog
@@ -68,7 +67,6 @@ As a fallback I find that using DuckDuckGo directly is acceptable as well, howev
 ## Related
 
 - [Switching to DuckDuckGo](https://blog.meain.io/2019/switching-to-duckduckgo/)
-
 
 [google]: https://google.com/
 [duckduckgo]: https://duckduckgo.com/

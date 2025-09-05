@@ -34,6 +34,5 @@ on-the-fly:
 {{query (property :tags "idea")}}
 ```
 
-
 [^1]: The query syntax is somewhat a blend of [orgmode](https://orgmode.org) +
     emacs lisp from emacs.

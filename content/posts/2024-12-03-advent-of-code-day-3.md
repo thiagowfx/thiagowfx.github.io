@@ -8,7 +8,6 @@ tags:
 
 Link to [Day #3](https://adventofcode.com/2024/day/3) puzzle.
 
-
 It's a pretty typical regex problem.
 To choose not to use regex is to endeavour in pain.
 
@@ -39,7 +38,6 @@ The full solution:
 #!/usr/bin/env python3
 import re
 import sys
-
 
 def main():
     with open(sys.argv[1]) as input:
@@ -74,7 +72,6 @@ def main():
 
     # part two
     print(prod_two)
-
 
 if __name__ == '__main__':
     main()

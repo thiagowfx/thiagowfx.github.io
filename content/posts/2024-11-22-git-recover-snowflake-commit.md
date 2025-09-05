@@ -9,7 +9,6 @@ When working with `git`, sometimes we make
 [PEBKAC](https://en.wikipedia.org/wiki/User_error) mistakes and end up losing a
 given checkout or commit or worktree.
 
-
 `git reflog` can often help recover from these mistakes. It is a bit difficult
 to understand, but quite straightforward to use:
 

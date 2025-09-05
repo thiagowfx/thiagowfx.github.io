@@ -84,7 +84,6 @@ Then I found out it's possible to do it with an one-shot command, via:
 I knew of `--recurse-submodules` for `git clone`, but it never occurred to me it
 would also exist for `git reset`.
 
-
 [^1]: I ended up finding an opt-out mechanism, which isn't very intuitive to
     self-discover:
     [rancher-sandbox/rancher-desktop#7315](https://github.com/rancher-sandbox/rancher-desktop/issues/7315).

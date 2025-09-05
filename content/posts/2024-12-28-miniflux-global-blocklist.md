@@ -34,5 +34,4 @@ but they post way too much about Apple. There are some classes of Apple products
 I do not own any of them, nor plan to e.g. Apple TV or iPad or Vision Pro.
 A global block list is a much more effective way to address mass filtering out of posts than per-feed ones.
 
-
 [^1]: Since `miniflux` version 2.1.4 (July 9, 2024).

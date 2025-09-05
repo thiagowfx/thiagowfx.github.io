@@ -25,6 +25,5 @@ Here's a non-exhaustive list in alphabetical order:
 
 And for completeness I'll also mention [Reddit](https://reddit.com/) but everyone already knows it at this point.
 
-
 [^1]: [Signal-to-noise ratio](https://en.wikipedia.org/wiki/Signal-to-noise_ratio).
 [^2]: Please invite me oh, dear reader. I do not currently have an account there.

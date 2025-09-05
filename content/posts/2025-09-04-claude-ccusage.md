@@ -23,7 +23,6 @@ Need to install the following packages:
 ccusage@16.2.3
 Ok to proceed? (y)
 
-
  WARN  Fetching latest model pricing from LiteLLM...
 
 ℹ Loaded pricing for 1544 models

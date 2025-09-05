@@ -50,6 +50,5 @@ afterwards. Especially, in particular, _not_ to modify my writing style.
 Authenticity is important. This is not a professional publication, it's done
 merely for fun, hence adding these extra steps would have been overkill.
 
-
 [^1]: Still waiting for the profit ($$). Nah.
 [^2]: Not on purpose, I swear.

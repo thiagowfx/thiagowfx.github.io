@@ -12,7 +12,6 @@ out-of-the-box defaults:
 - colored diff output
 - side-by-side diff
 
-
 The usual `diff` tool in Unix system has some basic color support[^1].
 Nonetheless, sometimes the output of `icdiff` is better, with little effort or
 memorization.

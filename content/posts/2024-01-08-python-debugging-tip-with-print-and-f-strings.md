@@ -8,7 +8,6 @@ tags:
 It's 2024, [the year of the linux desktop](https://yotld.com/), and the best™
 way to debug computer programs is still the good ol' `print` statement.
 
-
 Since Python 3.6 it is possible to use
 [f-strings](https://docs.python.org/3/whatsnew/3.6.html#whatsnew36-pep498).
 

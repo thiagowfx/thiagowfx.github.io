@@ -20,7 +20,6 @@ before, respectively).
 
 **Bonus**: the same flag exists in `grep` and in `rg` (`ripgrep`).
 
-
 [^1]: I should probably fully migrate to
     [`ripgrep`](https://github.com/BurntSushi/ripgrep) one day. Heck, it's not
     even in the [Arch core repositories](https://aur.archlinux.org/packages/ack)

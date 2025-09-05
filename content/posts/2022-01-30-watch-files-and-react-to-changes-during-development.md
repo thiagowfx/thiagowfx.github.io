@@ -8,7 +8,6 @@ tags:
 
 This post describes some tooling usages to watch for file changes and run or reload a command whenever they happen.
 
-
 ## Context
 
 I am contributing to [miniflux](https://github.com/miniflux/v2), a minimalist and opinionated RSS reader. Miniflux's stack is as minimalist as the app itself: It's a Golang application that connects to a local PostgreSQL database. It has a well-documented and comprehensive [`Makefile`](https://github.com/miniflux/v2/blob/master/Makefile).
@@ -75,6 +74,5 @@ It took me several minutes to figure out what's the gist of watchman, only to re
 ## Conclusion
 
 For simple projects, `entr` is the way to go, hands down. For complex webdev projects, I would look into `watchman` more deeply.
-
 
 [^1]: To be truly strict, only changes to `.go` files matter.

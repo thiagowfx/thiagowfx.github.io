@@ -50,7 +50,6 @@ project-agnostic chat platforms / communities...
 Perhaps one day we'll just be able to tell our LLM agents to go out there in the
 dark corners of the Web[^4] to ask a question for us.
 
-
 [^1]: I am (nit)picky. Gergely did **not** capitalize "overflow". _This is plainly wrong_!!1! 🤷
 
 [^2]: 🇨🇦

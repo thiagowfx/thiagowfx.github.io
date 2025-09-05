@@ -13,7 +13,6 @@ For example, mine: https://github.com/thiagowfx.keys
 
 And then let's say you also use your full name on GitHub.
 
-
 ```
 % ssh whoami.filippo.io
 The authenticity of host 'whoami.filippo.io (2a09:8280:1::a:5d6)' can't be established.

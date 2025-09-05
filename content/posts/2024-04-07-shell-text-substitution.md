@@ -11,7 +11,6 @@ command.
 
 Usage: `^prev^next`. It's best illustrated with examples:
 
-
 ## terraform
 
 Instead of running:

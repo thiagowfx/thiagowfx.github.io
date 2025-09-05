@@ -19,7 +19,6 @@ availability zones within it:
 Suppose you want to pick two of them for your service/app, and you don't
 particularly care about which one. How to proceed?
 
-
 ## Option #1: Hard-coding
 
 Pick two arbitrary zones and hard-code them.

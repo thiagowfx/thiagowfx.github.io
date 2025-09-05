@@ -8,7 +8,6 @@ tags:
 
 Here's how we can enable automatic (unattended) package upgrades in Debian.
 
-
 ## Howto
 
 Install the `unattended-upgrades` package with `apt(8)`:

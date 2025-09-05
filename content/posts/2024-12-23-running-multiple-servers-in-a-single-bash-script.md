@@ -48,5 +48,4 @@ Back in ~2018, it took quite a bit of trial-and-error to get it right. Now it
 seems so easy to just ask GenAI to generate it for you! Yikes. Our profession
 might get obsoleted in just a few more years to come...
 
-
 [^1]: A proprietary / internal framework for web applications.

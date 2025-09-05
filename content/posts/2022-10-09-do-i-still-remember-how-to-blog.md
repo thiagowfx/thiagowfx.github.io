@@ -7,7 +7,6 @@ tags:
 
 I haven't written a blog post for a couple of months now, which is a good indicator I should probably document my workflow before I forget how to do it...
 
-
 First, `git clone --recurse https://github.com/thiagowfx/thiagowfx.github.io/`.
 I like to store it in `~/Projects/`.
 

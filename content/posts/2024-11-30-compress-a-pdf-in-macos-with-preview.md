@@ -8,7 +8,6 @@ tags:
 All hail to [Apple
 Documentation](https://support.apple.com/en-ca/guide/preview/prvw1509/mac).
 
-
 The instructions are very simple:
 
 - open the `.pdf` file in Preview.app

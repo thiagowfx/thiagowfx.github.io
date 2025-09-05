@@ -19,7 +19,6 @@ years ago](https://github.com/github/roadmap/issues/372), and that's hard to
 beat. Graphviz, sadly, [does
 not](https://forum.graphviz.org/t/github-adding-support-for-mermaid-diagrams/998).
 
-
 There is a live editor for quick prototyping and iteration: https://mermaid.live/
 
 Once you are happy with the result, you can easily embed it in markdown[^1]:
@@ -37,7 +36,6 @@ Once you are happy with the result, you can easily embed it in markdown[^1]:
 
 MermaidJS is quite intuitive to use. There is plenty of documentation for it[^2],
 e.g. for graphs / flowcharts: https://mermaid.js.org/syntax/flowchart.html.
-
 
 [^1]: This is one of the examples in the official documentation.
 

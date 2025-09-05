@@ -20,7 +20,6 @@ It is a golang binary that lints [prometheus](https://prometheus.io/) rules.
 
 Can we bridge the gap?
 
-
 The end goal is the ability to run `pre-commit run --all-files pint` in our git
 repository.
 

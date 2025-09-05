@@ -32,7 +32,6 @@ subsequently publish the site.
 
 No AI involved™, not even a spellchecker[^2].
 
-
 [^1]: Which is what I strive for most of the time anyways.
 
 [^2]: Not completely true:

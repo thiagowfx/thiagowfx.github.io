@@ -18,6 +18,5 @@ Which emoji are you?
 Also, some people (millennials?) tend to (over)use emoticons, perhaps even more
 so than GIFs by Gen-Z. ;)
 
-
 [^1]: Caveat: Your exes better not have their own emoji identity, or else you
     _will_ remember them whenever you see the emoji.

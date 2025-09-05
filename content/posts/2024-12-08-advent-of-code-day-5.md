@@ -8,7 +8,6 @@ tags:
 
 Link to [Day #5](https://adventofcode.com/2024/day/5) puzzle.
 
-
 It is a topological sort problem, plain and simple.
 
 In part one all we care about is whether certain input sequences are valid,
@@ -63,7 +62,6 @@ The full source:
 from collections import defaultdict
 import sys
 
-
 def is_correct(update, edges):
     position = defaultdict(lambda: sys.maxsize, {node: i for (i, node) in enumerate(update)})
 
@@ -113,7 +111,6 @@ def main():
 
     # part two
     print(total_two)
-
 
 if __name__ == '__main__':
     main()

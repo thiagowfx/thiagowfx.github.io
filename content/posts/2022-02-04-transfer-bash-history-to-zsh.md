@@ -16,7 +16,6 @@ $ wc -l ~/.bash_history | cut -f1 -d' '
 
 Thus my goal was to first migrate all my history from `bash` to `zsh`.
 
-
 The `bash-to-zsh-hist.py` python script in this
 [gist](https://gist.github.com/muendelezaji/c14722ab66b505a49861b8a74e52b274)
 did most of the job:

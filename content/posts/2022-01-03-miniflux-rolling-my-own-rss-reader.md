@@ -10,7 +10,6 @@ tags:
 This article describes my experience transitioning to, setting up and using the
 [Miniflux](https://miniflux.app/) RSS reader for the first time.
 
-
 ## Preamble
 
 I always kind of enjoyed following people and blogs via RSS, even though it has never been a key part of my workflow (nor of the mainstream web). That said, I am not here to convince you why RSS is great, there are good existing resources[^kevq][^laura] for that already.
@@ -123,7 +122,6 @@ Common self-hosted alternatives to miniflux:
 - [FreshRSS][freshrss]
 - [TinyTinyRSS][tinytinyrss]
 - [Feedbin][feedbin] (harder to self-host)
-
 
 [feedbin]: https://feedbin.com/
 [freshrss]: https://freshrss.org/

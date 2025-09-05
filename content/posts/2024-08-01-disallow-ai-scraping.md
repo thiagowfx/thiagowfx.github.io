@@ -13,7 +13,6 @@ If you have control over your
 [`robots.txt`](https://perrotta.dev/robots.txt)[^1],
 add something like the following to it:
 
-
 ```
 User-agent: GPTBot
 Disallow: /

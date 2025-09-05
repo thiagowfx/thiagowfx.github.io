@@ -8,7 +8,6 @@ tags:
 
 This document describes my workflow to manage `PKGBUILDs` for the [AUR][aur] (Arch User Repository) in [Arch Linux][arch-linux].
 
-
 ## Disclaimer
 
 First of all, this post is not a substitute to the excellent [ArchWiki][arch-wiki] and it will likely get outdated at some point. In particular, refer to the following articles for up-to-date documentation that will outlive this blog:

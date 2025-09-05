@@ -8,7 +8,6 @@ tags:
 
 Link to [Day #4](https://adventofcode.com/2024/day/4) puzzle.
 
-
 It's a pretty typical 2D matrix search problem, or a graph search problem, if
 you will.
 
@@ -157,7 +156,6 @@ def search_diagonal(matrix, keyword):
 
     return count
 
-
 def search_double_mas(matrix):
     rows = len(matrix)
     cols = len(matrix[0])
@@ -184,8 +182,6 @@ def search_double_mas(matrix):
 
     return count
 
-
-
 def main():
     with open(sys.argv[1]) as input:
         lines = input.read().splitlines()
@@ -200,7 +196,6 @@ def main():
 
     # part two
     print(search_double_mas(matrix))
-
 
 if __name__ == '__main__':
     main()

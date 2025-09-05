@@ -7,7 +7,6 @@ tags:
 
 I was looking for a way to **track packages and parcels** (mail) for the most popular post and courier services e.g. DHL, UPS, Fedex, Canada Post, USPS, Correios, etc.
 
-
 There were only two requirements:
 
 1. _one place to rule them all_: whether an app, chatbot, self-hosted software, or website, all services should be available from a single UI endpoint, for **ease of management**

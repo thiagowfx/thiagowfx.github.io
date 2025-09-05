@@ -146,7 +146,6 @@ _Auf wiederlesen!_
 - [MVV](https://www.mvv-muenchen.de/ticketshop-preise/zeitkarten-abos/deutschland-ticket-d-ticket/index.html)
 - [MVG](https://www.mvg.de/abos-tickets/abos/deutschlandticket.html)
 
-
 [^1]: In practice it's possible to buy an _Anschluss Ticket_ ("additional
     ticket") alongside the zone 'M' weekly ticket, which costs ~9€ for the '1-5'
     zone range, which is the one you need to complement to get to the Munich

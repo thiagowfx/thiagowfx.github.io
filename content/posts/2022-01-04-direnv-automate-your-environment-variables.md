@@ -8,7 +8,6 @@ tags:
 
 [Direnv][direnv] is a tool to automate your shell to automatically load and unload environment variables on-the-fly, on a per-project (per-directory) basis.
 
-
 ## Preliminaries: Is it worth it?
 
 Questions I like to ask myself before deciding whether to invest my time into learning and potentially **adopting** a foreign tool are the following:

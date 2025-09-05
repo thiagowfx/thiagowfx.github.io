@@ -22,7 +22,6 @@ Common examples:
 
 ...and so on.
 
-
 Is there a way to have a "personal" `.gitignore` file? Yes, in fact, many ways!
 
 ## 1) Per repository

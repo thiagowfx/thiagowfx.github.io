@@ -9,7 +9,6 @@ Recent macbooks have a fingerprint reader, which is typically used to unlock the
 
 It is also possible to use it for `sudo` authentication via [PAM](https://en.wikipedia.org/wiki/Pluggable_authentication_module):
 
-
 ```shell
 % $EDITOR /etc/pam.d/sudo
 # sudo: auth account password session

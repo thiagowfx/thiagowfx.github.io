@@ -21,5 +21,4 @@ official repositories of a Linux distro I like!
 
 **Next milestone**: Follow suit with a project I maintain.
 
-
 [^1]: I did not initiate this: it has just happened organically / spontaneously.

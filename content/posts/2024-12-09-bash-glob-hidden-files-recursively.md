@@ -26,7 +26,6 @@ Unless...you set the `dotglob` option:
 
 Note that `shopt` works in `bash`, alas not in `zsh`.
 
-
 [^1]: https://sscce.org/
 [^2]: In theory, this is a pre-requisite: `shopt -s globstar`. In practice, it
     should be the default behavior.

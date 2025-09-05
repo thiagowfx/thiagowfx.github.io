@@ -7,7 +7,6 @@ tags:
 
 A few recipes for remounting linux devices / disks. It mostly boils down to running `mount -o remount` as root.
 
-
 ## Remount as read-write
 
 If `/dev/sdb1` is mounted on `/mnt/data` as read-only (`ro`), it could be remounted as `rw`:
@@ -21,7 +20,6 @@ or
 ```shell
 % mount -o remount,rw /dev/sdb1
 ```
-
 
 ## Increase RAM disk size
 

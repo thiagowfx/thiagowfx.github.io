@@ -86,7 +86,6 @@ fi
 that, in 2025, this "improve this script" chain-of-thought prompt reasoning
 would be part of the model out-of-the-box, oneshot. _Oh, well._
 
-
 [^1]: It's for [this script]({{< ref "2024-12-17-skopeo-operate-container-images-and-registries" >}}).
 
 [^2]: In this context the `./` is optional and was added only for clarity.

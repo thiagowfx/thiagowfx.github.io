@@ -20,7 +20,6 @@ help, don't hesitate:
 You can open an issue at https://github.com/nixos/nix/issues
 ```
 
-
 ## Hello world (bloated)
 
 All right then, let's do it!

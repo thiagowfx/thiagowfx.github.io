@@ -9,7 +9,6 @@ tags:
 This post exemplifies an efficient workflow to shorten the edit-refresh loop
 when dealing with github actions.
 
-
 ## Assumptions
 
 - You have `git`, `jq` and the [`gh`](https://cli.github.com/) command-line tool

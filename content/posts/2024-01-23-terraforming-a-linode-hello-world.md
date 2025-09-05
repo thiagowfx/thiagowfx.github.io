@@ -15,7 +15,6 @@ My current setup was performed manually. I was thinking that, for fun, it would
 be cool to fully automate it under the principles of
 [IaC](https://en.wikipedia.org/wiki/Infrastructure_as_code).
 
-
 The current setup does not use any containers. I had proudly made it as KISS as
 possible at the time:
 

@@ -13,7 +13,6 @@ associated to it. The more posts I create, the more consolidated the tags become
 Sometimes I need to rename tags after-the-fact to better reflect the underlying
 posts they represent.
 
-
 This is how I typically do it. Start from the root of the git repository, then do:
 
 ```shell

@@ -25,5 +25,4 @@ That's so..._cool_! Especially because it was totally unexpected.
 
 Now...back to work.
 
-
 [^1]: Lately I've been alternating between DuckDuckGo and ChatGPT Search.

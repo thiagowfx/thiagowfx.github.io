@@ -16,7 +16,6 @@ schema from scratch, by hand.
 
 **Can we automate this process?**
 
-
 Of course we can.
 
 One possibility is to use GenAI / LLMs. This is out of scope of this post.

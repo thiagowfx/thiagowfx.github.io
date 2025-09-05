@@ -26,7 +26,6 @@ in a team.
 
 The word after the slash is sourced from dictionary words on your system.
 
-
 [^1]: See https://en.wikipedia.org/wiki/Decision_fatigue, https://en.wikipedia.org/wiki/The_Paradox_of_Choice.
 
 [^2]: `nbt` stands for "new branch throwaway".

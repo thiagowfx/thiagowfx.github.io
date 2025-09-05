@@ -60,7 +60,6 @@ serendipity spreaders.
 Several conclusions can be drawn from these lemmas; nonetheless, this is not a
 blog about philosophy or morals, therefore the exercise is left to the reader.
 
-
 [^1]: I coined this term myself, inspired by hearing about
     [superspreaders](https://en.wikipedia.org/wiki/Superspreading_event) during
     the COVID-19 pandemic. The definition was written without AI. This is a

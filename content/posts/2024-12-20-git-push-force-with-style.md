@@ -20,7 +20,6 @@ TIL:
 > else has pushed changes, the push will be rejected, ensuring you do not
 > accidentally overwrite someone else's work.
 
-
 [(via)](https://medium.com/@sahilsahilbhatia/git-push-force-with-lease-vs-force-ecae72601e80).
 
 How nice! Why is `--force-with-lease` not the default behavior?

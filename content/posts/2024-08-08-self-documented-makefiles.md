@@ -10,7 +10,6 @@ tags:
 `bash` script with multiple functions with various dependencies (from a
 topological graph viewpoint), just create a bunch of `Makefile` targets.
 
-
 Recently I found myself writing the following `Makefile`:
 
 ```make

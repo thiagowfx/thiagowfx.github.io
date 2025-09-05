@@ -10,7 +10,6 @@ Google Chrome when working on [Chrome for Testing]({{< ref
 "2024-01-25-chrome-for-testing" >}}) in the Browser Automation team at
 Google:
 
-
 ```shell
 #!/bin/bash
 # start chrome with ephemeral settings (every run of Chrome is empty)

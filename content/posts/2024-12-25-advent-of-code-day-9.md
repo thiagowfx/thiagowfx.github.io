@@ -35,7 +35,6 @@ def expand(disk: list[int]) -> str:
 
     return output
 
-
 def defrag(disk: str) -> str:
     p = expand(disk)
 
@@ -53,7 +52,6 @@ def defrag(disk: str) -> str:
 
     return p
 
-
 def checksum(disk):
     total = 0
 
@@ -64,7 +62,6 @@ def checksum(disk):
 
     return total
 
-
 def main():
     with open(sys.argv[1]) as input:
         lines = input.read().splitlines()
@@ -73,7 +70,6 @@ def main():
 
     # part one
     print(checksum(defrag(disk)))
-
 
 if __name__ == '__main__':
     main()

@@ -48,7 +48,6 @@ outside of your team[^2]. Some people call these lunch ninjas, others call these
 [coffee donuts](https://www.donut.com/). Not everyone may end up accepting your
 invitations, but that's perfectly fine! Just move on.
 
-
 [^1]: As everything else in life...
 [^2]: Directors, VP and C-level folks are unlikely to accept your invitations
     though.

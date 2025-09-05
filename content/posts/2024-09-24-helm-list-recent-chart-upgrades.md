@@ -15,7 +15,6 @@ By "touched" we mean either installed (via `helm install`) or upgraded (via
 Something like: `helm ls --all --sort-by updated`. Using `kubectl` directly
 would also be OK.
 
-
 ## Solution
 
 The brute force way:

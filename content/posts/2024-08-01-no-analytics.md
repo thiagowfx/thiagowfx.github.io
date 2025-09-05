@@ -8,7 +8,6 @@ tags:
 There are many analytics and tracking offerings for blogs. I don't want any of
 them.
 
-
 In this umpteenth iteration of my personal blog, I realized from the start that
 I would be much happier by not having any anxiety related to trying to figure
 out how many visitors I have.

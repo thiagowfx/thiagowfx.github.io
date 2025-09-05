@@ -18,7 +18,6 @@ $ doas apt install <foo>
 
 It's not very difficult to get used to it, however you may still find yourself writing `sudo` occasionally. This post highlights a few ways to bridge that gap.
 
-
 ## Use a shell alias
 
 In your `~/.bashrc` or `~/.zshrc` or in your favorite shell, do:
@@ -48,7 +47,6 @@ Last but not least, you could choose to install `sudo` and configure it, keeping
 If you don't like or want `doas` for some reason, you could look into the other way around: find a `doas` shim that bridges to `sudo`, or define an alias: `$ alias doas=sudo`.
 
 The best long-term solution though would be to just use `doas` without any alias or shim, but our muscle memory may have trouble adapting to that, especially when `sudo` is still the _de facto standard_ in most Linux distributions out there these days.
-
 
 [doas]: https://man.openbsd.org/doas
 

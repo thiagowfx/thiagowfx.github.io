@@ -9,7 +9,6 @@ tags:
 When asking questions or filing bugs / feature requests in the internet, I often
 refer to these two invaluable resources:
 
-
 - [How To Ask Questions The Smart Way](http://www.catb.org/~esr/faqs/smart-questions.html) by Eric S. Raymond
 - [XY problem](https://xyproblem.info): The XY problem is asking about your
   attempted solution rather than your actual problem. This leads to enormous

@@ -17,7 +17,6 @@ From the official kubernetes
 > no response when you try to access it. This document will hopefully help you
 > to figure out what's going wrong.
 
-
 ## Run commands in a brand new pod
 
 ```shell

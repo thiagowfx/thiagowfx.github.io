@@ -8,7 +8,6 @@ tags:
 
 Link to [Day #8](https://adventofcode.com/2024/day/8) puzzle.
 
-
 This is a problem in a 2D grid. I like to start by making a frequency map
 (dictionary) from the frequencies to the coordinates where they occur:
 
@@ -109,7 +108,6 @@ import sys
 def within_bounds(x, y, height, width):
     return 0 <= x < height and 0 <= y < width
 
-
 def compute_antinodes(coord1, coord2, height, width, unbounded=False):
     x1, y1 = coord1
     x2, y2 = coord2
@@ -135,7 +133,6 @@ def compute_antinodes(coord1, coord2, height, width, unbounded=False):
                 break
 
     return antinodes
-
 
 def main():
     with open(sys.argv[1]) as input:

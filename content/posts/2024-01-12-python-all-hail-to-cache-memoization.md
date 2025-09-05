@@ -8,7 +8,6 @@ tags:
 In a typical dynamic programming (DP) problem, you'll usually instantiate a
 variable to hold previously computed data (cache).
 
-
 For example, let's consider a naive implementation of the factorial function:
 
 ```python
@@ -83,6 +82,5 @@ dictionary keys, i.e. the arguments must be
 speaking, this means lists are not cacheable, but tuples are.
 
 Happy dynamic programming!
-
 
 **Reference**: https://docs.python.org/3/library/functools.html

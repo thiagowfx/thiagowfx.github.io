@@ -11,7 +11,6 @@ There's also a redirect to it from https://blog.perrotta.dev/.
 
 **Update (2024-12-21)**: The canonical URL is now simply https://perrotta.dev/.
 
-
 I don't know which one I like best, so `www` is the canonical subdomain for now.
 Feel free to update the RSS in your feed reader, although
 https://thiagowfx.github.io/ should keep working for a little longer, until (if

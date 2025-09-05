@@ -11,7 +11,6 @@ Use case: Given an Alpine Linux **diskless**[^1] installation meant for
 a Raspberry Pi setup, we would like to add a persistent storage component to it
 to make it survive across reboots.
 
-
 ## Goal
 
 The [Alpine Linux Wiki][alpine-installation] covers most of the installation process, hence I will only document the bits that were lacking and/or confusing therein.
@@ -204,7 +203,6 @@ The final setup works surprisingly well:
 - https://vincentserpoul.github.io/post/alpine-linux-rpi0/
 - http://dahl-jacobsen.dk/tips/blog/2021-04-08-docker-on-alpine-linux/
 - http://dahl-jacobsen.dk/tips/blog/2018-03-15-alpine-on-raspberry-pi/
-
 
 [7-zip]: https://www.7-zip.org/
 [alpine-installation]: https://wiki.alpinelinux.org/wiki/Installation

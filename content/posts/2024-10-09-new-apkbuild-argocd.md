@@ -14,7 +14,6 @@ I am quite surprised no one bothered to create an Alpine Linux package for it.
 Until...[now](https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/73305),
 by yours truly.
 
-
 This `APKBUILD` took a bit longer to create than the usual.
 There were a couple of issues with `-buildmode=pie`, addressed with
 `export CGO_ENABLED=1` (via `make CGO_FLAG=1`).

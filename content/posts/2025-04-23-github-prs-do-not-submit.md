@@ -68,7 +68,6 @@ case insensitive.
 With the action in place, I can just update my PR title by prepending `DO NOT
 SUBMIT:` to it. The prefix doubles down as a documentation of my intent.
 
-
 [^1]: I don't think I'll ever remember the difference between a github action
     and a github workflow. One is reusable, the other one is not. I always
     forget which one.

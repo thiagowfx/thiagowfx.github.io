@@ -12,7 +12,6 @@ To persist those connections, a terminal multiplexer is often used, `tmux` and `
 
 In this post I will cover a few different client-side and server-side ways to have `ssh` automatically spawn `tmux` upon connection.
 
-
 ## Option #1: Use command-line ssh flags (client-side, recommended)
 
 Start `tmux`, forcing unicode, attaching to and/or creating a session named _main_:
@@ -92,6 +91,5 @@ $ ssh user@host -t -- NOTMUX=1 bash
 My favorite methods are #1 and #3, and whether I use one or the other depends whether I want to unconditionally spawn `tmux` server-side, or selectively spawn `tmux` client-side.
 
 When using chrome secure shell (hterm) I find #1 convenient because hterm remembers your `ssh` host settings. That said, in scenarios where I fully control a host and it's not solely used for production, #3 is my favorite as it works unconditionally regardless of the client terminal emulator I am using.
-
 
 [^1]: For example, maybe if `tmux` broke due to a recent upgrade, or if the `~/.tmux.conf` is invalid.

@@ -8,7 +8,6 @@ tags:
 
 **Issue**: For whatever reason, the `Home` and `End` keys on my [Keychron K2]({{< ref "2022-01-12-keychron-k2-review" >}}) do not work as intended on macOS.
 
-
 ## Expectations vs Reality
 
 For example, when using a text editor such as TextMate or a web browser like Chrome, I'd expect:
@@ -103,7 +102,6 @@ There's conveniently an **Import** button in the website though, which automatic
 **End Result**: It worked flawlessly! The only caveat is that from now on I need to keep the Karabiner Elements application running as a daemon, but it is well justified. Plus, if I ever need[^2] to map additional keys in the future, now I already have a workflow in place to do so.
 
 Karabiner is like having [QMK](https://qmk.fm) purely at the software layer, which works for any keyboard whatsoever.
-
 
 [^1]: As of this writing: macOS Monterey: 12.3.1.
 [^2]: https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it...

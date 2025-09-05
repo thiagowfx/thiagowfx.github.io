@@ -9,7 +9,6 @@ If you ever find yourself in a hurry to get access to a Linux shell but don't
 easily have one at hand (e.g. a workstation or a raspberry pi or a VPS), it's
 possible to quickly get access to an ephemeral instance in the cloud.
 
-
 Here's a non-exhaustive list of trusted providers:
 
 ## [Google Cloud Shell][google]

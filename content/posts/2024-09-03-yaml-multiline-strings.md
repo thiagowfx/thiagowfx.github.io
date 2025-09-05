@@ -9,7 +9,6 @@ I keep forgetting what the correct syntax is.
 
 This reference is the best: https://yaml-multiline.info/
 
-
 Summary:
 
 - `>` eats newlines, `|` keeps them.

@@ -9,7 +9,6 @@ tags:
 defaults. That said, I have my own gripes about it, but the list is
 surprisingly small.
 
-
 ## 1. No OSC-52 support
 
 https://github.com/roy2220/osc52pty:
@@ -57,7 +56,6 @@ https://unix.stackexchange.com/q/658709:
 ## Recommendations
 
 Both [alacritty][alacritty] and [kitty][kitty] are decent replacements (or complements) for `Terminal.app` that work out-of-the-box, with sensible defaults including all the aforementioned points.
-
 
 [alacritty]: https://alacritty.org
 [kitty]: https://sw.kovidgoyal.net/kitty/

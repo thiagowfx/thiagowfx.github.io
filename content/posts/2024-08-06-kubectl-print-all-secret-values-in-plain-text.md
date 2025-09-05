@@ -10,7 +10,6 @@ secret](https://kubernetes.io/docs/concepts/configuration/secret/) with more
 than one key-value pair, print **all** of them in plain text (i.e.
 base64-decoded in this context).
 
-
 **Edit(2024-08-08)**: It turns out I made a mistake. The effect of the post
 below is akin to `kubectl get [...] -o yaml`. I'll keep the post for
 bookkeeping purposes anyway.

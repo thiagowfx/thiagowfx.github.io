@@ -11,7 +11,6 @@ Suppose you committed something to `git`. A few commits later, you realized you
 forgot to add something to that commit, or possibly missed a link, or even
 spotted a typo. How do you go about fixing it?
 
-
 ## Team
 
 If you're working on a repository with a team, you should just `git commit` and `git push`. Write an [eloquent commit message][commit-message] to refer to the previous commit in which you forgot to include your changes.
@@ -56,7 +55,6 @@ $ git rebase -i abcdef~1
   rebase -i HEAD~10` where 10 is an arbitrary guess, but this will only work if
   `abcdef` is within the most 10 recent commits. Alternatively `git rebase -i
   abcdef~1` also works.
-
 
 [commit-message]: https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 [tig]: https://jonas.github.io/tig/

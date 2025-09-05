@@ -101,7 +101,6 @@ The final MR looks like the following:
 
 Now I sit tight and wait for approval.
 
-
 [^1]: On a [_best-effort_](https://xkcd.com/2347/) basis.
 
 [^2]: Unless it's a security risk or incident (e.g. whenever there's a CVE

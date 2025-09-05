@@ -9,7 +9,6 @@ tags:
 This post builds upon the previous [Anki: custom language card]({{< ref
 "2024-02-03-anki-custom-language-card" >}}).
 
-
 ## Searching word boundaries
 
 When searching for a word such as _Mann_, results such as _Mannschaft_ come up.

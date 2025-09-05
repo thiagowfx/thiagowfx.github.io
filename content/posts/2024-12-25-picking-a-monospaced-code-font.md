@@ -28,6 +28,5 @@ post prompted me to try out Commit Mono for a bit.
 
 Now it's your turn, go ahead, pick your ~~poison~~ font, I'll wait.
 
-
 [^1]: These days I use "IBM Plex Mono" on VSCode. "JetBrains Mono" is also a
     solid choice.

@@ -8,7 +8,6 @@ tags:
 
 Link to [Day #6](https://adventofcode.com/2024/day/6) puzzle.
 
-
 Part one is a classic 2D matrix (graph) traversal problem.
 
 To store state I created a `visited` set with the `(x, y)` coordinates.
@@ -35,13 +34,11 @@ The full solution:
 #!/usr/bin/env python3
 import sys
 
-
 def find(lines, c):
     for i, line in enumerate(lines):
         if c in line:
             return i, line.index(c)
     raise ValueError(f'Could not find {c} in lines')
-
 
 def move(pos, dir, lines, visited):
     dirs_clockwise = ((1, 0), (0, -1), (-1, 0), (0, 1))
@@ -71,7 +68,6 @@ def main():
 
     # part one
     print(len(visited))
-
 
 if __name__ == '__main__':
     main()

@@ -78,7 +78,6 @@ nnoremap J gJ
 When repeating the original link insertion sequence, it yields the following
 result, as desired (no spaces anywhere!):
 
-
 ```md
 [example](|https://example.com/)
 ```

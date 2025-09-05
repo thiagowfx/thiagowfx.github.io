@@ -9,7 +9,6 @@ tags:
 
 Last year I found out about [Advent of Code][aoc].
 
-
 ## You said what?
 
 **Advent of Code** by [Eric Wastl](http://was.tl/) happens every year since 2015, every December from the 1st to
@@ -88,7 +87,6 @@ Finally, for some extra inspiration, there are also some _10x programmers_[^6] o
 I am hoping to participate in AoC this year (2022) as well, and possibly revisit the 2021 puzzles and resolve the rest of the ones I missed as time permits.
 
 Hopefully this post encourages and motivates you to try Advent of Code as well! Happy coding.
-
 
 [aoc]: https://adventofcode.com/
 [icpc]: https://icpc.global/

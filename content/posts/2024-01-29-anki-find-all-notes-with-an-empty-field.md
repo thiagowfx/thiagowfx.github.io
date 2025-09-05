@@ -10,7 +10,6 @@ Forever](https://fluent-forever.com/index.html) book, that each
 [Anki](https://apps.ankiweb.net/) note (card) has at least one image
 associated to it. This is intended to improve overall retention.
 
-
 Back when I started my German Anki deck for language learning, I did not add
 any images. Now I find myself slowly backfilling my already existing notes
 with images. However, the more images I add, the harder it becomes to find

@@ -14,7 +14,6 @@ run containers ("serverless"), being part of ECS (Elastic Container Service).
 Problem statement: Add a container _healthcheck_ to the chartmuseum task
 definition associated with the container.
 
-
 The [official
 docs](https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_HealthCheck.html)
 suggest using `curl`:

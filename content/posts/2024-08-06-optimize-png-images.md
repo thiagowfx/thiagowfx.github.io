@@ -8,7 +8,6 @@ tags:
 Before checking `.png` images into git repositories, you should optimize them –
 mostly for their file size.
 
-
 The Chromium project provides [this
 script](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/tools/resources/optimize-png-files.sh)
 to do so. It boils down to installing and running the following executables:

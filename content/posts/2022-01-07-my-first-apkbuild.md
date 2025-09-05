@@ -8,7 +8,6 @@ tags:
 
 In the same spirit of my first PKGBUILD and [`Ebuild`]({{< ref "2014-09-28-my-first-ebuild" >}}), herein I will describe my first `APKBUILD`.
 
-
 ## At a glance
 
 Alpine Linux package management is very similar to Arch Linux, with tiny differences:
@@ -183,7 +182,6 @@ On Arch, to contribute a `PKGBUILD` upstream one just needs to create an account
 On Alpine there's a bit more of politics involved[^politics]: Anyone can send a `patch(1)`, either via [mailing list][aports-list] or via a [Gitlab MR][aports-gitlab] (merge request). Patch works well with `git send-email -1`, being automatically cross-posted to a Gitlab MR. On the other hand the MR workflow is easier to be followed up on feedback from developers and other contributors (`git push --force`), and it's also cross-posted, to the mailing list. An Alpine developer with the appropriate permissions must approve your patch/MR before it becomes available to other Alpine users.
 
 Sadly at the time of this writing [my patch][my-patch] hasn't yet been approved (2 weeks later), however we're in holiday season. This wouldn't have been a problem in the AUR, where I could have just pushed it immediately, without any review. On the other hand the Alpine approach at least gives me some hope that the submitted packages have slightly higher quality than the average ones in the AUR, since they need to be manually reviewed/approved/vetted by at least one Alpine developer.
-
 
 [archwiki]: https://wiki.archlinux.org/title/Main_page
 [aur]: https://aur.archlinux.org/

@@ -132,7 +132,6 @@ not yet tracked by `git`, whereas `git freeze` does. I think of `freeze` as the
 equivalent of completely clearing up my physical desk of all objects so that I
 can focus on something else.
 
-
 [^1]: _An agentic coding tool made by Anthropic. Currently in beta as a research
     preview._
 

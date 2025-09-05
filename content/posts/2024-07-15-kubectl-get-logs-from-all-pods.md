@@ -13,7 +13,6 @@ kubectl logs -n argocd argocd-repo-server-5d59975687-dxnh7
 
 But how do you know what hash to use after `server-`?
 
-
 **Option 1)**: TAB auto-completion:
 
 ```shell
@@ -62,8 +61,6 @@ Labels:           app.kubernetes.io/component=repo-server
 
 **Source**: https://stackoverflow.com/questions/33069736/how-do-i-get-logs-from-all-pods-of-a-kubernetes-replication-controller
 
-
 Happy logging!
-
 
 [^1]: Or `tail -1`, for that matter.
