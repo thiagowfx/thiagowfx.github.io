@@ -1,5 +1,5 @@
 ---
-title: "Leetcode 80 duplicate from sorted array ii"
+title: "Leetcode #80: Duplicate From Sorted Array II"
 date: 2025-09-05T20:29:31+02:00
 tags:
   - coding
@@ -35,4 +35,12 @@ class Solution:
 
 Can we do it without allocating a separate counter, with `O(1)` extra memory?
 
-TODO.
+```python
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+      for i in range(len(nums))[::-1][:-2]:
+        if nums[i] == nums[i - 1] == nums[i - 2]:
+          del nums[i]
+
+      return len(nums)
+```
