@@ -27,7 +27,7 @@ Let's follow the steps outlined in the wiki.
 
 Alpine provides officially supported images designed for the Raspberry Pi.
 
-Most Linux distributions provide an `.iso` or `.img` file to be installed with a tool like [Balena Etcher][balena-etcher], [Rufus][rufus], [**Raspberry Pi Imager**][raspberry-pi-imager] or plain `dd`[^3].
+Most Linux distributions provide an `.iso` or `.img` file to be installed with a tool like [Balena Etcher][balena-etcher], [Rufus][rufus], [**Raspberry Pi Imager**][raspberry-pi-imager] or plain [`dd`](https://www.gnu.org/software/coreutils/manual/html_node/dd-invocation.html)[^3].
 
 Alpine is not like most Linux distributions: Instead, it provides a `.tar.gz` archive with files that should be copied directly to the SD card. Grab the latest version (3.15 at the time of this post) from https://alpinelinux.org/downloads/. There are 3 options:
 
@@ -207,7 +207,6 @@ The final setup works surprisingly well:
 [7-zip]: https://www.7-zip.org/
 [alpine-installation]: https://wiki.alpinelinux.org/wiki/Installation
 [balena-etcher]: https://www.balena.io/etcher/
-[dd]: https://www.gnu.org/software/coreutils/manual/html_node/dd-invocation.html
 [raspberry-pi-imager]: https://www.raspberrypi.com/news/raspberry-pi-imager-imaging-utility/
 [rufus]: https://rufus.ie/en/
 
