@@ -30,7 +30,7 @@ NNN.NNN.NNN.NNN
 
 I love the simplicity of _I can haz ip_. It just returns your IP address in
 plain text, nothing else. It also works from the web browser. You can find
-details about it [here](https://major.io/icanhazip-com-faq/). **TL;DR**: It was
+details about it [in the FAQ](https://major.io/icanhazip-com-faq/). **TL;DR**: It was
 an [open source](https://github.com/major/icanhaz) pet project of a single
 person ([Major Hayden](https://major.io/)), then it was eventually bought by
 Cloudflare as it immensely grew.

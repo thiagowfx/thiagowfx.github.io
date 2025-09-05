@@ -197,6 +197,6 @@ reason](https://github.com/GoogleChromeLabs/chrome-for-testing/pull/102).
 
 [^1]: For simplicity, referred to as just _Chrome_ hereafter.
 [^2]: The same way you wouldn't recommend Arch Linux for linux newbies.
-[^3]: You can find lots of such reports [here](https://groups.google.com/g/chromedriver-users).
+[^3]: You can find lots of such reports [on the ChromeDriver users group](https://groups.google.com/g/chromedriver-users).
 [^4]: **Disclaimer**: I used to work on that repository, thus my self-assessment is clearly biased :-)
 [^5]: I know, I know, JS bloat.

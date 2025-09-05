@@ -34,7 +34,7 @@ HTTPS for your domain.
 
 Some [TLDs](https://en.wikipedia.org/wiki/Top-level_domain) enforce HTTPS
 through HSTS, some popular ones are `.app` and `.dev`.
-[Here](https://serverfault.com/q/1067229/180092) is a more comprehensive list.
+[A more comprehensive list is available on ServerFault](https://serverfault.com/q/1067229/180092).
 
 `HSTS` is fire-and-forget, you'll usually only need to worry about it once,
 when configuring a SSL certificate (HTTPS) for your domain or subdomains.

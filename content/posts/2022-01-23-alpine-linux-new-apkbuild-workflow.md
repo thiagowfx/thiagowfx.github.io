@@ -193,5 +193,5 @@ And that's all! Other useful tips:
 
 [^1]: If you use https://duckduckgo.com/, query for `!alpine sensible-utils`.
 [^2]: Package debugging is out of scope of this post.
-[^3]: In GitLab it's called Merge Request (MR). The list of all aports MRs is [here](https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests).
+[^3]: In GitLab it's called Merge Request (MR). The list of all aports MRs is [available on GitLab](https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests).
 [^4]: **Update(2025-05-10)**: Previously: `abuild sanitycheck`.

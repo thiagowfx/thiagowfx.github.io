@@ -94,4 +94,4 @@ Date:   Tue Jan 11 00:00:24 2022 -0500
 [commit-hook]: https://git.alpinelinux.org/aports/tree/main/etckeeper/apk-commit_hook
 [hess]: https://joeyh.name/
 
-[^1]: Which merely does `apk upgrade`, automatically. More details [here](https://github.com/jirutka/apk-autoupdate).
+[^1]: Which merely does `apk upgrade`, automatically. More details on [the apk-autoupdate GitHub repository](https://github.com/jirutka/apk-autoupdate).
