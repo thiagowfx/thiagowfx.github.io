@@ -11,7 +11,7 @@ was the ability to globally block feed items that match certain patterns.
 
 Previously it was possible to do so only in an individual feed basis.
 
-The documentation lives [here](https://miniflux.app/docs/rules.html#global-filtering-rules):
+[The Miniflux documentation](https://miniflux.app/docs/rules.html#global-filtering-rules):
 
 > Global filters are defined on the Settings page and are automatically applied to all articles from all feeds.
 

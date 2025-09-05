@@ -17,7 +17,7 @@ It uses [vals](https://github.com/helmfile/vals) underneath, which is a:
 ...including, in particular, [HashiCorp Vault](https://www.hashicorp.com/en/products/vault).
 
 The `vals` syntax is documented
-[here](https://github.com/helmfile/vals?tab=readme-ov-file#expression-syntax).
+[in the vals documentation](https://github.com/helmfile/vals?tab=readme-ov-file#expression-syntax).
 
 **Problem statement**: construct a string composed of the following two vault
 entries:

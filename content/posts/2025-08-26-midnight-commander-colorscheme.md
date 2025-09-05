@@ -36,7 +36,7 @@ It's one of the fewest built-in colorscheme themes I could find that strikes a
 good color contrast balance. Most other themes (including the default one) are
 unreadable.
 
-You can preview all themes [here](https://skins.midnight-commander.org/).
+You can preview all themes [on the MC skins website](https://skins.midnight-commander.org/).
 
 There are lots of jokes about how to quit `vim`, but do you know how to quit
 `mc`? Press `F10` or type `exit<CR>`.
