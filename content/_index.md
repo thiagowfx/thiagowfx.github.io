@@ -5,7 +5,7 @@
 
 - - -
 
-## Welcome to my digital garden
+## Welcome to my Digital Garden
 
 There are no ads, no affiliate links, no tracking or analytics, no guests
 or sponsored posts, no AI slop, and no paywall.
@@ -16,13 +16,12 @@ with the world what I've been learning.
 I can only hope this will serve as inspiration to others to leave their own mark
 on the web in the uphill battle against the
 [enshittification](https://en.wikipedia.org/wiki/Enshittification) of the
-internet.
+Web.
 
-If you want to email me, feel free to; _typically_ I will read it and
+If you want to email me, feel free to; I will _typically_ read it and
 eventually get back to you if needed.
 
 If you have Telegram, you're welcome to join [ByteBurst
-Brigade](https://t.me/+OzLfJRhjA69iNWFh), a supergroup I host with friends to
-discuss Tech in general.
+Brigade](https://t.me/+OzLfJRhjA69iNWFh), a group I host with friends who have affinity with Tech and FOSS.
 
 [^1]: And I seemingly enjoy footnotes. Thiago Perrotta (`@thiagowfx`)
