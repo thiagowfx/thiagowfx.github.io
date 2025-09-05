@@ -98,8 +98,7 @@ be possible to do so when automation adds git tags to commits e.g. `Reviewed-by:
 Thiago Perrotta <thiago@example.com>`.
 
 [Gerrit](https://www.gerritcodereview.com/) does that.
-[Here](https://chromium-review.googlesource.com/c/chromium/src/+/5012895) is an
-example in Chromium. In this case, one could just `grep` for `Reviewed-by` in
+[An example Chromium review](https://chromium-review.googlesource.com/c/chromium/src/+/5012895). In this case, one could just `grep` for `Reviewed-by` in
 `git log`.
 
 Otherwise: on GitHub, use a query such as `is:pr reviewed-by:@me` in the Pull

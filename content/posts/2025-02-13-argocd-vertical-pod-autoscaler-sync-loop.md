@@ -16,7 +16,7 @@ certificate via the
 function upon every change to our gitops repository. It turns out
 [this](https://github.com/cowboysysop/charts/blob/9527602f8f2ea59f51cd3a7d3380810ba60c39fc/charts/vertical-pod-autoscaler/README.md?plain=1#L236)
 is documented and we can see its corresponding manifest
-[here](https://github.com/cowboysysop/charts/blob/9527602f8f2ea59f51cd3a7d3380810ba60c39fc/charts/vertical-pod-autoscaler/templates/admission-controller/tls-secret.yaml#L3C1-L3C91).
+[in the chart template](https://github.com/cowboysysop/charts/blob/9527602f8f2ea59f51cd3a7d3380810ba60c39fc/charts/vertical-pod-autoscaler/templates/admission-controller/tls-secret.yaml#L3C1-L3C91).
 
 So that's where the sync loop was coming from! ArgoCD was constantly reporting
 (and resolving) a diff in the admission controller secret.

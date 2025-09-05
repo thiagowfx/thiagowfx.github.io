@@ -149,7 +149,8 @@ I also got an email from Cloudflare confirming it:
 
 Now it's time to [re-enable
 DNSSEC](https://developers.cloudflare.com/dns/dnssec/). Porkbun instructions are
-[here](https://kb.porkbun.com/article/93-how-to-install-dnssec): do not fill out
+in [the Porkbun DNSSEC
+guide](https://kb.porkbun.com/article/93-how-to-install-dnssec): do not fill out
 **keyData**. It's possible to verify it was properly configured via [DNSSEC
 Analyzer](https://dnssec-analyzer.verisignlabs.com/perrotta.dev) by VeriSign
 Labs, wherein all checkboxes should be green. Furthermore, from Cloudflare,
