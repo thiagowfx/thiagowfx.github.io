@@ -52,7 +52,7 @@ Ventoy is **magic**. It allows you to carry a single USB stick with all of your 
 
 > Most type of OS supported (Windows/WinPE/Linux/ChromeOS/Unix/VMware/Xen...)
 
-The full list of supported systems is [here](https://www.ventoy.net/en/isolist.html).
+The full list of supported systems is [available on the Ventoy website](https://www.ventoy.net/en/isolist.html).
 
 If you need some inspiration to fill in your Ventoy USB stick, head over to [distrowatch](https://distrowatch.com/).
 
