@@ -5,7 +5,7 @@ tags:
   - coding
 ---
 
-[LeetCode #26: Duplicate From Sorted Array](https://leetcode.com/problems/remove-element/):
+[LeetCode #26: Duplicate From Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array):
 
 ## Naive and elegant
 
