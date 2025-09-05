@@ -104,7 +104,7 @@ llama3:latest    365c0bd3c000    4.7 GB    4 minutes ago
 ```
 
 Which models are available for installation? See the list
-[here](https://ollama.com/search). For example, the
+[on the Ollama website](https://ollama.com/search). For example, the
 [page](https://ollama.com/library/llama3) for `llama3`.
 
 This model from Meta has 8 billion parameters[^1] and <5GiB of size. It seems

@@ -27,7 +27,7 @@ tags:
 It turns out it's possible to set the preferred feed / timeline view to "Most
 recent", instead of the default "Most relevant posts (Recommended)". Change the
 setting
-[here](https://www.linkedin.com/mypreferences/d/settings/preferred-view). The
+[in your LinkedIn preferences](https://www.linkedin.com/mypreferences/d/settings/preferred-view). The
 link works at the time of the publication of this post.
 
 A bit of fresh air, and less

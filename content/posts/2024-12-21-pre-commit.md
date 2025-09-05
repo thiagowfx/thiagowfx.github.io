@@ -70,7 +70,7 @@ To run only a single hook: `pre-commit run [--all-files] codespell`.
 
 How do you install `pre-commit` in the first place? Use `pip`, or `brew` (macOS), or your favorite package manager.
 
-Hooks are configured in `.pre-commit-hooks.yaml` files in their respective repositories. [Here](https://github.com/codespell-project/codespell/blob/main/.pre-commit-hooks.yaml) is an example, from `codespell`:
+Hooks are configured in `.pre-commit-hooks.yaml` files in their respective repositories. [The codespell configuration](https://github.com/codespell-project/codespell/blob/main/.pre-commit-hooks.yaml) is an example, from `codespell`:
 
 ```yaml
 - id: codespell
