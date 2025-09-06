@@ -50,3 +50,16 @@ class Solution:
  ```
 
  You don't need to know about counters. A `defaultdict(int)` would suffice.
+
+ If you can leverage built-in methods from `Counter`, then it's even simpler:
+
+```python
+from collections import Counter
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        return Counter(nums).most_common()[0][0]
+```
+
+Which also makes me realize you can construct a counter straight off a list,
+instead of doing it element by element.
