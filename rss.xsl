@@ -102,8 +102,6 @@
             border-radius: 5px;
             overflow-x: auto;
             border: 1px solid var(--border-color);
-            white-space: pre-wrap;
-            -webkit-white-space: pre-wrap;
           }
 
           .item-description pre code {
