@@ -25,4 +25,28 @@ class Solution:
 
 Because we're sorting the list, this is `O(n * log n)`.
 
-TODO.
+## Counter
+
+Use a `Counter` to keep track of the most common element.
+
+```python
+from collections import Counter
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+      counter = Counter()
+      for n in nums:
+        counter[n] += 1
+
+      ans = None
+      ans_freq = float('-inf')
+
+      for el, freq in counter.items():
+        if freq > ans_freq:
+          ans_freq = freq
+          ans = el
+
+      return ans
+ ```
+
+ You don't need to know about counters. A `defaultdict(int)` would suffice.
