@@ -102,6 +102,8 @@
             border-radius: 5px;
             overflow-x: auto;
             border: 1px solid var(--border-color);
+            white-space: pre-wrap;
+            -webkit-white-space: pre-wrap;
           }
 
           .item-description pre code {
@@ -185,11 +187,5 @@
         </div>
       </body>
     </html>
-  </xsl:template>
-
-  <xsl:template match="pre">
-    <div style="white-space: pre-wrap;">
-      <xsl:copy-of select="."/>
-    </div>
   </xsl:template>
 </xsl:stylesheet>
