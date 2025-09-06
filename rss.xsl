@@ -186,4 +186,10 @@
       </body>
     </html>
   </xsl:template>
+
+  <xsl:template match="pre">
+    <div style="white-space: pre-wrap;">
+      <xsl:copy-of select="."/>
+    </div>
+  </xsl:template>
 </xsl:stylesheet>
