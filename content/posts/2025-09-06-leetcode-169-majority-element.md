@@ -63,3 +63,39 @@ class Solution:
 
 Which also makes me realize you can construct a counter straight off a list,
 instead of doing it element by element.
+
+## Optimal
+
+[A Linear Time Majority Vote Algorithm](https://www.cs.utexas.edu/~moore/best-ideas/mjrty/index.html):
+
+> We will sweep down the sequence starting at the pointer position shown above.
+>
+> As we sweep we maintain a pair consisting of a current candidate and a
+> counter. Initially, the current candidate is unknown and the counter is 0.
+>
+> When we move the pointer forward over an element e:
+>
+> - If the counter is 0, we set the current candidate to e and we set the
+>   counter to 1.
+> - If the counter is not 0, we increment or decrement the counter according to
+>   whether e is the current candidate.
+>
+> When we are done, the current candidate is the majority element.
+
+```python
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+      candidate = None
+      count = 0
+
+      for n in nums:
+        if count == 0:
+          candidate = n
+          count = 1
+        else:
+          count += 1 if n == candidate else -1
+
+      return candidate
+```
+
+O(1) space, O(n) time.
