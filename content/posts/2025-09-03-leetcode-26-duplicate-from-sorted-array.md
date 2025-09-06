@@ -1,5 +1,5 @@
 ---
-title: "Leetcode #26: Duplicate From Sorted Array"
+title: "LeetCode #26: Duplicate From Sorted Array"
 date: 2025-09-03T20:00:06+02:00
 tags:
   - coding

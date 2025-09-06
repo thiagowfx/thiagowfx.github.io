@@ -1,11 +1,11 @@
 ---
-title: "Leetcode #169: Majority Element"
+title: "LeetCode #169: Majority Element"
 date: 2025-09-06T01:37:01+02:00
 tags:
   - coding
 ---
 
-[Leetcode #169: Majority Element](https://leetcode.com/problems/majority-element/):
+[LeetCode #169: Majority Element](https://leetcode.com/problems/majority-element/):
 
 ## Quickly via sorting
 
