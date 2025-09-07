@@ -58,3 +58,29 @@ Input: [1, 1, ...]
 
 If we have `n` elements, then it allocates up to `n` `canReach()` entries in the
 stack. Ooopsie.
+
+We can avoid this altogether by adopting a **greedy** approach.
+
+We try to jump as further as possible. For example, let's say we can reach
+indexes `m` and `n`, where `m > n`. The key observation is that there's no point
+to check for `n` if we know we can get to `m`. By definition, we must have
+gotten to `m` by having passed through `n` at some point.
+
+As such, let's keep track of the **furthest index reached so far**.
+
+```python
+from functools import cache
+
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        maxReach = 0
+
+        for i, jump in enumerate(nums):
+            # no point updating maxReach if it's not even reachable!
+            # no point continuing either: from here, `i` will keep increasing
+            if maxReach < i:
+                break
+            maxReach = max(maxReach, i + nums[i])
+
+        return maxReach >= (len(nums) - 1)
+```
