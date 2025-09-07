@@ -102,11 +102,13 @@
             border-radius: 5px;
             overflow-x: auto;
             border: 1px solid var(--border-color);
+            white-space: pre;
           }
 
           .item-description pre code {
             background: none;
             padding: 0;
+            white-space: pre;
           }
 
           .footer {
