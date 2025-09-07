@@ -55,4 +55,6 @@ class Solution:
                 i = j
 
             j += 1
+
+        return profit
 ```
