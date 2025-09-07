@@ -16,13 +16,15 @@ watch preview="true" *args:
 build *args:
     hugo --environment production --gc --minify {{ args }}
 
-# Create a new post. Usage: `just new "advent of code day 8"`
+# Create a new blog post. Usage: `just new "my cool title"`
 new title *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
     filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/: /-/g' | tr ' ' '-')
     hugo new --kind blog content/posts/`date "+%Y-%m-%d"`-${filename}.md {{ args }}
+
+alias blog := new
 
 # Create a new coding post. Usage: `just code "leetcode #1"`.
 code title *args:
@@ -31,6 +33,8 @@ code title *args:
 
     filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/: /-/g' | tr ' ' '-')
     hugo new --kind coding content/posts/`date "+%Y-%m-%d"`-${filename}.md {{ args }}
+
+alias coding := code
 
 # Delete hugo build artifacts
 clean:
