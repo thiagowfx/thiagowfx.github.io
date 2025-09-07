@@ -66,6 +66,8 @@ instead of doing it element by element.
 
 ## Optimal
 
+**Challenge**: Could you solve the problem in linear time and in O(1) space?
+
 [A Linear Time Majority Vote Algorithm](https://www.cs.utexas.edu/~moore/best-ideas/mjrty/index.html):
 
 > We will sweep down the sequence starting at the pointer position shown above.
