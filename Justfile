@@ -22,7 +22,7 @@ new title *args:
     set -euo pipefail
 
     filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/: /-/g' | tr ' ' '-')
-    hugo new content/posts/`date "+%Y-%m-%d"`-${filename}.md {{ args }}
+    hugo new --kind blog content/posts/`date "+%Y-%m-%d"`-${filename}.md {{ args }}
 
 # Create a new coding post. Usage: `just code "leetcode #1"`.
 code title *args:
