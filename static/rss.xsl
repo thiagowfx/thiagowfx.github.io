@@ -111,6 +111,15 @@
             white-space: pre;
           }
 
+          /* Fix Hugo's flexbox code line indentation */
+          .item-description pre span[style*="display:flex"] {
+            white-space: pre;
+          }
+
+          .item-description pre span[style*="display:flex"] span {
+            white-space: pre;
+          }
+
           .footer {
             margin-top: 40px;
             padding-top: 20px;
