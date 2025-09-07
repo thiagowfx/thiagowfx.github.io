@@ -554,6 +554,64 @@ painful from an UX perspective.&lt;/p>
 the scale from the gym or the one at home.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
+&lt;/div></description></item><item><title>git delta</title><link>https://perrotta.dev/2025/06/git-delta/</link><pubDate>Mon, 16 Jun 2025 13:28:23 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/git-delta/</guid><description>&lt;p>I&amp;rsquo;ve been using the venerable
+&lt;a href="https://github.com/git/git/tree/master/contrib/diff-highlight">&lt;code>diff-highlight&lt;/code>&lt;/a>
+script to power various &lt;code>git diff&lt;/code> operations in the terminal. It is a decent
+improvement on top of stock &lt;code>git diff&lt;/code>, but it&amp;rsquo;s somewhat of an
+&lt;a href="https://github.com/thiagowfx/.dotfiles/blob/94fa66d62260c7c5e133f50beef6181f098b3599/git/.profile.d/git.sh#L11">annoying&lt;/a>
+maintenance burden to manage it across various environments, as it&amp;rsquo;s installed
+in different ways on various systems:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e5c07b">hash&lt;/span> git &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#7f848e"># git-diff-highlight: alpine:/usr/bin/, arch, debian&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	path_munge &lt;span style="color:#98c379">&amp;#34;/usr/share/git/diff-highlight&amp;#34;&lt;/span> &lt;span style="color:#98c379">&amp;#34;/usr/share/doc/git/contrib/diff-highlight&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#7f848e"># brew&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e5c07b">hash&lt;/span> brew &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; &lt;span style="color:#c678dd">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		path_munge &lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#c678dd">$(&lt;/span>brew --prefix&lt;span style="color:#c678dd">)&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>/share/git-core/contrib/diff-highlight
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#c678dd">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Thus I decided to migrate to &lt;a href="https://github.com/dandavison/delta">&lt;code>git-delta&lt;/code>&lt;/a>,
+which is:&lt;/p>
+&lt;ul>
+&lt;li>quite popular&lt;/li>
+&lt;li>written in Rust™&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;/li>
+&lt;li>&lt;a href="https://repology.org/project/git-delta/versions">available&lt;/a> in all package
+managers I&amp;rsquo;m interested in – hence it&amp;rsquo;s &lt;strong>one install command away from my
+system&lt;/strong>, no need for extra configs &amp;lt;== And this is the main reason I wanted
+to migrate to it.&lt;/li>
+&lt;/ul>
+&lt;p>On macOS, the package is called &lt;code>git-delta&lt;/code> whereas the binary is called
+&lt;code>delta&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% brew install git-delta
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% brew ls git-delta | grep bin/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>/opt/homebrew/Cellar/git-delta/0.18.2_3/bin/delta
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The integration with &lt;code>git&lt;/code> is as follows:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% grep -E &lt;span style="color:#98c379">&amp;#39;\[core\]|pager =|delta&amp;#39;&lt;/span> ~/.gitconfig
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>core&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#7f848e"># delta &amp;gt; diff-highlight &amp;gt; plain cat&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">pager&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;delta --diff-highlight 2&amp;gt;/dev/null || ((diff-highlight 2&amp;gt;/dev/null || cat) | &lt;/span>&lt;span style="color:#98c379">${&lt;/span>&lt;span style="color:#e06c75">PAGER&lt;/span>&lt;span style="color:#c678dd">:-&lt;/span>&lt;span style="color:#e06c75">less&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">)&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It falls back to &lt;code>diff-highlight&lt;/code> when &lt;code>delta&lt;/code> is not available.&lt;/p>
+&lt;p>&lt;code>delta&lt;/code> is quite
+&lt;a href="https://dandavison.github.io/delta/configuration.html">configurable&lt;/a>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% grep -EA3 &lt;span style="color:#98c379">&amp;#39;\[delta\]&amp;#39;&lt;/span> ~/.gitconfig
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>delta&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">navigate&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e5c07b">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> side-by-side &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e5c07b">false&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> line-numbers &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e5c07b">true&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>One caveat of using &lt;code>delta&lt;/code>: the &lt;code>git diff&lt;/code> output is not suitable for sharing,
+as it does not contain diff markers, relying on colors instead.
+See &lt;a href="https://perrotta.dev/2025/08/git--no-pager/">this post&lt;/a> for a workaround.&lt;/p>
+&lt;p>&lt;strong>Update(2025-09-07)&lt;/strong>: I&amp;rsquo;ve been finding &lt;code>delta&lt;/code> quite pleasant to use.&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>Always an (over)hyped reason to migrate, but, oh well&amp;hellip;&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
 &lt;/div></description></item><item><title>ArgoCD: every application in unknown state</title><link>https://perrotta.dev/2025/06/argocd-every-application-in-unknown-state/</link><pubDate>Fri, 13 Jun 2025 22:34:33 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-every-application-in-unknown-state/</guid><description>&lt;p>&lt;strong>Symptom&lt;/strong>: Every single application in the Kubernetes cluster that is managed
 by Argo is in &lt;code>Unknown&lt;/code> sync status. A disaster! 😱&lt;/p>
 &lt;p>This has only happened in one of our clusters. More specifically, in an
@@ -3101,65 +3159,4 @@ Sites that block bots / crawlers may also be flagged as false positives.&lt;/p>
 2024.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Trains in Europe</title><link>https://perrotta.dev/2024/12/trains-in-europe/</link><pubDate>Mon, 30 Dec 2024 02:25:06 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/trains-in-europe/</guid><description>&lt;p>A (small) index on how to travel by train in Europe.&lt;/p>
-&lt;h2 id="search-">Search 🔎&lt;/h2>
-&lt;p>How to search for train routes?&lt;/p>
-&lt;h3 id="country--provider-agnostic">Country &amp;amp; Provider agnostic&lt;/h3>
-&lt;ul>
-&lt;li>&lt;a href="https://www.thetrainline.com/">Trainline&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://www.omio.com/">Omio&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://www.rome2rio.com/">Rome2Rio&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://www.fahrplan.guru/">Fahrplan Guru&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://int.bahn.de/">Deutsche Bahn (DB) International search&lt;/a> (YMMV)&lt;/li>
-&lt;li>&lt;a href="https://www.raileurope.com/">Rail Europe&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;p>These providers also include bus routes (e.g. via &lt;a href="https://www.flixbus.com/">Flixbus&lt;/a>).&lt;/p>
-&lt;p>Some of them also include ridesharing (e.g. via &lt;a href="https://www.blablacar.com/">BlaBlaCar&lt;/a>).&lt;/p>
-&lt;p>There&amp;rsquo;s no point in searching in all of them: pick one or two and call it a day.&lt;/p>
-&lt;p>&lt;a href="https://flights.google.com/">Google Flights&lt;/a> occasionally displays train routes but it&amp;rsquo;s imperfect, as it&amp;rsquo;s focused on flights.&lt;/p>
-&lt;h3 id="country-specific">Country-specific&lt;/h3>
-&lt;p>This list is intentionally non-exhaustive.&lt;/p>
-&lt;!-- keep-sorted start -->
-&lt;ul>
-&lt;li>&lt;a href="https://int.bahn.de/en/">Deutsche Bahn (DB)&lt;/a> for Germany 🇩🇪&lt;/li>
-&lt;li>&lt;a href="https://www.ns.nl/en">NS&lt;/a> for the Netherlands 🇳🇱&lt;/li>
-&lt;li>&lt;a href="https://www.sbb.ch/en">SBB&lt;/a> for Switzerland 🇨🇭&lt;/li>
-&lt;li>&lt;a href="https://www.sncf-connect.com/en-en/">SNCF&lt;/a> for France 🇫🇷&lt;/li>
-&lt;li>&lt;a href="https://www.oebb.at/en/">ÖBB&lt;/a> for Austria 🇦🇹&lt;/li>
-&lt;li>&lt;a href="https://www.cd.cz/en/">ČD.cz&lt;/a> for Czech Republic 🇨🇿&lt;/li>
-&lt;/ul>
-&lt;!-- keep-sorted end -->
-&lt;p>Sometimes a given train route is cheaper in a different provider.
-For example, the &lt;em>München – Praha&lt;/em> route is generally cheaper on ČD than on DB.&lt;/p>
-&lt;h2 id="savings-opportunities">Savings opportunities&lt;/h2>
-&lt;p>In Germany 🇩🇪, consider the &lt;a href="https://int.bahn.de/en/offers/regional/deutschland-ticket">Deutschland Ticket&lt;/a> (DL-Ticket).
-A single monthly ticket allows you to travel by train throughout the entire country, so long as you don&amp;rsquo;t use express (ICE / EC) trains (i.e. only regional trains).
-It also allows you to use unlimited local transit (e.g. U-Bahn = subway / metro, S-Bahn = surface trains, Trams = Straßenbahnen = Street Cars, Buses) a.k.a. ÖPNV.&lt;/p>
-&lt;p>In Europe, &lt;a href="https://www.interrail.eu/en">Interrail&lt;/a> / &lt;a href="https://www.eurail.com/en">Eurail&lt;/a> provides passes for multi-day journeys at a discount.
-There are several kinds of passes, some of them for travel within a single country, others for multiple countries. &lt;a href="https://www.thetrainline.com/passes?source=hweb&amp;amp;countryOfResidence=DE&amp;amp;countryToVisit=interrail-one-country-pass-italy">Trainline&lt;/a> also sells them.&lt;/p>
-&lt;h2 id="timetables-and-live-maps">Timetables and Live Maps&lt;/h2>
-&lt;p>Germany 🇩🇪:&lt;/p>
-&lt;ul>
-&lt;li>&lt;a href="https://s-bahn-muenchen-live.de/">S-Bahn München Live&lt;/a>: only for S-Bahns in
-Munich
-&lt;ul>
-&lt;li>⚠️ &lt;a href="https://www.s-bahn-muenchen.de/fahren/baustellen">Construction changes&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;a href="https://reiseauskunft.bahn.de/bin/bhftafel.exe/en?ld=96252&amp;amp;country=DEU&amp;amp;rt=1&amp;amp;newrequest=yes&amp;amp;&amp;amp;country=GBR">Deutsche Bahn (DB)&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://bahnapp.com/">&lt;strong>Bahn App&lt;/strong>&lt;/a>: minimalist, with a superb design, better (easier to use and more reliable) than DB&lt;/li>
-&lt;/ul>
-&lt;h2 id="in-depth-resources">In-depth resources&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a href="https://www.seat61.com/index.html">The Man in Seat61&lt;/a>
-&lt;ul>
-&lt;li>&lt;a href="https://www.seat61.com/international-trains/trains-from-Munich.htm">The Man in Seat61: trains from Munich&lt;/a>&lt;/li>
-&lt;li>Night / sleeper trains: &lt;a href="https://www.seat61.com/trains-and-routes/nightjet.htm">A guide to travel by Nightjet&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>Shipping with Deutsche Bahn (DB) in Germany: &lt;a href="https://www.gepaeckservice-bahn.de/buchung.xhtml">Gepäckservice für Reisegepäck&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;p>&amp;ldquo;Where can you go by train in 8h&amp;rdquo;? &lt;a href="https://www.chronotrains.com/">ChronoTrains&lt;/a> could convince you to ride a train instead of flying:&lt;/p>
-&lt;blockquote>
-&lt;p>This map shows you how far you can travel from each station in Europe in less than 8 hours.&lt;/p>
-&lt;/blockquote></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>
