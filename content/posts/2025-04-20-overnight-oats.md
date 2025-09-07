@@ -19,7 +19,9 @@ minute, tweaking the overall result each time. The sky is the limit.
 I recommend to have it for **breakfast** (it's enough!) or as an **afternoon snack**
 (for example, bring a Tupperware to work).
 
-## Ingredients
+## In Bulk (Tupperware)
+
+### Ingredients
 
 The most important ingredients are **in bold**.
 
@@ -62,9 +64,9 @@ The coolest™ ingredients are _in italics_.
   - figs
   - avoid: dry figs
 
-## Preparation
+### Preparation
 
-### The first day
+#### The first day
 
 These are overnight oats, therefore they should ideally be prepared one day
 before you intend to consume them. The intent is to leave them simmering in the
@@ -93,7 +95,7 @@ also OK.
 
 1. Put the container in the fridge. Good night!
 
-### The second day
+#### The second day
 
 The fruits should be cut in small pieces. Add them to the container.
 
@@ -103,6 +105,18 @@ It's done. Enjoy!
 
 **Note**: When in a rush, you can prepare and eat the oats within the same day.
 Just leave them in the fridge for _at least_ one hour.
+
+## Cup / Glass
+
+It's also possible to prepare a smaller portion in a glass.
+
+Add the content in this order:
+
+1. oat
+2. chia / flax seeds
+3. milk
+4. yogurt
+5. sweetener (e.g. maple syrup)
 
 **Disclaimer**: This post was written without AI, and without any web searches, it's purely from
 my memory and experience. Consume (pun intended!) this information at your own
