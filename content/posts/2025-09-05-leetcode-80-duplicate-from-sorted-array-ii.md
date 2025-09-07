@@ -7,8 +7,8 @@ tags:
 
 [LeetCode #80: Duplicate From Sorted Array II](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/):
 
-[Previously]({{< ref "2025-09-03-leetcode-26-duplicate-from-sorted-array.md"
->}}). Now each element can appear at most twice.
+[Previously]({{< ref "2025-09-03-leetcode-26-duplicate-from-sorted-array">}}).
+Now each element can appear at most twice.
 
 ## Elegant
 
