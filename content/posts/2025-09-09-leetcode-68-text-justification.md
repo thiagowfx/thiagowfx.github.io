@@ -77,7 +77,7 @@ class Solution:
             for i, word in enumerate(words):
                 ans.append(word)
 
-                if i < (len(words) - 1):  # last word should do not insert spaces afterwards
+                if i < (len(words) - 1):  # last word should not insert spaces afterwards
                     ans.append(' ' * spaces_per_word)
 
                     if remainder > 0:
