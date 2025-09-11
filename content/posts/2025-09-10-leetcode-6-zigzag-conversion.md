@@ -65,3 +65,6 @@ The intermediate variable is named `mySum`[^1] instead of `sum` in order to avoi
 shadowing the built-in `sum` function.
 
 [^1]: Long live Perl (`my @var;`).
+
+<!-- TODO: Use a generator for inc. -->
+<!-- TODO: Zigzag simulation. -->
