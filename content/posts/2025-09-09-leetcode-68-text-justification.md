@@ -97,3 +97,43 @@ class Solution:
         # last line must be left justified
         return [justify(line) for line in split[:-1]] + [left_justify(split[-1])]
 ```
+
+Here's the solution from the LLM. It boils down to the same approach, but it's
+more concise (perhaps at the expense of readability):
+
+```python
+class Solution:
+    def fullJustify(self, words: List[str], maxWidth: int) -> List[str]:
+        res = []
+        cur = []
+        num_of_letters = 0
+
+        for w in words:
+            if num_of_letters + len(w) + len(cur) > maxWidth:
+                # distribute spaces
+                for i in range(maxWidth - num_of_letters):
+                    cur[i % (len(cur) - 1 or 1)] += " "
+                res.append("".join(cur))
+                cur, num_of_letters = [], 0
+            cur.append(w)
+            num_of_letters += len(w)
+
+        # last line -> left-justified
+        res.append(" ".join(cur).ljust(maxWidth))
+        return res
+```
+
+**Today I learned**: `.ljust()`:
+
+```python
+>>> "aa".ljust(5)
+'aa   '
+>>> "aa".rjust(5)
+'   aa'
+>>> "aa".just(5)
+Traceback (most recent call last):
+  File "<python-input-2>", line 1, in <module>
+    "aa".just(5)
+    ^^^^^^^^^
+AttributeError: 'str' object has no attribute 'just'. Did you mean: 'ljust'?
+```
