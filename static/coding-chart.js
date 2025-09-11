@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Coding posts data (will be populated by Hugo template)
+  // LeetCode posts data (will be populated by Hugo template)
   if (typeof codingPostDates === 'undefined') {
     console.error('coding-chart.js: codingPostDates not defined');
     return;
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
     data: {
       labels: dateLabels,
       datasets: [{
-        label: 'Problems Solved',
+        label: 'LeetCode Problems Solved',
         data: cumulativeValues,
         borderColor: 'rgb(75, 192, 192)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
       plugins: {
         title: {
           display: true,
-          text: 'Cumulative Coding Problems Solved'
+          text: 'Cumulative LeetCode Problems Solved'
         },
         legend: {
           display: false
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
           beginAtZero: true,
           title: {
             display: true,
-            text: 'Problems Solved'
+            text: 'LeetCode Problems Solved'
           },
           ticks: {
             stepSize: 1
