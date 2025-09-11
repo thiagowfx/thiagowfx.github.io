@@ -6,7 +6,7 @@ tags:
   - serenity
 ---
 
-When looking for accommodation deals on [Booking.com](https://booking.com), you
+When looking for accommodation deals on [Booking.com](https://booking.com)[^1], you
 may or may not notice that there are some [mobile-only
 rates](https://partner.booking.com/en-gb/solutions/mobile-rates):
 
@@ -36,3 +36,6 @@ by `Cmd + Shift + M`.
 
 You should then be able to tap into [mobile-only
 deals](https://en.wikipedia.org/wiki/Dark_pattern) from your computer. Enjoy!
+
+[^1]: Nonetheless, it's still typically better to book accommodations _directly_
+    from the property listings. Cut the middle men!
