@@ -20,7 +20,7 @@ Here's a non-exhaustive list in alphabetical order:
 
 (ii) Article submission websites, where their users can submit articles which are then upvoted (or not) by other users (_wisdom of the crowds_):
 
-- [Hacker News](https://news.ycombinator.com/). You probably know this one already. The [/best](https://news.ycombinator.com/best) page should yield a higher SNR[^1]. Alternatively, to consume the best of hacker news directly in your RSS feed, you can use something like [HNRSS](https://hnrss.org/newest?points=250) to filter out all submissions below a certain threshold. It's also option to use an alternate interface, sorted [chronologically](https://hckrnews.com/).
+- [Hacker News](https://news.ycombinator.com/). You probably know this one already. The [/best](https://news.ycombinator.com/best) page should yield a higher SNR[^1]. Alternatively, to consume the best of hacker news directly in your RSS feed, you can use something like [HNRSS](https://hnrss.org/newest?points=250) to filter out all submissions below a certain threshold. It's also option to use an alternate interface, [sorted](https://hcker.news/) [chronologically](https://hckrnews.com/).
 - [Lobsters](https://lobste.rs/). See [about](https://lobste.rs/about). Lobsters is basically a more niche version of Hacker News. One distinctive feature is that new users can only join if they are invited by another user[^2].
 
 And for completeness I'll also mention [Reddit](https://reddit.com/) but everyone already knows it at this point.
