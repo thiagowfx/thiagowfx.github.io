@@ -90,7 +90,7 @@ Stopping briefly here for a moment, the following list comes to mind, using [Dis
 - NixOS
 - FreeBSD
 - OpenBSD
-- Slackware Linux
+- ~~Slackware Linux~~ (Updated on 2025-09-11)
 
 This list is still quite large.
 I will need to trim it down further in the following days. Stay tuned.
