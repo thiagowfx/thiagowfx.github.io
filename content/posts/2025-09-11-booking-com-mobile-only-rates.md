@@ -2,6 +2,7 @@
 title: "Booking.com mobile-only rates"
 date: 2025-09-11T11:35:39+02:00
 tags:
+  - bestof
   - serenity
 ---
 
