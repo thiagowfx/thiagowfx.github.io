@@ -1,39 +1,62 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // LeetCode posts data (will be populated by Hugo template)
   if (typeof codingPostDates === 'undefined') {
     console.error('coding-chart.js: codingPostDates not defined');
     return;
   }
+  if (typeof otherCodingPostDates === 'undefined') {
+    console.error('coding-chart.js: otherCodingPostDates not defined');
+    return;
+  }
 
-  // Remove trailing comma and sort dates
-  const sortedDates = codingPostDates.filter(d => d).sort();
+  // Helper function to process date arrays
+  const processDates = (dates) => {
+    const sorted = dates.filter(d => d).sort();
+    const cumulative = {};
+    sorted.forEach((date, index) => {
+      cumulative[date] = index + 1;
+    });
+    return {
+      sorted,
+      cumulative
+    };
+  };
 
-  // Create cumulative data
-  const cumulativeData = {};
-  sortedDates.forEach((date, index) => {
-    cumulativeData[date] = index + 1;
-  });
+  const leetCodeData = processDates(codingPostDates);
+  const otherData = processDates(otherCodingPostDates);
 
-  // Generate all dates from first post to last post
-  const firstDate = new Date(sortedDates[0]);
-  const lastDate = new Date(sortedDates[sortedDates.length - 1]);
+  // Determine the overall date range
+  const allDates = leetCodeData.sorted.concat(otherData.sorted).sort();
+  if (allDates.length === 0) {
+    return; // No data to plot
+  }
+  const firstDate = new Date(allDates[0]);
+  const lastDate = new Date(allDates[allDates.length - 1]);
+
+  // Generate all date labels for the x-axis
   const dateLabels = [];
-  const cumulativeValues = [];
-
   let currentDate = new Date(firstDate);
-  let cumulativeCount = 0;
-
   while (currentDate <= lastDate) {
-    const dateStr = currentDate.toISOString().split('T')[0];
-    dateLabels.push(dateStr);
-
-    if (cumulativeData[dateStr]) {
-      cumulativeCount = cumulativeData[dateStr];
-    }
-
-    cumulativeValues.push(cumulativeCount);
+    dateLabels.push(currentDate.toISOString().split('T')[0]);
     currentDate.setDate(currentDate.getDate() + 1);
   }
+
+  // Generate cumulative values for both datasets
+  const cumulativeValuesLeetCode = [];
+  const cumulativeValuesOther = [];
+  let leetCodeCount = 0;
+  let otherCount = 0;
+
+  dateLabels.forEach(dateStr => {
+    if (leetCodeData.cumulative[dateStr]) {
+      leetCodeCount = leetCodeData.cumulative[dateStr];
+    }
+    cumulativeValuesLeetCode.push(leetCodeCount);
+
+    if (otherData.cumulative[dateStr]) {
+      otherCount = otherData.cumulative[dateStr];
+    }
+    cumulativeValuesOther.push(otherCount);
+  });
 
   // Create chart
   const ctx = document.getElementById('cumulative-chart').getContext('2d');
@@ -43,9 +66,16 @@ document.addEventListener('DOMContentLoaded', function() {
       labels: dateLabels,
       datasets: [{
         label: 'LeetCode Problems Solved',
-        data: cumulativeValues,
+        data: cumulativeValuesLeetCode,
         borderColor: 'rgb(75, 192, 192)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        tension: 0.1,
+        fill: true
+      }, {
+        label: 'Other Coding Posts',
+        data: cumulativeValuesOther,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
         tension: 0.1,
         fill: true
       }]
@@ -55,10 +85,10 @@ document.addEventListener('DOMContentLoaded', function() {
       plugins: {
         title: {
           display: true,
-          text: 'Cumulative LeetCode Problems Solved'
+          text: 'Cumulative Coding Posts Over Time'
         },
         legend: {
-          display: false
+          display: true
         }
       },
       scales: {
@@ -72,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
           beginAtZero: true,
           title: {
             display: true,
-            text: 'LeetCode Problems Solved'
+            text: 'Cumulative Posts'
           },
           ticks: {
             stepSize: 1
