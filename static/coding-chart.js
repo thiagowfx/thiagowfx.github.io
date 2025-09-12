@@ -14,16 +14,16 @@ document.addEventListener('DOMContentLoaded', function() {
     cumulativeData[date] = index + 1;
   });
 
-  // Generate all dates from first post to today
+  // Generate all dates from first post to last post
   const firstDate = new Date(sortedDates[0]);
-  const today = new Date();
+  const lastDate = new Date(sortedDates[sortedDates.length - 1]);
   const dateLabels = [];
   const cumulativeValues = [];
 
   let currentDate = new Date(firstDate);
   let cumulativeCount = 0;
 
-  while (currentDate <= today) {
+  while (currentDate <= lastDate) {
     const dateStr = currentDate.toISOString().split('T')[0];
     dateLabels.push(dateStr);
 
