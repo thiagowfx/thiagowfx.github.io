@@ -5,7 +5,10 @@ tags:
   - serenity
 ---
 
-CBC: [Want a slice of the $500M bread price-fixing settlement? The claims process is now open](https://www.cbc.ca/news/canada/bread-fixing-website-1.7631445):
+CBC: [Want a slice of the $500M bread price-fixing settlement? The claims
+process is now
+open](https://www.cbc.ca/news/canada/bread-fixing-website-1.7631445) via my
+friend [Iuri](https://blog.iuri.rs/):
 
 > Eligible Canadians can now apply for compensation from settlement with Loblaw
 >
