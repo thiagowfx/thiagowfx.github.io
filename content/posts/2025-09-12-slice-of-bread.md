@@ -1,5 +1,5 @@
 ---
-title: "Slice of Bread"
+title: "Slice of bread"
 date: 2025-09-12T18:52:32+02:00
 tags:
   - serenity
