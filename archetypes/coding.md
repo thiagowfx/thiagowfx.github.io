@@ -1,12 +1,11 @@
 ---
-{{- $today := now.Format "2006-01-02"}}
-title: "{{ replace .Name $today "" | humanize }}"
+title: "{{ getenv "HUGO_TITLE" }}"
 date: {{ .Date }}
 tags:
   - coding
 ---
 
-[{{ replace .Name $today "" | humanize }}](#):
+[{{ getenv "HUGO_TITLE" }}](#):
 
 ```python
 ```
