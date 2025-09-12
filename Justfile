@@ -31,7 +31,7 @@ code title *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/: /-/g' | tr ' ' '-')
+    filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/#//g' -e 's/:/ /g' | tr -s ' ' | tr ' ' '-')
     hugo new --kind coding content/posts/`date "+%Y-%m-%d"`-${filename}.md {{ args }}
 
 alias coding := code
