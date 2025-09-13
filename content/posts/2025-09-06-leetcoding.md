@@ -16,3 +16,8 @@ to `/index.xml`. Instead, they have their own
 
 In the future I will move [my]({{< ref "/tags/aoc" >}}) [advent of
 code](https://adventofcode.com/) posts there as well.
+
+Problem sets:
+
+* [**LeetCode**](https://leetcode.com/)
+* [HackerRank](https://www.hackerrank.com/)
