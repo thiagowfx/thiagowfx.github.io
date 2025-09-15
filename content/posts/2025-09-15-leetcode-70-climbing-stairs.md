@@ -1,0 +1,26 @@
+---
+title: "LeetCode #70: Climbing Stairs"
+date: 2025-09-15T22:35:21+02:00
+tags:
+  - coding
+---
+
+[LeetCode #70: Climbing Stairs](https://leetcode.com/problems/climbing-stairs/):
+
+```python
+from functools import cache
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+
+        @cache
+        def cs(n):
+            assert n >= 0
+
+            if n in [0, 1, 2]:
+                return n
+
+            return cs(n-1) + cs(n-2)
+
+        return cs(n)
+```
