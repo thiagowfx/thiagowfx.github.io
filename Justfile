@@ -37,15 +37,7 @@ code title *args:
 
     filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/#//g' -e 's/:/ /g' | tr -s ' ' | tr ' ' '-')
     filepath="content/posts/`date "+%Y-%m-%d"`-${filename}.md"
-
-    hugo_title="{{ title }}"
-    hugo_leetcode_slug=""
-    if [[ "{{ title }}" == "LeetCode"* ]]; then
-      problem_name=$(echo "{{ title }}" | sed -e 's/LeetCode #[0-9]*: //')
-      hugo_leetcode_slug=$(echo "${problem_name}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-    fi
-
-    HUGO_TITLE="${hugo_title}" HUGO_LEETCODE_SLUG="${hugo_leetcode_slug}" hugo new --kind coding "${filepath}" {{ args }}
+    HUGO_TITLE="{{ title }}" hugo new --kind coding "${filepath}" {{ args }}
     {{ editor }} "${filepath}"
 
 alias coding := code

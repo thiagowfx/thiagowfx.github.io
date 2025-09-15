@@ -5,10 +5,15 @@ tags:
   - coding
 ---
 
-{{ $leetcode_slug := getenv "HUGO_LEETCODE_SLUG" }}
-{{ $url := cond (ne $leetcode_slug "") (printf "https://leetcode.com/problems/%s/" $leetcode_slug) "#" }}
+{{ $title := getenv "HUGO_TITLE" }}
+{{ $url := "#" }}
+{{ if strings.HasPrefix (lower $title) "leetcode" }}
+  {{ $problem := $title | split ":" | index 1 | strings.TrimLeft " " }}
+  {{ $slug := $problem | lower | replace " " "-" }}
+  {{ $url = printf "https://leetcode.com/problems/%s/" $slug }}
+{{ end }}
 
-[{{ getenv "HUGO_TITLE" }}]({{ $url }}):
+[{{ $title }}]({{ $url }}):
 
 ```python
 ```
