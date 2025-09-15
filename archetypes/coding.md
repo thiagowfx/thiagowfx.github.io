@@ -5,7 +5,10 @@ tags:
   - coding
 ---
 
-[{{ getenv "HUGO_TITLE" }}](#):
+{{ $leetcode_slug := getenv "HUGO_LEETCODE_SLUG" }}
+{{ $url := cond (ne $leetcode_slug "") (printf "https://leetcode.com/problems/%s/" $leetcode_slug) "#" }}
+
+[{{ getenv "HUGO_TITLE" }}]({{ $url }}):
 
 ```python
 ```
