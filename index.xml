@@ -24,7 +24,91 @@ tags:
 &lt;p>Up to a &lt;a href="https://perrotta.dev/2025/03/friction/">certain extent&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Slice of bread</title><link>https://perrotta.dev/2025/09/slice-of-bread/</link><pubDate>Fri, 12 Sep 2025 18:52:32 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/slice-of-bread/</guid><description>&lt;p>CBC: &lt;a href="https://www.cbc.ca/news/canada/bread-fixing-website-1.7631445">Want a slice of the $500M bread price-fixing settlement? The claims
+&lt;/div></description></item><item><title>Broot</title><link>https://perrotta.dev/2025/09/broot/</link><pubDate>Mon, 15 Sep 2025 12:36:10 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/broot/</guid><description>&lt;p>&lt;a href="https://github.com/Canop/broot">broot&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>A new way to see and navigate directory trees: &lt;a href="https://dystroy.org/broot">https://dystroy.org/broot&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;p>It&amp;rsquo;s a mixture of &lt;code>ranger&lt;/code> / &lt;code>mc&lt;/code> (terminal file manager), &lt;code>fzf&lt;/code> (fuzzy file
+finder), &lt;code>tree&lt;/code> (list directory trees in the terminal), &lt;code>ls&lt;/code>, &lt;code>find&lt;/code> / &lt;code>fd&lt;/code>,
+&lt;code>fpp&lt;/code>, &lt;code>grep&lt;/code> / &lt;code>ack&lt;/code> / &lt;code>rg&lt;/code>, all-in-one. I&amp;rsquo;m starting to occasionally use it in
+my daily workflow. Its &lt;a href="https://dystroy.org/broot/">&lt;code>Why?&lt;/code>&lt;/a> page may convince
+you to give it a try.&lt;/p>
+&lt;p>The upstream documentation is quite decent; as such, I do not intend to
+replicate it here. That said, here are a couple of ad-hoc notes.&lt;/p>
+&lt;p>&lt;strong>Usage&lt;/strong>: &lt;code>broot {dir}&lt;/code> or simply &lt;code>broot&lt;/code> to open it in the current directory,
+as you would with &lt;code>ranger&lt;/code>.&lt;/p>
+&lt;p>&lt;code>-c&lt;/code> to &lt;code>open_preview&lt;/code>. I do not know why this is not the default behavior. It
+really should be! It displays the file contents of the currently focused file in
+the right-side pane. We can make it the default:&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-hjson" data-lang="hjson">~/.config/broot/conf.hjson:
+
+###############################################################
+# Default flags
+# You can set up flags you want broot to start with by
+# default, for example `default_flags=&amp;#34;-ihp&amp;#34;` if you usually want
+# to see hidden and gitignored files and the permissions (then
+# if you don&amp;#39;t want the hidden files at a specific launch,
+# you can launch broot with `br -H`).
+# A popular flag is the `g` one which displays git related info.
+#
+# default_flags:
+default_flags: &amp;#34;-c :open_preview&amp;#34;
+&lt;/code>&lt;/pre>&lt;p>Use the up and down arrows to navigate (or Tab / Shift + Tab). Vi-like
+keybindings (&lt;code>j&lt;/code> / &lt;code>k&lt;/code>) do not work but that&amp;rsquo;s for a good reason, by design:
+there&amp;rsquo;s a permanent command-line bar at the bottom (think of &lt;code>mc&lt;/code>), used to
+issue commands to &lt;code>broot&lt;/code> and/or employ file/directory filtering; we need to be
+able to type in characters there. This takes some getting used to if you&amp;rsquo;re
+coming from &lt;code>ranger&lt;/code>.&lt;/p>
+&lt;p>&lt;code>ENTER&lt;/code>, by default, opens the currently focused file in your visual editor
+(e.g. VSCode, Zed). I am not a fan of this behavior, I&amp;rsquo;d rather it to use
+&lt;code>$EDITOR&lt;/code> (e.g. &lt;code>vim&lt;/code>, &lt;code>emacs&lt;/code>). It&amp;rsquo;s possible to change this behavior, but I
+haven&amp;rsquo;t done so yet. There&amp;rsquo;s a workaround: type in &lt;code>&amp;lt;Space&amp;gt;e&amp;lt;Enter&amp;gt;&lt;/code> (or
+&lt;code>:e&amp;lt;Enter&amp;gt;&lt;/code> like in &lt;code>vim&lt;/code>). This issues the &lt;code>edit&lt;/code> command, which opens
+&lt;code>$EDITOR&lt;/code>. I wish &lt;code>ENTER&lt;/code> would so do out-of-the-box!&lt;/p>
+&lt;p>The main reason to use &lt;code>broot&lt;/code> is due to its excellent and versatile
+&lt;a href="https://dystroy.org/broot/input/">filtering&lt;/a> capabilities, which allows
+composite searches as well. Here&amp;rsquo;s a practical example:&lt;/p>
+&lt;pre tabindex="0">&lt;code>ep/pgbouncer\/values.yaml/&amp;amp;c/default
+&lt;/code>&lt;/pre>&lt;p>&amp;hellip;it searches for all files named &lt;code>pgbouncer/values.yaml&lt;/code> (within or nested in
+PWD) whose file contents include the string &lt;code>default&lt;/code>. Then it displays a
+dynamic list of matches (including previews!) which you can manipulate
+individually or in batches. For example, you could easily open each of them in
+&lt;code>$EDITOR&lt;/code>, or delete all of them, or run &lt;code>sed -i&lt;/code> in all of them.&lt;/p>
+&lt;p>Explanation of the search modes (there are even more):&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>ep/&lt;/code>: exact string search on subpath (full path) – like &lt;code>fd -p&lt;/code>&lt;/li>
+&lt;li>&lt;code>c/&lt;/code>: exact string search on file content – like &lt;code>grep&lt;/code> or &lt;code>ack&lt;/code> or &lt;code>rg&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>:gs&lt;/code> opens an interactive tree with files in &lt;code>git status&lt;/code> – comparable to &lt;code>git status | fpp -ko&lt;/code>.&lt;/p>
+&lt;p>We can run &lt;code>sed -i&lt;/code> in all matches. First, define a verb (action) for it:&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-hjson" data-lang="hjson">~/.config/broot/verbs.hjson:
+
+###############################################################
+# This file contains the verb definitions for broot
+#
+# Some verbs here are examples and not enabled by default: you
+# need to uncomment them if you want to use them.
+#
+# Documentation at https://dystroy.org/broot/verbs/
+###############################################################
+verbs: [
+ [...]
+ {
+ invocation: &amp;#34;sed {arg}&amp;#34;
+ shortcut: sed
+ apply_to: text_file
+ execution: &amp;#34;gsed -i -e {arg} {file}&amp;#34;
+ leave_broot: false
+ }
+ [...]
+]
+&lt;/code>&lt;/pre>&lt;p>Then, after running a search, type in &lt;code>&amp;lt;Space&amp;gt;sed&amp;lt;Space&amp;gt;'s/foo/bar/g'&lt;/code>.&lt;/p>
+&lt;p>Again, why is this not a built-in verb?&lt;/p>
+&lt;p>All things considered, I think &lt;code>broot&lt;/code> needs some polishing in order to become
+easy(ier) to use. It is a powerful tool, but its out-of-the-box devex experience
+leaves a lot to be desired.&lt;/p>
+&lt;p>Another example: &lt;a href="https://github.com/Canop/broot/issues/453">#453&lt;/a>: there&amp;rsquo;s no
+filter history.&lt;/p></description></item><item><title>Slice of bread</title><link>https://perrotta.dev/2025/09/slice-of-bread/</link><pubDate>Fri, 12 Sep 2025 18:52:32 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/slice-of-bread/</guid><description>&lt;p>CBC: &lt;a href="https://www.cbc.ca/news/canada/bread-fixing-website-1.7631445">Want a slice of the $500M bread price-fixing settlement? The claims
 process is now
 open&lt;/a> via my
 friend &lt;a href="https://blog.iuri.rs/">Iuri&lt;/a>:&lt;/p>
@@ -1350,29 +1434,4 @@ cannot be made and this error response is sent back.&lt;/p>
 to while coding.&lt;/p>
 &lt;p>&lt;a href="https://music.youtube.com/watch?v=l_yuGtZ9U0Y&amp;amp;list=RDAMVMl_yuGtZ9U0Y">YouTube
 Music&lt;/a>.&lt;/p>
-&lt;p>&lt;em>Long live the fighters!&lt;/em>&lt;/p></description></item><item><title>Block "Sign in to XXX with google.com"</title><link>https://perrotta.dev/2025/08/block-sign-in-to-xxx-with-google.com/</link><pubDate>Sat, 02 Aug 2025 21:26:25 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/block-sign-in-to-xxx-with-google.com/</guid><description>&lt;p>Jeff Johnson, &lt;a href="https://underpassapp.com/news/2025/7/5.html">Sign in with Google in Chrome&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>Many websites such as Yelp show an annoying &amp;ldquo;Sign in with Google&amp;rdquo; banner when
-you visit.&lt;/p>
-&lt;p>&lt;img src="https://underpassapp.com/news/2025/7/5-images/Safari.png" alt="Sign in with Google
-banner">&lt;/p>
-&lt;p>This is what Google calls the One Tap user experience. Fortunately, my web
-browser extension StopTheMadness Pro hides &amp;ldquo;Sign in with Google&amp;rdquo; banners.&lt;/p>
-&lt;/blockquote>
-&lt;p>Annoying is an understatement.&lt;/p>
-&lt;blockquote>
-&lt;p>Although Chrome avoids the &amp;ldquo;Sign in with Google&amp;rdquo; banners, Google&amp;rsquo;s browser
-still has its own custom annoyance. If you&amp;rsquo;re already signed in to your Google
-account when you visit a participating website such as Yelp, Chrome will
-display a One Tap dialog.&lt;/p>
-&lt;/blockquote>
-&lt;p>Jeff helpfully points out how to block these banners in Google Chrome:&lt;/p>
-&lt;ul>
-&lt;li>Navigate to &lt;code>chrome://settings/content/federatedIdentityApi&lt;/code>&lt;/li>
-&lt;li>Switch the default behavior to &amp;ldquo;Block sign-in prompts from identity services&amp;rdquo;&lt;/li>
-&lt;/ul>
-&lt;blockquote>
-&lt;p>If the courts and antitrust regulators are reading—they probably won&amp;rsquo;t read my
-blog, but one can dream—this is yet another example of Google advantaging its
-own browser Chrome over other web browsers.&lt;/p>
-&lt;/blockquote></description></item></channel></rss>
+&lt;p>&lt;em>Long live the fighters!&lt;/em>&lt;/p></description></item></channel></rss>

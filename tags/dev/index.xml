@@ -24,7 +24,91 @@ tags:
 &lt;p>Up to a &lt;a href="https://perrotta.dev/2025/03/friction/">certain extent&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Hello?!</title><link>https://perrotta.dev/2025/09/hello/</link><pubDate>Sun, 07 Sep 2025 13:44:13 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/hello/</guid><description>&lt;p>Whenever the LLM gets stuck:&lt;/p>
+&lt;/div></description></item><item><title>Broot</title><link>https://perrotta.dev/2025/09/broot/</link><pubDate>Mon, 15 Sep 2025 12:36:10 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/broot/</guid><description>&lt;p>&lt;a href="https://github.com/Canop/broot">broot&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>A new way to see and navigate directory trees: &lt;a href="https://dystroy.org/broot">https://dystroy.org/broot&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;p>It&amp;rsquo;s a mixture of &lt;code>ranger&lt;/code> / &lt;code>mc&lt;/code> (terminal file manager), &lt;code>fzf&lt;/code> (fuzzy file
+finder), &lt;code>tree&lt;/code> (list directory trees in the terminal), &lt;code>ls&lt;/code>, &lt;code>find&lt;/code> / &lt;code>fd&lt;/code>,
+&lt;code>fpp&lt;/code>, &lt;code>grep&lt;/code> / &lt;code>ack&lt;/code> / &lt;code>rg&lt;/code>, all-in-one. I&amp;rsquo;m starting to occasionally use it in
+my daily workflow. Its &lt;a href="https://dystroy.org/broot/">&lt;code>Why?&lt;/code>&lt;/a> page may convince
+you to give it a try.&lt;/p>
+&lt;p>The upstream documentation is quite decent; as such, I do not intend to
+replicate it here. That said, here are a couple of ad-hoc notes.&lt;/p>
+&lt;p>&lt;strong>Usage&lt;/strong>: &lt;code>broot {dir}&lt;/code> or simply &lt;code>broot&lt;/code> to open it in the current directory,
+as you would with &lt;code>ranger&lt;/code>.&lt;/p>
+&lt;p>&lt;code>-c&lt;/code> to &lt;code>open_preview&lt;/code>. I do not know why this is not the default behavior. It
+really should be! It displays the file contents of the currently focused file in
+the right-side pane. We can make it the default:&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-hjson" data-lang="hjson">~/.config/broot/conf.hjson:
+
+###############################################################
+# Default flags
+# You can set up flags you want broot to start with by
+# default, for example `default_flags=&amp;#34;-ihp&amp;#34;` if you usually want
+# to see hidden and gitignored files and the permissions (then
+# if you don&amp;#39;t want the hidden files at a specific launch,
+# you can launch broot with `br -H`).
+# A popular flag is the `g` one which displays git related info.
+#
+# default_flags:
+default_flags: &amp;#34;-c :open_preview&amp;#34;
+&lt;/code>&lt;/pre>&lt;p>Use the up and down arrows to navigate (or Tab / Shift + Tab). Vi-like
+keybindings (&lt;code>j&lt;/code> / &lt;code>k&lt;/code>) do not work but that&amp;rsquo;s for a good reason, by design:
+there&amp;rsquo;s a permanent command-line bar at the bottom (think of &lt;code>mc&lt;/code>), used to
+issue commands to &lt;code>broot&lt;/code> and/or employ file/directory filtering; we need to be
+able to type in characters there. This takes some getting used to if you&amp;rsquo;re
+coming from &lt;code>ranger&lt;/code>.&lt;/p>
+&lt;p>&lt;code>ENTER&lt;/code>, by default, opens the currently focused file in your visual editor
+(e.g. VSCode, Zed). I am not a fan of this behavior, I&amp;rsquo;d rather it to use
+&lt;code>$EDITOR&lt;/code> (e.g. &lt;code>vim&lt;/code>, &lt;code>emacs&lt;/code>). It&amp;rsquo;s possible to change this behavior, but I
+haven&amp;rsquo;t done so yet. There&amp;rsquo;s a workaround: type in &lt;code>&amp;lt;Space&amp;gt;e&amp;lt;Enter&amp;gt;&lt;/code> (or
+&lt;code>:e&amp;lt;Enter&amp;gt;&lt;/code> like in &lt;code>vim&lt;/code>). This issues the &lt;code>edit&lt;/code> command, which opens
+&lt;code>$EDITOR&lt;/code>. I wish &lt;code>ENTER&lt;/code> would so do out-of-the-box!&lt;/p>
+&lt;p>The main reason to use &lt;code>broot&lt;/code> is due to its excellent and versatile
+&lt;a href="https://dystroy.org/broot/input/">filtering&lt;/a> capabilities, which allows
+composite searches as well. Here&amp;rsquo;s a practical example:&lt;/p>
+&lt;pre tabindex="0">&lt;code>ep/pgbouncer\/values.yaml/&amp;amp;c/default
+&lt;/code>&lt;/pre>&lt;p>&amp;hellip;it searches for all files named &lt;code>pgbouncer/values.yaml&lt;/code> (within or nested in
+PWD) whose file contents include the string &lt;code>default&lt;/code>. Then it displays a
+dynamic list of matches (including previews!) which you can manipulate
+individually or in batches. For example, you could easily open each of them in
+&lt;code>$EDITOR&lt;/code>, or delete all of them, or run &lt;code>sed -i&lt;/code> in all of them.&lt;/p>
+&lt;p>Explanation of the search modes (there are even more):&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>ep/&lt;/code>: exact string search on subpath (full path) – like &lt;code>fd -p&lt;/code>&lt;/li>
+&lt;li>&lt;code>c/&lt;/code>: exact string search on file content – like &lt;code>grep&lt;/code> or &lt;code>ack&lt;/code> or &lt;code>rg&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>:gs&lt;/code> opens an interactive tree with files in &lt;code>git status&lt;/code> – comparable to &lt;code>git status | fpp -ko&lt;/code>.&lt;/p>
+&lt;p>We can run &lt;code>sed -i&lt;/code> in all matches. First, define a verb (action) for it:&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-hjson" data-lang="hjson">~/.config/broot/verbs.hjson:
+
+###############################################################
+# This file contains the verb definitions for broot
+#
+# Some verbs here are examples and not enabled by default: you
+# need to uncomment them if you want to use them.
+#
+# Documentation at https://dystroy.org/broot/verbs/
+###############################################################
+verbs: [
+ [...]
+ {
+ invocation: &amp;#34;sed {arg}&amp;#34;
+ shortcut: sed
+ apply_to: text_file
+ execution: &amp;#34;gsed -i -e {arg} {file}&amp;#34;
+ leave_broot: false
+ }
+ [...]
+]
+&lt;/code>&lt;/pre>&lt;p>Then, after running a search, type in &lt;code>&amp;lt;Space&amp;gt;sed&amp;lt;Space&amp;gt;'s/foo/bar/g'&lt;/code>.&lt;/p>
+&lt;p>Again, why is this not a built-in verb?&lt;/p>
+&lt;p>All things considered, I think &lt;code>broot&lt;/code> needs some polishing in order to become
+easy(ier) to use. It is a powerful tool, but its out-of-the-box devex experience
+leaves a lot to be desired.&lt;/p>
+&lt;p>Another example: &lt;a href="https://github.com/Canop/broot/issues/453">#453&lt;/a>: there&amp;rsquo;s no
+filter history.&lt;/p></description></item><item><title>Hello?!</title><link>https://perrotta.dev/2025/09/hello/</link><pubDate>Sun, 07 Sep 2025 13:44:13 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/hello/</guid><description>&lt;p>Whenever the LLM gets stuck:&lt;/p>
 &lt;ol>
 &lt;li>Press ESC&lt;/li>
 &lt;li>Prompt: &lt;code>hello?&lt;/code>&lt;/li>
@@ -1373,85 +1457,4 @@ similar).&lt;/li>
 Bluetooth controller to interact with it and play games. I like the
 &lt;a href="https://stadia.google.com/controller/">Stadia&lt;/a> controller. It is still possible
 to find a few units in the aftermarket.&lt;/p>
-&lt;p>Now go play your game and have fun 🎮.&lt;/p></description></item><item><title>Alpine Linux: remove broken packages</title><link>https://perrotta.dev/2025/07/alpine-linux-remove-broken-packages/</link><pubDate>Sun, 20 Jul 2025 10:52:11 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/07/alpine-linux-remove-broken-packages/</guid><description>&lt;p>In a sunny Sunday morning:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% doas apk upgrade
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>WARNING: The indexes contain broken packages which might not &lt;span style="color:#c678dd">function&lt;/span> properly.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>What?! Out of nowhere?&lt;/p>
-&lt;p>I tried a couple of basic troubleshooting commands:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% doas apk update --force-refresh
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% doas apk fix
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% doas apk cache clean
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;to no avail.&lt;/p>
-&lt;p>Next idea: search engines. Virtually no results on &lt;a href="https://kagi.com/">Kagi&lt;/a>. No
-relevant results on Google either&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p>
-&lt;p>Next idea: LLMs. Nothing useful either.&lt;/p>
-&lt;p>This is novel territory! That&amp;rsquo;s what makes it fun to self-host Alpine Linux&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>.&lt;/p>
-&lt;p>My intuition tells me to start by searching their
-&lt;a href="https://gitlab.alpinelinux.org/alpine">Gitlab&lt;/a>. Eventually I got linked to
-&lt;a href="https://sourcegraph.com/github.com/alpinelinux/apk-tools/-/blob/test/solver/error11.test?L3-5">this&lt;/a>:&lt;/p>
-&lt;pre tabindex="0">&lt;code>test/solver/error11.test:
-
-@ARGS add invalid
-@REPO error.repo
-@EXPECT
-WARNING: The indexes contain broken packages which are not installable.
-ERROR: unable to select packages:
- invalid-1:
- error: uninstallable
- satisfies: world[invalid]
-&lt;/code>&lt;/pre>&lt;p>From this test file, it seems possible that there&amp;rsquo;s an invalid package in my
-&lt;code>/etc/apk/world&lt;/code>. The error message is not quite the same, but it is similar:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% wc -l /etc/apk/world
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#d19a66">293&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>There are too many packages there to hunt each of them by hand. And I didn&amp;rsquo;t
-install any new packages recently.&lt;/p>
-&lt;p>So I looked into &lt;code>apk fix --help&lt;/code> and discovered there is a &lt;code>--verbose&lt;/code> flag. I
-did not save its output, but there were five packages there:&lt;/p>
-&lt;pre tabindex="0">&lt;code>- busybox-initscripts
-- kmod-openrc
-- libacl
-- py3-pep517
-- sensible-utils
-&lt;/code>&lt;/pre>&lt;p>I ran &lt;code>doas apk del&lt;/code> to remove all of them. That was a sensible cleanup, but it
-still has not resolved the issue.&lt;/p>
-&lt;p>If I want to dive deeper into this, I&amp;rsquo;ll have to add some debugging logging to
-&lt;a href="https://sourcegraph.com/github.com/alpinelinux/apk-tools@bffc60041447cadee5b69c291df8c90eb3b8fe82/-/blob/src/database.c?L2090">&lt;code>src/database.c&lt;/code>&lt;/a>
-in &lt;code>apk-tools&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c" data-lang="c">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> (&lt;span style="color:#e06c75">db&lt;/span>&lt;span style="color:#56b6c2">-&amp;gt;&lt;/span>&lt;span style="color:#e06c75">compat_depversions&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#61afef;font-weight:bold">apk_warn&lt;/span>(&lt;span style="color:#e06c75">out&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;The indexes contain broken packages which %s.&amp;#34;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">db&lt;/span>&lt;span style="color:#56b6c2">-&amp;gt;&lt;/span>&lt;span style="color:#e06c75">compat_notinstallable&lt;/span> &lt;span style="color:#56b6c2">?&lt;/span> &lt;span style="color:#98c379">&amp;#34;are not installable&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">:&lt;/span> &lt;span style="color:#98c379">&amp;#34;might not function properly&amp;#34;&lt;/span>);
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then one last thought occurred to me:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% apk --version
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>apk-tools 3.0.0_rc5_git20250715-r0, compiled &lt;span style="color:#c678dd">for&lt;/span> x86_64.
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Aha! I am running a release candidate version of &lt;code>apk&lt;/code>, because I am using
-Alpine Linux edge repositories:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% cat /etc/apk/repositories
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http://dl-cdn.alpinelinux.org/alpine/edge/main
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http://dl-cdn.alpinelinux.org/alpine/edge/community
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http://dl-cdn.alpinelinux.org/alpine/edge/testing
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>From the
-&lt;a href="https://wiki.alpinelinux.org/wiki/Draft_Release_Notes_for_Alpine_3.23.0">Wiki&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>After 5 years of development in the master branch of apk-tools, apk v3 is now
-ready for Alpine v3.23.0. This should be a safe and seamless upgrade from apk
-v2, but might has some breaking changes if you use libapk.&lt;/p>
-&lt;/blockquote>
-&lt;p>No wonder this is bleeding edge territory!&lt;/p>
-&lt;p>I would say that there&amp;rsquo;s nothing to do here, other than waiting for the next
-release of Alpine Linux (3.23) with apk-tools v3, and ignoring the warning in
-the meantime.&lt;/p>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>Their AI overview insists on spitting out useless information about
-Ubuntu, which is completely unrelated in this case.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;li id="fn:2">
-&lt;p>It is &lt;em>fun&lt;/em>. Right? Right?!&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item></channel></rss>
+&lt;p>Now go play your game and have fun 🎮.&lt;/p></description></item></channel></rss>
