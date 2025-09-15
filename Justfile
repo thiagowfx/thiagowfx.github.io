@@ -36,6 +36,7 @@ code title *args:
     filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/#//g' -e 's/:/ /g' | tr -s ' ' | tr ' ' '-')
     filepath="content/posts/`date "+%Y-%m-%d"`-${filename}.md"
     HUGO_TITLE="{{ title }}" hugo new --kind coding "${filepath}" {{ args }}
+    ${EDITOR:-vim} "${filepath}"
 
 alias coding := code
 
