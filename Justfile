@@ -1,6 +1,8 @@
 #!/usr/bin/env just --justfile
 # https://github.com/casey/just
 
+editor := env_var_or_default("EDITOR", "vim")
+
 # Start a hugo server in watch mode
 watch preview="true" *args:
     #!/usr/bin/env bash
@@ -24,7 +26,7 @@ new title *args:
     filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/: /-/g' | tr ' ' '-')
     filepath="content/posts/`date "+%Y-%m-%d"`-${filename}.md"
     hugo new --kind blog "${filepath}" {{ args }}
-    ${EDITOR:-vim} "${filepath}"
+    {{ editor }} "${filepath}"
 
 alias blog := new
 
@@ -36,7 +38,7 @@ code title *args:
     filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/#//g' -e 's/:/ /g' | tr -s ' ' | tr ' ' '-')
     filepath="content/posts/`date "+%Y-%m-%d"`-${filename}.md"
     HUGO_TITLE="{{ title }}" hugo new --kind coding "${filepath}" {{ args }}
-    ${EDITOR:-vim} "${filepath}"
+    {{ editor }} "${filepath}"
 
 alias coding := code
 
