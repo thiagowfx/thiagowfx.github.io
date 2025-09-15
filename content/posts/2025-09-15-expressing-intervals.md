@@ -16,8 +16,11 @@ elements: 1 and 4.
 This is ambiguous, eh?
 
 In prose I propose to use
-`{1, 4}` to represent the list,
+`{1, 4}` to represent the list (or set),
 and `1..4` to represent the closed interval.
+
+Refer to it as "for 1..4" instead of "from 1..4".
+If you want to use "from", then state "from 1 to 4" fully.
 
 Or, alternatively, make it explicit which convention you're using, perhaps by
 making the context prominent.
