@@ -15,6 +15,7 @@ class Solution:
 
         @cache
         def cs(n):
+            """How many possibilities for n steps?"""
             assert n >= 0
 
             if n in [0, 1, 2]:
