@@ -22,7 +22,9 @@ new title *args:
     set -euo pipefail
 
     filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/: /-/g' | tr ' ' '-')
-    hugo new --kind blog content/posts/`date "+%Y-%m-%d"`-${filename}.md {{ args }}
+    filepath="content/posts/`date "+%Y-%m-%d"`-${filename}.md"
+    hugo new --kind blog "${filepath}" {{ args }}
+    ${EDITOR:-vim} "${filepath}"
 
 alias blog := new
 
