@@ -34,7 +34,8 @@ code title *args:
     set -euo pipefail
 
     filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/#//g' -e 's/:/ /g' | tr -s ' ' | tr ' ' '-')
-    HUGO_TITLE="{{ title }}" hugo new --kind coding content/posts/`date "+%Y-%m-%d"`-${filename}.md {{ args }}
+    filepath="content/posts/`date "+%Y-%m-%d"`-${filename}.md"
+    HUGO_TITLE="{{ title }}" hugo new --kind coding "${filepath}" {{ args }}
 
 alias coding := code
 
