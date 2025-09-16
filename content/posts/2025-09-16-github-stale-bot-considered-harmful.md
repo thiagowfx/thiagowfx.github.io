@@ -25,10 +25,11 @@ tags:
 
 ![github-actions stale bot automatically locking an issue](https://redacted.moe/f/e2f0d39c.png)
 
-I second this.
+I second this. It's not a "shame" to accumulate issues. Just set expectations
+accordingly.
 
-Lately I've been encountering various CNCF projects that employ it (helm,
-chart-testing), and it's [simply](https://github.com/helm/helm/issues/13192)
+Lately I've been encountering various CNCF projects that employ it, and it's
+[simply](https://github.com/helm/helm/issues/13192)
 [awful](https://github.com/helm/chart-testing/issues/748).
 
 I do not have anything else to add; Drew pretty much nails it.
