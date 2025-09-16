@@ -49,3 +49,28 @@ if grid[row][col] == 1:
 if row == (rows - 1) and col == (cols - 1):
     return 1
 ```
+
+Previously, starting from the end, essentially the same approach:
+
+```python
+from functools import cache
+
+class Solution:
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        # rows, cols
+        # m, n
+        @cache
+        def uniquePaths(m, n):
+            if m < 0 or n < 0:
+                return 0
+
+            if obstacleGrid[m][n] == 1:
+                return 0
+
+            if m == 0 and n == 0:
+                return 1
+
+            return uniquePaths(m - 1, n) + uniquePaths(m, n - 1)
+
+        return uniquePaths(len(obstacleGrid) - 1, len(obstacleGrid[0]) - 1)
+```
