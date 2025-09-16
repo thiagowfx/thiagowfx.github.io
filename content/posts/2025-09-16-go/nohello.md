@@ -1,0 +1,45 @@
+---
+title: "go/nohello"
+date: 2025-09-16T17:40:58+02:00
+tags:
+  - serenity
+---
+
+I highly value when people combine greeting + request right away when messaging
+folks. Less interruption – more efficiency! You can be friendly even with an
+_oneshot_ message.
+
+At Google there is a go/nohello internal link you could put in your Teams
+profile to signal this preference to your fellow coworkers.
+
+Externally, there are various sources that can be used:
+
+- https://nohello.net/en/ (classic, canonical)
+
+> Imagine calling someone on the phone, going hello! then putting them on
+> hold... 🤦‍♀️
+>
+> [...]
+>
+> It may seem trivial, but asking your question before getting that initial
+> salutatory reply also allows for asynchronous communication. If the other
+> party is away, and you leave before they come back, they can still answer your
+> question, instead of just staring at a "Hello" and wondering what they missed.
+
+- https://www.nohello.org/ (there's even dark mode!)
+- https://no-hello.com/ (text only)
+- https://www.nohello.com/ (Blogger)
+- https://nohello.info/ (minimalist)
+- https://nohello.wtf/ (sassy domain)
+- https://nohello.club/ (SMS screenshots, a custom logo)
+
+A bit of lore from [hacker news](https://news.ycombinator.com/item?id=44297431):
+
+> I'm the original author of this content. I wrote it on the internal wiki at
+> Google in 2007. Someone copied it and posted it at nohello.(something) after I
+> left Google. It's made the front page of HN multiple times.
+>
+> The discussions always split between the people who just want to get on with
+> the conversation and the people who can't bring themselves to do that because
+> they consider it unforgivably rude. The second group never seem to take the
+> hint that the first interruption is an imposition in itself.
