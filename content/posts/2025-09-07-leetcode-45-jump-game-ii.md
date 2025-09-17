@@ -17,7 +17,7 @@ required to reach it. In this scenario we can safely assume the end is always
 reachable. It's a **dynamic programming** problem as well.
 
 ```python
-from functools import lru_cache
+from functools import cache
 
 class Solution:
     def jump(self, nums: List[int]) -> int:
@@ -45,7 +45,7 @@ We could avoid the `None` quirks by checking for out-of-bounds in advance. Then
 there's no need to store the intermediate result `t` to check for `None`:
 
 ```python
-from functools import lru_cache
+from functools import cache
 
 class Solution:
     def jump(self, nums: List[int]) -> int:
