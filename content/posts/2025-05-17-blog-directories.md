@@ -27,7 +27,7 @@ A few directories I like[^1]:
 - ✪ https://kagi.com/smallweb
 - ✪ https://marginalia-search.com/
 - ✪ https://clew.se/
-- https://darktheme.club/
+- ✪ https://darktheme.club/
 - https://ooh.directory/
 
 I tend to visit them occasionally, whenever I crave for new content, perhaps like
