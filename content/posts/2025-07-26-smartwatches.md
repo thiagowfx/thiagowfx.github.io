@@ -2,6 +2,7 @@
 title: "Smartwatches"
 date: 2025-07-26T12:30:57+02:00
 tags:
+  - bestof
   - serenity
 ---
 
