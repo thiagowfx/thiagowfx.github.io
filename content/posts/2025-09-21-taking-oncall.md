@@ -34,8 +34,8 @@ The command works as is: "me" is a magic word, and "TechOps" is the name of the
 oncall rotation.
 
 But I cannot remember this command, no matter how often I run it. I can
-re-create it by running `/jsmops help`[^2], reading the documentation
-and then crafting it. Now a few wasted precious minutes were gone!
+re-create it by running `/jsmops help`[^2], reading the documentation and then
+crafting it. However, now a few wasted precious minutes were gone!
 
 In order to streamline it in the future, I'll use [espanso]({{< ref
 "2025-05-16-espanso-hello-world" >}}) to define this snippet (via `espanso
