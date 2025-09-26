@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 25 Sep 2025 13:23:35 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>pancake: potpourri scripts</title><link>https://perrotta.dev/2025/09/pancake-potpourri-scripts/</link><pubDate>Thu, 25 Sep 2025 13:23:35 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/pancake-potpourri-scripts/</guid><description>&lt;p>I&amp;rsquo;ve been meaning to create a git repository to host a collection of
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 26 Sep 2025 11:54:57 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes: pod memory usage</title><link>https://perrotta.dev/2025/09/kubernetes-pod-memory-usage/</link><pubDate>Fri, 26 Sep 2025 11:54:57 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/kubernetes-pod-memory-usage/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a pod in Kubernetes, check its memory (RAM) usage.&lt;/p>
+&lt;p>&lt;a href="https://stackoverflow.com/questions/54531646/checking-kubernetes-pod-cpu-and-memory-utilization">Stack
+Overflow&lt;/a>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl top pod -n &lt;span style="color:#56b6c2">{&lt;/span>namespace&lt;span style="color:#56b6c2">}&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span>pod name&lt;span style="color:#56b6c2">}&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span>--containers&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;pre tabindex="0">&lt;code>--containers=false:
+ If present, print usage of containers within a pod.
+&lt;/code>&lt;/pre>&lt;p>This only works if &lt;a href="https://github.com/kubernetes-sigs/metrics-server">metrics
+server&lt;/a> is installed (it
+should be!).&lt;/p>
+&lt;p>There&amp;rsquo;s an alternative:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl describe PodMetrics &lt;span style="color:#56b6c2">{&lt;/span>pod name&lt;span style="color:#56b6c2">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It must be &lt;code>PodMetrics&lt;/code>. &lt;code>PodMetric&lt;/code> does not work (ugh!&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% kubectl get PodMetric
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: the server doesn&amp;#39;t have a resource &lt;span style="color:#e5c07b">type&lt;/span> &lt;span style="color:#98c379">&amp;#34;PodMetric&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If metrics server is not available for some reason, then one needs to dive into
+the container:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl &lt;span style="color:#e5c07b">exec&lt;/span> -it &lt;span style="color:#56b6c2">{&lt;/span>pod name&lt;span style="color:#56b6c2">}&lt;/span> -n &lt;span style="color:#56b6c2">{&lt;/span>namespace&lt;span style="color:#56b6c2">}&lt;/span> -- /bin/sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;which won&amp;rsquo;t always work; not every container has &lt;code>/bin/sh&lt;/code>. Then read the
+contents of &lt;code>/sys/fs/cgroup/memory/memory.usage_in_bytes&lt;/code>.&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>Who designed this? Is it so hard to achieve consistency? Both &lt;code>kubectl get pod&lt;/code> and &lt;code>kubectl get pods&lt;/code> work. Why can&amp;rsquo;t it be the same with &lt;code>PodMetric&lt;/code>?
+And, no, &lt;code>PodMetricses&lt;/code> does not work either.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>pancake: potpourri scripts</title><link>https://perrotta.dev/2025/09/pancake-potpourri-scripts/</link><pubDate>Thu, 25 Sep 2025 13:23:35 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/pancake-potpourri-scripts/</guid><description>&lt;p>I&amp;rsquo;ve been meaning to create a git repository to host a collection of
 miscellaneous scripts / binaries that are too big to fit in shell aliases /
 functions, or text snippets.&lt;/p>
 &lt;p>This started today: &lt;a href="https://github.com/thiagowfx/pancake">https://github.com/thiagowfx/pancake&lt;/a>&lt;/p>
@@ -1416,20 +1443,4 @@ this point, and I instinctively knew what to do in this situation, without
 needing to consult the official documentation or even an LLM. I wouldn&amp;rsquo;t have
 minded doing either of these if needed, but the point is that it feels good to
 be well familiar with how a system works and how to apply your knowledge to fix
-day-to-day problems.&lt;/p></description></item><item><title>fd with xargs: filenames with spaces</title><link>https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/</link><pubDate>Fri, 08 Aug 2025 14:33:27 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: find all &lt;code>base/mongo&lt;/code> occurrences in &lt;code>kustomization.yaml&lt;/code>
-files in the codebase.&lt;/p>
-&lt;p>&lt;a href="https://perrotta.dev/2025/04/the-ack--xargs--sed-pattern/">My favorite approach&lt;/a>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% fd kustomization.yaml | ifne xargs -n &lt;span style="color:#d19a66">1&lt;/span> ack &lt;span style="color:#98c379">&amp;#34;base/mongo&amp;#34;&lt;/span> -l
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ack: scaffolding/cookiecutter/base/&lt;span style="color:#56b6c2">{{&lt;/span>: No such file or directory
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ack: cookiecutter.app_name: No such file or directory
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ack: &lt;span style="color:#56b6c2">}}&lt;/span>/kustomization.yaml: No such file or directory
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>But it looks horrible!&lt;/p>
-&lt;p>The problem is that there is a file named as follows:&lt;/p>
-&lt;pre tabindex="0">&lt;code>scaffolding/cookiecutter/base/{{ cookiecutter.app_name }}/kustomization.yaml
-&lt;/code>&lt;/pre>&lt;p>&amp;hellip;more specifically, the spaces are the problem. It&amp;rsquo;s easy to fix it though:&lt;/p>
-&lt;pre tabindex="0">&lt;code>% fd -0 kustomization.yaml | ifne xargs -0 -n 1 ack &amp;#34;base/mongo&amp;#34; -l
-&lt;/code>&lt;/pre>&lt;p>&amp;hellip;adding &lt;code>-0&lt;/code> to &lt;code>fd&lt;/code> instructs it to print the results null-separated (&lt;code>\0&lt;/code>)
-instead of newline (&lt;code>\n&lt;/code>) separated. And the corresponding switch in &lt;code>xargs&lt;/code>
-instructs it to expect null-separated input.&lt;/p>
-&lt;p>I especially like this approach because it&amp;rsquo;s easy to memorize.&lt;/p></description></item></channel></rss>
+day-to-day problems.&lt;/p></description></item></channel></rss>

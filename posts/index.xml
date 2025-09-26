@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/posts/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 26 Sep 2025 11:44:47 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Responsible adult with a digital calendar</title><link>https://perrotta.dev/2025/09/responsible-adult-with-a-digital-calendar/</link><pubDate>Fri, 26 Sep 2025 11:44:47 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/responsible-adult-with-a-digital-calendar/</guid><description>&lt;p>&lt;a href="https://onefoottsunami.com/2025/09/19/in-my-inbox-september-2025-edition/">I&amp;rsquo;m a responsible adult with a digital calendar&lt;/a>, says Paul Kafasis:&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 26 Sep 2025 11:54:57 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes: pod memory usage</title><link>https://perrotta.dev/2025/09/kubernetes-pod-memory-usage/</link><pubDate>Fri, 26 Sep 2025 11:54:57 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/kubernetes-pod-memory-usage/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a pod in Kubernetes, check its memory (RAM) usage.&lt;/p>
+&lt;p>&lt;a href="https://stackoverflow.com/questions/54531646/checking-kubernetes-pod-cpu-and-memory-utilization">Stack
+Overflow&lt;/a>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl top pod -n &lt;span style="color:#56b6c2">{&lt;/span>namespace&lt;span style="color:#56b6c2">}&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span>pod name&lt;span style="color:#56b6c2">}&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span>--containers&lt;span style="color:#56b6c2">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;pre tabindex="0">&lt;code>--containers=false:
+ If present, print usage of containers within a pod.
+&lt;/code>&lt;/pre>&lt;p>This only works if &lt;a href="https://github.com/kubernetes-sigs/metrics-server">metrics
+server&lt;/a> is installed (it
+should be!).&lt;/p>
+&lt;p>There&amp;rsquo;s an alternative:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl describe PodMetrics &lt;span style="color:#56b6c2">{&lt;/span>pod name&lt;span style="color:#56b6c2">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It must be &lt;code>PodMetrics&lt;/code>. &lt;code>PodMetric&lt;/code> does not work (ugh!&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% kubectl get PodMetric
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: the server doesn&amp;#39;t have a resource &lt;span style="color:#e5c07b">type&lt;/span> &lt;span style="color:#98c379">&amp;#34;PodMetric&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If metrics server is not available for some reason, then one needs to dive into
+the container:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl &lt;span style="color:#e5c07b">exec&lt;/span> -it &lt;span style="color:#56b6c2">{&lt;/span>pod name&lt;span style="color:#56b6c2">}&lt;/span> -n &lt;span style="color:#56b6c2">{&lt;/span>namespace&lt;span style="color:#56b6c2">}&lt;/span> -- /bin/sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;which won&amp;rsquo;t always work; not every container has &lt;code>/bin/sh&lt;/code>. Then read the
+contents of &lt;code>/sys/fs/cgroup/memory/memory.usage_in_bytes&lt;/code>.&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>Who designed this? Is it so hard to achieve consistency? Both &lt;code>kubectl get pod&lt;/code> and &lt;code>kubectl get pods&lt;/code> work. Why can&amp;rsquo;t it be the same with &lt;code>PodMetric&lt;/code>?
+And, no, &lt;code>PodMetricses&lt;/code> does not work either.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>Responsible adult with a digital calendar</title><link>https://perrotta.dev/2025/09/responsible-adult-with-a-digital-calendar/</link><pubDate>Fri, 26 Sep 2025 11:44:47 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/responsible-adult-with-a-digital-calendar/</guid><description>&lt;p>&lt;a href="https://onefoottsunami.com/2025/09/19/in-my-inbox-september-2025-edition/">I&amp;rsquo;m a responsible adult with a digital calendar&lt;/a>, says Paul Kafasis:&lt;/p>
 &lt;blockquote>
 &lt;p>I don&amp;rsquo;t need a reminder email for my vaccination appointment, but if I did, it sure ought to arrive before the appointment.&lt;/p>
 &lt;/blockquote>
@@ -1273,12 +1300,4 @@ pages or getting assistance from an LLM. &lt;em>C&amp;rsquo;est la vie&lt;/em>.&
 &lt;code>for&lt;/code> loop.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>XSLT in RSS feed</title><link>https://perrotta.dev/2025/08/xslt-in-rss-feed/</link><pubDate>Wed, 20 Aug 2025 14:03:18 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/xslt-in-rss-feed/</guid><description>&lt;p>&lt;a href="https://www.jwz.org/blog/2025/08/xslt/">There&amp;rsquo;s&lt;/a>
-&lt;a href="https://simonwillison.net/2025/Aug/19/xslt/#atom-everything">some&lt;/a>
-&lt;a href="https://www.osnews.com/story/143123/google-is-killing-the-open-web/">buzz&lt;/a>
-&lt;a href="https://wok.oblomov.eu/tecnologia/google-killing-open-web/">around&lt;/a>
-&lt;a href="https://github.com/whatwg/html/issues/11523">XSLT&lt;/a>
-&lt;a href="https://www.jonmsterling.com/01DI/index.xml">recently&lt;/a>&lt;a href="https://mastodon.social/@Edent/115048990801167629">.&lt;/a>&lt;/p>
-&lt;p>I have my own &lt;a href="https://en.wikipedia.org/wiki/Embrace,_extend,_and_extinguish">opinion&lt;/a> about the topic but I&amp;rsquo;m not here to discuss politics.&lt;/p>
-&lt;p>I took the &lt;a href="https://en.wikipedia.org/wiki/Streisand_effect">opportunity&lt;/a> to style my RSS feed.&lt;/p>
-&lt;p>The &lt;a href="https://perrotta.dev/index.xml">result&lt;/a>. Now it looks just like my blog!&lt;/p></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>
