@@ -53,6 +53,7 @@ alias coding := code
 # Delete hugo build artifacts
 clean:
     rm -rf public/ resources/
+    git clean -x -f -d
 
 # Ping search engines about changes in the sitemap
 ping sitemap="https://perrotta.dev/sitemap.xml":
