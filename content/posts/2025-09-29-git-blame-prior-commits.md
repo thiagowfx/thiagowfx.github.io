@@ -17,7 +17,8 @@ repository. Straightforward with [`git-blame(1)`](https://man.archlinux.org/man/
 
 I am not interested in `5d478f6cb83b` though: it was just a refactoring change.
 How can I look deeper in history? More specifically, I'd like to run `git blame`
-on a point in time *before* commit `5d478f6cb83b`:
+on a point in time
+[*before*](https://stackoverflow.com/questions/5098256/how-can-i-view-prior-commits-with-git-blame) commit `5d478f6cb83b`:
 
 ```shell
 % git --no-pager blame 5d478f6cb83b^ templates/secret-aws-info.yaml
