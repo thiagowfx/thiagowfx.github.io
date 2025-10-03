@@ -23,9 +23,10 @@ tags:
 
 Silly, but clever.
 
-Alternatively: look into [JSON5](https://json5.org/) ("JSON for Humans"),
+Alternatively: look into [JSON5](https://json5.org/) ("JSON for Humans"), or
 [JSONC](https://jsonc.org/) ("JSON with comments"), or
-[HJSON](https://hjson.github.io/) ("a user interface for JSON").
+[HJSON](https://hjson.github.io/) ("a user interface for JSON"), or
+[jsonl](https://jsonlines.org/) ("JSON Lines").
 
 Obligatory:
 
