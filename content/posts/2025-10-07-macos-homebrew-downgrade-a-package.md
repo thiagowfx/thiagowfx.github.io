@@ -21,8 +21,6 @@ Seahorse::Client::NetworkingError: SSL_connect returned=1 errno=0 peeraddr={reda
 /Users/thiago.perrotta/.rbenv/versions/3.2.4/lib/ruby/3.2.0/net/http.rb:1580:in `do_start'
 /Users/thiago.perrotta/.rbenv/versions/3.2.4/lib/ruby/3.2.0/net/http.rb:1575:in `start'
 /Users/thiago.perrotta/.rbenv/versions/3.2.4/lib/ruby/3.2.0/delegate.rb:87:in `method_missing'
-/Users/thiago.perrotta/Tulip/mulch/vendor/ruby/3.2.0/gems/aws-sdk-core-3.205.0/lib/seahorse/client/net_http/connection_pool.rb:307:in `start_session'
-/Users/thiago.perrotta/Tulip/mulch/vendor/ruby/3.2.0/gems/aws-sdk-core-3.205.0/lib/seahorse/client/net_http/connection_pool.rb:102:in `session_for'
 [...]
 ```
 
