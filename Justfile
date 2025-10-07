@@ -2,17 +2,18 @@
 # https://github.com/casey/just
 
 editor := env_var_or_default("EDITOR", "vim")
+port := env_var_or_default("PORT", "1313")
 
 # Start a hugo server in watch mode
 watch preview="true" *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    additional_flags=()
+    additional_flags=""
     if [ "{{ preview }}" = "true" ]; then
-    	additional_flags+=("--openBrowser" "--navigateToChanged")
+      additional_flags="--openBrowser --navigateToChanged"
     fi
-    hugo server --buildDrafts --port ${PORT:-1313} --watch "${additional_flags[@]}" {{ args }}
+    hugo server --buildDrafts --port {{ port }} --watch $additional_flags {{ args }}
 
 # Build the blog as in production
 build *args:
