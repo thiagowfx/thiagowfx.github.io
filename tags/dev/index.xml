@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 06 Oct 2025 17:31:30 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>claude code: custom commands</title><link>https://perrotta.dev/2025/10/claude-code-custom-commands/</link><pubDate>Mon, 06 Oct 2025 17:31:30 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/claude-code-custom-commands/</guid><description>&lt;p>&lt;a href="https://www.claude.com/product/claude-code">Claude Code&lt;/a> supports &lt;a href="https://docs.claude.com/en/docs/claude-code/slash-commands#custom-slash-commands">custom commands&lt;/a>.&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 07 Oct 2025 10:47:02 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>macOS homebrew: downgrade a package</title><link>https://perrotta.dev/2025/10/macos-homebrew-downgrade-a-package/</link><pubDate>Tue, 07 Oct 2025 10:47:02 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/macos-homebrew-downgrade-a-package/</guid><description>&lt;p>Yesterday we could no longer ssh to deploy servers (via a ruby-based wrapper we
+use).&lt;/p>
+&lt;p>This was bad™.&lt;/p>
+&lt;p>The error message looked like this:&lt;/p>
+&lt;pre tabindex="0">&lt;code>[...]
+Seahorse::Client::NetworkingError: SSL_connect returned=1 errno=0 peeraddr={redacted}:443 state=error: certificate verify failed (unable to get certificate CRL)
+/Users/thiago.perrotta/.rbenv/versions/3.2.4/lib/ruby/3.2.0/net/protocol.rb:46:in `connect_nonblock&amp;#39;
+/Users/thiago.perrotta/.rbenv/versions/3.2.4/lib/ruby/3.2.0/net/protocol.rb:46:in `ssl_socket_connect&amp;#39;
+/Users/thiago.perrotta/.rbenv/versions/3.2.4/lib/ruby/3.2.0/net/http.rb:1674:in `connect&amp;#39;
+/Users/thiago.perrotta/.rbenv/versions/3.2.4/lib/ruby/3.2.0/net/http.rb:1580:in `do_start&amp;#39;
+/Users/thiago.perrotta/.rbenv/versions/3.2.4/lib/ruby/3.2.0/net/http.rb:1575:in `start&amp;#39;
+/Users/thiago.perrotta/.rbenv/versions/3.2.4/lib/ruby/3.2.0/delegate.rb:87:in `method_missing&amp;#39;
+/Users/thiago.perrotta/Tulip/mulch/vendor/ruby/3.2.0/gems/aws-sdk-core-3.205.0/lib/seahorse/client/net_http/connection_pool.rb:307:in `start_session&amp;#39;
+/Users/thiago.perrotta/Tulip/mulch/vendor/ruby/3.2.0/gems/aws-sdk-core-3.205.0/lib/seahorse/client/net_http/connection_pool.rb:102:in `session_for&amp;#39;
+[...]
+&lt;/code>&lt;/pre>&lt;p>It was an error in OpenSSL.&lt;/p>
+&lt;p>There had been a new release a few days earlier,
+&lt;a href="https://github.com/openssl/openssl/releases/tag/openssl-3.6.0">3.6.0&lt;/a>.&lt;/p>
+&lt;p>Suspicious!&lt;/p>
+&lt;p>In order to restore our ability to ssh to deploy servers as quickly as possible,
+we decided to downgrade to 3.5.&lt;/p>
+&lt;p>This proved to be a bit more painful than it should have been in 2025:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>brew install openssl@3.5
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>brew pin openssl@3.5 &lt;span style="color:#7f848e"># prevent upgrades&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>brew uninstall --ignore-dependencies openssl@3
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>--ignore-dependencies&lt;/code> is needed because there is a ton of packages that depend
+on OpenSSL.&lt;/p>
+&lt;p>This is not enough.&lt;/p>
+&lt;p>Using our ruby-based tool to ssh into servers would yield another error. The
+tool was still trying to use OpenSSL 3.6.0, as the library paths were
+hard-coded. Ugh.&lt;/p>
+&lt;p>New attempt:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>rbenv install 3.3.9 &lt;span style="color:#7f848e"># compile / install a new version of ruby -&amp;gt; it will link against OpenSSL 3.5&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">$EDITOR&lt;/span> &amp;lt;mulch&amp;gt;/.ruby-version &lt;span style="color:#7f848e"># upgrade to the version above&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Installing a new version of ruby ends up compiling / linking libraries against
+OpenSSL 3.5. Now we regained the ability to ssh.&lt;/p>
+&lt;p>Now let&amp;rsquo;s investigate the root cause.&lt;/p>
+&lt;p>There was no bug report in homebrew.&lt;/p>
+&lt;p>Next: OpenSSL. &lt;a href="https://github.com/openssl/openssl/issues/28758">#28758&lt;/a>:&lt;/p>
+&lt;blockquote>
+&lt;p>OpenSSL 3.6.0 results in error: certificate verify failed (unable to get certificate CRL) #28758&lt;/p>
+&lt;/blockquote>
+&lt;p>Yes! That&amp;rsquo;s the one.&lt;/p>
+&lt;p>From there, someone linked to
+&lt;a href="https://github.com/ruby/openssl/issues/949">&lt;code>ruby/openssl&lt;/code>&lt;/a> (a core gem), which
+was precisely the issue we were having.&lt;/p>
+&lt;p>There was another workaround in that thread, but we didn&amp;rsquo;t need it.&lt;/p>
+&lt;p>Eventually a fix was
+&lt;a href="https://github.com/ruby/openssl/issues/949#issuecomment-3370358680">released&lt;/a>.&lt;/p>
+&lt;p>I thought to run &lt;code>gem update openssl&lt;/code> (or similar) to incorporate it, but it
+turned out that &lt;code>openssl&lt;/code> is a system gem, therefore it was not listed in our
+&lt;code>Gemfile.lock&lt;/code>.&lt;/p>
+&lt;p>A workaround: explicitly add it to our &lt;code>gemspec&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-ruby" data-lang="ruby">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">spec&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">add_runtime_dependency&lt;/span> &lt;span style="color:#98c379">&amp;#39;openssl&amp;#39;&lt;/span>, &lt;span style="color:#98c379">&amp;#39;~&amp;gt; 3.2.2&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then run &lt;code>bundle install&lt;/code>.&lt;/p>
+&lt;p>Now everything works. We can undo the original workaround:&lt;/p>
+&lt;pre tabindex="0">&lt;code>brew unpin openssl@3.5
+brew uninstall openssl@3.5
+brew install openssl@3
+&lt;/code>&lt;/pre></description></item><item><title>claude code: custom commands</title><link>https://perrotta.dev/2025/10/claude-code-custom-commands/</link><pubDate>Mon, 06 Oct 2025 17:31:30 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/claude-code-custom-commands/</guid><description>&lt;p>&lt;a href="https://www.claude.com/product/claude-code">Claude Code&lt;/a> supports &lt;a href="https://docs.claude.com/en/docs/claude-code/slash-commands#custom-slash-commands">custom commands&lt;/a>.&lt;/p>
 &lt;p>The precise term is &amp;ldquo;custom slash commands&amp;rdquo;:&lt;/p>
 &lt;blockquote>
 &lt;p>Custom slash commands allow you to define frequently-used prompts as Markdown
@@ -1449,63 +1508,4 @@ pages or getting assistance from an LLM. &lt;em>C&amp;rsquo;est la vie&lt;/em>.&
 | 2024-12-05T17:52:09.775000+01:00 | 1.0.0 |
 +-----------------------------------+-----------------------------------------------------+
 &lt;/code>&lt;/pre>&lt;p>If you omit &lt;code>--output table&lt;/code>, it emits JSON instead.&lt;/p>
-&lt;p>This is faster than logging into the AWS Console.&lt;/p></description></item><item><title>Dockerfile: CMD and ENTRYPOINT: shell and exec forms</title><link>https://perrotta.dev/2025/08/dockerfile-cmd-and-entrypoint-shell-and-exec-forms/</link><pubDate>Mon, 18 Aug 2025 15:09:28 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/dockerfile-cmd-and-entrypoint-shell-and-exec-forms/</guid><description>&lt;p>Today I filed a github issue against the
-&lt;a href="https://github.com/reteps/dockerfmt/">&lt;code>dockerfmt&lt;/code>&lt;/a> project, which I copy
-verbatim here given its surprising behavior.&lt;/p>
-&lt;h2 id="retepsdockerfmt33httpsgithubcomretepsdockerfmtissues33">&lt;a href="https://github.com/reteps/dockerfmt/issues/33">reteps/dockerfmt#33&lt;/a>&lt;/h2>
-&lt;p>Consider this sample &lt;code>Dockerfile&lt;/code> (abridged version of a real-world scenario):&lt;/p>
-&lt;pre tabindex="0">&lt;code>ENTRYPOINT sleep infinity
-CMD sleep infinity
-&lt;/code>&lt;/pre>&lt;p>Let&amp;rsquo;s run &lt;code>dockerfmt&lt;/code> (v0.3.7) in it:&lt;/p>
-&lt;pre tabindex="0">&lt;code>% dockerfmt Dockerfile
-ENTRYPOINT [&amp;#34;sleep&amp;#34;, &amp;#34;infinity&amp;#34;]
-CMD [&amp;#34;sleep&amp;#34;, &amp;#34;infinity&amp;#34;]
-&lt;/code>&lt;/pre>&lt;p>At first glance, everything looks OK. The problem is that this transformation is not a no-op.&lt;/p>
-&lt;p>Looking at the docs:&lt;/p>
-&lt;ul>
-&lt;li>&lt;a href="https://docs.docker.com/reference/dockerfile/#cmd">https://docs.docker.com/reference/dockerfile/#cmd&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://docs.docker.com/reference/dockerfile/#shell-and-exec-form">https://docs.docker.com/reference/dockerfile/#shell-and-exec-form&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;blockquote>
-&lt;p>If CMD is used to provide default arguments for the ENTRYPOINT instruction, both the CMD and ENTRYPOINT instructions should be specified in the &lt;a href="https://docs.docker.com/reference/dockerfile/#exec-form">exec form&lt;/a>.&lt;/p>
-&lt;/blockquote>
-&lt;p>The difference is:&lt;/p>
-&lt;ul>
-&lt;li>the original code yields &lt;code>sleep infinity&lt;/code> (correct!)&lt;/li>
-&lt;li>the transformed code yields &lt;code>sleep infinity sleep infinity&lt;/code>, which is an error (sleep: &lt;code>no such argument sleep&lt;/code>)&lt;/li>
-&lt;/ul>
-&lt;p>One could argue that the original code is odd – the following would be conceptually simpler, and more idiomatic:&lt;/p>
-&lt;pre tabindex="0">&lt;code>ENTRYPOINT [&amp;#34;sleep&amp;#34;]
-CMD [&amp;#34;infinity&amp;#34;]
-&lt;/code>&lt;/pre>&lt;p>Or even:&lt;/p>
-&lt;pre tabindex="0">&lt;code>ENTRYPOINT [&amp;#34;sleep&amp;#34;, &amp;#34;infinity&amp;#34;]
-&lt;/code>&lt;/pre>&lt;p>Nonetheless, IMHO &lt;code>dockerfmt&lt;/code> should not change the behavior in this case.&lt;/p>
-&lt;h2 id="notes">Notes&lt;/h2>
-&lt;p>&lt;a href="https://docs.docker.com/reference/dockerfile/#shell-and-exec-form">&lt;code>shell&lt;/code> and &lt;code>exec&lt;/code>
-forms&lt;/a> have
-distinct forms:&lt;/p>
-&lt;ul>
-&lt;li>&lt;code>INSTRUCTION [&amp;quot;executable&amp;quot;, &amp;quot;param1&amp;quot;, &amp;quot;param2&amp;quot;]&lt;/code> (exec form)&lt;/li>
-&lt;li>&lt;code>INSTRUCTION command param1 param2&lt;/code> (shell form)&lt;/li>
-&lt;/ul>
-&lt;blockquote>
-&lt;p>The exec form makes it possible to avoid shell string munging, and to invoke
-commands using a specific command shell, or any other executable. It uses a
-JSON array syntax, where each element in the array is a command, flag, or
-argument.&lt;/p>
-&lt;/blockquote>
-&lt;blockquote>
-&lt;p>The shell form is more relaxed, and emphasizes ease of use, flexibility, and
-readability. The shell form automatically uses a command shell, whereas the
-exec form does not.&lt;/p>
-&lt;/blockquote>
-&lt;p>&lt;code>dockerfmt&lt;/code>
-&lt;a href="https://github.com/reteps/dockerfmt/blob/290b5f78fbf3134024eb3366880754beee5dbe69/lib/format.go#L483">prefers&lt;/a>
-the exec form, for whatever reason.&lt;/p>
-&lt;p>There&amp;rsquo;s even a &lt;a href="https://github.com/reteps/dockerfmt/blob/290b5f78fbf3134024eb3366880754beee5dbe69/lib/format.go#L480">code
-comment&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>&lt;code>// this can technically change behavior. https://docs.docker.com/reference/dockerfile/#understand-how-cmd-and-entrypoint-interact&lt;/code>&lt;/p>
-&lt;/blockquote>
-&lt;p>Surprise surprise! The issue I reported is precisely due to a change of
-behavior.&lt;/p></description></item></channel></rss>
+&lt;p>This is faster than logging into the AWS Console.&lt;/p></description></item></channel></rss>
