@@ -68,7 +68,8 @@ Then we can proceed with the image sync:
 skopeo sync \
   --dest-creds "AWS:$(aws ecr get-login-password --region cn-north-1)" \
   --override-os linux --override-arch amd64 \
-  --src docker --dest docker \
+  --src docker \
+  --dest docker \
   quay.io/argoproj/argocd:v2.12.6 \
   {account_id_mfa}.dkr.ecr.cn-north-1.amazonaws.com.cn/quay.io/argoproj
 ```
