@@ -9,7 +9,7 @@ A brief list of disposable / throwaway account resources:
 
 ## Email inbox
 
-- https://dispostable.com/
+- ~~https://dispostable.com/~~
 - https://10minutemail.com/
 - https://yadim.dismail.de/
 - https://www.mailinator.com/ (recommended by [HIBP](https://haveibeenpwned.com/))
@@ -17,6 +17,8 @@ A brief list of disposable / throwaway account resources:
 ## NAT / public URLs
 
 - https://ngrok.com/
+
+Or search for "tunnelling".
 
 ## Pastebin
 
@@ -28,6 +30,10 @@ A brief list of disposable / throwaway account resources:
 ## SMS
 
 - https://smsreceivefree.com/
+
+## URL Shortener
+
+- https://phishyurl.com/ – Create a phishy URL
 
 ## Appendix
 
