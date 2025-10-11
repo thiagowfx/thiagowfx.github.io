@@ -35,6 +35,7 @@ This list is intentionally non-exhaustive.
 
 <!-- keep-sorted start -->
 - [Deutsche Bahn (DB)](https://int.bahn.de/en/) for Germany 🇩🇪
+- [MAV](https://www.mavcsoport.hu/en) for Hungary 🇭🇺
 - [NS](https://www.ns.nl/en) for the Netherlands 🇳🇱
 - [SBB](https://www.sbb.ch/en) for Switzerland 🇨🇭
 - [SNCF](https://www.sncf-connect.com/en-en/) for France 🇫🇷
@@ -63,6 +64,10 @@ Germany 🇩🇪:
   - ⚠️ [Construction changes](https://www.s-bahn-muenchen.de/fahren/baustellen)
 - [Deutsche Bahn (DB)](https://reiseauskunft.bahn.de/bin/bhftafel.exe/en?ld=96252&country=DEU&rt=1&newrequest=yes&&country=GBR)
 - [**Bahn App**](https://bahnapp.com/): minimalist, with a superb design, better (easier to use and more reliable) than DB
+
+World 🌎:
+
+- https://bahn.expert/
 
 ## In-depth resources
 
