@@ -38,7 +38,9 @@
     <details class="year-group" {{ if eq .Key $currentYear }}open{{ end }}>
       <summary><strong>{{ .Key }}</strong> ({{ len .Pages }} {{ if eq (len .Pages) 1 }}post{{ else }}posts{{ end }})</summary>
       <ul class="blog-posts">
+        {{ $lastDate := "" }}
         {{ range .Pages }}
+        {{ $currentDate := .Date.Format "02 Jan, 2006" }}
         <li>
           <span>
             <time
@@ -46,7 +48,9 @@
               pubdate
               class="pubdate-list"
             >
-              {{ .Date.Format (default "02 Jan, 2006" .Site.Params.dateFormat) }}
+              {{ if ne $currentDate $lastDate }}
+                {{ .Date.Format (default "02 Jan, 2006" .Site.Params.dateFormat) }}
+              {{ end }}
             </time>
           </span>
           <a href="{{ .Permalink }}">
@@ -55,6 +59,7 @@
             {{- end }} {{ .Title }}
           </a>
         </li>
+        {{ $lastDate = $currentDate }}
         {{ end }}
       </ul>
     </details>
