@@ -3,6 +3,7 @@ title: "Python: nested loops"
 date: 2025-08-29T20:30:39+02:00
 tags:
   - coding
+rss: false
 ---
 
 Given a list `v = [1, 2, 3, 4]`, use a double nested[^1] loop to iterate over

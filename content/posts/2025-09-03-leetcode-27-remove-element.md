@@ -3,6 +3,7 @@ title: "LeetCode #27: Remove Element"
 date: 2025-09-03T01:09:13+02:00
 tags:
   - coding
+rss: false
 ---
 
 [LeetCode #27: Remove Element](https://leetcode.com/problems/remove-element/):

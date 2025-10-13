@@ -3,6 +3,7 @@ title: "LeetCode #139: Word Break"
 date: 2025-09-16T01:08:11+02:00
 tags:
   - coding
+rss: false
 ---
 
 [LeetCode #139: Word Break](https://leetcode.com/problems/word-break/):

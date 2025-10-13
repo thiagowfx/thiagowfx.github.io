@@ -3,6 +3,7 @@ title: "LLM as online judge"
 date: 2025-09-16T12:56:59+02:00
 tags:
   - coding
+rss: false
 ---
 
 In 2025 it is quite comfortable to use LLMs (GenAI) to grade your code

@@ -4,6 +4,7 @@ date: 2024-12-12T19:30:53-03:00
 tags:
   - aoc
   - dev
+rss: false
 ---
 
 Assuming you are following this year's advent of code, you are welcome to join

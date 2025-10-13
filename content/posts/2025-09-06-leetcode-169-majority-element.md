@@ -3,6 +3,7 @@ title: "LeetCode #169: Majority Element"
 date: 2025-09-06T01:37:01+02:00
 tags:
   - coding
+rss: false
 ---
 
 [LeetCode #169: Majority Element](https://leetcode.com/problems/majority-element/):

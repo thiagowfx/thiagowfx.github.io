@@ -3,6 +3,7 @@ title: "LeetCode #45: Jump Game II"
 date: 2025-09-07T16:44:31+02:00
 tags:
   - coding
+rss: false
 ---
 
 [LeetCode #45: Jump Game II](https://leetcode.com/problems/jump-game-ii/):

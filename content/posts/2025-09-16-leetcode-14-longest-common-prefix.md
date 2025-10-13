@@ -3,6 +3,7 @@ title: "LeetCode #14: Longest Common Prefix"
 date: 2025-09-16T23:51:34+02:00
 tags:
   - coding
+rss: false
 ---
 
 [LeetCode #14: Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/):

@@ -3,6 +3,7 @@ title: "LeetCode #70: Climbing Stairs"
 date: 2025-09-15T22:35:21+02:00
 tags:
   - coding
+rss: false
 ---
 
 [LeetCode #70: Climbing Stairs](https://leetcode.com/problems/climbing-stairs/):

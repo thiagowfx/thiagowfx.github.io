@@ -3,6 +3,7 @@ title: "LeetCode #202: Happy Number"
 date: 2025-09-13T00:47:22+02:00
 tags:
   - coding
+rss: false
 ---
 
 [LeetCode #202: Happy Number](https://leetcode.com/problems/happy-number/):

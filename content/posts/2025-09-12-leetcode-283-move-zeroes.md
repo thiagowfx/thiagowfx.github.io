@@ -3,6 +3,7 @@ title: "LeetCode #283: Move Zeroes"
 date: 2025-09-12T23:07:57+02:00
 tags:
   - coding
+rss: false
 ---
 
 [LeetCode #283: Move Zeroes](https://leetcode.com/problems/move-zeroes/):

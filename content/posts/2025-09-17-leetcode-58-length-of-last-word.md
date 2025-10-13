@@ -3,6 +3,7 @@ title: "LeetCode #58: Length of Last Word"
 date: 2025-09-17T00:19:08+02:00
 tags:
   - coding
+rss: false
 ---
 
 [LeetCode #58: Length of Last Word](https://leetcode.com/problems/length-of-last-word/):
