@@ -20,4 +20,6 @@ code](https://adventofcode.com/) posts there as well.
 Problem sets:
 
 * [**LeetCode**](https://leetcode.com/)
+  * [Arrays](https://leetcode.com/problem-list/array/)
+  * [Top 150](https://leetcode.com/studyplan/top-interview-150/)
 * [HackerRank](https://www.hackerrank.com/)
