@@ -96,7 +96,7 @@ There's no need to fiddle with `$PATH`, as this is already handled by homebrew:
 lrwxr-xr-x@ - thiago.perrotta 13 Oct 14:43 /opt/homebrew/bin/aws_china_mfa -> ../Cellar/pancake/HEAD-1a58c53/bin/aws_china_mfa*
 ```
 
-[^1]: If this idea sticks, I intend to create a separate
+[^1]: If this idea sticks, I intend to create a dedicated
     `thiagowfx/homebrew-pancake` repo, so that you can tap it with `brew tap
     thiagowfx/pancake`, without the need of specifying the full repository URL
     as per
