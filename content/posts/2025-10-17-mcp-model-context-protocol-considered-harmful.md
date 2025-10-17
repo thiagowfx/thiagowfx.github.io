@@ -144,8 +144,8 @@ The Sonnet 4 model has a context window of 200k tokens.
 
 These 3 MCP servers, alone, consume about one third of them. **36%**!
 
-If you include system tools + the system prompt in the mix, practically half of
-the total available context window is already gone.
+If you account for system tools + the system prompt in the mix, practically half
+of the total available context window is already gone.
 
 ![south park agent context window aaaand it's gone](https://i.imgflip.com/a9djwa.jpg)
 
