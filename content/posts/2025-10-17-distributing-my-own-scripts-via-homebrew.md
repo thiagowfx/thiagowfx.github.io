@@ -6,7 +6,7 @@ tags:
   - dev
 ---
 
-Thank you [Justin
+Thanks [Justin
 Searls](https://justin.searls.co/posts/how-to-distribute-your-own-scripts-via-homebrew/)
 for the idea:
 
