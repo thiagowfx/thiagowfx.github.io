@@ -147,6 +147,9 @@ These 3 MCP servers, alone, consume about one third of them. **36%**!
 If you account for system tools + the system prompt in the mix, practically half
 of the total available context window is already gone.
 
+MCP tool definitions are wasteful, taking valuable ~~real~~ virtual estate,
+distracting the model, increasing overall costs.
+
 ![south park agent context window aaaand it's gone](https://i.imgflip.com/a9djwa.jpg)
 
 As [Simon Willison](https://simonwillison.net/2025/Oct/14/agentic-engineering/)
