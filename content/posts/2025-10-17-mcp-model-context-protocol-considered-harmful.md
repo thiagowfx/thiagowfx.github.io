@@ -140,7 +140,7 @@ And yet:
      └ mcp__github__update_pull_request_branch (github): 655 tokens
 ```
 
-The Sonnet 4 model has a context of 200k tokens.
+The Sonnet 4 model has a context window of 200k tokens.
 
 These 3 MCP servers, alone, consume about one third of them. **36%**!
 
