@@ -29,9 +29,9 @@ program.
 
 All you have to do is:
 
-- schedule an appointment in the Genius Bar,
+- [schedule an appointment](https://getsupport.apple.com/?caller=sfaq&SG=SG003&category_id=SC0999&symptom_id=99911) in the Genius Bar,
 - bring your iPhone there,
-- and then retrieve it a couple of hours later[^2].
+- and then retrieve it a couple of hours later[^2] ("same day service").
 
 Is it cost effective? Hell yes. I paid about 10% of the original purchase
 price, and it's like I just got a brand new iPhone.

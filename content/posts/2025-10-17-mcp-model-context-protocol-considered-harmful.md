@@ -171,3 +171,6 @@ Desktop versus rolling your tiling window manager and building from scratch
 an environment tailored to your own needs.
 
 Stay safe from the bloat out there.
+
+**Update(2025-10-18)**: See also [Skills c:ompared to
+MCP](https://simonwillison.net/2025/Oct/16/claude-skills/#skills-compared-to-mcp).
