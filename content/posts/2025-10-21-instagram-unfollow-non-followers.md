@@ -62,7 +62,7 @@ Write a python script to parse all people I follow that do not follow me back.
 Output username + profile URLs in each line.
 ```
 
-I am a fan of this one-shot prompt structure[^2]:
+I am a fan of this one-shot prompt structure / style[^2]:
 
 - you are a superb ${FOO}
 - this is some context for you
