@@ -1,6 +1,144 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/posts/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 18 Oct 2025 12:49:20 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>The Apple Store</title><link>https://perrotta.dev/2025/10/the-apple-store/</link><pubDate>Sat, 18 Oct 2025 12:49:20 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/the-apple-store/</guid><description>&lt;p>After owning an iPhone 14 Pro for more than two and a half years, its maximum
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 21 Oct 2025 00:13:11 +0200</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Instagram: unfollow non-followers</title><link>https://perrotta.dev/2025/10/instagram-unfollow-non-followers/</link><pubDate>Tue, 21 Oct 2025 00:13:11 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/instagram-unfollow-non-followers/</guid><description>&lt;p>Sometimes connections simply fade away. Life happens. Privacy prevails. Then why
+don&amp;rsquo;t people remove them both ways (follower + following)? If you don&amp;rsquo;t want to
+stay connected with someone any longer, it is good courtesy to do so
+symmetrically. If you just unfollow someone, without removing them from your
+follower list, then you tacitly demonstrate that you care to a great extent
+about invisible internet karma points /shrug.&lt;/p>
+&lt;p>Instagram doesn&amp;rsquo;t make it easy to find those who do not follow you back.
+However, it is possible to obtain this information with a little bit of
+scripting.&lt;/p>
+&lt;ul>
+&lt;li>Go to &lt;a href="https://www.instagram.com/download/request/">Go to Instagram → Settings → Privacy and security → Download your
+information&lt;/a>.&lt;/li>
+&lt;li>Choose JSON (not HTML).&lt;/li>
+&lt;li>Select &amp;ldquo;Connections&amp;rdquo; only and, for the period, choose from the beginning of time&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/li>
+&lt;li>Confirm the prompt.&lt;/li>
+&lt;li>Instagram will email you a ZIP file. That should take a couple of minutes.&lt;/li>
+&lt;li>Download the ZIP (&lt;code>instagram-{username}-YYYY-MM-DD-{id}.zip&lt;/code>) and unpack it.
+Structure:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% tree connections
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>connections
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>└── followers_and_following
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── blocked_profiles.json
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── close_friends.json
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── follow_requests_you&lt;span style="color:#98c379">&amp;#39;ve_received.json
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> ├── followers_1.json
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> ├── following.json
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> ├── hide_story_from.json
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> ├── pending_follow_requests.json
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> ├── profiles_you&amp;#39;&lt;/span>ve_favorited.json
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── recent_follow_requests.json
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── recently_unfollowed_profiles.json
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> └── removed_suggestions.json
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>(Yes, one of these files has a &lt;code>'&lt;/code> in the name. It was not a typo.)&lt;/p>
+&lt;p>We&amp;rsquo;re interested in &lt;code>followers_N.json&lt;/code> and &lt;code>following.json&lt;/code>.&lt;/p>
+&lt;p>From this point on, vibe code and chill. A single, well-crafted prompted is
+enough. For example:&lt;/p>
+&lt;pre tabindex="0">&lt;code>You are a world-class software developer.
+
+I exported all my Instagram data.
+
+Write a python script to parse all people I follow that do not follow me back.
+
+Output username + profile URLs in each line.
+&lt;/code>&lt;/pre>&lt;p>I am a fan of this one-shot prompt structure&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>:&lt;/p>
+&lt;ul>
+&lt;li>you are a superb ${FOO}&lt;/li>
+&lt;li>this is some context for you&lt;/li>
+&lt;li>do this for me&lt;/li>
+&lt;li>output in the desired format&lt;/li>
+&lt;/ul>
+&lt;p>The resulting script:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#!/usr/bin/env python3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">import&lt;/span> &lt;span style="color:#e06c75">json&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">import&lt;/span> &lt;span style="color:#e06c75">csv&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">from&lt;/span> &lt;span style="color:#e06c75">pathlib&lt;/span> &lt;span style="color:#c678dd">import&lt;/span> &lt;span style="color:#e06c75">Path&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Base path where your JSON files are&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">base&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">Path&lt;/span>(&lt;span style="color:#98c379">&amp;#34;connections/followers_and_following&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">def&lt;/span> &lt;span style="color:#61afef;font-weight:bold">extract_usernames&lt;/span>(&lt;span style="color:#e06c75">file_path&lt;/span>):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;&amp;#34;&amp;#34;Extract Instagram usernames from a followers/following JSON file.&amp;#34;&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">with&lt;/span> &lt;span style="color:#e5c07b">open&lt;/span>(&lt;span style="color:#e06c75">file_path&lt;/span>) &lt;span style="color:#c678dd">as&lt;/span> &lt;span style="color:#e06c75">f&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">data&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">json&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">load&lt;/span>(&lt;span style="color:#e06c75">f&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#7f848e"># Handle both old and new formats&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e5c07b">isinstance&lt;/span>(&lt;span style="color:#e06c75">data&lt;/span>, &lt;span style="color:#e5c07b">dict&lt;/span>):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">for&lt;/span> &lt;span style="color:#e06c75">v&lt;/span> &lt;span style="color:#56b6c2">in&lt;/span> &lt;span style="color:#e06c75">data&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">values&lt;/span>():
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e5c07b">isinstance&lt;/span>(&lt;span style="color:#e06c75">v&lt;/span>, &lt;span style="color:#e5c07b">list&lt;/span>):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">data&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">v&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">break&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#56b6c2">not&lt;/span> &lt;span style="color:#e5c07b">isinstance&lt;/span>(&lt;span style="color:#e06c75">data&lt;/span>, &lt;span style="color:#e5c07b">list&lt;/span>):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">raise&lt;/span> &lt;span style="color:#e06c75">ValueError&lt;/span>(&lt;span style="color:#98c379">f&lt;/span>&lt;span style="color:#98c379">&amp;#34;Unexpected format in &lt;/span>&lt;span style="color:#98c379">{&lt;/span>&lt;span style="color:#e06c75">file_path&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">usernames&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e5c07b">set&lt;/span>()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">for&lt;/span> &lt;span style="color:#e06c75">item&lt;/span> &lt;span style="color:#56b6c2">in&lt;/span> &lt;span style="color:#e06c75">data&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">try&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">entry&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">item&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">get&lt;/span>(&lt;span style="color:#98c379">&amp;#34;string_list_data&amp;#34;&lt;/span>, [])[&lt;span style="color:#d19a66">0&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">username&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">entry&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">get&lt;/span>(&lt;span style="color:#98c379">&amp;#34;value&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#e06c75">entry&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">get&lt;/span>(&lt;span style="color:#98c379">&amp;#34;href&amp;#34;&lt;/span>, &lt;span style="color:#98c379">&amp;#34;&amp;#34;&lt;/span>)&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">rstrip&lt;/span>(&lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span>)&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">split&lt;/span>(&lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span>)[&lt;span style="color:#56b6c2">-&lt;/span>&lt;span style="color:#d19a66">1&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#e06c75">entry&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">get&lt;/span>(&lt;span style="color:#98c379">&amp;#34;username&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> )
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">username&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">usernames&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">add&lt;/span>(&lt;span style="color:#e06c75">username&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">except&lt;/span> &lt;span style="color:#e06c75">Exception&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">continue&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">return&lt;/span> &lt;span style="color:#e06c75">usernames&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># --- Load followers (handles multiple files) ---&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">followers&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e5c07b">set&lt;/span>()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">for&lt;/span> &lt;span style="color:#e06c75">path&lt;/span> &lt;span style="color:#56b6c2">in&lt;/span> &lt;span style="color:#e06c75">base&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">glob&lt;/span>(&lt;span style="color:#98c379">&amp;#34;followers_*.json&amp;#34;&lt;/span>):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">followers&lt;/span> &lt;span style="color:#56b6c2">|=&lt;/span> &lt;span style="color:#e06c75">extract_usernames&lt;/span>(&lt;span style="color:#e06c75">path&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># --- Load following ---&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">following&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">extract_usernames&lt;/span>(&lt;span style="color:#e06c75">base&lt;/span> &lt;span style="color:#56b6c2">/&lt;/span> &lt;span style="color:#98c379">&amp;#34;following.json&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># --- Compute differences ---&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">not_following_back&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e5c07b">sorted&lt;/span>(&lt;span style="color:#e06c75">following&lt;/span> &lt;span style="color:#56b6c2">-&lt;/span> &lt;span style="color:#e06c75">followers&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">you_dont_follow_back&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e5c07b">sorted&lt;/span>(&lt;span style="color:#e06c75">followers&lt;/span> &lt;span style="color:#56b6c2">-&lt;/span> &lt;span style="color:#e06c75">following&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">mutuals&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e5c07b">sorted&lt;/span>(&lt;span style="color:#e06c75">followers&lt;/span> &lt;span style="color:#56b6c2">&amp;amp;&lt;/span> &lt;span style="color:#e06c75">following&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">def&lt;/span> &lt;span style="color:#61afef;font-weight:bold">write_csv&lt;/span>(&lt;span style="color:#e06c75">filename&lt;/span>, &lt;span style="color:#e06c75">users&lt;/span>):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">with&lt;/span> &lt;span style="color:#e5c07b">open&lt;/span>(&lt;span style="color:#e06c75">filename&lt;/span>, &lt;span style="color:#98c379">&amp;#34;w&amp;#34;&lt;/span>, &lt;span style="color:#e06c75">newline&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;&amp;#34;&lt;/span>, &lt;span style="color:#e06c75">encoding&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;utf-8&amp;#34;&lt;/span>) &lt;span style="color:#c678dd">as&lt;/span> &lt;span style="color:#e06c75">f&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">writer&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">csv&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">writer&lt;/span>(&lt;span style="color:#e06c75">f&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">writer&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">writerow&lt;/span>([&lt;span style="color:#98c379">&amp;#34;username&amp;#34;&lt;/span>, &lt;span style="color:#98c379">&amp;#34;profile_url&amp;#34;&lt;/span>])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">for&lt;/span> &lt;span style="color:#e06c75">user&lt;/span> &lt;span style="color:#56b6c2">in&lt;/span> &lt;span style="color:#e06c75">users&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">writer&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">writerow&lt;/span>([&lt;span style="color:#e06c75">user&lt;/span>, &lt;span style="color:#98c379">f&lt;/span>&lt;span style="color:#98c379">&amp;#34;https://www.instagram.com/&lt;/span>&lt;span style="color:#98c379">{&lt;/span>&lt;span style="color:#e06c75">user&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">/&amp;#34;&lt;/span>])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e5c07b">print&lt;/span>(&lt;span style="color:#98c379">f&lt;/span>&lt;span style="color:#98c379">&amp;#34;✅ Saved &lt;/span>&lt;span style="color:#98c379">{&lt;/span>&lt;span style="color:#e5c07b">len&lt;/span>(&lt;span style="color:#e06c75">users&lt;/span>)&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379"> entries to &lt;/span>&lt;span style="color:#98c379">{&lt;/span>&lt;span style="color:#e06c75">filename&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># --- Write results ---&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">write_csv&lt;/span>(&lt;span style="color:#98c379">&amp;#34;not_following_back.csv&amp;#34;&lt;/span>, &lt;span style="color:#e06c75">not_following_back&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">write_csv&lt;/span>(&lt;span style="color:#98c379">&amp;#34;you_dont_follow_back.csv&amp;#34;&lt;/span>, &lt;span style="color:#e06c75">you_dont_follow_back&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">write_csv&lt;/span>(&lt;span style="color:#98c379">&amp;#34;mutuals.csv&amp;#34;&lt;/span>, &lt;span style="color:#e06c75">mutuals&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The script was tested in a real account, and I&amp;rsquo;m pleased to state that it works
+as intended.&lt;/p>
+&lt;p>If you use it for the sake of unfollowing people&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup> then it&amp;rsquo;s advisable not to
+automate the unfollowing process, as Instagram could potentially block you.
+Instead, do it manually.&lt;/p>
+&lt;p>May the reduced noise increase your serenity.&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>Or else it won&amp;rsquo;t work.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>I am not here to claim what prompt is the best. Just keep it simple and
+carry on.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:3">
+&lt;p>Why would you run it otherwise?&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>The Apple Store</title><link>https://perrotta.dev/2025/10/the-apple-store/</link><pubDate>Sat, 18 Oct 2025 12:49:20 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/the-apple-store/</guid><description>&lt;p>After owning an iPhone 14 Pro for more than two and a half years, its maximum
 battery capacity degraded to &lt;strong>~76%&lt;/strong>. It is not a terrible number, but the
 general recommendation is to take action whenever it goes below &lt;strong>80%&lt;/strong>, which
 happened a couple of months ago.&lt;/p>
@@ -1684,88 +1822,4 @@ tags:
 &lt;p>Up to a &lt;a href="https://perrotta.dev/2025/03/friction/">certain extent&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Broot</title><link>https://perrotta.dev/2025/09/broot/</link><pubDate>Mon, 15 Sep 2025 12:36:10 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/broot/</guid><description>&lt;p>&lt;a href="https://github.com/Canop/broot">broot&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>A new way to see and navigate directory trees: &lt;a href="https://dystroy.org/broot">https://dystroy.org/broot&lt;/a>&lt;/p>
-&lt;/blockquote>
-&lt;p>It&amp;rsquo;s a mixture of &lt;code>ranger&lt;/code> / &lt;code>mc&lt;/code> (terminal file manager), &lt;code>fzf&lt;/code> (fuzzy file
-finder), &lt;code>tree&lt;/code> (list directory trees in the terminal), &lt;code>ls&lt;/code>, &lt;code>find&lt;/code> / &lt;code>fd&lt;/code>,
-&lt;code>fpp&lt;/code>, &lt;code>grep&lt;/code> / &lt;code>ack&lt;/code> / &lt;code>rg&lt;/code>, all-in-one. I&amp;rsquo;m starting to occasionally use it in
-my daily workflow. Its &lt;a href="https://dystroy.org/broot/">&lt;code>Why?&lt;/code>&lt;/a> page may convince
-you to give it a try.&lt;/p>
-&lt;p>The upstream documentation is quite decent; as such, I do not intend to
-replicate it here. That said, here are a couple of ad-hoc notes.&lt;/p>
-&lt;p>&lt;strong>Usage&lt;/strong>: &lt;code>broot {dir}&lt;/code> or simply &lt;code>broot&lt;/code> to open it in the current directory,
-as you would with &lt;code>ranger&lt;/code>.&lt;/p>
-&lt;p>&lt;code>-c&lt;/code> to &lt;code>open_preview&lt;/code>. I do not know why this is not the default behavior. It
-really should be! It displays the file contents of the currently focused file in
-the right-side pane. We can make it the default:&lt;/p>
-&lt;pre tabindex="0">&lt;code class="language-hjson" data-lang="hjson">~/.config/broot/conf.hjson:
-
-###############################################################
-# Default flags
-# You can set up flags you want broot to start with by
-# default, for example `default_flags=&amp;#34;-ihp&amp;#34;` if you usually want
-# to see hidden and gitignored files and the permissions (then
-# if you don&amp;#39;t want the hidden files at a specific launch,
-# you can launch broot with `br -H`).
-# A popular flag is the `g` one which displays git related info.
-#
-# default_flags:
-default_flags: &amp;#34;-c :open_preview&amp;#34;
-&lt;/code>&lt;/pre>&lt;p>Use the up and down arrows to navigate (or Tab / Shift + Tab). Vi-like
-keybindings (&lt;code>j&lt;/code> / &lt;code>k&lt;/code>) do not work but that&amp;rsquo;s for a good reason, by design:
-there&amp;rsquo;s a permanent command-line bar at the bottom (think of &lt;code>mc&lt;/code>), used to
-issue commands to &lt;code>broot&lt;/code> and/or employ file/directory filtering; we need to be
-able to type in characters there. This takes some getting used to if you&amp;rsquo;re
-coming from &lt;code>ranger&lt;/code>.&lt;/p>
-&lt;p>&lt;code>ENTER&lt;/code>, by default, opens the currently focused file in your visual editor
-(e.g. VSCode, Zed). I am not a fan of this behavior, I&amp;rsquo;d rather it to use
-&lt;code>$EDITOR&lt;/code> (e.g. &lt;code>vim&lt;/code>, &lt;code>emacs&lt;/code>). It&amp;rsquo;s possible to change this behavior, but I
-haven&amp;rsquo;t done so yet. There&amp;rsquo;s a workaround: type in &lt;code>&amp;lt;Space&amp;gt;e&amp;lt;Enter&amp;gt;&lt;/code> (or
-&lt;code>:e&amp;lt;Enter&amp;gt;&lt;/code> like in &lt;code>vim&lt;/code>). This issues the &lt;code>edit&lt;/code> command, which opens
-&lt;code>$EDITOR&lt;/code>. I wish &lt;code>ENTER&lt;/code> would so do out-of-the-box!&lt;/p>
-&lt;p>The main reason to use &lt;code>broot&lt;/code> is due to its excellent and versatile
-&lt;a href="https://dystroy.org/broot/input/">filtering&lt;/a> capabilities, which allows
-composite searches as well. Here&amp;rsquo;s a practical example:&lt;/p>
-&lt;pre tabindex="0">&lt;code>ep/pgbouncer\/values.yaml/&amp;amp;c/default
-&lt;/code>&lt;/pre>&lt;p>&amp;hellip;it searches for all files named &lt;code>pgbouncer/values.yaml&lt;/code> (within or nested in
-PWD) whose file contents include the string &lt;code>default&lt;/code>. Then it displays a
-dynamic list of matches (including previews!) which you can manipulate
-individually or in batches. For example, you could easily open each of them in
-&lt;code>$EDITOR&lt;/code>, or delete all of them, or run &lt;code>sed -i&lt;/code> in all of them.&lt;/p>
-&lt;p>Explanation of the search modes (there are even more):&lt;/p>
-&lt;ul>
-&lt;li>&lt;code>ep/&lt;/code>: exact string search on subpath (full path) – like &lt;code>fd -p&lt;/code>&lt;/li>
-&lt;li>&lt;code>c/&lt;/code>: exact string search on file content – like &lt;code>grep&lt;/code> or &lt;code>ack&lt;/code> or &lt;code>rg&lt;/code>&lt;/li>
-&lt;/ul>
-&lt;p>&lt;code>:gs&lt;/code> opens an interactive tree with files in &lt;code>git status&lt;/code> – comparable to &lt;code>git status | fpp -ko&lt;/code>.&lt;/p>
-&lt;p>We can run &lt;code>sed -i&lt;/code> in all matches. First, define a verb (action) for it:&lt;/p>
-&lt;pre tabindex="0">&lt;code class="language-hjson" data-lang="hjson">~/.config/broot/verbs.hjson:
-
-###############################################################
-# This file contains the verb definitions for broot
-#
-# Some verbs here are examples and not enabled by default: you
-# need to uncomment them if you want to use them.
-#
-# Documentation at https://dystroy.org/broot/verbs/
-###############################################################
-verbs: [
- [...]
- {
- invocation: &amp;#34;sed {arg}&amp;#34;
- shortcut: sed
- apply_to: text_file
- execution: &amp;#34;gsed -i -e {arg} {file}&amp;#34;
- leave_broot: false
- }
- [...]
-]
-&lt;/code>&lt;/pre>&lt;p>Then, after running a search, type in &lt;code>&amp;lt;Space&amp;gt;sed&amp;lt;Space&amp;gt;'s/foo/bar/g'&lt;/code>.&lt;/p>
-&lt;p>Again, why is this not a built-in verb?&lt;/p>
-&lt;p>All things considered, I think &lt;code>broot&lt;/code> needs some polishing in order to become
-easy(ier) to use. It is a powerful tool, but its out-of-the-box devex experience
-leaves a lot to be desired.&lt;/p>
-&lt;p>Another example: &lt;a href="https://github.com/Canop/broot/issues/453">#453&lt;/a>: there&amp;rsquo;s no
-filter history.&lt;/p></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>
