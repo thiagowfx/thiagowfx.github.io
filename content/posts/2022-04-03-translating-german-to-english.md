@@ -34,3 +34,7 @@ As a bonus it doubles down as an English dictionary.
 ## [Apple Dictionary](https://apple.com/)
 
 On Apple operating systems, including [iOS](https://support.apple.com/en-ca/guide/pages-ipad/tan9ef3ea9f8/ipados) and [macOS](https://support.apple.com/en-ca/guide/mac-help/mchl3983326c/mac), one can out-of-the-box force touch a word which yields a behavior very similar to Google Dictionary ("Look Up").
+
+## Verbformen
+
+Use [Verbformen](https://www.verbformen.de/) for verbs and conjugations.
