@@ -61,7 +61,7 @@ ping sitemap="https://perrotta.dev/sitemap.xml":
     curl -sS -o /dev/null "https://www.google.com/ping?sitemap={{ sitemap }}"
     curl -sS -o /dev/null "https://www.bing.com/ping?sitemap={{ sitemap }}"
 
-# Update git submodules and pre-commit hooks
+# Update git submodules, pre-commit hooks and JSON schemas
 update: update-git update-pre-commit update-json-schemas
 
 # Update git submodules
