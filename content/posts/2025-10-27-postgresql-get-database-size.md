@@ -5,7 +5,7 @@ tags:
   - dev
 ---
 
-**Problem statement**: Given a PostgreSQL DB, obtain is total size, preferably
+**Problem statement**: Given a PostgreSQL DB, obtain its total size, preferably
 in a human-readable format (pretty-printed).
 
 ## Option 1: SQL query
