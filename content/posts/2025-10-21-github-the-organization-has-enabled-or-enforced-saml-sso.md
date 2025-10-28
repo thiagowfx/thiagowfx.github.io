@@ -43,3 +43,12 @@ For the 1Password ssh agent, the following has worked for me:
 - `git push` again
 
 Surely there is a way to script this?
+
+**Update(2025-10-28)**: In a second try, killing the process below was enough to
+address the issue.
+
+```
+% pgrep -afl ssh
+7242 ssh: /tmp/ssh-control-bda8786786c69753cc9ddd9fb7c06aaff3768a70 [mux]
+% kill 7242
+```
