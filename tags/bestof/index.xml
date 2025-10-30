@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bestof on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/bestof/</link><description>Recent content in Bestof on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 18 Oct 2025 12:49:20 +0200</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>The Apple Store</title><link>https://perrotta.dev/2025/10/the-apple-store/</link><pubDate>Sat, 18 Oct 2025 12:49:20 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/the-apple-store/</guid><description>&lt;p>After owning an iPhone 14 Pro for more than two and a half years, its maximum
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 30 Oct 2025 12:59:53 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>New script: SSH mux restart</title><link>https://perrotta.dev/2025/10/new-script-ssh-mux-restart/</link><pubDate>Thu, 30 Oct 2025 12:59:53 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/new-script-ssh-mux-restart/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/10/github-the-organization-has-enabled-or-enforced-saml-sso/">Previously&lt;/a>,
+&lt;a href="https://perrotta.dev/2025/05/1password-ssh-agent-error/">previously&lt;/a>.&lt;/p>
+&lt;p>After experiencing almost daily frustration because of this SSH auth issue, I
+decided to script a solution out of it: and now
+&lt;a href="https://github.com/thiagowfx/pancake/tree/8707d1792c0d1266180dfa3d49c7d144c71ef23d/ssh_mux_restart">&lt;code>ssh_mux_restart&lt;/code>&lt;/a>
+was born.&lt;/p>
+&lt;p>A copy of the &lt;code>README.md&lt;/code> follows below for ease of reference.&lt;/p>
+&lt;p>The use case is very simple: run the &lt;code>ssh_mux_restart&lt;/code> script whenever I run
+into a git SSH authentication error, typically due to &lt;code>git pull&lt;/code>, &lt;code>git fetch&lt;/code> or
+&lt;code>git push&lt;/code>.&lt;/p>
+&lt;h2 id="usage">Usage&lt;/h2>
+&lt;p>Basic usage to kill SSH multiplexed connections:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>./ssh_mux_restart.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>To also restart the 1Password SSH agent:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>./ssh_mux_restart.sh --restart-1password
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="example-output">Example Output&lt;/h2>
+&lt;pre tabindex="0">&lt;code>% ./ssh_mux_restart.sh
+Finding SSH multiplexed connections...
+Found SSH multiplexed connections:
+ 88002 ssh: /tmp/ssh-control-FLAPJACK42 [mux]
+ 88123 ssh: /tmp/ssh-control-WAFFLE55 [mux]
+Killing SSH multiplexed connections...
+✓ Killed SSH mux process: 88002
+✓ Killed SSH mux process: 88123
+Killed 2/2 SSH multiplexed connections.
+
+All operations completed successfully!
+&lt;/code>&lt;/pre>&lt;p>With the &lt;code>--restart-1password&lt;/code> flag:&lt;/p>
+&lt;pre tabindex="0">&lt;code>% ./ssh_mux_restart.sh --restart-1password
+Finding SSH multiplexed connections...
+Found SSH multiplexed connections:
+ 88002 ssh: /tmp/ssh-control-PANCAKE99 [mux]
+Killing SSH multiplexed connections...
+✓ Killed SSH mux process: 88002
+Killed 1/1 SSH multiplexed connections.
+
+Restarting 1Password application...
+Found 1Password process: 67690
+Quitting 1Password...
+✓ 1Password quit successfully
+Starting 1Password...
+✓ 1Password started successfully
+1Password SSH agent is now ready for use.
+
+All operations completed successfully!
+&lt;/code>&lt;/pre>&lt;h2 id="why-this-matters">Why This Matters&lt;/h2>
+&lt;p>SSH multiplexed connections can cache stale authentication credentials, causing issues when:&lt;/p>
+&lt;ul>
+&lt;li>GitHub organizations enable or enforce SAML SSO&lt;/li>
+&lt;li>1Password SSH agent credentials need refreshing&lt;/li>
+&lt;li>SSH keys have been rotated or updated&lt;/li>
+&lt;/ul>
+&lt;p>Restarting these connections forces SSH to re-authenticate with fresh credentials.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>Standard Unix tools (&lt;code>pgrep&lt;/code>, &lt;code>pkill&lt;/code>)&lt;/li>
+&lt;li>1Password app (macOS) if using the &lt;code>--restart-1password&lt;/code> flag&lt;/li>
+&lt;/ul></description></item><item><title>The Apple Store</title><link>https://perrotta.dev/2025/10/the-apple-store/</link><pubDate>Sat, 18 Oct 2025 12:49:20 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/the-apple-store/</guid><description>&lt;p>After owning an iPhone 14 Pro for more than two and a half years, its maximum
 battery capacity degraded to &lt;strong>~76%&lt;/strong>. It is not a terrible number, but the
 general recommendation is to take action whenever it goes below &lt;strong>80%&lt;/strong>, which
 happened a couple of months ago.&lt;/p>
@@ -2923,134 +2980,4 @@ replaced.&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="https://mattedwards.org/2024/01/inject-secrets-into-terraform-environment-using-1password/">https://mattedwards.org/2024/01/inject-secrets-into-terraform-environment-using-1password/&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://nshipster.com/1password-cli/">https://nshipster.com/1password-cli/&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>git freeze, git thaw</title><link>https://perrotta.dev/2025/03/git-freeze-git-thaw/</link><pubDate>Wed, 19 Mar 2025 13:27:43 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/git-freeze-git-thaw/</guid><description>&lt;p>Now I am becoming one of the snobs™ with the first sentence in the following
-paragraph. Here we go.&lt;/p>
-&lt;p>I had &lt;a href="https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview">Claude
-Code&lt;/a>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>
-write me a pair of &lt;code>git&lt;/code> utilities: &lt;code>git freeze&lt;/code> and &lt;code>git thaw&lt;/code>.&lt;/p>
-&lt;p>First of all: &amp;ldquo;to thaw&amp;rdquo; means &amp;ldquo;to defrost&amp;rdquo;:&lt;/p>
-&lt;blockquote>
-&lt;p>To change from a frozen solid to a liquid by gradual warming.&lt;/p>
-&lt;/blockquote>
-&lt;p>Perhaps &lt;code>git unfreeze&lt;/code> would have been more intuitive, let&amp;rsquo;s leave the
-bikeshedding to another day though.&lt;/p>
-&lt;p>What should these utilities do? They are inspired by the ones with the same name
-in Chromium
-&lt;a href="https://www.chromium.org/developers/how-tos/install-depot-tools/">depot_tools&lt;/a>.
-&lt;a href="https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html#_setting_up">Direct
-link&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>&lt;a href="https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/git-freeze.html">&lt;code>git-freeze(1)&lt;/code>&lt;/a>
-allows you to put the current branch in &amp;lsquo;suspended animation&amp;rsquo; by committing
-your changes to a specially-named commit on the top of your current branch.
-When you come back to your branch later, you can just run
-&lt;a href="https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/git-thaw.html">&lt;code>git-thaw(1)&lt;/code>&lt;/a>
-to get your work-in-progress changes back to what they were.&lt;/p>
-&lt;/blockquote>
-&lt;p>Installing
-&lt;a href="https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools.html">&lt;code>depot_tools(7)&lt;/code>&lt;/a>
-just to get these two utilities is too bloated though. The security software at
-work flagged it as malware&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>. And they didn&amp;rsquo;t even bother to package it for
-Linux distributions in the first place.&lt;/p>
-&lt;h2 id="git-freezehttpsgithubcomthiagowfxdotfilesblobmastergitbingit-freeze">&lt;a href="https://github.com/thiagowfx/.dotfiles/blob/master/git/.bin/git-freeze">&lt;code>git-freeze&lt;/code>&lt;/a>&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#!/bin/sh
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">&lt;/span>&lt;span style="color:#7f848e">#&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># git-freeze - Stage all files and create a git-freeze commit&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e5c07b">set&lt;/span> -e
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Check if we&amp;#39;re inside a git repository&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span> &lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#c678dd">$(&lt;/span>git rev-parse --is-inside-work-tree 2&amp;gt;/dev/null&lt;span style="color:#c678dd">)&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span> !&lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;true&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">]&lt;/span>; &lt;span style="color:#c678dd">then&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e5c07b">echo&lt;/span> &lt;span style="color:#98c379">&amp;#34;Error: Not in a git repository&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e5c07b">exit&lt;/span> &lt;span style="color:#d19a66">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">fi&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Stage all changes (tracked and untracked)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git add -A
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Create a commit with the freeze message&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git commit -m &lt;span style="color:#98c379">&amp;#34;git-freeze&amp;#34;&lt;/span> -n
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e5c07b">echo&lt;/span> &lt;span style="color:#98c379">&amp;#34;Git freeze created successfully&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="git-thawhttpsgithubcomthiagowfxdotfilesblobmastergitbingit-thaw">&lt;a href="https://github.com/thiagowfx/.dotfiles/blob/master/git/.bin/git-thaw">&lt;code>git-thaw&lt;/code>&lt;/a>&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#!/bin/sh
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">&lt;/span>&lt;span style="color:#7f848e">#&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># git-thaw - Undo a git-freeze operation&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e5c07b">set&lt;/span> -e
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Check if we&amp;#39;re inside a git repository&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span> &lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#c678dd">$(&lt;/span>git rev-parse --is-inside-work-tree 2&amp;gt;/dev/null&lt;span style="color:#c678dd">)&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span> !&lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#98c379">&amp;#34;true&amp;#34;&lt;/span> &lt;span style="color:#56b6c2">]&lt;/span>; &lt;span style="color:#c678dd">then&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e5c07b">echo&lt;/span> &lt;span style="color:#98c379">&amp;#34;Error: Not in a git repository&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e5c07b">exit&lt;/span> &lt;span style="color:#d19a66">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">fi&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Check if there&amp;#39;s at least one commit&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> ! git rev-parse --verify HEAD &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; &lt;span style="color:#c678dd">then&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e5c07b">echo&lt;/span> &lt;span style="color:#98c379">&amp;#34;Error: No commits yet&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e5c07b">exit&lt;/span> &lt;span style="color:#d19a66">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">fi&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Check if the last commit is a git-freeze commit&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> ! git log -n &lt;span style="color:#d19a66">1&lt;/span> --pretty&lt;span style="color:#56b6c2">=&lt;/span>%B | grep -q &lt;span style="color:#98c379">&amp;#34;^git-freeze&lt;/span>$&lt;span style="color:#98c379">&amp;#34;&lt;/span>; &lt;span style="color:#c678dd">then&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e5c07b">echo&lt;/span> &lt;span style="color:#98c379">&amp;#34;Error: Last commit is not a git-freeze commit&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e5c07b">exit&lt;/span> &lt;span style="color:#d19a66">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">fi&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Undo the git-freeze commit&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> git rev-parse --verify HEAD^ &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; &lt;span style="color:#c678dd">then&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#7f848e"># If there&amp;#39;s a parent commit, reset to it&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> git reset &lt;span style="color:#98c379">&amp;#34;HEAD^&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">else&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#7f848e"># If it&amp;#39;s the initial commit, delete the reference and unstage everything&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> git update-ref -d HEAD
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> git restore --staged .
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">fi&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e5c07b">echo&lt;/span> &lt;span style="color:#98c379">&amp;#34;Git freeze thawed successfully&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="post-ai-cleanup">Post-AI cleanup&lt;/h2>
-&lt;p>The only change I had to make was to add &lt;code>-n&lt;/code> to &lt;code>git commit&lt;/code> in &lt;code>git-freeze&lt;/code> so
-that pre-commit hooks would be skipped upon freeze.&lt;/p>
-&lt;h2 id="usage">Usage&lt;/h2>
-&lt;ul>
-&lt;li>
-&lt;p>Within an existing &lt;code>git&lt;/code> repository, do some work in a custom branch.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>Decide that something else more important and/or urgent needs your attention.
-Let go of &lt;a href="https://git-scm.com/docs/git-worktree">git worktrees&lt;/a> in this
-instance.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;code>git freeze&lt;/code>&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>Switch to a new branch. Do whatever. Done.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;code>git checkout &amp;lt;your previous branch&amp;gt;&lt;/code>&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;code>git thaw&lt;/code>&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>Resume your previous work. Profit.&lt;/p>
-&lt;/li>
-&lt;/ul>
-&lt;p>&lt;strong>Edit(2025-03-20)&lt;/strong>: A friend asked that is the difference between &lt;code>git freeze&lt;/code>
-and &lt;code>git stash&lt;/code>. The main difference is that &lt;code>git stash&lt;/code> does not handle files
-not yet tracked by &lt;code>git&lt;/code>, whereas &lt;code>git freeze&lt;/code> does. I think of &lt;code>freeze&lt;/code> as the
-equivalent of completely clearing up my physical desk of all objects so that I
-can focus on something else.&lt;/p>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>&lt;em>An agentic coding tool made by Anthropic. Currently in beta as a research
-preview.&lt;/em>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;li id="fn:2">
-&lt;p>In hindsight that&amp;rsquo;s not even surprising.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item></channel></rss>
+&lt;/ul></description></item></channel></rss>

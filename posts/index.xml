@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/posts/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 29 Oct 2025 16:37:57 +0100</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Claude Code: paste in images</title><link>https://perrotta.dev/2025/10/claude-code-paste-in-images/</link><pubDate>Wed, 29 Oct 2025 16:37:57 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/claude-code-paste-in-images/</guid><description>&lt;p>&lt;a href="https://www.claude.com/product/claude-code">Claude Code&lt;/a> supports images as
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 30 Oct 2025 12:59:53 +0100</lastBuildDate><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>New script: SSH mux restart</title><link>https://perrotta.dev/2025/10/new-script-ssh-mux-restart/</link><pubDate>Thu, 30 Oct 2025 12:59:53 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/new-script-ssh-mux-restart/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/10/github-the-organization-has-enabled-or-enforced-saml-sso/">Previously&lt;/a>,
+&lt;a href="https://perrotta.dev/2025/05/1password-ssh-agent-error/">previously&lt;/a>.&lt;/p>
+&lt;p>After experiencing almost daily frustration because of this SSH auth issue, I
+decided to script a solution out of it: and now
+&lt;a href="https://github.com/thiagowfx/pancake/tree/8707d1792c0d1266180dfa3d49c7d144c71ef23d/ssh_mux_restart">&lt;code>ssh_mux_restart&lt;/code>&lt;/a>
+was born.&lt;/p>
+&lt;p>A copy of the &lt;code>README.md&lt;/code> follows below for ease of reference.&lt;/p>
+&lt;p>The use case is very simple: run the &lt;code>ssh_mux_restart&lt;/code> script whenever I run
+into a git SSH authentication error, typically due to &lt;code>git pull&lt;/code>, &lt;code>git fetch&lt;/code> or
+&lt;code>git push&lt;/code>.&lt;/p>
+&lt;h2 id="usage">Usage&lt;/h2>
+&lt;p>Basic usage to kill SSH multiplexed connections:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>./ssh_mux_restart.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>To also restart the 1Password SSH agent:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>./ssh_mux_restart.sh --restart-1password
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="example-output">Example Output&lt;/h2>
+&lt;pre tabindex="0">&lt;code>% ./ssh_mux_restart.sh
+Finding SSH multiplexed connections...
+Found SSH multiplexed connections:
+ 88002 ssh: /tmp/ssh-control-FLAPJACK42 [mux]
+ 88123 ssh: /tmp/ssh-control-WAFFLE55 [mux]
+Killing SSH multiplexed connections...
+✓ Killed SSH mux process: 88002
+✓ Killed SSH mux process: 88123
+Killed 2/2 SSH multiplexed connections.
+
+All operations completed successfully!
+&lt;/code>&lt;/pre>&lt;p>With the &lt;code>--restart-1password&lt;/code> flag:&lt;/p>
+&lt;pre tabindex="0">&lt;code>% ./ssh_mux_restart.sh --restart-1password
+Finding SSH multiplexed connections...
+Found SSH multiplexed connections:
+ 88002 ssh: /tmp/ssh-control-PANCAKE99 [mux]
+Killing SSH multiplexed connections...
+✓ Killed SSH mux process: 88002
+Killed 1/1 SSH multiplexed connections.
+
+Restarting 1Password application...
+Found 1Password process: 67690
+Quitting 1Password...
+✓ 1Password quit successfully
+Starting 1Password...
+✓ 1Password started successfully
+1Password SSH agent is now ready for use.
+
+All operations completed successfully!
+&lt;/code>&lt;/pre>&lt;h2 id="why-this-matters">Why This Matters&lt;/h2>
+&lt;p>SSH multiplexed connections can cache stale authentication credentials, causing issues when:&lt;/p>
+&lt;ul>
+&lt;li>GitHub organizations enable or enforce SAML SSO&lt;/li>
+&lt;li>1Password SSH agent credentials need refreshing&lt;/li>
+&lt;li>SSH keys have been rotated or updated&lt;/li>
+&lt;/ul>
+&lt;p>Restarting these connections forces SSH to re-authenticate with fresh credentials.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>Standard Unix tools (&lt;code>pgrep&lt;/code>, &lt;code>pkill&lt;/code>)&lt;/li>
+&lt;li>1Password app (macOS) if using the &lt;code>--restart-1password&lt;/code> flag&lt;/li>
+&lt;/ul></description></item><item><title>Claude Code: paste in images</title><link>https://perrotta.dev/2025/10/claude-code-paste-in-images/</link><pubDate>Wed, 29 Oct 2025 16:37:57 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/claude-code-paste-in-images/</guid><description>&lt;p>&lt;a href="https://www.claude.com/product/claude-code">Claude Code&lt;/a> supports images as
 input.&lt;/p>
 &lt;p>Absolutely incredible; considering that it is a TUI, one would usually not
 expect the ability to do so.&lt;/p>
@@ -1789,9 +1846,4 @@ simply add a key with our favorite comment indicator like // or #.&lt;/p>
  &lt;p>XKCD Courtesy of Randall Munroe&lt;/p>
  &lt;/figcaption>
 &lt;/figure>
-</description></item><item><title>GitHub autolinks</title><link>https://perrotta.dev/2025/09/github-autolinks/</link><pubDate>Thu, 18 Sep 2025 20:50:30 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/github-autolinks/</guid><description>&lt;p>&lt;a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/configuring-autolinks-to-reference-external-resources">Manage repository settings -&amp;gt; Configuring autolinks to reference external resources&lt;/a>:&lt;/p>
-&lt;blockquote>
-&lt;p>You can add autolinks to external resources like JIRA issues and Zendesk tickets to help streamline your workflow.&lt;/p>
-&lt;/blockquote>
-&lt;p>A practical application for this: configure &lt;code>INFRA-123&lt;/code> to automatically link to
-&lt;code>https://{corp}.atlassian.net/browse/INFRA-123&lt;/code>.&lt;/p></description></item></channel></rss>
+</description></item></channel></rss>

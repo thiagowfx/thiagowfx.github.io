@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 29 Oct 2025 16:37:57 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Claude Code: paste in images</title><link>https://perrotta.dev/2025/10/claude-code-paste-in-images/</link><pubDate>Wed, 29 Oct 2025 16:37:57 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/claude-code-paste-in-images/</guid><description>&lt;p>&lt;a href="https://www.claude.com/product/claude-code">Claude Code&lt;/a> supports images as
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 30 Oct 2025 12:59:53 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>New script: SSH mux restart</title><link>https://perrotta.dev/2025/10/new-script-ssh-mux-restart/</link><pubDate>Thu, 30 Oct 2025 12:59:53 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/new-script-ssh-mux-restart/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/10/github-the-organization-has-enabled-or-enforced-saml-sso/">Previously&lt;/a>,
+&lt;a href="https://perrotta.dev/2025/05/1password-ssh-agent-error/">previously&lt;/a>.&lt;/p>
+&lt;p>After experiencing almost daily frustration because of this SSH auth issue, I
+decided to script a solution out of it: and now
+&lt;a href="https://github.com/thiagowfx/pancake/tree/8707d1792c0d1266180dfa3d49c7d144c71ef23d/ssh_mux_restart">&lt;code>ssh_mux_restart&lt;/code>&lt;/a>
+was born.&lt;/p>
+&lt;p>A copy of the &lt;code>README.md&lt;/code> follows below for ease of reference.&lt;/p>
+&lt;p>The use case is very simple: run the &lt;code>ssh_mux_restart&lt;/code> script whenever I run
+into a git SSH authentication error, typically due to &lt;code>git pull&lt;/code>, &lt;code>git fetch&lt;/code> or
+&lt;code>git push&lt;/code>.&lt;/p>
+&lt;h2 id="usage">Usage&lt;/h2>
+&lt;p>Basic usage to kill SSH multiplexed connections:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>./ssh_mux_restart.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>To also restart the 1Password SSH agent:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>./ssh_mux_restart.sh --restart-1password
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="example-output">Example Output&lt;/h2>
+&lt;pre tabindex="0">&lt;code>% ./ssh_mux_restart.sh
+Finding SSH multiplexed connections...
+Found SSH multiplexed connections:
+ 88002 ssh: /tmp/ssh-control-FLAPJACK42 [mux]
+ 88123 ssh: /tmp/ssh-control-WAFFLE55 [mux]
+Killing SSH multiplexed connections...
+✓ Killed SSH mux process: 88002
+✓ Killed SSH mux process: 88123
+Killed 2/2 SSH multiplexed connections.
+
+All operations completed successfully!
+&lt;/code>&lt;/pre>&lt;p>With the &lt;code>--restart-1password&lt;/code> flag:&lt;/p>
+&lt;pre tabindex="0">&lt;code>% ./ssh_mux_restart.sh --restart-1password
+Finding SSH multiplexed connections...
+Found SSH multiplexed connections:
+ 88002 ssh: /tmp/ssh-control-PANCAKE99 [mux]
+Killing SSH multiplexed connections...
+✓ Killed SSH mux process: 88002
+Killed 1/1 SSH multiplexed connections.
+
+Restarting 1Password application...
+Found 1Password process: 67690
+Quitting 1Password...
+✓ 1Password quit successfully
+Starting 1Password...
+✓ 1Password started successfully
+1Password SSH agent is now ready for use.
+
+All operations completed successfully!
+&lt;/code>&lt;/pre>&lt;h2 id="why-this-matters">Why This Matters&lt;/h2>
+&lt;p>SSH multiplexed connections can cache stale authentication credentials, causing issues when:&lt;/p>
+&lt;ul>
+&lt;li>GitHub organizations enable or enforce SAML SSO&lt;/li>
+&lt;li>1Password SSH agent credentials need refreshing&lt;/li>
+&lt;li>SSH keys have been rotated or updated&lt;/li>
+&lt;/ul>
+&lt;p>Restarting these connections forces SSH to re-authenticate with fresh credentials.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>Standard Unix tools (&lt;code>pgrep&lt;/code>, &lt;code>pkill&lt;/code>)&lt;/li>
+&lt;li>1Password app (macOS) if using the &lt;code>--restart-1password&lt;/code> flag&lt;/li>
+&lt;/ul></description></item><item><title>Claude Code: paste in images</title><link>https://perrotta.dev/2025/10/claude-code-paste-in-images/</link><pubDate>Wed, 29 Oct 2025 16:37:57 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/claude-code-paste-in-images/</guid><description>&lt;p>&lt;a href="https://www.claude.com/product/claude-code">Claude Code&lt;/a> supports images as
 input.&lt;/p>
 &lt;p>Absolutely incredible; considering that it is a TUI, one would usually not
 expect the ability to do so.&lt;/p>
@@ -1795,34 +1852,4 @@ accordingly.&lt;/p>
 &lt;p>Lately I&amp;rsquo;ve been encountering various CNCF projects that employ it, and it&amp;rsquo;s
 &lt;a href="https://github.com/helm/helm/issues/13192">simply&lt;/a>
 &lt;a href="https://github.com/helm/chart-testing/issues/748">awful&lt;/a>.&lt;/p>
-&lt;p>I do not have anything else to add; Drew pretty much nails it.&lt;/p></description></item><item><title>vim: remove trailing whitespace</title><link>https://perrotta.dev/2025/09/vim-remove-trailing-whitespace/</link><pubDate>Tue, 16 Sep 2025 14:27:55 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/vim-remove-trailing-whitespace/</guid><description>&lt;p>A simple addition to remove all trailing whitespace from the current buffer by
-pressing &lt;code>,t&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>
-(&lt;a href="https://vi.stackexchange.com/questions/454/whats-the-simplest-way-to-strip-trailing-whitespace-from-all-lines-in-a-file">via&lt;/a>):&lt;/p>
-&lt;pre tabindex="0">&lt;code>% GIT_PAGER=cat git show
-commit 1c22fcbc12ffd2cb3c40152d152d099c9a9b7f85 (HEAD -&amp;gt; master, origin/master, origin/HEAD)
-Author: Thiago Perrotta &amp;lt;{redacted}&amp;gt;
-Date: Tue Sep 16 14:26:46 2025 +0200
-
- vim: remove trailing whitespace
-
-diff --git vim/.vim/vimrc vim/.vim/vimrc
-index 8cf33d8..004beda 100644
---- vim/.vim/vimrc
-+++ vim/.vim/vimrc
-@@ -60,6 +60,9 @@ nnoremap J gJ
- &amp;#34; Reflow current paragraph
- nnoremap &amp;lt;silent&amp;gt; Q gwip
-
-+&amp;#34; Remove all trailing whitespace
-+nnoremap &amp;lt;leader&amp;gt;t :let _s=@/&amp;lt;Bar&amp;gt;:%s/\s\+$//e&amp;lt;Bar&amp;gt;:let @/=_s&amp;lt;Bar&amp;gt;&amp;lt;CR&amp;gt;
-+
- &amp;#34; Always use vertical diff splits.
- set diffopt+=vertical
-&lt;/code>&lt;/pre>&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>My &lt;a href="https://stackoverflow.com/questions/1764263/what-is-the-leader-in-a-vimrc-file">leader&lt;/a> key is mapped to &lt;code>,&lt;/code>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item></channel></rss>
+&lt;p>I do not have anything else to add; Drew pretty much nails it.&lt;/p></description></item></channel></rss>
