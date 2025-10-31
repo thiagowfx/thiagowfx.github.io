@@ -8,10 +8,11 @@ tags:
 Using the [`gh`](https://cli.github.com/) tool (the official GitHub CLI tool):
 
 ```shell
-% gh pr create
+% gh pr create [--draft]
 ```
 
-It will prompt for more information.
+It will prompt for more information. `--draft` creates the PR in the draft
+state, delaying code review assignments.
 
 To skip all prompts and simply use the commit message to fill in the PR Title
 and the PR description, pass `--fill`:
