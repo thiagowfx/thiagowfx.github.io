@@ -43,7 +43,7 @@ Upon pressing `1<Enter>` it is automatically replaced.
 
 Alternatively we can skip the suggestions and simply [pick the first
 one](https://www.jakeworth.com/tils/select-first-spell-suggestion/) right away
-with `0z=`.
+with `1z=`.
 
 
 [^1]: `vim` never ceases to amaze me.
