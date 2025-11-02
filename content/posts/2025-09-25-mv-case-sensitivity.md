@@ -28,7 +28,7 @@ Fine. Let's do it the '''hard''' way:
 
 ```shell
 % mv justfile{,.bkp}
-% mv justfile.bkp Justfile
+% mv justfile{.bkp,}
 ```
 
 And life goes on.
