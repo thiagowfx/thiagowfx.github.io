@@ -45,5 +45,4 @@ Alternatively we can skip the suggestions and simply [pick the first
 one](https://www.jakeworth.com/tils/select-first-spell-suggestion/) right away
 with `1z=`.
 
-
 [^1]: `vim` never ceases to amaze me.
