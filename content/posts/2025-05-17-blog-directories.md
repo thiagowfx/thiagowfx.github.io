@@ -28,6 +28,7 @@ A few directories I like[^1]:
 - ✪ https://marginalia-search.com/
 - ✪ https://clew.se/
 - ✪ https://darktheme.club/
+- ✪ https://powrss.com/
 - https://ooh.directory/
 
 I tend to visit them occasionally, whenever I crave for new content, perhaps like
