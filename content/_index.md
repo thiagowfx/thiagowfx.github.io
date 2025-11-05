@@ -24,7 +24,7 @@ interesting conversations and opportunities.
 ## Colophon
 
 There are no ads, no affiliate links, no tracking or analytics, no guests
-or sponsored posts, no AI slop, and no paywall.
+or sponsored posts, [no AI slop](/ai), and no paywall.
 
 I can only hope this will serve as inspiration to others to leave their own mark
 on the Web[^2].
