@@ -1,6 +1,6 @@
 ---
 title: "AI"
-date: 2025-11-05T10:00:00-08:00
+type: "page"
 ---
 
 This page summarizes the usage of LLMs ("Gen AI") in this blog.
@@ -17,4 +17,4 @@ included.
 ## References
 
 - [Jake Worth](https://www.jakeworth.com/ai/)
-  - [AI Manifesto](https://www.bydamo.la/p/ai-manifesto).
+  - [AI Manifesto](https://www.bydamo.la/p/ai-manifesto)
