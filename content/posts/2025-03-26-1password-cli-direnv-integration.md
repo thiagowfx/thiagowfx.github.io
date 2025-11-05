@@ -73,6 +73,26 @@ Now run `terraform apply` via `op run`, as follows:
 op run --env-file=.env -- terraform apply
 ```
 
+## Third approach
+
+**Update(2025-11-05)**: The following just works™:
+
+```shell
+op run -- terraform plan
+```
+
+Assuming there's a `variables.tf` file, the default value will be dynamically
+replaced upon running the previous command:
+
+```terraform
+variable "external_dns_changer_staging_api_key" {
+  type        = string
+  sensitive   = true
+  default     = "op://vault/entry/password"
+  description = "API key for authentication (min 20 characters)"
+}
+```
+
 ## References
 
 - https://mattedwards.org/2024/01/inject-secrets-into-terraform-environment-using-1password/
