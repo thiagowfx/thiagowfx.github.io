@@ -1,6 +1,6 @@
 ---
 title: "AI"
-type: "page"
+email: false
 ---
 
 This page summarizes the usage of LLMs ("Gen AI") in this blog.
