@@ -14,6 +14,9 @@ I **do not** use an LLM spellchecker. There's only `vim`'s `:spell`.
 I **do not** use an LLM to help me iterate on my posts, title and content
 included.
 
+Agentic LLMs are occasionally used in the context of tooling and infrastructure
+of this site.
+
 ## References
 
 - [Jake Worth](https://www.jakeworth.com/ai/)
