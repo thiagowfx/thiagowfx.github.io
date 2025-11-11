@@ -22,7 +22,7 @@ When are they needed? If I launch any one of these binaries:
 - `codex` (provider-specific: OpenAI)
 - `claude` (provider-specific: Anthropic)
 
-I added with the following snippet in my shell profile:
+I added the following snippet in my shell profile:
 
 ```shell
 # Lazy-load API keys only when needed to avoid shell startup delay
