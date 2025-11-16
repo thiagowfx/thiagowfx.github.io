@@ -16,6 +16,8 @@ repos:
     rev: v0.0.11
     hooks:
       - id: check-bash-shebang
+        types:
+          - shell
 ```
 
 In action:
