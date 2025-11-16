@@ -1,5 +1,5 @@
 ---
-title: "Bash shebang #!"
+title: "bash shebang #!"
 date: 2025-11-16T20:01:04-03:00
 tags:
   - dev
