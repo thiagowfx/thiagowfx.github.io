@@ -1,6 +1,79 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 16 Nov 2025 20:01:04 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Bash shebang #!</title><link>https://perrotta.dev/2025/11/bash-shebang-/</link><pubDate>Sun, 16 Nov 2025 20:01:04 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/bash-shebang-/</guid><description>&lt;p>When writing portable shell scripts, should we prefer &lt;code>#!/bin/bash&lt;/code> or
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 16 Nov 2025 20:19:18 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>new script: PDF remove password</title><link>https://perrotta.dev/2025/11/new-script-pdf-remove-password/</link><pubDate>Sun, 16 Nov 2025 20:19:18 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/new-script-pdf-remove-password/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/11/new-script-copy/">Previously&lt;/a>.&lt;/p>
+&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a password-protected &lt;code>.pdf&lt;/code> file, remove its
+password. It&amp;rsquo;s indifferent whether the file gets overwritten or whether a new
+one is created.&lt;/p>
+&lt;p>&lt;a href="https://gist.github.com/pstaender/7412245">&lt;code>ghostscript&lt;/code>&lt;/a> can do it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>gs -q -dNOPAUSE -dBATCH -sDEVICE&lt;span style="color:#56b6c2">=&lt;/span>pdfwrite -sOutputFile&lt;span style="color:#56b6c2">=&lt;/span>output.pdf -c .setpdfwrite -f input.pdf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;a href="https://gist.github.com/raghur/f3eab7297691f2f411eec69b8032daf0">&lt;code>qpdf&lt;/code>&lt;/a> can do it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>qpdf --decrypt --password&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;{my pass}&amp;#34;&lt;/span> input.pdf output.pdf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I am not expected to memorize these CLI flags.&lt;/p>
+&lt;p>I do not want to look them up every time either.&lt;/p>
+&lt;p>There are various approaches to tackle this:&lt;/p>
+&lt;ul>
+&lt;li>a shell alias (&lt;code>alias foo=&lt;/code>)&lt;/li>
+&lt;li>a shell function &lt;code>foo() {}&lt;/code>&lt;/li>
+&lt;li>a shell script (&lt;code>*.sh&lt;/code>)&lt;/li>
+&lt;li>a &lt;a href="https://perrotta.dev/2025/10/comma-scripts/">comma script&lt;/a>&lt;/li>
+&lt;li>a copyable snippet (e.g. stored in Obsidian / LogSeq or some other digital
+garden / personal wiki / second brain app)&lt;/li>
+&lt;li>a snippet (e.g. in &lt;a href="https://perrotta.dev/2025/10/comma-scripts/">RayCast&lt;/a> or
+&lt;a href="https://perrotta.dev/2025/10/comma-scripts/">Espanso&lt;/a>)&lt;/li>
+&lt;li>ask the AI each time&lt;/li>
+&lt;li>&lt;del>google&lt;/del> &lt;a href="https://perrotta.dev/2025/05/kagi/">search&lt;/a> for it each time&lt;/li>
+&lt;/ul>
+&lt;p>Lately I&amp;rsquo;ve been favouring the &lt;a href="https://perrotta.dev/2025/09/pancake-potpourri-scripts/">shell script&lt;/a> approach, so &lt;a href="https://github.com/thiagowfx/pancake/tree/c7c3677119c567edc432fcc1f1c0f78c9a5b3c55/pdf_password_remove">here we go&lt;/a> with &lt;code>pdf_password_remove.sh&lt;/code>:&lt;/p>
+&lt;h2 id="usage">Usage&lt;/h2>
+&lt;p>Remove password protection from PDF files.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Interactive password prompt (most secure)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pdf_password_remove secret.pdf
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Process multiple files&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pdf_password_remove report.pdf invoice.pdf contract.pdf
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Provide password via command line&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pdf_password_remove --password&lt;span style="color:#56b6c2">=&lt;/span>BANANA42SPLIT secret.pdf
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Custom output filename (single file only)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pdf_password_remove -o unlocked.pdf secret.pdf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="example-output">Example Output&lt;/h2>
+&lt;pre tabindex="0">&lt;code>% pdf_password_remove --password=PIZZA69SLICE financial-report.pdf tax-form.pdf
+✓ Successfully processed: financial-report.pdf → financial-report-unlocked.pdf
+✓ Successfully processed: tax-form.pdf → tax-form-unlocked.pdf
+
+Summary: Successfully processed 2/2 file(s)
+&lt;/code>&lt;/pre>&lt;h2 id="features">Features&lt;/h2>
+&lt;ul>
+&lt;li>Process single or multiple PDF files in one command&lt;/li>
+&lt;li>Secure interactive password prompt (hidden input)&lt;/li>
+&lt;li>Command-line password option for automation/scripts&lt;/li>
+&lt;li>Default output naming: adds &lt;code>-unlocked&lt;/code> suffix&lt;/li>
+&lt;li>Custom output filename with &lt;code>-o&lt;/code> flag (single file only)&lt;/li>
+&lt;li>Clear success/failure indicators for each file&lt;/li>
+&lt;li>Validates PDF files before processing&lt;/li>
+&lt;/ul>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;p>Requires either &lt;code>ghostscript&lt;/code> (preferred) or &lt;code>qpdf&lt;/code> to be installed:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># macOS&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>brew install ghostscript &lt;span style="color:#7f848e"># Preferred&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>brew install qpdf &lt;span style="color:#7f848e"># Alternative&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Linux&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt install ghostscript &lt;span style="color:#7f848e"># Preferred - Debian/Ubuntu&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt install qpdf &lt;span style="color:#7f848e"># Alternative&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo dnf install ghostscript &lt;span style="color:#7f848e"># Preferred - Fedora&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo dnf install qpdf &lt;span style="color:#7f848e"># Alternative&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo pacman -S ghostscript &lt;span style="color:#7f848e"># Preferred - Arch&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo pacman -S qpdf &lt;span style="color:#7f848e"># Alternative&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The script automatically detects and uses whichever tool is available,
+preferring ghostscript if both are installed.&lt;/p>
+&lt;h2 id="security-note">Security Note&lt;/h2>
+&lt;p>Using &lt;code>--password&lt;/code> on the command line will expose the password in shell history
+and process lists. For sensitive documents, use the interactive prompt instead
+(default behavior when password is not provided).&lt;/p></description></item><item><title>Bash shebang #!</title><link>https://perrotta.dev/2025/11/bash-shebang-/</link><pubDate>Sun, 16 Nov 2025 20:01:04 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/bash-shebang-/</guid><description>&lt;p>When writing portable shell scripts, should we prefer &lt;code>#!/bin/bash&lt;/code> or
 &lt;code>#!/usr/bin/env bash&lt;/code>?&lt;/p>
 &lt;p>I tend to write &lt;code>#!/bin/bash&lt;/code> by hand, but here is an argument to prefer the
 &lt;code>env&lt;/code> version instead:&lt;/p>
@@ -2014,33 +2087,6 @@ things.&lt;/p>
 &lt;p>From whom I got
 &lt;a href="https://github.com/thiagowfx/.dotfiles/blob/db481962368a094e2b5c852709d1da9d3cfc5c07/profile/.profile.d/functions.sh#L5">my&lt;/a>
 beloved &lt;a href="https://frantic.im/cdtmp/">&lt;code>cdtmp&lt;/code>&lt;/a> shell alias.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item><item><title>Kubernetes: pod memory usage</title><link>https://perrotta.dev/2025/09/kubernetes-pod-memory-usage/</link><pubDate>Fri, 26 Sep 2025 11:54:57 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/09/kubernetes-pod-memory-usage/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a pod in Kubernetes, check its memory (RAM) usage.&lt;/p>
-&lt;p>&lt;a href="https://stackoverflow.com/questions/54531646/checking-kubernetes-pod-cpu-and-memory-utilization">Stack
-Overflow&lt;/a>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl top pod -n &lt;span style="color:#56b6c2">{&lt;/span>namespace&lt;span style="color:#56b6c2">}&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span>pod name&lt;span style="color:#56b6c2">}&lt;/span> &lt;span style="color:#56b6c2">[&lt;/span>--containers&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;pre tabindex="0">&lt;code>--containers=false:
- If present, print usage of containers within a pod.
-&lt;/code>&lt;/pre>&lt;p>This only works if &lt;a href="https://github.com/kubernetes-sigs/metrics-server">metrics
-server&lt;/a> is installed (it
-should be!).&lt;/p>
-&lt;p>There&amp;rsquo;s an alternative:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl describe PodMetrics &lt;span style="color:#56b6c2">{&lt;/span>pod name&lt;span style="color:#56b6c2">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It must be &lt;code>PodMetrics&lt;/code>. &lt;code>PodMetric&lt;/code> does not work (ugh!&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>):&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% kubectl get PodMetric
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: the server doesn&amp;#39;t have a resource &lt;span style="color:#e5c07b">type&lt;/span> &lt;span style="color:#98c379">&amp;#34;PodMetric&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If metrics server is not available for some reason, then one needs to dive into
-the container:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>kubectl &lt;span style="color:#e5c07b">exec&lt;/span> -it &lt;span style="color:#56b6c2">{&lt;/span>pod name&lt;span style="color:#56b6c2">}&lt;/span> -n &lt;span style="color:#56b6c2">{&lt;/span>namespace&lt;span style="color:#56b6c2">}&lt;/span> -- /bin/sh
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;which won&amp;rsquo;t always work; not every container has &lt;code>/bin/sh&lt;/code>. Then read the
-contents of &lt;code>/sys/fs/cgroup/memory/memory.usage_in_bytes&lt;/code>.&lt;/p>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>Who designed this? Is it so hard to achieve consistency? Both &lt;code>kubectl get pod&lt;/code> and &lt;code>kubectl get pods&lt;/code> work. Why can&amp;rsquo;t it be the same with &lt;code>PodMetric&lt;/code>?
-And, no, &lt;code>PodMetricses&lt;/code> does not work either.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
 &lt;/div></description></item></channel></rss>

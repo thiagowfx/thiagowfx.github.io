@@ -1,6 +1,79 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Selfhosted on ¬ just serendipity 🍀</title><link>https://perrotta.dev/tags/selfhosted/</link><description>Recent content in Selfhosted on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Tue, 04 Nov 2025 14:05:47 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>new script: copy</title><link>https://perrotta.dev/2025/11/new-script-copy/</link><pubDate>Tue, 04 Nov 2025 14:05:47 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/new-script-copy/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/10/new-script-ssh-mux-restart/">Previously&lt;/a>.&lt;/p>
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 16 Nov 2025 20:19:18 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml"/><item><title>new script: PDF remove password</title><link>https://perrotta.dev/2025/11/new-script-pdf-remove-password/</link><pubDate>Sun, 16 Nov 2025 20:19:18 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/new-script-pdf-remove-password/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/11/new-script-copy/">Previously&lt;/a>.&lt;/p>
+&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a password-protected &lt;code>.pdf&lt;/code> file, remove its
+password. It&amp;rsquo;s indifferent whether the file gets overwritten or whether a new
+one is created.&lt;/p>
+&lt;p>&lt;a href="https://gist.github.com/pstaender/7412245">&lt;code>ghostscript&lt;/code>&lt;/a> can do it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>gs -q -dNOPAUSE -dBATCH -sDEVICE&lt;span style="color:#56b6c2">=&lt;/span>pdfwrite -sOutputFile&lt;span style="color:#56b6c2">=&lt;/span>output.pdf -c .setpdfwrite -f input.pdf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;a href="https://gist.github.com/raghur/f3eab7297691f2f411eec69b8032daf0">&lt;code>qpdf&lt;/code>&lt;/a> can do it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>qpdf --decrypt --password&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;{my pass}&amp;#34;&lt;/span> input.pdf output.pdf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I am not expected to memorize these CLI flags.&lt;/p>
+&lt;p>I do not want to look them up every time either.&lt;/p>
+&lt;p>There are various approaches to tackle this:&lt;/p>
+&lt;ul>
+&lt;li>a shell alias (&lt;code>alias foo=&lt;/code>)&lt;/li>
+&lt;li>a shell function &lt;code>foo() {}&lt;/code>&lt;/li>
+&lt;li>a shell script (&lt;code>*.sh&lt;/code>)&lt;/li>
+&lt;li>a &lt;a href="https://perrotta.dev/2025/10/comma-scripts/">comma script&lt;/a>&lt;/li>
+&lt;li>a copyable snippet (e.g. stored in Obsidian / LogSeq or some other digital
+garden / personal wiki / second brain app)&lt;/li>
+&lt;li>a snippet (e.g. in &lt;a href="https://perrotta.dev/2025/10/comma-scripts/">RayCast&lt;/a> or
+&lt;a href="https://perrotta.dev/2025/10/comma-scripts/">Espanso&lt;/a>)&lt;/li>
+&lt;li>ask the AI each time&lt;/li>
+&lt;li>&lt;del>google&lt;/del> &lt;a href="https://perrotta.dev/2025/05/kagi/">search&lt;/a> for it each time&lt;/li>
+&lt;/ul>
+&lt;p>Lately I&amp;rsquo;ve been favouring the &lt;a href="https://perrotta.dev/2025/09/pancake-potpourri-scripts/">shell script&lt;/a> approach, so &lt;a href="https://github.com/thiagowfx/pancake/tree/c7c3677119c567edc432fcc1f1c0f78c9a5b3c55/pdf_password_remove">here we go&lt;/a> with &lt;code>pdf_password_remove.sh&lt;/code>:&lt;/p>
+&lt;h2 id="usage">Usage&lt;/h2>
+&lt;p>Remove password protection from PDF files.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Interactive password prompt (most secure)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pdf_password_remove secret.pdf
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Process multiple files&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pdf_password_remove report.pdf invoice.pdf contract.pdf
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Provide password via command line&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pdf_password_remove --password&lt;span style="color:#56b6c2">=&lt;/span>BANANA42SPLIT secret.pdf
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Custom output filename (single file only)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pdf_password_remove -o unlocked.pdf secret.pdf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="example-output">Example Output&lt;/h2>
+&lt;pre tabindex="0">&lt;code>% pdf_password_remove --password=PIZZA69SLICE financial-report.pdf tax-form.pdf
+✓ Successfully processed: financial-report.pdf → financial-report-unlocked.pdf
+✓ Successfully processed: tax-form.pdf → tax-form-unlocked.pdf
+
+Summary: Successfully processed 2/2 file(s)
+&lt;/code>&lt;/pre>&lt;h2 id="features">Features&lt;/h2>
+&lt;ul>
+&lt;li>Process single or multiple PDF files in one command&lt;/li>
+&lt;li>Secure interactive password prompt (hidden input)&lt;/li>
+&lt;li>Command-line password option for automation/scripts&lt;/li>
+&lt;li>Default output naming: adds &lt;code>-unlocked&lt;/code> suffix&lt;/li>
+&lt;li>Custom output filename with &lt;code>-o&lt;/code> flag (single file only)&lt;/li>
+&lt;li>Clear success/failure indicators for each file&lt;/li>
+&lt;li>Validates PDF files before processing&lt;/li>
+&lt;/ul>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;p>Requires either &lt;code>ghostscript&lt;/code> (preferred) or &lt;code>qpdf&lt;/code> to be installed:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># macOS&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>brew install ghostscript &lt;span style="color:#7f848e"># Preferred&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>brew install qpdf &lt;span style="color:#7f848e"># Alternative&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Linux&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt install ghostscript &lt;span style="color:#7f848e"># Preferred - Debian/Ubuntu&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt install qpdf &lt;span style="color:#7f848e"># Alternative&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo dnf install ghostscript &lt;span style="color:#7f848e"># Preferred - Fedora&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo dnf install qpdf &lt;span style="color:#7f848e"># Alternative&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo pacman -S ghostscript &lt;span style="color:#7f848e"># Preferred - Arch&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo pacman -S qpdf &lt;span style="color:#7f848e"># Alternative&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The script automatically detects and uses whichever tool is available,
+preferring ghostscript if both are installed.&lt;/p>
+&lt;h2 id="security-note">Security Note&lt;/h2>
+&lt;p>Using &lt;code>--password&lt;/code> on the command line will expose the password in shell history
+and process lists. For sensitive documents, use the interactive prompt instead
+(default behavior when password is not provided).&lt;/p></description></item><item><title>new script: copy</title><link>https://perrotta.dev/2025/11/new-script-copy/</link><pubDate>Tue, 04 Nov 2025 14:05:47 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/new-script-copy/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/10/new-script-ssh-mux-restart/">Previously&lt;/a>.&lt;/p>
 &lt;p>I decided to add a new &lt;code>copy&lt;/code> script to
 &lt;a href="https://github.com/thiagowfx/pancake">&lt;code>pancake&lt;/code>&lt;/a> to standardize copying command
 output and files to the system clipboard in both macOS and Linux.&lt;/p>
@@ -2076,33 +2149,4 @@ Docker driver / VM running in the background on macOS.&lt;/p>
 &lt;p>&lt;a href="https://imgflip.com/tag/is+that+a+lot">&lt;em>&amp;ldquo;Is that a lot&amp;rdquo;&lt;/em>&lt;/a>?&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/div></description></item><item><title>Site performance with Lighthouse</title><link>https://perrotta.dev/2024/12/site-performance-with-lighthouse/</link><pubDate>Sat, 28 Dec 2024 05:14:38 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2024/12/site-performance-with-lighthouse/</guid><description>&lt;p>Lighthouse can be used to assess overall site performance. There is a myriad of
-ways to run it:&lt;/p>
-&lt;ul>
-&lt;li>Google (cloud): &lt;a href="https://pagespeed.web.dev/">https://pagespeed.web.dev/&lt;/a>&lt;/li>
-&lt;li>Chrome DevTools (locally): Lighthouse tab&lt;/li>
-&lt;li>CLI tool: &lt;a href="https://github.com/GoogleChrome/lighthouse">https://github.com/GoogleChrome/lighthouse&lt;/a>&lt;/li>
-&lt;li>Github Actions: &lt;a href="https://github.com/GoogleChrome/lighthouse-ci">https://github.com/GoogleChrome/lighthouse-ci&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;p>It has four metrics scored from 0 to 100 each:&lt;/p>
-&lt;ul>
-&lt;li>performance&lt;/li>
-&lt;li>accessibility&lt;/li>
-&lt;li>best practices&lt;/li>
-&lt;li>SEO&lt;/li>
-&lt;/ul>
-&lt;p>I ran it against &lt;a href="https://pagespeed.web.dev/analysis/https-perrotta-dev/f7pfqerk0f?form_factor=mobile">my blog&lt;/a>.&lt;/p>
-&lt;p>My score was 100 / 83 / 96 / 100, respectively, which is quite good. It&amp;rsquo;s not
-unexpected either, because I am running a static website.&lt;/p>
-&lt;p>It offered me a couple of suggestions:&lt;/p>
-&lt;blockquote>
-&lt;ul>
-&lt;li>Image elements do not have explicit width and height&lt;/li>
-&lt;li>Serve images in next-gen formats Potential savings of 18 KiB&lt;/li>
-&lt;li>Serve static assets with an efficient cache policy 2 resources found&lt;/li>
-&lt;li>Properly size images Potential savings of 23 KiB&lt;/li>
-&lt;/ul>
-&lt;/blockquote>
-&lt;p>I addressed most of the suggestions.&lt;/p>
-&lt;p>Cloudflare also has a similar scan: &lt;a href="https://radar.cloudflare.com/scan/b274b6c2-1015-4907-aeca-30b7be8d1769/summary">Cloudflare
-Radar&lt;/a>.&lt;/p></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>
