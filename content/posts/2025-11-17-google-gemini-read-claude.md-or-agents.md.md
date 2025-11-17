@@ -65,6 +65,46 @@ ln -s CLAUDE.md GEMINI.md
 ...but that needs to be repeated in each repository, whereas the `settings.json`
 change is global.
 
+**Update(2025-11-17)**: Even better, as per
+[docs](https://geminicli.com/docs/cli/configuration/#available-settings-in-settingsjson):
+
+```json
+{
+  "contextFileName": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "GEMINI.md"
+  ]
+}
+```
+
+> contextFileName (string or array of strings):
+
+**Corollary**: It still pays to [RTFM](https://en.wikipedia.org/wiki/RTFM)
+directly, even in the LLM era.
+
+Once you launch `gemini` with this config, it gets automatically updated to:
+
+```json
+{
+  "context": {
+    "fileName": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "GEMINI.md"
+    ]
+  },
+}
+```
+
+...which suggests it to be the canonical form[^3].
+
+We know it works because, upon launching `gemini` within a repository that
+contains `CLAUDE.md`, it displays `Using: 1 context file`.
+
 [^1]: Citation needed? This statement comes from experience. Or _personal
     vibes_, if you will.
 [^2]: And likely intentional, as it would be trivial to support it.
+[^3]: They aren't great at updating [their own
+    docs](https://geminicli.com/docs/cli/configuration/#available-settings-in-settingsjson),
+    eh? This is not yet documented there.
