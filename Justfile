@@ -51,6 +51,18 @@ code title *args:
 
 alias coding := code
 
+# Edit the most recent blog post
+last:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    latest=$(ls -t content/posts/*.md 2>/dev/null | head -n 1 || true)
+    if [ -z "$latest" ]; then
+      echo "No posts found in content/posts/"
+      exit 1
+    fi
+    {{ editor }} "$latest"
+
 # Delete hugo build artifacts
 clean:
     rm -rf public/ resources/
