@@ -23,6 +23,18 @@
             column-gap: 10px;
           }
 
+          .header h1 a {
+            color: inherit;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            column-gap: 10px;
+          }
+
+          .header h1 a:hover {
+            text-decoration: underline;
+          }
+
           .header img {
             width: 32px;
             height: 32px;
