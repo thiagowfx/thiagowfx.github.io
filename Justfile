@@ -31,7 +31,7 @@ new title *args:
 
 alias blog := new
 
-# Create a new coding post. Usage: `just code "leetcode #1"`.
+# Create a new coding post. Usage: `just code "leetcode #1"` or `just code "bytebytego #1"`.
 code title *args:
     #!/usr/bin/env bash
     set -euo pipefail
