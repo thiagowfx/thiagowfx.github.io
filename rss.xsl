@@ -131,8 +131,10 @@
       <body>
         <div class="header">
           <h1>
-            <img src="/thiagowfx.png" alt="thiagowfx's avatar"/>
-            <xsl:value-of select="rss/channel/title"/>
+            <a href="{rss/channel/link}">
+              <img src="/thiagowfx.png" alt="thiagowfx's avatar"/>
+              <xsl:value-of select="rss/channel/title"/>
+            </a>
           </h1>
           <p><xsl:value-of select="rss/channel/description"/></p>
         </div>
