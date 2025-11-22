@@ -41,12 +41,16 @@ code title *args:
 
     hugo_title="{{ title }}"
     hugo_leetcode_slug=""
+    hugo_bytebytego_slug=""
     if [[ "{{ title }}" == "LeetCode"* ]]; then
       problem_name=$(echo "{{ title }}" | sed -e 's/LeetCode #[0-9]*: //')
       hugo_leetcode_slug=$(echo "${problem_name}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+    elif [[ "{{ title }}" == "ByteByteGo"* ]]; then
+      problem_name=$(echo "{{ title }}" | sed -e 's/ByteByteGo #[0-9]*: //')
+      hugo_bytebytego_slug=$(echo "${problem_name}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
     fi
 
-    HUGO_TITLE="${hugo_title}" HUGO_LEETCODE_SLUG="${hugo_leetcode_slug}" hugo new --kind coding "${filepath}" {{ args }}
+    HUGO_TITLE="${hugo_title}" HUGO_LEETCODE_SLUG="${hugo_leetcode_slug}" HUGO_BYTEBYTEGO_SLUG="${hugo_bytebytego_slug}" hugo new --kind coding "${filepath}" {{ args }}
     {{ editor }} "${filepath}"
 
 alias coding := code

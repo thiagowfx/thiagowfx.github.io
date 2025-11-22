@@ -7,7 +7,13 @@ rss: false
 ---
 
 {{- $leetcode_slug := getenv "HUGO_LEETCODE_SLUG" }}
-{{- $url := cond (ne $leetcode_slug "") (printf "https://leetcode.com/problems/%s/" $leetcode_slug) "#" }}
+{{- $bytebytego_slug := getenv "HUGO_BYTEBYTEGO_SLUG" }}
+{{- $url := "#" }}
+{{- if ne $leetcode_slug "" }}
+  {{- $url = printf "https://leetcode.com/problems/%s/" $leetcode_slug }}
+{{- else if ne $bytebytego_slug "" }}
+  {{- $url = printf "https://bytebytego.com/exercises/coding-patterns/%s" $bytebytego_slug }}
+{{- end }}
 
 [{{ getenv "HUGO_TITLE" }}]({{ $url }}):
 
