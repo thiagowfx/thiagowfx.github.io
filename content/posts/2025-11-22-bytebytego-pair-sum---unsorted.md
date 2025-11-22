@@ -28,3 +28,15 @@ def pair_sum_unsorted(nums: List[int], target: int) -> List[int]:
 ```
 
 Be careful not to pick the same index twice.
+
+Simpler way to construct the hash map: a dict comprehension:
+
+```python
+d = {num: i for i, num in enumerate(nums)}
+```
+
+Fancier:
+
+```python
+d = dict(zip(nums, range(len(nums))))
+```
