@@ -1,0 +1,27 @@
+---
+title: "ByteByteGo #1: Pair Sum - Sorted"
+date: 2025-11-22T15:08:14-03:00
+tags:
+  - coding
+rss: false
+---
+
+[ByteByteGo #1](https://bytebytego.com/exercises/coding-patterns/two-pointers/pair-sum-sorted):
+
+```python
+from typing import List
+
+def pair_sum_sorted(nums: List[int], target: int) -> List[int]:
+    left = 0
+    right = len(nums) - 1
+
+    while left < right:
+        if nums[left] + nums[right] == target:
+            return [left, right]
+        elif nums[left] + nums[right] < target:
+            left += 1
+        else:
+            right -= 1
+
+    return []
+```
