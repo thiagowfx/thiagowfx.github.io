@@ -6,7 +6,7 @@ tags:
 rss: false
 ---
 
-[ByteByteGo #1](https://bytebytego.com/exercises/coding-patterns/two-pointers/pair-sum-sorted):
+[ByteByteGo: Pair Sum - Sorted](https://bytebytego.com/exercises/coding-patterns/two-pointers/pair-sum-sorted):
 
 ```python
 from typing import List
@@ -25,3 +25,5 @@ def pair_sum_sorted(nums: List[int], target: int) -> List[int]:
 
     return []
 ```
+
+Classic Two Pointer problem, inward traversal.
