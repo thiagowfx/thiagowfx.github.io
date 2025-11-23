@@ -27,3 +27,17 @@ def shift_zeros_to_the_end(nums: List[int]) -> None:
                 j = i
 
 ```
+
+Simplified version:
+
+```python
+from typing import List
+
+def shift_zeros_to_the_end(nums: List[int]) -> None:
+    j = 0
+
+    for i, num in enumerate(nums):
+        if num != 0:
+            nums[i], nums[j] = nums[j], nums[i]
+            j += 1
+```
