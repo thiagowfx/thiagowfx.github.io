@@ -27,3 +27,18 @@ def pair_sum_sorted(nums: List[int], target: int) -> List[int]:
 ```
 
 Classic Two Pointer problem, inward traversal.
+
+In a single pass:
+
+```python
+from typing import List
+
+def pair_sum_unsorted(nums: List[int], target: int) -> List[int]:
+    d = {}
+    for i, num in enumerate(nums):
+        if (target - num) in d.keys():
+            return [d[target-num], i]
+        d[num] = i
+
+    return []
+```
