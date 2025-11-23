@@ -31,7 +31,7 @@ new title *args:
 
 alias blog := new
 
-# Create a new coding post. Usage: `just code "leetcode #1"` or `just code "bytebytego #1"`.
+# Create a new coding post. Usage: `just code "leetcode #1"` or `just code "bytebytego #1"` or `just code "ByteByteGo: Triplet Sum"`.
 code title *args:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -43,10 +43,12 @@ code title *args:
     hugo_leetcode_slug=""
     hugo_bytebytego_slug=""
     if [[ "{{ title }}" == "LeetCode"* ]]; then
-      problem_name=$(echo "{{ title }}" | sed -e 's/LeetCode #[0-9]*: //')
+      # Handle both "LeetCode #1: Problem" and "LeetCode: Problem" formats
+      problem_name=$(echo "{{ title }}" | sed -e 's/LeetCode \(#[0-9]*: \)\?//')
       hugo_leetcode_slug=$(echo "${problem_name}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
     elif [[ "{{ title }}" == "ByteByteGo"* ]]; then
-      problem_name=$(echo "{{ title }}" | sed -e 's/ByteByteGo #[0-9]*: //')
+      # Handle both "ByteByteGo #1: Problem" and "ByteByteGo: Problem" formats
+      problem_name=$(echo "{{ title }}" | sed -e 's/ByteByteGo \(#[0-9]*: \)\?//')
       hugo_bytebytego_slug=$(echo "${problem_name}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
     fi
 

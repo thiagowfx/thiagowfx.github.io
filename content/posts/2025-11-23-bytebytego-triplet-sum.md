@@ -1,12 +1,12 @@
 ---
-title: "ByteByteGo Triplet Sum"
+title: "ByteByteGo: Triplet Sum"
 date: 2025-11-23T17:00:21-03:00
 tags:
   - coding
 rss: false
 ---
 
-[ByteByteGo Triplet Sum](https://bytebytego.com/exercises/coding-patterns/triplet-sum):
+[ByteByteGo: Triplet Sum](https://bytebytego.com/exercises/coding-patterns/triplet-sum):
 
 ```python
 from typing import List
