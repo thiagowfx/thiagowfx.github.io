@@ -6,7 +6,7 @@ tags:
 rss: false
 ---
 
-[ByteByteGo: Triplet Sum](https://bytebytego.com/exercises/coding-patterns/triplet-sum):
+[ByteByteGo: Triplet Sum](https://bytebytego.com/exercises/coding-patterns/two-pointers/triplet-sum):
 
 ```python
 from typing import List
