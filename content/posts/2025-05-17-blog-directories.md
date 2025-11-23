@@ -29,6 +29,7 @@ A few directories I like[^1]:
 - ✪ https://clew.se/
 - ✪ https://darktheme.club/
 - ✪ https://powrss.com/
+- ✪ https://feedle.world/
 - https://ooh.directory/
 - https://256kb.club/
 
