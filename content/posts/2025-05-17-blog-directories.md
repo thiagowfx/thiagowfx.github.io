@@ -30,6 +30,7 @@ A few directories I like[^1]:
 - ✪ https://darktheme.club/
 - ✪ https://powrss.com/
 - https://ooh.directory/
+- https://256kb.club/
 
 I tend to visit them occasionally, whenever I crave for new content, perhaps like
 [doomscrolling](https://en.wikipedia.org/wiki/Doomscrolling) in social media.
