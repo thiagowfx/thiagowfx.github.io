@@ -7,6 +7,12 @@ tags:
 
 Not everything is available via RSS. However, there are some decent workarounds in a few situations.
 
+## Why This Matters
+
+The shift away from RSS and open standards represents a broader trend of [enshittification](https://en.wikipedia.org/wiki/Enshittification) on the web—where platforms prioritize lock-in and data collection over user freedom. RSS embodies the original spirit of the open web: user control, interoperability, and freedom from algorithmic manipulation.
+
+By using RSS bridges and alternatives, we push back against this trend and reclaim control over how we consume content online.
+
 ## Newsletters
 
 Some blogs and authors refuse to provide RSS feeds to their websites. Instead, they will only provide newsletters.
