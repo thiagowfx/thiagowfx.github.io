@@ -13,7 +13,7 @@ watch preview="true" *args:
     if [ "{{ preview }}" = "true" ]; then
       additional_flags="--openBrowser --navigateToChanged"
     fi
-    hugo server --buildDrafts --port {{ port }} --watch $additional_flags {{ args }}
+    hugo server --baseURL "http://localhost:{{ port }}" --buildDrafts --port {{ port }} --watch $additional_flags {{ args }}
 
 # Build the blog as in production
 build *args:

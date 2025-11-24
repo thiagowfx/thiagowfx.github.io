@@ -63,7 +63,10 @@ The only diff is `.Content` instead of `.Summary` for full-text RSS feeds.
       <pubDate>{{ .PublishDate.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
       {{- with $authorEmail }}<author>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</author>{{ end }}
       <guid>{{ .Permalink }}</guid>
-      <description>{{ .Content | transform.XMLEscape | safeHTML }}</description>
+      {{- $content := .Content }}
+      {{- $content = $content | replaceRE `(<img[^>]+src=")(/[^"]+)` (printf `${1}%s${2}` site.BaseURL) }}
+      {{- $content = $content | replaceRE `(<img[^>]+src=")([^/"h][^"]*)` (printf `${1}%s${2}` .Permalink) }}
+      <description>{{ $content | transform.XMLEscape | safeHTML }}</description>
     </item>
     {{- end }}
   </channel>
