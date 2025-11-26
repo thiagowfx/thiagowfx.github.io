@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify that LeetCode post titles follow the expected format."""
+"""Verify that LeetCode and ByteByteGo post titles follow the expected format."""
 
 from __future__ import annotations
 
@@ -7,7 +7,8 @@ import re
 import sys
 from pathlib import Path
 
-TITLE_PATTERN = re.compile(r"^LeetCode #\d+: .+$")
+LEETCODE_PATTERN = re.compile(r"^LeetCode #\d+: .+$")
+BYTEBYTEGO_PATTERN = re.compile(r"^ByteByteGo: .+$")
 
 
 def extract_title(path: Path) -> str | None:
@@ -41,7 +42,14 @@ def _strip_quotes(value: str) -> str:
 
 def check_file(path: Path) -> str | None:
     """Return an error message if the file fails validation."""
-    if "leetcode" not in path.stem.lower():
+    stem = path.stem.lower()
+    if "leetcode" in stem:
+        pattern = LEETCODE_PATTERN
+        expected = "'LeetCode #NN: Title'"
+    elif "bytebytego" in stem:
+        pattern = BYTEBYTEGO_PATTERN
+        expected = "'ByteByteGo: Title'"
+    else:
         return None
 
     try:
@@ -52,10 +60,8 @@ def check_file(path: Path) -> str | None:
     if not title:
         return f"{path}: missing title front matter"
 
-    if not TITLE_PATTERN.fullmatch(title):
-        return (
-            f"{path}: title must match 'LeetCode #NN: Title' (found: {title!r})"
-        )
+    if not pattern.fullmatch(title):
+        return f"{path}: title must match {expected} (found: {title!r})"
 
     return None
 
