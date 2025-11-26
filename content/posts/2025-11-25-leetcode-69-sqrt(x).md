@@ -71,3 +71,61 @@ class Solution:
                     elif mid ** 2 > x:
                         right = mid
 ```
+
+## Geometric (fast, pure)
+
+```python
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        if x == 0:
+            return 0
+
+        left = 1
+        right = x
+        ans = 0
+
+        while left <= right:
+            m = left + ((right - left) // 2)
+
+            if m ** 2 > x:
+                right = m - 1
+
+            elif m ** 2 < x:
+                left = m + 1
+                ans = m
+
+            else:
+                return m
+
+        return ans
+```
+
+## Geometric (fast, my style)
+
+```python
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        if x == 0:
+            return 0
+
+        left = 1
+        right = x
+        ans = 0
+
+        while left <= right:
+            m = left + ((right - left) // 2)
+
+            if m ** 2 > x:
+                right = m - 1
+
+            elif m ** 2 < x:
+                left = m + 1
+
+                if m ** 2 < x < (m + 1) ** 2:
+                    return m
+
+            else:
+                return m
+
+        return ans
+```
