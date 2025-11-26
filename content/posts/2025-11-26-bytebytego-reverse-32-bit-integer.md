@@ -8,7 +8,7 @@ rss: false
 
 [ByteByteGo: Reverse 32-Bit Integer](https://bytebytego.com/exercises/coding-patterns/bytebytego:-reverse-32-bit-integer):
 
-With strings:
+## Strings
 
 ```python
 def reverse_32_bit_integer(n: int) -> int:
@@ -39,4 +39,25 @@ def reverse_32_bit_integer(n: int) -> int:
     ans = int(ans) * (-1 if is_negative else 1)
 
     return ans if (-1 * 2**31 <= ans <= 2**31 - 1) else 0
+```
+
+## Numbers
+
+```python
+def reverse_32_bit_integer(n: int) -> int:
+    ans = 0
+    is_negative = -1 if n < 0 else 1
+    n = abs(n)
+
+    while n != 0:
+        digit = n % 10
+        n //= 10
+
+        # Check for overflow: positive
+        if ans > (2**31 - 1) // 10:
+            return 0
+
+        ans = ans * 10 + digit
+
+    return is_negative * ans
 ```
