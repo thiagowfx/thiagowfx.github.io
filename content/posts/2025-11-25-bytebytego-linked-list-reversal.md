@@ -51,15 +51,14 @@ def linked_list_reversal(head: ListNode) -> ListNode:
         return head
 
     prev = None
-    current = head
 
-    while current is not None:
-        next_node = current.next
+    while head is not None:
+        next_node = head.next
 
-        current.next = prev
+        head.next = prev
 
-        prev = current
-        current = next_node
+        prev = head
+        head = next_node
 
     return prev
 ```
