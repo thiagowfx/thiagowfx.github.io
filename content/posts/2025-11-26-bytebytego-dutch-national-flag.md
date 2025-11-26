@@ -39,3 +39,29 @@ def dutch_national_flag(nums: List[int]) -> None:
                 c[ins] -= 1
                 break
 ```
+
+Clean:
+
+```python
+from typing import List
+
+def dutch_national_flag(nums: List[int]) -> None:
+    """
+    In-place sort of array containing only 0,1,2 using the three-pointer method.
+    Time: O(n), Space: O(1)
+    """
+    left = 0
+    mid = 0
+    right = len(nums) - 1
+
+    while mid <= right:
+        if nums[mid] == 0:
+            nums[left], nums[mid] = nums[mid], nums[left]
+            left += 1
+            mid += 1
+        elif nums[mid] == 1:
+            mid += 1
+        else:  # nums[mid] == 2
+            nums[mid], nums[right] = nums[right], nums[mid]
+            right -= 1
+```
