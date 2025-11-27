@@ -50,6 +50,9 @@ from typing import List
 def hamming_weights_of_integers(n: int) -> List[int]:
     from functools import lru_cache
 
+    if n == 0:
+        return [0]
+
     hammer = [0] * (n + 1)
     hammer[0] = 0
     hammer[1] = 1
