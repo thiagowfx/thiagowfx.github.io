@@ -69,6 +69,10 @@ last:
     fi
     {{ editor }} "$latest"
 
+# Create a git commit without any substance
+lazy *args:
+    git commit -m "lazy commit" -n {{ args }}
+
 # Delete hugo build artifacts
 clean:
     rm -rf public/ resources/
