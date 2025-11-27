@@ -71,7 +71,8 @@ def factorial(n: int) -> int:
   return n * factorial(n - 1)
 ```
 
-`@cache` is equivalent to `lru_cache(maxsize=None)`.
+`@cache` is equivalent to `lru_cache(maxsize=None)`. It is only available from
+Python 3.9+.
 
 With this trick, you won't ever need to manually memoize any function in python
 anymore!
