@@ -15,26 +15,39 @@ Overflow&lt;/a>:&lt;/p>
 &lt;/ul></description></item><item><title>git: prune stale branches</title><link>https://perrotta.dev/2025/11/git-prune-stale-branches/</link><pubDate>Thu, 27 Nov 2025 18:04:45 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/git-prune-stale-branches/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Delete all local git branches whose counterpart remote
 branches have already been merged upstream.&lt;/p>
 &lt;p>Update &lt;code>~/.gitconfig&lt;/code>:&lt;/p>
-&lt;pre tabindex="0">&lt;code class="language-gitconfig" data-lang="gitconfig">[alias]
- prune-gone = !git fetch -p &amp;amp;&amp;amp; git branch -vv | awk &amp;#39;/: gone]/{print $1}&amp;#39; | xargs -r git branch -D
- world = !git fetch --all &amp;amp;&amp;amp; git remote prune origin &amp;amp;&amp;amp; git prune &amp;amp;&amp;amp; git prune-gone
-&lt;/code>&lt;/pre>&lt;p>Now simply run &lt;code>git prune-gone&lt;/code> – or, even better, &lt;code>git world&lt;/code> for a more
+
+&lt;div class="codeblock" data-lang="gitconfig">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">gitconfig&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ini" data-lang="ini">&lt;span class="line">&lt;span class="cl">&lt;span class="k">[alias]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">prune-gone&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">!git fetch -p &amp;amp;&amp;amp; git branch -vv | awk &amp;#39;/: gone]/{print $1}&amp;#39; | xargs -r git branch -D
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> world = !git fetch --all &amp;amp;&amp;amp; git remote prune origin &amp;amp;&amp;amp; git prune &amp;amp;&amp;amp; git prune-gone&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>Now simply run &lt;code>git prune-gone&lt;/code> – or, even better, &lt;code>git world&lt;/code> for a more
 complete cleanup.&lt;/p>
 &lt;p>This is much more ergonomic than hunting down individual branches and doing &lt;code>git push origin :{my branch}&lt;/code>.&lt;/p>
 &lt;p>Example usage:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% ~/Workspace/pancake &lt;span style="color:#56b6c2">(&lt;/span>git&lt;span style="color:#56b6c2">)&lt;/span>-&lt;span style="color:#56b6c2">[&lt;/span>master&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% git world
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>From github.com:thiagowfx/pancake
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#56b6c2">[&lt;/span>deleted&lt;span style="color:#56b6c2">]&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>none&lt;span style="color:#56b6c2">)&lt;/span> -&amp;gt; origin/thiagowfx/apkbuild-sync
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#56b6c2">[&lt;/span>deleted&lt;span style="color:#56b6c2">]&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>none&lt;span style="color:#56b6c2">)&lt;/span> -&amp;gt; origin/thiagowfx/wt-no-origin-graceful
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>remote: Enumerating objects: 13, &lt;span style="color:#c678dd">done&lt;/span>.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>remote: Counting objects: 100% &lt;span style="color:#56b6c2">(&lt;/span>13/13&lt;span style="color:#56b6c2">)&lt;/span>, &lt;span style="color:#c678dd">done&lt;/span>.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>remote: Compressing objects: 100% &lt;span style="color:#56b6c2">(&lt;/span>5/5&lt;span style="color:#56b6c2">)&lt;/span>, &lt;span style="color:#c678dd">done&lt;/span>.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>remote: Total &lt;span style="color:#d19a66">8&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>delta 5&lt;span style="color:#56b6c2">)&lt;/span>, reused &lt;span style="color:#d19a66">3&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>delta 3&lt;span style="color:#56b6c2">)&lt;/span>, pack-reused &lt;span style="color:#d19a66">0&lt;/span> &lt;span style="color:#56b6c2">(&lt;/span>from 0&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Unpacking objects: 100% &lt;span style="color:#56b6c2">(&lt;/span>8/8&lt;span style="color:#56b6c2">)&lt;/span>, 2.61 KiB | 668.00 KiB/s, &lt;span style="color:#c678dd">done&lt;/span>.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> f727bd7..51f81ee master -&amp;gt; origin/master
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Deleted branch thiagowfx/wt-cd-dash &lt;span style="color:#56b6c2">(&lt;/span>was 6403261&lt;span style="color:#56b6c2">)&lt;/span>.
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>GitHub labels vs merge when ready</title><link>https://perrotta.dev/2025/11/github-labels-vs-merge-when-ready/</link><pubDate>Thu, 27 Nov 2025 16:00:28 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/github-labels-vs-merge-when-ready/</guid><description>&lt;p>GitHub allows marking PRs to be &lt;a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/merging-a-pull-request-with-a-merge-queue">merged when
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">% ~/Workspace/pancake &lt;span class="o">(&lt;/span>git&lt;span class="o">)&lt;/span>-&lt;span class="o">[&lt;/span>master&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">% git world
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">From github.com:thiagowfx/pancake
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &lt;span class="o">[&lt;/span>deleted&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>none&lt;span class="o">)&lt;/span> -&amp;gt; origin/thiagowfx/apkbuild-sync
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - &lt;span class="o">[&lt;/span>deleted&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>none&lt;span class="o">)&lt;/span> -&amp;gt; origin/thiagowfx/wt-no-origin-graceful
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">remote: Enumerating objects: 13, &lt;span class="k">done&lt;/span>.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">remote: Counting objects: 100% &lt;span class="o">(&lt;/span>13/13&lt;span class="o">)&lt;/span>, &lt;span class="k">done&lt;/span>.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">remote: Compressing objects: 100% &lt;span class="o">(&lt;/span>5/5&lt;span class="o">)&lt;/span>, &lt;span class="k">done&lt;/span>.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">remote: Total &lt;span class="m">8&lt;/span> &lt;span class="o">(&lt;/span>delta 5&lt;span class="o">)&lt;/span>, reused &lt;span class="m">3&lt;/span> &lt;span class="o">(&lt;/span>delta 3&lt;span class="o">)&lt;/span>, pack-reused &lt;span class="m">0&lt;/span> &lt;span class="o">(&lt;/span>from 0&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Unpacking objects: 100% &lt;span class="o">(&lt;/span>8/8&lt;span class="o">)&lt;/span>, 2.61 KiB &lt;span class="p">|&lt;/span> 668.00 KiB/s, &lt;span class="k">done&lt;/span>.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> f727bd7..51f81ee master -&amp;gt; origin/master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Deleted branch thiagowfx/wt-cd-dash &lt;span class="o">(&lt;/span>was 6403261&lt;span class="o">)&lt;/span>.&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div></description></item><item><title>GitHub labels vs merge when ready</title><link>https://perrotta.dev/2025/11/github-labels-vs-merge-when-ready/</link><pubDate>Thu, 27 Nov 2025 16:00:28 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/github-labels-vs-merge-when-ready/</guid><description>&lt;p>GitHub allows marking PRs to be &lt;a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/merging-a-pull-request-with-a-merge-queue">merged when
 ready&lt;/a>.
 This means a merge operation will automatically happen in the background once
 all PR requirements are satisfied i.e. CI checks pass, teammate approvals, etc.&lt;/p>
@@ -62,8 +75,11 @@ the merge of the PR as soon as they approve it.&lt;/p>
 &lt;a href="https://en.wikipedia.org/wiki/Quake_(video_game)">Quake&lt;/a>-like&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> mode to pop
 up a terminal (console) from the top of the screen, no matter where you are.&lt;/p>
 &lt;p>Enable it with this setting in your Ghostty config:&lt;/p>
-&lt;pre tabindex="0">&lt;code>keybind = global:cmd+;=toggle_quick_terminal
-&lt;/code>&lt;/pre>&lt;p>&lt;code>global:&lt;/code> is what does the &amp;ldquo;no matter where you are&amp;rdquo; magic. Even if your focus
+
+&lt;div class="codeblock">
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl">keybind = global:cmd+;=toggle_quick_terminal&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>&lt;code>global:&lt;/code> is what does the &amp;ldquo;no matter where you are&amp;rdquo; magic. Even if your focus
 is in another application / window, the shortcut will still work. I did not test
 it with conflicting shortcuts, it&amp;rsquo;s better to pick an uncommon one (don&amp;rsquo;t pick
 &lt;code>Cmd + T&lt;/code>!).&lt;/p>
@@ -109,40 +125,68 @@ a simple tool that doesn&amp;rsquo;t interfere with your terminal. Not an &amp;l
 terminal&amp;rdquo; or anything. You ask, and howto answers. That&amp;rsquo;s the deal.&lt;/p>
 &lt;/blockquote>
 &lt;p>Installation:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>brew tap nalgeon/howto https://github.com/nalgeon/howto
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>brew install howto
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Configuration: add to my shell startup file:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Lazy-load API keys only when needed to avoid shell startup delay&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e5c07b">command&lt;/span> -v howto &amp;amp;&amp;gt;/dev/null; &lt;span style="color:#c678dd">then&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	_load_api_keys_howto&lt;span style="color:#56b6c2">()&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e5c07b">export&lt;/span> &lt;span style="color:#e06c75">HOWTO_AI_TOKEN&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#c678dd">$(&lt;/span>&lt;span style="color:#e5c07b">command&lt;/span> llm keys get openai&lt;span style="color:#c678dd">)&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#7f848e"># Redefine itself to be a no-op after first call&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		_load_api_keys_howto&lt;span style="color:#56b6c2">()&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span> :; &lt;span style="color:#56b6c2">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#56b6c2">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#7f848e"># Wrap all AI CLI commands to auto-load keys&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#e5c07b">command&lt;/span> -v howto &amp;amp;&amp;gt;/dev/null &lt;span style="color:#56b6c2">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#e5c07b">eval&lt;/span> &lt;span style="color:#98c379">&amp;#34;howto() { _load_api_keys_howto; command howto \&amp;#34;\$@\&amp;#34;; }&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">fi&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In this case, I retrieve the API token from
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">brew tap nalgeon/howto https://github.com/nalgeon/howto
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">brew install howto&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>Configuration: add to my shell startup file:&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Lazy-load API keys only when needed to avoid shell startup delay&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="nb">command&lt;/span> -v howto &lt;span class="p">&amp;amp;&lt;/span>&amp;gt;/dev/null&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	_load_api_keys_howto&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="nb">export&lt;/span> &lt;span class="nv">HOWTO_AI_TOKEN&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>&lt;span class="nb">command&lt;/span> llm keys get openai&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		&lt;span class="c1"># Redefine itself to be a no-op after first call&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">		_load_api_keys_howto&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span> :&lt;span class="p">;&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="c1"># Wrap all AI CLI commands to auto-load keys&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="nb">command&lt;/span> -v howto &lt;span class="p">&amp;amp;&lt;/span>&amp;gt;/dev/null &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">eval&lt;/span> &lt;span class="s2">&amp;#34;howto() { _load_api_keys_howto; command howto \&amp;#34;\$@\&amp;#34;; }&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>In this case, I retrieve the API token from
 &lt;a href="https://github.com/simonw/llm">&lt;code>llm&lt;/code>&lt;/a>.&lt;/p>
 &lt;p>Usage examples:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% howto curl post request
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>curl -X POST &lt;span style="color:#56b6c2">[&lt;/span>URL&lt;span style="color:#56b6c2">]&lt;/span> -d &lt;span style="color:#98c379">&amp;#34;[data]&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>The &lt;span style="color:#98c379">`&lt;/span>curl&lt;span style="color:#98c379">`&lt;/span> &lt;span style="color:#e5c07b">command&lt;/span> is used to make HTTP requests from the &lt;span style="color:#e5c07b">command&lt;/span> line.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>The &lt;span style="color:#98c379">`&lt;/span>-X POST&lt;span style="color:#98c379">`&lt;/span> option specifies that the request method is POST.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>The &lt;span style="color:#98c379">`&lt;/span>-d &lt;span style="color:#98c379">&amp;#34;[data]&amp;#34;&lt;/span>&lt;span style="color:#98c379">`&lt;/span> option is used to send the specified data in the POST request
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>body.
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% howto terraform init given a backend and a tfvars
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>terraform init -backend-config&lt;span style="color:#56b6c2">=&lt;/span>&amp;lt;backend-config-file&amp;gt; -var-file&lt;span style="color:#56b6c2">=&lt;/span>&amp;lt;variables-file&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>The &lt;span style="color:#98c379">`&lt;/span>terraform init&lt;span style="color:#98c379">`&lt;/span> &lt;span style="color:#e5c07b">command&lt;/span> initializes a Terraform working directory,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>preparing it &lt;span style="color:#c678dd">for&lt;/span> other commands.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>The &lt;span style="color:#98c379">`&lt;/span>-backend-config&lt;span style="color:#56b6c2">=&lt;/span>&amp;lt;backend-config-file&amp;gt;&lt;span style="color:#98c379">`&lt;/span> option specifies a file containing
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>backend configuration settings.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>The &lt;span style="color:#98c379">`&lt;/span>-var-file&lt;span style="color:#56b6c2">=&lt;/span>&amp;lt;variables-file&amp;gt;&lt;span style="color:#98c379">`&lt;/span> option specifies a file containing variable
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>definitions.
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Workflow: when stuck, press &lt;code>Ctrl + a&lt;/code> (go to beginning of line), type &lt;code>howto&lt;/code>,
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">% howto curl post request
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">curl -X POST &lt;span class="o">[&lt;/span>URL&lt;span class="o">]&lt;/span> -d &lt;span class="s2">&amp;#34;[data]&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">The &lt;span class="sb">`&lt;/span>curl&lt;span class="sb">`&lt;/span> &lt;span class="nb">command&lt;/span> is used to make HTTP requests from the &lt;span class="nb">command&lt;/span> line.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">The &lt;span class="sb">`&lt;/span>-X POST&lt;span class="sb">`&lt;/span> option specifies that the request method is POST.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">The &lt;span class="sb">`&lt;/span>-d &lt;span class="s2">&amp;#34;[data]&amp;#34;&lt;/span>&lt;span class="sb">`&lt;/span> option is used to send the specified data in the POST request
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">body.&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">% howto terraform init given a backend and a tfvars
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">terraform init -backend-config&lt;span class="o">=&lt;/span>&amp;lt;backend-config-file&amp;gt; -var-file&lt;span class="o">=&lt;/span>&amp;lt;variables-file&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">The &lt;span class="sb">`&lt;/span>terraform init&lt;span class="sb">`&lt;/span> &lt;span class="nb">command&lt;/span> initializes a Terraform working directory,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">preparing it &lt;span class="k">for&lt;/span> other commands.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">The &lt;span class="sb">`&lt;/span>-backend-config&lt;span class="o">=&lt;/span>&amp;lt;backend-config-file&amp;gt;&lt;span class="sb">`&lt;/span> option specifies a file containing
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">backend configuration settings.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">The &lt;span class="sb">`&lt;/span>-var-file&lt;span class="o">=&lt;/span>&amp;lt;variables-file&amp;gt;&lt;span class="sb">`&lt;/span> option specifies a file containing variable
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">definitions.&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>Workflow: when stuck, press &lt;code>Ctrl + a&lt;/code> (go to beginning of line), type &lt;code>howto&lt;/code>,
 press &lt;code>&amp;lt;Enter&amp;gt;&lt;/code>.&lt;/p></description></item><item><title>Canary</title><link>https://perrotta.dev/2025/11/canary/</link><pubDate>Mon, 24 Nov 2025 22:42:09 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/canary/</guid><description>&lt;p>Inspired by &lt;a href="https://www.usecue.com/blog/warrant-canary-added/">Joost van der
 Schee&lt;/a>:&lt;/p>
 &lt;blockquote>
@@ -198,22 +242,24 @@ do so for me.&lt;/p>
 &lt;p>This is a built-in agent.&lt;/p>
 &lt;p>Let the &lt;del>experts&lt;/del> agents handle the cruft.&lt;/p>
 &lt;p>For example, &lt;code>/commit&lt;/code>:&lt;/p>
-&lt;pre tabindex="0">&lt;code>% cat ~/.claude/commands/commit.md
----
-allowed_tools: [&amp;#34;Bash(git add:*)&amp;#34;, &amp;#34;Bash(git commit:*)&amp;#34;, &amp;#34;Bash(git status:*)&amp;#34;, &amp;#34;Bash(git rev-parse:*)&amp;#34;]
-argument-hint: [message]
-description: Make a concise git commit on the current branch
----
 
-Create a concise git commit with the provided message.
-
-Steps:
-1. Show current git status to confirm changes
-2. Commit with the provided message
-3. Ask the user if they want to push the changes
-
-If the user provides a message as argument, use it directly. Otherwise, ask them for a commit message.
-&lt;/code>&lt;/pre></description></item><item><title>Personal blogs are back</title><link>https://perrotta.dev/2025/11/personal-blogs-are-back/</link><pubDate>Sun, 23 Nov 2025 14:48:36 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/personal-blogs-are-back/</guid><description>&lt;p>&lt;a href="https://disassociated.com/personal-blogs-back-niche-blogs-next/">Disassociated&lt;/a> (&lt;a href="https://news.ycombinator.com/item?id=46009894">via&lt;/a>):&lt;/p>
+&lt;div class="codeblock">
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl">% cat ~/.claude/commands/commit.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">---
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">allowed_tools: [&amp;#34;Bash(git add:*)&amp;#34;, &amp;#34;Bash(git commit:*)&amp;#34;, &amp;#34;Bash(git status:*)&amp;#34;, &amp;#34;Bash(git rev-parse:*)&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">argument-hint: [message]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">description: Make a concise git commit on the current branch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">---
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Create a concise git commit with the provided message.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Steps:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1. Show current git status to confirm changes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2. Commit with the provided message
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">3. Ask the user if they want to push the changes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">If the user provides a message as argument, use it directly. Otherwise, ask them for a commit message.&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div></description></item><item><title>Personal blogs are back</title><link>https://perrotta.dev/2025/11/personal-blogs-are-back/</link><pubDate>Sun, 23 Nov 2025 14:48:36 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/personal-blogs-are-back/</guid><description>&lt;p>&lt;a href="https://disassociated.com/personal-blogs-back-niche-blogs-next/">Disassociated&lt;/a> (&lt;a href="https://news.ycombinator.com/item?id=46009894">via&lt;/a>):&lt;/p>
 &lt;blockquote>
 &lt;p>Personal blogs are back, should niche blogs be next?&lt;/p>
 &lt;p>A resurgence in personal blogging is the first step in rebuilding a vibrant,
@@ -273,12 +319,26 @@ nobody else is reading it at all.&lt;/p>
 &lt;/blockquote>
 &lt;p>I do not have anything to add, really. Simon has nailed it.&lt;/p></description></item><item><title>git stash -m</title><link>https://perrotta.dev/2025/11/git-stash-m/</link><pubDate>Sun, 23 Nov 2025 13:14:09 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/git-stash-m/</guid><description>&lt;p>When running &lt;code>git stash&lt;/code>, it&amp;rsquo;s possible to pass a &amp;ldquo;stash message&amp;rdquo; to it with
 &lt;code>-m&lt;/code>, just like how you give a &amp;ldquo;commit message&amp;rdquo; to &lt;code>git commit&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git stash -m &lt;span style="color:#98c379">&amp;#34;first draft, approach #1 from design doc&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can view past stashes with &lt;code>git stash list&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% git stash list
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>stash@&lt;span style="color:#56b6c2">{&lt;/span>0&lt;span style="color:#56b6c2">}&lt;/span>: On master: first draft, approach &lt;span style="color:#7f848e">#1 from design doc&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now your &lt;del>junk&lt;/del> stashes can be properly organized!&lt;/p></description></item><item><title>help2man</title><link>https://perrotta.dev/2025/11/help2man/</link><pubDate>Sun, 23 Nov 2025 00:59:51 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/help2man/</guid><description>&lt;p>Thanks to &lt;a href="https://www.gnu.org/software/help2man/">&lt;code>help2man&lt;/code>&lt;/a>:&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git stash -m &lt;span class="s2">&amp;#34;first draft, approach #1 from design doc&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>You can view past stashes with &lt;code>git stash list&lt;/code>:&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">% git stash list
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">stash@&lt;span class="o">{&lt;/span>0&lt;span class="o">}&lt;/span>: On master: first draft, approach &lt;span class="c1">#1 from design doc&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>...&lt;span class="o">]&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>Now your &lt;del>junk&lt;/del> stashes can be properly organized!&lt;/p></description></item><item><title>help2man</title><link>https://perrotta.dev/2025/11/help2man/</link><pubDate>Sun, 23 Nov 2025 00:59:51 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/help2man/</guid><description>&lt;p>Thanks to &lt;a href="https://www.gnu.org/software/help2man/">&lt;code>help2man&lt;/code>&lt;/a>:&lt;/p>
 &lt;blockquote>
 &lt;p>&lt;code>help2man&lt;/code> produces simple manual pages from the &lt;code>--help&lt;/code> and &lt;code>--version&lt;/code>
 output of other commands.&lt;/p>
@@ -292,45 +352,53 @@ a manual page.&lt;/p>
 &lt;/blockquote>
 &lt;p>&amp;hellip;&lt;a href="https://github.com/thiagowfx/pancake">pancake&lt;/a> scripts/tools now all have
 man pages! The integration was quite straightforward&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-diff" data-lang="diff">&lt;span style="display:flex;">&lt;span>% git --no-pager show HEAD~3
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>commit fd319657199d740138236b0b56eb47a4fb9dc1d9 (tag: 2025.11.23.1)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Author: Thiago Perrotta &amp;lt;{redacted}&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Date: Sun Nov 23 00:45:19 2025 -0300
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> formula: add man page generation with help2man
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 🤖 Generated with [Claude Code](https://claude.com/claude-code)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Co-Authored-By: Claude &amp;lt;noreply@anthropic.com&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>diff --git Formula/pancake.rb Formula/pancake.rb
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>index 921df77..808eac6 100644
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">--- Formula/pancake.rb
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">&lt;/span>&lt;span style="color:#98c379;font-weight:bold">+++ Formula/pancake.rb
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">&lt;/span>@@ -5,6 +5,8 @@ class Pancake &amp;lt; Formula
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> sha256 &amp;#34;1e2ee2a7cd22a659c541361b1d50761e672a197a76176aa04683eb430bb080fd&amp;#34;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> head &amp;#34;https://github.com/thiagowfx/pancake.git&amp;#34;, branch: &amp;#34;master&amp;#34;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ depends_on &amp;#34;help2man&amp;#34; =&amp;gt; :build
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">&lt;/span> # Script definitions: [directory, script_file, command_name]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> SCRIPTS = [
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@@ -39,6 +41,14 @@ class Pancake &amp;lt; Formula
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> # aws_login_headless requires additional Python script
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> bin.install &amp;#34;aws_login_headless/aws_login_headless_playwright.py&amp;#34;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ # Generate and install man pages
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ SCRIPTS.each do |_, _, command|
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ system &amp;#34;help2man&amp;#34;, &amp;#34;--no-info&amp;#34;, &amp;#34;--no-discard-stderr&amp;#34;,
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ &amp;#34;--version-string=#{version}&amp;#34;, &amp;#34;--output=#{command}.1&amp;#34;,
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ &amp;#34;--name=#{command}&amp;#34;, bin/command
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ man1.install &amp;#34;#{command}.1&amp;#34;
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">+ end
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379;font-weight:bold">&lt;/span> end
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> test do
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It parses the output of &lt;code>--help&lt;/code> to compose a man page. DRY.&lt;/p>
+
+&lt;div class="codeblock" data-lang="diff">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">diff&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-diff" data-lang="diff">&lt;span class="line">&lt;span class="cl">% git --no-pager show HEAD~3
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">commit fd319657199d740138236b0b56eb47a4fb9dc1d9 (tag: 2025.11.23.1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Author: Thiago Perrotta &amp;lt;{redacted}&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Date: Sun Nov 23 00:45:19 2025 -0300
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> formula: add man page generation with help2man
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 🤖 Generated with [Claude Code](https://claude.com/claude-code)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Co-Authored-By: Claude &amp;lt;noreply@anthropic.com&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gh">diff --git Formula/pancake.rb Formula/pancake.rb
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gh">index 921df77..808eac6 100644
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gh">&lt;/span>&lt;span class="gd">--- Formula/pancake.rb
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gd">&lt;/span>&lt;span class="gi">+++ Formula/pancake.rb
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">&lt;/span>&lt;span class="gu">@@ -5,6 +5,8 @@ class Pancake &amp;lt; Formula
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gu">&lt;/span> sha256 &amp;#34;1e2ee2a7cd22a659c541361b1d50761e672a197a76176aa04683eb430bb080fd&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> head &amp;#34;https://github.com/thiagowfx/pancake.git&amp;#34;, branch: &amp;#34;master&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">+ depends_on &amp;#34;help2man&amp;#34; =&amp;gt; :build
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">+
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">&lt;/span> # Script definitions: [directory, script_file, command_name]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> SCRIPTS = [
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gu">@@ -39,6 +41,14 @@ class Pancake &amp;lt; Formula
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gu">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # aws_login_headless requires additional Python script
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> bin.install &amp;#34;aws_login_headless/aws_login_headless_playwright.py&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">+
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">+ # Generate and install man pages
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">+ SCRIPTS.each do |_, _, command|
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">+ system &amp;#34;help2man&amp;#34;, &amp;#34;--no-info&amp;#34;, &amp;#34;--no-discard-stderr&amp;#34;,
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">+ &amp;#34;--version-string=#{version}&amp;#34;, &amp;#34;--output=#{command}.1&amp;#34;,
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">+ &amp;#34;--name=#{command}&amp;#34;, bin/command
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">+ man1.install &amp;#34;#{command}.1&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">+ end
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="gi">&lt;/span> end
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> test do
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>It parses the output of &lt;code>--help&lt;/code> to compose a man page. DRY.&lt;/p>
 &lt;div class="footnotes" role="doc-endnotes">
 &lt;hr>
 &lt;ol>
@@ -383,15 +451,22 @@ tell me information or get me involved.&amp;rdquo;&lt;/p>
 &lt;p>Stream internet radio stations using available media players.&lt;/p>
 &lt;/blockquote>
 &lt;p>Available Stations:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% radio --list
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Available stations:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> defcon DEF CON Radio - Music &lt;span style="color:#c678dd">for&lt;/span> hacking
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> lofi Lo-fi hip hop beats
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> trance HBR1 Trance
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> salsa Latina Salsa
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> kfai KFAI &lt;span style="color:#56b6c2">(&lt;/span>Minneapolis community radio&lt;span style="color:#56b6c2">)&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If no station is specified, a random station will be selected.&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">% radio --list
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Available stations:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> defcon DEF CON Radio - Music &lt;span class="k">for&lt;/span> hacking
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> lofi Lo-fi hip hop beats
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> trance HBR1 Trance
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> salsa Latina Salsa
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> kfai KFAI &lt;span class="o">(&lt;/span>Minneapolis community radio&lt;span class="o">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>If no station is specified, a random station will be selected.&lt;/p>
 &lt;p>Automatically detects and uses available media players (mpv, vlc, ffplay,
 mplayer).&lt;/p>
 &lt;p>Sometimes it&amp;rsquo;s handy to have access to a music stream quickly, without having to
@@ -429,37 +504,40 @@ showing when scanning, see Bluetooth#Device does not show up in scan.&lt;/p>
 &lt;/blockquote></description></item><item><title>Open the most recent blog post</title><link>https://perrotta.dev/2025/11/open-the-most-recent-blog-post/</link><pubDate>Fri, 21 Nov 2025 14:07:48 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/open-the-most-recent-blog-post/</guid><description>&lt;p>Added a new &lt;a href="https://just.systems/">just&lt;/a>
 &lt;a href="https://just.systems/man/en/the-default-recipe.html">recipe&lt;/a> to open the latest
 (=most recent) blog post in &lt;code>$EDITOR&lt;/code>. Very handy to make quick edits!&lt;/p>
-&lt;pre tabindex="0">&lt;code>% GIT_PAGER=cat git show HEAD
-commit 9fac587c257da57a9abb37e4ea1d7b2502ba51d2 (HEAD -&amp;gt; master, origin/master, origin/HEAD)
-Author: Thiago Perrotta &amp;lt;{redacted}&amp;gt;
-Date: Fri Nov 21 14:07:35 2025 -0300
 
- just: add last
-
-diff --git Justfile Justfile
-index a6ba3d0b9..ba6268b98 100755
---- Justfile
-+++ Justfile
-@@ -51,6 +51,18 @@ code title *args:
-
- alias coding := code
-
-+# Edit the most recent blog post
-+last:
-+ #!/usr/bin/env bash
-+ set -euo pipefail
-+
-+ latest=$(ls -t content/posts/*.md 2&amp;gt;/dev/null | head -n 1 || true)
-+ if [ -z &amp;#34;$latest&amp;#34; ]; then
-+ echo &amp;#34;No posts found in content/posts/&amp;#34;
-+ exit 1
-+ fi
-+ {{ editor }} &amp;#34;$latest&amp;#34;
-+
- # Delete hugo build artifacts
- clean:
- rm -rf public/ resources/
-&lt;/code>&lt;/pre>&lt;p>&lt;a href="https://man7.org/linux/man-pages/man1/ls.1.html">&lt;code>ls -t&lt;/code>&lt;/a> sorts by time, newest
+&lt;div class="codeblock">
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl">% GIT_PAGER=cat git show HEAD
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">commit 9fac587c257da57a9abb37e4ea1d7b2502ba51d2 (HEAD -&amp;gt; master, origin/master, origin/HEAD)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Author: Thiago Perrotta &amp;lt;{redacted}&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Date: Fri Nov 21 14:07:35 2025 -0300
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> just: add last
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">diff --git Justfile Justfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">index a6ba3d0b9..ba6268b98 100755
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">--- Justfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+++ Justfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">@@ -51,6 +51,18 @@ code title *args:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> alias coding := code
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+# Edit the most recent blog post
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+last:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+ #!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+ set -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+ latest=$(ls -t content/posts/*.md 2&amp;gt;/dev/null | head -n 1 || true)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+ if [ -z &amp;#34;$latest&amp;#34; ]; then
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+ echo &amp;#34;No posts found in content/posts/&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+ exit 1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+ fi
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+ {{ editor }} &amp;#34;$latest&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Delete hugo build artifacts
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> clean:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> rm -rf public/ resources/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>&lt;a href="https://man7.org/linux/man-pages/man1/ls.1.html">&lt;code>ls -t&lt;/code>&lt;/a> sorts by time, newest
 first.&lt;/p></description></item><item><title>Stress</title><link>https://perrotta.dev/2025/11/stress/</link><pubDate>Fri, 21 Nov 2025 14:02:14 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/stress/</guid><description>&lt;p>Lately I&amp;rsquo;ve been running a lot of &lt;code>terraform apply&lt;/code> in &lt;strong>PROD&lt;/strong>.&lt;/p>
 &lt;p>Goodness, this is so stressful.&lt;/p>
 &lt;p>Even when your brain knows that the plan is safe to apply, your heart completely
@@ -478,13 +556,27 @@ ignores all rationality anyway.&lt;/p></description></item><item><title>realpath
 locks from shell scripts.&lt;/p>
 &lt;h2 id="file">File&lt;/h2>
 &lt;p>Shell #1:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">lockfile&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>lock
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>flock &lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#e06c75">$lockfile&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span> vim foo
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>vim&lt;/code> will open.&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nv">lockfile&lt;/span>&lt;span class="o">=&lt;/span>lock
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">flock &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$lockfile&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> vim foo&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>&lt;code>vim&lt;/code> will open.&lt;/p>
 &lt;p>Shell #2:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">lockfile&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>lock
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>flock &lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#e06c75">$lockfile&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span> vim foo
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>vim&lt;/code> will block, waiting until the lock is released.&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nv">lockfile&lt;/span>&lt;span class="o">=&lt;/span>lock
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">flock &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$lockfile&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> vim foo&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>&lt;code>vim&lt;/code> will block, waiting until the lock is released.&lt;/p>
 &lt;p>Once we &lt;code>:q&lt;/code> (quit) &lt;code>vim&lt;/code> in the first shell, the second &lt;code>vim&lt;/code> will immediately
 open.&lt;/p>
 &lt;p>&lt;code>lock&lt;/code> is a file. It can be anything e.g. &lt;code>lockfile=/tmp/lock&lt;/code> or
@@ -496,11 +588,25 @@ perfectly acceptable.&lt;/p>
 &lt;h2 id="directory">Directory&lt;/h2>
 &lt;p>We can lock entire directories as well.&lt;/p>
 &lt;p>Shell #1:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>flock . vim foo
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>vim&lt;/code> will open.&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">flock . vim foo&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>&lt;code>vim&lt;/code> will open.&lt;/p>
 &lt;p>Shell #2:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>flock . vim bar
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>vim&lt;/code> will block, waiting until the lock is released. Same as before.&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">flock . vim bar&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>&lt;code>vim&lt;/code> will block, waiting until the lock is released. Same as before.&lt;/p>
 &lt;p>Once we &lt;code>:q&lt;/code> (quit) &lt;code>vim&lt;/code> in the first shell, the second &lt;code>vim&lt;/code> will immediately
 open.&lt;/p>
 &lt;p>When is this handy? For example, when multiple parties need to edit the same
@@ -537,62 +643,111 @@ efficient than having the agent perform the task &lt;em>directly&lt;/em>.&lt;/p>
 and/or &lt;a href="https://agents.md">&lt;code>AGENTS.md&lt;/code>&lt;/a>. By default, it reads only
 &lt;a href="https://geminicli.com/docs/cli/gemini-md/">&lt;code>GEMINI.md&lt;/code>&lt;/a>.&lt;/p>
 &lt;p>Update &lt;code>~/.gemini/settings.json&lt;/code> to either:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">&amp;#34;contextFileName&amp;#34;&lt;/span>: &lt;span style="color:#98c379">&amp;#34;AGENTS.md&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>or&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">&amp;#34;contextFileName&amp;#34;&lt;/span>: &lt;span style="color:#98c379">&amp;#34;CLAUDE.md&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;a href="https://github.com/thiagowfx/.dotfiles/commit/c57b414d3daa1f8b931b3213f0d6c7904a31d93f">My config&lt;/a>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">&amp;#34;contextFileName&amp;#34;&lt;/span>: &lt;span style="color:#98c379">&amp;#34;CLAUDE.md&amp;#34;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">&amp;#34;security&amp;#34;&lt;/span>: {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">&amp;#34;auth&amp;#34;&lt;/span>: {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">&amp;#34;selectedType&amp;#34;&lt;/span>: &lt;span style="color:#98c379">&amp;#34;gemini-api-key&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">&amp;#34;ui&amp;#34;&lt;/span>: {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">&amp;#34;theme&amp;#34;&lt;/span>: &lt;span style="color:#98c379">&amp;#34;Default&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Why not use &lt;code>GEMINI.md&lt;/code>? Claude Code provides, by far, a superior experience&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.
+
+&lt;div class="codeblock" data-lang="json">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">json&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;contextFileName&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;AGENTS.md&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>or&lt;/p>
+
+&lt;div class="codeblock" data-lang="json">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">json&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;contextFileName&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;CLAUDE.md&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>&lt;a href="https://github.com/thiagowfx/.dotfiles/commit/c57b414d3daa1f8b931b3213f0d6c7904a31d93f">My config&lt;/a>:&lt;/p>
+
+&lt;div class="codeblock" data-lang="json">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">json&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;contextFileName&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;CLAUDE.md&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;security&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;auth&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;selectedType&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;gemini-api-key&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;ui&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;theme&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;Default&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>Why not use &lt;code>GEMINI.md&lt;/code>? Claude Code provides, by far, a superior experience&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.
 Either way, &lt;a href="https://agents.md">&lt;code>AGENTS.md&lt;/code>&lt;/a> is the closest to becoming a
 standard.&lt;/p>
 &lt;p>It is unfortunate&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup> that &lt;code>Claude Code&lt;/code> does &lt;a href="https://github.com/anthropics/claude-code/issues/6235">not
 yet&lt;/a> support &lt;code>AGENTS.md&lt;/code>.
 &lt;a href="https://xkcd.com/927/">One file&lt;/a> to rule them all would have been the best.&lt;/p>
 &lt;p>Alternatively, we could symlink &lt;code>GEMINI.md&lt;/code> to one of the aforementioned files:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ln -s AGENTS.md GEMINI.md
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>or&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ln -s CLAUDE.md GEMINI.md
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;but that needs to be repeated in each repository, whereas the &lt;code>settings.json&lt;/code>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">ln -s AGENTS.md GEMINI.md&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>or&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">ln -s CLAUDE.md GEMINI.md&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>&amp;hellip;but that needs to be repeated in each repository, whereas the &lt;code>settings.json&lt;/code>
 change is global.&lt;/p>
 &lt;p>&lt;strong>Update(2025-11-17)&lt;/strong>: Even better, as per
 &lt;a href="https://geminicli.com/docs/cli/configuration/#available-settings-in-settingsjson">docs&lt;/a>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">&amp;#34;contextFileName&amp;#34;&lt;/span>: [
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;AGENTS.md&amp;#34;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;CLAUDE.md&amp;#34;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;GEMINI.md&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+
+&lt;div class="codeblock" data-lang="json">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">json&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;contextFileName&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;AGENTS.md&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;CLAUDE.md&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;GEMINI.md&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;blockquote>
 &lt;p>contextFileName (string or array of strings):&lt;/p>
 &lt;/blockquote>
 &lt;p>&lt;strong>Corollary&lt;/strong>: It still pays to &lt;a href="https://en.wikipedia.org/wiki/RTFM">RTFM&lt;/a>
 directly, even in the LLM era.&lt;/p>
 &lt;p>Once you launch &lt;code>gemini&lt;/code> with this config, it gets automatically updated to:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">&amp;#34;context&amp;#34;&lt;/span>: {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">&amp;#34;fileName&amp;#34;&lt;/span>: [
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;AGENTS.md&amp;#34;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;CLAUDE.md&amp;#34;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;GEMINI.md&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;which suggests it to be the canonical form&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>.&lt;/p>
+
+&lt;div class="codeblock" data-lang="json">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">json&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;context&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;fileName&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;AGENTS.md&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;CLAUDE.md&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;GEMINI.md&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>&amp;hellip;which suggests it to be the canonical form&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>.&lt;/p>
 &lt;p>We know it works because, upon launching &lt;code>gemini&lt;/code> within a repository that
 contains &lt;code>CLAUDE.md&lt;/code>, it displays &lt;code>Using: 1 context file&lt;/code>.&lt;/p>
 &lt;div class="footnotes" role="doc-endnotes">
@@ -630,38 +785,65 @@ expressions to incorporate any changes.&lt;/p>
 resources, a few at a time, until drift is completely eliminated.&lt;/p></description></item><item><title>new pre-commit hook: check-bash-shebang</title><link>https://perrotta.dev/2025/11/new-pre-commit-hook-check-bash-shebang/</link><pubDate>Sun, 16 Nov 2025 20:48:17 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/new-pre-commit-hook-check-bash-shebang/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/11/bash-shebang-/">Previously&lt;/a>.&lt;/p>
 &lt;p>I couldn&amp;rsquo;t resist creating a &lt;a href="https://pre-commit.com/">pre-commit hook&lt;/a> for
 this:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">repos&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e06c75">repo&lt;/span>: https://github.com/thiagowfx/pre-commit-hooks/
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">rev&lt;/span>: v0.0.11
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">hooks&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e06c75">id&lt;/span>: check-bash-shebang
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">types&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - shell
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In action:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% &lt;span style="color:#e5c07b">cd&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span>pancake&lt;span style="color:#56b6c2">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% pre-commit run -a check-bash-shebang
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Check bash scripts use portable shebang..................................Failed
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- hook id: check-bash-shebang
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#e5c07b">exit&lt;/span> code: &lt;span style="color:#d19a66">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: &lt;span style="color:#98c379">&amp;#39;aws_china_mfa/aws_china_mfa.sh&amp;#39;&lt;/span> uses &lt;span style="color:#98c379">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span style="color:#98c379">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: &lt;span style="color:#98c379">&amp;#39;aws_login_headless/aws_login_headless.sh&amp;#39;&lt;/span> uses &lt;span style="color:#98c379">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span style="color:#98c379">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: &lt;span style="color:#98c379">&amp;#39;pritunl_login/pritunl_login.sh&amp;#39;&lt;/span> uses &lt;span style="color:#98c379">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span style="color:#98c379">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: &lt;span style="color:#98c379">&amp;#39;sd_world/sd_world.sh&amp;#39;&lt;/span> uses &lt;span style="color:#98c379">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span style="color:#98c379">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: &lt;span style="color:#98c379">&amp;#39;pdf_password_remove/pdf_password_remove.sh&amp;#39;&lt;/span> uses &lt;span style="color:#98c379">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span style="color:#98c379">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: &lt;span style="color:#98c379">&amp;#39;img_optimize/img_optimize.sh&amp;#39;&lt;/span> uses &lt;span style="color:#98c379">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span style="color:#98c379">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: &lt;span style="color:#98c379">&amp;#39;copy/copy.sh&amp;#39;&lt;/span> uses &lt;span style="color:#98c379">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span style="color:#98c379">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: &lt;span style="color:#98c379">&amp;#39;ssh_mux_restart/ssh_mux_restart.sh&amp;#39;&lt;/span> uses &lt;span style="color:#98c379">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span style="color:#98c379">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>error: &lt;span style="color:#98c379">&amp;#39;op_login_all/op_login_all.sh&amp;#39;&lt;/span> uses &lt;span style="color:#98c379">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span style="color:#98c379">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>new script: PDF remove password</title><link>https://perrotta.dev/2025/11/new-script-pdf-remove-password/</link><pubDate>Sun, 16 Nov 2025 20:19:18 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/new-script-pdf-remove-password/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/11/new-script-copy/">Previously&lt;/a>.&lt;/p>
+
+&lt;div class="codeblock" data-lang="yaml">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">yaml&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">repos&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">repo&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://github.com/thiagowfx/pre-commit-hooks/&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">rev&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">v0.0.11&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">hooks&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">id&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">check-bash-shebang&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">types&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">shell&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>In action:&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">% &lt;span class="nb">cd&lt;/span> &lt;span class="o">{&lt;/span>pancake&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">% pre-commit run -a check-bash-shebang
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Check bash scripts use portable shebang..................................Failed
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- hook id: check-bash-shebang
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- &lt;span class="nb">exit&lt;/span> code: &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">error: &lt;span class="s1">&amp;#39;aws_china_mfa/aws_china_mfa.sh&amp;#39;&lt;/span> uses &lt;span class="s1">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span class="s1">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">error: &lt;span class="s1">&amp;#39;aws_login_headless/aws_login_headless.sh&amp;#39;&lt;/span> uses &lt;span class="s1">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span class="s1">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">error: &lt;span class="s1">&amp;#39;pritunl_login/pritunl_login.sh&amp;#39;&lt;/span> uses &lt;span class="s1">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span class="s1">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">error: &lt;span class="s1">&amp;#39;sd_world/sd_world.sh&amp;#39;&lt;/span> uses &lt;span class="s1">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span class="s1">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">error: &lt;span class="s1">&amp;#39;pdf_password_remove/pdf_password_remove.sh&amp;#39;&lt;/span> uses &lt;span class="s1">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span class="s1">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">error: &lt;span class="s1">&amp;#39;img_optimize/img_optimize.sh&amp;#39;&lt;/span> uses &lt;span class="s1">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span class="s1">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">error: &lt;span class="s1">&amp;#39;copy/copy.sh&amp;#39;&lt;/span> uses &lt;span class="s1">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span class="s1">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">error: &lt;span class="s1">&amp;#39;ssh_mux_restart/ssh_mux_restart.sh&amp;#39;&lt;/span> uses &lt;span class="s1">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span class="s1">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">error: &lt;span class="s1">&amp;#39;op_login_all/op_login_all.sh&amp;#39;&lt;/span> uses &lt;span class="s1">&amp;#39;#!/bin/bash&amp;#39;&lt;/span> instead of &lt;span class="s1">&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div></description></item><item><title>new script: PDF remove password</title><link>https://perrotta.dev/2025/11/new-script-pdf-remove-password/</link><pubDate>Sun, 16 Nov 2025 20:19:18 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/new-script-pdf-remove-password/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/11/new-script-copy/">Previously&lt;/a>.&lt;/p>
 &lt;p>&lt;strong>Problem statement&lt;/strong>: Given a password-protected &lt;code>.pdf&lt;/code> file, remove its
 password. It&amp;rsquo;s indifferent whether the file gets overwritten or whether a new
 one is created.&lt;/p>
 &lt;p>&lt;a href="https://gist.github.com/pstaender/7412245">&lt;code>ghostscript&lt;/code>&lt;/a> can do it:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>gs -q -dNOPAUSE -dBATCH -sDEVICE&lt;span style="color:#56b6c2">=&lt;/span>pdfwrite -sOutputFile&lt;span style="color:#56b6c2">=&lt;/span>output.pdf -c .setpdfwrite -f input.pdf
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;a href="https://gist.github.com/raghur/f3eab7297691f2f411eec69b8032daf0">&lt;code>qpdf&lt;/code>&lt;/a> can do it:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>qpdf --decrypt --password&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;{my pass}&amp;#34;&lt;/span> input.pdf output.pdf
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I am not expected to memorize these CLI flags.&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">gs -q -dNOPAUSE -dBATCH -sDEVICE&lt;span class="o">=&lt;/span>pdfwrite -sOutputFile&lt;span class="o">=&lt;/span>output.pdf -c .setpdfwrite -f input.pdf&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>&lt;a href="https://gist.github.com/raghur/f3eab7297691f2f411eec69b8032daf0">&lt;code>qpdf&lt;/code>&lt;/a> can do it:&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">qpdf --decrypt --password&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;{my pass}&amp;#34;&lt;/span> input.pdf output.pdf&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>I am not expected to memorize these CLI flags.&lt;/p>
 &lt;p>I do not want to look them up every time either.&lt;/p>
 &lt;p>There are various approaches to tackle this:&lt;/p>
 &lt;ul>
@@ -679,24 +861,34 @@ garden / personal wiki / second brain app)&lt;/li>
 &lt;p>Lately I&amp;rsquo;ve been favouring the &lt;a href="https://perrotta.dev/2025/09/pancake-potpourri-scripts/">shell script&lt;/a> approach, so &lt;a href="https://github.com/thiagowfx/pancake/tree/c7c3677119c567edc432fcc1f1c0f78c9a5b3c55/pdf_password_remove">here we go&lt;/a> with &lt;code>pdf_password_remove.sh&lt;/code>:&lt;/p>
 &lt;h2 id="usage">Usage&lt;/h2>
 &lt;p>Remove password protection from PDF files.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Interactive password prompt (most secure)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pdf_password_remove secret.pdf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Process multiple files&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pdf_password_remove report.pdf invoice.pdf contract.pdf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Provide password via command line&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pdf_password_remove --password&lt;span style="color:#56b6c2">=&lt;/span>BANANA42SPLIT secret.pdf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Custom output filename (single file only)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pdf_password_remove -o unlocked.pdf secret.pdf
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="example-output">Example Output&lt;/h2>
-&lt;pre tabindex="0">&lt;code>% pdf_password_remove --password=PIZZA69SLICE financial-report.pdf tax-form.pdf
-✓ Successfully processed: financial-report.pdf → financial-report-unlocked.pdf
-✓ Successfully processed: tax-form.pdf → tax-form-unlocked.pdf
 
-Summary: Successfully processed 2/2 file(s)
-&lt;/code>&lt;/pre>&lt;h2 id="features">Features&lt;/h2>
+&lt;div class="codeblock" data-lang="bash">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">bash&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Interactive password prompt (most secure)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pdf_password_remove secret.pdf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Process multiple files&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pdf_password_remove report.pdf invoice.pdf contract.pdf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Provide password via command line&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pdf_password_remove --password&lt;span class="o">=&lt;/span>BANANA42SPLIT secret.pdf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Custom output filename (single file only)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pdf_password_remove -o unlocked.pdf secret.pdf&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;h2 id="example-output">Example Output&lt;/h2>
+
+&lt;div class="codeblock">
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl">% pdf_password_remove --password=PIZZA69SLICE financial-report.pdf tax-form.pdf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">✓ Successfully processed: financial-report.pdf → financial-report-unlocked.pdf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">✓ Successfully processed: tax-form.pdf → tax-form-unlocked.pdf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Summary: Successfully processed 2/2 file(s)&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;h2 id="features">Features&lt;/h2>
 &lt;ul>
 &lt;li>Process single or multiple PDF files in one command&lt;/li>
 &lt;li>Secure interactive password prompt (hidden input)&lt;/li>
@@ -708,20 +900,27 @@ Summary: Successfully processed 2/2 file(s)
 &lt;/ul>
 &lt;h2 id="prerequisites">Prerequisites&lt;/h2>
 &lt;p>Requires either &lt;code>ghostscript&lt;/code> (preferred) or &lt;code>qpdf&lt;/code> to be installed:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># macOS&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>brew install ghostscript &lt;span style="color:#7f848e"># Preferred&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>brew install qpdf &lt;span style="color:#7f848e"># Alternative&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Linux&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt install ghostscript &lt;span style="color:#7f848e"># Preferred - Debian/Ubuntu&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt install qpdf &lt;span style="color:#7f848e"># Alternative&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo dnf install ghostscript &lt;span style="color:#7f848e"># Preferred - Fedora&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo dnf install qpdf &lt;span style="color:#7f848e"># Alternative&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo pacman -S ghostscript &lt;span style="color:#7f848e"># Preferred - Arch&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo pacman -S qpdf &lt;span style="color:#7f848e"># Alternative&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The script automatically detects and uses whichever tool is available,
+
+&lt;div class="codeblock" data-lang="bash">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">bash&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># macOS&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">brew install ghostscript &lt;span class="c1"># Preferred&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">brew install qpdf &lt;span class="c1"># Alternative&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Linux&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt install ghostscript &lt;span class="c1"># Preferred - Debian/Ubuntu&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt install qpdf &lt;span class="c1"># Alternative&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo dnf install ghostscript &lt;span class="c1"># Preferred - Fedora&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo dnf install qpdf &lt;span class="c1"># Alternative&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo pacman -S ghostscript &lt;span class="c1"># Preferred - Arch&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo pacman -S qpdf &lt;span class="c1"># Alternative&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>The script automatically detects and uses whichever tool is available,
 preferring ghostscript if both are installed.&lt;/p>
 &lt;h2 id="security-note">Security Note&lt;/h2>
 &lt;p>Using &lt;code>--password&lt;/code> on the command line will expose the password in shell history
@@ -730,20 +929,23 @@ and process lists. For sensitive documents, use the interactive prompt instead
 &lt;code>#!/usr/bin/env bash&lt;/code>?&lt;/p>
 &lt;p>I tend to write &lt;code>#!/bin/bash&lt;/code> by hand, but here is an argument to prefer the
 &lt;code>env&lt;/code> version instead:&lt;/p>
-&lt;pre tabindex="0">&lt;code>thiago.perrotta@thiagoperrotta-MacBook-Pro ~
-% /bin/bash --version
-GNU bash, version 3.2.57(1)-release (arm64-apple-darwin24)
-Copyright (C) 2007 Free Software Foundation, Inc.
-thiago.perrotta@thiagoperrotta-MacBook-Pro ~
 
-% /usr/bin/env bash --version
-GNU bash, version 5.3.3(1)-release (aarch64-apple-darwin24.4.0)
-Copyright (C) 2025 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later &amp;lt;http://gnu.org/licenses/gpl.html&amp;gt;
-
-This is free software; you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-&lt;/code>&lt;/pre>&lt;p>&amp;hellip;&lt;code>/bin/bash&lt;/code> on macOS is forever stuck on &lt;code>3.2.57&lt;/code>.&lt;/p>
+&lt;div class="codeblock">
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl">thiago.perrotta@thiagoperrotta-MacBook-Pro ~
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">% /bin/bash --version
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">GNU bash, version 3.2.57(1)-release (arm64-apple-darwin24)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Copyright (C) 2007 Free Software Foundation, Inc.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">thiago.perrotta@thiagoperrotta-MacBook-Pro ~
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">% /usr/bin/env bash --version
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">GNU bash, version 5.3.3(1)-release (aarch64-apple-darwin24.4.0)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Copyright (C) 2025 Free Software Foundation, Inc.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">License GPLv3+: GNU GPL version 3 or later &amp;lt;http://gnu.org/licenses/gpl.html&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">This is free software; you are free to change and redistribute it.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">There is NO WARRANTY, to the extent permitted by law.&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>&amp;hellip;&lt;code>/bin/bash&lt;/code> on macOS is forever stuck on &lt;code>3.2.57&lt;/code>.&lt;/p>
 &lt;p>Others &lt;a href="https://unix.stackexchange.com/a/792243/41858">appear&lt;/a> to agree.&lt;/p></description></item><item><title>Shell memoization: lazy-load LLM API keys</title><link>https://perrotta.dev/2025/11/shell-memoization-lazy-load-llm-api-keys/</link><pubDate>Mon, 10 Nov 2025 13:55:56 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/shell-memoization-lazy-load-llm-api-keys/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given LLM keys shell environment variables:&lt;/p>
 &lt;ul>
 &lt;li>&lt;code>ANTHROPIC_API_KEY&lt;/code>&lt;/li>
@@ -760,22 +962,29 @@ There is NO WARRANTY, to the extent permitted by law.
 &lt;li>&lt;code>claude&lt;/code> (provider-specific: Anthropic)&lt;/li>
 &lt;/ul>
 &lt;p>I added the following snippet in my shell profile:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Lazy-load API keys only when needed to avoid shell startup delay&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e5c07b">command&lt;/span> -v llm &amp;amp;&amp;gt;/dev/null; &lt;span style="color:#c678dd">then&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> _load_api_keys&lt;span style="color:#56b6c2">()&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e5c07b">export&lt;/span> &lt;span style="color:#e06c75">ANTHROPIC_API_KEY&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#c678dd">$(&lt;/span>&lt;span style="color:#e5c07b">command&lt;/span> llm keys get anthropic&lt;span style="color:#c678dd">)&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e5c07b">export&lt;/span> &lt;span style="color:#e06c75">GEMINI_API_KEY&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#c678dd">$(&lt;/span>&lt;span style="color:#e5c07b">command&lt;/span> llm keys get gemini&lt;span style="color:#c678dd">)&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e5c07b">export&lt;/span> &lt;span style="color:#e06c75">OPENAI_API_KEY&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#c678dd">$(&lt;/span>&lt;span style="color:#e5c07b">command&lt;/span> llm keys get openai&lt;span style="color:#c678dd">)&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#7f848e"># Redefine itself to be a no-op after first call&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> _load_api_keys&lt;span style="color:#56b6c2">()&lt;/span> &lt;span style="color:#56b6c2">{&lt;/span> :; &lt;span style="color:#56b6c2">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#56b6c2">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#7f848e"># Wrap all AI CLI commands to auto-load keys&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">for&lt;/span> cmd in claude llm aider codex gemini; &lt;span style="color:#c678dd">do&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e5c07b">command&lt;/span> -v &lt;span style="color:#e06c75">$cmd&lt;/span> &amp;amp;&amp;gt;/dev/null &lt;span style="color:#56b6c2">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#e5c07b">eval&lt;/span> &lt;span style="color:#98c379">&amp;#34;&lt;/span>&lt;span style="color:#98c379">${&lt;/span>&lt;span style="color:#e06c75">cmd&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">() { _load_api_keys; command &lt;/span>&lt;span style="color:#98c379">${&lt;/span>&lt;span style="color:#e06c75">cmd&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379"> \&amp;#34;\$@\&amp;#34;; }&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">done&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">fi&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The keys are loaded via &lt;code>llm keys get&lt;/code>. This is not secure, but it is practical.
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Lazy-load API keys only when needed to avoid shell startup delay&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="nb">command&lt;/span> -v llm &lt;span class="p">&amp;amp;&lt;/span>&amp;gt;/dev/null&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> _load_api_keys&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">export&lt;/span> &lt;span class="nv">ANTHROPIC_API_KEY&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>&lt;span class="nb">command&lt;/span> llm keys get anthropic&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">export&lt;/span> &lt;span class="nv">GEMINI_API_KEY&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>&lt;span class="nb">command&lt;/span> llm keys get gemini&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">export&lt;/span> &lt;span class="nv">OPENAI_API_KEY&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>&lt;span class="nb">command&lt;/span> llm keys get openai&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Redefine itself to be a no-op after first call&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> _load_api_keys&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span> :&lt;span class="p">;&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Wrap all AI CLI commands to auto-load keys&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> cmd in claude llm aider codex gemini&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">command&lt;/span> -v &lt;span class="nv">$cmd&lt;/span> &lt;span class="p">&amp;amp;&lt;/span>&amp;gt;/dev/null &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">eval&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">cmd&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">() { _load_api_keys; command &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">cmd&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> \&amp;#34;\$@\&amp;#34;; }&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>The keys are loaded via &lt;code>llm keys get&lt;/code>. This is not secure, but it is practical.
 A more secure approach would be to read the credentials directly from a password
 manager. This trade-off is acceptable in the environment I am currently
 operating on, but I would not recommend it as an universal approach.&lt;/p>
@@ -1084,24 +1293,37 @@ it.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">
 &lt;p>Adopting it via &lt;a href="https://pre-commit.com">pre-commit&lt;/a> in a git repository is very
 straightforward:&lt;/p>
 &lt;p>&lt;code>.pre-commit-config.yaml&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">repos&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e06c75">repo&lt;/span>: https://github.com/frnmst/md-toc
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">rev: 4a8b796dbde00f71eb1a51b075462f825f872c34 # frozen&lt;/span>: &lt;span style="color:#d19a66">9.0.0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">hooks&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e06c75">id&lt;/span>: md-toc
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Next, update &lt;code>README.md&lt;/code> to include &lt;code>&amp;lt;!--TOC--&amp;gt;&lt;/code> where the table of contents
+
+&lt;div class="codeblock" data-lang="yaml">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">yaml&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">repos&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">repo&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://github.com/frnmst/md-toc&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">rev: 4a8b796dbde00f71eb1a51b075462f825f872c34 # frozen&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">9.0.0&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">hooks&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">id&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">md-toc&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>Next, update &lt;code>README.md&lt;/code> to include &lt;code>&amp;lt;!--TOC--&amp;gt;&lt;/code> where the table of contents
 should be inserted.&lt;/p>
 &lt;p>Run &lt;code>pre-commit run -a md-toc&lt;/code> once to generate and preview the results:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-markdown" data-lang="markdown">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">&amp;lt;!--TOC--&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">-&lt;/span> [&lt;span style="color:#e06c75">GitOps Pipeline for Terraform&lt;/span>](&lt;span style="color:#e06c75">#gitops-pipeline-for-terraform&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">-&lt;/span> [&lt;span style="color:#e06c75">CI status&lt;/span>](&lt;span style="color:#e06c75">#ci-status&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">-&lt;/span> [&lt;span style="color:#e06c75">Key Objectives&lt;/span>](&lt;span style="color:#e06c75">#key-objectives&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">-&lt;/span> [&lt;span style="color:#e06c75">The Workflow&lt;/span>](&lt;span style="color:#e06c75">#the-workflow&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">-&lt;/span> [&lt;span style="color:#e06c75">Core Features&lt;/span>](&lt;span style="color:#e06c75">#core-features&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">&amp;lt;!--TOC--&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Record Club</title><link>https://perrotta.dev/2025/11/record-club/</link><pubDate>Wed, 05 Nov 2025 11:30:05 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/record-club/</guid><description>&lt;p>&lt;a href="https://record.club">Record Club&lt;/a>:&lt;/p>
+
+&lt;div class="codeblock" data-lang="markdown">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">markdown&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-markdown" data-lang="markdown">&lt;span class="line">&lt;span class="cl">&lt;span class="c">&amp;lt;!--TOC--&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">-&lt;/span> [&lt;span class="nt">GitOps Pipeline for Terraform&lt;/span>](&lt;span class="na">#gitops-pipeline-for-terraform&lt;/span>)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">-&lt;/span> [&lt;span class="nt">CI status&lt;/span>](&lt;span class="na">#ci-status&lt;/span>)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">-&lt;/span> [&lt;span class="nt">Key Objectives&lt;/span>](&lt;span class="na">#key-objectives&lt;/span>)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">-&lt;/span> [&lt;span class="nt">The Workflow&lt;/span>](&lt;span class="na">#the-workflow&lt;/span>)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">-&lt;/span> [&lt;span class="nt">Core Features&lt;/span>](&lt;span class="na">#core-features&lt;/span>)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c">&amp;lt;!--TOC--&amp;gt;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div></description></item><item><title>Record Club</title><link>https://perrotta.dev/2025/11/record-club/</link><pubDate>Wed, 05 Nov 2025 11:30:05 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/record-club/</guid><description>&lt;p>&lt;a href="https://record.club">Record Club&lt;/a>:&lt;/p>
 &lt;blockquote>
 &lt;p>A {new,fun,better} way to discover and share music with friends.&lt;/p>
 &lt;p>Record Club is a social music network that makes it easy to track, rate,
@@ -1144,15 +1366,22 @@ Hahn&lt;/a>:&lt;/p>
 &lt;p>&lt;a href="https://codeberg.org/EvanHahn/dotfiles/src/commit/843b9ee13d949d346a4a73ccee2a99351aed285b/home/bin/bin/copy">Evan&amp;rsquo;s version&lt;/a> is concise and elegant.&lt;/p>
 &lt;p>&lt;a href="https://github.com/thiagowfx/pancake/blob/457441b3bc790068ff2618125da08de0effab016/copy/copy.sh">My version&lt;/a> is more verbose, for the sake of consistency with the rest of my scripts in pancake.&lt;/p>
 &lt;h2 id="usage">Usage&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Copy from stdin&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e5c07b">echo&lt;/span> &lt;span style="color:#98c379">&amp;#34;BANANA42SPLIT88SUNDAE99CHERRY&amp;#34;&lt;/span> | copy
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Copy a file&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>copy notes.txt
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Copy multiple files&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>copy *.md
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="platform-support">Platform Support&lt;/h2>
+
+&lt;div class="codeblock" data-lang="bash">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">bash&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy from stdin&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;BANANA42SPLIT88SUNDAE99CHERRY&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> copy
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy a file&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">copy notes.txt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy multiple files&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">copy *.md&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;h2 id="platform-support">Platform Support&lt;/h2>
 &lt;ul>
 &lt;li>&lt;strong>macOS&lt;/strong>: Uses &lt;code>pbcopy&lt;/code> (built-in)&lt;/li>
 &lt;li>&lt;strong>Linux&lt;/strong>: Auto-detects first available tool:
@@ -1211,25 +1440,31 @@ highlights words that are not in the dictionary.&lt;/p>
 &lt;/blockquote>
 &lt;p>It turns out &lt;code>vim&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> can also suggest corrections to these words.&lt;/p>
 &lt;p>&lt;code>:h z=&lt;/code>:&lt;/p>
-&lt;pre tabindex="0">&lt;code>z= For the word under/after the cursor suggest correctly
- spelled words. This also works to find alternatives
- for a word that is not highlighted as a bad word,
- e.g., when the word after it is bad.
- In Visual mode the highlighted text is taken as the
- word to be replaced.
- The results are sorted on similarity to the word being
- replaced.
- This may take a long time. Hit CTRL-C when you get
- bored.
-&lt;/code>&lt;/pre>&lt;p>For example: take the word &lt;code>exampl&lt;/code>. When pressing &lt;code>z=&lt;/code>:&lt;/p>
-&lt;pre tabindex="0">&lt;code>Change &amp;#34;exampl&amp;#34; to:
- 1 &amp;#34;example&amp;#34;
- 2 &amp;#34;example&amp;#34; &amp;lt; &amp;#34;exampl.&amp;#34;
- 3 &amp;#34;exam pl&amp;#34;
- 4 &amp;#34;exempt&amp;#34;
- 5 &amp;#34;exam Pl&amp;#34;
- 6 &amp;#34;exam&amp;#34;
-&lt;/code>&lt;/pre>&lt;p>Upon pressing &lt;code>1&amp;lt;Enter&amp;gt;&lt;/code> it is automatically replaced.&lt;/p>
+
+&lt;div class="codeblock">
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl">z= For the word under/after the cursor suggest correctly
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> spelled words. This also works to find alternatives
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for a word that is not highlighted as a bad word,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> e.g., when the word after it is bad.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> In Visual mode the highlighted text is taken as the
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> word to be replaced.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> The results are sorted on similarity to the word being
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replaced.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> This may take a long time. Hit CTRL-C when you get
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> bored.&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>For example: take the word &lt;code>exampl&lt;/code>. When pressing &lt;code>z=&lt;/code>:&lt;/p>
+
+&lt;div class="codeblock">
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl">Change &amp;#34;exampl&amp;#34; to:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 1 &amp;#34;example&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 2 &amp;#34;example&amp;#34; &amp;lt; &amp;#34;exampl.&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 3 &amp;#34;exam pl&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 4 &amp;#34;exempt&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 5 &amp;#34;exam Pl&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 6 &amp;#34;exam&amp;#34;&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>Upon pressing &lt;code>1&amp;lt;Enter&amp;gt;&lt;/code> it is automatically replaced.&lt;/p>
 &lt;p>Alternatively we can skip the suggestions and simply &lt;a href="https://www.jakeworth.com/tils/select-first-spell-suggestion/">pick the first
 one&lt;/a> right away
 with &lt;code>1z=&lt;/code>.&lt;/p>
@@ -1356,40 +1591,60 @@ into a git SSH authentication error, typically due to &lt;code>git pull&lt;/code
 &lt;code>git push&lt;/code>.&lt;/p>
 &lt;h2 id="usage">Usage&lt;/h2>
 &lt;p>Basic usage to kill SSH multiplexed connections:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>./ssh_mux_restart.sh
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>To also restart the 1Password SSH agent:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>./ssh_mux_restart.sh --restart-1password
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="example-output">Example Output&lt;/h2>
-&lt;pre tabindex="0">&lt;code>% ./ssh_mux_restart.sh
-Finding SSH multiplexed connections...
-Found SSH multiplexed connections:
- 88002 ssh: /tmp/ssh-control-FLAPJACK42 [mux]
- 88123 ssh: /tmp/ssh-control-WAFFLE55 [mux]
-Killing SSH multiplexed connections...
-✓ Killed SSH mux process: 88002
-✓ Killed SSH mux process: 88123
-Killed 2/2 SSH multiplexed connections.
 
-All operations completed successfully!
-&lt;/code>&lt;/pre>&lt;p>With the &lt;code>--restart-1password&lt;/code> flag:&lt;/p>
-&lt;pre tabindex="0">&lt;code>% ./ssh_mux_restart.sh --restart-1password
-Finding SSH multiplexed connections...
-Found SSH multiplexed connections:
- 88002 ssh: /tmp/ssh-control-PANCAKE99 [mux]
-Killing SSH multiplexed connections...
-✓ Killed SSH mux process: 88002
-Killed 1/1 SSH multiplexed connections.
+&lt;div class="codeblock" data-lang="bash">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">bash&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">./ssh_mux_restart.sh&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>To also restart the 1Password SSH agent:&lt;/p>
 
-Restarting 1Password application...
-Found 1Password process: 67690
-Quitting 1Password...
-✓ 1Password quit successfully
-Starting 1Password...
-✓ 1Password started successfully
-1Password SSH agent is now ready for use.
+&lt;div class="codeblock" data-lang="bash">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">bash&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">./ssh_mux_restart.sh --restart-1password&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;h2 id="example-output">Example Output&lt;/h2>
 
-All operations completed successfully!
-&lt;/code>&lt;/pre>&lt;h2 id="why-this-matters">Why This Matters&lt;/h2>
+&lt;div class="codeblock">
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl">% ./ssh_mux_restart.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Finding SSH multiplexed connections...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Found SSH multiplexed connections:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 88002 ssh: /tmp/ssh-control-FLAPJACK42 [mux]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 88123 ssh: /tmp/ssh-control-WAFFLE55 [mux]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Killing SSH multiplexed connections...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">✓ Killed SSH mux process: 88002
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">✓ Killed SSH mux process: 88123
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Killed 2/2 SSH multiplexed connections.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">All operations completed successfully!&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>With the &lt;code>--restart-1password&lt;/code> flag:&lt;/p>
+
+&lt;div class="codeblock">
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl">% ./ssh_mux_restart.sh --restart-1password
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Finding SSH multiplexed connections...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Found SSH multiplexed connections:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 88002 ssh: /tmp/ssh-control-PANCAKE99 [mux]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Killing SSH multiplexed connections...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">✓ Killed SSH mux process: 88002
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Killed 1/1 SSH multiplexed connections.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Restarting 1Password application...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Found 1Password process: 67690
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Quitting 1Password...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">✓ 1Password quit successfully
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Starting 1Password...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">✓ 1Password started successfully
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1Password SSH agent is now ready for use.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">All operations completed successfully!&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;h2 id="why-this-matters">Why This Matters&lt;/h2>
 &lt;p>SSH multiplexed connections can cache stale authentication credentials, causing issues when:&lt;/p>
 &lt;ul>
 &lt;li>GitHub organizations enable or enforce SAML SSO&lt;/li>
@@ -1407,53 +1662,90 @@ input.&lt;/p>
 expect the ability to do so.&lt;/p>
 &lt;p>Copy the image to your clipboard as usual, and then paste it in with &lt;code>Ctrl + V&lt;/code>,
 as you would in any GUI app:&lt;/p>
-&lt;pre tabindex="0">&lt;code> ▐▛███▜▌ Claude Code v2.0.28
-▝▜█████▛▘ Sonnet 4.5 · API Usage Billing
- ▘▘ ▝▝ /Users/thiago.perrotta/corp/gitops
 
-&amp;gt; Document in the @README.md how to use the argocd CLI with our setup.
-
-[Image #1][Image #2]
- ⎿ Read README.md (937 lines)
-
-⏺ I&amp;#39;ll add comprehensive ArgoCD CLI documentation to the README. Let me examine the current structure
- and add a new section after the User Management section.
-&lt;/code>&lt;/pre></description></item><item><title>Grep in PDFs</title><link>https://perrotta.dev/2025/10/grep-in-pdfs/</link><pubDate>Wed, 29 Oct 2025 01:59:08 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/grep-in-pdfs/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: &lt;code>grep&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> for a given string in a multitude of
+&lt;div class="codeblock">
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl"> ▐▛███▜▌ Claude Code v2.0.28
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">▝▜█████▛▘ Sonnet 4.5 · API Usage Billing
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ▘▘ ▝▝ /Users/thiago.perrotta/corp/gitops
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt; Document in the @README.md how to use the argocd CLI with our setup.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[Image #1][Image #2]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ⎿ Read README.md (937 lines)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">⏺ I&amp;#39;ll add comprehensive ArgoCD CLI documentation to the README. Let me examine the current structure
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> and add a new section after the User Management section.&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div></description></item><item><title>Grep in PDFs</title><link>https://perrotta.dev/2025/10/grep-in-pdfs/</link><pubDate>Wed, 29 Oct 2025 01:59:08 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/grep-in-pdfs/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: &lt;code>grep&lt;/code>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> for a given string in a multitude of
 multi-page PDF files:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% du -sh very_large_file.zip
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>513M very_large_file.zip
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% unzip very_large_file.zip
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#56b6c2">[&lt;/span>...&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>% ls -1 *.pdf | wc -l
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#d19a66">6816&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>There&amp;rsquo;s a tool called &lt;a href="https://github.com/phiresky/ripgrep-all">&lt;code>ripgrep-all&lt;/code>&lt;/a>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">% du -sh very_large_file.zip
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">513M very_large_file.zip
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">% unzip very_large_file.zip
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>...&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">% ls -1 *.pdf &lt;span class="p">|&lt;/span> wc -l
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">6816&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>There&amp;rsquo;s a tool called &lt;a href="https://github.com/phiresky/ripgrep-all">&lt;code>ripgrep-all&lt;/code>&lt;/a>
 (short: &lt;code>rga&lt;/code>) that is perfect for that. And yes, it resembles our good ol'
 &lt;code>ripgrep&lt;/code> (short: &lt;code>rg&lt;/code>).&lt;/p>
 &lt;p>It is &lt;a href="https://repology.org/project/ripgrep-all/versions">widely available&lt;/a> in
 most package managers.&lt;/p>
 &lt;p>I install it with &lt;code>homebrew&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% brew install ripgrep-all &lt;span style="color:#7f848e"># or rga&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Upon running it with:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% rga -i &lt;span style="color:#98c379">&amp;#34;perrotta&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;it did not initially work. &lt;code>pdftotext&lt;/code> is a required dependency that was
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">% brew install ripgrep-all &lt;span class="c1"># or rga&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>Upon running it with:&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">% rga -i &lt;span class="s2">&amp;#34;perrotta&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>&amp;hellip;it did not initially work. &lt;code>pdftotext&lt;/code> is a required dependency that was
 missing.&lt;/p>
 &lt;p>&lt;a href="https://superuser.com/questions/781693/how-to-determine-which-brew-package-provides-a-given-file">Where&lt;/a> can we obtain &lt;code>pdftotext&lt;/code>?&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% brew which-formula pdftotext
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pdf2image
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>poppler
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>poppler-qt5
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>xpdf
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I installed &lt;code>poppler&lt;/code>, as it is quite well-known in the Linux world.&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">% brew which-formula pdftotext
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pdf2image
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">poppler
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">poppler-qt5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpdf&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>I installed &lt;code>poppler&lt;/code>, as it is quite well-known in the Linux world.&lt;/p>
 &lt;p>The search works as expected afterwards:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% rga -i perrotta
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>my_cool_file_000.pdf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Page 12: HELLO PERROTTA GOODBYE
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>my_cool_file_001.pdf
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Page 123: SERVUS PERROTTA CIAO
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="footnotes" role="doc-endnotes">
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">% rga -i perrotta
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">my_cool_file_000.pdf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Page 12: HELLO PERROTTA GOODBYE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">my_cool_file_001.pdf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Page 123: SERVUS PERROTTA CIAO&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;div class="footnotes" role="doc-endnotes">
 &lt;hr>
 &lt;ol>
 &lt;li id="fn:1">
@@ -1463,16 +1755,29 @@ missing.&lt;/p>
 &lt;/div></description></item><item><title>PostgreSQL: get database size</title><link>https://perrotta.dev/2025/10/postgresql-get-database-size/</link><pubDate>Mon, 27 Oct 2025 22:47:56 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/postgresql-get-database-size/</guid><description>&lt;p>&lt;strong>Problem statement&lt;/strong>: Given a PostgreSQL DB, obtain its total size, preferably
 in a human-readable format (pretty-printed).&lt;/p>
 &lt;h2 id="option-1-sql-query">Option 1: SQL query&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sql" data-lang="sql">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">SELECT&lt;/span> &lt;span style="color:#e06c75">pg_size_pretty&lt;/span>(&lt;span style="color:#e06c75">pg_database_size&lt;/span>(&lt;span style="color:#98c379">&amp;#39;dbname&amp;#39;&lt;/span>));
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#d19a66">11&lt;/span> &lt;span style="color:#e06c75">GB&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="option-2-psql-cli">Option 2: &lt;code>psql&lt;/code> CLI&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sql" data-lang="sql">&lt;span style="display:flex;">&lt;span>\&lt;span style="color:#e06c75">l&lt;/span>&lt;span style="color:#56b6c2">+&lt;/span> &lt;span style="color:#e06c75">dbname&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">List&lt;/span> &lt;span style="color:#c678dd">of&lt;/span> &lt;span style="color:#e06c75">databases&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">Name&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span> &lt;span style="color:#c678dd">Owner&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span> &lt;span style="color:#c678dd">Encoding&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span> &lt;span style="color:#c678dd">Collate&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span> &lt;span style="color:#e06c75">Ctype&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span> &lt;span style="color:#c678dd">Access&lt;/span> &lt;span style="color:#c678dd">privileges&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span> &lt;span style="color:#c678dd">Size&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span> &lt;span style="color:#e06c75">Tablespace&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span> &lt;span style="color:#e06c75">Description&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">--------------------+-------+----------+-------------+-------------+-------------------+-------+------------+-------------
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">&lt;/span> &lt;span style="color:#e06c75">dbname&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span> &lt;span style="color:#e06c75">me&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span> &lt;span style="color:#e06c75">UTF8&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span> &lt;span style="color:#e06c75">en_US&lt;/span>.&lt;span style="color:#e06c75">UTF&lt;/span>&lt;span style="color:#56b6c2">-&lt;/span>&lt;span style="color:#d19a66">8&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span> &lt;span style="color:#e06c75">en_US&lt;/span>.&lt;span style="color:#e06c75">UTF&lt;/span>&lt;span style="color:#56b6c2">-&lt;/span>&lt;span style="color:#d19a66">8&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span> &lt;span style="color:#d19a66">11&lt;/span> &lt;span style="color:#e06c75">GB&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span> &lt;span style="color:#e06c75">pg_default&lt;/span> &lt;span style="color:#56b6c2">|&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#d19a66">1&lt;/span> &lt;span style="color:#c678dd">row&lt;/span>)
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>.terraform-version</title><link>https://perrotta.dev/2025/10/.terraform-version/</link><pubDate>Fri, 24 Oct 2025 15:12:18 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/.terraform-version/</guid><description>&lt;p>&lt;code>.terraform-version&lt;/code> at the root of a git repository is recognized by various
+
+&lt;div class="codeblock" data-lang="sql">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">sql&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">pg_size_pretty&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">pg_database_size&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;dbname&amp;#39;&lt;/span>&lt;span class="p">));&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="mi">11&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">GB&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;h2 id="option-2-psql-cli">Option 2: &lt;code>psql&lt;/code> CLI&lt;/h2>
+
+&lt;div class="codeblock" data-lang="sql">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">sql&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="err">\&lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dbname&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">List&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">of&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">databases&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">Name&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">Owner&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">Encoding&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">Collate&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Ctype&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">Access&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">privileges&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">Size&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Tablespace&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Description&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">--------------------+-------+----------+-------------+-------------+-------------------+-------+------------+-------------
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">dbname&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">me&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">UTF8&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">en_US&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">UTF&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">en_US&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">UTF&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">11&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">GB&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">pg_default&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">row&lt;/span>&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div></description></item><item><title>.terraform-version</title><link>https://perrotta.dev/2025/10/.terraform-version/</link><pubDate>Fri, 24 Oct 2025 15:12:18 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/.terraform-version/</guid><description>&lt;p>&lt;code>.terraform-version&lt;/code> at the root of a git repository is recognized by various
 tools:&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="https://github.com/tfutils/tfenv#terraform-version-file">tfenv&lt;/a>&lt;/li>
@@ -1483,29 +1788,46 @@ tools:&lt;/p>
 &lt;a href="https://github.com/hashicorp/setup-terraform">&lt;code>hashicorp/setup-terraform&lt;/code>&lt;/a>
 github action would also recognize it out-of-the-box, but it does not. We can
 address this gap by reading it manually:&lt;/p>
-&lt;pre tabindex="0">&lt;code>jobs:
- terraform:
- runs-on: ubuntu-latest
- steps:
- - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
- with:
- persist-credentials: false
 
- - name: Read Terraform version
- id: terraform-version
- run: echo &amp;#34;version=$(cat .terraform-version)&amp;#34; &amp;gt;&amp;gt; &amp;#34;$GITHUB_OUTPUT&amp;#34;
-
- - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3.1.2
- with:
- terraform_version: ${{ steps.terraform-version.outputs.version }}
-&lt;/code>&lt;/pre>&lt;p>There&amp;rsquo;s a &lt;a href="https://github.com/hashicorp/setup-terraform/issues/298">feature
+&lt;div class="codeblock">
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl">jobs:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> terraform:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> runs-on: ubuntu-latest
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> steps:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> with:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> persist-credentials: false
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: Read Terraform version
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> id: terraform-version
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> run: echo &amp;#34;version=$(cat .terraform-version)&amp;#34; &amp;gt;&amp;gt; &amp;#34;$GITHUB_OUTPUT&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3.1.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> with:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> terraform_version: ${{ steps.terraform-version.outputs.version }}&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>There&amp;rsquo;s a &lt;a href="https://github.com/hashicorp/setup-terraform/issues/298">feature
 request&lt;/a> for it.&lt;/p></description></item><item><title>brew: upgrade HEAD formulas</title><link>https://perrotta.dev/2025/10/brew-upgrade-head-formulas/</link><pubDate>Thu, 23 Oct 2025 12:53:11 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/brew-upgrade-head-formulas/</guid><description>&lt;p>&lt;a href="https://perrotta.dev/2025/10/distributing-my-own-scripts-via-homebrew/">Previously&lt;/a>.&lt;/p>
 &lt;p>When a package is installed with &lt;code>--HEAD&lt;/code>:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% brew install --HEAD pancake
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&amp;hellip;&lt;code>brew upgrade&lt;/code> won&amp;rsquo;t automatically fetch its latest version.&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">% brew install --HEAD pancake&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>&amp;hellip;&lt;code>brew upgrade&lt;/code> won&amp;rsquo;t automatically fetch its latest version.&lt;/p>
 &lt;p>In order to do so, run:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% brew upgrade --fetch-HEAD &lt;span style="color:#56b6c2">[&lt;/span>package...&lt;span style="color:#56b6c2">]&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;a href="https://apple.stackexchange.com/questions/439595/brew-head-update-behaviour">Source&lt;/a>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">% brew upgrade --fetch-HEAD &lt;span class="o">[&lt;/span>package...&lt;span class="o">]&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>&lt;a href="https://apple.stackexchange.com/questions/439595/brew-head-update-behaviour">Source&lt;/a>&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p>
 &lt;div class="footnotes" role="doc-endnotes">
 &lt;hr>
 &lt;ol>
@@ -1514,16 +1836,19 @@ request&lt;/a> for it.&lt;/p></description></item><item><title>brew: upgrade HEA
 &lt;/li>
 &lt;/ol>
 &lt;/div></description></item><item><title>GitHub: the organization has enabled or enforced SAML sso</title><link>https://perrotta.dev/2025/10/github-the-organization-has-enabled-or-enforced-saml-sso/</link><pubDate>Tue, 21 Oct 2025 08:15:41 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/github-the-organization-has-enabled-or-enforced-saml-sso/</guid><description>&lt;p>Error message when doing &lt;code>git push&lt;/code>:&lt;/p>
-&lt;pre tabindex="0">&lt;code>% git push
-ERROR: The &amp;#39;{corp}&amp;#39; organization has enabled or enforced SAML SSO.
-To access this repository, you must use the HTTPS remote with a personal access token or SSH with an SSH key and passphrase that has been authorized for this organization.
-Visit https://docs.github.com/articles/authenticating-to-a-github-organization-with-saml-single-sign-on/ for more information.
 
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-&lt;/code>&lt;/pre>&lt;p>Even after authenticating by logging in, the error persists.&lt;/p>
+&lt;div class="codeblock">
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl">% git push
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ERROR: The &amp;#39;{corp}&amp;#39; organization has enabled or enforced SAML SSO.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">To access this repository, you must use the HTTPS remote with a personal access token or SSH with an SSH key and passphrase that has been authorized for this organization.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Visit https://docs.github.com/articles/authenticating-to-a-github-organization-with-saml-single-sign-on/ for more information.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">fatal: Could not read from remote repository.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Please make sure you have the correct access rights
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">and the repository exists.&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>Even after authenticating by logging in, the error persists.&lt;/p>
 &lt;p>The solution is to &lt;strong>restart the ssh agent&lt;/strong>.&lt;/p>
 &lt;p>How to do so is out of scope of this post, because it depends on which one you
 use.&lt;/p>
@@ -1533,10 +1858,13 @@ use.&lt;/p>
 &lt;li>kill the ssh agent (&lt;code>pkill ssh-agent&lt;/code>)&lt;/li>
 &lt;li>kill open ssh multiplexing connections (e.g. with &lt;code>pkill&lt;/code>):&lt;/li>
 &lt;/ul>
-&lt;pre tabindex="0">&lt;code>% pgrep -afl ssh
-48564 ssh: /tmp/ssh-control-bda8786786c69753cc9ddd9fb7c06aaff3768a70 [mux]
-50845 ssh: /tmp/ssh-control-bda8786786c69753cc9ddd9fb7c06aaff3768a70 [mux]
-&lt;/code>&lt;/pre>&lt;ul>
+
+&lt;div class="codeblock">
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl">% pgrep -afl ssh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">48564 ssh: /tmp/ssh-control-bda8786786c69753cc9ddd9fb7c06aaff3768a70 [mux]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">50845 ssh: /tmp/ssh-control-bda8786786c69753cc9ddd9fb7c06aaff3768a70 [mux]&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;ul>
 &lt;li>quit 1Password, then reopen it&lt;/li>
 &lt;li>re-enable the 1Password ssh agent&lt;/li>
 &lt;li>&lt;code>git push&lt;/code> again&lt;/li>
@@ -1544,10 +1872,12 @@ use.&lt;/p>
 &lt;p>Surely there is a way to script this?&lt;/p>
 &lt;p>&lt;strong>Update(2025-10-28)&lt;/strong>: In a second try, killing the process below was enough to
 address the issue.&lt;/p>
-&lt;pre tabindex="0">&lt;code>% pgrep -afl ssh
-7242 ssh: /tmp/ssh-control-bda8786786c69753cc9ddd9fb7c06aaff3768a70 [mux]
-% kill 7242
-&lt;/code>&lt;/pre></description></item><item><title>Instagram: unfollow non-followers</title><link>https://perrotta.dev/2025/10/instagram-unfollow-non-followers/</link><pubDate>Tue, 21 Oct 2025 00:13:11 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/instagram-unfollow-non-followers/</guid><description>&lt;p>Sometimes connections simply fade away. Life happens. Privacy prevails. Then why
+
+&lt;div class="codeblock">
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl">% pgrep -afl ssh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">7242 ssh: /tmp/ssh-control-bda8786786c69753cc9ddd9fb7c06aaff3768a70 [mux]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">% kill 7242&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div></description></item><item><title>Instagram: unfollow non-followers</title><link>https://perrotta.dev/2025/10/instagram-unfollow-non-followers/</link><pubDate>Tue, 21 Oct 2025 00:13:11 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/instagram-unfollow-non-followers/</guid><description>&lt;p>Sometimes connections simply fade away. Life happens. Privacy prevails. Then why
 don&amp;rsquo;t people remove them both ways (follower + following)? If you don&amp;rsquo;t want to
 stay connected with someone any longer, it is good courtesy to do so
 symmetrically. If you just unfollow someone, without removing them from your
@@ -1566,32 +1896,42 @@ information&lt;/a>.&lt;/li>
 &lt;li>Download the ZIP (&lt;code>instagram-{username}-YYYY-MM-DD-{id}.zip&lt;/code>) and unpack it.
 Structure:&lt;/li>
 &lt;/ul>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>% tree connections
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>connections
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>└── followers_and_following
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── blocked_profiles.json
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── close_friends.json
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── follow_requests_you&lt;span style="color:#98c379">&amp;#39;ve_received.json
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> ├── followers_1.json
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> ├── following.json
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> ├── hide_story_from.json
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> ├── pending_follow_requests.json
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#98c379"> ├── profiles_you&amp;#39;&lt;/span>ve_favorited.json
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── recent_follow_requests.json
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── recently_unfollowed_profiles.json
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> └── removed_suggestions.json
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>(Yes, one of these files has a &lt;code>'&lt;/code> in the name. It was not a typo.)&lt;/p>
+
+&lt;div class="codeblock" data-lang="shell">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">shell&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">% tree connections
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">connections
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── followers_and_following
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── blocked_profiles.json
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── close_friends.json
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── follow_requests_you&lt;span class="s1">&amp;#39;ve_received.json
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> ├── followers_1.json
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> ├── following.json
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> ├── hide_story_from.json
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> ├── pending_follow_requests.json
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> ├── profiles_you&amp;#39;&lt;/span>ve_favorited.json
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── recent_follow_requests.json
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── recently_unfollowed_profiles.json
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── removed_suggestions.json&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>(Yes, one of these files has a &lt;code>'&lt;/code> in the name. It was not a typo.)&lt;/p>
 &lt;p>We&amp;rsquo;re interested in &lt;code>followers_N.json&lt;/code> and &lt;code>following.json&lt;/code>.&lt;/p>
 &lt;p>From this point on, vibe code and chill. A single, well-crafted prompted is
 enough. For example:&lt;/p>
-&lt;pre tabindex="0">&lt;code>You are a world-class software developer.
 
-I exported all my Instagram data.
-
-Write a python script to parse all people I follow that do not follow me back.
-
-Output username + profile URLs in each line.
-&lt;/code>&lt;/pre>&lt;p>I am a fan of this one-shot prompt structure / style&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>:&lt;/p>
+&lt;div class="codeblock">
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl">You are a world-class software developer.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I exported all my Instagram data.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Write a python script to parse all people I follow that do not follow me back.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Output username + profile URLs in each line.&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>I am a fan of this one-shot prompt structure / style&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>:&lt;/p>
 &lt;ul>
 &lt;li>you are a superb ${FOO}&lt;/li>
 &lt;li>this is some context for you&lt;/li>
@@ -1599,73 +1939,80 @@ Output username + profile URLs in each line.
 &lt;li>output in the desired format&lt;/li>
 &lt;/ul>
 &lt;p>The resulting script:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e">#!/usr/bin/env python3&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">import&lt;/span> &lt;span style="color:#e06c75">json&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">import&lt;/span> &lt;span style="color:#e06c75">csv&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">from&lt;/span> &lt;span style="color:#e06c75">pathlib&lt;/span> &lt;span style="color:#c678dd">import&lt;/span> &lt;span style="color:#e06c75">Path&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># Base path where your JSON files are&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">base&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">Path&lt;/span>(&lt;span style="color:#98c379">&amp;#34;connections/followers_and_following&amp;#34;&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">def&lt;/span> &lt;span style="color:#61afef;font-weight:bold">extract_usernames&lt;/span>(&lt;span style="color:#e06c75">file_path&lt;/span>):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#98c379">&amp;#34;&amp;#34;&amp;#34;Extract Instagram usernames from a followers/following JSON file.&amp;#34;&amp;#34;&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">with&lt;/span> &lt;span style="color:#e5c07b">open&lt;/span>(&lt;span style="color:#e06c75">file_path&lt;/span>) &lt;span style="color:#c678dd">as&lt;/span> &lt;span style="color:#e06c75">f&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">data&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">json&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">load&lt;/span>(&lt;span style="color:#e06c75">f&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#7f848e"># Handle both old and new formats&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e5c07b">isinstance&lt;/span>(&lt;span style="color:#e06c75">data&lt;/span>, &lt;span style="color:#e5c07b">dict&lt;/span>):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">for&lt;/span> &lt;span style="color:#e06c75">v&lt;/span> &lt;span style="color:#56b6c2">in&lt;/span> &lt;span style="color:#e06c75">data&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">values&lt;/span>():
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e5c07b">isinstance&lt;/span>(&lt;span style="color:#e06c75">v&lt;/span>, &lt;span style="color:#e5c07b">list&lt;/span>):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">data&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">v&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">break&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#56b6c2">not&lt;/span> &lt;span style="color:#e5c07b">isinstance&lt;/span>(&lt;span style="color:#e06c75">data&lt;/span>, &lt;span style="color:#e5c07b">list&lt;/span>):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">raise&lt;/span> &lt;span style="color:#e06c75">ValueError&lt;/span>(&lt;span style="color:#98c379">f&lt;/span>&lt;span style="color:#98c379">&amp;#34;Unexpected format in &lt;/span>&lt;span style="color:#98c379">{&lt;/span>&lt;span style="color:#e06c75">file_path&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">usernames&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e5c07b">set&lt;/span>()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">for&lt;/span> &lt;span style="color:#e06c75">item&lt;/span> &lt;span style="color:#56b6c2">in&lt;/span> &lt;span style="color:#e06c75">data&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">try&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">entry&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">item&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">get&lt;/span>(&lt;span style="color:#98c379">&amp;#34;string_list_data&amp;#34;&lt;/span>, [])[&lt;span style="color:#d19a66">0&lt;/span>]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">username&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> (
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">entry&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">get&lt;/span>(&lt;span style="color:#98c379">&amp;#34;value&amp;#34;&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#e06c75">entry&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">get&lt;/span>(&lt;span style="color:#98c379">&amp;#34;href&amp;#34;&lt;/span>, &lt;span style="color:#98c379">&amp;#34;&amp;#34;&lt;/span>)&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">rstrip&lt;/span>(&lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span>)&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">split&lt;/span>(&lt;span style="color:#98c379">&amp;#34;/&amp;#34;&lt;/span>)[&lt;span style="color:#56b6c2">-&lt;/span>&lt;span style="color:#d19a66">1&lt;/span>]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#56b6c2">or&lt;/span> &lt;span style="color:#e06c75">entry&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">get&lt;/span>(&lt;span style="color:#98c379">&amp;#34;username&amp;#34;&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> )
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">if&lt;/span> &lt;span style="color:#e06c75">username&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">usernames&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">add&lt;/span>(&lt;span style="color:#e06c75">username&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">except&lt;/span> &lt;span style="color:#e06c75">Exception&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">continue&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">return&lt;/span> &lt;span style="color:#e06c75">usernames&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># --- Load followers (handles multiple files) ---&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">followers&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e5c07b">set&lt;/span>()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">for&lt;/span> &lt;span style="color:#e06c75">path&lt;/span> &lt;span style="color:#56b6c2">in&lt;/span> &lt;span style="color:#e06c75">base&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">glob&lt;/span>(&lt;span style="color:#98c379">&amp;#34;followers_*.json&amp;#34;&lt;/span>):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">followers&lt;/span> &lt;span style="color:#56b6c2">|=&lt;/span> &lt;span style="color:#e06c75">extract_usernames&lt;/span>(&lt;span style="color:#e06c75">path&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># --- Load following ---&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">following&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">extract_usernames&lt;/span>(&lt;span style="color:#e06c75">base&lt;/span> &lt;span style="color:#56b6c2">/&lt;/span> &lt;span style="color:#98c379">&amp;#34;following.json&amp;#34;&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># --- Compute differences ---&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">not_following_back&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e5c07b">sorted&lt;/span>(&lt;span style="color:#e06c75">following&lt;/span> &lt;span style="color:#56b6c2">-&lt;/span> &lt;span style="color:#e06c75">followers&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">you_dont_follow_back&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e5c07b">sorted&lt;/span>(&lt;span style="color:#e06c75">followers&lt;/span> &lt;span style="color:#56b6c2">-&lt;/span> &lt;span style="color:#e06c75">following&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">mutuals&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e5c07b">sorted&lt;/span>(&lt;span style="color:#e06c75">followers&lt;/span> &lt;span style="color:#56b6c2">&amp;amp;&lt;/span> &lt;span style="color:#e06c75">following&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#c678dd">def&lt;/span> &lt;span style="color:#61afef;font-weight:bold">write_csv&lt;/span>(&lt;span style="color:#e06c75">filename&lt;/span>, &lt;span style="color:#e06c75">users&lt;/span>):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">with&lt;/span> &lt;span style="color:#e5c07b">open&lt;/span>(&lt;span style="color:#e06c75">filename&lt;/span>, &lt;span style="color:#98c379">&amp;#34;w&amp;#34;&lt;/span>, &lt;span style="color:#e06c75">newline&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;&amp;#34;&lt;/span>, &lt;span style="color:#e06c75">encoding&lt;/span>&lt;span style="color:#56b6c2">=&lt;/span>&lt;span style="color:#98c379">&amp;#34;utf-8&amp;#34;&lt;/span>) &lt;span style="color:#c678dd">as&lt;/span> &lt;span style="color:#e06c75">f&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">writer&lt;/span> &lt;span style="color:#56b6c2">=&lt;/span> &lt;span style="color:#e06c75">csv&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">writer&lt;/span>(&lt;span style="color:#e06c75">f&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">writer&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">writerow&lt;/span>([&lt;span style="color:#98c379">&amp;#34;username&amp;#34;&lt;/span>, &lt;span style="color:#98c379">&amp;#34;profile_url&amp;#34;&lt;/span>])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c678dd">for&lt;/span> &lt;span style="color:#e06c75">user&lt;/span> &lt;span style="color:#56b6c2">in&lt;/span> &lt;span style="color:#e06c75">users&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e06c75">writer&lt;/span>&lt;span style="color:#56b6c2">.&lt;/span>&lt;span style="color:#e06c75">writerow&lt;/span>([&lt;span style="color:#e06c75">user&lt;/span>, &lt;span style="color:#98c379">f&lt;/span>&lt;span style="color:#98c379">&amp;#34;https://www.instagram.com/&lt;/span>&lt;span style="color:#98c379">{&lt;/span>&lt;span style="color:#e06c75">user&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">/&amp;#34;&lt;/span>])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e5c07b">print&lt;/span>(&lt;span style="color:#98c379">f&lt;/span>&lt;span style="color:#98c379">&amp;#34;✅ Saved &lt;/span>&lt;span style="color:#98c379">{&lt;/span>&lt;span style="color:#e5c07b">len&lt;/span>(&lt;span style="color:#e06c75">users&lt;/span>)&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379"> entries to &lt;/span>&lt;span style="color:#98c379">{&lt;/span>&lt;span style="color:#e06c75">filename&lt;/span>&lt;span style="color:#98c379">}&lt;/span>&lt;span style="color:#98c379">&amp;#34;&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#7f848e"># --- Write results ---&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">write_csv&lt;/span>(&lt;span style="color:#98c379">&amp;#34;not_following_back.csv&amp;#34;&lt;/span>, &lt;span style="color:#e06c75">not_following_back&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">write_csv&lt;/span>(&lt;span style="color:#98c379">&amp;#34;you_dont_follow_back.csv&amp;#34;&lt;/span>, &lt;span style="color:#e06c75">you_dont_follow_back&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e06c75">write_csv&lt;/span>(&lt;span style="color:#98c379">&amp;#34;mutuals.csv&amp;#34;&lt;/span>, &lt;span style="color:#e06c75">mutuals&lt;/span>)
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The script was tested in a real account, and I&amp;rsquo;m pleased to state that it works
+
+&lt;div class="codeblock" data-lang="python">
+ &lt;div class="codeblock-header">
+ &lt;span class="codeblock-language">python&lt;/span>
+ &lt;button class="codeblock-copy" type="button" data-copy-code>Copy&lt;/button>
+ &lt;/div>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="ch">#!/usr/bin/env python3&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">json&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">csv&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">pathlib&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">Path&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Base path where your JSON files are&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">base&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Path&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;connections/followers_and_following&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">extract_usernames&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">file_path&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;Extract Instagram usernames from a followers/following JSON file.&amp;#34;&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">with&lt;/span> &lt;span class="nb">open&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">file_path&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">data&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">json&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">load&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">f&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Handle both old and new formats&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nb">isinstance&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">dict&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">v&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">values&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nb">isinstance&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">v&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">list&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">data&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">v&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">break&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="nb">isinstance&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">list&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">raise&lt;/span> &lt;span class="ne">ValueError&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;Unexpected format in &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">file_path&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">usernames&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">set&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">item&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">entry&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">item&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;string_list_data&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">[])[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">username&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">entry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;value&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="ow">or&lt;/span> &lt;span class="n">entry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;href&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">rstrip&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">split&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/&amp;#34;&lt;/span>&lt;span class="p">)[&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="ow">or&lt;/span> &lt;span class="n">entry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;username&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">username&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">usernames&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">username&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">except&lt;/span> &lt;span class="ne">Exception&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">continue&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">usernames&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># --- Load followers (handles multiple files) ---&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">followers&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">set&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">path&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">base&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">glob&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;followers_*.json&amp;#34;&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">followers&lt;/span> &lt;span class="o">|=&lt;/span> &lt;span class="n">extract_usernames&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">path&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># --- Load following ---&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">following&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">extract_usernames&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">base&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="s2">&amp;#34;following.json&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># --- Compute differences ---&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">not_following_back&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">sorted&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">following&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">followers&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">you_dont_follow_back&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">sorted&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">followers&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">following&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">mutuals&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">sorted&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">followers&lt;/span> &lt;span class="o">&amp;amp;&lt;/span> &lt;span class="n">following&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">write_csv&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">filename&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">users&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">with&lt;/span> &lt;span class="nb">open&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">filename&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;w&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">newline&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">encoding&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;utf-8&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="n">f&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">writer&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">csv&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">writer&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">f&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">writer&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">writerow&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="s2">&amp;#34;username&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;profile_url&amp;#34;&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">user&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">users&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">writer&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">writerow&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="n">user&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;https://www.instagram.com/&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">user&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">/&amp;#34;&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;✅ Saved &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="nb">len&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">users&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> entries to &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">filename&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># --- Write results ---&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">write_csv&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;not_following_back.csv&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">not_following_back&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">write_csv&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;you_dont_follow_back.csv&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">you_dont_follow_back&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">write_csv&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;mutuals.csv&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">mutuals&lt;/span>&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/div>
+&lt;p>The script was tested in a real account, and I&amp;rsquo;m pleased to state that it works
 as intended.&lt;/p>
 &lt;p>If you use it for the sake of unfollowing people&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup> then it&amp;rsquo;s advisable not to
 automate the unfollowing process, as Instagram could potentially block you.
