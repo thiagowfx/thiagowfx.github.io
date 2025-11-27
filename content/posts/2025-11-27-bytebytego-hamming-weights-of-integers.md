@@ -24,7 +24,7 @@ def hamming_weights_of_integers(n: int) -> List[int]:
     return [hammer(n) for n in range(n + 1)]
 ```
 
-With dynamic programming, linear:
+With top-down dynamic programming, linear:
 
 ```python
 from typing import List
@@ -40,4 +40,22 @@ def hamming_weights_of_integers(n: int) -> List[int]:
         return hammer(n >> 1) + (n & 1)
 
     return [hammer(n) for n in range(n + 1)]
+```
+
+With bottom-up dynamic programming, linear:
+
+```python
+from typing import List
+
+def hamming_weights_of_integers(n: int) -> List[int]:
+    from functools import lru_cache
+
+    hammer = [0] * (n + 1)
+    hammer[0] = 0
+    hammer[1] = 1
+
+    for x in range(2, n + 1):
+        hammer[x] = hammer[x >> 1] + (x & 1)
+
+    return hammer
 ```
