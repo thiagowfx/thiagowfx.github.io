@@ -32,7 +32,7 @@ reviewers approve it.
 In GitHub there's no straightforward out-of-the-box equivalent. There are ways
 to work around the platform limitations, but they all seem hacky to me.
 
-I found an alternative: design a `done`
+I found an alternative: designate a `done`
 [label](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/managing-labels)
 to represent that no further changes are planned in the PR.
 
