@@ -120,6 +120,40 @@
       </a>
     </div>
   </footer>
+  <script>
+    document.addEventListener('click', function (event) {
+      if (!event.target.matches('[data-copy-code]')) {
+        return;
+      }
+      const button = event.target;
+      const container = button.closest('.codeblock');
+      if (!container) {
+        return;
+      }
+      const code = container.querySelector('pre code');
+      if (!code) {
+        return;
+      }
+      const text = code.innerText;
+      if (!navigator.clipboard || !navigator.clipboard.writeText) {
+        return;
+      }
+      navigator.clipboard.writeText(text)
+        .then(function () {
+          button.dataset.originalLabel = button.textContent;
+          button.textContent = 'Copied!';
+          setTimeout(function () {
+            button.textContent = button.dataset.originalLabel || 'Copy';
+          }, 1500);
+        })
+        .catch(function () {
+          button.textContent = 'Failed';
+          setTimeout(function () {
+            button.textContent = button.dataset.originalLabel || 'Copy';
+          }, 1500);
+        });
+    });
+  </script>
 </body>
 
 </html>
