@@ -1,0 +1,29 @@
+{{- $rawLang := .Type | default "" -}}
+{{- $langAliases := dict
+  "gitconfig" "ini"
+  "git" "bash"
+  "shell" "bash"
+  "text" "plaintext"
+-}}
+{{- $lang := $rawLang -}}
+{{- with index $langAliases $rawLang }}
+  {{- $lang = . -}}
+{{- end }}
+{{- if eq $lang "" }}
+  {{- $lang = "plaintext" -}}
+{{- end }}
+{{- $label := $rawLang -}}
+{{- if eq $label "" }}
+  {{- if ne $lang "plaintext" }}
+    {{- $label = $lang -}}
+  {{- end }}
+{{- end }}
+<div class="codeblock"{{ if $label }} data-lang="{{ $label }}"{{ end }}>
+  {{- if $label }}
+  <div class="codeblock-header">
+    <span class="codeblock-language">{{ $label }}</span>
+    <button class="codeblock-copy" type="button" data-copy-code>Copy</button>
+  </div>
+  {{- end }}
+  {{ highlight .Inner $lang "" }}
+</div>
