@@ -22,4 +22,8 @@ it with conflicting shortcuts, it's better to pick an uncommon one (don't pick
 
 `Cmd + ;` seems reasonable. I am also dabbling with `Cmd + Shift + Enter`.
 
+The terminal session persists. Say you open `vim` and then close the terminal.
+Upon opening it again, `vim` will still be there. This blog post was written
+from the quick terminal.
+
 [^1]: See also: [Guake Terminal](https://guake.github.io/).
