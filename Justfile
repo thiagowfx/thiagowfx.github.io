@@ -57,6 +57,21 @@ code title *args:
 
 alias coding := code
 
+# Search and edit a blog post. Usage: `just edit` or `just edit <term>`
+edit *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    if [ -z "{{ args }}" ]; then
+        file=$(find content/posts -name "*.md" | fzf || true)
+    else
+        file=$(find content/posts -name "*.md" | fzf --query "{{ args }}" --select-1 || true)
+    fi
+
+    if [ -n "$file" ]; then
+        {{ editor }} "$file"
+    fi
+
 # Edit the most recent blog post
 last:
     #!/usr/bin/env bash
