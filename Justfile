@@ -71,7 +71,9 @@ last:
 
 # Create a git commit without any substance
 lazy *args:
+    # assume vim-fugitive :Gwq is used
     git commit -m "lazy commit" -n {{ args }}
+    git pushm
 
 # Delete hugo build artifacts
 clean:
