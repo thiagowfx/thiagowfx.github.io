@@ -19,6 +19,20 @@
   {{ end }}
 </p>
 {{- end }}
+{{- $warningYears := int (default 0 .Site.Params.oldEntryWarningYears) }}
+{{- $isPost := or (eq .Section "posts") (eq .Type "posts") }}
+{{- if and $isPost (gt $warningYears 0) (not .Date.IsZero) }}
+  {{- $thresholdDate := now.AddDate (mul -1 $warningYears) 0 0 }}
+  {{- if lt .Date $thresholdDate }}
+    {{- $thresholdText := printf "%d years" $warningYears }}
+    {{- if eq $warningYears 1 }}
+      {{- $thresholdText = "one year" }}
+    {{- end }}
+    <div class="old-entry-warning" role="note">
+      ⚠️ This entry is already over {{ $thresholdText }} old. It may no longer be up to date. Opinions may have changed. Instructions may be outdated.
+    </div>
+  {{- end }}
+{{- end }}
 <content> {{ .Content }} </content>
 <div style="display: flex; justify-content: space-between">
   {{ if .Params.email | default true }}
