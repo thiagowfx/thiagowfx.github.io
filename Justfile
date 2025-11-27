@@ -62,10 +62,16 @@ edit *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    if [ -z "{{ args }}" ]; then
-        file=$(find content/posts -name "*.md" | fzf || true)
+    if command -v fd >/dev/null 2>&1; then
+        finder="fd --extension md . content/posts"
     else
-        file=$(find content/posts -name "*.md" | fzf --query "{{ args }}" --select-1 || true)
+        finder="find content/posts -name *.md"
+    fi
+
+    if [ -z "{{ args }}" ]; then
+        file=$($finder | fzf || true)
+    else
+        file=$($finder | fzf --query "{{ args }}" --select-1 || true)
     fi
 
     if [ -n "$file" ]; then
