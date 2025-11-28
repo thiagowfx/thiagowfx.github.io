@@ -6,7 +6,7 @@ tags:
 rss: false
 ---
 
-[ByteByteGo: Maximum Subarray Sum](https://bytebytego.com/exercises/coding-patterns/bytebytego:-maximum-subarray-sum):
+[ByteByteGo: Maximum Subarray Sum](https://bytebytego.com/exercises/coding-patterns/dynamic-programming/maximum-subarray-sum):
 
 ```python
 from typing import List

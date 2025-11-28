@@ -6,7 +6,7 @@ tags:
 rss: false
 ---
 
-[ByteByteGo: Reverse 32-Bit Integer](https://bytebytego.com/exercises/coding-patterns/bytebytego:-reverse-32-bit-integer):
+[ByteByteGo: Reverse 32-Bit Integer](https://bytebytego.com/exercises/coding-patterns/math-and-geometry/reverse-32-bit-integer):
 
 ## Strings
 

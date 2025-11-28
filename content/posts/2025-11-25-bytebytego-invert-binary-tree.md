@@ -6,7 +6,7 @@ tags:
 rss: false
 ---
 
-[ByteByteGo: Invert Binary Tree](https://bytebytego.com/exercises/coding-patterns/bytebytego:-invert-binary-tree):
+[ByteByteGo: Invert Binary Tree](https://bytebytego.com/exercises/coding-patterns/trees/invert-binary-tree):
 
 ```python
 from ds import TreeNode

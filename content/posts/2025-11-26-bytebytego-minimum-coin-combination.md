@@ -6,7 +6,7 @@ tags:
 rss: false
 ---
 
-[ByteByteGo: Minimum Coin Combination](https://bytebytego.com/exercises/coding-patterns/bytebytego:-minimum-coin-combination):
+[ByteByteGo: Minimum Coin Combination](https://bytebytego.com/exercises/coding-patterns/dynamic-programming/minimum-coin-combination):
 
 The `-1` return requirement makes it a bit ugly.
 

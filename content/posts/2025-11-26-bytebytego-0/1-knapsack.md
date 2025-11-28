@@ -6,7 +6,7 @@ tags:
 rss: false
 ---
 
-[ByteByteGo: 0/1 Knapsack](https://bytebytego.com/exercises/coding-patterns/bytebytego:-0/1-knapsack):
+[ByteByteGo: 0/1 Knapsack](https://bytebytego.com/exercises/coding-patterns/dynamic-programming/01-knapsack):
 
 ```python
 from typing import List
