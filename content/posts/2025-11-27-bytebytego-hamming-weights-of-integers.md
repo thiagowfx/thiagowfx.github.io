@@ -6,7 +6,7 @@ tags:
 rss: false
 ---
 
-[ByteByteGo: Hamming Weights of Integers](https://bytebytego.com/exercises/coding-patterns/bytebytego:-hamming-weights-of-integers):
+[ByteByteGo: Hamming Weights of Integers](https://bytebytego.com/exercises/coding-patterns/bit-manipulation/hamming-weights-of-integers):
 
 Did someone say something about variable scoping? Poor `n` is overworked.
 

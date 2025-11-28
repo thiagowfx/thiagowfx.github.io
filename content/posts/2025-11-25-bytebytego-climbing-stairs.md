@@ -6,7 +6,7 @@ tags:
 rss: false
 ---
 
-[ByteByteGo: Climbing Stairs](https://bytebytego.com/exercises/coding-patterns/bytebytego:-climbing-stairs):
+[ByteByteGo: Climbing Stairs](https://bytebytego.com/exercises/coding-patterns/dynamic-programming/climbing-stairs):
 
 Top-down DP:
 

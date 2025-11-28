@@ -8,7 +8,7 @@ rss: false
 
 [Same as LeetCode #283]({{< ref "2025-09-12-leetcode-283-move-zeroes" >}}).
 
-[ByteByteGo: Shift Zeros to the End](https://bytebytego.com/exercises/coding-patterns/bytebytego:-shift-zeros-to-the-end):
+[ByteByteGo: Shift Zeros to the End](https://bytebytego.com/exercises/coding-patterns/two-pointers/shift-zeros-to-the-end):
 
 ```python
 from typing import List
