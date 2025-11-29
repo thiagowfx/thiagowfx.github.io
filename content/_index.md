@@ -20,5 +20,4 @@ content. Want to chat? Start an interesting conversation – send me an email.
 
 This site has [no ads](https://www.nevermonetize.com/), affiliate links,
 tracking cookies, [Gen AI slop](/ai), and no paywall.
-
 I hope it will inspire you to leave your own mark on the Indie Web too.
