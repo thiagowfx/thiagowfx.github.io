@@ -1,6 +1,4 @@
-## Welcome – Hi, I am Thiago Perrotta ✨
-
-a.k.a. @thiagowfx
+## Welcome – Hi, I am Thiago Perrotta (@thiagowfx) ✨
 
 - - -
 
