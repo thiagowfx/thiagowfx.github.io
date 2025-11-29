@@ -16,8 +16,7 @@ document my journey, share insights with genuine self-expression, and dive into
 miscellaneous topics that spark my curiosity.
 
 I believe in the power of the Small Web for sharing valuable, distraction-free
-content. Want to chat? Send me an email – I'm always up for interesting
-conversations and opportunities.
+content. Want to chat? Start an interesting conversation – send me an email.
 
 This site has [no ads](https://www.nevermonetize.com/), affiliate links,
 tracking cookies, [Gen AI slop](/ai), and no paywall.
