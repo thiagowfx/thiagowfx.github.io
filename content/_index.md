@@ -22,6 +22,7 @@ I believe in the power of the Indie Web for sharing knowledge. Want to chat?
 Send me an email – I'm always up for interesting conversations and
 opportunities.
 
-This site has no ads, no affiliate links, no tracking, sponsored posts, [no Gen AI slop](/ai), and no paywall.
+This site has [no ads](https://www.nevermonetize.com/), affiliate links,
+tracking cookies, [Gen AI slop](/ai), and no paywall.
 
 I hope it will inspire you to leave your own mark on the Web too.
