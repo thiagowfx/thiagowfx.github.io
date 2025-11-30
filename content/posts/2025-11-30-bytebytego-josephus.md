@@ -1,0 +1,51 @@
+---
+title: "ByteByteGo: Josephus"
+date: 2025-11-30T17:26:22-03:00
+tags:
+  - coding
+rss: false
+---
+
+[ByteByteGo: Josephus](https://bytebytego.com/exercises/coding-patterns/math-and-geometry/the-josephus-problem):
+
+With an array:
+
+```python
+def josephus(n: int, k: int) -> int:
+    circle = list(range(n))
+    victim = 0
+    # [0, 1, 2, 3, 4]
+    #  ^
+    #
+    # clockwise: victim += 1
+    #
+    # next victim: victim + k - 1 (remember to mod)
+
+    while len(circle) > 1:
+        victim = (victim + (k - 1)) % len(circle)
+        del circle[victim]
+
+    return circle[0]
+```
+
+With a linked list (`deque`):
+
+```python
+from collections import deque
+
+def josephus(n: int, k: int) -> int:
+    circle = deque(range(n))
+    victim = 0
+    # [0, 1, 2, 3, 4]
+    #  ^
+    #
+    # clockwise: victim += 1
+    #
+    # next victim: victim + k - 1 (remember to mod)
+
+    while len(circle) > 1:
+        victim = (victim + (k - 1)) % len(circle)
+        del circle[victim]
+
+    return circle[0]
+```
