@@ -21,3 +21,5 @@ apps/overlays/g02/clustermon/values.yaml
 
 A natural extension is to pipe it to `| ifne xargs -n 1 gsed -i -e
 '{expression}'`. Changes in the entire codebase at your fingertips!
+
+**Update(2025-11-30)**: We can use `xargs -r` instead of `ifne`.
