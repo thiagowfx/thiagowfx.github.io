@@ -34,3 +34,5 @@ def find_all_permutations(nums: List[int]) -> List[List[int]]:
 
     return ans
 ```
+
+If we do not make a copy of candidate (`candidate[:]`), `ans` will be a mess.
