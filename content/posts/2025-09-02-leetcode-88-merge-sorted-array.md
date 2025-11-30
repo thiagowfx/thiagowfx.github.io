@@ -28,7 +28,7 @@ class Solution:
 ## Optimal
 
 `O(m + n)`. We can achieve a linear solution by iterating only _once_ on each
-element, keeping tracking of **two pointers**.
+element, keeping track of **two pointers**.
 
 Storage: we can either start with an empty list and keep appending[^1] to it, or
 preallocate `m + n` elements and simply populate them[^2].
