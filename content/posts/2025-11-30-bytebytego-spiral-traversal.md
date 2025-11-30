@@ -17,7 +17,7 @@ def spiral_matrix(matrix: List[List[int]]) -> List[int]:
     start = (0, 0)
     end = (len(matrix), len(matrix[0]))
 
-    def debian_once(matrix, start, end):
+    def debian_once(start, end):
         # if (start[0], start[1]) == (end[0] - 1, end[1] - 1):
         #     ans.append(matrix[start[0]][start[1]])
         #     return
@@ -39,7 +39,7 @@ def spiral_matrix(matrix: List[List[int]]) -> List[int]:
     # while start[0] < end[0] and start[1] < end[1]:
     # while all(start[i] < end[i] for i in range(len(start))):
     while all(x < y for (x, y) in zip(start, end)):
-        debian_once(matrix, start, end)
+        debian_once(start, end)
         start = tuple(el + 1 for el in start)
         end = tuple(el - 1 for el in end)
 
