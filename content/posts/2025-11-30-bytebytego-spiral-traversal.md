@@ -36,7 +36,7 @@ def spiral_matrix(matrix: List[List[int]]) -> List[int]:
             for i in range(end[0] - 1 - 1, start[1], -1):
                 ans.append(matrix[i][start[1]])
 
-    #  while start[0] < end[0] and start[1] < end[1]:
+    # while start[0] < end[0] and start[1] < end[1]:
     # while all(start[i] < end[i] for i in range(len(start))):
     while all(x < y for (x, y) in zip(start, end)):
         debian_once(matrix, start, end)
