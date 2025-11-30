@@ -28,7 +28,7 @@ def spiral_matrix(matrix: List[List[int]]) -> List[int]:
             for j in range(end[1] - 1, start[1] - 1, -1):
                 ans.append(matrix[end[0] - 1][j])
 
-        if start[1] < end[1] - 1:
+        if end[1] - 1 > start[1]:
             for i in range(end[0] - 1 - 1, start[1], -1):
                 ans.append(matrix[i][start[1]])
 
