@@ -18,10 +18,6 @@ def spiral_matrix(matrix: List[List[int]]) -> List[int]:
     end = (len(matrix), len(matrix[0]))
 
     def debian_once(start, end):
-        # if (start[0], start[1]) == (end[0] - 1, end[1] - 1):
-        #     ans.append(matrix[start[0]][start[1]])
-        #     return
-
         for j in range(start[1], end[1]):
             ans.append(matrix[start[0]][j])
 
