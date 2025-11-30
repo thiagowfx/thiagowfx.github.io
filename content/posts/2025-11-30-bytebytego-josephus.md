@@ -49,3 +49,22 @@ def josephus(n: int, k: int) -> int:
 
     return circle[0]
 ```
+
+With a linked list, efficient removals from the end (beginning) of the list:
+
+```
+from collections import deque
+
+def josephus(n: int, k: int) -> int:
+    circle = deque(range(n))
+
+    while len(circle) > 1:
+        # rotate left so that the k‑th person becomes the leftmost element
+        # deque.rotate moves elements to the right; negative rotates left
+        circle.rotate(-(k - 1))
+
+        # eliminate that person
+        circle.popleft()
+
+    return circle[0]
+```
