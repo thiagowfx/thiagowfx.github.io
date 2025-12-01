@@ -52,7 +52,7 @@ def josephus(n: int, k: int) -> int:
 
 With a linked list, efficient removals from the end (beginning) of the list:
 
-```
+```python
 from collections import deque
 
 def josephus(n: int, k: int) -> int:
