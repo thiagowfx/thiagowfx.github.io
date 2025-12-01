@@ -123,5 +123,5 @@ Various edge cases.
 
 Positive dials are easy.
 
-Non-positive dials requires accounting for whether the dial was initially in
+Non-positive dials require accounting for whether the dial was initially in
 zero.
