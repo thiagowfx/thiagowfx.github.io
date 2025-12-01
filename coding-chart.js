@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
     console.error('coding-chart.js: byteByteGoPostDates not defined');
     return;
   }
+  if (typeof aocPostDates === 'undefined') {
+    console.error('coding-chart.js: aocPostDates not defined');
+    return;
+  }
   if (typeof otherCodingPostDates === 'undefined') {
     console.error('coding-chart.js: otherCodingPostDates not defined');
     return;
@@ -28,10 +32,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const leetCodeData = processDates(leetCodePostDates);
   const byteByteGoData = processDates(byteByteGoPostDates);
+  const aocData = processDates(aocPostDates);
   const otherData = processDates(otherCodingPostDates);
 
   // Determine the date range (last month only for display)
-  const allDates = leetCodeData.sorted.concat(byteByteGoData.sorted).concat(otherData.sorted).sort();
+  const allDates = leetCodeData.sorted.concat(byteByteGoData.sorted).concat(aocData.sorted).concat(otherData.sorted).sort();
   if (allDates.length === 0) {
     return; // No data to plot
   }
@@ -50,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Calculate initial counts (all posts before the display window)
   let leetCodeCount = 0;
   let byteByteGoCount = 0;
+  let aocCount = 0;
   let otherCount = 0;
 
   const firstDateStr = dateLabels[0];
@@ -59,6 +65,9 @@ document.addEventListener('DOMContentLoaded', function() {
   byteByteGoData.sorted.forEach(date => {
     if (date < firstDateStr) byteByteGoCount++;
   });
+  aocData.sorted.forEach(date => {
+    if (date < firstDateStr) aocCount++;
+  });
   otherData.sorted.forEach(date => {
     if (date < firstDateStr) otherCount++;
   });
@@ -66,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Generate cumulative values for all datasets (starting from historical count)
   const cumulativeValuesLeetCode = [];
   const cumulativeValuesByteByteGo = [];
+  const cumulativeValuesAoC = [];
   const cumulativeValuesOther = [];
 
   dateLabels.forEach(dateStr => {
@@ -78,6 +88,11 @@ document.addEventListener('DOMContentLoaded', function() {
       byteByteGoCount = byteByteGoData.cumulative[dateStr];
     }
     cumulativeValuesByteByteGo.push(byteByteGoCount);
+
+    if (aocData.cumulative[dateStr]) {
+      aocCount = aocData.cumulative[dateStr];
+    }
+    cumulativeValuesAoC.push(aocCount);
 
     if (otherData.cumulative[dateStr]) {
       otherCount = otherData.cumulative[dateStr];
@@ -103,6 +118,13 @@ document.addEventListener('DOMContentLoaded', function() {
         data: cumulativeValuesByteByteGo,
         borderColor: 'rgb(255, 159, 64)',
         backgroundColor: 'rgba(255, 159, 64, 0.2)',
+        tension: 0.1,
+        fill: true
+      }, {
+        label: 'Advent of Code',
+        data: cumulativeValuesAoC,
+        borderColor: 'rgb(155, 89, 182)',
+        backgroundColor: 'rgba(155, 89, 182, 0.2)',
         tension: 0.1,
         fill: true
       }, {
