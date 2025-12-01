@@ -14,6 +14,9 @@ deleting 019ad59e973b7c139c4a1d67fe2155be
 deleting 019ad59e973b7c139c4a1d40a0da15f1
 ```
 
+First do the search without `--delete`, and then re-run the command with
+`--delete` if the output is what you expect.
+
 You would want to do so in these two scenarios:
 
 - prevent irrelevant entries from showing up in `C-r` (history search), reducing
