@@ -9,6 +9,7 @@ from pathlib import Path
 
 LEETCODE_PATTERN = re.compile(r"^LeetCode #\d+: .+$")
 BYTEBYTEGO_PATTERN = re.compile(r"^ByteByteGo: .+$")
+AOC_PATTERN = re.compile(r"^(?:AoC|Advent of Code) \d{4} Day \d{1,2}: .+$")
 
 
 def extract_title(path: Path) -> str | None:
@@ -49,6 +50,9 @@ def check_file(path: Path) -> str | None:
     elif "bytebytego" in stem:
         pattern = BYTEBYTEGO_PATTERN
         expected = "'ByteByteGo: Title'"
+    elif "aoc" in stem or "advent" in stem:
+        pattern = AOC_PATTERN
+        expected = "'AoC YYYY Day N: Title' or 'Advent of Code YYYY Day N: Title'"
     else:
         return None
 

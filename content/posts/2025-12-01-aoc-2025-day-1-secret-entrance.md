@@ -3,7 +3,6 @@ title: "AoC 2025 Day 1: Secret Entrance"
 date: 2025-12-01T02:33:03-03:00
 tags:
   - coding
-  - dev
 ---
 
 A new year, a new advent of code. My _Pythonista_ self is always happy.

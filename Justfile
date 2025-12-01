@@ -31,7 +31,7 @@ new title *args:
 
 alias blog := new
 
-# Create a new coding post. Usage: `just code "leetcode #1"` or `just code "bytebytego #1"` or `just code "ByteByteGo: Triplet Sum"`.
+# Create a new coding post. Usage: `just code "leetcode #1"` or `just code "bytebytego #1"` or `just code "ByteByteGo: Triplet Sum"` or `just code "AoC 2024 Day 1"`.
 code title *args:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -42,6 +42,7 @@ code title *args:
     hugo_title="{{ title }}"
     hugo_leetcode_slug=""
     hugo_bytebytego_slug=""
+    hugo_aoc_slug=""
     if [[ "{{ title }}" == "LeetCode"* ]]; then
       # Handle both "LeetCode #1: Problem" and "LeetCode: Problem" formats
       problem_name=$(echo "{{ title }}" | sed -e 's/LeetCode \(#[0-9]*: \)\?//')
@@ -50,9 +51,13 @@ code title *args:
       # Handle both "ByteByteGo #1: Problem" and "ByteByteGo: Problem" formats
       problem_name=$(echo "{{ title }}" | sed -e 's/ByteByteGo \(#[0-9]*: \)\?//')
       hugo_bytebytego_slug=$(echo "${problem_name}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+    elif [[ "{{ title }}" == "AoC"* ]] || [[ "{{ title }}" == "Advent"* ]]; then
+      # Handle "AoC YYYY Day N" or "Advent of Code YYYY Day N" formats
+      problem_name=$(echo "{{ title }}" | sed -e 's/\(AoC\|Advent of Code\) //')
+      hugo_aoc_slug=$(echo "${problem_name}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
     fi
 
-    HUGO_TITLE="${hugo_title}" HUGO_LEETCODE_SLUG="${hugo_leetcode_slug}" HUGO_BYTEBYTEGO_SLUG="${hugo_bytebytego_slug}" hugo new --kind coding "${filepath}" {{ args }}
+    HUGO_TITLE="${hugo_title}" HUGO_LEETCODE_SLUG="${hugo_leetcode_slug}" HUGO_BYTEBYTEGO_SLUG="${hugo_bytebytego_slug}" HUGO_AOC_SLUG="${hugo_aoc_slug}" hugo new --kind coding "${filepath}" {{ args }}
     {{ editor }} "${filepath}"
 
 alias coding := code
