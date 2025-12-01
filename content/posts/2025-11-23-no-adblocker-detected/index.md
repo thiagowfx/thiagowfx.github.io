@@ -34,7 +34,7 @@ This is a very cool activist idea.
 
 I prototyped it in this blog:
 
-![ad](ad.jpg)
+![ad](ad.webp)
 
 However I would need to add a cookie in order to implement the close button
 effectively, and I'd rather not do so.
