@@ -13,7 +13,7 @@ I've been slowly incorporating Claude Code as part of my daily workflow, as you
 can see below:
 
 | Date | Input | Output | Total Tokens | Cost (USD) |
-|------|-------|--------|--------------|------------|
+| --- | --- | --- | --- | --- |
 | 2025-10-06 | 336 | 3,439 | 1,968,081 | $1.33 |
 | 2025-10-07 | 18,391 | 28,591 | 7,748,856 | $5.32 |
 | 2025-10-08 | 5,319 | 9,137 | 13,575,138 | $9.74 |

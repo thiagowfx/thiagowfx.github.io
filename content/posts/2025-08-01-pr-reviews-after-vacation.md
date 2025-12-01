@@ -27,7 +27,7 @@ Do we live in the same world?
 
 - - -
 
-### Master Foo and the Absent Pull Requests[^1]
+## Master Foo and the Absent Pull Requests[^1]
 
 A novice once sent two pull‑requests before departing for a long holiday.
 
