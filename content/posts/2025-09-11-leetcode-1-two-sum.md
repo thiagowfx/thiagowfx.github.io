@@ -44,6 +44,20 @@ class Solution:
                 return [index[a][0], index[a][1]]
 ```
 
+Or simpler:
+
+```python
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        idx = {}
+        for i, num in enumerate(nums):
+            idx[num] = i
+
+        for i, num in enumerate(nums):
+            if (target - num) in idx and i != idx[target - num]:
+                return i, idx[target-num]
+```
+
 Another way to solve it is with **two pointers** in a sorted array:
 
 ```python
