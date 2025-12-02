@@ -83,6 +83,8 @@ edit *args:
         {{ editor }} "$file"
     fi
 
+alias search := edit
+
 # Edit the most recent blog post
 last:
     #!/usr/bin/env bash
