@@ -6,7 +6,7 @@ tags:
 rss: false
 ---
 
-[ByteByteGo: Linked List Midpoint](https://bytebytego.com/exercises/coding-patterns/bytebytego:-linked-list-midpoint):
+[ByteByteGo: Linked List Midpoint](https://bytebytego.com/exercises/coding-patterns/fast-and-slow-pointers/linked-list-midpoint):
 
 Slow and fast pointers.
 

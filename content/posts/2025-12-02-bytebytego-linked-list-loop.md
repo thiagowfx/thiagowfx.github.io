@@ -6,7 +6,7 @@ tags:
 rss: false
 ---
 
-[ByteByteGo: Linked List Loop](https://bytebytego.com/exercises/coding-patterns/bytebytego:-linked-list-loop):
+[ByteByteGo: Linked List Loop](https://bytebytego.com/exercises/coding-patterns/fast-and-slow-pointers/detect-linked-list-loops):
 
 Slow and fast pointers.
 

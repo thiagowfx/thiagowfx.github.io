@@ -6,7 +6,7 @@ tags:
 rss: false
 ---
 
-[ByteByteGo: First and Last Occurrences of a Number](https://bytebytego.com/exercises/coding-patterns/bytebytego:-first-and-last-occurrences-of-a-number):
+[ByteByteGo: First and Last Occurrences of a Number](https://bytebytego.com/exercises/coding-patterns/binary-search/first-and-last-occurrences-of-a-number):
 
 ```python
 import bisect

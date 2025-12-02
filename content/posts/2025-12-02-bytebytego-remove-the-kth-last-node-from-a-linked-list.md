@@ -6,7 +6,7 @@ tags:
 rss: false
 ---
 
-[ByteByteGo: Remove the Kth Last Node From a Linked List](https://bytebytego.com/exercises/coding-patterns/bytebytego:-remove-the-kth-last-node-from-a-linked-list):
+[ByteByteGo: Remove the Kth Last Node From a Linked List](https://bytebytego.com/exercises/coding-patterns/linked-lists/remove-the-kth-last-node-from-a-linked-list):
 
 ```python
 from ds import ListNode

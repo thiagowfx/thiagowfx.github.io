@@ -6,7 +6,7 @@ tags:
 rss: false
 ---
 
-[ByteByteGo: Happy Number](https://bytebytego.com/exercises/coding-patterns/bytebytego:-happy-number):
+[ByteByteGo: Happy Number](https://bytebytego.com/exercises/coding-patterns/fast-and-slow-pointers/happy-number):
 
 ```python
 def happy_number(n: int) -> bool:
