@@ -37,3 +37,13 @@ def find_the_insertion_index(nums: List[int], target: int) -> int:
         return left
 
 ```
+
+Elegant:
+
+```python
+import bisect
+from typing import List
+
+def find_the_insertion_index(nums: List[int], target: int) -> int:
+    return bisect.bisect_left(nums, target)
+```
