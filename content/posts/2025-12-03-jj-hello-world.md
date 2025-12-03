@@ -137,5 +137,88 @@ Whilst I keep adding text to this file...
 
 Oh, look! Our friend is still around.
 
+```shell
+% jj amend
+error: unrecognized subcommand 'amend'
+
+For more information, try '--help'.
+Hint: You probably want `jj squash`. You can configure `aliases.amend = ["squash"]` if you want `jj amend` to work.
+```
+
+Really? Oh.
+
+```shell
+thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/d6c2ee34fe38ec5a63644114c4c3b13bb09401f1]
+% jj squash
+Working copy  (@) now at: kpumvxpm e60fb5b5 (empty) (no description set)
+Parent commit (@-)      : vvvzruls bba2f04e add hello world
+```
+
+Weird:
+
+```
+thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
+% jj
+@  kpumvxpm thiago@perrotta.dev 2025-12-03 04:03:57 41b2cf2f
+│  (no description set)
+○  vvvzruls thiago@perrotta.dev 2025-12-03 04:03:21 git_head() bba2f04e
+│  add hello world
+│ ○  oqwvuopo thiago@perrotta.dev 2025-12-03 03:36:43 likes 907c5e72
+├─╯  git-freeze
+◆  oqwnlpuv thiago@perrotta.dev 2025-12-02 23:12:39 master a9efb058
+│  bytebytego: Product Array Without Current Elemen
+~
+thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
+% jj status
+Working copy changes:
+M content/posts/2025-12-03-jj-hello-world.md
+Working copy  (@) : kpumvxpm 41b2cf2f (no description set)
+Parent commit (@-): vvvzruls bba2f04e add hello world
+thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
+% git status
+## HEAD (no branch)
+ M content/posts/2025-12-03-jj-hello-world.md
+```
+
+I thought `amend` (or `squash`) would be akin to `git commit --amend`, but
+apparently not? I see two nodes.
+
+Remember the advice from a while ago?
+
+```shell
+% jj sync
+error: unrecognized subcommand 'sync'
+```
+
+Lame.
+
+Time for `jj help -k tutorial` (linked to from `jj --help`).
+
+At this point I just want to end the post. I'll try `jj git push`. If I am
+cut-off, it means it has worked. And we'll continue this in 2026.
+
+```shell
+% jj git push
+Warning: No bookmarks found in the default push revset: remote_bookmarks(remote=origin)..@
+Nothing changed.
+```
+
+Errr.
+
+```shell
+% jj checkout master
+error: unrecognized subcommand 'checkout'
+
+Usage: jj [OPTIONS] <COMMAND>
+
+For more information, try '--help'.
+```
+
+```shell
+% jj describe -m "new just: jj hello world"
+Working copy  (@) now at: kpumvxpm 516b5d69 new just: jj hello world
+Parent commit (@-)      : vvvzruls bba2f04e add hello world
+```
+
 
 [^1]: From whom? From what? Mystery? I think you know the answer.
