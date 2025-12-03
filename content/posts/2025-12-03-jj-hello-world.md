@@ -159,13 +159,13 @@ Weird:
 ```
 thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
 % jj
-@  kpumvxpm thiago@perrotta.dev 2025-12-03 04:03:57 41b2cf2f
+@  kpumvxpm thiago@{redacted email} 2025-12-03 04:03:57 41b2cf2f
 │  (no description set)
-○  vvvzruls thiago@perrotta.dev 2025-12-03 04:03:21 git_head() bba2f04e
+○  vvvzruls thiago@{redacted email} 2025-12-03 04:03:21 git_head() bba2f04e
 │  add hello world
-│ ○  oqwvuopo thiago@perrotta.dev 2025-12-03 03:36:43 likes 907c5e72
+│ ○  oqwvuopo thiago@{redacted email} 2025-12-03 03:36:43 likes 907c5e72
 ├─╯  git-freeze
-◆  oqwnlpuv thiago@perrotta.dev 2025-12-02 23:12:39 master a9efb058
+◆  oqwnlpuv thiago@{redacted email} 2025-12-02 23:12:39 master a9efb058
 │  bytebytego: Product Array Without Current Elemen
 ~
 thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
@@ -220,5 +220,10 @@ Working copy  (@) now at: kpumvxpm 516b5d69 new just: jj hello world
 Parent commit (@-)      : vvvzruls bba2f04e add hello world
 ```
 
+This is the moment of the post when I had to bail out to `git`.
+
+Somehow two distinct commits were created. :(
+
+Until next time.
 
 [^1]: From whom? From what? Mystery? I think you know the answer.
