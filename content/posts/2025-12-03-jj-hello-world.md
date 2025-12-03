@@ -159,13 +159,13 @@ Weird:
 ```
 thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
 % jj
-@  kpumvxpm thiago@{redacted email} 2025-12-03 04:03:57 41b2cf2f
+@  kpumvxpm {redacted email} 2025-12-03 04:03:57 41b2cf2f
 │  (no description set)
-○  vvvzruls thiago@{redacted email} 2025-12-03 04:03:21 git_head() bba2f04e
+○  vvvzruls {redacted email} 2025-12-03 04:03:21 git_head() bba2f04e
 │  add hello world
-│ ○  oqwvuopo thiago@{redacted email} 2025-12-03 03:36:43 likes 907c5e72
+│ ○  oqwvuopo {redacted email} 2025-12-03 03:36:43 likes 907c5e72
 ├─╯  git-freeze
-◆  oqwnlpuv thiago@{redacted email} 2025-12-02 23:12:39 master a9efb058
+◆  oqwnlpuv {redacted email} 2025-12-02 23:12:39 master a9efb058
 │  bytebytego: Product Array Without Current Elemen
 ~
 thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
