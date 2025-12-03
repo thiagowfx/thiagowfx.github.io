@@ -30,6 +30,7 @@ A few directories I like[^1]:
 - ✪ https://darktheme.club/
 - ✪ https://powrss.com/
 - ✪ https://feedle.world/
+- https://static.quest
 - https://ooh.directory/
 - https://256kb.club/
 
