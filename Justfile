@@ -9,11 +9,11 @@ watch preview="true" *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    additional_flags=""
     if [ "{{ preview }}" = "true" ]; then
-      additional_flags="--openBrowser --navigateToChanged"
+      (sleep 2 && open "http://localhost:{{ port }}/posts/") &
     fi
-    hugo server --baseURL "http://localhost:{{ port }}" --buildDrafts --port {{ port }} --watch $additional_flags {{ args }}
+
+    hugo server --baseURL "http://localhost:{{ port }}" --buildDrafts --port {{ port }} --watch {{ args }}
 
 # Build the blog as in production
 build *args:
