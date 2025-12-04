@@ -43,7 +43,8 @@ index 1979baf..1ac35da 100644
 +  },
 ```
 
-This is the JSON snippet for ease of copy and paste:
+This is the JSON snippet for ease of copy and paste, you'll add it to your
+`~/.claude/settings.json`:
 
 ```
 "hooks": {
