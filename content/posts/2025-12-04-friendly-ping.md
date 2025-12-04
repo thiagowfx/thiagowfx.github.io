@@ -7,8 +7,10 @@ tags:
   - serenity
 ---
 
-I released a new tool: **friendly_ping**, a shell script to list all your open
-GitHub pull requests (still) waiting for review.
+I released a new tool:
+[**friendly_ping**](https://github.com/thiagowfx/pancake/tree/master/friendly_ping),
+a shell script to list all your open GitHub pull requests (still) waiting for
+review.
 
 ## Problem
 
@@ -80,8 +82,6 @@ The default grouping is per repo.
 - Git configured with `user.name` (or use `--user` flag)
 
 ## Repository
-
-https://github.com/thiagowfx/pancake/tree/main/friendly_ping
 
 Contributions welcome. This was fully vibe-coded by [Amp
 Code](https://ampcode.com/). The CLI design was fully my own.
