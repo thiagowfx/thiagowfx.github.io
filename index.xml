@@ -72,7 +72,93 @@ never get
 &lt;p&gt;&lt;a href="https://perrotta.dev/2025/09/github-stale-bot-considered-harmful/"&gt;Previously&lt;/a&gt;.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;It&amp;rsquo;s likely that person will never try and contribute to your project again.&lt;/p&gt;
-&lt;/blockquote&gt;</description></item><item><title>jj: hello world</title><link>https://perrotta.dev/2025/12/jj-hello-world/</link><pubDate>Wed, 03 Dec 2025 03:43:01 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/jj-hello-world/</guid><description>&lt;p&gt;I am reasonably confident to end up (&lt;em&gt;fully&lt;/em&gt;) adopting
+&lt;/blockquote&gt;</description></item><item><title>friendly_ping: track your stale GitHub pull requests</title><link>https://perrotta.dev/2025/12/friendly_ping-track-your-stale-github-pull-requests/</link><pubDate>Thu, 04 Dec 2025 00:00:00 +0000</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/friendly_ping-track-your-stale-github-pull-requests/</guid><description>&lt;p&gt;I released a new tool: &lt;strong&gt;friendly_ping&lt;/strong&gt;, a shell script to list all your open
+GitHub pull requests (still) waiting for review.&lt;/p&gt;
+&lt;h2 id="problem"&gt;Problem&lt;/h2&gt;
+&lt;p&gt;When contributing to multiple repositories on GitHub, it&amp;rsquo;s easy to lose track of
+which PRs are waiting for reviewer feedback&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;. You end up doing one of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Manually checking GitHub every few days&lt;sup id="fnref:2"&gt;&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;Forgetting about contributions entirely&lt;sup id="fnref:3"&gt;&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref"&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;Having no visibility into the review status across various projects&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="solution"&gt;Solution&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;friendly_ping&lt;/code&gt; queries the GitHub API and groups your open PRs by repository:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="bash"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;bash&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ friendly_ping
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;helm/helm
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; fix&lt;span class="o"&gt;(&lt;/span&gt;helm-lint&lt;span class="o"&gt;)&lt;/span&gt;: &lt;span class="k"&gt;do&lt;/span&gt; not validate metadata.name &lt;span class="k"&gt;for&lt;/span&gt; List resources
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; https://github.com/helm/helm/pull/31169
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Reviewers: john, jane
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; docs: update helm plugin installation guide
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; https://github.com/helm/helm/pull/31204
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Reviewers: jane
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;loeffel-io/ls-lint
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; feat: introduce a json schema file &lt;span class="k"&gt;for&lt;/span&gt; ls-lint
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; https://github.com/loeffel-io/ls-lint/pull/256&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;(The examples above are semi-fictitious.)&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="features"&gt;Features&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Filtering&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Filter by organization: &lt;code&gt;friendly_ping --org helm&lt;/code&gt; (your company)&lt;/li&gt;
+&lt;li&gt;Filter by date range: &lt;code&gt;friendly_ping --created-after &amp;quot;30 days&amp;quot;&lt;/code&gt; (find old PRs)&lt;/li&gt;
+&lt;li&gt;Filter by specific repos: &lt;code&gt;friendly_ping thiagowfx/.dotfiles thiagowfx/pre-commit-hooks&lt;/code&gt; (or one repo at a time)&lt;/li&gt;
+&lt;li&gt;Filter by reviewer/assignee: &lt;code&gt;friendly_ping --involves alice --detailed&lt;/code&gt;
+(filter by a specific teammate, handy for your 1:1s)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Grouping&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;By reviewer: &lt;code&gt;friendly_ping --group-by reviewer --detailed&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;By assignee: &lt;code&gt;friendly_ping --group-by assignee --detailed&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;By user (reviewers and assignees combined): &lt;code&gt;friendly_ping --group-by user --detailed&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The default grouping is per repo.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Comments&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add &amp;ldquo;friendly ping&amp;rdquo; comments to PRs: &lt;code&gt;friendly_ping --comment&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Custom messages: &lt;code&gt;friendly_ping --comment &amp;quot;Please review when you get a chance. Deadline is approaching!&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Automatically skips PRs wherein you already commented&lt;/li&gt;
+&lt;li&gt;Appends context about how long the PR has been waiting (&amp;ldquo;waiting for 3 days&amp;rdquo;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Other modes&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;JSON output: &lt;code&gt;friendly_ping --json&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Quiet mode for scripts: &lt;code&gt;friendly_ping --quiet &amp;amp;&amp;amp; echo &amp;quot;You have open PRs&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="prerequisites"&gt;Prerequisites&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gh&lt;/code&gt; (GitHub CLI) — preferred method, or &lt;code&gt;curl&lt;/code&gt; as fallback&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;jq&lt;/code&gt; — for JSON processing&lt;/li&gt;
+&lt;li&gt;Git configured with &lt;code&gt;user.name&lt;/code&gt; (or use &lt;code&gt;--user&lt;/code&gt; flag)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="repository"&gt;Repository&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/thiagowfx/pancake/tree/main/friendly_ping"&gt;https://github.com/thiagowfx/pancake/tree/main/friendly_ping&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Contributions welcome. This was fully vibe-coded by &lt;a href="https://ampcode.com/"&gt;Amp
+Code&lt;/a&gt;. The CLI design was fully my own.&lt;/p&gt;
+&lt;p&gt;This could be extended beyond GitHub, naturally.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;Some people take forever to review PRs / CLs&amp;hellip;&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;Or multiple times a day.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:3"&gt;
+&lt;p&gt;The non-urgent ones.&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description></item><item><title>jj: hello world</title><link>https://perrotta.dev/2025/12/jj-hello-world/</link><pubDate>Wed, 03 Dec 2025 03:43:01 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/jj-hello-world/</guid><description>&lt;p&gt;I am reasonably confident to end up (&lt;em&gt;fully&lt;/em&gt;) adopting
 &lt;a href="https://github.com/jj-vcs/jj"&gt;&lt;code&gt;jj&lt;/code&gt;&lt;/a&gt; in 2026. Baby steps though.&lt;/p&gt;
 &lt;p&gt;Can I attempt to start to use &lt;code&gt;jj&lt;/code&gt; to manage this blog?&lt;/p&gt;
 &lt;p&gt;First, the usual:&lt;/p&gt;
@@ -1915,134 +2001,6 @@ efficient than having the agent perform the task &lt;em&gt;directly&lt;/em&gt;.&
 &lt;ol&gt;
 &lt;li id="fn:1"&gt;
 &lt;p&gt;You&amp;rsquo;ll need to refactor these later for maintainability.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;</description></item><item><title>Google Gemini: read CLAUDE.md or AGENTS.md</title><link>https://perrotta.dev/2025/11/google-gemini-read-claude.md-or-agents.md/</link><pubDate>Mon, 17 Nov 2025 12:36:41 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/google-gemini-read-claude.md-or-agents.md/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Make Google&amp;rsquo;s &lt;a href="https://gemini.google.com/"&gt;Gemini&lt;/a&gt; read
-&lt;a href="https://www.anthropic.com/engineering/claude-code-best-practices"&gt;&lt;code&gt;CLAUDE.md&lt;/code&gt;&lt;/a&gt;
-and/or &lt;a href="https://agents.md"&gt;&lt;code&gt;AGENTS.md&lt;/code&gt;&lt;/a&gt;. By default, it reads only
-&lt;a href="https://geminicli.com/docs/cli/gemini-md/"&gt;&lt;code&gt;GEMINI.md&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Update &lt;code&gt;~/.gemini/settings.json&lt;/code&gt; to either:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="json"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
- &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;contextFileName&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;AGENTS.md&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;or&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="json"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
- &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;contextFileName&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;CLAUDE.md&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;a href="https://github.com/thiagowfx/.dotfiles/commit/c57b414d3daa1f8b931b3213f0d6c7904a31d93f"&gt;My config&lt;/a&gt;:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="json"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
- &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;contextFileName&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;CLAUDE.md&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;security&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;auth&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;selectedType&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;gemini-api-key&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;},&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;ui&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;theme&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Default&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;Why not use &lt;code&gt;GEMINI.md&lt;/code&gt;? Claude Code provides, by far, a superior experience&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;.
-Either way, &lt;a href="https://agents.md"&gt;&lt;code&gt;AGENTS.md&lt;/code&gt;&lt;/a&gt; is the closest to becoming a
-standard.&lt;/p&gt;
-&lt;p&gt;It is unfortunate&lt;sup id="fnref:2"&gt;&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt; that &lt;code&gt;Claude Code&lt;/code&gt; does &lt;a href="https://github.com/anthropics/claude-code/issues/6235"&gt;not
-yet&lt;/a&gt; support &lt;code&gt;AGENTS.md&lt;/code&gt;.
-&lt;a href="https://xkcd.com/927/"&gt;One file&lt;/a&gt; to rule them all would have been the best.&lt;/p&gt;
-&lt;p&gt;Alternatively, we could symlink &lt;code&gt;GEMINI.md&lt;/code&gt; to one of the aforementioned files:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ln -s AGENTS.md GEMINI.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;or&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ln -s CLAUDE.md GEMINI.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;&amp;hellip;but that needs to be repeated in each repository, whereas the &lt;code&gt;settings.json&lt;/code&gt;
-change is global.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Update(2025-11-17)&lt;/strong&gt;: Even better, as per
-&lt;a href="https://geminicli.com/docs/cli/configuration/#available-settings-in-settingsjson"&gt;docs&lt;/a&gt;:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="json"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
- &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;contextFileName&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;AGENTS.md&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;CLAUDE.md&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;GEMINI.md&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;blockquote&gt;
-&lt;p&gt;contextFileName (string or array of strings):&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Corollary&lt;/strong&gt;: It still pays to &lt;a href="https://en.wikipedia.org/wiki/RTFM"&gt;RTFM&lt;/a&gt;
-directly, even in the LLM era.&lt;/p&gt;
-&lt;p&gt;Once you launch &lt;code&gt;gemini&lt;/code&gt; with this config, it gets automatically updated to:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="json"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
- &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;context&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;fileName&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;AGENTS.md&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;CLAUDE.md&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;GEMINI.md&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;},&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;&amp;hellip;which suggests it to be the canonical form&lt;sup id="fnref:3"&gt;&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref"&gt;3&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-&lt;p&gt;We know it works because, upon launching &lt;code&gt;gemini&lt;/code&gt; within a repository that
-contains &lt;code&gt;CLAUDE.md&lt;/code&gt;, it displays &lt;code&gt;Using: 1 context file&lt;/code&gt;.&lt;/p&gt;
-&lt;div class="footnotes" role="doc-endnotes"&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id="fn:1"&gt;
-&lt;p&gt;Citation needed? This statement comes from experience. Or &lt;em&gt;personal
-vibes&lt;/em&gt;, if you will.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li id="fn:2"&gt;
-&lt;p&gt;And likely intentional, as it would be trivial to support it.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li id="fn:3"&gt;
-&lt;p&gt;They aren&amp;rsquo;t great at updating &lt;a href="https://geminicli.com/docs/cli/configuration/#available-settings-in-settingsjson"&gt;their own
-docs&lt;/a&gt;,
-eh? This is not yet documented there.&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;</description></item></channel></rss>
