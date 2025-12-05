@@ -1,6 +1,6 @@
 ---
 title: "friendly_ping: track your stale GitHub pull requests"
-date: 2025-12-04T00:00:00Z
+date: 2025-12-04T18:36:16-03:00
 tags:
   - bestof
   - dev
@@ -83,7 +83,7 @@ The default grouping is per repo.
 
 ## Repository
 
-Contributions welcome. This was fully vibe-coded by [Amp
+Contributions welcome. This was fully vibe-coded with [Amp
 Code](https://ampcode.com/). The CLI design was fully my own.
 
 This could be extended beyond GitHub, naturally.
