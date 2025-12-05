@@ -31,6 +31,7 @@ A few directories I like[^1]:
 - ✪ https://powrss.com/
 - ✪ https://feedle.world/
 - ✪ https://static.quest
+- ✪ https://rss.social/
 - https://ooh.directory/
 - https://256kb.club/
 
