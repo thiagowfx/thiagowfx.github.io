@@ -17,7 +17,7 @@ watch preview="true" *args:
 
 # Build the blog as in production
 build *args:
-    hugo --environment production --gc --minify {{ args }}
+    hugo --environment production --gc {{ args }}
 
 # Create a new blog post. Usage: `just new "my cool title"`
 new title *args:
