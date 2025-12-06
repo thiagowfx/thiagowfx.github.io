@@ -37,4 +37,4 @@ Update `custom.css` in LogSeq settings:
 ```
 
 **Side effect**: The `[]` wikilink button will be moved to be the third one in
-the editor bar.
+the editor toolbar.
