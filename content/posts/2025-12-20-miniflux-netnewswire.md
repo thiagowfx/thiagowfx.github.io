@@ -18,7 +18,7 @@ does not support miniflux as a server back-end:
 Or does it?
 
 Thanks to [Luke Harris](https://www.lkhrs.com/blog/app-defaults-2025/), I just
-realized it _in fact_ does support Miniflux, albeit indirectly!
+realized it does _in fact_ support Miniflux, albeit indirectly!
 
 When adding your self-hosted miniflux server, select the "FreshRSS" option,
 which is also compatible with the Google Reader API.
