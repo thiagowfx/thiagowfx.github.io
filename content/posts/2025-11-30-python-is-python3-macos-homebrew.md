@@ -45,7 +45,7 @@ Classic. I hate it. Now you'll have a `python` alias even if `python3` is not
 available. This is not elegant at all. You could make it a bit better, sure:
 
 ```shell
-command -v python3 >/dev/ull 2>&1 && alias python=python3
+command -v python3 >/dev/null 2>&1 && alias python=python3
 ```
 
 Or even a bit more idiomatically if using `zsh`:
