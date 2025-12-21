@@ -144,7 +144,7 @@
         <div class="header">
           <h1>
             <a href="{rss/channel/link}">
-              <img src="/thiagowfx.png" alt="thiagowfx's avatar"/>
+              <img src="/thiagowfx.webp" alt="thiagowfx's avatar"/>
               <xsl:value-of select="rss/channel/title"/>
             </a>
           </h1>
