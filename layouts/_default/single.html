@@ -1,4 +1,37 @@
-{{- define "main" }} {{- if not .Params.menu }}
+{{- define "main" }}
+{{- $posts := where .Site.RegularPages "Section" .Section }}
+{{- if in .Params.tags "coding" }}
+  {{- $posts = where $posts "Params.tags" "intersect" (slice "coding") }}
+{{- else }}
+  {{- $posts = where $posts "Params.tags" "intersect" (slice "coding") | symdiff $posts }}
+{{- end }}
+{{- $prevPost := "" }}
+{{- $nextPost := "" }}
+{{- range $posts }}
+  {{- if lt .Date $.Date }}
+    {{- if or (eq $prevPost "") (gt .Date $prevPost.Date) }}
+      {{- $prevPost = . }}
+    {{- end }}
+  {{- else if gt .Date $.Date }}
+    {{- if or (eq $nextPost "") (lt .Date $nextPost.Date) }}
+      {{- $nextPost = . }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+<script>
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'j') {
+      const prev = document.querySelector('[data-nav="prev"]');
+      if (prev && prev.href) window.location.href = prev.href;
+    } else if (event.key === 'k') {
+      const next = document.querySelector('[data-nav="next"]');
+      if (next && next.href) window.location.href = next.href;
+    }
+  });
+</script>
+<a href="{{ with $prevPost }}{{ .Permalink }}{{ end }}" data-nav="prev" style="display: none;"></a>
+<a href="{{ with $nextPost }}{{ .Permalink }}{{ end }}" data-nav="next" style="display: none;"></a>
+{{- if not .Params.menu }}
 <h2>
   {{- if in .Params.tags "bestof" }}
   <span>★</span>
