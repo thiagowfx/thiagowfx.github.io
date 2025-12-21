@@ -48,7 +48,9 @@
   <hr />
   <footer>
     <span>
-      {{ site.Copyright | markdownify }} · <a href="{{ "canary" | relURL }}">🐦</a>
+      {{ site.Copyright | markdownify }} · <a href="{{ "canary" | relURL }}">🐦</a> · <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <span id="theme-toggle-icon">🌙</span>
+      </button>
     </span>
 
     <div class="social-link-wrapper">
@@ -124,6 +126,49 @@
     </div>
   </footer>
   <script>
+    const darkVars = {
+      'bg-color': '#19150f',
+      'text-color': '#dddddd',
+      'heading-color': '#eeeeee',
+      'link-color': '#ff5e6c',
+      'border-color': '#444',
+      'code-bg': '#1a1a1a',
+      'code-text-color': '#e8e8e8',
+    };
+
+    const lightVars = {
+      'bg-color': '#fffcf0',
+      'text-color': '#444',
+      'heading-color': '#222',
+      'link-color': '#3273dc',
+      'border-color': '#ddd',
+      'code-bg': '#f5f5f5',
+      'code-text-color': '#1a1a1a',
+    };
+
+    function applyTheme(isDark) {
+      const vars = isDark ? darkVars : lightVars;
+      Object.entries(vars).forEach(([k, v]) => {
+        document.documentElement.style.setProperty(`--${k}`, v);
+      });
+      document.getElementById('theme-toggle-icon').textContent = isDark ? '☀️' : '🌙';
+    }
+
+    // Initialize
+    const saved = localStorage.getItem('theme');
+    const isDark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(isDark);
+
+    // Toggle
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      const saved = localStorage.getItem('theme');
+      const pref = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const current = saved ? saved === 'dark' : pref;
+      const newIsDark = !current;
+      localStorage.setItem('theme', newIsDark ? 'dark' : 'light');
+      applyTheme(newIsDark);
+    });
+
     document.addEventListener('click', function (event) {
       if (!event.target.matches('[data-copy-code]')) {
         return;
