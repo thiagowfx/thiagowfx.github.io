@@ -43,9 +43,9 @@ in `~/.claude/settings.json`:
 }
 ```
 
-This is enough.
+**This is enough**.
 
-For extra safety, I added a [pre-tool use
+For extra safety though, I added a [pre-tool use
 hook](https://code.claude.com/docs/en/hooks#pretooluse) for redundancy:
 
 > Runs after Claude creates tool parameters and before processing the
