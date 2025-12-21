@@ -32,8 +32,8 @@ A few directories I like[^1]:
 - ✪ https://feedle.world/
 - ✪ https://static.quest
 - ✪ https://rss.social/
+- ✪ https://250kb.club/ / https://256kb.club/
 - https://ooh.directory/
-- https://256kb.club/
 
 I tend to visit them occasionally, whenever I crave for new content, perhaps like
 [doomscrolling](https://en.wikipedia.org/wiki/Doomscrolling) in social media.
