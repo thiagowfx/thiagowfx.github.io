@@ -67,6 +67,10 @@ The only diff is `.Content` instead of `.Summary` for full-text RSS feeds.
       {{- $content = $content | replaceRE `(<img[^>]+src=")(/[^"]+)` (printf `${1}%s${2}` site.BaseURL) }}
       {{- $content = $content | replaceRE `(<img[^>]+src=")([^/"h][^"]*)` (printf `${1}%s${2}` .Permalink) }}
       {{- $content = print $content `<p style="text-align: center; margin-top: 2em;">— § —</p>` }}
+      {{- if .Params.email | default true }}
+        {{- $mailtoLink := printf `<p>Reply via <a href="mailto:%s?subject=Reply to: %s">email</a></p>` $authorEmail .Title }}
+        {{- $content = print $content $mailtoLink }}
+      {{- end }}
       <description>{{ $content | transform.XMLEscape | safeHTML }}</description>
     </item>
     {{- end }}
