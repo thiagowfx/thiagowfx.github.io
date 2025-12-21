@@ -13,7 +13,7 @@ watch preview="true" *args:
       (sleep 2 && open "http://localhost:{{ port }}/posts/") &
     fi
 
-    hugo server --baseURL "http://localhost:{{ port }}" --buildDrafts --port {{ port }} --watch {{ args }}
+    hugo server --port {{ port }} --watch {{ args }}
 
 # Build the blog as in production
 build *args:
