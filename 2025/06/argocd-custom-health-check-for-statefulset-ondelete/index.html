@@ -46,7 +46,7 @@ where Gen AI is helpful, though it does not shine. I could not have Gen AI
 produce a fully working health check for this scenario. Instead, I used it to
 bootstrap a basic example, then had to tweak it until it worked. This has been
 tested multiple times, I am reasonably confident it works well (some edge cases
-could be missing though).</p><div class=codeblock data-lang=lua><div class=codeblock-header><span class=codeblock-language>lua</span>
+could be missing though).</p><div class=codeblock data-lang=lua><div class=codeblock-header data-rss-hide><span class=codeblock-language>lua</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>health_status</span> <span class=o>=</span> <span class=p>{}</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kr>if</span> <span class=n>obj.status</span> <span class=o>==</span> <span class=kc>nil</span> <span class=kr>then</span>
@@ -93,13 +93,13 @@ don&rsquo;t mean anything for that update strategy. This can be observed
 <a href=https://github.com/argoproj/gitops-engine/blob/f8f1b61ba3fd5fcb647563db3106977e1364de31/pkg/health/health_statefulset.go#L63>upstream</a>
 as well.</p><p>It is easy to write / tweak the health check when you look at the live STS
 resource / manifest in the cluster. <code>obj</code> refers to the STS manifest (<code>kubectl get sts -o yaml</code>). The most relevant field is <code>status:</code>.</p><p>If you deploy ArgoCD via its helm chart, add that check for <code>argocd-cm</code>. The
-<code>values.yaml</code> file:</p><div class=codeblock data-lang=yaml><div class=codeblock-header><span class=codeblock-language>yaml</span>
+<code>values.yaml</code> file:</p><div class=codeblock data-lang=yaml><div class=codeblock-header data-rss-hide><span class=codeblock-language>yaml</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>argo-cd</span><span class=p>:</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>configs</span><span class=p>:</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>cm</span><span class=p>:</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>resource.customizations.health.apps_StatefulSet</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
 </span></span></span><span class=line><span class=cl><span class=sd>        health_status = {}
-</span></span></span><span class=line><span class=cl><span class=sd>        [...]</span></span></span></code></pre></div></div><p>This custom health check was partly inspired by a Prometheus alert we have:</p><div class=codeblock data-lang=yaml><div class=codeblock-header><span class=codeblock-language>yaml</span>
+</span></span></span><span class=line><span class=cl><span class=sd>        [...]</span></span></span></code></pre></div></div><p>This custom health check was partly inspired by a Prometheus alert we have:</p><div class=codeblock data-lang=yaml><div class=codeblock-header data-rss-hide><span class=codeblock-language>yaml</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>alert</span><span class=p>:</span><span class=w> </span><span class=l>StatefulSetUpdateNotRolledOut</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>expr</span><span class=p>:</span><span class=w> </span><span class=l>max without (revision) (kube_statefulset_status_current_revision unless kube_statefulset_status_update_revision) * (kube_statefulset_replicas != kube_statefulset_status_replicas_updated)</span></span></span></code></pre></div></div><p>How long will it take until LLMs <del>steal</del> adopt this novel solution from me?</p></content><p style=text-align:center;margin-top:2em>— § —</p><div style=display:flex;justify-content:space-between><p>Reply via
 <a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD%3a%20custom%20health%20check%20for%20StatefulSet%20%28OnDelete%29">email</a></p><p><a href=https://perrotta.dev/tags/bestof/>#bestof</a>

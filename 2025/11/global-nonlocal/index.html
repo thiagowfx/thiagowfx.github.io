@@ -57,7 +57,7 @@ python Copy a = 1 def f(): global a a += 1 print(a) return a assert f() == 2 a +
 </a><a href=/posts/><span class=nav-text>Blog</span>
 </a><a href=/blogroll/><span class=nav-text>Blogroll</span>
 </a><a href=/tags/coding/><span class=nav-text>Coding</span></a></nav></header><main><script>document.addEventListener("keydown",function(e){if(e.key==="j"||e.key==="ArrowLeft"){const e=document.querySelector('[data-nav="prev"]');e&&e.href&&(window.location.href=e.href)}else if(e.key==="k"||e.key==="ArrowRight"){const e=document.querySelector('[data-nav="next"]');e&&e.href&&(window.location.href=e.href)}})</script><a href=https://perrotta.dev/2025/11/default-arguments-evaluated-once-when-defined/ data-nav=prev style=display:none></a><a href=https://perrotta.dev/2025/11/id/ data-nav=next style=display:none></a><h2>global, nonlocal</h2><p><span class=pubdate-single><time datetime=2025-11-30 pubdate>30 Nov, 2025
-</time>• 271 words • 2 min</span></p><content><p>This is wrong:</p><div class=codeblock data-lang=python><div class=codeblock-header><span class=codeblock-language>python</span>
+</time>• 271 words • 2 min</span></p><content><p>This is wrong:</p><div class=codeblock data-lang=python><div class=codeblock-header data-rss-hide><span class=codeblock-language>python</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>a</span> <span class=o>=</span> <span class=mi>1</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>f</span><span class=p>():</span>
@@ -72,7 +72,7 @@ python Copy a = 1 def f(): global a a += 1 print(a) return a assert f() == 2 a +
 </span></span><span class=line><span class=cl>  File &#34;&lt;python-input-8&gt;&#34;, line 4, in f
 </span></span><span class=line><span class=cl>    a += 1
 </span></span><span class=line><span class=cl>    ^
-</span></span><span class=line><span class=cl>UnboundLocalError: cannot access local variable &#39;a&#39; where it is not associated with a value</span></span></code></pre></div></div><p>What is missing? <code>global a</code>:</p><div class=codeblock data-lang=python><div class=codeblock-header><span class=codeblock-language>python</span>
+</span></span><span class=line><span class=cl>UnboundLocalError: cannot access local variable &#39;a&#39; where it is not associated with a value</span></span></code></pre></div></div><p>What is missing? <code>global a</code>:</p><div class=codeblock data-lang=python><div class=codeblock-header data-rss-hide><span class=codeblock-language>python</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>a</span> <span class=o>=</span> <span class=mi>1</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>f</span><span class=p>():</span>
@@ -81,7 +81,7 @@ python Copy a = 1 def f(): global a a += 1 print(a) return a assert f() == 2 a +
 </span></span><span class=line><span class=cl>  <span class=nb>print</span><span class=p>(</span><span class=n>a</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=n>a</span>
 </span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=k>assert</span> <span class=n>f</span><span class=p>()</span> <span class=o>==</span> <span class=mi>2</span></span></span></code></pre></div></div><p><code>a += 1</code> creates a function-scoped <code>a</code> variable unless we pass <code>global</code>.</p><p>This construct is for strictly global variables.</p><p>For outer variables that are non-global, use <code>nonlocal</code> instead.</p><p>Similar example, this will fail:</p><div class=codeblock data-lang=python><div class=codeblock-header><span class=codeblock-language>python</span>
+</span></span><span class=line><span class=cl><span class=k>assert</span> <span class=n>f</span><span class=p>()</span> <span class=o>==</span> <span class=mi>2</span></span></span></code></pre></div></div><p><code>a += 1</code> creates a function-scoped <code>a</code> variable unless we pass <code>global</code>.</p><p>This construct is for strictly global variables.</p><p>For outer variables that are non-global, use <code>nonlocal</code> instead.</p><p>Similar example, this will fail:</p><div class=codeblock data-lang=python><div class=codeblock-header data-rss-hide><span class=codeblock-language>python</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>wrapper</span><span class=p>():</span>
 </span></span><span class=line><span class=cl>  <span class=n>a</span> <span class=o>=</span> <span class=mi>1</span>
 </span></span><span class=line><span class=cl>
@@ -100,7 +100,7 @@ python Copy a = 1 def f(): global a a += 1 print(a) return a assert f() == 2 a +
 </span></span><span class=line><span class=cl>  File &#34;&lt;python-input-11&gt;&#34;, line 10, in wrapper
 </span></span><span class=line><span class=cl>    assert f() == 2
 </span></span><span class=line><span class=cl>           ^^^^^^^^
-</span></span><span class=line><span class=cl>AssertionError</span></span></code></pre></div></div><p>Removing <code>global a</code> fails as well:</p><div class=codeblock data-lang=python><div class=codeblock-header><span class=codeblock-language>python</span>
+</span></span><span class=line><span class=cl>AssertionError</span></span></code></pre></div></div><p>Removing <code>global a</code> fails as well:</p><div class=codeblock data-lang=python><div class=codeblock-header data-rss-hide><span class=codeblock-language>python</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>wrapper</span><span class=p>():</span>
 </span></span><span class=line><span class=cl>  <span class=n>a</span> <span class=o>=</span> <span class=mi>1</span>
 </span></span><span class=line><span class=cl>
@@ -121,7 +121,7 @@ python Copy a = 1 def f(): global a a += 1 print(a) return a assert f() == 2 a +
 </span></span><span class=line><span class=cl>  File &#34;&lt;python-input-12&gt;&#34;, line 5, in f
 </span></span><span class=line><span class=cl>    a += 1
 </span></span><span class=line><span class=cl>    ^
-</span></span><span class=line><span class=cl>UnboundLocalError: cannot access local variable &#39;a&#39; where it is not associated with a value</span></span></code></pre></div></div><p>The fix is to use <code>nonlocal a</code> instead:</p><div class=codeblock data-lang=python><div class=codeblock-header><span class=codeblock-language>python</span>
+</span></span><span class=line><span class=cl>UnboundLocalError: cannot access local variable &#39;a&#39; where it is not associated with a value</span></span></code></pre></div></div><p>The fix is to use <code>nonlocal a</code> instead:</p><div class=codeblock data-lang=python><div class=codeblock-header data-rss-hide><span class=codeblock-language>python</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>wrapper</span><span class=p>():</span>
 </span></span><span class=line><span class=cl>  <span class=n>a</span> <span class=o>=</span> <span class=mi>1</span>
 </span></span><span class=line><span class=cl>

@@ -34,7 +34,7 @@ Today a teammate could not git pull one of our internal repos:
 private key was present in <code>~/.ssh/id_ed25519</code>.</p><p>Next, verify <code>~/.ssh/config</code>:</p><div class=codeblock><div class=highlight><pre tabindex=0 class=chroma><code class=language-plaintext data-lang=plaintext><span class=line><span class=cl>Host github.com
 </span></span><span class=line><span class=cl>AddKeysToAgent yes
 </span></span><span class=line><span class=cl>UseKeychain yes
-</span></span><span class=line><span class=cl>IdentityFile ~/.ssh/id_ed25519</span></span></code></pre></div></div><p>Looks fine. Then:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
+</span></span><span class=line><span class=cl>IdentityFile ~/.ssh/id_ed25519</span></span></code></pre></div></div><p>Looks fine. Then:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>% <span class=nb>export</span> <span class=nv>GIT_SSH_COMMAND</span><span class=o>=</span><span class=s2>&#34;ssh -vvv&#34;</span>
 </span></span><span class=line><span class=cl>% git pull
 </span></span><span class=line><span class=cl><span class=o>[</span>...<span class=o>]</span>
@@ -50,7 +50,7 @@ private key was present in <code>~/.ssh/id_ed25519</code>.</p><p>Next, verify <c
 </span></span><span class=line><span class=cl><span class=o>}</span>
 </span></span><span class=line><span class=cl>debug2: Unexpected keychain error <span class=k>while</span> searching <span class=k>for</span> an item: User interaction is not allowed.</span></span></code></pre></div></div><p>Herein lies the error! The interaction with the system keychain in macOS was not
 successful.</p><p>I suggested him to remove <code>AddKeysToAgent</code> and <code>UseKeychain</code> from this config
-file, but that did not work either:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
+file, but that did not work either:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>% git pull
 </span></span><span class=line><span class=cl><span class=o>[</span>...<span class=o>]</span>
 </span></span><span class=line><span class=cl>Enter passphrase <span class=k>for</span> key <span class=s1>&#39;/Users/user/.ssh/id_ed25519&#39;</span>:
@@ -62,7 +62,7 @@ file, but that did not work either:</p><div class=codeblock data-lang=shell><div
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>Please make sure you have the correct access rights
 </span></span><span class=line><span class=cl>and the repository exists.</span></span></code></pre></div></div><p>The ssh key is protected with a passphrase.</p><p>In this case, it&rsquo;s better to fix the keychain issue. We readd the two deleted
-lines.</p><p>Restart the <code>ssh-agent</code> and readd the key there:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
+lines.</p><p>Restart the <code>ssh-agent</code> and readd the key there:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>% <span class=nb>eval</span> <span class=s2>&#34;</span><span class=k>$(</span>ssh-agent -s<span class=k>)</span><span class=s2>&#34;</span>
 </span></span><span class=line><span class=cl>% ssh-add -K ~/.ssh/id_ed25519</span></span></code></pre></div></div><p>Problem resolved! <code>git pull</code> works now.</p></content><p style=text-align:center;margin-top:2em>— § —</p><div style=display:flex;justify-content:space-between><p>Reply via
 <a href="mailto:serendipity@perrotta.dev?subject=Reply to: git%20pull%3a%20authentication%20issues">email</a></p><p><a href=https://perrotta.dev/tags/dev/>#dev</a></p></div></main><hr><footer><span>© 2021 - 2025 Thiago Perrotta ·

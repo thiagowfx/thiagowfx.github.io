@@ -36,14 +36,14 @@ I found out that doing an one-off server-side apply sync addresses the label rem
 (v3)</a>
 across our fleet.</p><p>One of its <a href=https://argo-cd.readthedocs.io/en/stable/operator-manual/upgrading/2.14-3.0/>breaking
 changes</a>
-is the removal of helm labels from argo applications, like such:</p><div class=codeblock data-lang=yaml><div class=codeblock-header><span class=codeblock-language>yaml</span>
+is the removal of helm labels from argo applications, like such:</p><div class=codeblock data-lang=yaml><div class=codeblock-header data-rss-hide><span class=codeblock-language>yaml</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>metadata</span><span class=p>:</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=c># [...]</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>labels</span><span class=p>:</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>app.kubernetes.io/managed-by</span><span class=p>:</span><span class=w> </span><span class=l>Helm</span></span></span></code></pre></div></div><p>Applying a normal sync does not get rid of the label.</p><p>I found out that doing an one-off <a href=https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/#server-side-apply>server-side apply
 sync</a>
 addresses the label removal, and it is safe to do (incurs no downtime):</p><blockquote><p>However, there are some cases where you want to use <code>kubectl apply --server-side</code> over <code>kubectl apply</code>:</p><p>[&mldr;]</p><p>Patching of existing resources on the cluster that are not fully managed by
-Argo CD.</p></blockquote><p>There&rsquo;s no need to make the server-side apply a permanent config, i.e.:</p><div class=codeblock data-lang=yaml><div class=codeblock-header><span class=codeblock-language>yaml</span>
+Argo CD.</p></blockquote><p>There&rsquo;s no need to make the server-side apply a permanent config, i.e.:</p><div class=codeblock data-lang=yaml><div class=codeblock-header data-rss-hide><span class=codeblock-language>yaml</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=l>argoproj.io/v1alpha1</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class=l>Application</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>spec</span><span class=p>:</span><span class=w>
