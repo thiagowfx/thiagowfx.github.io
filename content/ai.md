@@ -5,13 +5,13 @@ email: false
 
 This page summarizes the usage of LLMs ("Gen AI") in this blog.
 
-I **handcraft** every post, and choose subjects of my interest. I've been doing
-this way before LLMs, and will continue to do so.
+I **handcraft** every post by myself, and choose subjects of my own interest.
+I've been doing this even before LLMs, and will continue to do so.
 
-I **do not** use an LLM spellchecker. There's only `vim`'s `:spell`.
+I **do not** use an LLM spellchecker; only `vim`'s `:spell`.
 
-I **do not** use an LLM to help me iterate on my posts, title and content
-included.
+I **do not** use LLMs to help me iterate on blog posts, including their title
+and content.
 
 Agentic LLMs are occasionally used in the context of design, tooling and
 infrastructure of this site.

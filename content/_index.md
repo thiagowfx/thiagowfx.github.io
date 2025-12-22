@@ -1,4 +1,4 @@
-## Hi, I am Thiago Perrotta (@thiagowfx) ✨
+## Hi, I'm Thiago Perrotta (@thiagowfx) ✨
 
 - - -
 
@@ -15,9 +15,8 @@ I'm passionate about continuous learning and open-source software. Here, I
 document my journey, share insights with genuine self-expression, and dive into
 miscellaneous topics that spark my curiosity.
 
-I believe in the power of the Small Web for sharing valuable, distraction-free
-content. Want to chat? Start an interesting conversation – send me an email.
+I believe in the power of the {Indie, Small} Web for sharing valuable, distraction-free
+content.
+Hopefully this will inspire you to leave your own mark there too.
 
-This site has [no ads](https://www.nevermonetize.com/), affiliate links,
-tracking cookies, [Gen AI slop](/ai), and no paywall.
-I hope it will inspire you to leave your own mark on the Indie Web too.
+Want to chat? Drop me an email anytime.
