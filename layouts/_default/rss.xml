@@ -64,6 +64,13 @@ The only diff is `.Content` instead of `.Summary` for full-text RSS feeds.
       {{- with $authorEmail }}<author>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</author>{{ end }}
       <guid>{{ .Permalink }}</guid>
       {{- $content := .Content }}
+      {{/* Remove RSS-hidden divs by parsing out the exact pattern */}}
+      {{- $parts := split $content ` <div class="codeblock-header" data-rss-hide>` }}
+      {{- $content = index $parts 0 }}
+      {{- range after 1 $parts }}
+        {{- $closeParts := split . `</div>` }}
+        {{- $content = print $content (index $closeParts 1) }}
+      {{- end }}
       {{- $content = $content | replaceRE `(<img[^>]+src=")(/[^"]+)` (printf `${1}%s${2}` site.BaseURL) }}
       {{- $content = $content | replaceRE `(<img[^>]+src=")([^/"h][^"]*)` (printf `${1}%s${2}` .Permalink) }}
       {{- $content = print $content `<p style="text-align: center; margin-top: 2em;">— § —</p>` }}
