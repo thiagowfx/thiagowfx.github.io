@@ -9,7 +9,7 @@ tags:
 As I write this very post, this is what my git repository status looks like:
 
 ```shell
-% git status
+% git st
 ## master...origin/master
 ?? content/posts/2025-12-22-git-stash-untracked.md
 ```
