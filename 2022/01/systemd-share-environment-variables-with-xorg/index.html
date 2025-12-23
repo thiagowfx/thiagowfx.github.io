@@ -38,7 +38,7 @@ shell Copy # fix java application decorations, for tiling window managers export
 </time>• 632 words • 3 min
 • updated <time datetime=2025-09-05>05 Sep, 2025</time></span></p><div class=old-entry-warning role=note>⚠️ This post is over one year old. It may no longer be up to date. Opinions may have changed.</div><content><p>In this post we will learn how to share environment variables (e.g.
 <code>$GDK_SCALE</code>) between a system user session and X11/Xorg.</p><p>The typical <a href=https://wiki.archlinux.org/title/Xinit><code>~/.xinitrc</code></a> and/or <a href=https://wiki.archlinux.org/title/Xprofile><code>~/.xprofile</code></a> setup in
-2020s involves some environment variable exports such as the following:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+2020s involves some environment variable exports such as the following:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># fix java application decorations, for tiling window managers</span>
 </span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>_JAVA_AWT_WM_NONREPARENTING</span><span class=o>=</span><span class=m>1</span>
 </span></span><span class=line><span class=cl>
@@ -61,19 +61,19 @@ icons will appear in the screen.</p></li></ul><p>Those exports work well for gra
 window manager after it has already started, however if you decide to launch an
 application from <code>systemd</code>, those settings will not be picked up by it.</p><p>For example, if you decide to manage <a href=http://jonls.dk/redshift/><code>redshift</code></a><sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup> (more
 specifically, <code>redshift-gtk</code> which has a system tray app) from a systemd user
-session<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>, its fonts will look small.</p><p>There are several ways to address this issue.</p><p>One of them is to edit the service file directly:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+session<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>, its fonts will look small.</p><p>There are several ways to address this issue.</p><p>One of them is to edit the service file directly:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ systemctl --user edit redshift-gtk</span></span></code></pre></div></div><p>And then add:</p><div class=codeblock><div class=highlight><pre tabindex=0 class=chroma><code class=language-plaintext data-lang=plaintext><span class=line><span class=cl>[Unit]
-</span></span><span class=line><span class=cl>Environment=GDK_SCALE=2 GDK_DPI_SCALE=0.5</span></span></code></pre></div></div><p>Which results in:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+</span></span><span class=line><span class=cl>Environment=GDK_SCALE=2 GDK_DPI_SCALE=0.5</span></span></code></pre></div></div><p>Which results in:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ cat ~/.config/systemd/user/redshift-gtk.service.d/override.conf
 </span></span><span class=line><span class=cl><span class=o>[</span>Unit<span class=o>]</span>
-</span></span><span class=line><span class=cl><span class=nv>Environment</span><span class=o>=</span><span class=nv>GDK_SCALE</span><span class=o>=</span><span class=m>2</span> <span class=nv>GDK_DPI_SCALE</span><span class=o>=</span>0.5</span></span></code></pre></div></div><p>Which you can make effective by:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+</span></span><span class=line><span class=cl><span class=nv>Environment</span><span class=o>=</span><span class=nv>GDK_SCALE</span><span class=o>=</span><span class=m>2</span> <span class=nv>GDK_DPI_SCALE</span><span class=o>=</span>0.5</span></span></code></pre></div></div><p>Which you can make effective by:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ systemctl --user daemon-reload
 </span></span><span class=line><span class=cl>$ systemctl --user restart redshift-gtk</span></span></code></pre></div></div><p>I am not a fan of this approach though, because this step would need to be repeated
 to all service files you want to manage this way. There&rsquo;s a better, <a href=https://en.wikipedia.org/wiki/Don%27t_repeat_yourself>DRY</a> way to
 do so.</p><p><code>systemd</code> supports <a href=https://www.freedesktop.org/software/systemd/man/environment.d.html>environment
 files</a>
 (<code>environment.d(5)</code>). User-defined ones live in
-<code>~/.config/environment.d/*.conf</code> by default.</p><p>This means we could produce the following file:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+<code>~/.config/environment.d/*.conf</code> by default.</p><p>This means we could produce the following file:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ cat ~/.config/environment.d/user.conf
 </span></span><span class=line><span class=cl><span class=c1># systemd environment.d(5) EnvironmentFile</span>
 </span></span><span class=line><span class=cl><span class=c1># https://www.freedesktop.org/software/systemd/man/environment.d.html</span>
@@ -99,7 +99,7 @@ files</a>
 </span></span><span class=line><span class=cl><span class=c1># HiDPI settings for QT</span>
 </span></span><span class=line><span class=cl><span class=nv>QT_FONT_DPI</span><span class=o>=</span><span class=m>192</span></span></span></code></pre></div></div><p>Which is applied to all systemd user service files automatically, no need to
 set <code>Environment=</code> manually everywhere.</p><p>However, now we need to maintain two different files: the systemd <code>.conf</code> one
-and the xorg <code>~/.xinitrc</code> one.</p><p>One elegant way to reduce maintenance burden is, in my opinion, the follownig:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+and the xorg <code>~/.xinitrc</code> one.</p><p>One elegant way to reduce maintenance burden is, in my opinion, the follownig:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ cat ~/.xinitrc
 </span></span><span class=line><span class=cl>...
 </span></span><span class=line><span class=cl><span class=c1># Parse user session environment variables.</span>

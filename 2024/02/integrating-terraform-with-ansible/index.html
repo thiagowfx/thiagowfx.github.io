@@ -27,7 +27,7 @@ First of all, here’s an overview of where I stopped last time. There were a co
 set up Miniflux in our new Linode.</p></blockquote><p>Before we extensively use Ansible to configure our VPS instance, first let&rsquo;s
 set up a basic integration between Terraform and Ansible.</p><p>First of all, here&rsquo;s an overview of where I stopped last time. There were a
 couple of lightweight modifications since then. I&rsquo;ll explain some of them
-below.</p><div class=codeblock data-lang=terraform><div class=codeblock-header data-rss-hide><span class=codeblock-language>terraform</span>
+below.</p><div class=codeblock data-lang=terraform><div class=codeblock-header><span class=codeblock-language>terraform</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-terraform data-lang=terraform><span class=line><span class=cl><span class=o>%</span> <span class=nx>cat</span> <span class=nx>variables</span><span class=p>.</span><span class=nx>tf</span>
 </span></span><span class=line><span class=cl><span class=kr>variable</span> <span class=s2>&#34;github_username&#34;</span> <span class=p>{</span>
 </span></span><span class=line><span class=cl>  <span class=nx>type</span>    <span class=o>=</span> <span class=nx>string</span>
@@ -46,7 +46,7 @@ below.</p><div class=codeblock data-lang=terraform><div class=codeblock-header d
 terraform
 <a href=https://developer.hashicorp.com/terraform/language/modules/develop/structure>conventions</a>
 / recommendations for module structures. Furthermore, it becomes easier to
-manage variables when they are all stored in a single place.</p><p>The main module file now looks like this:</p><div class=codeblock data-lang=terraform><div class=codeblock-header data-rss-hide><span class=codeblock-language>terraform</span>
+manage variables when they are all stored in a single place.</p><p>The main module file now looks like this:</p><div class=codeblock data-lang=terraform><div class=codeblock-header><span class=codeblock-language>terraform</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-terraform data-lang=terraform><span class=line><span class=cl><span class=o>%</span> <span class=nx>cat</span> <span class=nx>main</span><span class=p>.</span><span class=nx>tf</span>
 </span></span><span class=line><span class=cl><span class=nx>terraform</span> <span class=p>{</span>
 </span></span><span class=line><span class=cl>  <span class=nx>required_providers</span> <span class=p>{</span>
@@ -80,7 +80,7 @@ manage variables when they are all stored in a single place.</p><p>The main modu
 </span></span><span class=line><span class=cl>  <span class=nx>watchdog_enabled</span> <span class=o>=</span> <span class=s2>&#34;true&#34;</span>
 </span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></div></div><p>I removed the token from the linode provider. Now it is supplied via the
 <code>LINODE_TOKEN</code> environment variable. In order to automatically populate that
-variable, I use <a href=https://perrotta.dev/2022/01/direnv-automate-your-environment-variables/><code>direnv</code></a>. There&rsquo;s an <code>.envrc</code> file that provides its value, like so:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+variable, I use <a href=https://perrotta.dev/2022/01/direnv-automate-your-environment-variables/><code>direnv</code></a>. There&rsquo;s an <code>.envrc</code> file that provides its value, like so:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/sh
 </span></span></span><span class=line><span class=cl><span class=cp></span><span class=c1># terraform init</span>
 </span></span><span class=line><span class=cl>
@@ -89,7 +89,7 @@ variable, I use <a href=https://perrotta.dev/2022/01/direnv-automate-your-enviro
 go back to Ansible.</p><p>The first component we&rsquo;ll need is an Ansible
 <a href=https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html>inventory</a>
 file, containing the IP address of the host we&rsquo;ll manage. It could look like
-this:</p><div class=codeblock data-lang=ini><div class=codeblock-header data-rss-hide><span class=codeblock-language>ini</span>
+this:</p><div class=codeblock data-lang=ini><div class=codeblock-header><span class=codeblock-language>ini</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-ini data-lang=ini><span class=line><span class=cl><span class=k>[all]</span>
 </span></span><span class=line><span class=cl><span class=na>1.2.3.4 ansible_user</span><span class=o>=</span><span class=s>root</span></span></span></code></pre></div></div><p>&mldr;wherein <code>1.2.3.4</code> is the IP address of our VPS.</p><p>That said, due to the fact the VPS instance is created dynamically, maintaining
 that IP address manually would be tedious. Therefore, let&rsquo;s have Terraform
@@ -111,14 +111,14 @@ by our VCS:</p><div class=codeblock><div class=highlight><pre tabindex=0 class=c
 with the above contents.</p><p>Because the IP address is ephemeral and dynamic, we should have a
 straightforward way to see its value. A terraform
 <a href=https://developer.hashicorp.com/terraform/language/values/outputs><code>output</code></a>
-is perfect for that:</p><div class=codeblock data-lang=terraform><div class=codeblock-header data-rss-hide><span class=codeblock-language>terraform</span>
+is perfect for that:</p><div class=codeblock data-lang=terraform><div class=codeblock-header><span class=codeblock-language>terraform</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-terraform data-lang=terraform><span class=line><span class=cl><span class=o>%</span> <span class=nx>cat</span> <span class=nx>outputs</span><span class=p>.</span><span class=nx>tf</span>
 </span></span><span class=line><span class=cl><span class=kr>output</span> <span class=s2>&#34;ip_address&#34;</span> <span class=p>{</span>
 </span></span><span class=line><span class=cl>  <span class=nx>value</span> <span class=o>=</span> <span class=nx>linode_instance</span><span class=p>.</span><span class=nx>nanode</span><span class=p>.</span><span class=nx>ip_address</span>
 </span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></div></div><p>Later on (after terraforming) we will be able to use <code>terraform output</code> to see
 the server IP address.</p><p>We have the inventory file. Now we need a
 <a href=https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html>playbook</a>.
-A playbook contains a sequence of tasks to be applied to our server.</p><p>Let&rsquo;s start with a basic playbook that just installs and starts <code>nginx</code>:</p><div class=codeblock data-lang=yaml><div class=codeblock-header data-rss-hide><span class=codeblock-language>yaml</span>
+A playbook contains a sequence of tasks to be applied to our server.</p><p>Let&rsquo;s start with a basic playbook that just installs and starts <code>nginx</code>:</p><div class=codeblock data-lang=yaml><div class=codeblock-header><span class=codeblock-language>yaml</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nn>---</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span>- <span class=nt>hosts</span><span class=p>:</span><span class=w> </span><span class=l>all</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>tasks</span><span class=p>:</span><span class=w>
@@ -129,8 +129,8 @@ A playbook contains a sequence of tasks to be applied to our server.</p><p>Let&r
 </span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Start the web server</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>service</span><span class=p>:</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>nginx</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>state</span><span class=p>:</span><span class=w> </span><span class=l>started</span></span></span></code></pre></div></div><p>Save this to a <code>playbook.yml</code> file.</p><p>After terraforming, we should now be able to run ansible:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
-<button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>% ansible-playbook -i inventory.ini playbook.yml</span></span></code></pre></div></div><p>In order to make this setup more ergonomic, let&rsquo;s create a <code>Makefile</code>:</p><div class=codeblock data-lang=Makefile><div class=codeblock-header data-rss-hide><span class=codeblock-language>Makefile</span>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>state</span><span class=p>:</span><span class=w> </span><span class=l>started</span></span></span></code></pre></div></div><p>Save this to a <code>playbook.yml</code> file.</p><p>After terraforming, we should now be able to run ansible:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
+<button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>% ansible-playbook -i inventory.ini playbook.yml</span></span></code></pre></div></div><p>In order to make this setup more ergonomic, let&rsquo;s create a <code>Makefile</code>:</p><div class=codeblock data-lang=Makefile><div class=codeblock-header><span class=codeblock-language>Makefile</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-Makefile data-lang=Makefile><span class=line><span class=cl><span class=nv>TERRAFORM</span> <span class=o>:=</span> terraform
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=nf>all</span><span class=o>:</span> <span class=n>terraform</span> <span class=n>ansible</span>

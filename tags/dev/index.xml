@@ -49,24 +49,63 @@ it.&lt;/p&gt;
 &lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: myrepos: chain configs"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>git: stash untracked files</title><link>https://perrotta.dev/2025/12/git-stash-untracked-files/</link><pubDate>Mon, 22 Dec 2025 02:30:06 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/git-stash-untracked-files/</guid><description>&lt;p&gt;As I write this very post, this is what my git repository status looks like:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% git st
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;## master...origin/master&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;?? content/posts/2025-12-22-git-stash-untracked.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;?? content/posts/2025-12-22-git-stash-untracked.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;What if I wanted to stash it?&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% git stash
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;No &lt;span class="nb"&gt;local&lt;/span&gt; changes to save
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% git st
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;## master...origin/master&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;?? content/posts/2025-12-22-git-stash-untracked.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;?? content/posts/2025-12-22-git-stash-untracked.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Nothing happens, because this post is a new file, not yet tracked by git.&lt;/p&gt;
+&lt;p&gt;The classic way to address this is to switch to another branch, commit
+everything (e.g. with &lt;a href="https://perrotta.dev/2025/03/git-freeze-git-thaw/"&gt;&lt;code&gt;git-freeze&lt;/code&gt;&lt;/a&gt;), and then switch back. But this is slow.&lt;/p&gt;
+&lt;p&gt;Today I learned about &lt;code&gt;git stash -u&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-u, --include-untracked, --no-include-untracked
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; When used with the push and save commands, all untracked files are also stashed and then cleaned up with git clean.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; When used with the show command, show the untracked files in the
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; stash entry as part of the diff.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Let&amp;rsquo;s try it:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% git stash -u
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Saved working directory and index state WIP on master: 58cde6e88 hide codeblock header in RSS feeds
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% git st
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;## master...origin/master&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git: stash untracked files"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>.apk-new</title><link>https://perrotta.dev/2025/12/.apk-new/</link><pubDate>Mon, 22 Dec 2025 01:00:02 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/.apk-new/</guid><description>&lt;p&gt;After running an Alpine Linux server for a couple of months (or years), you&amp;rsquo;ll
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;## master...origin/master&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The new post gets stashed indeed!&lt;/p&gt;
+&lt;p&gt;I don&amp;rsquo;t know how I missed this feature – I&amp;rsquo;ve wanted this functionality for
+&lt;code&gt;stash&lt;/code&gt; since forever!&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git: stash untracked files"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>.apk-new</title><link>https://perrotta.dev/2025/12/.apk-new/</link><pubDate>Mon, 22 Dec 2025 01:00:02 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/.apk-new/</guid><description>&lt;p&gt;After running an Alpine Linux server for a couple of months (or years), you&amp;rsquo;ll
 inevitably find a couple of &lt;code&gt;.apk-new&lt;/code&gt; files scattered in your filesystem within
 &lt;code&gt;/etc&lt;/code&gt;:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas find / -name &lt;span class="s2"&gt;&amp;#34;*.apk-new&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/rc.conf.apk-new
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/inittab.apk-new
@@ -83,7 +122,93 @@ inevitably find a couple of &lt;code&gt;.apk-new&lt;/code&gt; files scattered in
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/shadow.apk-new
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/network/interfaces.apk-new
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/profile.d/locale.sh.apk-new
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/doas.conf.apk-new&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: .apk-new"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>MIUI debloater</title><link>https://perrotta.dev/2025/12/miui-debloater/</link><pubDate>Sun, 21 Dec 2025 19:28:50 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/miui-debloater/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2025/11/coreldraw-disable-ads-on-windows/"&gt;Previously&lt;/a&gt;.&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/doas.conf.apk-new&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;As per the &lt;a href="https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html#_installing_packages"&gt;alpine user
+handbook&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Installing a package means that the package itself will be downloaded from a
+repository (specified in /etc/apk/repositories) and unpacked to the system.
+Existing files will be overwritten. An exception are configuration files in
+/etc, which will be preserved. The configuration files (which comes from the
+package) will be renamed to *.apk-new.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It&amp;rsquo;s very similar to what happens in Arch Linux with
+&lt;a href="https://wiki.archlinux.org/title/Pacman/Pacnew_and_Pacsave"&gt;&lt;code&gt;.pacnew&lt;/code&gt;&lt;/a&gt; files.
+Arch Linux has an utility called
+&lt;a href="https://wiki.archlinux.org/title/Pacman/Pacnew_and_Pacsave#pacdiff"&gt;&lt;code&gt;pacdiff&lt;/code&gt;&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;It will search for .pacnew, .pacsave and .pacorig files, and will then prompt
+to take action upon them.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&amp;hellip;and also in Gentoo Linux with
+&lt;a href="https://wiki.gentoo.org/wiki/Etc-update"&gt;&lt;code&gt;etc-update&lt;/code&gt;&lt;/a&gt; or
+&lt;a href="https://wiki.gentoo.org/wiki/Dispatch-conf"&gt;&lt;code&gt;dispatch-conf&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Alpine Linux lacks such an utility, to the best of my knowledge.&lt;/p&gt;
+&lt;p&gt;As such, I vibe coded one in &lt;a href="https://github.com/thiagowfx/pancake"&gt;&lt;code&gt;pancake&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I hereby introduce &lt;a href="https://github.com/thiagowfx/pancake/tree/master/apknew"&gt;&lt;code&gt;apknew&lt;/code&gt;&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Reconcile .apk-new configuration files on Alpine Linux, similar to pacdiff on
+Arch Linux.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;By default, it operates on &lt;code&gt;/etc&lt;/code&gt; only.&lt;/p&gt;
+&lt;p&gt;A sample run looks like the following, prompting a pair of files at a time:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;==============================================
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;File: /etc/crontabs/root.apk-new
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Original: /etc/crontabs/root
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;==============================================
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[v]iew diff [k]eep original [r]eplace with new [m]erge [s]kip
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Action:&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;You&amp;rsquo;ll want to hit &lt;code&gt;v&lt;/code&gt; first to inspect the diff, and then decide whether to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;keep the original file&lt;/li&gt;
+&lt;li&gt;replace it with the newer package file&lt;/li&gt;
+&lt;li&gt;interactively merge them (e.g. with &lt;code&gt;vimdiff&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;do nothing (skip)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It&amp;rsquo;s much easier than diffing each file manually.&lt;/p&gt;
+&lt;p&gt;Another example:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% apknew/apknew.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Searching for .apk-new files in /etc...
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Found 14 file(s) to process.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;==============================================
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;File: /etc/passwd.apk-new
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Original: /etc/passwd
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;==============================================
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[v]iew diff [k]eep original [r]eplace with new [m]erge [s]kip
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Action: s
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Skipping /etc/passwd.apk-new...
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;==============================================
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;File: /etc/shells.apk-new
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Original: /etc/shells
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;==============================================
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[v]iew diff [k]eep original [r]eplace with new [m]erge [s]kip
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Action: v
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;--- /etc/shells	2025-12-21 11:07:42.531531775 -0500
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;+++ /etc/shells.apk-new	2025-12-15 09:00:47.000000000 -0500
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;@@ -1,5 +1,3 @@
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; # valid login shells
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; /bin/sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; /bin/ash
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-/bin/zsh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[v]iew diff [k]eep original [r]eplace with new [m]erge [s]kip
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Action: k
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Removing /etc/shells.apk-new...
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Done. Kept original file.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: .apk-new"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>MIUI debloater</title><link>https://perrotta.dev/2025/12/miui-debloater/</link><pubDate>Sun, 21 Dec 2025 19:28:50 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/miui-debloater/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2025/11/coreldraw-disable-ads-on-windows/"&gt;Previously&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;From &amp;lsquo;Technical Support&amp;rsquo; tales of the trenches.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: My parents have a Xiaomi Android phone. The amount of
 bloat in it is horrifying, incredibly disgusting.&lt;/p&gt;
@@ -156,7 +281,10 @@ list&lt;/a&gt;
 in &lt;code&gt;~/.claude/settings.json&lt;/code&gt;:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="json"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;permissions&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;deny&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
@@ -165,7 +293,21 @@ in &lt;code&gt;~/.claude/settings.json&lt;/code&gt;:&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;Bash(terraform destroy:*)&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;This is enough&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;For extra safety though, I added a &lt;a href="https://code.claude.com/docs/en/hooks#pretooluse"&gt;pre-tool use
+hook&lt;/a&gt; for redundancy:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Runs after Claude creates tool parameters and before processing the
+tool call.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class="codeblock" data-lang="json"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;hooks&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;PreToolUse&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
@@ -181,7 +323,15 @@ in &lt;code&gt;~/.claude/settings.json&lt;/code&gt;:&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The hook file (generated by Claude itself, needless to say):&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/bin/bash
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;&lt;/span&gt;&lt;span class="c1"&gt;# PreToolUse hook to block dangerous commands like &amp;#34;rm -rf&amp;#34; and &amp;#34;terraform apply&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
@@ -234,7 +384,9 @@ in &lt;code&gt;~/.claude/settings.json&lt;/code&gt;:&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Allow command to proceed&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Claude Code: block dangerous commands"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Claude Code: stash</title><link>https://perrotta.dev/2025/12/claude-code-stash/</link><pubDate>Sun, 21 Dec 2025 16:48:26 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/claude-code-stash/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: You&amp;rsquo;re midway in a long, multi-line prompt in Claude
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Claude Code: block dangerous commands"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Claude Code: stash</title><link>https://perrotta.dev/2025/12/claude-code-stash/</link><pubDate>Sun, 21 Dec 2025 16:48:26 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/claude-code-stash/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: You&amp;rsquo;re midway in a long, multi-line prompt in Claude
 Code.&lt;/p&gt;
 
 &lt;div class="codeblock"&gt;
@@ -349,7 +501,10 @@ the open? Colin, you are my hero.&lt;/p&gt;
 &lt;p&gt;Update &lt;code&gt;custom.css&lt;/code&gt; in LogSeq settings:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="css"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;css&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-css" data-lang="css"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;/* Move icons 3+ to order 2 */&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="nn"&gt;mobile-editor-toolbar&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;toolbar-commands&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;nth-child&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;n&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="nt"&gt;3&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;order&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -360,7 +515,11 @@ the open? Colin, you are my hero.&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="nn"&gt;mobile-editor-toolbar&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;toolbar-commands&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;nth-child&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;11&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;order&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nf"&gt;var&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="kc"&gt;orange&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Reordering mobile editing icons in logseq"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>friendly_ping: track your stale GitHub pull requests</title><link>https://perrotta.dev/2025/12/friendly_ping-track-your-stale-github-pull-requests/</link><pubDate>Thu, 04 Dec 2025 18:36:16 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/friendly_ping-track-your-stale-github-pull-requests/</guid><description>&lt;p&gt;I released a new tool:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Side effect&lt;/strong&gt;: The &lt;code&gt;[]&lt;/code&gt; wikilink button will be moved to be the third one in
+the editor toolbar.&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Reordering mobile editing icons in logseq"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>friendly_ping: track your stale GitHub pull requests</title><link>https://perrotta.dev/2025/12/friendly_ping-track-your-stale-github-pull-requests/</link><pubDate>Thu, 04 Dec 2025 18:36:16 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/friendly_ping-track-your-stale-github-pull-requests/</guid><description>&lt;p&gt;I released a new tool:
 &lt;a href="https://github.com/thiagowfx/pancake/tree/master/friendly_ping"&gt;&lt;strong&gt;friendly_ping&lt;/strong&gt;&lt;/a&gt;,
 a shell script to list all your open GitHub pull requests (still) waiting for
 review.&lt;/p&gt;
@@ -376,7 +535,10 @@ which PRs are waiting for reviewer feedback&lt;sup id="fnref:1"&gt;&lt;a href="#
 &lt;p&gt;&lt;code&gt;friendly_ping&lt;/code&gt; queries the GitHub API and groups your open PRs by repository:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="bash"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;bash&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ friendly_ping
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;helm/helm
@@ -390,13 +552,71 @@ which PRs are waiting for reviewer feedback&lt;sup id="fnref:1"&gt;&lt;a href="#
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;loeffel-io/ls-lint
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; feat: introduce a json schema file &lt;span class="k"&gt;for&lt;/span&gt; ls-lint
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; https://github.com/loeffel-io/ls-lint/pull/256&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: friendly_ping: track your stale GitHub pull requests"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Claude Code: notify when needed</title><link>https://perrotta.dev/2025/12/claude-code-notify-when-needed/</link><pubDate>Thu, 04 Dec 2025 02:36:16 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/claude-code-notify-when-needed/</guid><description>&lt;p&gt;This is one little productivity boost to make you a 10x Engineer! None of the
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; https://github.com/loeffel-io/ls-lint/pull/256&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;(The examples above are semi-fictitious.)&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="features"&gt;Features&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Filtering&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Filter by organization: &lt;code&gt;friendly_ping --org helm&lt;/code&gt; (your company)&lt;/li&gt;
+&lt;li&gt;Filter by date range: &lt;code&gt;friendly_ping --created-after &amp;quot;30 days&amp;quot;&lt;/code&gt; (find old PRs)&lt;/li&gt;
+&lt;li&gt;Filter by specific repos: &lt;code&gt;friendly_ping thiagowfx/.dotfiles thiagowfx/pre-commit-hooks&lt;/code&gt; (or one repo at a time)&lt;/li&gt;
+&lt;li&gt;Filter by reviewer/assignee: &lt;code&gt;friendly_ping --involves alice --detailed&lt;/code&gt;
+(filter by a specific teammate, handy for your 1:1s)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Grouping&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;By reviewer: &lt;code&gt;friendly_ping --group-by reviewer --detailed&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;By assignee: &lt;code&gt;friendly_ping --group-by assignee --detailed&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;By user (reviewers and assignees combined): &lt;code&gt;friendly_ping --group-by user --detailed&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The default grouping is per repo.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Comments&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add &amp;ldquo;friendly ping&amp;rdquo; comments to PRs: &lt;code&gt;friendly_ping --comment&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Custom messages: &lt;code&gt;friendly_ping --comment &amp;quot;Please review when you get a chance. Deadline is approaching!&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Automatically skips PRs wherein you already commented&lt;/li&gt;
+&lt;li&gt;Appends context about how long the PR has been waiting (&amp;ldquo;waiting for 3 days&amp;rdquo;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Other modes&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;JSON output: &lt;code&gt;friendly_ping --json&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Quiet mode for scripts: &lt;code&gt;friendly_ping --quiet &amp;amp;&amp;amp; echo &amp;quot;You have open PRs&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="prerequisites"&gt;Prerequisites&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gh&lt;/code&gt; (GitHub CLI) — preferred method, or &lt;code&gt;curl&lt;/code&gt; as fallback&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;jq&lt;/code&gt; — for JSON processing&lt;/li&gt;
+&lt;li&gt;Git configured with &lt;code&gt;user.name&lt;/code&gt; (or use &lt;code&gt;--user&lt;/code&gt; flag)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="repository"&gt;Repository&lt;/h2&gt;
+&lt;p&gt;Contributions welcome. This was fully vibe-coded with &lt;a href="https://ampcode.com/"&gt;Amp
+Code&lt;/a&gt;. The CLI design was fully my own.&lt;/p&gt;
+&lt;p&gt;This could be extended beyond GitHub, naturally.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;Some people take forever to review PRs / CLs&amp;hellip;&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;Or multiple times a day.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:3"&gt;
+&lt;p&gt;The non-urgent ones.&amp;#160;&lt;a href="#fnref:3" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: friendly_ping: track your stale GitHub pull requests"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Claude Code: notify when needed</title><link>https://perrotta.dev/2025/12/claude-code-notify-when-needed/</link><pubDate>Thu, 04 Dec 2025 02:36:16 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/claude-code-notify-when-needed/</guid><description>&lt;p&gt;This is one little productivity boost to make you a 10x Engineer! None of the
 popular AI blogs talk about this!!1!&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Make Claude Code emit a chime whenever it needs
 attention.&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="diff"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;diff&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-diff" data-lang="diff"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;commit e668b387b6b34943143b046ad915effbd3945601
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Author: Thiago Perrotta &amp;lt;{redacted}&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Date: Thu Dec 4 02:33:11 2025 -0300
@@ -424,7 +644,36 @@ attention.&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gi"&gt;+ }
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gi"&gt;+ ]
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gi"&gt;+ },
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Claude Code: notify when needed"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Stale bot considered harmful</title><link>https://perrotta.dev/2025/12/stale-bot-considered-harmful/</link><pubDate>Thu, 04 Dec 2025 00:25:59 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/stale-bot-considered-harmful/</guid><description>&lt;p&gt;&lt;a href="https://github.com/helm/chart-testing/pull/755"&gt;This&lt;/a&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This is the JSON snippet for ease of copy and paste, you&amp;rsquo;ll add it to your
+&lt;code&gt;~/.claude/settings.json&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&amp;#34;hooks&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;Notification&amp;#34;: [
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;hooks&amp;#34;: [
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;command&amp;#34;: &amp;#34;afplay /System/Library/Sounds/Glass.aiff &amp;amp;&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;#34;type&amp;#34;: &amp;#34;command&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This command is for macOS only, but it could be easily adapted to Linux (use
+&lt;code&gt;aplay&lt;/code&gt; instead).&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://code.claude.com/docs/en/hooks#notification"&gt;Claude Code Hooks docs&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Runs when Claude Code sends notifications. Supports matchers to filter by
+notification type.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;macOS ships with various system sounds in &lt;code&gt;/System/Library/Sounds&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;This inspiration came from &lt;a href="https://ampcode.com/"&gt;Amp Code&lt;/a&gt;. Amp plays the
+&lt;code&gt;Submarine.aiff&lt;/code&gt; sound by default.&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Claude Code: notify when needed"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Stale bot considered harmful</title><link>https://perrotta.dev/2025/12/stale-bot-considered-harmful/</link><pubDate>Thu, 04 Dec 2025 00:25:59 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/stale-bot-considered-harmful/</guid><description>&lt;p&gt;&lt;a href="https://github.com/helm/chart-testing/pull/755"&gt;This&lt;/a&gt;
 &lt;a href="https://drewdevault.com/2021/10/26/stalebot.html"&gt;will&lt;/a&gt;
 never get
 &lt;a href="https://jacobtomlinson.dev/posts/2024/most-stale-bots-are-anti-user-and-anti-contributor-but-they-dont-have-to-be/"&gt;old&lt;/a&gt;.&lt;/p&gt;
@@ -438,15 +687,36 @@ never get
 &lt;p&gt;First, the usual:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install jj&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install jj&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Second, a basic config file. &lt;code&gt;git&lt;/code&gt; requires one too:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% cat ~/.config/jj/config.toml
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;user&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Thiago Perrotta&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;email&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;{redacted}&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;ui&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;default-command &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;log&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;default-command &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;log&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;So far so good.&lt;/p&gt;
+&lt;p&gt;Third, initialize a &lt;code&gt;jj&lt;/code&gt; repo alongside (&amp;ldquo;co-located&amp;rdquo;) the existing &lt;code&gt;git&lt;/code&gt; repo
+of this blog:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj git init --colocate
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Done importing changes from the underlying Git repo.
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ignoring git submodule at &lt;span class="s2"&gt;&amp;#34;vendor/ai.robots.txt&amp;#34;&lt;/span&gt;
@@ -456,14 +726,83 @@ never get
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Hint: Run the following &lt;span class="nb"&gt;command&lt;/span&gt; to keep &lt;span class="nb"&gt;local&lt;/span&gt; bookmarks updated on future pulls:
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; jj bookmark track master@origin
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Initialized repo in &lt;span class="s2"&gt;&amp;#34;.&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Hint: Running &lt;span class="sb"&gt;`&lt;/span&gt;git clean -xdf&lt;span class="sb"&gt;`&lt;/span&gt; will remove &lt;span class="sb"&gt;`&lt;/span&gt;.jj/&lt;span class="sb"&gt;`&lt;/span&gt;!&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj bookmark track master@origin&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Hint: Running &lt;span class="sb"&gt;`&lt;/span&gt;git clean -xdf&lt;span class="sb"&gt;`&lt;/span&gt; will remove &lt;span class="sb"&gt;`&lt;/span&gt;.jj/&lt;span class="sb"&gt;`&lt;/span&gt;!&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;I am fine with the second hint, even though I don&amp;rsquo;t fully comprehend it:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj bookmark track master@origin&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;I got this advice&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;For jj in a blog repo (especially with colocated Git):&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;Use small, focused commits - jj makes this easy; amend frequently with jj
+amend instead of stashing&lt;/li&gt;
+&lt;li&gt;Leverage jj log - understand your repo state before operations&lt;/li&gt;
+&lt;li&gt;Work on branches - jj new -b feature-name for feature work, keeps main
+clean&lt;/li&gt;
+&lt;li&gt;Keep commits working - jj can track your working changes automatically&lt;/li&gt;
+&lt;li&gt;Use jj sync - pulls and pushes in one command with Git&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;OK.&lt;/p&gt;
+&lt;p&gt;I know &lt;code&gt;jj&lt;/code&gt; does not have the concept of a staging area, thus there&amp;rsquo;s no
+&lt;code&gt;jj add&lt;/code&gt;. I double-checked:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj add
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;error: unrecognized subcommand &lt;span class="s1"&gt;&amp;#39;add&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj commit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;error: unrecognized subcommand &lt;span class="s1"&gt;&amp;#39;add&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Then what should I do&amp;hellip;commit?!&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj commit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Opens &lt;code&gt;$EDITOR&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;add hello world
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;JJ: Change ID: vvvzruls
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;JJ: This commit contains the following changes:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;JJ: A content/posts/2025-12-03-jj-hello-world.md
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;JJ:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;JJ: Lines starting with &amp;#34;JJ:&amp;#34; (like this one) will be removed.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Follow-up:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj commit
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Working copy &lt;span class="o"&gt;(&lt;/span&gt;@&lt;span class="o"&gt;)&lt;/span&gt; now at: loyssymn 4ba8427d &lt;span class="o"&gt;(&lt;/span&gt;empty&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;no description &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Parent commit &lt;span class="o"&gt;(&lt;/span&gt;@-&lt;span class="o"&gt;)&lt;/span&gt; : vvvzruls d6c2ee34 add hello world&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Parent commit &lt;span class="o"&gt;(&lt;/span&gt;@-&lt;span class="o"&gt;)&lt;/span&gt; : vvvzruls d6c2ee34 add hello world&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Fancy! Now what? I learned that whenever I am lost, &lt;code&gt;jj&lt;/code&gt; is your friend. &lt;code&gt;jj&lt;/code&gt;
+(or &lt;code&gt;jj log&lt;/code&gt;) is akin to &lt;code&gt;git status&lt;/code&gt; and/or &lt;code&gt;git log&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;@ loyssymn &lt;span class="o"&gt;{&lt;/span&gt;redacted email&lt;span class="o"&gt;}&lt;/span&gt; 2025-12-03 04:00:08 9df24e6a
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ &lt;span class="o"&gt;(&lt;/span&gt;no description &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
@@ -473,38 +812,144 @@ never get
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├─╯ git-freeze
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;◆ oqwnlpuv &lt;span class="o"&gt;{&lt;/span&gt;redacted email&lt;span class="o"&gt;}&lt;/span&gt; 2025-12-02 23:12:39 master a9efb058
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ bytebytego: Product Array Without Current Elemen
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;~&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;~&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;There&amp;rsquo;s also:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj status
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Working copy changes:
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;M content/posts/2025-12-03-jj-hello-world.md
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Working copy &lt;span class="o"&gt;(&lt;/span&gt;@&lt;span class="o"&gt;)&lt;/span&gt; : loyssymn 54ba540b &lt;span class="o"&gt;(&lt;/span&gt;no description &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Parent commit &lt;span class="o"&gt;(&lt;/span&gt;@-&lt;span class="o"&gt;)&lt;/span&gt;: vvvzruls d6c2ee34 add hello world&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Parent commit &lt;span class="o"&gt;(&lt;/span&gt;@-&lt;span class="o"&gt;)&lt;/span&gt;: vvvzruls d6c2ee34 add hello world&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Whilst I keep adding text to this file&amp;hellip;&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% git st
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;## HEAD (no branch)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; M content/posts/2025-12-03-jj-hello-world.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; M content/posts/2025-12-03-jj-hello-world.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Oh, look! Our friend is still around.&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj amend
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;error: unrecognized subcommand &lt;span class="s1"&gt;&amp;#39;amend&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;For more information, try &lt;span class="s1"&gt;&amp;#39;--help&amp;#39;&lt;/span&gt;.
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Hint: You probably want &lt;span class="sb"&gt;`&lt;/span&gt;jj squash&lt;span class="sb"&gt;`&lt;/span&gt;. You can configure &lt;span class="sb"&gt;`&lt;/span&gt;aliases.amend &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;squash&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; you want &lt;span class="sb"&gt;`&lt;/span&gt;jj amend&lt;span class="sb"&gt;`&lt;/span&gt; to work.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Hint: You probably want &lt;span class="sb"&gt;`&lt;/span&gt;jj squash&lt;span class="sb"&gt;`&lt;/span&gt;. You can configure &lt;span class="sb"&gt;`&lt;/span&gt;aliases.amend &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;squash&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; you want &lt;span class="sb"&gt;`&lt;/span&gt;jj amend&lt;span class="sb"&gt;`&lt;/span&gt; to work.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Really? Oh.&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog &lt;span class="o"&gt;(&lt;/span&gt;git&lt;span class="o"&gt;)&lt;/span&gt;-&lt;span class="o"&gt;[&lt;/span&gt;jj/keep/d6c2ee34fe38ec5a63644114c4c3b13bb09401f1&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj squash
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Working copy &lt;span class="o"&gt;(&lt;/span&gt;@&lt;span class="o"&gt;)&lt;/span&gt; now at: kpumvxpm e60fb5b5 &lt;span class="o"&gt;(&lt;/span&gt;empty&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;no description &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Parent commit &lt;span class="o"&gt;(&lt;/span&gt;@-&lt;span class="o"&gt;)&lt;/span&gt; : vvvzruls bba2f04e add hello world&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Parent commit &lt;span class="o"&gt;(&lt;/span&gt;@-&lt;span class="o"&gt;)&lt;/span&gt; : vvvzruls bba2f04e add hello world&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Weird:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;@ kpumvxpm {redacted email} 2025-12-03 04:03:57 41b2cf2f
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ (no description set)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;○ vvvzruls {redacted email} 2025-12-03 04:03:21 git_head() bba2f04e
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ add hello world
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ○ oqwvuopo {redacted email} 2025-12-03 03:36:43 likes 907c5e72
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├─╯ git-freeze
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;◆ oqwnlpuv {redacted email} 2025-12-02 23:12:39 master a9efb058
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ bytebytego: Product Array Without Current Elemen
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;~
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj status
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Working copy changes:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;M content/posts/2025-12-03-jj-hello-world.md
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Working copy (@) : kpumvxpm 41b2cf2f (no description set)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Parent commit (@-): vvvzruls bba2f04e add hello world
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% git status
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;## HEAD (no branch)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; M content/posts/2025-12-03-jj-hello-world.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;I thought &lt;code&gt;amend&lt;/code&gt; (or &lt;code&gt;squash&lt;/code&gt;) would be akin to &lt;code&gt;git commit --amend&lt;/code&gt;, but
+apparently not? I see two nodes.&lt;/p&gt;
+&lt;p&gt;Remember the advice from a while ago?&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj sync
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;error: unrecognized subcommand &lt;span class="s1"&gt;&amp;#39;sync&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;error: unrecognized subcommand &lt;span class="s1"&gt;&amp;#39;sync&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Lame.&lt;/p&gt;
+&lt;p&gt;Time for &lt;code&gt;jj help -k tutorial&lt;/code&gt; (linked to from &lt;code&gt;jj --help&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;At this point I just want to end the post. I&amp;rsquo;ll try &lt;code&gt;jj git push&lt;/code&gt;. If I am
+cut-off, it means it has worked. And we&amp;rsquo;ll continue this in 2026.&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj git push
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Warning: No bookmarks found in the default push revset: remote_bookmarks&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;remote&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;origin&lt;span class="o"&gt;)&lt;/span&gt;..@
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Nothing changed.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Nothing changed.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Errr.&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj checkout master
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;error: unrecognized subcommand &lt;span class="s1"&gt;&amp;#39;checkout&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Usage: jj &lt;span class="o"&gt;[&lt;/span&gt;OPTIONS&lt;span class="o"&gt;]&lt;/span&gt; &amp;lt;COMMAND&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;For more information, try &lt;span class="s1"&gt;&amp;#39;--help&amp;#39;&lt;/span&gt;.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;For more information, try &lt;span class="s1"&gt;&amp;#39;--help&amp;#39;&lt;/span&gt;.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% jj describe -m &lt;span class="s2"&gt;&amp;#34;new just: jj hello world&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Working copy &lt;span class="o"&gt;(&lt;/span&gt;@&lt;span class="o"&gt;)&lt;/span&gt; now at: kpumvxpm 516b5d69 new just: jj hello world
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Parent commit &lt;span class="o"&gt;(&lt;/span&gt;@-&lt;span class="o"&gt;)&lt;/span&gt; : vvvzruls bba2f04e add hello world&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: jj: hello world"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Try</title><link>https://perrotta.dev/2025/12/try/</link><pubDate>Tue, 02 Dec 2025 12:50:10 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/try/</guid><description>&lt;p&gt;Inspired by &lt;a href="https://github.com/tobi/try"&gt;&lt;code&gt;tobi/try&lt;/code&gt;&lt;/a&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Parent commit &lt;span class="o"&gt;(&lt;/span&gt;@-&lt;span class="o"&gt;)&lt;/span&gt; : vvvzruls bba2f04e add hello world&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This is the moment of the post when I had to bail out to &lt;code&gt;git&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Somehow two distinct commits were created. :(&lt;/p&gt;
+&lt;p&gt;Until next time.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;From whom? From what? Mystery? I think you know the answer.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: jj: hello world"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Try</title><link>https://perrotta.dev/2025/12/try/</link><pubDate>Tue, 02 Dec 2025 12:50:10 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/try/</guid><description>&lt;p&gt;Inspired by &lt;a href="https://github.com/tobi/try"&gt;&lt;code&gt;tobi/try&lt;/code&gt;&lt;/a&gt;
 (&lt;a href="https://world.hey.com/dhh/six-billion-reasons-to-cheer-for-shopify-55720846"&gt;via&lt;/a&gt;),
 I created my own &lt;code&gt;try&lt;/code&gt; in &lt;a href="https://github.com/thiagowfx/pancake/tree/master/try"&gt;pancake&lt;/a&gt;:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -565,10 +1010,24 @@ MassCode, &lt;code&gt;pet&lt;/code&gt; and LogSeq are cross-platform. Snippets L
 than ever, thanks to &lt;a href="https://github.com/atuinsh/atuin"&gt;atuin&lt;/a&gt;.&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% atuin search &lt;span class="s1"&gt;&amp;#39;^aws_login_headless&amp;#39;&lt;/span&gt; --delete
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;deleting 019ad59e973b7c139c4a1d67fe2155be
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;deleting 019ad59e973b7c139c4a1d40a0da15f1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Atuin: delete history entries"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Canary tokens</title><link>https://perrotta.dev/2025/11/canary-tokens/</link><pubDate>Sun, 30 Nov 2025 19:30:23 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/canary-tokens/</guid><description>&lt;p&gt;&lt;a href="https://canarytokens.org/"&gt;Canary Tokens&lt;/a&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;deleting 019ad59e973b7c139c4a1d40a0da15f1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;First do the search without &lt;code&gt;--delete&lt;/code&gt;, and then re-run the command with
+&lt;code&gt;--delete&lt;/code&gt; if the output is what you expect.&lt;/p&gt;
+&lt;p&gt;You would want to do so in these two scenarios:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;prevent irrelevant entries from showing up in &lt;code&gt;C-r&lt;/code&gt; (history search), reducing
+clutter&lt;/li&gt;
+&lt;li&gt;delete sensitive entries e.g. passwords (&lt;code&gt;docker login --password {foo}&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="https://perrotta.dev/2025/11/atuin/"&gt;Previously&lt;/a&gt;.&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Atuin: delete history entries"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Canary tokens</title><link>https://perrotta.dev/2025/11/canary-tokens/</link><pubDate>Sun, 30 Nov 2025 19:30:23 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/canary-tokens/</guid><description>&lt;p&gt;&lt;a href="https://canarytokens.org/"&gt;Canary Tokens&lt;/a&gt;,
 &lt;a href="https://docs.canarytokens.org/guide/"&gt;introduction&lt;/a&gt;:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;What are Canarytokens&lt;/p&gt;
@@ -700,7 +1159,10 @@ will stick.&lt;/p&gt;
 my &lt;code&gt;~/.zshrc.d/&lt;/code&gt;&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# fzf: fuzzy file finder&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt; $+commands&lt;span class="o"&gt;[&lt;/span&gt;fzf&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;))&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# alpine/arch, debian&lt;/span&gt;
@@ -710,10 +1172,70 @@ my &lt;code&gt;~/.zshrc.d/&lt;/code&gt;&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt; $+commands&lt;span class="o"&gt;[&lt;/span&gt;brew&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;))&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; src_files &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;brew --prefix&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;/opt/fzf/shell/&lt;span class="o"&gt;{&lt;/span&gt;completion,key-bindings&lt;span class="o"&gt;}&lt;/span&gt;.zsh
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;fi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install atuin&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;a href="https://github.com/junegunn/fzf"&gt;&lt;code&gt;fzf&lt;/code&gt;&lt;/a&gt; does it all.&lt;/p&gt;
+&lt;p&gt;I hit &lt;code&gt;C-r&lt;/code&gt; and get fuzzy finding over all my &lt;code&gt;history&lt;/code&gt;, this has been
+overpowering my productivity for ages, likely since university.&lt;/p&gt;
+&lt;p&gt;Then I found out I could go one step further.&lt;/p&gt;
+&lt;p&gt;Enter &lt;a href="https://atuin.sh"&gt;Atuin&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Making your shell magical&lt;/p&gt;
+&lt;p&gt;Sync, search and backup shell history with Atuin.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Installing &lt;code&gt;atuin&lt;/code&gt; is simple: it&amp;rsquo;s available &lt;a href="https://repology.org/project/atuin/versions"&gt;everywhere&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install atuin&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Configuring &lt;code&gt;atuin&lt;/code&gt; is simple, start by adding this snippet to your &lt;code&gt;/.zshrc&lt;/code&gt;
+file&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# atuin: https://docs.atuin.sh/&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;((&lt;/span&gt; $+commands&lt;span class="o"&gt;[&lt;/span&gt;atuin&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;eval&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;atuin init zsh --disable-up-arrow&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;((&lt;/span&gt; $+commands&lt;span class="o"&gt;[&lt;/span&gt;atuin&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;eval&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;atuin init zsh --disable-up-arrow&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Now run &lt;code&gt;atuin import auto&lt;/code&gt; to import your shell history entries to &lt;code&gt;atuin&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;By default, &lt;code&gt;atuin init&lt;/code&gt; binds both &lt;code&gt;C-r&lt;/code&gt; and the up arrow. I find the up
+arrow binding disruptive.&lt;/p&gt;
+&lt;p&gt;I want my workflow to stay as close as possible to &lt;code&gt;fzf&lt;/code&gt; &lt;code&gt;C-r&lt;/code&gt;.
+&lt;a href="https://docs.atuin.sh/configuration/key-binding/#disable-up-arrow"&gt;&lt;code&gt;--disable-up-arrow&lt;/code&gt;&lt;/a&gt;
+is essential for that.&lt;/p&gt;
+&lt;p&gt;Pressing &lt;code&gt;C-r&lt;/code&gt; will invoke a fuzzy find window that behaves similarly to &lt;code&gt;fzf&lt;/code&gt;,
+though it&amp;rsquo;s more powerful. It&amp;rsquo;s hard to describe, you must try it out.&lt;/p&gt;
+&lt;p&gt;This is enough to make the migration. Which makes me feel bad for having
+procrastinated for so long to do so. Trying out &lt;code&gt;atuin&lt;/code&gt; has been in my TODO list
+for ages!&lt;/p&gt;
+&lt;p&gt;There&amp;rsquo;s an optional step of syncing your history with their remote cloud. Or
+with your own, because there&amp;rsquo;s an option of self-hosting a server (&lt;code&gt;atuin server start&lt;/code&gt;). Self-hosting is optimal, but trying out their cloud first to get a feel
+of the sync experience is reasonable.&lt;/p&gt;
+&lt;p&gt;Syncing happens every hour by default, but this is configurable.&lt;/p&gt;
+&lt;p&gt;See &lt;a href="https://docs.atuin.sh/reference/sync/"&gt;sync docs&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Atuin can back up your history to a server, and use this to ensure multiple
+machines have the same shell history. This is all encrypted end-to-end, so the
+server operator can never see your data!&lt;/p&gt;
+&lt;p&gt;Anyone can host a server (try atuin server start, more docs to follow), but I
+host one at &lt;a href="https://api.atuin.sh"&gt;https://api.atuin.sh&lt;/a&gt;. This is the default server address, which
+can be changed in the config. Again, I cannot see your data, and do not want
+to.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You can create a &lt;code&gt;~/.config/atuin/config.toml&lt;/code&gt; to customize &lt;code&gt;atuin&lt;/code&gt;. I added
+this:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="toml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;toml&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-toml" data-lang="toml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;## With workspace filtering enabled, Atuin will filter for commands executed&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;## in any directory within a git repository tree (default: false).&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;##&lt;/span&gt;
@@ -741,7 +1263,34 @@ my &lt;code&gt;~/.zshrc.d/&lt;/code&gt;&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;## &amp;#34;vim-normal&amp;#34;, the startup keymap mode in the Atuin search is forced to be&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;## the specified one.&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# keymap_mode = &amp;#34;auto&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;keymap_mode&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;vim-insert&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;keymap_mode&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;vim-insert&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;enter_accept&lt;/code&gt; is an important tweak to resemble &lt;code&gt;fzf&lt;/code&gt;. By default, pressing
+Enter when looking up history entries in &lt;code&gt;atuin&lt;/code&gt; will automatically execute the
+command. In &lt;code&gt;fzf&lt;/code&gt; you have an opportunity to edit/tweak the command before
+execution, which is what I prefer. Set &lt;code&gt;enter_accept = false&lt;/code&gt; to achieve the
+same behavior in &lt;code&gt;atuin&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;atuin&lt;/code&gt; has an option to manage
+&lt;a href="https://docs.atuin.sh/guide/dotfiles/"&gt;dotfiles&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;While Atuin started as a tool for syncing and searching shell history, we are
+building tooling for syncing dotfiles across machines, and making them easier
+to work with.&lt;/p&gt;
+&lt;p&gt;At the moment, we support managing and syncing of shell aliases and
+environment variables - with more coming soon.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&amp;hellip;but I don&amp;rsquo;t feel the need to use this.&lt;/p&gt;
+&lt;p&gt;The magic of &lt;code&gt;atuin&lt;/code&gt;, when using multiple computers is its shell history
+synchronization. Picking up the slack in my personal computer would reveal my
+work computer history and vice-versa. In some environments this is very
+welcome!&lt;/p&gt;
+&lt;p&gt;Also cool: &lt;code&gt;stats&lt;/code&gt; for free:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% atuin stats
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;▮▮▮▮▮▮▮▮▮▮&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="m"&gt;4540&lt;/span&gt; git commit
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;▮▮▮▮▮▮ &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="m"&gt;3062&lt;/span&gt; ack
@@ -754,8 +1303,34 @@ my &lt;code&gt;~/.zshrc.d/&lt;/code&gt;&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;▮ &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="m"&gt;822&lt;/span&gt; git add
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;▮ &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="m"&gt;818&lt;/span&gt; git nb
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Total commands: &lt;span class="m"&gt;29464&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Unique commands: &lt;span class="m"&gt;20610&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% atuin search --exit &lt;span class="m"&gt;0&lt;/span&gt; --after&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;4 months ago&amp;#34;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;^skopeo&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Atuin"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>python-is-python3 with macOS homebrew</title><link>https://perrotta.dev/2025/11/python-is-python3-with-macos-homebrew/</link><pubDate>Sun, 30 Nov 2025 00:22:28 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/python-is-python3-with-macos-homebrew/</guid><description>&lt;p&gt;I face this annoyance all the time:&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Unique commands: &lt;span class="m"&gt;20610&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Query past entries with a SQL-like CLI:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% atuin search --exit &lt;span class="m"&gt;0&lt;/span&gt; --after&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;4 months ago&amp;#34;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;^skopeo&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Clearly I&amp;rsquo;m a die-hard &lt;a href="https://beyondgrep.com/"&gt;&lt;code&gt;ack&lt;/code&gt;&lt;/a&gt; fan. Will I ever switch
+to &lt;a href="https://github.com/BurntSushi/ripgrep"&gt;&lt;code&gt;rg&lt;/code&gt;&lt;/a&gt;?&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://just.systems/"&gt;&lt;code&gt;just&lt;/code&gt;&lt;/a&gt; is starting to become part of my core tool belt.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;See also&lt;/strong&gt;: &lt;a href="https://archive.fosdem.org/2023/schedule/event/rust_atuin_magical_shell_history_with_rust/"&gt;Tech
+Talk&lt;/a&gt;,
+including
+&lt;a href="https://archive.fosdem.org/2023/schedule/event/rust_atuin_magical_shell_history_with_rust/attachments/slides/5735/export/events/attachments/rust_atuin_magical_shell_history_with_rust/slides/5735/Atuin_FOSDEM_1.pdf"&gt;slides&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Next chapter: &lt;a href="https://github.com/atuinsh/desktop"&gt;Atuin Desktop&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;&lt;code&gt;bash&lt;/code&gt;, &lt;code&gt;fish&lt;/code&gt;, &lt;code&gt;xonsh&lt;/code&gt; are also supported at the time of this writing.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Atuin"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>python-is-python3 with macOS homebrew</title><link>https://perrotta.dev/2025/11/python-is-python3-with-macos-homebrew/</link><pubDate>Sun, 30 Nov 2025 00:22:28 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/python-is-python3-with-macos-homebrew/</guid><description>&lt;p&gt;I face this annoyance all the time:&lt;/p&gt;
 
 &lt;div class="codeblock"&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;thiago.perrotta@thiagoperrotta-MacBook-Pro ~
@@ -782,13 +1357,78 @@ need to remember this explicitly, we take it as gospel already.&lt;/p&gt;
 &lt;p&gt;There are various ways to resolve this:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;python&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;python3&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;command&lt;/span&gt; -v python3 &amp;gt;/dev/null 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;python&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;python3&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;((&lt;/span&gt; $+commands&lt;span class="o"&gt;[&lt;/span&gt;python3&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;python&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;python3&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;python&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;python3&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Classic. I hate it. Now you&amp;rsquo;ll have a &lt;code&gt;python&lt;/code&gt; alias even if &lt;code&gt;python3&lt;/code&gt; is not
+available. This is not elegant at all. You could make it a bit better, sure:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;command&lt;/span&gt; -v python3 &amp;gt;/dev/null 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;python&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;python3&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Or even a bit more idiomatically if using &lt;code&gt;zsh&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;((&lt;/span&gt; $+commands&lt;span class="o"&gt;[&lt;/span&gt;python3&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;python&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;python3&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Still, this is not a problem the shell should own. It just &lt;em&gt;feels&lt;/em&gt; wrong. This
+is a package management problem. The shell remedy is just a cheap band-aid.
+Can we do better than this?&lt;/p&gt;
+&lt;p&gt;What about a wrapper script in &lt;code&gt;/usr/local/bin&lt;/code&gt;?&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/usr/bin/env bash
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;&lt;/span&gt;&lt;span class="nb"&gt;exec&lt;/span&gt; python3 &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$@&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% sudo ln -s /usr/bin/python3 /usr/local/bin/python&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;&lt;/span&gt;&lt;span class="nb"&gt;exec&lt;/span&gt; python3 &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$@&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This is better. Much better. However, why not make it even simpler?&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% sudo ln -s /usr/bin/python3 /usr/local/bin/python&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;A symlink suffices. You just need to decide whether to point it out to &lt;code&gt;python3&lt;/code&gt;
+in homebrew or in the system.&lt;/p&gt;
+&lt;p&gt;A symlink is not reproducible&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt; though. If you reinstall your system, or acquire a
+new one, now you&amp;rsquo;ll have to remember to re-create it.&lt;/p&gt;
+&lt;p&gt;Sure, you could script it in your .dotfiles installation script, or add it to
+the system installation notes section in your second brain app. Who am I to tell
+you what to do?&lt;/p&gt;
+&lt;p&gt;Here is my favorite way to address the issue: install a package!&lt;/p&gt;
+&lt;p&gt;For example, there was a time in Debian and Ubuntu that the
+&lt;a href="https://packages.debian.org/sid/python-is-python3"&gt;&lt;code&gt;python-is-python3&lt;/code&gt;&lt;/a&gt; package
+did exactly that:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This is a convenience package which ships a symlink to point the
+/usr/bin/python interpreter at the current default python3. It may improve
+compatibility with other modern systems, whilst breaking some obsolete or
+3rd-party software.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Now you can guess what the source of my inspiration was. I created a homebrew
+formula to do the same:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="ruby"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;ruby&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-ruby" data-lang="ruby"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;PythonIsPython3&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="no"&gt;Formula&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;desc&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Make python point to python3&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;homepage&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;https://github.com/thiagowfx/homebrew-taps&amp;#34;&lt;/span&gt;
@@ -802,11 +1442,40 @@ need to remember this explicitly, we take it as gospel already.&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;install_symlink&lt;/span&gt; &lt;span class="no"&gt;Formula&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;python&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;].&lt;/span&gt;&lt;span class="n"&gt;opt_bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;python3&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;python&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;install_symlink&lt;/span&gt; &lt;span class="no"&gt;Formula&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;python&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;].&lt;/span&gt;&lt;span class="n"&gt;opt_bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;pip3&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;pip&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;end&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;end&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;And now that I have a formula, I need to create a tap to host it somewhere.&lt;/p&gt;
+&lt;p&gt;Hence &lt;a href="https://github.com/thiagowfx/homebrew-taps"&gt;https://github.com/thiagowfx/homebrew-taps&lt;/a&gt; is born.&lt;/p&gt;
+&lt;p&gt;To install it:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew tap thiagowfx/taps
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install python-is-python3&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install python-is-python3&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Enjoy peace!&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% which python
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/opt/homebrew/bin/python&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: python-is-python3 with macOS homebrew"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>CorelDRAW: disable ads on Windows</title><link>https://perrotta.dev/2025/11/coreldraw-disable-ads-on-windows/</link><pubDate>Sat, 29 Nov 2025 13:21:32 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/coreldraw-disable-ads-on-windows/</guid><description>&lt;p&gt;From &amp;lsquo;Technical Support&amp;rsquo; tales of the trenches.&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/opt/homebrew/bin/python&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;This is a very loose usage of &amp;ldquo;reproducible&amp;rdquo;. Sorry Nix folks, I meant no
+harm!&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: python-is-python3 with macOS homebrew"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>CorelDRAW: disable ads on Windows</title><link>https://perrotta.dev/2025/11/coreldraw-disable-ads-on-windows/</link><pubDate>Sat, 29 Nov 2025 13:21:32 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/coreldraw-disable-ads-on-windows/</guid><description>&lt;p&gt;From &amp;lsquo;Technical Support&amp;rsquo; tales of the trenches.&lt;/p&gt;
 &lt;p&gt;Whenever CorelDRAW is installed on Windows, by default it will display ads upon
 startup, every single day. I call this malware.&lt;/p&gt;
 &lt;p&gt;To disable this hostile behavior:&lt;/p&gt;
@@ -841,10 +1510,24 @@ branches have already been merged upstream.&lt;/p&gt;
 &lt;p&gt;Update &lt;code&gt;~/.gitconfig&lt;/code&gt;:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="gitconfig"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;gitconfig&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-ini" data-lang="ini"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;[alias]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;prune-gone&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;!git fetch -p &amp;amp;&amp;amp; git branch -vv | awk &amp;#39;/: gone]/{print $1}&amp;#39; | xargs -r git branch -D
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; world = !git fetch --all &amp;amp;&amp;amp; git remote prune origin &amp;amp;&amp;amp; git prune &amp;amp;&amp;amp; git prune-gone&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt; world = !git fetch --all &amp;amp;&amp;amp; git remote prune origin &amp;amp;&amp;amp; git prune &amp;amp;&amp;amp; git prune-gone&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Now simply run &lt;code&gt;git prune-gone&lt;/code&gt; – or, even better, &lt;code&gt;git world&lt;/code&gt; for a more
+complete cleanup.&lt;/p&gt;
+&lt;p&gt;This is much more ergonomic than hunting down individual branches and doing &lt;code&gt;git push origin :{my branch}&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Example usage:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% ~/Workspace/pancake &lt;span class="o"&gt;(&lt;/span&gt;git&lt;span class="o"&gt;)&lt;/span&gt;-&lt;span class="o"&gt;[&lt;/span&gt;master&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% git world
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;From github.com:thiagowfx/pancake
@@ -856,7 +1539,9 @@ branches have already been merged upstream.&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;remote: Total &lt;span class="m"&gt;8&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;delta 5&lt;span class="o"&gt;)&lt;/span&gt;, reused &lt;span class="m"&gt;3&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;delta 3&lt;span class="o"&gt;)&lt;/span&gt;, pack-reused &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;from 0&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Unpacking objects: 100% &lt;span class="o"&gt;(&lt;/span&gt;8/8&lt;span class="o"&gt;)&lt;/span&gt;, 2.61 KiB &lt;span class="p"&gt;|&lt;/span&gt; 668.00 KiB/s, &lt;span class="k"&gt;done&lt;/span&gt;.
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; f727bd7..51f81ee master -&amp;gt; origin/master
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Deleted branch thiagowfx/wt-cd-dash &lt;span class="o"&gt;(&lt;/span&gt;was 6403261&lt;span class="o"&gt;)&lt;/span&gt;.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git: prune stale branches"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>GitHub labels vs merge when ready</title><link>https://perrotta.dev/2025/11/github-labels-vs-merge-when-ready/</link><pubDate>Thu, 27 Nov 2025 16:00:28 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/github-labels-vs-merge-when-ready/</guid><description>&lt;p&gt;GitHub allows marking PRs to be &lt;a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/merging-a-pull-request-with-a-merge-queue"&gt;merged when
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Deleted branch thiagowfx/wt-cd-dash &lt;span class="o"&gt;(&lt;/span&gt;was 6403261&lt;span class="o"&gt;)&lt;/span&gt;.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git: prune stale branches"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>GitHub labels vs merge when ready</title><link>https://perrotta.dev/2025/11/github-labels-vs-merge-when-ready/</link><pubDate>Thu, 27 Nov 2025 16:00:28 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/github-labels-vs-merge-when-ready/</guid><description>&lt;p&gt;GitHub allows marking PRs to be &lt;a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/merging-a-pull-request-with-a-merge-queue"&gt;merged when
 ready&lt;/a&gt;.
 This means a merge operation will automatically happen in the background once
 all PR requirements are satisfied i.e. CI checks pass, teammate approvals, etc.&lt;/p&gt;
@@ -940,9 +1625,20 @@ terminal&amp;rdquo; or anything. You ask, and howto answers. That&amp;rsquo;s th
 &lt;p&gt;Installation:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew tap nalgeon/howto https://github.com/nalgeon/howto
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install howto&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install howto&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Configuration: add to my shell startup file:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Lazy-load API keys only when needed to avoid shell startup delay&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;command&lt;/span&gt; -v howto &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&amp;gt;/dev/null&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;	_load_api_keys_howto&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
@@ -953,14 +1649,31 @@ terminal&amp;rdquo; or anything. You ask, and howto answers. That&amp;rsquo;s th
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;	&lt;span class="c1"&gt;# Wrap all AI CLI commands to auto-load keys&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;	&lt;span class="nb"&gt;command&lt;/span&gt; -v howto &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&amp;gt;/dev/null &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;eval&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;howto() { _load_api_keys_howto; command howto \&amp;#34;\$@\&amp;#34;; }&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;In this case, I retrieve the API token from
+&lt;a href="https://github.com/simonw/llm"&gt;&lt;code&gt;llm&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Usage examples:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% howto curl post request
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -X POST &lt;span class="o"&gt;[&lt;/span&gt;URL&lt;span class="o"&gt;]&lt;/span&gt; -d &lt;span class="s2"&gt;&amp;#34;[data]&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;The &lt;span class="sb"&gt;`&lt;/span&gt;curl&lt;span class="sb"&gt;`&lt;/span&gt; &lt;span class="nb"&gt;command&lt;/span&gt; is used to make HTTP requests from the &lt;span class="nb"&gt;command&lt;/span&gt; line.
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;The &lt;span class="sb"&gt;`&lt;/span&gt;-X POST&lt;span class="sb"&gt;`&lt;/span&gt; option specifies that the request method is POST.
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;The &lt;span class="sb"&gt;`&lt;/span&gt;-d &lt;span class="s2"&gt;&amp;#34;[data]&amp;#34;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt; option is used to send the specified data in the POST request
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;body.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;body.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% howto terraform init given a backend and a tfvars
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;terraform init -backend-config&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;backend-config-file&amp;gt; -var-file&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;variables-file&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
@@ -969,7 +1682,11 @@ terminal&amp;rdquo; or anything. You ask, and howto answers. That&amp;rsquo;s th
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;The &lt;span class="sb"&gt;`&lt;/span&gt;-backend-config&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;backend-config-file&amp;gt;&lt;span class="sb"&gt;`&lt;/span&gt; option specifies a file containing
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;backend configuration settings.
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;The &lt;span class="sb"&gt;`&lt;/span&gt;-var-file&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;variables-file&amp;gt;&lt;span class="sb"&gt;`&lt;/span&gt; option specifies a file containing variable
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;definitions.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: howto"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Canary</title><link>https://perrotta.dev/2025/11/canary/</link><pubDate>Mon, 24 Nov 2025 22:42:09 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/canary/</guid><description>&lt;p&gt;Inspired by &lt;a href="https://www.usecue.com/blog/warrant-canary-added/"&gt;Joost van der
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;definitions.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Workflow: when stuck, press &lt;code&gt;Ctrl + a&lt;/code&gt; (go to beginning of line), type &lt;code&gt;howto&lt;/code&gt;,
+press &lt;code&gt;&amp;lt;Enter&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: howto"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Canary</title><link>https://perrotta.dev/2025/11/canary/</link><pubDate>Mon, 24 Nov 2025 22:42:09 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/canary/</guid><description>&lt;p&gt;Inspired by &lt;a href="https://www.usecue.com/blog/warrant-canary-added/"&gt;Joost van der
 Schee&lt;/a&gt;:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Warrant canary added&lt;/p&gt;
@@ -1048,11 +1765,25 @@ do so for me.&lt;/p&gt;
 &lt;code&gt;-m&lt;/code&gt;, just like how you give a &amp;ldquo;commit message&amp;rdquo; to &lt;code&gt;git commit&lt;/code&gt;.&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git stash -m &lt;span class="s2"&gt;&amp;#34;first draft, approach #1 from design doc&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git stash -m &lt;span class="s2"&gt;&amp;#34;first draft, approach #1 from design doc&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;You can view past stashes with &lt;code&gt;git stash list&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% git stash list
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;stash@&lt;span class="o"&gt;{&lt;/span&gt;0&lt;span class="o"&gt;}&lt;/span&gt;: On master: first draft, approach &lt;span class="c1"&gt;#1 from design doc&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git stash -m"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>help2man</title><link>https://perrotta.dev/2025/11/help2man/</link><pubDate>Sun, 23 Nov 2025 00:59:51 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/help2man/</guid><description>&lt;p&gt;Thanks to &lt;a href="https://www.gnu.org/software/help2man/"&gt;&lt;code&gt;help2man&lt;/code&gt;&lt;/a&gt;:&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Now your &lt;del&gt;junk&lt;/del&gt; stashes can be properly organized!&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git stash -m"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>help2man</title><link>https://perrotta.dev/2025/11/help2man/</link><pubDate>Sun, 23 Nov 2025 00:59:51 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/help2man/</guid><description>&lt;p&gt;Thanks to &lt;a href="https://www.gnu.org/software/help2man/"&gt;&lt;code&gt;help2man&lt;/code&gt;&lt;/a&gt;:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;help2man&lt;/code&gt; produces simple manual pages from the &lt;code&gt;--help&lt;/code&gt; and &lt;code&gt;--version&lt;/code&gt;
 output of other commands.&lt;/p&gt;
@@ -1068,7 +1799,10 @@ a manual page.&lt;/p&gt;
 man pages! The integration was quite straightforward&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="diff"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;diff&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-diff" data-lang="diff"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% git --no-pager show HEAD~3
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;commit fd319657199d740138236b0b56eb47a4fb9dc1d9 (tag: 2025.11.23.1)
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Author: Thiago Perrotta &amp;lt;{redacted}&amp;gt;
@@ -1107,4 +1841,15 @@ man pages! The integration was quite straightforward&lt;sup id="fnref:1"&gt;&lt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gi"&gt;&lt;/span&gt; end
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; test do
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: help2man"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It parses the output of &lt;code&gt;--help&lt;/code&gt; to compose a man page. DRY.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;With the assistance of an LLM, as (can&amp;rsquo;t believe I&amp;rsquo;ll say this) &lt;em&gt;usual&lt;/em&gt;.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: help2man"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

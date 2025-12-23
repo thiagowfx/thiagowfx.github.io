@@ -5,7 +5,10 @@ inevitably find a couple of &lt;code&gt;.apk-new&lt;/code&gt; files scattered in
 &lt;code&gt;/etc&lt;/code&gt;:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas find / -name &lt;span class="s2"&gt;&amp;#34;*.apk-new&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/rc.conf.apk-new
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/inittab.apk-new
@@ -22,7 +25,93 @@ inevitably find a couple of &lt;code&gt;.apk-new&lt;/code&gt; files scattered in
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/shadow.apk-new
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/network/interfaces.apk-new
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/profile.d/locale.sh.apk-new
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/doas.conf.apk-new&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: .apk-new"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Miniflux: NetNewsWire integration</title><link>https://perrotta.dev/2025/12/miniflux-netnewswire-integration/</link><pubDate>Sat, 20 Dec 2025 14:39:24 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/miniflux-netnewswire-integration/</guid><description>&lt;p&gt;&lt;a href="https://netnewswire.com/"&gt;NetNewsWire&lt;/a&gt; is a great RSS &lt;strong&gt;client&lt;/strong&gt; reader for
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/doas.conf.apk-new&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;As per the &lt;a href="https://docs.alpinelinux.org/user-handbook/0.1a/Working/apk.html#_installing_packages"&gt;alpine user
+handbook&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Installing a package means that the package itself will be downloaded from a
+repository (specified in /etc/apk/repositories) and unpacked to the system.
+Existing files will be overwritten. An exception are configuration files in
+/etc, which will be preserved. The configuration files (which comes from the
+package) will be renamed to *.apk-new.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It&amp;rsquo;s very similar to what happens in Arch Linux with
+&lt;a href="https://wiki.archlinux.org/title/Pacman/Pacnew_and_Pacsave"&gt;&lt;code&gt;.pacnew&lt;/code&gt;&lt;/a&gt; files.
+Arch Linux has an utility called
+&lt;a href="https://wiki.archlinux.org/title/Pacman/Pacnew_and_Pacsave#pacdiff"&gt;&lt;code&gt;pacdiff&lt;/code&gt;&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;It will search for .pacnew, .pacsave and .pacorig files, and will then prompt
+to take action upon them.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&amp;hellip;and also in Gentoo Linux with
+&lt;a href="https://wiki.gentoo.org/wiki/Etc-update"&gt;&lt;code&gt;etc-update&lt;/code&gt;&lt;/a&gt; or
+&lt;a href="https://wiki.gentoo.org/wiki/Dispatch-conf"&gt;&lt;code&gt;dispatch-conf&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Alpine Linux lacks such an utility, to the best of my knowledge.&lt;/p&gt;
+&lt;p&gt;As such, I vibe coded one in &lt;a href="https://github.com/thiagowfx/pancake"&gt;&lt;code&gt;pancake&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I hereby introduce &lt;a href="https://github.com/thiagowfx/pancake/tree/master/apknew"&gt;&lt;code&gt;apknew&lt;/code&gt;&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Reconcile .apk-new configuration files on Alpine Linux, similar to pacdiff on
+Arch Linux.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;By default, it operates on &lt;code&gt;/etc&lt;/code&gt; only.&lt;/p&gt;
+&lt;p&gt;A sample run looks like the following, prompting a pair of files at a time:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;==============================================
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;File: /etc/crontabs/root.apk-new
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Original: /etc/crontabs/root
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;==============================================
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[v]iew diff [k]eep original [r]eplace with new [m]erge [s]kip
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Action:&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;You&amp;rsquo;ll want to hit &lt;code&gt;v&lt;/code&gt; first to inspect the diff, and then decide whether to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;keep the original file&lt;/li&gt;
+&lt;li&gt;replace it with the newer package file&lt;/li&gt;
+&lt;li&gt;interactively merge them (e.g. with &lt;code&gt;vimdiff&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;do nothing (skip)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It&amp;rsquo;s much easier than diffing each file manually.&lt;/p&gt;
+&lt;p&gt;Another example:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% apknew/apknew.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Searching for .apk-new files in /etc...
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Found 14 file(s) to process.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;==============================================
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;File: /etc/passwd.apk-new
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Original: /etc/passwd
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;==============================================
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[v]iew diff [k]eep original [r]eplace with new [m]erge [s]kip
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Action: s
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Skipping /etc/passwd.apk-new...
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;==============================================
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;File: /etc/shells.apk-new
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Original: /etc/shells
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;==============================================
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[v]iew diff [k]eep original [r]eplace with new [m]erge [s]kip
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Action: v
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;--- /etc/shells	2025-12-21 11:07:42.531531775 -0500
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;+++ /etc/shells.apk-new	2025-12-15 09:00:47.000000000 -0500
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;@@ -1,5 +1,3 @@
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; # valid login shells
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; /bin/sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; /bin/ash
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-/bin/zsh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[v]iew diff [k]eep original [r]eplace with new [m]erge [s]kip
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Action: k
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Removing /etc/shells.apk-new...
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Done. Kept original file.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: .apk-new"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Miniflux: NetNewsWire integration</title><link>https://perrotta.dev/2025/12/miniflux-netnewswire-integration/</link><pubDate>Sat, 20 Dec 2025 14:39:24 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/miniflux-netnewswire-integration/</guid><description>&lt;p&gt;&lt;a href="https://netnewswire.com/"&gt;NetNewsWire&lt;/a&gt; is a great RSS &lt;strong&gt;client&lt;/strong&gt; reader for
 macOS and iOS.&lt;/p&gt;
 &lt;p&gt;I already use &lt;a href="https://miniflux.app/"&gt;miniflux&lt;/a&gt; though. It&amp;rsquo;s too bad NetNewsWire
 does not support miniflux as a server back-end:&lt;/p&gt;
@@ -224,9 +313,45 @@ one is created.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://gist.github.com/pstaender/7412245"&gt;&lt;code&gt;ghostscript&lt;/code&gt;&lt;/a&gt; can do it:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;gs -q -dNOPAUSE -dBATCH -sDEVICE&lt;span class="o"&gt;=&lt;/span&gt;pdfwrite -sOutputFile&lt;span class="o"&gt;=&lt;/span&gt;output.pdf -c .setpdfwrite -f input.pdf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;qpdf --decrypt --password&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;{my pass}&amp;#34;&lt;/span&gt; input.pdf output.pdf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;gs -q -dNOPAUSE -dBATCH -sDEVICE&lt;span class="o"&gt;=&lt;/span&gt;pdfwrite -sOutputFile&lt;span class="o"&gt;=&lt;/span&gt;output.pdf -c .setpdfwrite -f input.pdf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;a href="https://gist.github.com/raghur/f3eab7297691f2f411eec69b8032daf0"&gt;&lt;code&gt;qpdf&lt;/code&gt;&lt;/a&gt; can do it:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;qpdf --decrypt --password&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;{my pass}&amp;#34;&lt;/span&gt; input.pdf output.pdf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;I am not expected to memorize these CLI flags.&lt;/p&gt;
+&lt;p&gt;I do not want to look them up every time either.&lt;/p&gt;
+&lt;p&gt;There are various approaches to tackle this:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a shell alias (&lt;code&gt;alias foo=&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;a shell function &lt;code&gt;foo() {}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;a shell script (&lt;code&gt;*.sh&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;a &lt;a href="https://perrotta.dev/2025/10/comma-scripts/"&gt;comma script&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;a copyable snippet (e.g. stored in Obsidian / LogSeq or some other digital
+garden / personal wiki / second brain app)&lt;/li&gt;
+&lt;li&gt;a snippet (e.g. in &lt;a href="https://perrotta.dev/2025/10/comma-scripts/"&gt;RayCast&lt;/a&gt; or
+&lt;a href="https://perrotta.dev/2025/10/comma-scripts/"&gt;Espanso&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;ask the AI each time&lt;/li&gt;
+&lt;li&gt;&lt;del&gt;google&lt;/del&gt; &lt;a href="https://perrotta.dev/2025/05/kagi/"&gt;search&lt;/a&gt; for it each time&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Lately I&amp;rsquo;ve been favouring the &lt;a href="https://perrotta.dev/2025/09/pancake-potpourri-scripts/"&gt;shell script&lt;/a&gt; approach, so &lt;a href="https://github.com/thiagowfx/pancake/tree/c7c3677119c567edc432fcc1f1c0f78c9a5b3c55/pdf_password_remove"&gt;here we go&lt;/a&gt; with &lt;code&gt;pdf_password_remove.sh&lt;/code&gt;:&lt;/p&gt;
+&lt;h2 id="usage"&gt;Usage&lt;/h2&gt;
+&lt;p&gt;Remove password protection from PDF files.&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="bash"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;bash&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Interactive password prompt (most secure)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pdf_password_remove secret.pdf
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
@@ -237,7 +362,35 @@ one is created.&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pdf_password_remove --password&lt;span class="o"&gt;=&lt;/span&gt;BANANA42SPLIT secret.pdf
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Custom output filename (single file only)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pdf_password_remove -o unlocked.pdf secret.pdf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;pdf_password_remove -o unlocked.pdf secret.pdf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 id="example-output"&gt;Example Output&lt;/h2&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% pdf_password_remove --password=PIZZA69SLICE financial-report.pdf tax-form.pdf
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;✓ Successfully processed: financial-report.pdf → financial-report-unlocked.pdf
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;✓ Successfully processed: tax-form.pdf → tax-form-unlocked.pdf
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Summary: Successfully processed 2/2 file(s)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 id="features"&gt;Features&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Process single or multiple PDF files in one command&lt;/li&gt;
+&lt;li&gt;Secure interactive password prompt (hidden input)&lt;/li&gt;
+&lt;li&gt;Command-line password option for automation/scripts&lt;/li&gt;
+&lt;li&gt;Default output naming: adds &lt;code&gt;-unlocked&lt;/code&gt; suffix&lt;/li&gt;
+&lt;li&gt;Custom output filename with &lt;code&gt;-o&lt;/code&gt; flag (single file only)&lt;/li&gt;
+&lt;li&gt;Clear success/failure indicators for each file&lt;/li&gt;
+&lt;li&gt;Validates PDF files before processing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="prerequisites"&gt;Prerequisites&lt;/h2&gt;
+&lt;p&gt;Requires either &lt;code&gt;ghostscript&lt;/code&gt; (preferred) or &lt;code&gt;qpdf&lt;/code&gt; to be installed:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="bash"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;bash&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# macOS&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install ghostscript &lt;span class="c1"&gt;# Preferred&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install qpdf &lt;span class="c1"&gt;# Alternative&lt;/span&gt;
@@ -250,7 +403,15 @@ one is created.&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo dnf install qpdf &lt;span class="c1"&gt;# Alternative&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo pacman -S ghostscript &lt;span class="c1"&gt;# Preferred - Arch&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo pacman -S qpdf &lt;span class="c1"&gt;# Alternative&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: new script: PDF remove password"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>new script: copy</title><link>https://perrotta.dev/2025/11/new-script-copy/</link><pubDate>Tue, 04 Nov 2025 14:05:47 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/new-script-copy/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2025/10/new-script-ssh-mux-restart/"&gt;Previously&lt;/a&gt;.&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo pacman -S qpdf &lt;span class="c1"&gt;# Alternative&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The script automatically detects and uses whichever tool is available,
+preferring ghostscript if both are installed.&lt;/p&gt;
+&lt;h2 id="security-note"&gt;Security Note&lt;/h2&gt;
+&lt;p&gt;Using &lt;code&gt;--password&lt;/code&gt; on the command line will expose the password in shell history
+and process lists. For sensitive documents, use the interactive prompt instead
+(default behavior when password is not provided).&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: new script: PDF remove password"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>new script: copy</title><link>https://perrotta.dev/2025/11/new-script-copy/</link><pubDate>Tue, 04 Nov 2025 14:05:47 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/new-script-copy/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2025/10/new-script-ssh-mux-restart/"&gt;Previously&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;I decided to add a new &lt;code&gt;copy&lt;/code&gt; script to
 &lt;a href="https://github.com/thiagowfx/pancake"&gt;&lt;code&gt;pancake&lt;/code&gt;&lt;/a&gt; to standardize copying command
 output and files to the system clipboard in both macOS and Linux.&lt;/p&gt;
@@ -265,7 +426,10 @@ Hahn&lt;/a&gt;:&lt;/p&gt;
 &lt;h2 id="usage"&gt;Usage&lt;/h2&gt;
 
 &lt;div class="codeblock" data-lang="bash"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;bash&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Copy from stdin&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;BANANA42SPLIT88SUNDAE99CHERRY&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; copy
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
@@ -273,13 +437,57 @@ Hahn&lt;/a&gt;:&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;copy notes.txt
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Copy multiple files&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;copy *.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: new script: copy"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>brew: upgrade HEAD formulas</title><link>https://perrotta.dev/2025/10/brew-upgrade-head-formulas/</link><pubDate>Thu, 23 Oct 2025 12:53:11 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/brew-upgrade-head-formulas/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2025/10/distributing-my-own-scripts-via-homebrew/"&gt;Previously&lt;/a&gt;.&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;copy *.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 id="platform-support"&gt;Platform Support&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;macOS&lt;/strong&gt;: Uses &lt;code&gt;pbcopy&lt;/code&gt; (built-in)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Linux&lt;/strong&gt;: Auto-detects first available tool:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;wl-copy&lt;/code&gt; (Wayland) - prioritized for modern desktops&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xclip&lt;/code&gt; (X11)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xsel&lt;/code&gt; (X11)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="features"&gt;Features&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Silent on success (Unix philosophy)&lt;/li&gt;
+&lt;li&gt;Supports stdin input&lt;/li&gt;
+&lt;li&gt;Supports single or multiple files&lt;/li&gt;
+&lt;li&gt;Multiple files are concatenated with newline separators&lt;/li&gt;
+&lt;li&gt;Clear error messages for missing files or dependencies&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: new script: copy"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>brew: upgrade HEAD formulas</title><link>https://perrotta.dev/2025/10/brew-upgrade-head-formulas/</link><pubDate>Thu, 23 Oct 2025 12:53:11 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/10/brew-upgrade-head-formulas/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2025/10/distributing-my-own-scripts-via-homebrew/"&gt;Previously&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;When a package is installed with &lt;code&gt;--HEAD&lt;/code&gt;:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% brew install --HEAD pancake&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% brew upgrade --fetch-HEAD &lt;span class="o"&gt;[&lt;/span&gt;package...&lt;span class="o"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: brew: upgrade HEAD formulas"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: git index.lock issue</title><link>https://perrotta.dev/2025/08/argocd-git-index.lock-issue/</link><pubDate>Sat, 23 Aug 2025 12:39:14 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/argocd-git-index.lock-issue/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Every ArgoCD application is stuck in &lt;em&gt;Unknown&lt;/em&gt; state,
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% brew install --HEAD pancake&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;&lt;code&gt;brew upgrade&lt;/code&gt; won&amp;rsquo;t automatically fetch its latest version.&lt;/p&gt;
+&lt;p&gt;In order to do so, run:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% brew upgrade --fetch-HEAD &lt;span class="o"&gt;[&lt;/span&gt;package...&lt;span class="o"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;a href="https://apple.stackexchange.com/questions/439595/brew-head-update-behaviour"&gt;Source&lt;/a&gt;&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;I answered it there, does that count as linking to the source?&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: brew: upgrade HEAD formulas"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: git index.lock issue</title><link>https://perrotta.dev/2025/08/argocd-git-index.lock-issue/</link><pubDate>Sat, 23 Aug 2025 12:39:14 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/argocd-git-index.lock-issue/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Every ArgoCD application is stuck in &lt;em&gt;Unknown&lt;/em&gt; state,
 with the following error:&lt;/p&gt;
 
 &lt;div class="codeblock"&gt;
@@ -298,8 +506,20 @@ component, with the git &lt;code&gt;index.lock&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;The easiest way to address it is to restart the repo server:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl rollout restart deploy -n argocd argocd-repo-server&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: git index.lock issue"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Kubernetes: list all ImagePullBackOff container images</title><link>https://perrotta.dev/2025/08/kubernetes-list-all-imagepullbackoff-container-images/</link><pubDate>Thu, 21 Aug 2025 13:34:27 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/kubernetes-list-all-imagepullbackoff-container-images/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt; Upgrade the
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl rollout restart deploy -n argocd argocd-repo-server&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Afterwards, refresh all applications in the cluster via the web UI:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;click Applications on the left-side nav bar&lt;/li&gt;
+&lt;li&gt;click Refresh apps at the top&lt;/li&gt;
+&lt;li&gt;select ALL applications, set refresh type to NORMAL&lt;/li&gt;
+&lt;li&gt;click refresh&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: git index.lock issue"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Kubernetes: list all ImagePullBackOff container images</title><link>https://perrotta.dev/2025/08/kubernetes-list-all-imagepullbackoff-container-images/</link><pubDate>Thu, 21 Aug 2025 13:34:27 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/kubernetes-list-all-imagepullbackoff-container-images/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt; Upgrade the
 &lt;a href="https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack"&gt;&lt;code&gt;kube-prometheus-stack&lt;/code&gt;&lt;/a&gt;
 helm chart in &lt;a href="https://portal.azure.cn/"&gt;Azure China&lt;/a&gt; to the latest version.
 &lt;em&gt;Side effect&lt;/em&gt;: Many container images are now missing from our internal
@@ -308,20 +528,65 @@ Container Registry). They need to be synced with &lt;a href="https://github.com/
 &lt;p&gt;Which images need to be synced? Use the command below, it is quite readable&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl get pods --all-namespaces -o json &lt;span class="p"&gt;|&lt;/span&gt; jq -r &lt;span class="s1"&gt;&amp;#39;.items[] | select(any(.status.containerStatuses[]; .state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;)) | .metadata.namespace + &amp;#34;/&amp;#34; + .metadata.name + &amp;#34;\t&amp;#34; + ( [.status.containerStatuses[] | select(.state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;).image] | join(&amp;#34;, &amp;#34;) )&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl get pods --all-namespaces -o json &lt;span class="p"&gt;|&lt;/span&gt; jq -r &lt;span class="s1"&gt;&amp;#39;.items[] | select(any(.status.containerStatuses[]; .state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;)) | .metadata.namespace + &amp;#34;/&amp;#34; + .metadata.name + &amp;#34;\t&amp;#34; + ( [.status.containerStatuses[] | select(.state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;).image] | join(&amp;#34;, &amp;#34;) )&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Sample run:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ubuntu@universe:~ $ kubectl get pods --all-namespaces -o json &lt;span class="p"&gt;|&lt;/span&gt; jq -r &lt;span class="s1"&gt;&amp;#39;.items[]
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s1"&gt; | select(any(.status.containerStatuses[]; .state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;))
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s1"&gt; | .metadata.namespace + &amp;#34;/&amp;#34; + .metadata.name + &amp;#34;\t&amp;#34; +
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s1"&gt; ( [.status.containerStatuses[] | select(.state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;).image] | join(&amp;#34;, &amp;#34;) )&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;monitoring/clustermon-kube-prometheus-operator-67c8b6c87c-w72km &lt;span class="o"&gt;{&lt;/span&gt;my-registry-name&lt;span class="o"&gt;}&lt;/span&gt;.azurecr.cn/quay.io/prometheus-operator/prometheus-operator:v0.83.0
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;monitoring/clustermon-prometheus-node-exporter-v7bpt &lt;span class="o"&gt;{&lt;/span&gt;my-registry-name&lt;span class="o"&gt;}&lt;/span&gt;.azurecr.cn/quay.io/prometheus/node-exporter:v1.9.1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;#34;{password}&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; skopeo login &lt;span class="o"&gt;{&lt;/span&gt;my-registry-name&lt;span class="o"&gt;}&lt;/span&gt;.azurecr.cn --password-stdin --username &lt;span class="o"&gt;{&lt;/span&gt;my-username&lt;span class="o"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;monitoring/clustermon-prometheus-node-exporter-v7bpt &lt;span class="o"&gt;{&lt;/span&gt;my-registry-name&lt;span class="o"&gt;}&lt;/span&gt;.azurecr.cn/quay.io/prometheus/node-exporter:v1.9.1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;How to &lt;code&gt;skopeo&lt;/code&gt;? First, log in:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;#34;{password}&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; skopeo login &lt;span class="o"&gt;{&lt;/span&gt;my-registry-name&lt;span class="o"&gt;}&lt;/span&gt;.azurecr.cn --password-stdin --username &lt;span class="o"&gt;{&lt;/span&gt;my-username&lt;span class="o"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;How do you get these credentials? Log in to the Azure China Portal, find the ACR
+resource, navigate to Settings &amp;gt; Access keys.&lt;/p&gt;
+&lt;p&gt;Then sync each image&lt;sup id="fnref:2"&gt;&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% skopeo sync &lt;span class="se"&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="se"&gt;&lt;/span&gt; --override-os linux --override-arch amd64 &lt;span class="se"&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="se"&gt;&lt;/span&gt; --src docker --dest docker &lt;span class="se"&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="se"&gt;&lt;/span&gt; quay.io/prometheus/node-exporter:v1.9.1 &lt;span class="se"&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="se"&gt;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;my-registry-name&lt;span class="o"&gt;}&lt;/span&gt;.azurecr.cn/quay.io/prometheus&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Kubernetes: list all ImagePullBackOff container images"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>XSLT in RSS feed</title><link>https://perrotta.dev/2025/08/xslt-in-rss-feed/</link><pubDate>Wed, 20 Aug 2025 14:03:18 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/xslt-in-rss-feed/</guid><description>&lt;p&gt;&lt;a href="https://www.jwz.org/blog/2025/08/xslt/"&gt;There&amp;rsquo;s&lt;/a&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="se"&gt;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;my-registry-name&lt;span class="o"&gt;}&lt;/span&gt;.azurecr.cn/quay.io/prometheus&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;I cannot promise I am able to craft this by hand without looking up man
+pages or getting assistance from an LLM. &lt;em&gt;C&amp;rsquo;est la vie&lt;/em&gt;.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;If there are many images, consider using an
+&lt;a href="https://www.gnu.org/software/bash/manual/html_node/Arrays.html"&gt;array&lt;/a&gt; +
+&lt;code&gt;for&lt;/code&gt; loop.&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Kubernetes: list all ImagePullBackOff container images"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>XSLT in RSS feed</title><link>https://perrotta.dev/2025/08/xslt-in-rss-feed/</link><pubDate>Wed, 20 Aug 2025 14:03:18 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/xslt-in-rss-feed/</guid><description>&lt;p&gt;&lt;a href="https://www.jwz.org/blog/2025/08/xslt/"&gt;There&amp;rsquo;s&lt;/a&gt;
 &lt;a href="https://simonwillison.net/2025/Aug/19/xslt/#atom-everything"&gt;some&lt;/a&gt;
 &lt;a href="https://www.osnews.com/story/143123/google-is-killing-the-open-web/"&gt;buzz&lt;/a&gt;
 &lt;a href="https://wok.oblomov.eu/tecnologia/google-killing-open-web/"&gt;around&lt;/a&gt;
@@ -357,11 +622,63 @@ directly.&lt;/p&gt;
 &lt;p&gt;First we patch the root app (app-of-apps pattern):&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl edit app -n argocd root&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl edit appproject -n argocd cluster&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl edit app -n argocd traefik&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl get deploy -n kube-system traefik -w&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: recovery when traefik is broken"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>terraform: bypass lock</title><link>https://perrotta.dev/2025/08/terraform-bypass-lock/</link><pubDate>Mon, 04 Aug 2025 11:49:16 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/terraform-bypass-lock/</guid><description>&lt;p&gt;Terraform supports &lt;a href="https://developer.hashicorp.com/terraform/language/state/locking"&gt;state
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl edit app -n argocd root&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;We remove the &lt;code&gt;automated&lt;/code&gt; block, to effectively pause auto sync, otherwise our
+subsequent changes to traefik would be immediately reverted:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;spec:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;# automated:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;# prune: [..]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;# selfHeal: [...]&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;You can comment or delete the &lt;code&gt;automated:&lt;/code&gt; block, either is fine.&lt;/p&gt;
+&lt;p&gt;Next, we need to remove traefik from all application project (app project) sync
+windows, so that changes to it will be immediately applied:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl edit appproject -n argocd cluster&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The traefik entry got removed from all sync windows.&lt;/p&gt;
+&lt;p&gt;Now, finally, let&amp;rsquo;s instruct Argo to roll traefik back.&lt;/p&gt;
+&lt;p&gt;The broken version is 2.5.1, the previous working version was 2.4.1.&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl edit app -n argocd traefik&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Update &lt;code&gt;targetRevision: 2.4.1&lt;/code&gt; under the &lt;code&gt;helm&lt;/code&gt; block.&lt;/p&gt;
+&lt;p&gt;Wait a few seconds. Observe traefik pods as they are rolling restarted:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl get deploy -n kube-system traefik -w&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Finally, all services are once again accessible!&lt;/p&gt;
+&lt;p&gt;From this point on, we can go back to &lt;code&gt;git&lt;/code&gt; and do a proper pull request revert
+to reconcile the codebase with the live cluster state.&lt;/p&gt;
+&lt;p&gt;This was an interesting exercise. I&amp;rsquo;m quite familiar with ArgoCD and GitOps at
+this point, and I instinctively knew what to do in this situation, without
+needing to consult the official documentation or even an LLM. I wouldn&amp;rsquo;t have
+minded doing either of these if needed, but the point is that it feels good to
+be well familiar with how a system works and how to apply your knowledge to fix
+day-to-day problems.&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: recovery when traefik is broken"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>terraform: bypass lock</title><link>https://perrotta.dev/2025/08/terraform-bypass-lock/</link><pubDate>Mon, 04 Aug 2025 11:49:16 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/terraform-bypass-lock/</guid><description>&lt;p&gt;Terraform supports &lt;a href="https://developer.hashicorp.com/terraform/language/state/locking"&gt;state
 locking&lt;/a&gt;:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;If supported by your backend, Terraform will lock your state for all
@@ -371,7 +688,10 @@ lock and potentially corrupting your state.&lt;/p&gt;
 &lt;p&gt;Neat, right?&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% op run --env-file&lt;span class="o"&gt;=&lt;/span&gt;.env -- terraform plan
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;╷
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ Error: Error acquiring the state lock
@@ -394,16 +714,52 @@ lock and potentially corrupting your state.&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ Terraform acquires a state lock to protect the state from being written
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ by multiple users at the same time. Please resolve the issue above and try
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ again. For most commands, you can disable locking with the &lt;span class="s2"&gt;&amp;#34;-lock=false&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ flag, but this is not recommended.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ flag, but this is not recommended.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It even uses a custom &lt;a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/412"&gt;HTTP
+Status&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;The HTTP 412 Precondition Failed&lt;/strong&gt; &lt;em&gt;client error response status code&lt;/em&gt;
+indicates that access to the target resource was denied. This happens with
+conditional requests on methods other than GET or HEAD when the condition
+defined by the If-Unmodified-Since or If-Match headers is not fulfilled. In
+that case, the request (usually an upload or a modification of a resource)
+cannot be made and this error response is sent back.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;If you&amp;rsquo;re sure no one else is working on that workspace, you can proceed with
+&lt;code&gt;-lock=false&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% op run --env-file&lt;span class="o"&gt;=&lt;/span&gt;.env -- terraform plan -lock&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uptime_check_http.chartmuseum: Refreshing state... &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;chartmuseum&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;data.aws_availability_zones.available: Reading...
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;data.aws_availability_zones.available: Read &lt;span class="nb"&gt;complete&lt;/span&gt; after 1s &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;us-east-1&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;That&amp;rsquo;s an one-off. A subsequent run without that argument will fail again:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% op run --env-file&lt;span class="o"&gt;=&lt;/span&gt;.env -- terraform plan
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;╷
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ Error: Error acquiring the state lock
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;In this case it would be better to simply remove the lock with
+&lt;a href="https://developer.hashicorp.com/terraform/language/state/locking#force-unlock"&gt;&lt;code&gt;force-unlock&lt;/code&gt;&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% op run --env-file&lt;span class="o"&gt;=&lt;/span&gt;.env -- terraform force-unlock &lt;span class="o"&gt;{&lt;/span&gt;lock-id&lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Do you really want to force-unlock?
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Terraform will remove the lock on the remote state.
@@ -415,40 +771,180 @@ lock and potentially corrupting your state.&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Terraform state has been successfully unlocked!
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;The state has been unlocked, and Terraform commands should now be able to
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;obtain a new lock on the remote state.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;obtain a new lock on the remote state.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;lock-id&lt;/code&gt; can be obtained from the &lt;code&gt;plan&lt;/code&gt; output.&lt;/p&gt;
+&lt;p&gt;Now we can &lt;code&gt;plan&lt;/code&gt; as usual:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% op run --env-file&lt;span class="o"&gt;=&lt;/span&gt;.env -- terraform plan
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uptime_check_http.chartmuseum: Refreshing state... &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;chartmuseum&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;data.aws_availability_zones.available: Reading...
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;data.aws_availability_zones.available: Read &lt;span class="nb"&gt;complete&lt;/span&gt; after 0s &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;us-east-1&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: terraform: bypass lock"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: all applications stuck on refresh</title><link>https://perrotta.dev/2025/08/argocd-all-applications-stuck-on-refresh/</link><pubDate>Fri, 01 Aug 2025 14:30:58 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/argocd-all-applications-stuck-on-refresh/</guid><description>&lt;p&gt;The problem is very likely the Application Controller.&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: terraform: bypass lock"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: all applications stuck on refresh</title><link>https://perrotta.dev/2025/08/argocd-all-applications-stuck-on-refresh/</link><pubDate>Fri, 01 Aug 2025 14:30:58 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/08/argocd-all-applications-stuck-on-refresh/</guid><description>&lt;p&gt;The problem is very likely the Application Controller.&lt;/p&gt;
 &lt;p&gt;You can restart it:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl rollout restart sts -n argocd argocd-application-controller&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl logs -n argocd argocd-application-controller-0 --tail&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; less&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: all applications stuck on refresh"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Alpine Linux: remove broken packages</title><link>https://perrotta.dev/2025/07/alpine-linux-remove-broken-packages/</link><pubDate>Sun, 20 Jul 2025 10:52:11 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/07/alpine-linux-remove-broken-packages/</guid><description>&lt;p&gt;In a sunny Sunday morning:&lt;/p&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl rollout restart sts -n argocd argocd-application-controller&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Or inspect its logs:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kubectl logs -n argocd argocd-application-controller-0 --tail&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; less&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;While we&amp;rsquo;re here, make sure there is at least one replica running:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% kubectl get sts -n argocd argocd-application-controller
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;NAME READY AGE
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;argocd-application-controller 1/1 415d&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;a href="https://github.com/argoproj/argo-cd/issues/11831"&gt;Upstream issue&lt;/a&gt;.&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: all applications stuck on refresh"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Alpine Linux: remove broken packages</title><link>https://perrotta.dev/2025/07/alpine-linux-remove-broken-packages/</link><pubDate>Sun, 20 Jul 2025 10:52:11 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/07/alpine-linux-remove-broken-packages/</guid><description>&lt;p&gt;In a sunny Sunday morning:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas apk upgrade
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;WARNING: The indexes contain broken packages which might not &lt;span class="k"&gt;function&lt;/span&gt; properly.
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;What?! Out of nowhere?&lt;/p&gt;
+&lt;p&gt;I tried a couple of basic troubleshooting commands:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas apk update --force-refresh
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas apk fix
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas apk cache clean&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas apk cache clean&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;to no avail.&lt;/p&gt;
+&lt;p&gt;Next idea: search engines. Virtually no results on &lt;a href="https://kagi.com/"&gt;Kagi&lt;/a&gt;. No
+relevant results on Google either&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;Next idea: LLMs. Nothing useful either.&lt;/p&gt;
+&lt;p&gt;This is novel territory! That&amp;rsquo;s what makes it fun to self-host Alpine Linux&lt;sup id="fnref:2"&gt;&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;My intuition tells me to start by searching their
+&lt;a href="https://gitlab.alpinelinux.org/alpine"&gt;Gitlab&lt;/a&gt;. Eventually I got linked to
+&lt;a href="https://sourcegraph.com/github.com/alpinelinux/apk-tools/-/blob/test/solver/error11.test?L3-5"&gt;this&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;test/solver/error11.test:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;@ARGS add invalid
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;@REPO error.repo
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;@EXPECT
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;WARNING: The indexes contain broken packages which are not installable.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ERROR: unable to select packages:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; invalid-1:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; error: uninstallable
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; satisfies: world[invalid]&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;From this test file, it seems possible that there&amp;rsquo;s an invalid package in my
+&lt;code&gt;/etc/apk/world&lt;/code&gt;. The error message is not quite the same, but it is similar:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% wc -l /etc/apk/world
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="m"&gt;293&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="m"&gt;293&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;There are too many packages there to hunt each of them by hand. And I didn&amp;rsquo;t
+install any new packages recently.&lt;/p&gt;
+&lt;p&gt;So I looked into &lt;code&gt;apk fix --help&lt;/code&gt; and discovered there is a &lt;code&gt;--verbose&lt;/code&gt; flag. I
+did not save its output, but there were five packages there:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- busybox-initscripts
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- kmod-openrc
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- libacl
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- py3-pep517
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- sensible-utils&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;I ran &lt;code&gt;doas apk del&lt;/code&gt; to remove all of them. That was a sensible cleanup, but it
+still has not resolved the issue.&lt;/p&gt;
+&lt;p&gt;If I want to dive deeper into this, I&amp;rsquo;ll have to add some debugging logging to
+&lt;a href="https://sourcegraph.com/github.com/alpinelinux/apk-tools@bffc60041447cadee5b69c291df8c90eb3b8fe82/-/blob/src/database.c?L2090"&gt;&lt;code&gt;src/database.c&lt;/code&gt;&lt;/a&gt;
+in &lt;code&gt;apk-tools&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="c"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;c&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;compat_depversions&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;apk_warn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s"&gt;&amp;#34;The indexes contain broken packages which %s.&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;compat_notinstallable&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;are not installable&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;might not function properly&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Then one last thought occurred to me:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% apk --version
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;apk-tools 3.0.0_rc5_git20250715-r0, compiled &lt;span class="k"&gt;for&lt;/span&gt; x86_64.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;apk-tools 3.0.0_rc5_git20250715-r0, compiled &lt;span class="k"&gt;for&lt;/span&gt; x86_64.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Aha! I am running a release candidate version of &lt;code&gt;apk&lt;/code&gt;, because I am using
+Alpine Linux edge repositories:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% cat /etc/apk/repositories
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http://dl-cdn.alpinelinux.org/alpine/edge/main
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http://dl-cdn.alpinelinux.org/alpine/edge/community
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http://dl-cdn.alpinelinux.org/alpine/edge/testing&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Alpine Linux: remove broken packages"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>pq: could not access file "$libdir/dict_snowball": No such file or directory</title><link>https://perrotta.dev/2025/07/pq-could-not-access-file-libdir/dict_snowball-no-such-file-or-directory/</link><pubDate>Thu, 10 Jul 2025 11:14:29 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/07/pq-could-not-access-file-libdir/dict_snowball-no-such-file-or-directory/</guid><description>&lt;p&gt;My &lt;a href="http://miniflux.app/"&gt;miniflux&lt;/a&gt; instance broke yesterday. All feeds had the
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http://dl-cdn.alpinelinux.org/alpine/edge/testing&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;From the
+&lt;a href="https://wiki.alpinelinux.org/wiki/Draft_Release_Notes_for_Alpine_3.23.0"&gt;Wiki&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;After 5 years of development in the master branch of apk-tools, apk v3 is now
+ready for Alpine v3.23.0. This should be a safe and seamless upgrade from apk
+v2, but might has some breaking changes if you use libapk.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;No wonder this is bleeding edge territory!&lt;/p&gt;
+&lt;p&gt;I would say that there&amp;rsquo;s nothing to do here, other than waiting for the next
+release of Alpine Linux (3.23) with apk-tools v3, and ignoring the warning in
+the meantime.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;Their AI overview insists on spitting out useless information about
+Ubuntu, which is completely unrelated in this case.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;It is &lt;em&gt;fun&lt;/em&gt;. Right? Right?!&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Alpine Linux: remove broken packages"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>pq: could not access file "$libdir/dict_snowball": No such file or directory</title><link>https://perrotta.dev/2025/07/pq-could-not-access-file-libdir/dict_snowball-no-such-file-or-directory/</link><pubDate>Thu, 10 Jul 2025 11:14:29 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/07/pq-could-not-access-file-libdir/dict_snowball-no-such-file-or-directory/</guid><description>&lt;p&gt;My &lt;a href="http://miniflux.app/"&gt;miniflux&lt;/a&gt; instance broke yesterday. All feeds had the
 following error:&lt;/p&gt;
 
 &lt;div class="codeblock"&gt;
@@ -480,9 +976,23 @@ following error:&lt;/p&gt;
 &lt;p&gt;The fix is straightforward:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas apk add postgresql17
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas service miniflux restart&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: pq: could not access file "$libdir/dict_snowball": No such file or directory"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: deployment spec.selector: field is immutable</title><link>https://perrotta.dev/2025/06/argocd-deployment-spec.selector-field-is-immutable/</link><pubDate>Mon, 30 Jun 2025 13:04:51 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-deployment-spec.selector-field-is-immutable/</guid><description>&lt;p&gt;When using &lt;a href="https://argo-cd.readthedocs.io/en/stable/"&gt;ArgoCD&lt;/a&gt; to manage an app,
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas service miniflux restart&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Why did it break in the first place?!&lt;/p&gt;
+&lt;p&gt;There&amp;rsquo;s nothing suspicious on &lt;code&gt;postgresql17&lt;/code&gt; in the
+&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/commits/master/main/postgresql17"&gt;aports&lt;/a&gt;
+repo 🤷&lt;/p&gt;
+&lt;p&gt;What is &lt;code&gt;dict_snowball&lt;/code&gt;?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;dict_snowball&lt;/code&gt; is a PostgreSQL text search dictionary module that uses the
+Snowball stemming algorithms for full-text search.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: pq: could not access file "$libdir/dict_snowball": No such file or directory"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: deployment spec.selector: field is immutable</title><link>https://perrotta.dev/2025/06/argocd-deployment-spec.selector-field-is-immutable/</link><pubDate>Mon, 30 Jun 2025 13:04:51 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-deployment-spec.selector-field-is-immutable/</guid><description>&lt;p&gt;When using &lt;a href="https://argo-cd.readthedocs.io/en/stable/"&gt;ArgoCD&lt;/a&gt; to manage an app,
 the Deployment manifest needs to undergo significant changes, updating its
 selector labels. When trying to sync the argocd app, we get the following error:&lt;/p&gt;
 
@@ -627,16 +1137,76 @@ by Argo is in &lt;code&gt;Unknown&lt;/code&gt; sync status. A disaster! 😱&lt;
 &lt;p&gt;An observed effect:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% kubectl get --raw&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/openapi/v2&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; head -c &lt;span class="m"&gt;200&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Error from server &lt;span class="o"&gt;(&lt;/span&gt;ServiceUnavailable&lt;span class="o"&gt;)&lt;/span&gt;: the server is currently unable to handle the request&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Error from server &lt;span class="o"&gt;(&lt;/span&gt;ServiceUnavailable&lt;span class="o"&gt;)&lt;/span&gt;: the server is currently unable to handle the request&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Aha! The Kubernetes OpenAPI server is not responding properly.
+That explains why Argo is having so much trouble to figure out the state of affairs in
+the cluster.&lt;/p&gt;
+&lt;p&gt;It was quite difficult to troubleshoot this issue. There are barely any
+resources about it in the open web. We filed an Azure Support ticket, but it was
+completely useless. They offered to restart&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt; the OpenAPI server, but that
+didn&amp;rsquo;t help (of course it wouldn&amp;rsquo;t!).&lt;/p&gt;
+&lt;p&gt;Because this is a managed Kubernetes cluster, we have limited access to it,
+which includes lack of access to raw logs. The Azure portal doesn&amp;rsquo;t make it easy
+but, after digging quite deep into it, eventually we found this error message in
+the logs:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; {&amp;#34;pod&amp;#34;:&amp;#34;kube-apiserver-7785d59f4f-scqmp&amp;#34;,&amp;#34;stream&amp;#34;:&amp;#34;stderr&amp;#34;,&amp;#34;containerID&amp;#34;:&amp;#34;925345f6501626aa6cd40dd187d5cf57837389eec9cb39b2292fb9ae3f66242f&amp;#34;,&amp;#34;log&amp;#34;:&amp;#34;E0512 12:01:36.876768 1 handler.go:160] Error in OpenAPI handler: failed to build merge specs: unable to merge: duplicated path \/apis\/reports.kyverno.io\/v1\/clusterephemeralreports\n&amp;#34;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;That was the first clue! Now we know it&amp;rsquo;s related to
+&lt;a href="https://kyverno.io/"&gt;Kyverno&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;That error eventually led us to
+&lt;a href="https://github.com/kubernetes/kubernetes/issues/122668#issuecomment-2531243040"&gt;this&lt;/a&gt;
+issue in Kubernetes:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;We have the same issue here, actually also triggered by installing the kyverno
+reports-server with both apiservices (different groups served by the same
+api-server).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Aha!&lt;/p&gt;
+&lt;p&gt;Deleting the duplicate CRDs installed by &lt;a href="https://github.com/kyverno/reports-server"&gt;kyverno reports
+server&lt;/a&gt; has immediately resolved the
+OpenAPI server unresponsiveness. It wasn&amp;rsquo;t even necessary to restart it:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% kubectl delete crd ephemeralreports.reports.kyverno.io clusterephemeralreports.reports.kyverno.io clusterpolicyreports.wgpolicyk8s.io policyreports.wgpolicyk8s.io
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;customresourcedefinition.apiextensions.k8s.io &lt;span class="s2"&gt;&amp;#34;ephemeralreports.reports.kyverno.io&amp;#34;&lt;/span&gt; deleted
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;customresourcedefinition.apiextensions.k8s.io &lt;span class="s2"&gt;&amp;#34;clusterephemeralreports.reports.kyverno.io&amp;#34;&lt;/span&gt; deleted
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;customresourcedefinition.apiextensions.k8s.io &lt;span class="s2"&gt;&amp;#34;clusterpolicyreports.wgpolicyk8s.io&amp;#34;&lt;/span&gt; deleted
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;customresourcedefinition.apiextensions.k8s.io &lt;span class="s2"&gt;&amp;#34;policyreports.wgpolicyk8s.io&amp;#34;&lt;/span&gt; deleted&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;customresourcedefinition.apiextensions.k8s.io &lt;span class="s2"&gt;&amp;#34;policyreports.wgpolicyk8s.io&amp;#34;&lt;/span&gt; deleted&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;And now:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ kubectl get --raw&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/openapi/v2&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; head -c &lt;span class="m"&gt;200&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;swagger&amp;#34;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;#34;2.0&amp;#34;&lt;/span&gt;,&lt;span class="s2"&gt;&amp;#34;info&amp;#34;&lt;/span&gt;:&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;title&amp;#34;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;#34;Kubernetes&amp;#34;&lt;/span&gt;,&lt;span class="s2"&gt;&amp;#34;version&amp;#34;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;#34;v1.30.11&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;,&lt;span class="s2"&gt;&amp;#34;paths&amp;#34;&lt;/span&gt;:&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;/.well-known/openid-configuration/&amp;#34;&lt;/span&gt;:&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;get&amp;#34;&lt;/span&gt;:&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;description&amp;#34;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;#34;get service account issuer OpenID configuration, also known as&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: every application in unknown state"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: custom health check for StatefulSet (OnDelete)</title><link>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</link><pubDate>Fri, 13 Jun 2025 21:40:01 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</guid><description>&lt;p&gt;It turns out the
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;swagger&amp;#34;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;#34;2.0&amp;#34;&lt;/span&gt;,&lt;span class="s2"&gt;&amp;#34;info&amp;#34;&lt;/span&gt;:&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;title&amp;#34;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;#34;Kubernetes&amp;#34;&lt;/span&gt;,&lt;span class="s2"&gt;&amp;#34;version&amp;#34;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;#34;v1.30.11&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;,&lt;span class="s2"&gt;&amp;#34;paths&amp;#34;&lt;/span&gt;:&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;/.well-known/openid-configuration/&amp;#34;&lt;/span&gt;:&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;get&amp;#34;&lt;/span&gt;:&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;description&amp;#34;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;#34;get service account issuer OpenID configuration, also known as&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;That was a tricky one! Interestingly: it has only occurred in AKS.
+&lt;a href="https://aws.amazon.com/eks/"&gt;EKS&lt;/a&gt; was fine.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;&lt;a href="https://en.wikiquote.org/wiki/The_IT_Crowd"&gt;Hello, IT. Have you tried turning it off and on
+again?&lt;/a&gt;.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: every application in unknown state"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: custom health check for StatefulSet (OnDelete)</title><link>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</link><pubDate>Fri, 13 Jun 2025 21:40:01 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</guid><description>&lt;p&gt;It turns out the
 &lt;a href="https://github.com/argoproj/gitops-engine/blob/master/pkg/health/health_statefulset.go"&gt;built-in&lt;/a&gt;
 health check for
 &lt;a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/"&gt;StatefulSets&lt;/a&gt;
@@ -659,7 +1229,10 @@ tested multiple times, I am reasonably confident it works well (some edge cases
 could be missing though).&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="lua"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;lua&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-lua" data-lang="lua"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;health_status&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;if&lt;/span&gt; &lt;span class="n"&gt;obj.status&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;nil&lt;/span&gt; &lt;span class="kr"&gt;then&lt;/span&gt;
@@ -701,15 +1274,42 @@ could be missing though).&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;health_status.message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;RollingUpdate progressing: &amp;#34;&lt;/span&gt; &lt;span class="o"&gt;..&lt;/span&gt; &lt;span class="n"&gt;ready_replicas&lt;/span&gt; &lt;span class="o"&gt;..&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;/&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;..&lt;/span&gt; &lt;span class="n"&gt;status_replicas&lt;/span&gt; &lt;span class="o"&gt;..&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34; ready, &amp;#34;&lt;/span&gt; &lt;span class="o"&gt;..&lt;/span&gt; &lt;span class="n"&gt;updated_replicas&lt;/span&gt; &lt;span class="o"&gt;..&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;/&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;..&lt;/span&gt; &lt;span class="n"&gt;spec_replicas&lt;/span&gt; &lt;span class="o"&gt;..&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34; updated&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kr"&gt;end&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;return&lt;/span&gt; &lt;span class="n"&gt;health_status&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;return&lt;/span&gt; &lt;span class="n"&gt;health_status&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It is necessary to distinguish between &lt;code&gt;OnDelete&lt;/code&gt; and &lt;code&gt;RollingUpdate&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;OnDelete&lt;/code&gt; should not use &lt;code&gt;currentRevision&lt;/code&gt; / &lt;code&gt;update_revision&lt;/code&gt;, as these values
+don&amp;rsquo;t mean anything for that update strategy. This can be observed
+&lt;a href="https://github.com/argoproj/gitops-engine/blob/f8f1b61ba3fd5fcb647563db3106977e1364de31/pkg/health/health_statefulset.go#L63"&gt;upstream&lt;/a&gt;
+as well.&lt;/p&gt;
+&lt;p&gt;It is easy to write / tweak the health check when you look at the live STS
+resource / manifest in the cluster. &lt;code&gt;obj&lt;/code&gt; refers to the STS manifest (&lt;code&gt;kubectl get sts -o yaml&lt;/code&gt;). The most relevant field is &lt;code&gt;status:&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;If you deploy ArgoCD via its helm chart, add that check for &lt;code&gt;argocd-cm&lt;/code&gt;. The
+&lt;code&gt;values.yaml&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;argo-cd&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;configs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;cm&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;resource.customizations.health.apps_StatefulSet&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="sd"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="sd"&gt; health_status = {}
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="sd"&gt; [...]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="sd"&gt; [...]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This custom health check was partly inspired by a Prometheus alert we have:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;StatefulSetUpdateNotRolledOut&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nt"&gt;expr&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;max without (revision) (kube_statefulset_status_current_revision unless kube_statefulset_status_update_revision) * (kube_statefulset_replicas != kube_statefulset_status_replicas_updated)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: custom health check for StatefulSet (OnDelete)"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: application stuck in unknown</title><link>https://perrotta.dev/2025/06/argocd-application-stuck-in-unknown/</link><pubDate>Thu, 12 Jun 2025 11:51:32 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-application-stuck-in-unknown/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: An application in ArgoCD that was previously running
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nt"&gt;expr&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;max without (revision) (kube_statefulset_status_current_revision unless kube_statefulset_status_update_revision) * (kube_statefulset_replicas != kube_statefulset_status_replicas_updated)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;How long will it take until LLMs &lt;del&gt;steal&lt;/del&gt; adopt this novel solution from me?&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: custom health check for StatefulSet (OnDelete)"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: application stuck in unknown</title><link>https://perrotta.dev/2025/06/argocd-application-stuck-in-unknown/</link><pubDate>Thu, 12 Jun 2025 11:51:32 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-application-stuck-in-unknown/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: An application in ArgoCD that was previously running
 smoothly has suddenly started to fail. Its status has changed to &amp;ldquo;Unknown&amp;rdquo;.
 The &amp;ldquo;Refresh&amp;rdquo; button is grayed out in the Argo web UI.&lt;/p&gt;
 &lt;p&gt;I found the following works in this scenario, which is typically a transient
@@ -721,9 +1321,14 @@ issue:&lt;/p&gt;
 &lt;p&gt;In terms of commands:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% kubectl rollout restart deployment argocd-server -n argocd
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% kubectl rollout restart deployment argocd-repo-server -n argocd&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: application stuck in unknown"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: upgrade to v3, remove helm labels</title><link>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</link><pubDate>Mon, 02 Jun 2025 13:03:24 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</guid><description>&lt;p&gt;I am leading the effort to upgrade ArgoCD to its &lt;a href="https://blog.argoproj.io/announcing-argo-cd-v3-small-but-mighty-df05c0b39ad6"&gt;newest major version
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% kubectl rollout restart deployment argocd-repo-server -n argocd&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: application stuck in unknown"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: upgrade to v3, remove helm labels</title><link>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</link><pubDate>Mon, 02 Jun 2025 13:03:24 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</guid><description>&lt;p&gt;I am leading the effort to upgrade ArgoCD to its &lt;a href="https://blog.argoproj.io/announcing-argo-cd-v3-small-but-mighty-df05c0b39ad6"&gt;newest major version
 (v3)&lt;/a&gt;
 across our fleet.&lt;/p&gt;
 &lt;p&gt;One of its &lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/upgrading/2.14-3.0/"&gt;breaking
@@ -731,17 +1336,41 @@ changes&lt;/a&gt;
 is the removal of helm labels from argo applications, like such:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="yaml"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;metadata&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="c"&gt;# [...]&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;labels&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;app.kubernetes.io/managed-by&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;Helm&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;app.kubernetes.io/managed-by&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;Helm&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Applying a normal sync does not get rid of the label.&lt;/p&gt;
+&lt;p&gt;I found out that doing an one-off &lt;a href="https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/#server-side-apply"&gt;server-side apply
+sync&lt;/a&gt;
+addresses the label removal, and it is safe to do (incurs no downtime):&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;However, there are some cases where you want to use &lt;code&gt;kubectl apply --server-side&lt;/code&gt; over &lt;code&gt;kubectl apply&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;[&amp;hellip;]&lt;/p&gt;
+&lt;p&gt;Patching of existing resources on the cluster that are not fully managed by
+Argo CD.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;There&amp;rsquo;s no need to make the server-side apply a permanent config, i.e.:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;apiVersion&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;argoproj.io/v1alpha1&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nt"&gt;kind&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;Application&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nt"&gt;spec&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;syncPolicy&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;syncOptions&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="l"&gt;ServerSideApply=true&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: upgrade to v3, remove helm labels"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>PDB: minAvailable and maxUnavailable cannot be both set</title><link>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</link><pubDate>Mon, 02 Jun 2025 12:00:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</guid><description>&lt;p&gt;In Kubernetes it&amp;rsquo;s not possible to have a &lt;a href="https://kubernetes.io/docs/tasks/run-application/configure-pdb/"&gt;&lt;code&gt;PodDisruptionBudget&lt;/code&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="l"&gt;ServerSideApply=true&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;though there&amp;rsquo;s no harm either in doing so.&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: upgrade to v3, remove helm labels"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>PDB: minAvailable and maxUnavailable cannot be both set</title><link>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</link><pubDate>Mon, 02 Jun 2025 12:00:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</guid><description>&lt;p&gt;In Kubernetes it&amp;rsquo;s not possible to have a &lt;a href="https://kubernetes.io/docs/tasks/run-application/configure-pdb/"&gt;&lt;code&gt;PodDisruptionBudget&lt;/code&gt;
 (PDB)&lt;/a&gt; with
 both &lt;code&gt;minAvailable&lt;/code&gt; and &lt;code&gt;maxUnavailable&lt;/code&gt; set simultaneously:&lt;/p&gt;
 
@@ -754,12 +1383,21 @@ come from?&lt;/p&gt;
 intermediate state containing both properties:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="yaml"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# [...]&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="nt"&gt;spec&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;minAvailable&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;maxUnavailable&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="c"&gt;# [...]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: PDB: minAvailable and maxUnavailable cannot be both set"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>pre-commit: add hugo build</title><link>https://perrotta.dev/2025/05/pre-commit-add-hugo-build/</link><pubDate>Sat, 24 May 2025 17:29:48 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/pre-commit-add-hugo-build/</guid><description>&lt;p&gt;Sometimes I make changes to this blog that yield build errors with its static
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;&lt;/span&gt;&lt;span class="c"&gt;# [...]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;One solution is to sync the underlying application PDB manifest with
+&lt;a href="https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/#replace-resource-instead-of-applying-changes"&gt;replace&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;: It&amp;rsquo;s better to &amp;ldquo;sync with replace&amp;rdquo; &lt;strong&gt;only&lt;/strong&gt; the PDB. Do not do it
+in the entire application.&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: PDB: minAvailable and maxUnavailable cannot be both set"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>pre-commit: add hugo build</title><link>https://perrotta.dev/2025/05/pre-commit-add-hugo-build/</link><pubDate>Sat, 24 May 2025 17:29:48 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/pre-commit-add-hugo-build/</guid><description>&lt;p&gt;Sometimes I make changes to this blog that yield build errors with its static
 site generator (&lt;a href="https://gohugo.io/"&gt;hugo&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;It&amp;rsquo;s trivial to spot these changes with a simple &lt;code&gt;hugo build&lt;/code&gt;, but &lt;a href="https://perrotta.dev/2025/03/yolo-debug-only-after-push/"&gt;I don&amp;rsquo;t always
 run it&lt;/a&gt;.&lt;/p&gt;
@@ -792,7 +1430,10 @@ would expect:&lt;/p&gt;
 &lt;p&gt;This is trivial with a &lt;a href="https://pre-commit.com/"&gt;pre-commit.com&lt;/a&gt; hook:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="diff"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;diff&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-diff" data-lang="diff"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Author: Thiago Perrotta &amp;lt;{email redacted}&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Date: Sat May 24 17:26:59 2025 +0200
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
@@ -811,7 +1452,15 @@ would expect:&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gi"&gt;+ language: system
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gi"&gt;+ entry: just build
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="gi"&gt;+ pass_filenames: false
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Here&amp;rsquo;s the end result:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% git commit -m &lt;span class="s2"&gt;&amp;#34;test&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Check hooks apply to the repository.............................................&lt;span class="o"&gt;(&lt;/span&gt;no files to check&lt;span class="o"&gt;)&lt;/span&gt;Skipped
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Check &lt;span class="k"&gt;for&lt;/span&gt; useless excludes......................................................&lt;span class="o"&gt;(&lt;/span&gt;no files to check&lt;span class="o"&gt;)&lt;/span&gt;Skipped
@@ -828,28 +1477,89 @@ would expect:&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ERROR &lt;span class="o"&gt;[&lt;/span&gt;en&lt;span class="o"&gt;]&lt;/span&gt; REF_NOT_FOUND: Ref &lt;span class="s2"&gt;&amp;#34;a/2024-12-23-unbuffer&amp;#34;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;#34;/Users/tperrotta/Workspace/perrotta.dev/content/posts/2025-05-24-watch-with-color.md:54:54&amp;#34;&lt;/span&gt;: page not found
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Total in &lt;span class="m"&gt;276&lt;/span&gt; ms
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Error: error building site: logged &lt;span class="m"&gt;1&lt;/span&gt; error&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;error: Recipe &lt;span class="sb"&gt;`&lt;/span&gt;build&lt;span class="sb"&gt;`&lt;/span&gt; failed on line &lt;span class="m"&gt;19&lt;/span&gt; with &lt;span class="nb"&gt;exit&lt;/span&gt; code &lt;span class="m"&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: pre-commit: add hugo build"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>PostgreSQL major version upgrade on Alpine Linux</title><link>https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/</link><pubDate>Sat, 24 May 2025 16:00:23 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/</guid><description>&lt;h2 id="problem-statement"&gt;Problem statement&lt;/h2&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;error: Recipe &lt;span class="sb"&gt;`&lt;/span&gt;build&lt;span class="sb"&gt;`&lt;/span&gt; failed on line &lt;span class="m"&gt;19&lt;/span&gt; with &lt;span class="nb"&gt;exit&lt;/span&gt; code &lt;span class="m"&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: pre-commit: add hugo build"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>PostgreSQL major version upgrade on Alpine Linux</title><link>https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/</link><pubDate>Sat, 24 May 2025 16:00:23 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/</guid><description>&lt;h2 id="problem-statement"&gt;Problem statement&lt;/h2&gt;
 &lt;p&gt;Given Alpine Linux 3.22 running PostgreSQL 16, upgrade to PostgreSQL 17. For
 this specific example, consider a &lt;a href="https://miniflux.app/"&gt;&lt;code&gt;miniflux&lt;/code&gt;&lt;/a&gt; database.&lt;/p&gt;
 &lt;h2 id="procedure"&gt;Procedure&lt;/h2&gt;
 &lt;p&gt;Install PostgreSQL 17:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas apk add postgres&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas service postgresql stop&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas pg_versions set-default &lt;span class="m"&gt;17&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas apk add postgres&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It can coexist with &lt;code&gt;postgres16&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Stop the PostgreSQL daemon:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas service postgresql stop&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If you navigate to the Miniflux server with your browser, it will fail, as
+expected:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;store: unable to create app session: dial tcp [::1]:5432: connect: connection refused&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Change the PostgreSQL system version to the desired one:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas pg_versions set-default &lt;span class="m"&gt;17&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Change to the root user, for convenience, then change to the existing postgresql
+directory:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas su
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% &lt;span class="nb"&gt;cd&lt;/span&gt; /var/lib/postgresql/&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% &lt;span class="nb"&gt;cd&lt;/span&gt; /var/lib/postgresql/&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Prepare files and directories for the upgrade:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% &lt;span class="nb"&gt;cd&lt;/span&gt; 16/
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% mv data olddata
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% &lt;span class="nb"&gt;cd&lt;/span&gt; ../
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% mkdir 17/
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% &lt;span class="nb"&gt;cd&lt;/span&gt; 17/
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% mkdir data tmp
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% chown postgres:postgres data tmp&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% chown postgres:postgres data tmp&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Change to the &lt;code&gt;postgres&lt;/code&gt; user:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% su postgres
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% &lt;span class="nb"&gt;cd&lt;/span&gt; tmp/&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% &lt;span class="nb"&gt;cd&lt;/span&gt; tmp/&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Initialize the new cluster:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% initdb -D /var/lib/postgresql/17/data --locale&lt;span class="o"&gt;=&lt;/span&gt;en_US.UTF-8 --encoding&lt;span class="o"&gt;=&lt;/span&gt;UTF8 &lt;span class="o"&gt;[&lt;/span&gt;--data-checksums&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;The files belonging to this database system will be owned by user &lt;span class="s2"&gt;&amp;#34;postgres&amp;#34;&lt;/span&gt;.
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;This user must also own the server process.
@@ -873,7 +1583,22 @@ this specific example, consider a &lt;a href="https://miniflux.app/"&gt;&lt;code
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;initdb: warning: enabling &lt;span class="s2"&gt;&amp;#34;trust&amp;#34;&lt;/span&gt; authentication &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nb"&gt;local&lt;/span&gt; connections
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next &lt;span class="nb"&gt;time&lt;/span&gt; you run initdb.
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Success.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Success.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;In the previous command I chose to omit &lt;code&gt;--data-checksums&lt;/code&gt;, otherwise I get the
+following error:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;old cluster does not use data checksums but the new one does
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Failure, exiting&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Upgrade the new cluster:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% pg_upgrade -b /usr/libexec/postgresql16/ -B /usr/libexec/postgresql17/ -d /var/lib/postgresql/16/olddata/ -D /var/lib/postgresql/17/data/
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Performing Consistency Checks
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-----------------------------
@@ -926,13 +1651,37 @@ this specific example, consider a &lt;a href="https://miniflux.app/"&gt;&lt;code
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Once you start the new server, consider running:
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; /usr/libexec/postgresql17/vacuumdb --all --analyze-in-stages
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Running this script will delete the old cluster&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;s data files:
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ./delete_old_cluster.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ./delete_old_cluster.sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Now clean up:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% ^D &lt;span class="c1"&gt;# go back to the root user&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% /var/lib/postgresql/17/tmp/delete_old_cluster.sh
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% rmdir /var/lib/postgresql/16/ &lt;span class="c1"&gt;# it should be empty by now&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% rmdir /var/lib/postgresql/16/ &lt;span class="c1"&gt;# it should be empty by now&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If you&amp;rsquo;re curious about this script, it&amp;rsquo;s a simple one-liner:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/bin/sh
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rm -rf &lt;span class="s1"&gt;&amp;#39;/var/lib/postgresql/16/olddata&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rm -rf &lt;span class="s1"&gt;&amp;#39;/var/lib/postgresql/16/olddata&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Finally, let&amp;rsquo;s get the cluster back up and vacuum it:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% ^D &lt;span class="c1"&gt;# go back to your main user&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas service postgresql start
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas su - postgres -c &lt;span class="s1"&gt;&amp;#39;/usr/libexec/postgresql17/vacuumdb --all --analyze-in-stages&amp;#39;&lt;/span&gt;
@@ -944,8 +1693,26 @@ this specific example, consider a &lt;a href="https://miniflux.app/"&gt;&lt;code
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vacuumdb: processing database &lt;span class="s2"&gt;&amp;#34;template1&amp;#34;&lt;/span&gt;: Generating medium optimizer statistics &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt; targets&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vacuumdb: processing database &lt;span class="s2"&gt;&amp;#34;miniflux&amp;#34;&lt;/span&gt;: Generating default &lt;span class="o"&gt;(&lt;/span&gt;full&lt;span class="o"&gt;)&lt;/span&gt; optimizer statistics
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vacuumdb: processing database &lt;span class="s2"&gt;&amp;#34;postgres&amp;#34;&lt;/span&gt;: Generating default &lt;span class="o"&gt;(&lt;/span&gt;full&lt;span class="o"&gt;)&lt;/span&gt; optimizer statistics
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vacuumdb: processing database &lt;span class="s2"&gt;&amp;#34;template1&amp;#34;&lt;/span&gt;: Generating default &lt;span class="o"&gt;(&lt;/span&gt;full&lt;span class="o"&gt;)&lt;/span&gt; optimizer statistics&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas apk del postgresql16 postgres16-contrib&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vacuumdb: processing database &lt;span class="s2"&gt;&amp;#34;template1&amp;#34;&lt;/span&gt;: Generating default &lt;span class="o"&gt;(&lt;/span&gt;full&lt;span class="o"&gt;)&lt;/span&gt; optimizer statistics&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;At this point, Miniflux should be working again.
+Navigate to &lt;code&gt;/about&lt;/code&gt; and verify its database version: &lt;code&gt;Postgres version: 17.5&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Last step, delete the previous package:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas apk del postgresql16 postgres16-contrib&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Double-check the newer version is still installed:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% apk list -I &lt;span class="p"&gt;|&lt;/span&gt; grep postgres
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;libpq-17.5-r0 x86_64 &lt;span class="o"&gt;{&lt;/span&gt;postgresql17&lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;PostgreSQL&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;installed&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;postgresql-common-1.2-r1 x86_64 &lt;span class="o"&gt;{&lt;/span&gt;postgresql-common&lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;MIT&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;installed&lt;span class="o"&gt;]&lt;/span&gt;
@@ -954,25 +1721,59 @@ this specific example, consider a &lt;a href="https://miniflux.app/"&gt;&lt;code
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;postgresql17-17.5-r0 x86_64 &lt;span class="o"&gt;{&lt;/span&gt;postgresql17&lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;PostgreSQL&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;installed&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;postgresql17-client-17.5-r0 x86_64 &lt;span class="o"&gt;{&lt;/span&gt;postgresql17&lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;PostgreSQL&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;installed&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;postgresql17-contrib-17.5-r0 x86_64 &lt;span class="o"&gt;{&lt;/span&gt;postgresql17&lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;PostgreSQL&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;installed&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;postgresql17-openrc-17.5-r0 x86_64 &lt;span class="o"&gt;{&lt;/span&gt;postgresql17&lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;PostgreSQL&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;installed&lt;span class="o"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: PostgreSQL major version upgrade on Alpine Linux"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>npx serve</title><link>https://perrotta.dev/2025/05/npx-serve/</link><pubDate>Sat, 24 May 2025 11:14:22 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/npx-serve/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2024/01/start-an-http-server-asap/"&gt;Previously&lt;/a&gt;:&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;postgresql17-openrc-17.5-r0 x86_64 &lt;span class="o"&gt;{&lt;/span&gt;postgresql17&lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;PostgreSQL&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;installed&lt;span class="o"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;And we&amp;rsquo;re done!&lt;/p&gt;
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://wiki.alpinelinux.org/wiki/Postgresql"&gt;https://wiki.alpinelinux.org/wiki/Postgresql&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://beune.dev/posts/upgrade-alpine-postgresql/"&gt;https://beune.dev/posts/upgrade-alpine-postgresql/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: PostgreSQL major version upgrade on Alpine Linux"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>npx serve</title><link>https://perrotta.dev/2025/05/npx-serve/</link><pubDate>Sat, 24 May 2025 11:14:22 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/npx-serve/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2024/01/start-an-http-server-asap/"&gt;Previously&lt;/a&gt;:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Start an HTTP server ASAP&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id="option-5-use-node"&gt;Option #5: use &lt;code&gt;node&lt;/code&gt;&lt;/h2&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% npx serve&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: npx serve"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>kubernetes: list pending pods in daemonset</title><link>https://perrotta.dev/2025/05/kubernetes-list-pending-pods-in-daemonset/</link><pubDate>Tue, 20 May 2025 16:41:00 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/kubernetes-list-pending-pods-in-daemonset/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Given a DaemonSet with a couple of pods stuck in
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% npx serve&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;a href="https://www.npmjs.com/package/serve"&gt;serve&lt;/a&gt; comes from Vercel:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;serve&lt;/code&gt; helps you serve a static site, single page application or just a static
+file (no matter if on your device or on the local network). It also provides a
+neat interface for listing the directory&amp;rsquo;s contents:&lt;/p&gt;
+&lt;p&gt;The quickest way to get started is to just run npx serve in your project&amp;rsquo;s
+directory.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: npx serve"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>kubernetes: list pending pods in daemonset</title><link>https://perrotta.dev/2025/05/kubernetes-list-pending-pods-in-daemonset/</link><pubDate>Tue, 20 May 2025 16:41:00 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/kubernetes-list-pending-pods-in-daemonset/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Given a DaemonSet with a couple of pods stuck in
 &amp;ldquo;Pending&amp;rdquo; state during their rollout, find out which nodes did not yet complete
 the pod initialization.&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% kubectl get nodes -o name &lt;span class="p"&gt;|&lt;/span&gt; grep -vFf &amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;kubectl get pods -n &lt;span class="o"&gt;{&lt;/span&gt;namespace&lt;span class="o"&gt;}&lt;/span&gt; -l &lt;span class="o"&gt;{&lt;/span&gt;ds-label-selector&lt;span class="o"&gt;}&lt;/span&gt; -o wide --no-headers &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{print &amp;#34;node/&amp;#34; $7}&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;node/aks-database-12345678-vmss000000
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;node/aks-database-12345678-vmss000002
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;node/aks-systempool-87654321-vmss000000
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;node/aks-systempool-87654321-vmss000001&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: kubernetes: list pending pods in daemonset"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>WinterBreak: hello world</title><link>https://perrotta.dev/2025/05/winterbreak-hello-world/</link><pubDate>Sat, 17 May 2025 12:21:26 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/winterbreak-hello-world/</guid><description>&lt;p&gt;I decided to
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;node/aks-systempool-87654321-vmss000001&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Notes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;kubectl get nodes -o name&lt;/code&gt;: list all node names in the &lt;code&gt;node/&amp;lt;name&amp;gt;&lt;/code&gt; form&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kubectl get pods [...] -o wide&lt;/code&gt;: get the node name for each running DaemonSet pod&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;awk '{print &amp;quot;node/&amp;quot; $7}'&lt;/code&gt;: get the node name matching the output of &lt;code&gt;get nodes&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;grep [...]&lt;/code&gt;: find the nodes we are looking for&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Surely there must be an easier way to accomplish this?&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: kubernetes: list pending pods in daemonset"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>WinterBreak: hello world</title><link>https://perrotta.dev/2025/05/winterbreak-hello-world/</link><pubDate>Sat, 17 May 2025 12:21:26 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/05/winterbreak-hello-world/</guid><description>&lt;p&gt;I decided to
 &lt;a href="https://en.wikipedia.org/wiki/Privilege_escalation#Jailbreaking"&gt;jailbreak&lt;/a&gt; my
 Kindle on January 1st this year, once I got aware of the
 &lt;a href="https://kindlemodding.org/jailbreaking/WinterBreak/"&gt;WinterBreak&lt;/a&gt;&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt; exploit,
@@ -1196,20 +1997,45 @@ tagged with a given &lt;code&gt;content&lt;/code&gt; tag:&lt;/p&gt;
 &lt;p&gt;We can do so with the following logseq query&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="logseq"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;logseq&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;pre tabindex="0"&gt;&lt;code class="language-logseq" data-lang="logseq"&gt;#+BEGIN_QUERY
 {
  :title &amp;#34;Ideas 💡 (-&amp;gt;)&amp;#34;
  :query (property :tags &amp;#34;idea&amp;#34;)
 }
 #+END_QUERY&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;This is a static query, not meant to be changed.&lt;/p&gt;
+&lt;p&gt;Alternatively it&amp;rsquo;s possible to create a live query, which allows one to tweak it
+on-the-fly:&lt;/p&gt;
 
+&lt;div class="codeblock" data-lang="logseq"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;logseq&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;pre tabindex="0"&gt;&lt;code class="language-logseq" data-lang="logseq"&gt;{{query (property :tags &amp;#34;idea&amp;#34;)}}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;The query syntax is somewhat a blend of &lt;a href="https://orgmode.org"&gt;orgmode&lt;/a&gt; +
+emacs lisp from emacs.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
 &lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Logseq: list all pages of a tag"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>HashiCorp Vault from helm values</title><link>https://perrotta.dev/2025/04/hashicorp-vault-from-helm-values/</link><pubDate>Wed, 23 Apr 2025 16:56:16 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/hashicorp-vault-from-helm-values/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Populate HashiCorp Vault with select keys from &lt;code&gt;helm get values&lt;/code&gt; for a given chart release.&lt;/p&gt;
 &lt;p&gt;The following script works:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/bin/bash
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Usage: Tweak entries as needed and then run the script.&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
@@ -1258,7 +2084,11 @@ tagged with a given &lt;code&gt;content&lt;/code&gt; tag:&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; rm ~/.vault-token
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;main&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: HashiCorp Vault from helm values"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Alpine Linux: the maintainer workflow</title><link>https://perrotta.dev/2025/04/alpine-linux-the-maintainer-workflow/</link><pubDate>Sun, 20 Apr 2025 15:12:09 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/alpine-linux-the-maintainer-workflow/</guid><description>&lt;p&gt;I maintain &lt;a href="https://pkgs.alpinelinux.org/packages?name=&amp;amp;branch=edge&amp;amp;repo=&amp;amp;arch=x86_64&amp;amp;origin=&amp;amp;flagged=&amp;amp;maintainer=Thiago+Perrotta"&gt;a couple of
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;main&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;FIRST&lt;/code&gt;: In the first time we need to create an entry (&lt;code&gt;vault kv put&lt;/code&gt;), in the
+second time we need to patch it (&lt;code&gt;vault kv patch&lt;/code&gt;).&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: HashiCorp Vault from helm values"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Alpine Linux: the maintainer workflow</title><link>https://perrotta.dev/2025/04/alpine-linux-the-maintainer-workflow/</link><pubDate>Sun, 20 Apr 2025 15:12:09 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/04/alpine-linux-the-maintainer-workflow/</guid><description>&lt;p&gt;I maintain &lt;a href="https://pkgs.alpinelinux.org/packages?name=&amp;amp;branch=edge&amp;amp;repo=&amp;amp;arch=x86_64&amp;amp;origin=&amp;amp;flagged=&amp;amp;maintainer=Thiago+Perrotta"&gt;a couple of
 packages&lt;/a&gt;
 on Alpine Linux.&lt;/p&gt;
 &lt;p&gt;Every now and then, a new software version is released, and it&amp;rsquo;s my duty&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt; as an
@@ -1298,8 +2128,53 @@ already &lt;code&gt;master&lt;/code&gt;. But, if not, then &lt;code&gt;git reset
 cheating:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% abump argocd-2.14.9&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Alpine Linux: the maintainer workflow"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>SAML Chrome Panel</title><link>https://perrotta.dev/2025/03/saml-chrome-panel/</link><pubDate>Wed, 12 Mar 2025 00:51:05 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/saml-chrome-panel/</guid><description>&lt;p&gt;&lt;a href="https://chromewebstore.google.com/detail/saml-chrome-panel/paijfdbeoenhembfhkhllainmocckace"&gt;SAML Chrome Panel&lt;/a&gt;:&lt;/p&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% abump argocd-2.14.9&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This will update the version and checksums in the corresponding &lt;code&gt;APKBUILD&lt;/code&gt; and
+trigger a package build.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s sensible to check the package release notes or changelog to find potential
+incompatibilities and/or updates to the build process. It&amp;rsquo;s also sensible to
+look at the package diffs to inspect for potential malware, which is becoming
+increasingly more common these days in open source packages. &amp;ldquo;Secure your supply
+chain&amp;rdquo;, as they say it.&lt;/p&gt;
+&lt;p&gt;If the build completes successfully, create a new branch (&lt;code&gt;git nb argocd&lt;/code&gt;),
+commit, push it (&lt;code&gt;git pushm&lt;/code&gt;), then create a merge request (MR) on
+&lt;a href="https://gitlab.alpinelinux.org/"&gt;GitLab&lt;/a&gt;. I normally use the Web UI to do so,
+but it&amp;rsquo;s also possible to do it with the CLI. A link to create the MR is printed
+to stdout upon pushing the branch, which makes the process even easier.&lt;/p&gt;
+&lt;p&gt;It could happen that the MR fails CI for some architectures (even if it works
+locally on my machine™). These errors need to be dealt with.&lt;/p&gt;
+&lt;p&gt;The commit message must follow a certain style. I have a pre-commit script set
+up that does it for me. It is typically in this form:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;testing/argocd: upgrade to 2.14.9&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;There&amp;rsquo;s a rule: only one package per merge request.&lt;/p&gt;
+&lt;p&gt;If there are more packages to upgrade, I run &lt;code&gt;git bd&lt;/code&gt; (&amp;ldquo;branch delete&amp;rdquo;) and then
+restart this process. It&amp;rsquo;s quite manageable, as I don&amp;rsquo;t maintain a lot of
+packages. Perhaps it could be further automated if there were more packages
+and/or if the package upgrades were more frequent.&lt;/p&gt;
+&lt;p&gt;The final MR looks like the following:
+&lt;a href="https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/83026"&gt;!83026&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Now I sit tight and wait for approval.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;On a &lt;a href="https://xkcd.com/2347/"&gt;&lt;em&gt;best-effort&lt;/em&gt;&lt;/a&gt; basis.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;Unless it&amp;rsquo;s a security risk or incident (e.g. whenever there&amp;rsquo;s a CVE
+associated with it).&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Alpine Linux: the maintainer workflow"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>SAML Chrome Panel</title><link>https://perrotta.dev/2025/03/saml-chrome-panel/</link><pubDate>Wed, 12 Mar 2025 00:51:05 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/03/saml-chrome-panel/</guid><description>&lt;p&gt;&lt;a href="https://chromewebstore.google.com/detail/saml-chrome-panel/paijfdbeoenhembfhkhllainmocckace"&gt;SAML Chrome Panel&lt;/a&gt;:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Extends the (Chrome) Developer Tools, adding support for SAML Requests and
 Responses to be displayed in the Developer Tools window&lt;/p&gt;

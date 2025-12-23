@@ -46,10 +46,10 @@ Next idea: LLMs. Nothing useful either."><meta itemprop=datePublished content="2
 </a><a href=/blogroll/><span class=nav-text>Blogroll</span>
 </a><a href=/tags/coding/><span class=nav-text>Coding</span></a></nav></header><main><script>document.addEventListener("keydown",function(e){if(e.key==="j"||e.key==="ArrowLeft"){const e=document.querySelector('[data-nav="prev"]');e&&e.href&&(window.location.href=e.href)}else if(e.key==="k"||e.key==="ArrowRight"){const e=document.querySelector('[data-nav="next"]');e&&e.href&&(window.location.href=e.href)}})</script><a href=https://perrotta.dev/2025/07/check-json-schema-pre-commit-hook/ data-nav=prev style=display:none></a><a href=https://perrotta.dev/2025/07/steam-deck-640x480-external-monitor-resolution/ data-nav=next style=display:none></a><h2>Alpine Linux: remove broken packages</h2><p><span class=pubdate-single><time datetime=2025-07-20 pubdate>20 Jul, 2025
 </time>• 434 words • 3 min
-• updated <time datetime=2025-09-05>05 Sep, 2025</time></span></p><content><p>In a sunny Sunday morning:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+• updated <time datetime=2025-09-05>05 Sep, 2025</time></span></p><content><p>In a sunny Sunday morning:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>% doas apk upgrade
 </span></span><span class=line><span class=cl>WARNING: The indexes contain broken packages which might not <span class=k>function</span> properly.
-</span></span><span class=line><span class=cl><span class=o>[</span>...<span class=o>]</span></span></span></code></pre></div></div><p>What?! Out of nowhere?</p><p>I tried a couple of basic troubleshooting commands:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>...<span class=o>]</span></span></span></code></pre></div></div><p>What?! Out of nowhere?</p><p>I tried a couple of basic troubleshooting commands:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>% doas apk update --force-refresh
 </span></span><span class=line><span class=cl>% doas apk fix
 </span></span><span class=line><span class=cl>% doas apk cache clean</span></span></code></pre></div></div><p>&mldr;to no avail.</p><p>Next idea: search engines. Virtually no results on <a href=https://kagi.com/>Kagi</a>. No
@@ -65,7 +65,7 @@ relevant results on Google either<sup id=fnref:1><a href=#fn:1 class=footnote-re
 </span></span><span class=line><span class=cl>  invalid-1:
 </span></span><span class=line><span class=cl>    error: uninstallable
 </span></span><span class=line><span class=cl>    satisfies: world[invalid]</span></span></code></pre></div></div><p>From this test file, it seems possible that there&rsquo;s an invalid package in my
-<code>/etc/apk/world</code>. The error message is not quite the same, but it is similar:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+<code>/etc/apk/world</code>. The error message is not quite the same, but it is similar:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>% wc -l /etc/apk/world
 </span></span><span class=line><span class=cl><span class=m>293</span></span></span></code></pre></div></div><p>There are too many packages there to hunt each of them by hand. And I didn&rsquo;t
 install any new packages recently.</p><p>So I looked into <code>apk fix --help</code> and discovered there is a <code>--verbose</code> flag. I
@@ -76,15 +76,15 @@ did not save its output, but there were five packages there:</p><div class=codeb
 </span></span><span class=line><span class=cl>- sensible-utils</span></span></code></pre></div></div><p>I ran <code>doas apk del</code> to remove all of them. That was a sensible cleanup, but it
 still has not resolved the issue.</p><p>If I want to dive deeper into this, I&rsquo;ll have to add some debugging logging to
 <a href=https://sourcegraph.com/github.com/alpinelinux/apk-tools@bffc60041447cadee5b69c291df8c90eb3b8fe82/-/blob/src/database.c?L2090><code>src/database.c</code></a>
-in <code>apk-tools</code>:</p><div class=codeblock data-lang=c><div class=codeblock-header data-rss-hide><span class=codeblock-language>c</span>
+in <code>apk-tools</code>:</p><div class=codeblock data-lang=c><div class=codeblock-header><span class=codeblock-language>c</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=k>if</span> <span class=p>(</span><span class=n>db</span><span class=o>-&gt;</span><span class=n>compat_depversions</span><span class=p>)</span> <span class=p>{</span>
 </span></span><span class=line><span class=cl>    <span class=nf>apk_warn</span><span class=p>(</span><span class=n>out</span><span class=p>,</span>
 </span></span><span class=line><span class=cl>        <span class=s>&#34;The indexes contain broken packages which %s.&#34;</span><span class=p>,</span>
 </span></span><span class=line><span class=cl>        <span class=n>db</span><span class=o>-&gt;</span><span class=n>compat_notinstallable</span> <span class=o>?</span> <span class=s>&#34;are not installable&#34;</span> <span class=o>:</span> <span class=s>&#34;might not function properly&#34;</span><span class=p>);</span>
-</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></div></div><p>Then one last thought occurred to me:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></div></div><p>Then one last thought occurred to me:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>% apk --version
 </span></span><span class=line><span class=cl>apk-tools 3.0.0_rc5_git20250715-r0, compiled <span class=k>for</span> x86_64.</span></span></code></pre></div></div><p>Aha! I am running a release candidate version of <code>apk</code>, because I am using
-Alpine Linux edge repositories:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+Alpine Linux edge repositories:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>% cat /etc/apk/repositories
 </span></span><span class=line><span class=cl>http://dl-cdn.alpinelinux.org/alpine/edge/main
 </span></span><span class=line><span class=cl>http://dl-cdn.alpinelinux.org/alpine/edge/community

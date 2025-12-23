@@ -85,7 +85,10 @@ similares ao &lt;code&gt;dtrx&lt;/code&gt;, não rolou.&lt;/p&gt;
 programa que faria o seguinte:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="cpp"&gt;
- 
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;cpp&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-cpp" data-lang="cpp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;	&lt;span class="n"&gt;unzip&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
@@ -96,7 +99,32 @@ programa que faria o seguinte:&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;	&lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;		&lt;span class="c1"&gt;// ...e assim por diante
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;&lt;/span&gt;	&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Obviamente eu utilizaria os programas diretamente, então a coisa poderia ficar
+um pouco mais simples, utilizando os return codes dos mesmos para detectar se
+descompactaram o arquivo com sucesso. Por exemplo, &lt;code&gt;tar xf &amp;lt;file&amp;gt;&lt;/code&gt; retorna &lt;code&gt;0&lt;/code&gt;
+se rodou corretamente, do contrário ele retorna algo diferente de zero. Isso se
+mostrou válido para todos os programas de descompactação que utilizei, exceto o
+lha, que insistia em retornar &lt;code&gt;0&lt;/code&gt; de qualquer jeito, mesmo quando falhava.&lt;/p&gt;
+&lt;p&gt;Para automatizar essa tarefa, resolvi utilizar &lt;code&gt;python2&lt;/code&gt;. &lt;code&gt;C/C++&lt;/code&gt; provavelmente
+também seriam bons candidatos, mas eu queria praticar o meu &lt;code&gt;python&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Após algumas inspeções, notei que cada arquivo continha um e somente um arquivo
+dentro dele, então a ideia base seria:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;mantenha uma lista com todos os arquivos conhecidos até então (no começo, só
+haveria um);&lt;/li&gt;
+&lt;li&gt;descompacte esse arquivo;&lt;/li&gt;
+&lt;li&gt;detecte qual arquivo acabou de ser descompactado&lt;/li&gt;
+&lt;li&gt;continue fazendo isso até encontrar a &lt;code&gt;flag&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Meu código ficou assim:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="python"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;python&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="ch"&gt;#!/usr/bin/env python&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
@@ -169,7 +197,15 @@ programa que faria o seguinte:&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;err&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;print&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;lha fail&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;base&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;newbase&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Matroshka"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Instalando o Gentoo a partir do Arch</title><link>https://perrotta.dev/2014/05/instalando-o-gentoo-a-partir-do-arch/</link><pubDate>Thu, 01 May 2014 02:20:00 +0000</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2014/05/instalando-o-gentoo-a-partir-do-arch/</guid><description>&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;: pequena TODO list sobre como instalar o Gentoo. Você vai passar 90% do seu tempo olhando para &lt;strong&gt;texto&lt;/strong&gt; dando scroll na tela (processo demorado…).&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;base&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;newbase&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Essa ideia funcionou bastante bem. A única coisa &lt;em&gt;overkill&lt;/em&gt; foi que eu não
+deletei arquivos anteriores; isso poderia ter simplificado significativamente o
+problema (e os &lt;em&gt;sets&lt;/em&gt; no python).&lt;/p&gt;
+&lt;p&gt;Ademais, uma das coisas chatas do &lt;code&gt;arj&lt;/code&gt; é que ele só é capaz de extrair arquivos
+que terminam em &lt;code&gt;*.arj&lt;/code&gt;, então fui obrigado a renomear/copiar um arquivo antes
+de tentar utilizá-lo para extrair seu conteúdo.&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Matroshka"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Instalando o Gentoo a partir do Arch</title><link>https://perrotta.dev/2014/05/instalando-o-gentoo-a-partir-do-arch/</link><pubDate>Thu, 01 May 2014 02:20:00 +0000</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2014/05/instalando-o-gentoo-a-partir-do-arch/</guid><description>&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;: pequena TODO list sobre como instalar o Gentoo. Você vai passar 90% do seu tempo olhando para &lt;strong&gt;texto&lt;/strong&gt; dando scroll na tela (processo demorado…).&lt;/p&gt;
 &lt;p&gt;Esse é o método mais tradicional possível (e que me interessa) que pude constatar. Adapte-o para as suas próprias necessidades:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -252,8 +288,36 @@ programa que faria o seguinte:&lt;/p&gt;
 &lt;p&gt;Isso tudo é muito mais prático do que gravar a ISO num Flash (Pen) Drive e então testá-la com um novo &lt;em&gt;boot&lt;/em&gt;. No entanto, podemos ser mais práticos ainda se utilizarmos, para isso, &lt;strong&gt;um único comando&lt;/strong&gt;, com o &lt;code&gt;qemu&lt;/code&gt;! O comando típico é:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
- 
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;qemu-system-x86_64 --enable-kvm -m 512M -cdrom ~/Downloads/debisuse-latest.iso&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lsmod &lt;span class="p"&gt;|&lt;/span&gt; grep kvm&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;qemu-system-x86_64 --enable-kvm -m 512M -cdrom ~/Downloads/debisuse-latest.iso&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Se sua arquitetura for de 32 bits, você vai querer &lt;em&gt;qemu-system-i386&lt;/em&gt;. O parâmetro &lt;em&gt;m&lt;/em&gt; regula a quantidade de memória a ser alocada para a máquina virtual.&lt;/p&gt;
+&lt;p&gt;Para utilizar o QEMU, você vai precisar encontrar o pacote adequado na sua distro.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;No Debian/Ubuntu e openSUSE: &lt;code&gt;qemu&lt;/code&gt; e &lt;code&gt;kvm&lt;/code&gt; (não testei, mas tudo indica que são esses)&lt;/li&gt;
+&lt;li&gt;No Arch: &lt;code&gt;qemu&lt;/code&gt; (veja &lt;a href="https://wiki.archlinux.org/index.php/Kvm"&gt;https://wiki.archlinux.org/index.php/Kvm&lt;/a&gt; e &lt;a href="https://wiki.archlinux.org/index.php/QEMU"&gt;https://wiki.archlinux.org/index.php/QEMU&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;OBS.: O &lt;em&gt;KVM&lt;/em&gt; é para deixar a execução ainda mais rápida. Mas ele não é obrigatório, OK? Para poder usá-lo existe uma série de peculiaridades, tais como habilitar as opções de virtualização na sua &lt;em&gt;BIOS&lt;/em&gt; (isso é mais comum em laptops) e assegurar-se de que o módulo adequado do kernel foi carregado (geralmente &lt;code&gt;kvm\_intel&lt;/code&gt; ou &lt;code&gt;kvm\_amd&lt;/code&gt;). Você pode conferir isso com o comando:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lsmod &lt;span class="p"&gt;|&lt;/span&gt; grep kvm&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Se ver alguma saída, existem boas chances de o módulo correto do &lt;em&gt;KVM&lt;/em&gt; já ter sido carregado pelo seu kernel. Para fins de comparação, essa é a minha saída:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
  &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kvm_intel &lt;span class="m"&gt;131191&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kvm &lt;span class="m"&gt;388773&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; kvm_intel&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Testando uma ISO no Linux sem o VirtualBox"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;kvm &lt;span class="m"&gt;388773&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; kvm_intel&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;Happy hacking!&lt;/em&gt;&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Testando uma ISO no Linux sem o VirtualBox"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

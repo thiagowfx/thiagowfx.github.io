@@ -55,7 +55,7 @@ shell Copy % op run --env-file=.env -- terraform plan ╷ │ Error: Error acqui
 </time>• 438 words • 3 min</span></p><content><p>Terraform supports <a href=https://developer.hashicorp.com/terraform/language/state/locking>state
 locking</a>:</p><blockquote><p>If supported by your backend, Terraform will lock your state for all
 operations that could write state. This prevents others from acquiring the
-lock and potentially corrupting your state.</p></blockquote><p>Neat, right?</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+lock and potentially corrupting your state.</p></blockquote><p>Neat, right?</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>% op run --env-file<span class=o>=</span>.env -- terraform plan
 </span></span><span class=line><span class=cl>╷
 </span></span><span class=line><span class=cl>│ Error: Error acquiring the state lock
@@ -85,17 +85,17 @@ conditional requests on methods other than GET or HEAD when the condition
 defined by the If-Unmodified-Since or If-Match headers is not fulfilled. In
 that case, the request (usually an upload or a modification of a resource)
 cannot be made and this error response is sent back.</p></blockquote><p>If you&rsquo;re sure no one else is working on that workspace, you can proceed with
-<code>-lock=false</code>:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+<code>-lock=false</code>:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>% op run --env-file<span class=o>=</span>.env -- terraform plan -lock<span class=o>=</span><span class=nb>false</span>
 </span></span><span class=line><span class=cl>uptime_check_http.chartmuseum: Refreshing state... <span class=o>[</span><span class=nv>name</span><span class=o>=</span>chartmuseum<span class=o>]</span>
 </span></span><span class=line><span class=cl>data.aws_availability_zones.available: Reading...
 </span></span><span class=line><span class=cl>data.aws_availability_zones.available: Read <span class=nb>complete</span> after 1s <span class=o>[</span><span class=nv>id</span><span class=o>=</span>us-east-1<span class=o>]</span>
-</span></span><span class=line><span class=cl><span class=o>[</span>...<span class=o>]</span></span></span></code></pre></div></div><p>That&rsquo;s an one-off. A subsequent run without that argument will fail again:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>...<span class=o>]</span></span></span></code></pre></div></div><p>That&rsquo;s an one-off. A subsequent run without that argument will fail again:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>% op run --env-file<span class=o>=</span>.env -- terraform plan
 </span></span><span class=line><span class=cl>╷
 </span></span><span class=line><span class=cl>│ Error: Error acquiring the state lock
 </span></span><span class=line><span class=cl><span class=o>[</span>...<span class=o>]</span></span></span></code></pre></div></div><p>In this case it would be better to simply remove the lock with
-<a href=https://developer.hashicorp.com/terraform/language/state/locking#force-unlock><code>force-unlock</code></a>:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+<a href=https://developer.hashicorp.com/terraform/language/state/locking#force-unlock><code>force-unlock</code></a>:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>% op run --env-file<span class=o>=</span>.env -- terraform force-unlock <span class=o>{</span>lock-id<span class=o>}</span>
 </span></span><span class=line><span class=cl>Do you really want to force-unlock?
 </span></span><span class=line><span class=cl>  Terraform will remove the lock on the remote state.
@@ -107,7 +107,7 @@ cannot be made and this error response is sent back.</p></blockquote><p>If you&r
 </span></span><span class=line><span class=cl>Terraform state has been successfully unlocked!
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>The state has been unlocked, and Terraform commands should now be able to
-</span></span><span class=line><span class=cl>obtain a new lock on the remote state.</span></span></code></pre></div></div><p>The <code>lock-id</code> can be obtained from the <code>plan</code> output.</p><p>Now we can <code>plan</code> as usual:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+</span></span><span class=line><span class=cl>obtain a new lock on the remote state.</span></span></code></pre></div></div><p>The <code>lock-id</code> can be obtained from the <code>plan</code> output.</p><p>Now we can <code>plan</code> as usual:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>% op run --env-file<span class=o>=</span>.env -- terraform plan
 </span></span><span class=line><span class=cl>uptime_check_http.chartmuseum: Refreshing state... <span class=o>[</span><span class=nv>name</span><span class=o>=</span>chartmuseum<span class=o>]</span>
 </span></span><span class=line><span class=cl>data.aws_availability_zones.available: Reading...

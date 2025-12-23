@@ -50,9 +50,9 @@ yaml Copy repos: - repo: https://github.com/python-jsonschema/check-jsonschema r
 <code>schema.json</code> file (for example, found via the <a href=https://www.schemastore.org/>schema
 store</a>).</p><p>I like the
 <a href=https://github.com/python-jsonschema/check-jsonschema>check-jsonschema</a> python
-package:</p><div class=codeblock data-lang=shell><div class=codeblock-header data-rss-hide><span class=codeblock-language>shell</span>
+package:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>pipx run check-jsonschema --schemafile schema.json entry.json</span></span></code></pre></div></div><p>What if we want to do the validation via a
-<a href=https://pre-commit.com>pre-commit.com</a> hook?</p><div class=codeblock data-lang=yaml><div class=codeblock-header data-rss-hide><span class=codeblock-language>yaml</span>
+<a href=https://pre-commit.com>pre-commit.com</a> hook?</p><div class=codeblock data-lang=yaml><div class=codeblock-header><span class=codeblock-language>yaml</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>repos</span><span class=p>:</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>repo</span><span class=p>:</span><span class=w> </span><span class=l>https://github.com/python-jsonschema/check-jsonschema</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>rev</span><span class=p>:</span><span class=w> </span><span class=m>0.33.2</span><span class=w>
@@ -63,7 +63,7 @@ package:</p><div class=codeblock data-lang=shell><div class=codeblock-header dat
 </span></span></span><span class=line><span class=cl><span class=w>          </span>- --<span class=l>schemafile</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>          </span>- <span class=l>schema.json</span></span></span></code></pre></div></div><p>This approach works well, but it requires the upkeep of a mapping from JSON file
 to JSON schema.</p><p>If we had various JSON files within a single repository, this would result in a
-maintenance burden in the pre-commit config file.</p><p>For example:</p><div class=codeblock data-lang=yaml><div class=codeblock-header data-rss-hide><span class=codeblock-language>yaml</span>
+maintenance burden in the pre-commit config file.</p><p>For example:</p><div class=codeblock data-lang=yaml><div class=codeblock-header><span class=codeblock-language>yaml</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>repos</span><span class=p>:</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>repo</span><span class=p>:</span><span class=w> </span><span class=l>https://github.com/python-jsonschema/check-jsonschema</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>rev</span><span class=p>:</span><span class=w> </span><span class=m>0.33.2</span><span class=w>
@@ -82,10 +82,10 @@ maintenance burden in the pre-commit config file.</p><p>For example:</p><div cla
 </span></span></span><span class=line><span class=cl><span class=w>          </span>- <span class=l>schema2.json</span></span></span></code></pre></div></div><p>It&rsquo;s somewhat annoying to maintain multiple entries in that fashion. Furthermore
 it can easily get outdated: upon the deletion of <code>entry1.json</code> from the
 repository, you&rsquo;d need to remember to manually delete its corresponding entry
-from the pre-commit config file.</p><p>Can we do better?</p><p>What if we embedded the schema reference within the JSON file itself?</p><p>For example, with a local schema:</p><div class=codeblock data-lang=json><div class=codeblock-header data-rss-hide><span class=codeblock-language>json</span>
+from the pre-commit config file.</p><p>Can we do better?</p><p>What if we embedded the schema reference within the JSON file itself?</p><p>For example, with a local schema:</p><div class=codeblock data-lang=json><div class=codeblock-header><span class=codeblock-language>json</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span>
 </span></span><span class=line><span class=cl>  <span class=nt>&#34;$schema&#34;</span><span class=p>:</span> <span class=s2>&#34;schema.json&#34;</span>
-</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></div></div><p>Or with a remote schema URI, via HTTPS:</p><div class=codeblock data-lang=json><div class=codeblock-header data-rss-hide><span class=codeblock-language>json</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></div></div><p>Or with a remote schema URI, via HTTPS:</p><div class=codeblock data-lang=json><div class=codeblock-header><span class=codeblock-language>json</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span>
 </span></span><span class=line><span class=cl>  <span class=nt>&#34;$schema&#34;</span><span class=p>:</span> <span class=s2>&#34;https://example.com/schema.json&#34;</span>
 </span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></div></div><p>Now the JSON file is self-contained, and there&rsquo;s no need to define a mapping
@@ -97,7 +97,7 @@ request</a>,
 filed ~2 years ago, with no consensus yet on how move forward. Its maintainer
 seems helpful and concerned with backwards compatibility.</p><p>For the sake of unblocking myself, I decided to wrap the ability to do so within
 my own pre-commit hook definition.</p><p>This gave birth to the following repository:
-<a href=https://github.com/thiagowfx/check-json-schema-meta><code>thiagowfx/check-json-schema-meta</code></a>, which I also <a href=https://github.com/python-jsonschema/check-jsonschema/issues/310#issuecomment-3062174357>announced</a> in the original feature request thread.</p><p>Usage:</p><div class=codeblock data-lang=yaml><div class=codeblock-header data-rss-hide><span class=codeblock-language>yaml</span>
+<a href=https://github.com/thiagowfx/check-json-schema-meta><code>thiagowfx/check-json-schema-meta</code></a>, which I also <a href=https://github.com/python-jsonschema/check-jsonschema/issues/310#issuecomment-3062174357>announced</a> in the original feature request thread.</p><p>Usage:</p><div class=codeblock data-lang=yaml><div class=codeblock-header><span class=codeblock-language>yaml</span>
 <button class=codeblock-copy type=button data-copy-code>Copy</button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>repos</span><span class=p>:</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>repo</span><span class=p>:</span><span class=w> </span><span class=l>https://github.com/thiagowfx/check-json-schema-meta</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>rev</span><span class=p>:</span><span class=w> </span><span class=l>v0.0.2</span><span class=w>
