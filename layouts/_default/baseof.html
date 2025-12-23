@@ -147,15 +147,14 @@
       updateThemeIcon();
     }
 
-    function getCurrentTheme() {
-      const saved = localStorage.getItem('theme');
-      if (saved) return saved;
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    function getCurrentThemeState() {
+      return localStorage.getItem('theme') || 'auto';
     }
 
     function updateThemeIcon() {
-      const theme = getCurrentTheme();
-      document.getElementById('theme-toggle-icon').textContent = theme === 'dark' ? '🌙' : '☀️';
+      const state = getCurrentThemeState();
+      const icons = { 'auto': '🌓', 'dark': '🌙', 'light': '☀️' };
+      document.getElementById('theme-toggle-icon').textContent = icons[state];
     }
 
     // Initialize
@@ -167,8 +166,9 @@
 
     // Toggle between auto, light, dark
     document.getElementById('theme-toggle').addEventListener('click', function () {
-      const current = getCurrentTheme();
-      const next = current === 'dark' ? 'light' : 'dark';
+      const current = getCurrentThemeState();
+      const cycle = { 'auto': 'light', 'light': 'dark', 'dark': 'auto' };
+      const next = cycle[current];
       setTheme(next);
     });
 
