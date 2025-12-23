@@ -136,65 +136,40 @@
     </p>
   </footer>
   <script>
-    const darkVars = {
-      'bg-color': '#19150f',
-      'text-color': '#dddddd',
-      'heading-color': '#eeeeee',
-      'link-color': '#ff5e6c',
-      'border-color': '#444',
-      'code-bg': '#1a1a1a',
-      'code-text-color': '#e8e8e8',
-      'chroma-text': '#abb2bf',
-      'chroma-bg': '#282c34',
-      'chroma-comment': '#5c6370',
-      'chroma-keyword': '#c678dd',
-      'chroma-string': '#98c379',
-      'chroma-function': '#61afef',
-      'chroma-name': '#e06c75',
-      'chroma-number': '#d19a66',
-      'chroma-operator': '#56b6c2',
-    };
+    function setTheme(theme) {
+      if (theme === 'auto') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.removeItem('theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+      }
+      updateThemeIcon();
+    }
 
-    const lightVars = {
-      'bg-color': '#fffcf0',
-      'text-color': '#444',
-      'heading-color': '#222',
-      'link-color': '#3273dc',
-      'border-color': '#ddd',
-      'code-bg': '#f5f5f5',
-      'code-text-color': '#1a1a1a',
-      'chroma-text': '#383a42',
-      'chroma-bg': '#fafafa',
-      'chroma-comment': '#a0a1a7',
-      'chroma-keyword': '#a626a4',
-      'chroma-string': '#50a14f',
-      'chroma-function': '#4078f2',
-      'chroma-name': '#e45649',
-      'chroma-number': '#986801',
-      'chroma-operator': '#0184bc',
-    };
+    function getCurrentTheme() {
+      const saved = localStorage.getItem('theme');
+      if (saved) return saved;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
 
-    function applyTheme(isDark) {
-      const vars = isDark ? darkVars : lightVars;
-      Object.entries(vars).forEach(([k, v]) => {
-        document.documentElement.style.setProperty(`--${k}`, v);
-      });
-      document.getElementById('theme-toggle-icon').textContent = isDark ? '🌙' : '☀️';
+    function updateThemeIcon() {
+      const theme = getCurrentTheme();
+      document.getElementById('theme-toggle-icon').textContent = theme === 'dark' ? '🌙' : '☀️';
     }
 
     // Initialize
     const saved = localStorage.getItem('theme');
-    const isDark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-    applyTheme(isDark);
+    if (saved) {
+      document.documentElement.setAttribute('data-theme', saved);
+    }
+    updateThemeIcon();
 
-    // Toggle
+    // Toggle between auto, light, dark
     document.getElementById('theme-toggle').addEventListener('click', function () {
-      const saved = localStorage.getItem('theme');
-      const pref = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const current = saved ? saved === 'dark' : pref;
-      const newIsDark = !current;
-      localStorage.setItem('theme', newIsDark ? 'dark' : 'light');
-      applyTheme(newIsDark);
+      const current = getCurrentTheme();
+      const next = current === 'dark' ? 'light' : 'dark';
+      setTheme(next);
     });
 
     document.addEventListener('click', function (event) {
