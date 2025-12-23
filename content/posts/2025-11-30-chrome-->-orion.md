@@ -20,7 +20,8 @@ not. Nowadays I bail out to Google (`!g` in Kagi and in DuckDuckGo) very rarely:
 - to see what mainstream search results look like for a specific search term
 - to search for something obscure or rare – for example, torrents of Linux ISOs™
 
-And now I had been meaning to switch from Google Chrome.
+And now I had been meaning to [switch from Google
+Chrome](https://onlinesafety.substack.com/p/digital-fingerprinting-the-reason-to-ditch-chrome).
 
 Chromium or [Ungoogled
 Chromium](https://github.com/ungoogled-software/ungoogled-chromium) are solid
