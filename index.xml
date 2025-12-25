@@ -1,6 +1,217 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2025 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>vim → nvim</title><link>https://perrotta.dev/2025/12/vim-nvim/</link><pubDate>Tue, 23 Dec 2025 12:14:33 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/vim-nvim/</guid><description>&lt;p&gt;I am piloting a transition from &lt;code&gt;vim&lt;/code&gt; to &lt;code&gt;nvim&lt;/code&gt;.&lt;/p&gt;
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>nginx → caddy</title><link>https://perrotta.dev/2025/12/nginx-caddy/</link><pubDate>Wed, 24 Dec 2025 23:59:02 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/nginx-caddy/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Replace &lt;code&gt;nginx&lt;/code&gt; with &lt;code&gt;caddy&lt;/code&gt; for &lt;code&gt;miniflux&lt;/code&gt; on my Alpine
+Linux VPS host.&lt;/p&gt;
+&lt;p&gt;First, install &lt;code&gt;caddy&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;doas apk add caddy&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Next, migrate the existing nginx config to caddy.&lt;/p&gt;
+&lt;p&gt;The stock config:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% cat /etc/caddy/Caddyfile
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Caddy&amp;#39;s configuration file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# see: https://caddyserver.com/docs/caddyfile&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The new config:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="caddyfile"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;caddyfile&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-caddyfile" data-lang="caddyfile"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Caddy&amp;#39;s configuration file
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# see: https://caddyserver.com/docs/caddyfile
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;&lt;/span&gt;&lt;span class="se"&gt;{miniflux_host}&lt;/span&gt;&lt;span class="gh"&gt;.perrotta.dev&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;reverse_proxy&lt;/span&gt; &lt;span class="nd"&gt;*&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="n"&gt;127.0.0.1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;8080&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;header_up&lt;/span&gt; &lt;span class="s"&gt;Host&lt;/span&gt; &lt;span class="se"&gt;{host}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;header_up&lt;/span&gt; &lt;span class="s"&gt;X-Forwarded-For&lt;/span&gt; &lt;span class="se"&gt;{remote}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;header_up&lt;/span&gt; &lt;span class="s"&gt;X-Forwarded-Proto&lt;/span&gt; &lt;span class="se"&gt;{scheme}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Stop nginx:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;doas service nginx stop&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Start caddy:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas service caddy start
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas service caddy status
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; * status: started&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Now I tried to access my server via a web browser, and it worked out-of-the-box
+:)&lt;/p&gt;
+&lt;p&gt;I can see information about the SSL certificate in my web browser:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Issued On	Thursday, December 25, 2025 at 1:41:33 AM
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Expires On	Wednesday, March 25, 2026 at 1:41:32 AM&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It was issued just a few seconds ago!&lt;/p&gt;
+&lt;p&gt;How to view logs?&lt;/p&gt;
+&lt;p&gt;I expect to find them at &lt;code&gt;/var/log/caddy&lt;/code&gt; but there&amp;rsquo;s nothing there.&lt;/p&gt;
+&lt;p&gt;I need to add an explicit directive to enable logging:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="caddy"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;caddy&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-caddy" data-lang="caddy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="se"&gt;{miniflux_host}&lt;/span&gt;&lt;span class="gh"&gt;.perrotta.dev&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;log&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;output&lt;/span&gt; &lt;span class="s"&gt;file&lt;/span&gt; &lt;span class="s"&gt;/var/log/caddy/miniflux.log&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;reverse_proxy&lt;/span&gt; &lt;span class="nd"&gt;*&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="n"&gt;127.0.0.1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;8080&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;header_up&lt;/span&gt; &lt;span class="s"&gt;Host&lt;/span&gt; &lt;span class="se"&gt;{host}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;header_up&lt;/span&gt; &lt;span class="s"&gt;X-Forwarded-For&lt;/span&gt; &lt;span class="se"&gt;{remote}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;header_up&lt;/span&gt; &lt;span class="s"&gt;X-Forwarded-Proto&lt;/span&gt; &lt;span class="se"&gt;{scheme}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Then reload caddy:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas service caddy reload
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;~ &lt;span class="c1"&gt;# service caddy reload&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; * Reloading Caddy web server ...
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2025/12/25 05:49:04.531	INFO	using config from file	&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;file&amp;#34;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;#34;/etc/caddy/Caddyfile&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2025/12/25 05:49:04.532	WARN	caddyfile	Unnecessary header_up X-Forwarded-For: the reverse proxy&lt;span class="s1"&gt;&amp;#39;s default behavior is to pass headers to the upstream
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s1"&gt;2025/12/25 05:49:04.532	WARN	caddyfile	Unnecessary header_up X-Forwarded-Proto: the reverse proxy&amp;#39;&lt;/span&gt;s default behavior is to pass headers to the upstream
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2025/12/25 05:49:04.532	INFO	adapted config to JSON	&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;adapter&amp;#34;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;#34;caddyfile&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2025/12/25 05:49:04.533	WARN	Caddyfile input is not formatted&lt;span class="p"&gt;;&lt;/span&gt; run &lt;span class="s1"&gt;&amp;#39;caddy fmt --overwrite&amp;#39;&lt;/span&gt; to fix inconsistencies	&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;adapter&amp;#34;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;#34;caddyfile&amp;#34;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;#34;file&amp;#34;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;#34;/etc/caddy/Caddyfile&amp;#34;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;#34;line&amp;#34;&lt;/span&gt;: 4&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Error: sending configuration to instance: caddy responded with error: HTTP 400: &lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;error&amp;#34;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;#34;loading config: loading new config: setting up custom log &amp;#39;log0&amp;#39;: opening log writer using \u0026logging.FileWriter{Filename:\&amp;#34;/var/log/caddy/miniflux.log\&amp;#34;, Mode:0x0, Roll:(*bool)(nil), RollSizeMB:0, RollCompress:(*bool)(nil), RollLocalTime:false, RollKeep:0, RollKeepDays:0}: open /var/log/caddy/miniflux.log: permission denied&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Let&amp;rsquo;s address these issues:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/etc/caddy % doas caddy fmt --overwrite&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The formatting warning is gone:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas service caddy reload
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; * Reloading Caddy web server ...
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2025/12/25 05:53:06.079	INFO	using config from file	&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;file&amp;#34;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;#34;/etc/caddy/Caddyfile&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2025/12/25 05:53:06.079	WARN	caddyfile	Unnecessary header_up X-Forwarded-For: the reverse proxy&lt;span class="s1"&gt;&amp;#39;s default behavior is to pass headers to the upstream
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s1"&gt;2025/12/25 05:53:06.079	WARN	caddyfile	Unnecessary header_up X-Forwarded-Proto: the reverse proxy&amp;#39;&lt;/span&gt;s default behavior is to pass headers to the upstream
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2025/12/25 05:53:06.080	INFO	adapted config to JSON	&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;adapter&amp;#34;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;#34;caddyfile&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Error: sending configuration to instance: caddy responded with error: HTTP 400: &lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;error&amp;#34;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;#34;loading config: loading new config: setting up custom log &amp;#39;log0&amp;#39;: opening log writer using \u0026logging.FileWriter{Filename:\&amp;#34;/var/log/caddy/miniflux.log\&amp;#34;, Mode:0x0, Roll:(*bool)(nil), RollSizeMB:0, RollCompress:(*bool)(nil), RollLocalTime:false, RollKeep:0, RollKeepDays:0}: open /var/log/caddy/miniflux.log: permission denied&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Next, logging:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas mkdir /var/log/caddy
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas touch /var/log/caddy/miniflux.log
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas chown -R caddy:caddy /var/log/caddy&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Now it&amp;rsquo;s much better:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas service caddy reload
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; * Reloading Caddy web server ...
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2025/12/25 05:56:11.041	INFO	using config from file	&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;file&amp;#34;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;#34;/etc/caddy/Caddyfile&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2025/12/25 05:56:11.041	WARN	caddyfile	Unnecessary header_up X-Forwarded-For: the reverse proxy&lt;span class="s1"&gt;&amp;#39;s default behavior is to pass headers to the upstream
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s1"&gt;2025/12/25 05:56:11.041	WARN	caddyfile	Unnecessary header_up X-Forwarded-Proto: the reverse proxy&amp;#39;&lt;/span&gt;s default behavior is to pass headers to the upstream
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;2025/12/25 05:56:11.042	INFO	adapted config to JSON	&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;adapter&amp;#34;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;#34;caddyfile&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;How did I know which user to &lt;code&gt;chown&lt;/code&gt; to? &lt;code&gt;/etc/init.d/caddy&lt;/code&gt; has the following
+line:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="conf"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;conf&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;pre tabindex="0"&gt;&lt;code class="language-conf" data-lang="conf"&gt;command_user=caddy:caddy&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;though it wouldn&amp;rsquo;t have been difficult to guess it anyways.&lt;/p&gt;
+&lt;p&gt;I can see some logs at &lt;code&gt;/var/log/caddy/miniflux.log&lt;/code&gt; already.&lt;/p&gt;
+&lt;p&gt;Use &lt;code&gt;tail -f&lt;/code&gt; or &lt;code&gt;tspin -f&lt;/code&gt; (from tailspin) for live log tailing.&lt;/p&gt;
+&lt;p&gt;LLM security analysis, for completeness:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;I reviewed /etc/caddy/Caddyfile. Overall, it&amp;#39;s a straightforward reverse proxy for {miniflux_host}.perrotta.dev to 127.0.0.1:8080 with logging to
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; /var/log/caddy/miniflux.log. Caddy will automatically manage HTTPS and pass the appropriate headers upstream, and Caddy&amp;#39;s defaults already
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; set the Host and X-Forwarded-* headers—so explicitly setting them is optional but not harmful.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Security considerations:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - Ensure the local Miniflux instance is bound to loopback only (127.0.0.1) so it&amp;#39;s not exposed directly.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - Confirm /var/log/caddy/ and the log file are readable by the Caddy user but not world-readable if the logs might contain sensitive data.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - If you ever place Caddy behind another proxy (e.g., Cloudflare), configure trusted_proxies in Caddy to ensure X-Forwarded-* is accurate.
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; Beyond that, the config is minimal and doesn&amp;#39;t expose extra surfaces.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Last step: let&amp;rsquo;s make caddy auto start, and disable nginx startup + uninstall
+it:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;doas rc-update del nginx
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;doas rc-update add caddy
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;doas apk del nginx&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Out of curiosity: the certificates live here:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;/var/lib/caddy/.local/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/&lt;span class="o"&gt;{&lt;/span&gt;miniflux_host&lt;span class="o"&gt;}&lt;/span&gt;.perrotta.dev/&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;There are three files:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;crt and key: SSL / TLS&lt;/li&gt;
+&lt;li&gt;json: configuration / metadata for let&amp;rsquo;s encrypt&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And we&amp;rsquo;re done!&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: nginx → caddy"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>vim → nvim</title><link>https://perrotta.dev/2025/12/vim-nvim/</link><pubDate>Tue, 23 Dec 2025 12:14:33 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/vim-nvim/</guid><description>&lt;p&gt;I am piloting a transition from &lt;code&gt;vim&lt;/code&gt; to &lt;code&gt;nvim&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Here is the least disruptive way I found to accomplish that.&lt;/p&gt;
 &lt;p&gt;First, install &lt;code&gt;neovim&lt;/code&gt;.&lt;/p&gt;
 
@@ -1864,77 +2075,4 @@ program I have always wished that jq was.&lt;/p&gt;
 &lt;p&gt;Definitely adding it to my tool belt.&lt;/p&gt;
 &lt;p&gt;I did some experimentation and it seems to be very user-friendly and intuitive
 to use.&lt;/p&gt;
-&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: fx"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>howto</title><link>https://perrotta.dev/2025/11/howto/</link><pubDate>Mon, 24 Nov 2025 23:20:46 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/11/howto/</guid><description>&lt;p&gt;&lt;a href="https://github.com/nalgeon/howto"&gt;https://github.com/nalgeon/howto&lt;/a&gt; (&lt;a href="https://antonz.org/howto/"&gt;via&lt;/a&gt;):&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Humble command-line assistant&lt;/p&gt;
-&lt;p&gt;Howto helps you solve command-line tasks with AI. Describe the task, and howto
-will suggest a solution:&lt;/p&gt;
-&lt;p&gt;Howto works with any OpenAI-compatible provider and local Ollama models. It&amp;rsquo;s
-a simple tool that doesn&amp;rsquo;t interfere with your terminal. Not an &amp;ldquo;intelligent
-terminal&amp;rdquo; or anything. You ask, and howto answers. That&amp;rsquo;s the deal.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Installation:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew tap nalgeon/howto https://github.com/nalgeon/howto
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install howto&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;Configuration: add to my shell startup file:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Lazy-load API keys only when needed to avoid shell startup delay&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;command&lt;/span&gt; -v howto &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&amp;gt;/dev/null&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;	_load_api_keys_howto&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;		&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;HOWTO_AI_TOKEN&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;command&lt;/span&gt; llm keys get openai&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;		&lt;span class="c1"&gt;# Redefine itself to be a no-op after first call&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;		_load_api_keys_howto&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; :&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;	&lt;span class="o"&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;	&lt;span class="c1"&gt;# Wrap all AI CLI commands to auto-load keys&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;	&lt;span class="nb"&gt;command&lt;/span&gt; -v howto &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&amp;gt;/dev/null &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;eval&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;howto() { _load_api_keys_howto; command howto \&amp;#34;\$@\&amp;#34;; }&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;In this case, I retrieve the API token from
-&lt;a href="https://github.com/simonw/llm"&gt;&lt;code&gt;llm&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Usage examples:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% howto curl post request
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -X POST &lt;span class="o"&gt;[&lt;/span&gt;URL&lt;span class="o"&gt;]&lt;/span&gt; -d &lt;span class="s2"&gt;&amp;#34;[data]&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;The &lt;span class="sb"&gt;`&lt;/span&gt;curl&lt;span class="sb"&gt;`&lt;/span&gt; &lt;span class="nb"&gt;command&lt;/span&gt; is used to make HTTP requests from the &lt;span class="nb"&gt;command&lt;/span&gt; line.
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;The &lt;span class="sb"&gt;`&lt;/span&gt;-X POST&lt;span class="sb"&gt;`&lt;/span&gt; option specifies that the request method is POST.
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;The &lt;span class="sb"&gt;`&lt;/span&gt;-d &lt;span class="s2"&gt;&amp;#34;[data]&amp;#34;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt; option is used to send the specified data in the POST request
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;body.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;button class="codeblock-copy" type="button" data-copy-code&gt;Copy&lt;/button&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% howto terraform init given a backend and a tfvars
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;terraform init -backend-config&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;backend-config-file&amp;gt; -var-file&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;variables-file&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;The &lt;span class="sb"&gt;`&lt;/span&gt;terraform init&lt;span class="sb"&gt;`&lt;/span&gt; &lt;span class="nb"&gt;command&lt;/span&gt; initializes a Terraform working directory,
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;preparing it &lt;span class="k"&gt;for&lt;/span&gt; other commands.
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;The &lt;span class="sb"&gt;`&lt;/span&gt;-backend-config&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;backend-config-file&amp;gt;&lt;span class="sb"&gt;`&lt;/span&gt; option specifies a file containing
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;backend configuration settings.
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;The &lt;span class="sb"&gt;`&lt;/span&gt;-var-file&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;variables-file&amp;gt;&lt;span class="sb"&gt;`&lt;/span&gt; option specifies a file containing variable
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;definitions.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;Workflow: when stuck, press &lt;code&gt;Ctrl + a&lt;/code&gt; (go to beginning of line), type &lt;code&gt;howto&lt;/code&gt;,
-press &lt;code&gt;&amp;lt;Enter&amp;gt;&lt;/code&gt;.&lt;/p&gt;
-&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: howto"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: fx"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
