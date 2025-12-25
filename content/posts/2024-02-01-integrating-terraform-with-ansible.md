@@ -180,7 +180,7 @@ After terraforming, we should now be able to run ansible:
 
 In order to make this setup more ergonomic, let's create a `Makefile`:
 
-```Makefile
+```makefile
 TERRAFORM := terraform
 
 all: terraform ansible

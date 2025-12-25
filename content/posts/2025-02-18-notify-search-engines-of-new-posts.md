@@ -11,7 +11,7 @@ tags:
 I have the following rule in the [`Justfile`](https://just.systems/man/en/) of
 this blog:
 
-```just
+```justfile
 # Ping Google and Bing about changes in the sitemap
 ping sitemap="https://perrotta.dev/sitemap.xml":
 	curl -sS -o /dev/null "https://www.google.com/ping?sitemap={{ sitemap }}"

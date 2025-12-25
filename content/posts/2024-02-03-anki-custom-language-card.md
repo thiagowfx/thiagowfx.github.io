@@ -76,7 +76,7 @@ striked terms.
 
 ### The Front card
 
-```anki
+```text
 {{Front}} {{tts de_DE:Front}}
 
 {{#Front Example}}
@@ -93,7 +93,7 @@ For (High) German, that is `de_DE`.
 
 ### The Back card
 
-```anki
+```text
 {{Back}}
 
 {{#Striked}}

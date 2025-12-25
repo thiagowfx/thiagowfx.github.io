@@ -26,7 +26,7 @@ The command will prompt for a password.
 Once it's set, add two lines to the corresponding `server {}` block in your
 nginx config:
 
-```nginx
+```nginxconf
 server {
 [...]
     auth_basic "Restricted Access";

@@ -16,7 +16,7 @@ tags:: content
 
 We can do so with the following logseq query[^1]:
 
-```logseq
+```markdown
 #+BEGIN_QUERY
 {
   :title "Ideas 💡 (->)"
@@ -30,7 +30,7 @@ This is a static query, not meant to be changed.
 Alternatively it's possible to create a live query, which allows one to tweak it
 on-the-fly:
 
-```logseq
+```markdown
 {{query (property :tags "idea")}}
 ```
 

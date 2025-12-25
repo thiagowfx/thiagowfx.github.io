@@ -33,7 +33,7 @@ The following diff (under a `template` block) accomplishes that:
 
 Diving into it with pretty-printing[^1]:
 
-```gotemplate
+```go-template
 {{if .app.spec.source.targetRevision}}
   ({{.app.spec.source.targetRevision}})
 {{else}}
