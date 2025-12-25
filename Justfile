@@ -95,7 +95,7 @@ last:
       echo "No posts found in content/posts/"
       exit 1
     fi
-    {{ editor }} '+/^```/' "$latest"
+    {{ editor }} "$latest"
 
 # Create a git commit without any substance
 lazy *args:
