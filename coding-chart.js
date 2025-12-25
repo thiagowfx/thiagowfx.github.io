@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tension: 0.1,
         fill: true
       }, {
-        label: 'Other coding posts',
+        label: 'Other',
         data: cumulativeValuesOther,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
