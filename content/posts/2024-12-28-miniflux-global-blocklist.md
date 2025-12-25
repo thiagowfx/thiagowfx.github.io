@@ -3,7 +3,6 @@ title: "Miniflux: global blocklist"
 date: 2024-12-28T18:04:19-03:00
 tags:
   - dev
-  - selfhosted
 ---
 
 One of the best features of [miniflux](https://miniflux.app/) rolled out [this year](https://github.com/miniflux/v2/blob/main/ChangeLog)[^1]

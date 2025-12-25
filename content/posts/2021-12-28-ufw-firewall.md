@@ -3,7 +3,6 @@ title: 'Ufw: Firewall'
 date: 2021-12-28T17:14:55-05:00
 tags:
   - dev
-  - selfhosted
 ---
 
 > Ufw stands for Uncomplicated Firewall, and is a program for managing a netfilter firewall. It provides a command line interface and aims to be uncomplicated and easy to use.

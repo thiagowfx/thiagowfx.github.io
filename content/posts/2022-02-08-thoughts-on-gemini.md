@@ -2,7 +2,7 @@
 title: "Thoughts on Gemini"
 date: 2022-02-08T11:40:00-05:00
 tags:
-  - selfhosted
+  - dev
 ---
 
 From the [homepage](https://gemini.circumlunar.space):

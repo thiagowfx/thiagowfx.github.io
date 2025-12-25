@@ -3,7 +3,6 @@ title: "PDB: minAvailable and maxUnavailable cannot be both set"
 date: 2025-06-02T12:00:05+02:00
 tags:
   - dev
-  - selfhosted
 ---
 
 In Kubernetes it's not possible to have a [`PodDisruptionBudget`

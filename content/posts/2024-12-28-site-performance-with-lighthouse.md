@@ -3,7 +3,6 @@ title: "Site performance with Lighthouse"
 date: 2024-12-28T05:14:38-03:00
 tags:
   - dev
-  - selfhosted
 ---
 
 Lighthouse can be used to assess overall site performance. There is a myriad of

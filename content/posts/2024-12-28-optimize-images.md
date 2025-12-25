@@ -3,7 +3,6 @@ title: "Optimize images"
 date: 2024-12-28T16:14:19-03:00
 tags:
   - dev
-  - selfhosted
 ---
 
 I like to use [oxipng](https://github.com/shssoichiro/oxipng) to optimize PNG (and other) images.

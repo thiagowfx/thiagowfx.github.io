@@ -2,7 +2,7 @@
 title: "RSS: bridging the gap"
 date: 2022-02-09T22:17:52-05:00
 tags:
-  - selfhosted
+  - dev
 ---
 
 Not everything is available via RSS. However, there are some decent workarounds in a few situations.

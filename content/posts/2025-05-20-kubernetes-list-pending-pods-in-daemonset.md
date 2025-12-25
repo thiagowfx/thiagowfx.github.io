@@ -3,7 +3,6 @@ title: "kubernetes: list pending pods in daemonset"
 date: 2025-05-20T16:41:00+02:00
 tags:
   - dev
-  - selfhosted
 ---
 
 **Problem statement**: Given a DaemonSet with a couple of pods stuck in

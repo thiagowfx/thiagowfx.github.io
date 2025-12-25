@@ -4,7 +4,6 @@ date: 2022-01-15T23:18:56-05:00
 tags:
   - bestof
   - dev
-  - selfhosted
 ---
 
 Use case: Given an Alpine Linux **diskless**[^1] installation meant for

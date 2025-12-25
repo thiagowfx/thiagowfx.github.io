@@ -2,7 +2,7 @@
 title: "Logseq: list all pages of a tag"
 date: 2025-05-04T13:24:52+02:00
 tags:
-  - selfhosted
+  - dev
 ---
 
 **Problem statement**: Given a couple of pages in [Logseq](https://logseq.com/)

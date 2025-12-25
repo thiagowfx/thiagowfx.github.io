@@ -5,7 +5,6 @@ tags:
   - dev
   - meta
   - privacy
-  - selfhosted
   - serenity
 ---
 

@@ -5,7 +5,6 @@ tags:
   - bestof
   - dev
   - meta
-  - selfhosted
 ---
 
 I have the following rule in the [`Justfile`](https://just.systems/man/en/) of

@@ -3,7 +3,6 @@ title: "Alpine Linux: install / pin old packages"
 date: 2025-01-08T15:54:44-03:00
 tags:
   - dev
-  - selfhosted
 ---
 
 Let's say you want to install an older version of `jq` in Alpine Linux.

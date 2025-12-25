@@ -3,7 +3,6 @@ title: 'pq: could not access file "$libdir/dict_snowball": No such file or direc
 date: 2025-07-10T11:14:29+02:00
 tags:
   - dev
-  - selfhosted
 ---
 
 My [miniflux](http://miniflux.app/) instance broke yesterday. All feeds had the

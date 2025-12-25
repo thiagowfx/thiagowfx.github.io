@@ -2,8 +2,8 @@
 title: "New domain"
 date: 2024-02-04T23:27:09-03:00
 tags:
+  - dev
   - meta
-  - selfhosted
 ---
 
 I got a new domain! This blog is now available on https://www.perrotta.dev/.

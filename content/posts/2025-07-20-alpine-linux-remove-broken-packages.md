@@ -3,7 +3,6 @@ title: "Alpine Linux: remove broken packages"
 date: 2025-07-20T10:52:11+02:00
 tags:
   - dev
-  - selfhosted
 ---
 
 In a sunny Sunday morning:

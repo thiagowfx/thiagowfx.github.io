@@ -3,7 +3,6 @@ title: "Kindle Paperwhite: KOReader: calibre sync"
 date: 2025-06-15T03:49:24+02:00
 tags:
   - dev
-  - selfhosted
   - serenity
 ---
 

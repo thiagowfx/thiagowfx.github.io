@@ -4,7 +4,6 @@ date: 2025-11-16T20:19:18-03:00
 tags:
   - bestof
   - dev
-  - selfhosted
   - serenity
 ---
 

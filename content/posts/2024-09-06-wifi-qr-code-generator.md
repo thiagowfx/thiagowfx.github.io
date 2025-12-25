@@ -3,7 +3,6 @@ title: "Wi-Fi QR code generator"
 date: 2024-09-06T19:21:22+02:00
 tags:
   - dev
-  - selfhosted
 ---
 
 https://qifi.org/ is a pure JS Wi-Fi QR Code generator.

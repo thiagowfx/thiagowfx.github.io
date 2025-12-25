@@ -4,7 +4,6 @@ date: 2025-02-08T16:26:04+01:00
 tags:
   - dev
   - privacy
-  - selfhosted
 ---
 
 [MLC Chat](https://apps.apple.com/us/app/mlc-chat/id6448482937):

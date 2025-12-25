@@ -3,7 +3,6 @@ title: "Open the most recent blog post"
 date: 2025-11-21T14:07:48-03:00
 tags:
   - dev
-  - selfhosted
 ---
 
 Added a new [just](https://just.systems/)

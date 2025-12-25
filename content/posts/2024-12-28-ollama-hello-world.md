@@ -5,7 +5,6 @@ tags:
   - bestof
   - dev
   - privacy
-  - selfhosted
 ---
 
 [`ollama`](https://ollama.com/):

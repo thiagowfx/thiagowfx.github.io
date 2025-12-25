@@ -2,8 +2,8 @@
 title: "Reply to: smash that subscribe button"
 date: 2025-01-20T01:01:23-03:00
 tags:
+  - dev
   - meta
-  - selfhosted
   - serenity
 ---
 

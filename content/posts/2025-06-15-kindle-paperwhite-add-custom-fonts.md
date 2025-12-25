@@ -3,7 +3,6 @@ title: "Kindle Paperwhite: add custom fonts"
 date: 2025-06-15T02:14:41+02:00
 tags:
   - dev
-  - selfhosted
   - serenity
 ---
 

@@ -2,7 +2,7 @@
 title: "Blog directories"
 date: 2025-05-17T01:16:22+02:00
 tags:
-  - selfhosted
+  - dev
   - serenity
 ---
 

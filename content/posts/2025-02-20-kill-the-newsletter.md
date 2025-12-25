@@ -4,7 +4,6 @@ date: 2025-02-20T15:34:30+01:00
 tags:
   - dev
   - privacy
-  - selfhosted
 ---
 
 I don't like to sign up for newsletters. They are too noisy, pollute my inbox,

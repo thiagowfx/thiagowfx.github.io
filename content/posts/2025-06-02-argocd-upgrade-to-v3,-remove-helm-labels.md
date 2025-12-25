@@ -3,7 +3,6 @@ title: "ArgoCD: upgrade to v3, remove helm labels"
 date: 2025-06-02T13:03:24+02:00
 tags:
   - dev
-  - selfhosted
 ---
 
 I am leading the effort to upgrade ArgoCD to its [newest major version

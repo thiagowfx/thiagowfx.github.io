@@ -3,7 +3,6 @@ title: "localhost under your own domain"
 date: 2024-12-27T22:24:11-03:00
 tags:
   - dev
-  - selfhosted
 ---
 
 To interact with `localhost`, you can use `127.0.0.1`.

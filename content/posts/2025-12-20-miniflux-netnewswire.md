@@ -3,7 +3,6 @@ title: "Miniflux: NetNewsWire integration"
 date: 2025-12-20T14:39:24-03:00
 tags:
   - dev
-  - selfhosted
 ---
 
 [NetNewsWire](https://netnewswire.com/) is a great RSS **client** reader for

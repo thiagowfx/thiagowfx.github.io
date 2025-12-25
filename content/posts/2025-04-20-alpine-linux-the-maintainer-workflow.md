@@ -4,7 +4,6 @@ date: 2025-04-20T15:12:09+02:00
 tags:
   - bestof
   - dev
-  - selfhosted
 ---
 
 I maintain [a couple of

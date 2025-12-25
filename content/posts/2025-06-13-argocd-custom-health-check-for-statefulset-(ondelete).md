@@ -4,7 +4,6 @@ date: 2025-06-13T21:40:01+02:00
 tags:
   - bestof
   - dev
-  - selfhosted
 ---
 
 It turns out the

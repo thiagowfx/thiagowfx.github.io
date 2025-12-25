@@ -3,7 +3,6 @@ title: "brew: upgrade HEAD formulas"
 date: 2025-10-23T12:53:11+02:00
 tags:
   - dev
-  - selfhosted
 ---
 
 [Previously]({{< ref "2025-10-17-distributing-my-own-scripts-via-homebrew" >}}).

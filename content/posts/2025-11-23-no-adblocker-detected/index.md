@@ -3,7 +3,6 @@ title: "No adblocker detected"
 date: 2025-11-23T00:23:26-03:00
 tags:
   - dev
-  - selfhosted
   - serenity
 ---
 

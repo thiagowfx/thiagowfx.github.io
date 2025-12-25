@@ -3,7 +3,6 @@ title: "terraform: bypass lock"
 date: 2025-08-04T11:49:16+02:00
 tags:
   - dev
-  - selfhosted
 ---
 
 Terraform supports [state

@@ -4,7 +4,6 @@ date: 2025-01-09T21:39:29-03:00
 tags:
   - dev
   - meta
-  - selfhosted
 ---
 
 I am a fan of the [Stack Exchange](https://stackexchange.com/) network, which

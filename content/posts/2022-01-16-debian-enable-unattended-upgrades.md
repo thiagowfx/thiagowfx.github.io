@@ -3,7 +3,6 @@ title: "Debian: Enable unattended upgrades"
 date: 2022-01-16T02:07:00-05:00
 tags:
   - dev
-  - selfhosted
 ---
 
 Here's how we can enable automatic (unattended) package upgrades in Debian.

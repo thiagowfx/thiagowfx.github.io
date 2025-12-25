@@ -3,7 +3,6 @@ title: "ArgoCD: application stuck in unknown"
 date: 2025-06-12T11:51:32+02:00
 tags:
   - dev
-  - selfhosted
 ---
 
 **Problem statement**: An application in ArgoCD that was previously running

@@ -4,7 +4,6 @@ date: 2025-08-21T13:34:27+02:00
 tags:
   - bestof
   - dev
-  - selfhosted
 ---
 
 **Problem statement** Upgrade the

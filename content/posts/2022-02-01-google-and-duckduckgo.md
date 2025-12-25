@@ -2,8 +2,8 @@
 title: "Google and DuckDuckGo"
 date: 2022-02-02T18:51:00-05:00
 tags:
+  - dev
   - privacy
-  - selfhosted
 ---
 
 My search engine of choice is [Google][google], nonetheless I still enjoy [DuckDuckGo][duckduckgo] occasionally.

@@ -3,7 +3,6 @@ title: "Helm: migrate chart dependencies from HTTPS to OCI"
 date: 2025-01-08T18:45:57-03:00
 tags:
   - dev
-  - selfhosted
 ---
 
 I got aware of this due to

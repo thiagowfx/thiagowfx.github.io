@@ -22,7 +22,6 @@ tags:
   - meta
   - pt
   - privacy
-  - selfhosted
   - serenity
 ---
 ```

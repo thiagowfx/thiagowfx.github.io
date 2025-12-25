@@ -2,9 +2,9 @@
 title: "WinterBreak: hello world"
 date: 2025-05-17T12:21:26+02:00
 tags:
+  - dev
   - bestof
   - privacy
-  - selfhosted
   - serenity
 ---
 

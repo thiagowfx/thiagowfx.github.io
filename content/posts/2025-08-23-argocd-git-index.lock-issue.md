@@ -3,7 +3,6 @@ title: "ArgoCD: git index.lock issue"
 date: 2025-08-23T12:39:14+02:00
 tags:
   - dev
-  - selfhosted
 ---
 
 **Problem statement**: Every ArgoCD application is stuck in _Unknown_ state,

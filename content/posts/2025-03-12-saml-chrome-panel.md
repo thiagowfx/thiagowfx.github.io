@@ -3,7 +3,6 @@ title: "SAML Chrome Panel"
 date: 2025-03-12T00:51:05+01:00
 tags:
   - dev
-  - selfhosted
 ---
 
 [SAML Chrome Panel](https://chromewebstore.google.com/detail/saml-chrome-panel/paijfdbeoenhembfhkhllainmocckace):
