@@ -7,21 +7,21 @@ More specifically, currently, a Slack notification message from Argo looks like
 the following:
 
 
-  Cluster 37: Application heart-of-gold is unhealthy.
+   Cluster 37: Application heart-of-gold is unhealthy.
 
 We want to improve it to:
 
 
-  Cluster 37: Application heart-of-gold (~1.18.3) is unhealthy.
+   Cluster 37: Application heart-of-gold (~1.18.3) is unhealthy.
 
 The following diff (under a template block) accomplishes that:
 
 
-  
-    diff
-    Copy
-  
-  -          {{if eq .serviceType "slack"}}:interrobang:{{end}} Cluster <{{.context.argocdUrl}}|*{{.context.clusterId}}*>: Application <{{.context.argocdUrl}}/applications/{{.app.metadata.name}}|`{{.app.metadata.name}}`> _sync_ by {{.app.status.operationState.operation.initiatedBy.username | default "_automation_" }} is _unknown_.
+   
+     diff
+     Copy
+   
+   -          {{if eq .serviceType "slack"}}:interrobang:{{end}} Cluster <{{.context.argocdUrl}}|*{{.context.clusterId}}*>: Application <{{.context.argocdUrl}}/applications/{{.app.metadata.name}}|`{{.app.metadata.name}}`> _sync_ by {{.app.status.operationState.operation.initiatedBy.username | default "_automation_" }} is _unknown_.
 +          {{if eq .serviceType "slack"}}:interrobang:{{end}} Cluster <{{.context.argocdUrl}}|*{{.context.clusterId}}*>: Application <{{.context.argocdUrl}}/applications/{{.app.metadata.name}}|`{{.app.metadata.name}}`>{{if .app.spec.source.targetRevision}} ({{.app.spec.source.targetRevision}}){{else}}{{range .app.spec.sources}}{{if .targetRevision}} ({{.targetRevision}}){{break}}{{end}}{{end}}{{end}} _sync_ by {{.app.status.operationState.operation.initiatedBy.username | default "_automation_" }} is _unknown_.
 
 
