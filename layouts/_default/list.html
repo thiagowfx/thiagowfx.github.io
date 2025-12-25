@@ -34,12 +34,12 @@
       <li>No posts yet</li>
     </ul>
   {{ else }}
-    {{ range $pagesGroupedByYear }}
-    <details class="year-group" {{ if eq .Key $currentYear }}open{{ end }}>
-      <summary><strong>{{ .Key }}</strong> ({{ len .Pages }} {{ if eq (len .Pages) 1 }}post{{ else }}posts{{ end }})</summary>
+    {{ range $i, $group := $pagesGroupedByYear }}
+    <details class="year-group" {{ if eq $group.Key $currentYear }}open{{ end }}>
+      <summary><strong>{{ $group.Key }}</strong> ({{ len $group.Pages }} {{ if eq (len $group.Pages) 1 }}post{{ else }}posts{{ end }})</summary>
       <ul class="blog-posts">
         {{ $lastDate := "" }}
-        {{ range .Pages }}
+        {{ range $group.Pages }}
         {{ $currentDate := .Date.Format "02 Jan, 2006" }}
         <li>
           <span>
@@ -63,7 +63,7 @@
         {{ end }}
       </ul>
     </details>
-    <hr>
+    {{ if ne (add $i 1) (len $pagesGroupedByYear) }}<hr>{{ end }}
     {{ end }}
   {{ end }}
   {{- if not .Data.Singular }}
