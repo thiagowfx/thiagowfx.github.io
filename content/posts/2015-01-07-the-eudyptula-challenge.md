@@ -86,7 +86,7 @@ Also, I was careful not to accidentally find a solution for this task directly. 
 
 Anyways, after writing those two files and testing that they really worked as expected, I loaded my freshly built module. And yay, a simple `dmesg` would reveal my hello message out there. It was really cool to see it worked:
 
-```none
+```text
 thiago@archpad ~//01 % sudo modinfo hello.ko
 filename:       /home/thiago//01/hello.ko
 license:        GPL

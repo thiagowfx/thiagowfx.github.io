@@ -21,7 +21,7 @@ instance was in my [Raspberry Pi][raspberry-pi] in my local network.
 
 The relevant snippets to the pihole look like this:
 
-```none
+```text
 Nmap scan report for pi.hole (192.168.1.XX)
 Host is up (0.0052s latency).
 Not shown: 997 closed tcp ports (reset)

@@ -15,7 +15,7 @@ We can also use it to craft family trees!
 
 I came up with the following template:
 
-```graphviz
+```text
 digraph G {
     {Greatgrandfather Greatgrandmother} -> Grandfather;
     {Grandfather Grandmother} -> Father;

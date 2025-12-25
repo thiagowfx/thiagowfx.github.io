@@ -40,7 +40,7 @@ The snippet allows drop-in customizations to live in `conf.d`. The `include` dir
 
 - i3-only config options live in [`~/.config/i3/conf.d/i3.conf`](https://github.com/thiagowfx/.dotfiles/blob/master/i3/.config/i3/conf.d/i3.conf). To give you an idea of what it looks like and which options aren't compatible with `sway`, here's a snapshot of my config in early 2022:
 
-```conf
+```ini
 # i3(1) only config file
 # Commands herein are not compatible or interoperable with sway(1)
 # Reference: https://i3wm.org/docs/userguide.html
@@ -103,7 +103,7 @@ It's possible some of these configs will become compatible with `sway` over time
 
 - sway-only config options live in [`~/.config/sway/conf.d/sway.conf`](https://github.com/thiagowfx/.dotfiles/blob/master/sway/.config/sway/conf.d/sway.conf). To give you an idea of what it looks like and which options aren't compatible with i3, here's a snapshot of my config in early 2022:
 
-```conf
+```ini
 # sway(1) only config file
 # Commands herein are not compatible or interoperable with i3(1)
 # References:

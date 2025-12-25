@@ -14,7 +14,7 @@ In this post we'll learn how to customize it.
 The easiest way to customize the Secure Shell extension to use a custom font is to select one from [Google Fonts][google-fonts].
 Once you select a font from there, it will give you information like this:
 
-```none
+```text
 Use on the web
 To embed a font, copy the code into the <head> of your html
 ( ) <link> (x) @import
@@ -30,7 +30,7 @@ All we have to do is to copy the URL within the `url('...')` fragment above,
 go to the [settings](chrome-extension://iodihamcpbpeioajjeobimgagajmlibd/html/nassh_preferences_editor.html) of the Secure Shell extension,
 and then paste it there:
 
-```none
+```text
 # Example 1: IBM Plex Sans
 Custom CSS (URI): https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap
 
@@ -43,7 +43,7 @@ https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=IBM+Plex+
 
 And then set the extension to use it:
 
-```none
+```text
 Text font family: "IBM Plex Sans", "Fira Code", monospace
 ```
 
@@ -53,7 +53,7 @@ From Secure Shell [FAQ][faq]:
 
 If your font supports [ligatures](https://en.wikipedia.org/wiki/Ligature_(writing)), consider enabling them:
 
-```none
+```text
 Custom CSS (inline text):
 
 * {
@@ -72,7 +72,7 @@ Many fonts are available on GitHub (or in other forges), checked into a git repo
 
 If you happen to find a `.woff2` web font file laying therein, you could also use it in hterm:
 
-```none
+```text
 Custom CSS (inline text):
 
 @font-face {
@@ -83,7 +83,7 @@ Custom CSS (inline text):
 
 And then set the extension to use it:
 
-```none
+```text
 Text font family: "Anonymous Pro", monospace
 ```
 
