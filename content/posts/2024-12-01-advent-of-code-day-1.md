@@ -2,7 +2,7 @@
 title: "Advent of Code 2024: Day 1"
 date: 2024-12-01T22:29:19+01:00
 tags:
-  - aoc
+  - coding
   - dev
 ---
 

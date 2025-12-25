@@ -2,7 +2,7 @@
 title: "Advent of Code 2024: Day 7"
 date: 2024-12-12T23:12:31-03:00
 tags:
-  - aoc
+  - coding
   - dev
 rss: false
 ---
