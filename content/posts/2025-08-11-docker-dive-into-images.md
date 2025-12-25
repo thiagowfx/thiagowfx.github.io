@@ -21,7 +21,7 @@ This is enough for our needs.
 
 It would have been trivial to build our own image otherwise if needed:
 
-```Dockerfile
+```dockerfile
 FROM alpine:3.22
 RUN apk add --no-cache kubectl
 ```

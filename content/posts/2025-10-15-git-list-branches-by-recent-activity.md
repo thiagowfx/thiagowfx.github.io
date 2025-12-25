@@ -7,7 +7,7 @@ tags:
 
 Tweak `~/.gitconfig`:
 
-```gitconfig
+```ini
 [alias]
   xl = branch -vv
 

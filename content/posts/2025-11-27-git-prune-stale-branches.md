@@ -11,7 +11,7 @@ branches have already been merged upstream.
 
 Update `~/.gitconfig`:
 
-```gitconfig
+```ini
 [alias]
     prune-gone = !git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs -r git branch -D
     world = !git fetch --all && git remote prune origin && git prune && git prune-gone

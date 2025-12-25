@@ -32,7 +32,7 @@ This happens to be the default in
 
 As such, another possibility is to create an alias:
 
-```gitconfig
+```ini
 [alias]
   graft = cherry-pick -n
 ```

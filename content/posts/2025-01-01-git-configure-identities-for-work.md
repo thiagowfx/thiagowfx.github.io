@@ -16,7 +16,7 @@ I like the following workflow.
 First, create your usual `~/.gitconfig`. It will be used for your personal
 project:
 
-```gitconfig
+```ini
 [user]
         name = Thiago Perrotta
         email = {personal-email}
@@ -37,7 +37,7 @@ And we are done with our personal laptop.
 
 Now, for the work laptop, create `~/.gitconfig_corp`:
 
-```gitconfig
+```ini
 [includeIf "gitdir:~/Orgname/**"]
   path = .gitconfig_orgname
 
@@ -59,7 +59,7 @@ submodules: both git repositories are cloned and managed independently.
 
 And now, last but not least, is the actual git config for work:
 
-```gitconfig
+```ini
 % cat ~/.gitconfig_orgname
 [user]
         name = Thiago Perrotta
