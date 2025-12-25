@@ -144,6 +144,15 @@ Regarding the two "unnecessary" configs, just remove them from the `Caddyfile`:
 -        header_up X-Forwarded-Proto {scheme}
 ```
 
+And here's the cleanest possible startup:
+
+```shell
+% doas service caddy reload
+ * Reloading Caddy web server ...
+2025/12/25 06:22:17.476	INFO	using config from file	{"file": "/etc/caddy/Caddyfile"}
+2025/12/25 06:22:17.478	INFO	adapted config to JSON	{"adapter": "caddyfile"}
+```
+
 How did I know which user to `chown` to? `/etc/init.d/caddy` has the following
 line:
 
