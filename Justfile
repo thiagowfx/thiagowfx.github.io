@@ -58,7 +58,7 @@ code title *args:
     fi
 
     HUGO_TITLE="${hugo_title}" HUGO_LEETCODE_SLUG="${hugo_leetcode_slug}" HUGO_BYTEBYTEGO_SLUG="${hugo_bytebytego_slug}" HUGO_AOC_SLUG="${hugo_aoc_slug}" hugo new --kind coding "${filepath}" {{ args }}
-    {{ editor }} "${filepath}"
+    {{ editor }} '+/^```/' "${filepath}"
 
 alias coding := code
 
@@ -95,7 +95,7 @@ last:
       echo "No posts found in content/posts/"
       exit 1
     fi
-    {{ editor }} "$latest"
+    {{ editor }} '+/^```/' "$latest"
 
 # Create a git commit without any substance
 lazy *args:
