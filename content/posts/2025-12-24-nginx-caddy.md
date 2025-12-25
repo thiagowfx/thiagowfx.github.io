@@ -156,7 +156,7 @@ And here's the cleanest possible startup:
 How did I know which user to `chown` to? `/etc/init.d/caddy` has the following
 line:
 
-```conf
+```ini
 command_user=caddy:caddy
 ```
 
