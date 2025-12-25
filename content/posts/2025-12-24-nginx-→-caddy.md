@@ -137,6 +137,13 @@ Now it's much better:
 2025/12/25 05:56:11.042	INFO	adapted config to JSON	{"adapter": "caddyfile"}
 ```
 
+Regarding the two "unnecessary" configs, just remove them from the `Caddyfile`:
+
+```diff
+-        header_up X-Forwarded-For {remote}
+-        header_up X-Forwarded-Proto {scheme}
+```
+
 How did I know which user to `chown` to? `/etc/init.d/caddy` has the following
 line:
 
