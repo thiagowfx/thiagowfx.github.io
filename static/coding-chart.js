@@ -107,14 +107,14 @@ document.addEventListener('DOMContentLoaded', function() {
     data: {
       labels: dateLabels,
       datasets: [{
-        label: 'LeetCode Problems',
+        label: 'LeetCode',
         data: cumulativeValuesLeetCode,
         borderColor: 'rgb(75, 192, 192)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         tension: 0.1,
         fill: true
       }, {
-        label: 'ByteByteGo Problems',
+        label: 'ByteByteGo',
         data: cumulativeValuesByteByteGo,
         borderColor: 'rgb(255, 159, 64)',
         backgroundColor: 'rgba(255, 159, 64, 0.2)',
