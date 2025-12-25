@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tension: 0.1,
         fill: true
       }, {
-        label: 'Other Coding Posts',
+        label: 'Other coding posts',
         data: cumulativeValuesOther,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
       plugins: {
         title: {
           display: true,
-          text: 'Cumulative Coding Posts Over Time'
+          text: 'Cumulative coding posts over time'
         },
         legend: {
           display: true
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
           beginAtZero: true,
           title: {
             display: true,
-            text: 'Cumulative Posts'
+            text: 'Cumulative posts'
           },
           ticks: {
             stepSize: 1
