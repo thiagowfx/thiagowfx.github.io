@@ -14,8 +14,7 @@ For the sake of not "polluting" the main RSS feed, coding posts do not make it
 to `/index.xml`. Instead, they have their own
 [coding](/tags/coding/index.xml) feed.
 
-In the future I will move [my]({{< ref "/tags/aoc" >}}) [advent of
-code](https://adventofcode.com/) posts there as well.
+I have also moved my [advent of code](https://adventofcode.com/) posts there.
 
 Problem sets:
 
