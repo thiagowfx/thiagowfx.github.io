@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ with .Site.LanguageCode }}{{ . }}{{ else }}en-US{{ end }}"{{- if .Site.Params.enableSnowflakes }} style="width: 100%; height: 100%; background-color: #ffffff; background-image: radial-gradient(circle, transparent 10px, transparent calc(10px + 1px)), radial-gradient(circle, transparent 15px, transparent calc(15px + 1px)), radial-gradient(circle, transparent 12px, transparent calc(12px + 1px)), linear-gradient(to right, #ffe6e6 0%, transparent 8%, transparent 92%, #ffe6e6 100%); background-size: 280px 400px, 350px 480px, 420px 550px, 100% 100%; background-position: 0 0, 100px 150px, 200px 300px, 0 0; background-attachment: scroll;"{{- end }}>
+<html lang="{{ with .Site.LanguageCode }}{{ . }}{{ else }}en-US{{ end }}" id="root-html">
 
 <head>
   <meta charset="utf-8">
@@ -28,15 +28,29 @@
 </head>
 
 <body>
+  <script>
+    // Initialize snowflake state on page load
+    if (localStorage.getItem('snowflakes-enabled') === null) {
+      localStorage.setItem('snowflakes-enabled', 'true');
+    }
+    if (localStorage.getItem('snowflakes-enabled') === 'true') {
+      document.documentElement.classList.add('snowflakes-enabled');
+    }
+  </script>
   <header>
     <div class="header-top">
       <a href="{{ "" | relURL }}" class="title">
         <img src='{{ "thiagowfx.webp" | absURL }}' alt="thiagowfx's avatar" width="32" height="32" />
         <h1 class="title">{{ .Site.Title }}</h1>
       </a>
-      <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-        <span id="theme-toggle-icon">☀️</span>
-      </button>
+      <div class="header-buttons">
+        <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <span id="theme-toggle-icon">☀️</span>
+        </button>
+        <button id="snowflake-toggle" aria-label="Toggle snowflake animation" title="Toggle snowflake animation">
+          <span id="snowflake-toggle-icon">❄️</span>
+        </button>
+      </div>
     </div>
     <nav>
       {{- range .Site.Menus.main }}
@@ -147,73 +161,99 @@
   <script>
     {{- if .Site.Params.enableSnowflakes }}
     // Snowflake falling animation
-    (function() {
-      const canvas = document.createElement('canvas');
-      canvas.id = 'snowflake-canvas';
-      canvas.style.position = 'fixed';
-      canvas.style.top = '0';
-      canvas.style.left = '0';
-      canvas.style.pointerEvents = 'none';
-      canvas.style.zIndex = '-1';
-      document.body.insertBefore(canvas, document.body.firstChild);
+    window.snowflakeAnimation = {
+      canvas: null,
+      ctx: null,
+      particles: [],
+      animationFrameId: null,
+      isRunning: false,
+      christmasEmojis: ['❄️', '🎄', '🎅', '🎁', '⛄', '🔔'],
 
-      const ctx = canvas.getContext('2d');
-      let particles = [];
+      init: function() {
+        this.canvas = document.createElement('canvas');
+        this.canvas.id = 'snowflake-canvas';
+        this.canvas.style.position = 'fixed';
+        this.canvas.style.top = '0';
+        this.canvas.style.left = '0';
+        this.canvas.style.pointerEvents = 'none';
+        this.canvas.style.zIndex = '-1';
+        document.body.insertBefore(this.canvas, document.body.firstChild);
 
-      function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
-      resizeCanvas();
-      window.addEventListener('resize', resizeCanvas);
+        this.ctx = this.canvas.getContext('2d');
+        this.resizeCanvas();
+        window.addEventListener('resize', this.resizeCanvas.bind(this));
+      },
 
-      const christmasEmojis = ['❄️', '🎄', '🎅', '🎁', '⛄', '🔔'];
+      resizeCanvas: function() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+      },
 
-      class Snowflake {
-        constructor() {
-          this.x = Math.random() * canvas.width;
+      createSnowflakes: function() {
+        this.particles = [];
+        for (let i = 0; i < 30; i++) {
+          this.particles.push(new this.Snowflake(this));
+        }
+      },
+
+      Snowflake: class {
+        constructor(animation) {
+          this.animation = animation;
+          this.x = Math.random() * animation.canvas.width;
           this.y = -20;
           this.size = Math.random() * 20 + 10;
           this.speedY = Math.random() * 2 + 1;
           this.speedX = (Math.random() - 0.5) * 2;
           this.opacity = Math.random() * 0.5 + 0.5;
-          this.emoji = christmasEmojis[Math.floor(Math.random() * christmasEmojis.length)];
+          this.emoji = animation.christmasEmojis[Math.floor(Math.random() * animation.christmasEmojis.length)];
         }
         update() {
           this.y += this.speedY;
           this.x += this.speedX;
-          if (this.y > canvas.height) {
+          if (this.y > this.animation.canvas.height) {
             this.y = -20;
-            this.x = Math.random() * canvas.width;
-            this.emoji = christmasEmojis[Math.floor(Math.random() * christmasEmojis.length)];
+            this.x = Math.random() * this.animation.canvas.width;
+            this.emoji = this.animation.christmasEmojis[Math.floor(Math.random() * this.animation.christmasEmojis.length)];
           }
         }
         draw() {
-          ctx.globalAlpha = this.opacity;
-          ctx.font = `${this.size}px Arial`;
-          ctx.fillText(this.emoji, this.x, this.y);
-          ctx.globalAlpha = 1;
+          this.animation.ctx.globalAlpha = this.opacity;
+          this.animation.ctx.font = `${this.size}px Arial`;
+          this.animation.ctx.fillText(this.emoji, this.x, this.y);
+          this.animation.ctx.globalAlpha = 1;
         }
-      }
+      },
 
-      function createSnowflakes() {
-        for (let i = 0; i < 30; i++) {
-          particles.push(new Snowflake());
-        }
-      }
-
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
+      animate: function() {
+        if (!this.isRunning) return;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.particles.forEach(p => {
           p.update();
           p.draw();
         });
-        requestAnimationFrame(animate);
-      }
+        this.animationFrameId = requestAnimationFrame(this.animate.bind(this));
+      },
 
-      createSnowflakes();
-      animate();
-    })();
+      start: function() {
+        if (this.isRunning) return;
+        this.isRunning = true;
+        this.createSnowflakes();
+        this.animate();
+      },
+
+      stop: function() {
+        this.isRunning = false;
+        if (this.animationFrameId) {
+          cancelAnimationFrame(this.animationFrameId);
+        }
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      }
+    };
+
+    window.snowflakeAnimation.init();
+    if (localStorage.getItem('snowflakes-enabled') === 'true') {
+      window.snowflakeAnimation.start();
+    }
     {{- end }}
 
     function setTheme(theme) {
@@ -250,6 +290,36 @@
       const cycle = { 'auto': 'light', 'light': 'dark', 'dark': 'auto' };
       const next = cycle[current];
       setTheme(next);
+    });
+
+    // Snowflake toggle functionality
+    function getSnowflakeState() {
+      return localStorage.getItem('snowflakes-enabled') === 'true';
+    }
+
+    function setSnowflakeState(enabled) {
+      if (enabled) {
+        localStorage.setItem('snowflakes-enabled', 'true');
+        document.documentElement.classList.add('snowflakes-enabled');
+        {{- if .Site.Params.enableSnowflakes }}
+        if (window.snowflakeAnimation) {
+          window.snowflakeAnimation.start();
+        }
+        {{- end }}
+      } else {
+        localStorage.setItem('snowflakes-enabled', 'false');
+        document.documentElement.classList.remove('snowflakes-enabled');
+        {{- if .Site.Params.enableSnowflakes }}
+        if (window.snowflakeAnimation) {
+          window.snowflakeAnimation.stop();
+        }
+        {{- end }}
+      }
+    }
+
+    document.getElementById('snowflake-toggle').addEventListener('click', function () {
+      const current = getSnowflakeState();
+      setSnowflakeState(!current);
     });
 
     document.addEventListener('click', function (event) {
