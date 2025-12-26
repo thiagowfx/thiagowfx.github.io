@@ -27,6 +27,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Check links: `pre-commit run markdown-link-check --files <file>` (expensive, runs manually)
 - Run misspell check: `pre-commit run misspell --files <file>` (manual stage only)
 - Hugo build validation is included in pre-commit hooks
+- Build and test changes: `hugo` (always test changes before committing, especially Hugo template, shortcode, or config changes)
 
 ## Style Guidelines
 
