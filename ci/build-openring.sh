@@ -9,6 +9,12 @@ REPO_ROOT="$(dirname "$SCRIPT_DIR")"
 OUTPUT_FILE="${REPO_ROOT}/layouts/partials/openring.html"
 OPML_INPUT="${REPO_ROOT}/data/blogroll.yaml"
 
+# Ensure openring is installed
+if ! command -v openring &>/dev/null; then
+    echo "Installing openring..."
+    go install git.sr.ht/~sircmpwn/openring@latest
+fi
+
 # Create a temporary template for openring (HTML template with {{.Articles}} loop)
 TEMP_TEMPLATE=$(mktemp)
 trap 'rm -f "$TEMP_TEMPLATE"' EXIT
