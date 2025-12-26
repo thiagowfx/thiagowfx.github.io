@@ -9,4 +9,8 @@ Here are some of them[^1] ([OPML](/blogroll.opml)):
 
 {{< blogroll >}}
 
+## OpenRing
+
+{{< openring >}}
+
 [^1]: This list is not exhaustive and does not necessarily express endorsement.
