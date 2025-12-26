@@ -13,6 +13,8 @@ email: false
 - [homebrew-taps](https://github.com/thiagowfx/homebrew-taps) - My Homebrew taps with personal formulas and tooling
 - [pre-commit-hooks](https://github.com/thiagowfx/pre-commit-hooks) - A collection of useful hooks for pre-commit
 
+---
+
 ## Open Source Repository Packages
 
 - **[Alpine Linux](https://alpinelinux.org/)**: [Packages](https://pkgs.alpinelinux.org/packages?name=&branch=edge&repo=&arch=&origin=&flagged=&maintainer=Thiago+Perrotta)

@@ -9,6 +9,8 @@ Here are some of them[^1] ([OPML](/blogroll.opml)):
 
 {{< blogroll >}}
 
+---
+
 ## OpenRing
 
 {{< openring >}}
