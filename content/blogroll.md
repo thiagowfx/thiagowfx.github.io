@@ -1,6 +1,7 @@
 ---
 title: "Blogroll"
 date: 2025-11-25
+email: false
 ---
 
 As of **2025-11-25** I subscribe to more than **600** feeds.

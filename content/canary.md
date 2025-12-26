@@ -1,6 +1,7 @@
 ---
 title: "Warrant Canary"
 date: 2025-11-24
+email: false
 ---
 
 As of November 24, 2025, I, Thiago Perrotta, have not received any National Security Letters, FISA court orders, or any other classified request for user information.
