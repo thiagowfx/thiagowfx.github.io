@@ -16,11 +16,13 @@ watch preview="true" *args:
     hugo server --port {{ port }} --watch {{ args }}
 
 # Build the blog as in production
-build *args:
+build with-openring="false" *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    ./ci/build-openring.sh
+    if [ "{{ with-openring }}" = "true" ]; then
+        ./ci/build-openring.sh
+    fi
     hugo --environment production --gc {{ args }}
 
 # Create a new blog post. Usage: `just new "my cool title"`
