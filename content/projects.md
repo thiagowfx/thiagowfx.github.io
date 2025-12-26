@@ -11,7 +11,7 @@ email: false
 - [adventofcode](https://github.com/thiagowfx/adventofcode) - My Advent of Code solutions
 - [check-json-schema-meta](https://github.com/thiagowfx/check-json-schema-meta) - A pre-commit hook that validates JSON files contain valid $schema references
 - [homebrew-taps](https://github.com/thiagowfx/homebrew-taps) - My Homebrew taps with personal formulas and tooling
-- [pre-commit-hooks](https://github.com/thiagowfx/pre-commit-hooks) - A collection of useful hooks for pre-commit
+- [pre-commit-hooks](https://github.com/thiagowfx/pre-commit-hooks) - A collection of useful hooks for pre-commit.com
 
 ---
 
