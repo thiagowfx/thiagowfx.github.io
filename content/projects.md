@@ -4,10 +4,17 @@ date: 2025-12-26
 email: false
 ---
 
-- [.dotfiles](https://github.com/thiagowfx/.dotfiles) - My dotfiles, managed with GNU stow
+## Personal Projects
+
+- ★ [.dotfiles](https://github.com/thiagowfx/.dotfiles) - My dotfiles, managed with GNU stow
+- ★ [pancake](https://github.com/thiagowfx/pancake) - A potpourri of sweet ingredients – miscellaneous utilities
+- ★ [not just serendipity](https://github.com/thiagowfx/thiagowfx.github.io) - My blog, built with Hugo (this site)
 - [adventofcode](https://github.com/thiagowfx/adventofcode) - My Advent of Code solutions
 - [check-json-schema-meta](https://github.com/thiagowfx/check-json-schema-meta) - A pre-commit hook that validates JSON files contain valid $schema references
 - [homebrew-taps](https://github.com/thiagowfx/homebrew-taps) - My Homebrew taps with personal formulas and tooling
-- [pancake](https://github.com/thiagowfx/pancake) - A potpourri of sweet ingredients – miscellaneous utilities
 - [pre-commit-hooks](https://github.com/thiagowfx/pre-commit-hooks) - A collection of useful hooks for pre-commit
-- [thiagowfx.github.io](https://github.com/thiagowfx/thiagowfx.github.io) - My 'Not Just Serendipity' blog, built with Hugo (this site)
+
+## Open Source Repository Packages
+
+- **[Alpine Linux](https://alpinelinux.org/)**: [Packages](https://pkgs.alpinelinux.org/packages?name=&branch=edge&repo=&arch=&origin=&flagged=&maintainer=Thiago+Perrotta)
+- **[Arch Linux](https://archlinux.org/)**: AUR – Arch User Repository ([maintainer](https://aur.archlinux.org/packages?O=0&SeB=M&K=thiagowfx&outdated=&SB=p&SO=d&PP=50&submit=Go), [submitter](https://aur.archlinux.org/packages?O=0&SeB=s&K=thiagowfx&outdated=&SB=p&SO=d&PP=50&submit=Go)) and [PKGBUILDs](https://github.com/thiagowfx/PKGBUILDs)
