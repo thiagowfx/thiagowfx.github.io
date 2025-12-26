@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -o pipefail
 
 # Build OpenRing HTML from blogroll.yaml
 # Generates 3 random recent articles from feeds
@@ -12,7 +12,10 @@ OPML_INPUT="${REPO_ROOT}/data/blogroll.yaml"
 # Ensure openring is installed
 if ! command -v openring &>/dev/null; then
     echo "Installing openring..."
-    go install git.sr.ht/~sircmpwn/openring@latest
+    if ! go install git.sr.ht/~sircmpwn/openring@latest 2>&1; then
+        echo "Failed to install openring"
+        exit 1
+    fi
 fi
 
 # Create a temporary template for openring (HTML template with {{.Articles}} loop)
@@ -43,7 +46,7 @@ trap 'rm -f "$TEMP_TEMPLATE" "$TEMP_OUT"' EXIT
 
 # Parse YAML and extract feed URLs, exclude own blog, sample 5 random ones
 echo "Sampling feeds from blogroll..."
-FEEDS=$(grep -E '^\s+feed:' "$OPML_INPUT" | sed 's/.*feed:[[:space:]]*//' | sed 's/[[:space:]]*$//' | grep -v "perrotta.dev" | shuf | head -5)
+FEEDS=$(grep -E '^\s+feed:' "$OPML_INPUT" | sed 's/.*feed:[[:space:]]*//' | sed 's/[[:space:]]*$//' | grep -v "perrotta.dev" | shuf | head -5 || true)
 
 # Build openring command
 OPENRING_ARGS="-n 3"  # Get 3 articles total
