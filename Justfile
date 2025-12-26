@@ -17,6 +17,10 @@ watch preview="true" *args:
 
 # Build the blog as in production
 build *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    ./ci/build-openring.sh
     hugo --environment production --gc {{ args }}
 
 # Create a new blog post. Usage: `just new "my cool title"`
