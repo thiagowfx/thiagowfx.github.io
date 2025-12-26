@@ -6,7 +6,7 @@ tags:
 rss: false
 ---
 
-[LeetCode #303: Range Sum Query – Immutable](https://leetcode.com/problems/range-sum-query-–-immutable):
+[LeetCode #303: Range Sum Query – Immutable](https://leetcode.com/problems/range-sum-query-immutable):
 
 ```python
 class NumArray:
