@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify that LeetCode and ByteByteGo post titles follow the expected format."""
+"""Verify that LeetCode, ByteByteGo, and AoC post titles follow the expected format."""
 
 from __future__ import annotations
 
