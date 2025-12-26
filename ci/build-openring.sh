@@ -42,13 +42,16 @@ TEMP_OUT=$(mktemp)
 trap 'rm -f "$TEMP_TEMPLATE" "$TEMP_OUT"' EXIT
 
 # Parse YAML and extract feed URLs, exclude own blog, sample 5 random ones
+echo "Sampling feeds from blogroll..."
 FEEDS=$(grep -E '^\s+feed:' "$OPML_INPUT" | sed 's/.*feed:[[:space:]]*//' | sed 's/[[:space:]]*$//' | grep -v "perrotta.dev" | shuf | head -5)
 
 # Build openring command
 OPENRING_ARGS="-n 3"  # Get 3 articles total
+FEED_COUNT=0
 while IFS= read -r feed; do
-    [ -n "$feed" ] && OPENRING_ARGS="$OPENRING_ARGS -s '$feed'"
+    [ -n "$feed" ] && OPENRING_ARGS="$OPENRING_ARGS -s '$feed'" && ((FEED_COUNT++))
 done <<< "$FEEDS"
+echo "Running openring with $FEED_COUNT feeds (timeout: 120s)..."
 
 # Run with timeout (120s) and capture stderr
 if timeout 120 bash -c "eval 'openring $OPENRING_ARGS' < '$TEMP_TEMPLATE'" > "$TEMP_OUT" 2>/tmp/openring.err; then
