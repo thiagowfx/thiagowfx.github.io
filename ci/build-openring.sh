@@ -35,8 +35,8 @@ TEMPLATE
 TEMP_OUT=$(mktemp)
 trap 'rm -f "$TEMP_TEMPLATE" "$TEMP_OUT"' EXIT
 
-# Parse YAML and extract feed URLs, exclude own blog, sample 20 random ones
-FEEDS=$(grep -E '^\s+feed:' "$OPML_INPUT" | sed 's/.*feed:[[:space:]]*//' | sed 's/[[:space:]]*$//' | grep -v "perrotta.dev" | shuf | head -20)
+# Parse YAML and extract feed URLs, exclude own blog, sample 5 random ones
+FEEDS=$(grep -E '^\s+feed:' "$OPML_INPUT" | sed 's/.*feed:[[:space:]]*//' | sed 's/[[:space:]]*$//' | grep -v "perrotta.dev" | shuf | head -5)
 
 # Build openring command
 OPENRING_ARGS="-n 3"  # Get 3 articles total
@@ -44,15 +44,28 @@ while IFS= read -r feed; do
     [ -n "$feed" ] && OPENRING_ARGS="$OPENRING_ARGS -s '$feed'"
 done <<< "$FEEDS"
 
-eval "openring $OPENRING_ARGS" < "$TEMP_TEMPLATE" > "$TEMP_OUT" 2>/dev/null || {
-    echo "⚠ OpenRing skipped (feeds may be rate-limited or unavailable)"
+# Run with timeout (120s) and capture stderr
+if timeout 120 bash -c "eval 'openring $OPENRING_ARGS' < '$TEMP_TEMPLATE'" > "$TEMP_OUT" 2>/tmp/openring.err; then
+    # Check if output is not empty
+    if [ -s "$TEMP_OUT" ]; then
+        mkdir -p "$(dirname "$OUTPUT_FILE")"
+        mv "$TEMP_OUT" "$OUTPUT_FILE"
+        echo "✓ Generated OpenRing"
+    else
+        echo "⚠ OpenRing generated empty output"
+        mkdir -p "$(dirname "$OUTPUT_FILE")"
+        cat > "$OUTPUT_FILE" << 'STUB'
+<!-- OpenRing: feeds returned no articles -->
+STUB
+    fi
+else
+    echo "⚠ OpenRing generation failed/timed out."
+    if [ -f /tmp/openring.err ]; then
+        echo "Error:"
+        cat /tmp/openring.err
+    fi
     mkdir -p "$(dirname "$OUTPUT_FILE")"
     cat > "$OUTPUT_FILE" << 'STUB'
 <!-- OpenRing generation will be enabled on deploy -->
 STUB
-    exit 0
-}
-
-mkdir -p "$(dirname "$OUTPUT_FILE")"
-mv "$TEMP_OUT" "$OUTPUT_FILE"
-echo "✓ Generated OpenRing"
+fi
