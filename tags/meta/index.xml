@@ -1,6 +1,110 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Meta on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Meta on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en-us</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 26 Dec 2025 03:00:24 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/meta/index.xml" rel="self" type="application/rss+xml"/><item><title>Openring</title><link>https://perrotta.dev/2025/12/openring/</link><pubDate>Fri, 26 Dec 2025 00:00:00 +0000</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/openring/</guid><description>&lt;p&gt;I just added &lt;a href="https://git.sr.ht/~sircmpwn/openring"&gt;Openring&lt;/a&gt; to my
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 27 Dec 2025 02:10:15 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/meta/index.xml" rel="self" type="application/rss+xml"/><item><title>UptimeKuma</title><link>https://perrotta.dev/2025/12/uptimekuma/</link><pubDate>Sat, 27 Dec 2025 01:53:05 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/uptimekuma/</guid><description>&lt;p&gt;This site is now monitored via self-hosted &lt;a href="https://uptime.perrotta.dev/status/serendipity"&gt;uptime infrastructure&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;How did I do it?&lt;/p&gt;
+&lt;p&gt;Software: &lt;a href="https://github.com/louislam/uptime-kuma"&gt;UptimeKuma&lt;/a&gt;. Open-source,
+self-hosted, simple &amp;amp; easy, has a docker image for deployment, sensible
+defaults, lots of customization possibilities. Modern, solid, well-maintained,
+popular (80k+ stars on GitHub). A no-brainer choice, really.&lt;/p&gt;
+&lt;p&gt;I deployed it via Docker on Alpine Linux.&lt;/p&gt;
+&lt;p&gt;Install docker and docker-compose:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas apk add docker docker-compose&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Update the docker storage driver from the &lt;code&gt;overlay2&lt;/code&gt; default as it was failing
+for some reason:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doasedit /etc/docker/daemon.json
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;	 &lt;span class="s2"&gt;&amp;#34;storage-driver&amp;#34;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;#34;vfs&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Start docker, now and on startup:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas service docker start
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas rc-update add docker&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;equivalently to &lt;code&gt;systemctl enable --now docker&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Create a &lt;code&gt;docker-compose.yml&lt;/code&gt; file for the service:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% cat docker/docker-compose.yml
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;services:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; uptime-kuma:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; image: louislam/uptime-kuma:latest
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; container_name: uptime-kuma
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; restart: unless-stopped
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ports:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - &lt;span class="s2"&gt;&amp;#34;127.0.0.1:3001:3001&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; volumes:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; - /opt/uptime-kuma:/app/data&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;ensure to bind it to localhost only (&lt;code&gt;127.0.0.1&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Start it:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% docker-compose up -d&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;-d&lt;/code&gt; to start it in the background.&lt;/p&gt;
+&lt;p&gt;From here we access the service and configure it (out of scope of this post):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;create an admin user, set a secure password&lt;/li&gt;
+&lt;li&gt;enable 2FA (TOTP)&lt;/li&gt;
+&lt;li&gt;add the first monitor (&lt;code&gt;https://perrotta.dev&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To access the service securely for the first time, there are various
+possibilities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;expose it under a reverse proxy with HTTP basic auth&lt;/li&gt;
+&lt;li&gt;employ a VPN (e.g. Tailscale, Wireguard)&lt;/li&gt;
+&lt;li&gt;use SSH port forwarding from your VPS to your laptop&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;hellip;just &lt;em&gt;do not&lt;/em&gt; expose the service to &lt;code&gt;0.0.0.0&lt;/code&gt; without credentials.&lt;/p&gt;
+&lt;p&gt;Next, expose the service via a user-friendly URL, with the creation of a DNS
+record. As you can see, I chose uptime.perrotta.dev.&lt;/p&gt;
+&lt;p&gt;Configure your reverse proxy (&lt;a href="https://perrotta.dev/2025/12/nginx-caddy/"&gt;Caddy&lt;/a&gt; in
+this case):&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uptime.perrotta.dev {
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;	log {
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;		output file /var/log/caddy/uptime.log
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;	reverse_proxy * {
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;		to 127.0.0.1:3001
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;		header_up Host {host}
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Then:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;% doas service caddy reload&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;And now sit back and enjoy free uptime monitoring!&lt;/p&gt;
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: UptimeKuma"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Openring</title><link>https://perrotta.dev/2025/12/openring/</link><pubDate>Fri, 26 Dec 2025 00:00:00 +0000</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2025/12/openring/</guid><description>&lt;p&gt;I just added &lt;a href="https://git.sr.ht/~sircmpwn/openring"&gt;Openring&lt;/a&gt; to my
 &lt;a href="https://perrotta.dev/blogroll/"&gt;blogroll&lt;/a&gt; page:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;This is a tool for generating a webring from RSS feeds, so you can link to
@@ -1286,9 +1390,4 @@ stock Notes app is decent for drafting blog posts.&amp;#160;&lt;a href="https://
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
-&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Hugo: compose or edit blog posts from the web"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Hello World from Hugo</title><link>https://perrotta.dev/2021/12/hello-world-from-hugo/</link><pubDate>Sat, 11 Dec 2021 20:57:56 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><guid>https://perrotta.dev/2021/12/hello-world-from-hugo/</guid><description>&lt;p&gt;Hello World from &lt;a href="https://gohugo.io/"&gt;Hugo&lt;/a&gt;!&lt;/p&gt;
-&lt;p&gt;I am joining the &lt;a href="https://indieweb.org/"&gt;indieweb&lt;/a&gt; and the &lt;a href="https://jamstack.org/"&gt;JAMStack&lt;/a&gt; by rolling my
-own blog backed by a static site generator (&lt;a href="https://jamstack.org/generators/"&gt;SSG&lt;/a&gt;) and deployed with &lt;code&gt;git&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Previously I used to have a blog hosted on Wordpress
-called &lt;a href="https://everydayserendipity.wordpress.com"&gt;Everyday Serendipity&lt;/a&gt;.&lt;/p&gt;
-&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Hello World from Hugo"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p style="text-align: center; margin-top: 2em;"&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Hugo: compose or edit blog posts from the web"&gt;email&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
