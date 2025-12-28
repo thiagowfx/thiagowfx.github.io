@@ -23,5 +23,5 @@ class Solution:
 
             return tribo(n - 1) + tribo(n - 2) + tribo(n - 3)
 
-         return tribo(n)
+        return tribo(n)
 ```
