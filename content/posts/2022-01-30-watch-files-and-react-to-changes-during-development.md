@@ -76,3 +76,5 @@ It took me several minutes to figure out what's the gist of watchman, only to re
 For simple projects, `entr` is the way to go, hands down. For complex webdev projects, I would look into `watchman` more deeply.
 
 [^1]: To be truly strict, only changes to `.go` files matter.
+
+**See also**: [`watchexec`](https://github.com/watchexec/watchexec)
