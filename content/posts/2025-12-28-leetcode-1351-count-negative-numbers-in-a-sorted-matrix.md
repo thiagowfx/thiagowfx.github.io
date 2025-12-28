@@ -65,3 +65,22 @@ class Solution:
 ```
 
 **Note**: `bisect_left` on `0`.
+
+Optimized:
+
+```python
+import bisect
+
+class Solution:
+    def countNegatives(self, grid: List[List[int]]) -> int:
+        ans = 0
+
+        w = len(grid[0])
+        for i in range(len(grid)):
+            p = bisect.bisect_left(list(reversed(grid[i][:w])), 0)
+            ans += p + (len(grid[0]) - w)
+
+            w -= p
+
+        return ans
+```
