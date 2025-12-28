@@ -29,5 +29,5 @@ class Solution:
                 solve(amount, i - 1),
             ))
 
-        return solve(amount, len(coins) - 1
+        return solve(amount, len(coins) - 1)
 ```
