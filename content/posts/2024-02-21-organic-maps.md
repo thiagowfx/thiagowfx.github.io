@@ -31,3 +31,6 @@ Negative impressions:
 
 - do not use it for public transit, it is terrible as it does not have
   real-time data integration
+
+**Update(2025-12)**: It turns out Organic Maps is also great to track routes
+(e.g. during hiking or bus tours).
