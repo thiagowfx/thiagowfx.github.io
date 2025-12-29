@@ -3,9 +3,11 @@ title: "Projects"
 email: false
 ---
 
+This is the closest I have to a [`/now`](https://sive.rs/now3) page.
+
 ## Personal Projects
 
-- ★ [.dotfiles](https://github.com/thiagowfx/.dotfiles) - My dotfiles, managed with GNU stow. This is the closest I have to an `/uses` page.
+- ★ [.dotfiles](https://github.com/thiagowfx/.dotfiles) - My dotfiles, managed with GNU stow. This repository is the closest I have to an `/uses` page.
 - ★ [pancake](https://github.com/thiagowfx/pancake) - A potpourri of sweet ingredients – miscellaneous utilities
 - ★ [not just serendipity](https://github.com/thiagowfx/thiagowfx.github.io) - My blog, built with Hugo (this site)
 - [adventofcode](https://github.com/thiagowfx/adventofcode) - My Advent of Code solutions
