@@ -105,3 +105,29 @@ class Solution:
 
         return solve(0, 0)
 ```
+
+Modern:
+
+```python
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+
+        from functools import cache
+
+        @cache
+        def solve(m, n):
+            if m < 0 or n < 0:
+                return float('inf')
+
+            if m == 0 and n == 0:
+                return grid[m][n]
+
+            return grid[m][n] + min(
+                solve(m - 1, n),
+                solve(m, n - 1),
+            )
+
+        return solve(m - 1, n - 1)
+```
