@@ -50,3 +50,9 @@ class Solution:
 
         return solve(n) % mod
 ```
+
+This also works:
+
+```python
+ans += 2 * sum(solve(i) for i in range(n - 2))
+```
