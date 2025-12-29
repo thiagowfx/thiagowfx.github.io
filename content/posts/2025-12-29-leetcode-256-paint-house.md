@@ -37,3 +37,9 @@ class Solution:
 
         return solve(n - 1)
 ```
+
+One-liner:
+
+```python
+return min(costs[i][j] + solve(i - 1, j) for j in range(3) if j != prev_color)
+```
