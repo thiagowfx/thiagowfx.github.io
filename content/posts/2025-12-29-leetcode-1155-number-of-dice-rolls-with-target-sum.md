@@ -17,12 +17,12 @@ class Solution:
 
         @cache
         def solve(die_left, mysum = 0):
-            if die_left == 0:
-                return int(mysum == target)
-
             # out of bounds
             if mysum > target:
                 return 0
+
+            if die_left == 0:
+                return int(mysum == target)
 
             ans = 0
             for d in range(1, k + 1):
