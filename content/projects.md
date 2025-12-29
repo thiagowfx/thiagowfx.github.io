@@ -5,7 +5,7 @@ email: false
 
 ## Personal Projects
 
-- ★ [.dotfiles](https://github.com/thiagowfx/.dotfiles) - My dotfiles, managed with GNU stow
+- ★ [.dotfiles](https://github.com/thiagowfx/.dotfiles) - My dotfiles, managed with GNU stow. This is the closest I have to an `/uses` page.
 - ★ [pancake](https://github.com/thiagowfx/pancake) - A potpourri of sweet ingredients – miscellaneous utilities
 - ★ [not just serendipity](https://github.com/thiagowfx/thiagowfx.github.io) - My blog, built with Hugo (this site)
 - [adventofcode](https://github.com/thiagowfx/adventofcode) - My Advent of Code solutions
