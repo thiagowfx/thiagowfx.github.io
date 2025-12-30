@@ -178,10 +178,13 @@
               <strong>Published: </strong> <xsl:value-of select="pubDate"/>
               <xsl:if test="category">
                  • <strong>Tags: </strong>
-                <xsl:for-each select="category">
-                  <xsl:value-of select="."/>
-                  <xsl:if test="position() != last()">, </xsl:if>
-                </xsl:for-each>
+               <xsl:for-each select="category">
+                 <a>
+                   <xsl:attribute name="href"><xsl:value-of select="/rss/channel/link"/>tags/<xsl:value-of select="translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>/</xsl:attribute>
+                   <xsl:value-of select="."/>
+                 </a>
+                 <xsl:if test="position() != last()">, </xsl:if>
+               </xsl:for-each>
               </xsl:if>
             </div>
 
