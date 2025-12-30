@@ -176,6 +176,13 @@
                 <strong>By: </strong> <a href="mailto:{substring-before(author, ' (')}"><xsl:value-of select="substring-before(substring-after(author, ' ('), ')')"/></a> •
               </xsl:if>
               <strong>Published: </strong> <xsl:value-of select="pubDate"/>
+              <xsl:if test="category">
+                 • <strong>Tags: </strong>
+                <xsl:for-each select="category">
+                  <xsl:value-of select="."/>
+                  <xsl:if test="position() != last()">, </xsl:if>
+                </xsl:for-each>
+              </xsl:if>
             </div>
 
             <div class="item-description">
