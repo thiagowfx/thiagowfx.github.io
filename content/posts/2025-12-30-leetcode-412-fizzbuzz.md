@@ -1,0 +1,27 @@
+---
+title: "LeetCode #412: FizzBuzz"
+date: 2025-12-30T05:04:41-03:00
+tags:
+  - coding
+rss: false
+---
+
+[LeetCode #412: FizzBuzz](https://leetcode.com/problems/leetcode-#412:-fizzbuzz):
+
+```python
+class Solution:
+    def fizzBuzz(self, n: int) -> List[str]:
+        ans = []
+
+        for i in range(1, n + 1):
+            if i % 15 == 0:
+                ans.append("FizzBuzz")
+            elif i % 5 == 0:
+                ans.append("Buzz")
+            elif i % 3 == 0:
+                ans.append("Fizz")
+            else:
+                ans.append(str(i))
+
+        return ans
+```
