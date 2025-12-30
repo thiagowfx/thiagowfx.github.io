@@ -128,3 +128,20 @@ class Solution:
     the index: `for el in v` which is simpler than `for _, el in enumerate(v)`.
 
 [^2]: `[::-1]` slicing reverses a list.
+
+New:
+
+```python
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        p = 0
+        for i, num in enumerate(nums):
+            ## 1 2 2 3
+            ## 2
+            nums[p] = nums[i]
+
+            if num != val:
+                p += 1
+
+        return p
+```
