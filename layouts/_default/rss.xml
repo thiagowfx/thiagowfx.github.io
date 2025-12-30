@@ -78,7 +78,11 @@ The only diff is `.Content` instead of `.Summary` for full-text RSS feeds.
         {{- if .Params.email | default true }}
           {{- $content = print $content ` • ` }}
         {{- end }}
-        {{- $content = print $content `<strong>Tags:</strong> ` (delimit .Params.tags ", ") }}
+        {{- $content = print $content `<strong>Tags:</strong> ` }}
+        {{- range $index, $tag := .Params.tags }}
+          {{- if gt $index 0 }}{{ $content = print $content `, ` }}{{ end }}
+          {{- $content = print $content (printf `<a href="%stags/%s/">%s</a>` (strings.TrimSuffix site.BaseURL "/") (lower $tag) $tag) }}
+        {{- end }}
       {{- end }}
       {{- $content = print $content `</p>` }}
       <description>{{ $content | transform.XMLEscape | safeHTML }}</description>
