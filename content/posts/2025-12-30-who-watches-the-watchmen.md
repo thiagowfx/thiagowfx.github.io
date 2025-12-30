@@ -49,6 +49,6 @@ Here is a practical example when iterating on [`stack.py`]({{< ref
 
 ```shell
 % watchexec --clear -- ty check
-[Running: python stack.py]
+[Running: ty check]
 [Command was successful]
 ```
