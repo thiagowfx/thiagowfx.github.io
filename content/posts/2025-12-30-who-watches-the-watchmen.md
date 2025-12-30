@@ -37,3 +37,18 @@ watchexec -w src make          # watch the given directory
 
 There are various other useful command-line switches, its [man
 page](https://man.archlinux.org/man/watchexec.1) is very descriptive.
+
+Here is a practical example when iterating on [`stack.py`]({{< ref
+"2025-12-30-stack" >}}):
+
+```shell
+% watchexec --clear -- python stack.py
+[Running: python stack.py]
+[Command was successful]
+```
+
+```shell
+% watchexec --clear -- ty check
+[Running: python stack.py]
+[Command was successful]
+```
