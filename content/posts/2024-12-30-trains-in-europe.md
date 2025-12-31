@@ -1,6 +1,7 @@
 ---
 title: "Trains in Europe"
 date: 2024-12-30T02:25:06-03:00
+toc: true
 tags:
   - bestof
   - serenity
