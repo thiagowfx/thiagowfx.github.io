@@ -8,7 +8,7 @@
 </a><a href=/posts/><span class=nav-text>Blog</span>
 </a><a href=/blogroll/><span class=nav-text>Blogroll</span>
 </a><a href=/tags/coding/><span class=nav-text>Coding</span>
-</a><a href=/projects/><span class=nav-text>Projects</span></a></nav></header><main><content><h2>Search</h2><div class=search-container><input type=text id=search-input placeholder="Type to search posts..." autocomplete=off autofocus><div id=search-info class=search-info></div></div><div id=search-results class=search-results></div></content><script type=module>
+</a><a href=/projects/><span class=nav-text>Projects</span></a></nav></header><main><content><h2>Search</h2><div class=search-container><input type=text id=search-input placeholder="Search posts... (use * as wildcard)" autocomplete=off autofocus><div id=search-info class=search-info></div></div><div id=search-results class=search-results></div></content><script type=module>
   let searchIndex = null;
   const searchInput = document.getElementById('search-input');
   const searchResults = document.getElementById('search-results');
@@ -28,13 +28,27 @@
     return div.innerHTML;
   };
 
+  const termToRegex = (term) => {
+    const escaped = term.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
+    return new RegExp(escaped.replace(/\*/g, '.*'), 'i');
+  };
+
+  const matchesTerm = (text, term) => {
+    if (term.includes('*')) {
+      return termToRegex(term).test(text);
+    }
+    return text.includes(term);
+  };
+
   const highlightMatch = (text, query) => {
     if (!text) return '';
     const escaped = escapeHtml(text);
     const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 0);
     return terms.reduce((result, term) => {
-      const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-      return result.replace(regex, '<mark>$1</mark>');
+      const pattern = term.includes('*')
+        ? term.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '[^\\s]*')
+        : term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return result.replace(new RegExp(`(${pattern})`, 'gi'), '<mark>$1</mark>');
     }, escaped);
   };
 
@@ -99,9 +113,9 @@
       let score = 0;
 
       for (const term of terms) {
-        const inTitle = title.includes(term);
-        const inSummary = summary.includes(term);
-        const inTags = tagsText.includes(term);
+        const inTitle = matchesTerm(title, term);
+        const inSummary = matchesTerm(summary, term);
+        const inTags = matchesTerm(tagsText, term);
 
         if (!inTitle && !inSummary && !inTags) {
           allMatch = false;
