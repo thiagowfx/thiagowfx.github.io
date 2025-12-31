@@ -29,54 +29,54 @@ build with-openring="false" *args:
 build-quick *args:
     hugo --environment quick {{ args }}
 
-# Create a new blog post. Usage: `just new "my cool title"`
-new title *args:
+# Create a new blog post. Usage: `just new "my cool title"` or `just new my cool title`
+new *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/: /-/g' | tr ' ' '-')
+    filename=$(echo "{{ args }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/: /-/g' | tr ' ' '-')
     filepath="content/posts/`date "+%Y-%m-%d"`-${filename}.md"
-    hugo new --kind blog "${filepath}" {{ args }}
+    hugo new --kind blog "${filepath}"
     {{ editor }} "${filepath}"
 
 alias blog := new
 
-# Create a new coding post. Usage: `just code "leetcode #1"` or `just code "bytebytego #1"` or `just code "ByteByteGo: Triplet Sum"` or `just code "AoC 2024 Day 1"`.
-code title *args:
+# Create a new coding post. Usage: `just code "leetcode #1"` or `just code leetcode 1` or `just code "ByteByteGo: Triplet Sum"` or `just code AoC 2024 Day 1`.
+code *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    filename=$(echo "{{ title }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/#//g' -e 's/:/ /g' | tr -s ' ' | tr ' ' '-')
+    filename=$(echo "{{ args }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/#//g' -e 's/:/ /g' | tr -s ' ' | tr ' ' '-')
     filepath="content/posts/`date "+%Y-%m-%d"`-${filename}.md"
 
-    hugo_title="{{ title }}"
+    hugo_title="{{ args }}"
     hugo_leetcode_slug=""
     hugo_bytebytego_slug=""
     hugo_aoc_slug=""
-    if [[ "{{ title }}" == "LeetCode"* ]]; then
+    if [[ "{{ args }}" == "LeetCode"* ]]; then
       # Handle "LeetCode #1: Problem", "LeetCode 1. Problem", and "LeetCode: Problem" formats
       # Normalize "LeetCode 1. Problem" to "LeetCode #1: Problem"
-      if [[ "{{ title }}" =~ LeetCode[[:space:]]+([0-9]+)\. ]]; then
+      if [[ "{{ args }}" =~ LeetCode[[:space:]]+([0-9]+)\. ]]; then
         problem_number="${BASH_REMATCH[1]}"
-        problem_name=$(echo "{{ title }}" | sed -e 's/LeetCode [0-9]*\. //')
+        problem_name=$(echo "{{ args }}" | sed -e 's/LeetCode [0-9]*\. //')
         hugo_title="LeetCode #${problem_number}: ${problem_name}"
       fi
       problem_name=$(echo "${hugo_title}" | sed -e 's/LeetCode \(#[0-9]*: \|[0-9]*\. \)\?//')
       hugo_leetcode_slug=$(echo "${problem_name}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-    elif [[ "{{ title }}" == "ByteByteGo"* ]]; then
+    elif [[ "{{ args }}" == "ByteByteGo"* ]]; then
       # Handle both "ByteByteGo #1: Problem" and "ByteByteGo: Problem" formats
-      problem_name=$(echo "{{ title }}" | sed -e 's/ByteByteGo \(#[0-9]*: \)\?//')
+      problem_name=$(echo "{{ args }}" | sed -e 's/ByteByteGo \(#[0-9]*: \)\?//')
       hugo_bytebytego_slug=$(echo "${problem_name}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-    elif [[ "{{ title }}" == "AoC"* ]] || [[ "{{ title }}" == "Advent"* ]]; then
+    elif [[ "{{ args }}" == "AoC"* ]] || [[ "{{ args }}" == "Advent"* ]]; then
       # Handle "AoC YYYY Day N" or "Advent of Code YYYY Day N" formats
-      problem_name=$(echo "{{ title }}" | sed -e 's/\(AoC\|Advent of Code\) //')
+      problem_name=$(echo "{{ args }}" | sed -e 's/\(AoC\|Advent of Code\) //')
       hugo_aoc_slug=$(echo "${problem_name}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
     fi
 
-    HUGO_TITLE="${hugo_title}" HUGO_LEETCODE_SLUG="${hugo_leetcode_slug}" HUGO_BYTEBYTEGO_SLUG="${hugo_bytebytego_slug}" HUGO_AOC_SLUG="${hugo_aoc_slug}" hugo new --kind coding "${filepath}" {{ args }}
+    HUGO_TITLE="${hugo_title}" HUGO_LEETCODE_SLUG="${hugo_leetcode_slug}" HUGO_BYTEBYTEGO_SLUG="${hugo_bytebytego_slug}" HUGO_AOC_SLUG="${hugo_aoc_slug}" hugo new --kind coding "${filepath}"
 
     # Check for duplicate LeetCode posts before opening editor
-    if [[ "{{ title }}" == "LeetCode"* ]]; then
+    if [[ "{{ args }}" == "LeetCode"* ]]; then
         if ! ci/check_duplicate_leetcode_posts.py; then
             echo ""
             echo "❌ Duplicate LeetCode post detected! Please resolve the duplicate before editing."
