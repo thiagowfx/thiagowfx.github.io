@@ -36,12 +36,14 @@
     {{- $score = add $score 5 -}}
   {{- end -}}
   {{- if gt $score 0 -}}
-    {{- $scored = $scored | append (dict "page" . "score" $score) -}}
+    {{- /* Composite key: score * 10^12 + unix timestamp (newer wins ties) */ -}}
+    {{- $sortKey := add (mul $score 1000000000000) .Date.Unix -}}
+    {{- $scored = $scored | append (dict "page" . "score" $score "sortKey" $sortKey) -}}
   {{- end -}}
 {{- end -}}
 
-{{- /* Sort by score descending and take top 2 */ -}}
-{{- $sorted := sort $scored "score" "desc" -}}
+{{- /* Sort by score descending, with date as tiebreaker (newer wins) */ -}}
+{{- $sorted := sort $scored "sortKey" "desc" -}}
 {{- $related := slice -}}
 {{- range first 2 $sorted -}}
   {{- $related = $related | append .page -}}
