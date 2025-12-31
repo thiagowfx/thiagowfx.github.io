@@ -12,6 +12,9 @@
   {{- end -}}
 {{- end -}}
 
+{{- /* Extract current post filename for link detection */ -}}
+{{- $currentFilename := path.Base $currentPage.File.Path | replaceRE "\\.md$" "" -}}
+
 {{- /* Score posts by matching title words */ -}}
 {{- $scored := slice -}}
 {{- range $posts -}}
@@ -25,6 +28,13 @@
   {{- /* Also boost if they share tags */ -}}
   {{- $sharedTags := intersect $currentPage.Params.tags .Params.tags -}}
   {{- $score = add $score (len $sharedTags) -}}
+  {{- /* Boost if either post links to the other (bidirectional) */ -}}
+  {{- $otherFilename := path.Base .File.Path | replaceRE "\\.md$" "" -}}
+  {{- $currentLinksToOther := findRE (printf `ref\s+"[^"]*%s` $otherFilename) $currentPage.RawContent -}}
+  {{- $otherLinksToCurrent := findRE (printf `ref\s+"[^"]*%s` $currentFilename) .RawContent -}}
+  {{- if or $currentLinksToOther $otherLinksToCurrent -}}
+    {{- $score = add $score 5 -}}
+  {{- end -}}
   {{- if gt $score 0 -}}
     {{- $scored = $scored | append (dict "page" . "score" $score) -}}
   {{- end -}}
