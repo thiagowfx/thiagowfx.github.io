@@ -1,6 +1,7 @@
 {{- $autofocus := .autofocus | default false }}
 {{- $contentSelector := .contentSelector | default "" }}
 {{- $excludeTags := .excludeTags | default slice }}
+{{- $includeTags := .includeTags | default slice }}
 <div class="search-container">
   <input type="text" id="search-input" placeholder="Search posts... (use * as wildcard)" autocomplete="off" {{ if $autofocus }}autofocus{{ end }} />
   <div id="search-info" class="search-info"></div>
@@ -14,6 +15,7 @@
   const contentSelector = '{{ $contentSelector }}';
   const contentEl = contentSelector ? document.querySelector(contentSelector) : null;
   const excludeTags = new Set({{ $excludeTags | jsonify | safeJS }});
+  const includeTags = new Set({{ $includeTags | jsonify | safeJS }});
 
   const debounce = (fn, delay) => {
     let timeout;
@@ -145,9 +147,13 @@
   fetch('/search/index.json')
     .then(response => response.json())
     .then(data => {
-      searchIndex = excludeTags.size > 0
-        ? data.filter(post => !(post.tags ?? []).some(t => excludeTags.has(t)))
-        : data;
+      searchIndex = data;
+      if (includeTags.size > 0) {
+        searchIndex = searchIndex.filter(post => (post.tags ?? []).some(t => includeTags.has(t)));
+      }
+      if (excludeTags.size > 0) {
+        searchIndex = searchIndex.filter(post => !(post.tags ?? []).some(t => excludeTags.has(t)));
+      }
       searchInfo.textContent = `${searchIndex.length} posts indexed`;
       const q = new URLSearchParams(window.location.search).get('q');
       if (q) {
