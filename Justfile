@@ -50,8 +50,8 @@ code title *args:
     hugo_bytebytego_slug=""
     hugo_aoc_slug=""
     if [[ "{{ title }}" == "LeetCode"* ]]; then
-      # Handle both "LeetCode #1: Problem" and "LeetCode: Problem" formats
-      problem_name=$(echo "{{ title }}" | sed -e 's/LeetCode \(#[0-9]*: \)\?//')
+      # Handle "LeetCode #1: Problem", "LeetCode 1. Problem", and "LeetCode: Problem" formats
+      problem_name=$(echo "{{ title }}" | sed -e 's/LeetCode \(#[0-9]*: \|[0-9]*\. \)\?//')
       hugo_leetcode_slug=$(echo "${problem_name}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
     elif [[ "{{ title }}" == "ByteByteGo"* ]]; then
       # Handle both "ByteByteGo #1: Problem" and "ByteByteGo: Problem" formats
