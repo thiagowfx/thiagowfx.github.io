@@ -1,7 +1,6 @@
 ---
 title: "Markdown headings and git comments"
 date: 2025-07-08T13:18:09+02:00
-toc: true
 tags:
   - dev
 ---

@@ -1,7 +1,6 @@
 ---
 title: "Overnight Oats"
 date: 2025-04-20T13:09:31+02:00
-toc: true
 tags:
   - bestof
   - recipe
