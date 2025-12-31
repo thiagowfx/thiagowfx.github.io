@@ -10,7 +10,7 @@ watch preview="true" *args:
     set -euo pipefail
 
     if [ "{{ preview }}" = "true" ]; then
-      (sleep 1 && open "http://localhost:{{ port }}/posts/") &
+      open "http://localhost:{{ port }}/posts/" &
     fi
 
     hugo server --port {{ port }} --watch {{ args }}
