@@ -21,7 +21,7 @@ build with-openring="false" *args:
     set -euo pipefail
 
     if [ "{{ with-openring }}" = "true" ]; then
-        ./ci/build-openring.sh
+        ./ci/build_openring.sh
     fi
     hugo --environment production --gc {{ args }}
 
