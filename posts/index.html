@@ -18,6 +18,7 @@
   const contentSelector = '#posts-content';
   const contentEl = contentSelector ? document.querySelector(contentSelector) : null;
   const excludeTags = new Set(["coding"]);
+  const includeTags = new Set([]);
 
   const debounce = (fn, delay) => {
     let timeout;
@@ -149,9 +150,13 @@
   fetch('/search/index.json')
     .then(response => response.json())
     .then(data => {
-      searchIndex = excludeTags.size > 0
-        ? data.filter(post => !(post.tags ?? []).some(t => excludeTags.has(t)))
-        : data;
+      searchIndex = data;
+      if (includeTags.size > 0) {
+        searchIndex = searchIndex.filter(post => (post.tags ?? []).some(t => includeTags.has(t)));
+      }
+      if (excludeTags.size > 0) {
+        searchIndex = searchIndex.filter(post => !(post.tags ?? []).some(t => excludeTags.has(t)));
+      }
       searchInfo.textContent = `${searchIndex.length} posts indexed`;
       const q = new URLSearchParams(window.location.search).get('q');
       if (q) {
