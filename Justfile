@@ -25,6 +25,10 @@ build with-openring="false" *args:
     fi
     hugo --environment production --gc {{ args }}
 
+# Quick build for pre-commit (skips expensive template logic)
+build-quick *args:
+    hugo --environment quick {{ args }}
+
 # Create a new blog post. Usage: `just new "my cool title"`
 new title *args:
     #!/usr/bin/env bash
