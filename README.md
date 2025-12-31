@@ -4,6 +4,7 @@
 [![GH Pages](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/gh-pages.yml)
 [![Pre-commit autoupdate](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit-autoupdate.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit-autoupdate.yml)
 [![Pre-commit](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yml)
+[![ls-lint](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/ls-lint.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/ls-lint.yml)
 <!-- keep-sorted end -->
 
 This blog is built with [`hugo`][hugo].
