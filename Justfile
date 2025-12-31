@@ -135,6 +135,17 @@ clean:
     rm -rf public/ resources/
     git clean -x -f -d
 
+# Lint and validate with pre-commit hooks
+lint *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    if [ -z "{{ args }}" ]; then
+        pre-commit run --all-files
+    else
+        pre-commit run --files {{ args }}
+    fi
+
 # Ping search engines about changes in the sitemap
 ping sitemap="https://perrotta.dev/sitemap.xml":
     curl -sS -o /dev/null "https://www.google.com/ping?sitemap={{ sitemap }}"
