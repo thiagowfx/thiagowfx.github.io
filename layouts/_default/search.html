@@ -7,50 +7,80 @@
   </div>
   <div id="search-results" class="search-results"></div>
 </content>
-<script>
-(function() {
+<script type="module">
   let searchIndex = null;
   const searchInput = document.getElementById('search-input');
   const searchResults = document.getElementById('search-results');
   const searchInfo = document.getElementById('search-info');
 
-  // Fetch the search index
-  fetch('/search/index.json')
-    .then(response => response.json())
-    .then(data => {
-      searchIndex = data;
-      searchInfo.textContent = searchIndex.length + ' posts indexed';
-      // Check for query parameter
-      const params = new URLSearchParams(window.location.search);
-      const q = params.get('q');
-      if (q) {
-        searchInput.value = q;
-        performSearch(q);
-      }
-    })
-    .catch(err => {
-      searchInfo.textContent = 'Error loading search index';
-      console.error('Search index load error:', err);
-    });
-
-  // Debounce function
-  function debounce(fn, delay) {
+  const debounce = (fn, delay) => {
     let timeout;
-    return function() {
-      const args = arguments;
+    return (...args) => {
       clearTimeout(timeout);
-      timeout = setTimeout(() => fn.apply(this, args), delay);
+      timeout = setTimeout(() => fn(...args), delay);
     };
-  }
+  };
 
-  // Search function
-  function performSearch(query) {
+  const escapeHtml = (text) => {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  };
+
+  const highlightMatch = (text, query) => {
+    if (!text) return '';
+    const escaped = escapeHtml(text);
+    const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 0);
+    return terms.reduce((result, term) => {
+      const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      return result.replace(regex, '<mark>$1</mark>');
+    }, escaped);
+  };
+
+  const updateURL = (query) => {
+    const url = new URL(window.location);
+    if (query) {
+      url.searchParams.set('q', query);
+    } else {
+      url.searchParams.delete('q');
+    }
+    history.replaceState(null, '', url);
+  };
+
+  const renderResults = (results, query) => {
+    if (results.length === 0) {
+      searchInfo.textContent = 'No results found';
+      searchResults.innerHTML = '<p class="no-results">No posts match your search.</p>';
+      return;
+    }
+
+    searchInfo.textContent = `${results.length} result${results.length === 1 ? '' : 's'} found`;
+
+    searchResults.innerHTML = results.map(({ post }) => {
+      const tags = (post.tags ?? [])
+        .map(t => `<a href="/tags/${t}/" class="search-tag">#${escapeHtml(t)}</a>`)
+        .join(' ');
+
+      return `
+        <div class="search-result">
+          <a href="${escapeHtml(post.url)}" class="search-result-title">${highlightMatch(post.title, query)}</a>
+          <div class="search-result-meta">
+            <span class="search-result-date">${escapeHtml(post.date)}</span>
+            ${tags ? `<span class="search-result-tags">${tags}</span>` : ''}
+          </div>
+          ${post.summary ? `<p class="search-result-summary">${highlightMatch(post.summary, query)}</p>` : ''}
+        </div>
+      `;
+    }).join('');
+  };
+
+  const performSearch = (query) => {
     if (!searchIndex) return;
 
     const q = query.toLowerCase().trim();
     if (q.length === 0) {
       searchResults.innerHTML = '';
-      searchInfo.textContent = searchIndex.length + ' posts indexed';
+      searchInfo.textContent = `${searchIndex.length} posts indexed`;
       updateURL('');
       return;
     }
@@ -58,13 +88,12 @@
     const terms = q.split(/\s+/).filter(t => t.length > 0);
     const results = [];
 
-    searchIndex.forEach(post => {
-      const title = (post.title || '').toLowerCase();
-      const summary = (post.summary || '').toLowerCase();
-      const tags = (post.tags || []).map(t => t.toLowerCase());
+    for (const post of searchIndex) {
+      const title = (post.title ?? '').toLowerCase();
+      const summary = (post.summary ?? '').toLowerCase();
+      const tags = (post.tags ?? []).map(t => t.toLowerCase());
       const tagsText = tags.join(' ');
 
-      // Check if all terms match
       let allMatch = true;
       let score = 0;
 
@@ -78,7 +107,6 @@
           break;
         }
 
-        // Score: title matches are worth more
         if (inTitle) score += 10;
         if (inTags) score += 5;
         if (inSummary) score += 1;
@@ -87,93 +115,30 @@
       if (allMatch) {
         results.push({ post, score });
       }
-    });
+    }
 
-    // Sort by score (descending), then by date (newest first)
-    results.sort((a, b) => {
-      if (b.score !== a.score) return b.score - a.score;
-      return b.post.date.localeCompare(a.post.date);
-    });
+    results.sort((a, b) => b.score - a.score || b.post.date.localeCompare(a.post.date));
 
     updateURL(query);
     renderResults(results, query);
-  }
+  };
 
-  function updateURL(query) {
-    const url = new URL(window.location);
-    if (query) {
-      url.searchParams.set('q', query);
-    } else {
-      url.searchParams.delete('q');
-    }
-    history.replaceState(null, '', url);
-  }
-
-  function renderResults(results, query) {
-    if (results.length === 0) {
-      searchInfo.textContent = 'No results found';
-      searchResults.innerHTML = '<p class="no-results">No posts match your search.</p>';
-      return;
-    }
-
-    searchInfo.textContent = results.length + ' result' + (results.length === 1 ? '' : 's') + ' found';
-
-    const html = results.map(({ post }) => {
-      const tags = (post.tags || []).map(t =>
-        '<a href="/tags/' + t + '/" class="search-tag">#' + escapeHtml(t) + '</a>'
-      ).join(' ');
-
-      return '<div class="search-result">' +
-        '<a href="' + escapeHtml(post.url) + '" class="search-result-title">' +
-        highlightMatch(post.title, query) + '</a>' +
-        '<div class="search-result-meta">' +
-        '<span class="search-result-date">' + escapeHtml(post.date) + '</span>' +
-        (tags ? ' <span class="search-result-tags">' + tags + '</span>' : '') +
-        '</div>' +
-        (post.summary ? '<p class="search-result-summary">' +
-          highlightMatch(post.summary, query) + '</p>' : '') +
-        '</div>';
-    }).join('');
-
-    searchResults.innerHTML = html;
-  }
-
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-  }
-
-  function highlightMatch(text, query) {
-    if (!text) return '';
-    const escaped = escapeHtml(text);
-    const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 0);
-
-    let result = escaped;
-    terms.forEach(term => {
-      const regex = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-      result = result.replace(regex, '<mark>$1</mark>');
+  fetch('/search/index.json')
+    .then(response => response.json())
+    .then(data => {
+      searchIndex = data;
+      searchInfo.textContent = `${searchIndex.length} posts indexed`;
+      const q = new URLSearchParams(window.location.search).get('q');
+      if (q) {
+        searchInput.value = q;
+        performSearch(q);
+      }
+    })
+    .catch(err => {
+      searchInfo.textContent = 'Error loading search index';
+      console.error('Search index load error:', err);
     });
-    return result;
-  }
 
-  // Attach event listener with debounce
-  const debouncedSearch = debounce(function(e) {
-    performSearch(e.target.value);
-  }, 150);
-
-  searchInput.addEventListener('input', debouncedSearch);
-
-  // Handle keyboard shortcut (/ to focus search)
-  document.addEventListener('keydown', function(e) {
-    if (e.key === '/' && document.activeElement !== searchInput) {
-      e.preventDefault();
-      searchInput.focus();
-    }
-    if (e.key === 'Escape' && document.activeElement === searchInput) {
-      searchInput.blur();
-    }
-  });
-})();
+  searchInput.addEventListener('input', debounce(e => performSearch(e.target.value), 150));
 </script>
 {{- end }}
