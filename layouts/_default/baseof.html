@@ -54,10 +54,27 @@
     </div>
     <nav>
       {{- range .Site.Menus.main }}
+      {{- if not .Parent }}
+      {{- if .Params.dropdown }}
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-trigger"{{- if .Params.emoji }} data-emoji="{{ .Params.emoji }}"{{- end }}>
+          {{- with .Params.emoji }}<span class="nav-emoji">{{ . }}</span>{{- end }}
+          <span class="nav-text">{{ .Name }}</span>
+          <span class="nav-dropdown-arrow">▼</span>
+        </button>
+        <div class="nav-dropdown-menu">
+          {{- range .Children }}
+          <a href="{{ .URL }}" class="nav-dropdown-item">{{ .Name }}</a>
+          {{- end }}
+        </div>
+      </div>
+      {{- else }}
       <a href="{{ .URL }}"{{- if .Params.emoji }} class="has-emoji{{- if or (eq $.RelPermalink .URL) (and (eq .URL "/tags/bestof/") (or (in $.RelPermalink "/tags/bestof/") (and (eq $.Type "posts") (in $.Params.tags "bestof")))) }} active-star{{- end }}"{{- end }}>
         {{- with .Params.emoji }}<span class="nav-emoji">{{ . }}</span>{{- end }}
         <span class="nav-text">{{ .Name }}</span>
       </a>
+      {{- end }}
+      {{- end }}
       {{- end }}
     </nav>
   </header>
@@ -321,6 +338,35 @@
     document.getElementById('snowflake-toggle').addEventListener('click', function () {
       const current = getSnowflakeState();
       setSnowflakeState(!current);
+    });
+
+    // Dropdown menu functionality
+    const dropdownTriggers = document.querySelectorAll('.nav-dropdown-trigger');
+    dropdownTriggers.forEach(trigger => {
+      trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        const dropdown = this.closest('.nav-dropdown');
+        const isOpen = dropdown.classList.contains('open');
+
+        // Close all dropdowns
+        document.querySelectorAll('.nav-dropdown.open').forEach(d => {
+          d.classList.remove('open');
+        });
+
+        // Open clicked dropdown if it wasn't open
+        if (!isOpen) {
+          dropdown.classList.add('open');
+        }
+      });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown')) {
+        document.querySelectorAll('.nav-dropdown.open').forEach(d => {
+          d.classList.remove('open');
+        });
+      }
     });
 
     document.addEventListener('click', function (event) {
