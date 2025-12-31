@@ -8,7 +8,140 @@
 </a><a href=/blogroll/><span class=nav-text>Blogroll</span>
 </a><a href=/tags/coding/><span class=nav-text>Coding</span>
 </a><a href=/projects/><span class=nav-text>Projects</span>
-</a><a href=/search/><span class=nav-text>Search</span></a></nav></header><main><content><h2>Search</h2><div class=search-container><input type=text id=search-input placeholder="Type to search posts..." autocomplete=off autofocus><div id=search-info class=search-info></div></div><div id=search-results class=search-results></div></content><script>(function(){let t=null;const e=document.getElementById("search-input"),o=document.getElementById("search-results"),n=document.getElementById("search-info");fetch("/search/index.json").then(e=>e.json()).then(s=>{t=s,n.textContent=t.length+" posts indexed";const a=new URLSearchParams(window.location.search),o=a.get("q");o&&(e.value=o,i(o))}).catch(e=>{n.textContent="Error loading search index",console.error("Search index load error:",e)});function c(e,t){let n;return function(){const s=arguments;clearTimeout(n),n=setTimeout(()=>e.apply(this,s),t)}}function i(e){if(!t)return;const i=e.toLowerCase().trim();if(i.length===0){o.innerHTML="",n.textContent=t.length+" posts indexed",a("");return}const r=i.split(/\s+/).filter(e=>e.length>0),s=[];t.forEach(e=>{const o=(e.title||"").toLowerCase(),i=(e.summary||"").toLowerCase(),a=(e.tags||[]).map(e=>e.toLowerCase()),c=a.join(" ");let n=!0,t=0;for(const e of r){const s=o.includes(e),a=i.includes(e),l=c.includes(e);if(!s&&!a&&!l){n=!1;break}s&&(t+=10),l&&(t+=5),a&&(t+=1)}n&&s.push({post:e,score:t})}),s.sort((e,t)=>t.score!==e.score?t.score-e.score:t.post.date.localeCompare(e.post.date)),a(e),l(s,e)}function a(e){const t=new URL(window.location);e?t.searchParams.set("q",e):t.searchParams.delete("q"),history.replaceState(null,"",t)}function l(e,t){if(e.length===0){n.textContent="No results found",o.innerHTML='<p class="no-results">No posts match your search.</p>';return}n.textContent=e.length+" result"+(e.length===1?"":"s")+" found";const i=e.map(({post:e})=>{const n=(e.tags||[]).map(e=>'<a href="/tags/'+e+'/" class="search-tag">#'+s(e)+"</a>").join(" ");return'<div class="search-result"><a href="'+s(e.url)+'" class="search-result-title">'+r(e.title,t)+'</a><div class="search-result-meta"><span class="search-result-date">'+s(e.date)+"</span>"+(n?' <span class="search-result-tags">'+n+"</span>":"")+"</div>"+(e.summary?'<p class="search-result-summary">'+r(e.summary,t)+"</p>":"")+"</div>"}).join("");o.innerHTML=i}function s(e){const t=document.createElement("div");return t.textContent=e,t.innerHTML}function r(e,t){if(!e)return"";const o=s(e),i=t.toLowerCase().split(/\s+/).filter(e=>e.length>0);let n=o;return i.forEach(e=>{const t=new RegExp("("+e.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","gi");n=n.replace(t,"<mark>$1</mark>")}),n}const d=c(function(e){i(e.target.value)},150);e.addEventListener("input",d),document.addEventListener("keydown",function(t){t.key==="/"&&document.activeElement!==e&&(t.preventDefault(),e.focus()),t.key==="Escape"&&document.activeElement===e&&e.blur()})})()</script></main><hr><footer><span>© 2021 - 2026 Thiago Perrotta ·
+</a><a href=/search/><span class=nav-text>Search</span></a></nav></header><main><content><h2>Search</h2><div class=search-container><input type=text id=search-input placeholder="Type to search posts..." autocomplete=off autofocus><div id=search-info class=search-info></div></div><div id=search-results class=search-results></div></content><script type=module>
+  let searchIndex = null;
+  const searchInput = document.getElementById('search-input');
+  const searchResults = document.getElementById('search-results');
+  const searchInfo = document.getElementById('search-info');
+
+  const debounce = (fn, delay) => {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn(...args), delay);
+    };
+  };
+
+  const escapeHtml = (text) => {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  };
+
+  const highlightMatch = (text, query) => {
+    if (!text) return '';
+    const escaped = escapeHtml(text);
+    const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 0);
+    return terms.reduce((result, term) => {
+      const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      return result.replace(regex, '<mark>$1</mark>');
+    }, escaped);
+  };
+
+  const updateURL = (query) => {
+    const url = new URL(window.location);
+    if (query) {
+      url.searchParams.set('q', query);
+    } else {
+      url.searchParams.delete('q');
+    }
+    history.replaceState(null, '', url);
+  };
+
+  const renderResults = (results, query) => {
+    if (results.length === 0) {
+      searchInfo.textContent = 'No results found';
+      searchResults.innerHTML = '<p class="no-results">No posts match your search.</p>';
+      return;
+    }
+
+    searchInfo.textContent = `${results.length} result${results.length === 1 ? '' : 's'} found`;
+
+    searchResults.innerHTML = results.map(({ post }) => {
+      const tags = (post.tags ?? [])
+        .map(t => `<a href="/tags/${t}/" class="search-tag">#${escapeHtml(t)}</a>`)
+        .join(' ');
+
+      return `
+        <div class="search-result">
+          <a href="${escapeHtml(post.url)}" class="search-result-title">${highlightMatch(post.title, query)}</a>
+          <div class="search-result-meta">
+            <span class="search-result-date">${escapeHtml(post.date)}</span>
+            ${tags ? `<span class="search-result-tags">${tags}</span>` : ''}
+          </div>
+          ${post.summary ? `<p class="search-result-summary">${highlightMatch(post.summary, query)}</p>` : ''}
+        </div>
+      `;
+    }).join('');
+  };
+
+  const performSearch = (query) => {
+    if (!searchIndex) return;
+
+    const q = query.toLowerCase().trim();
+    if (q.length === 0) {
+      searchResults.innerHTML = '';
+      searchInfo.textContent = `${searchIndex.length} posts indexed`;
+      updateURL('');
+      return;
+    }
+
+    const terms = q.split(/\s+/).filter(t => t.length > 0);
+    const results = [];
+
+    for (const post of searchIndex) {
+      const title = (post.title ?? '').toLowerCase();
+      const summary = (post.summary ?? '').toLowerCase();
+      const tags = (post.tags ?? []).map(t => t.toLowerCase());
+      const tagsText = tags.join(' ');
+
+      let allMatch = true;
+      let score = 0;
+
+      for (const term of terms) {
+        const inTitle = title.includes(term);
+        const inSummary = summary.includes(term);
+        const inTags = tagsText.includes(term);
+
+        if (!inTitle && !inSummary && !inTags) {
+          allMatch = false;
+          break;
+        }
+
+        if (inTitle) score += 10;
+        if (inTags) score += 5;
+        if (inSummary) score += 1;
+      }
+
+      if (allMatch) {
+        results.push({ post, score });
+      }
+    }
+
+    results.sort((a, b) => b.score - a.score || b.post.date.localeCompare(a.post.date));
+
+    updateURL(query);
+    renderResults(results, query);
+  };
+
+  fetch('/search/index.json')
+    .then(response => response.json())
+    .then(data => {
+      searchIndex = data;
+      searchInfo.textContent = `${searchIndex.length} posts indexed`;
+      const q = new URLSearchParams(window.location.search).get('q');
+      if (q) {
+        searchInput.value = q;
+        performSearch(q);
+      }
+    })
+    .catch(err => {
+      searchInfo.textContent = 'Error loading search index';
+      console.error('Search index load error:', err);
+    });
+
+  searchInput.addEventListener('input', debounce(e => performSearch(e.target.value), 150));
+</script></main><hr><footer><span>© 2021 - 2026 Thiago Perrotta ·
 <a href=https://creativecommons.org/licenses/by-nc-sa/4.0/>some rights reserved</a> ·
 a fork of <a href=https://github.com/janraasch/hugo-bearblog/>hugo ʕ•ᴥ•ʔ bear</a> · <a href=/canary>🐦</a></span><div class=social-link-wrapper><a target=_blank rel=noopener class=social-link href=mailto:serendipity@perrotta.dev title="Email address"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" height="1.2em" width="1.2em"><path d="M3 8l7.89 5.26a2 2 0 002.22.0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5A2 2 0 003 7v10a2 2 0 002 2z"/></svg>
 </a><a target=_blank rel=noopener class=social-link href=https://perrotta.dev/index.xml title="RSS feed"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" height="1.2em" width="1.2em"><path d="M4 11a9 9 0 019 9M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg>
