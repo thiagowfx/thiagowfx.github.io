@@ -43,3 +43,47 @@ class Solution:
 
         return root
 ```
+
+With `Enum`:
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+from enum import Enum, auto
+
+class Direction(Enum):
+    LEFT = auto()
+    RIGHT = auto()
+
+class Solution:
+    def insertIntoBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+        if not root:
+            return TreeNode(val)
+
+        parent = None
+        last = None
+        node = root
+        assert node.val != val
+
+        while node:
+            parent = node
+            if node.val > val:
+                node = node.left
+                last = Direction.LEFT
+            elif node.val < val:
+                node = node.right
+                last = Direction.RIGHT
+
+        if last == Direction.LEFT:
+            parent.left = TreeNode(val)
+        elif last == Direction.RIGHT:
+            parent.right = TreeNode(val)
+        else:
+            raise Exception
+
+        return root
+```
