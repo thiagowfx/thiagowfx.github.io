@@ -55,7 +55,13 @@ code title *args:
     hugo_aoc_slug=""
     if [[ "{{ title }}" == "LeetCode"* ]]; then
       # Handle "LeetCode #1: Problem", "LeetCode 1. Problem", and "LeetCode: Problem" formats
-      problem_name=$(echo "{{ title }}" | sed -e 's/LeetCode \(#[0-9]*: \|[0-9]*\. \)\?//')
+      # Normalize "LeetCode 1. Problem" to "LeetCode #1: Problem"
+      if [[ "{{ title }}" =~ LeetCode[[:space:]]+([0-9]+)\. ]]; then
+        problem_number="${BASH_REMATCH[1]}"
+        problem_name=$(echo "{{ title }}" | sed -e 's/LeetCode [0-9]*\. //')
+        hugo_title="LeetCode #${problem_number}: ${problem_name}"
+      fi
+      problem_name=$(echo "${hugo_title}" | sed -e 's/LeetCode \(#[0-9]*: \|[0-9]*\. \)\?//')
       hugo_leetcode_slug=$(echo "${problem_name}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
     elif [[ "{{ title }}" == "ByteByteGo"* ]]; then
       # Handle both "ByteByteGo #1: Problem" and "ByteByteGo: Problem" formats
