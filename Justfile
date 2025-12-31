@@ -126,9 +126,15 @@ last:
 
 # Create a git commit without any substance
 lazy *args:
-    # assume vim-fugitive :Gwq is used
-    git commit -m "lazy commit" -n {{ args }}
-    git pushm
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    if [ -z "{{ args }}" ]; then
+        msg="lazy commit"
+    else
+        msg="{{ args }}"
+    fi
+    git commit -m "$msg" -n && git pushm
 
 # Delete hugo build artifacts
 clean:
