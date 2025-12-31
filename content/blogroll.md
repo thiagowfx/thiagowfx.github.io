@@ -3,9 +3,9 @@ title: "Blogroll"
 email: false
 ---
 
-As of **2025-11-25** I subscribe to more than **600** feeds.
+As of **2025-11-25** I subscribe to **600+** feeds.
 
-Here are some of them[^1] ([OPML](/blogroll.opml)):
+The following is a carefully curated subset[^1] of them ([OPML](/blogroll.opml)):
 
 {{< blogroll >}}
 
