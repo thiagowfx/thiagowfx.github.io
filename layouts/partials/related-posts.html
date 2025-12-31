@@ -1,14 +1,57 @@
-{{- $related := .Site.RegularPages.Related . | first 3 -}}
+{{- $currentPage := . -}}
+{{- $currentTitle := .Title | lower -}}
+{{- $posts := where .Site.RegularPages "Section" "posts" -}}
+{{- $posts = where $posts "Permalink" "ne" .Permalink -}}
+
+{{- /* Extract words from current title (min 4 chars to skip common words) */ -}}
+{{- $titleWords := slice -}}
+{{- range split $currentTitle " " -}}
+  {{- $word := . | replaceRE "[^a-z0-9]+" "" -}}
+  {{- if ge (len $word) 4 -}}
+    {{- $titleWords = $titleWords | append $word -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Score posts by matching title words */ -}}
+{{- $scored := slice -}}
+{{- range $posts -}}
+  {{- $otherTitle := .Title | lower -}}
+  {{- $score := 0 -}}
+  {{- range $titleWords -}}
+    {{- if in $otherTitle . -}}
+      {{- $score = add $score 1 -}}
+    {{- end -}}
+  {{- end -}}
+  {{- /* Also boost if they share tags */ -}}
+  {{- $sharedTags := intersect $currentPage.Params.tags .Params.tags -}}
+  {{- $score = add $score (len $sharedTags) -}}
+  {{- if gt $score 0 -}}
+    {{- $scored = $scored | append (dict "page" . "score" $score) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Sort by score descending and take top 3 */ -}}
+{{- $sorted := sort $scored "score" "desc" -}}
+{{- $related := slice -}}
+{{- range first 3 $sorted -}}
+  {{- $related = $related | append .page -}}
+{{- end -}}
+
 {{- if $related -}}
 <div class="related-posts">
   <h3>Related Posts</h3>
-  <ul class="blog-posts">
+  <div class="search-results">
     {{- range $related -}}
-    <li>
-      <a href="{{ .Permalink }}">{{ .Title }}</a>
-      <span class="pubdate-list">{{ .Date.Format "02 Jan, 2006" }}</span>
-    </li>
+    <div class="search-result">
+      <a href="{{ .Permalink }}" class="search-result-title">{{ .Title }}</a>
+      <div class="search-result-meta">
+        <span class="search-result-date">{{ .Date.Format "02 Jan, 2006" }}</span>
+      </div>
+      {{- with .Summary -}}
+      <p class="search-result-summary">{{ . | plainify | truncate 150 }}</p>
+      {{- end -}}
+    </div>
     {{- end -}}
-  </ul>
+  </div>
 </div>
 {{- end -}}
