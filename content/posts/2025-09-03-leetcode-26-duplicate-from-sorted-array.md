@@ -27,17 +27,44 @@ though it wouldn't hurt.
 
 ## Optimal
 
-We need to modify the original list in-place. We could create another list and
-then copy it to the original list in the end, but let's avoid this approach.
-
-Instead, let's go backwards and remove duplicates as we find them:
+We need to modify the original list in-place. Using a two-pointer approach, we iterate through the array and only move forward when we find a different element:
 
 ```python
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-      for i in range(len(nums))[::-1][:-1]:
-          if nums[i] == nums[i - 1]:
-              del nums[i]
+        p = 0
+        prev = None
 
-      return len(nums)
+        for i, num in enumerate(nums):
+            if prev is None:
+                prev = num
+                p += 1
+            else:
+                if prev != num:
+                    prev = num
+                    nums[p] = nums[i]
+                    p += 1
+
+        return p
+```
+
+The algorithm maintains a pointer `p` that tracks where the next unique element should be placed. We iterate through all elements, and whenever we find a new unique value, we place it at position `p` and increment the pointer.
+
+For example with `[1, 2, 2, 3, 4, 4]`:
+
+- We place 1 at position 0, 2 at position 1, 3 at position 2, 4 at position 3
+- Return 4 (the length of unique elements)
+
+## Alternative: Backwards approach
+
+Another way is to go backwards and remove duplicates as we find them:
+
+```python
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        for i in range(len(nums))[::-1][:-1]:
+            if nums[i] == nums[i - 1]:
+                del nums[i]
+
+        return len(nums)
 ```
