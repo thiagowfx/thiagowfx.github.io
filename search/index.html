@@ -16,6 +16,7 @@
   const searchInfo = document.getElementById('search-info');
   const contentSelector = '';
   const contentEl = contentSelector ? document.querySelector(contentSelector) : null;
+  const excludeTags = new Set([]);
 
   const debounce = (fn, delay) => {
     let timeout;
@@ -147,7 +148,9 @@
   fetch('/search/index.json')
     .then(response => response.json())
     .then(data => {
-      searchIndex = data;
+      searchIndex = excludeTags.size > 0
+        ? data.filter(post => !(post.tags ?? []).some(t => excludeTags.has(t)))
+        : data;
       searchInfo.textContent = `${searchIndex.length} posts indexed`;
       const q = new URLSearchParams(window.location.search).get('q');
       if (q) {
