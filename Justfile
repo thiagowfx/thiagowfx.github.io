@@ -89,7 +89,7 @@ code title *args:
 
 alias coding := code
 
-# Search and edit a blog post. Usage: `just edit` or `just edit <term>`
+# Search for and edit a blog post. Usage: `just edit` or `just edit <term>`
 edit *args:
     #!/usr/bin/env bash
     set -euo pipefail
