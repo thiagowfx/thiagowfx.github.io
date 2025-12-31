@@ -1,24 +1,24 @@
-document.addEventListener('DOMContentLoaded', function() {
-  if (typeof leetCodePostDates === 'undefined') {
-    console.error('coding-chart.js: leetCodePostDates not defined');
+document.addEventListener("DOMContentLoaded", function () {
+  if (typeof leetCodePostDates === "undefined") {
+    console.error("coding-chart.js: leetCodePostDates not defined");
     return;
   }
-  if (typeof byteByteGoPostDates === 'undefined') {
-    console.error('coding-chart.js: byteByteGoPostDates not defined');
+  if (typeof byteByteGoPostDates === "undefined") {
+    console.error("coding-chart.js: byteByteGoPostDates not defined");
     return;
   }
-  if (typeof aocPostDates === 'undefined') {
-    console.error('coding-chart.js: aocPostDates not defined');
+  if (typeof aocPostDates === "undefined") {
+    console.error("coding-chart.js: aocPostDates not defined");
     return;
   }
-  if (typeof otherCodingPostDates === 'undefined') {
-    console.error('coding-chart.js: otherCodingPostDates not defined');
+  if (typeof otherCodingPostDates === "undefined") {
+    console.error("coding-chart.js: otherCodingPostDates not defined");
     return;
   }
 
   // Helper function to process date arrays - builds cumulative counts from all history
   const processDates = (dates) => {
-    const sorted = dates.filter(d => d).sort();
+    const sorted = dates.filter((d) => d).sort();
     const cumulative = {};
     sorted.forEach((date, index) => {
       cumulative[date] = index + 1;
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return {
       sorted,
       cumulative,
-      totalCount: sorted.length
+      totalCount: sorted.length,
     };
   };
 
@@ -36,7 +36,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const otherData = processDates(otherCodingPostDates);
 
   // Determine the date range (last month only for display)
-  const allDates = leetCodeData.sorted.concat(byteByteGoData.sorted).concat(aocData.sorted).concat(otherData.sorted).sort();
+  const allDates = leetCodeData.sorted
+    .concat(byteByteGoData.sorted)
+    .concat(aocData.sorted)
+    .concat(otherData.sorted)
+    .sort();
   if (allDates.length === 0) {
     return; // No data to plot
   }
@@ -48,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const dateLabels = [];
   let currentDate = new Date(firstDate);
   while (currentDate <= lastDate) {
-    dateLabels.push(currentDate.toISOString().split('T')[0]);
+    dateLabels.push(currentDate.toISOString().split("T")[0]);
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
@@ -59,16 +63,16 @@ document.addEventListener('DOMContentLoaded', function() {
   let otherCount = 0;
 
   const firstDateStr = dateLabels[0];
-  leetCodeData.sorted.forEach(date => {
+  leetCodeData.sorted.forEach((date) => {
     if (date < firstDateStr) leetCodeCount++;
   });
-  byteByteGoData.sorted.forEach(date => {
+  byteByteGoData.sorted.forEach((date) => {
     if (date < firstDateStr) byteByteGoCount++;
   });
-  aocData.sorted.forEach(date => {
+  aocData.sorted.forEach((date) => {
     if (date < firstDateStr) aocCount++;
   });
-  otherData.sorted.forEach(date => {
+  otherData.sorted.forEach((date) => {
     if (date < firstDateStr) otherCount++;
   });
 
@@ -78,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const cumulativeValuesAoC = [];
   const cumulativeValuesOther = [];
 
-  dateLabels.forEach(dateStr => {
+  dateLabels.forEach((dateStr) => {
     if (leetCodeData.cumulative[dateStr]) {
       leetCodeCount = leetCodeData.cumulative[dateStr];
     }
@@ -101,74 +105,79 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Create chart
-  const ctx = document.getElementById('cumulative-chart').getContext('2d');
+  const ctx = document.getElementById("cumulative-chart").getContext("2d");
   new Chart(ctx, {
-    type: 'line',
+    type: "line",
     data: {
       labels: dateLabels,
-      datasets: [{
-        label: 'LeetCode',
-        data: cumulativeValuesLeetCode,
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        tension: 0.1,
-        fill: true
-      }, {
-        label: 'ByteByteGo',
-        data: cumulativeValuesByteByteGo,
-        borderColor: 'rgb(255, 159, 64)',
-        backgroundColor: 'rgba(255, 159, 64, 0.2)',
-        tension: 0.1,
-        fill: true
-      }, {
-        label: 'Advent of Code',
-        data: cumulativeValuesAoC,
-        borderColor: 'rgb(155, 89, 182)',
-        backgroundColor: 'rgba(155, 89, 182, 0.2)',
-        tension: 0.1,
-        fill: true
-      }, {
-        label: 'Other',
-        data: cumulativeValuesOther,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        tension: 0.1,
-        fill: true
-      }]
+      datasets: [
+        {
+          label: "LeetCode",
+          data: cumulativeValuesLeetCode,
+          borderColor: "rgb(75, 192, 192)",
+          backgroundColor: "rgba(75, 192, 192, 0.2)",
+          tension: 0.1,
+          fill: true,
+        },
+        {
+          label: "ByteByteGo",
+          data: cumulativeValuesByteByteGo,
+          borderColor: "rgb(255, 159, 64)",
+          backgroundColor: "rgba(255, 159, 64, 0.2)",
+          tension: 0.1,
+          fill: true,
+        },
+        {
+          label: "Advent of Code",
+          data: cumulativeValuesAoC,
+          borderColor: "rgb(155, 89, 182)",
+          backgroundColor: "rgba(155, 89, 182, 0.2)",
+          tension: 0.1,
+          fill: true,
+        },
+        {
+          label: "Other",
+          data: cumulativeValuesOther,
+          borderColor: "rgb(255, 99, 132)",
+          backgroundColor: "rgba(255, 99, 132, 0.2)",
+          tension: 0.1,
+          fill: true,
+        },
+      ],
     },
     options: {
       responsive: true,
       plugins: {
         title: {
           display: true,
-          text: 'Cumulative coding posts over time'
+          text: "Cumulative coding posts over time",
         },
         legend: {
-          display: true
-        }
+          display: true,
+        },
       },
       scales: {
         x: {
           title: {
             display: true,
-            text: 'Date'
-          }
+            text: "Date",
+          },
         },
         y: {
           beginAtZero: true,
           title: {
             display: true,
-            text: 'Cumulative posts'
+            text: "Cumulative posts",
           },
           ticks: {
-            stepSize: 1
-          }
-        }
+            stepSize: 1,
+          },
+        },
       },
       interaction: {
         intersect: false,
-        mode: 'index'
-      }
-    }
+        mode: "index",
+      },
+    },
   });
 });
