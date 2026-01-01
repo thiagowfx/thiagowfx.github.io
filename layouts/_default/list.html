@@ -1,10 +1,10 @@
 {{- define "main" }}
 <content>
   {{- $pages := where .Pages "Site.Language.Lang" .Site.Language.Lang }}
-  {{- if not .Data.Singular }}
+  {{- if and (not .Data.Singular) (eq .Type "section") }}
     {{- $filteredPages := slice }}
     {{- range $pages }}
-      {{- if not (in .Params.tags "coding") }}
+      {{- if not (in .Params.categories "coding") }}
         {{- $filteredPages = $filteredPages | append . }}
       {{- end }}
     {{- end }}
@@ -18,10 +18,14 @@
   </h2>
 
   {{- if .Data.Singular }}
-  {{- partial "search-widget.html" (dict "contentSelector" "#posts-content" "includeTags" (slice .Name) "lang" .Site.Language.Lang) }}
-  {{- else }}
-  {{- partial "search-widget.html" (dict "contentSelector" "#posts-content" "excludeTags" (slice "coding") "lang" .Site.Language.Lang) }}
-  {{- end }}
+   {{- if eq .Section "tags" }}
+   {{- partial "search-widget.html" (dict "contentSelector" "#posts-content" "includeTags" (slice .Name) "lang" .Site.Language.Lang) }}
+   {{- else if eq .Section "categories" }}
+   {{- partial "search-widget.html" (dict "contentSelector" "#posts-content" "includeCategories" (slice .Name) "lang" .Site.Language.Lang) }}
+   {{- end }}
+   {{- else }}
+   {{- partial "search-widget.html" (dict "contentSelector" "#posts-content" "excludeCategories" (slice "coding") "lang" .Site.Language.Lang) }}
+   {{- end }}
 
   <div id="posts-content">
   {{- if and .Data.Singular (eq .Name "coding") }}

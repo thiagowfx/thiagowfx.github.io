@@ -2,6 +2,8 @@
 {{- $contentSelector := .contentSelector | default "" }}
 {{- $excludeTags := .excludeTags | default slice }}
 {{- $includeTags := .includeTags | default slice }}
+{{- $excludeCategories := .excludeCategories | default slice }}
+{{- $includeCategories := .includeCategories | default slice }}
 <div class="search-container">
   <input type="text" id="search-input" placeholder="{{ i18n "searchPlaceholder" }}" autocomplete="off" {{ if $autofocus }}autofocus{{ end }} />
   <div id="search-info" class="search-info"></div>
@@ -16,6 +18,8 @@
   const contentEl = contentSelector ? document.querySelector(contentSelector) : null;
   const excludeTags = new Set({{ $excludeTags | jsonify | safeJS }});
   const includeTags = new Set({{ $includeTags | jsonify | safeJS }});
+  const excludeCategories = new Set({{ $excludeCategories | jsonify | safeJS }});
+  const includeCategories = new Set({{ $includeCategories | jsonify | safeJS }});
   const i18n = {
     postsIndexed: '{{ i18n "postsIndexed" }}',
     noResults: '{{ i18n "noResults" }}'
@@ -159,6 +163,12 @@
       }
       if (excludeTags.size > 0) {
         searchIndex = searchIndex.filter(post => !(post.tags ?? []).some(t => excludeTags.has(t)));
+      }
+      if (includeCategories.size > 0) {
+        searchIndex = searchIndex.filter(post => (post.categories ?? []).some(c => includeCategories.has(c)));
+      }
+      if (excludeCategories.size > 0) {
+        searchIndex = searchIndex.filter(post => !(post.categories ?? []).some(c => excludeCategories.has(c)));
       }
       searchInfo.textContent = `${searchIndex.length} ${i18n.postsIndexed}`;
       const q = new URLSearchParams(window.location.search).get('q');
