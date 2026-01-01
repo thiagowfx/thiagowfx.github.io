@@ -1,7 +1,6 @@
 ---
 title: "copying lists"
 date: 2025-11-30T14:48:38-03:00
-rss: false
 categories:
   - coding
 ---

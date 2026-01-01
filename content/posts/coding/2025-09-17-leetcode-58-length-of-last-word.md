@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #58: Length of Last Word"
 date: 2025-09-17T00:19:08+02:00
-rss: false
 categories:
   - coding
 ---

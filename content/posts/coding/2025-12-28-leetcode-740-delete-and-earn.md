@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #740: Delete and Earn"
 date: 2025-12-28T06:04:14-03:00
-rss: false
 categories:
   - coding
 ---

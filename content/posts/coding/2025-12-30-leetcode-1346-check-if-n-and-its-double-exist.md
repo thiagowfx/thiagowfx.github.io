@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #1346: Check If N and Its Double Exist"
 date: 2025-12-30T10:22:45-03:00
-rss: false
 categories:
   - coding
 ---

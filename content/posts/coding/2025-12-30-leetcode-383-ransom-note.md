@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #383: Ransom Note"
 date: 2025-12-30T05:19:04-03:00
-rss: false
 categories:
   - coding
 ---

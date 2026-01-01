@@ -3,7 +3,6 @@ title: "Advent of Code: discussion group"
 date: 2024-12-12T19:30:53-03:00
 tags:
   - dev
-rss: false
 categories:
   - coding
 ---

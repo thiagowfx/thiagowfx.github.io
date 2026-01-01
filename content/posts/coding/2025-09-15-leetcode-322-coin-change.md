@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #322: Coin Change"
 date: 2025-09-15T23:25:06+02:00
-rss: false
 categories:
   - coding
 ---

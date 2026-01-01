@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #14: Longest Common Prefix"
 date: 2025-09-16T23:51:34+02:00
-rss: false
 categories:
   - coding
 ---

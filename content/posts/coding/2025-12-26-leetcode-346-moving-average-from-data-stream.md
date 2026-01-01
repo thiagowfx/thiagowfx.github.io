@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #346: Moving Average from Data Stream"
 date: 2025-12-26T16:59:22-03:00
-rss: false
 categories:
   - coding
 ---

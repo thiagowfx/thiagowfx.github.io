@@ -1,7 +1,6 @@
 ---
 title: "average without overflow"
 date: 2025-11-25T22:43:28-03:00
-rss: false
 categories:
   - coding
 ---

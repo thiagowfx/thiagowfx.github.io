@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #344: Reverse String"
 date: 2025-12-26T16:55:43-03:00
-rss: false
 categories:
   - coding
 ---

@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #941: Valid Mountain Array"
 date: 2025-12-30T10:38:22-03:00
-rss: false
 categories:
   - coding
 ---

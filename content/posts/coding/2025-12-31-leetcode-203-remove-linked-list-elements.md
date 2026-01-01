@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #203: Remove Linked List Elements"
 date: 2025-12-31T01:31:29-03:00
-rss: false
 categories:
   - coding
 ---

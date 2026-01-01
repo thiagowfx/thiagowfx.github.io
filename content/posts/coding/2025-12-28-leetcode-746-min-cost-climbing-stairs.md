@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #746: Min Cost Climbing Stairs"
 date: 2025-12-28T06:35:04-03:00
-rss: false
 categories:
   - coding
 ---

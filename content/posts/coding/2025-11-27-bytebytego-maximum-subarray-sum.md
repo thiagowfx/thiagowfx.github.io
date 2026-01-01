@@ -1,7 +1,6 @@
 ---
 title: "ByteByteGo: Maximum Subarray Sum"
 date: 2025-11-27T02:51:23-03:00
-rss: false
 categories:
   - coding
 ---

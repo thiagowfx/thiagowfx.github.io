@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #171: Excel Sheet Column Number"
 date: 2025-12-24T04:40:55-03:00
-rss: false
 categories:
   - coding
 ---

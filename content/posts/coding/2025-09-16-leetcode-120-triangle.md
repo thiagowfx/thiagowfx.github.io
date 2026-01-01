@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #120: Triangle"
 date: 2025-09-16T01:20:40+02:00
-rss: false
 categories:
   - coding
 ---

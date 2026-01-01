@@ -1,7 +1,6 @@
 ---
 title: "default arguments evaluated once when defined"
 date: 2025-11-30T20:49:22-03:00
-rss: false
 categories:
   - coding
 ---

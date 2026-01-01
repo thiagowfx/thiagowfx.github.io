@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #27: Remove Element"
 date: 2025-09-03T01:09:13+02:00
-rss: false
 categories:
   - coding
 ---

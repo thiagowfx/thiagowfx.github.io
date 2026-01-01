@@ -1,7 +1,6 @@
 ---
 title: "ByteByteGo: Pair Sum - Unsorted"
 date: 2025-11-22T19:28:06-03:00
-rss: false
 categories:
   - coding
 ---

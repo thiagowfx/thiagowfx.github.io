@@ -1,7 +1,6 @@
 ---
 title: "ByteByteGo: Remove the Kth Last Node From a Linked List"
 date: 2025-12-02T03:58:25-03:00
-rss: false
 categories:
   - coding
 ---

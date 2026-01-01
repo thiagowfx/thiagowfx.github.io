@@ -1,7 +1,6 @@
 ---
 title: "ByteByteGo: Verify Sudoku Board"
 date: 2025-11-24T22:09:17-03:00
-rss: false
 categories:
   - coding
 ---

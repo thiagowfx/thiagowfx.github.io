@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #70: Climbing Stairs"
 date: 2025-09-15T22:35:21+02:00
-rss: false
 categories:
   - coding
 ---

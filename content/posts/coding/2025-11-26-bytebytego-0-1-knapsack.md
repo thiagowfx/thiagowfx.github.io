@@ -3,7 +3,6 @@ title: "ByteByteGo: 0/1 Knapsack"
 date: 2025-11-26T22:06:31-03:00
 categories:
   - coding
-rss: false
 ---
 
 [ByteByteGo: 0/1 Knapsack](https://bytebytego.com/exercises/coding-patterns/dynamic-programming/01-knapsack):

@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #268: Missing Number"
 date: 2025-12-24T17:26:11-03:00
-rss: false
 categories:
   - coding
 ---

@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #3477: Fruits Into Baskets II"
 date: 2025-12-28T03:55:14-03:00
-rss: false
 categories:
   - coding
 ---

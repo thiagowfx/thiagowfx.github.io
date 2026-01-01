@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #198: House Robber"
 date: 2025-09-15T22:47:23+02:00
-rss: false
 categories:
   - coding
 ---

@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #121: Best Time To Buy And Sell Stock"
 date: 2025-09-07T02:06:22+02:00
-rss: false
 categories:
   - coding
 ---

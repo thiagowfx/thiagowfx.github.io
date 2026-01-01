@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #20: Valid Parentheses"
 date: 2025-09-13T00:17:37+02:00
-rss: false
 categories:
   - coding
 ---

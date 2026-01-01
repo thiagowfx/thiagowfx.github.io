@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #28: Find the Index of the First Occurrence in a String"
 date: 2025-09-17T00:00:28+02:00
-rss: false
 categories:
   - coding
 ---

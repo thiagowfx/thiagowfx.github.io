@@ -1,7 +1,6 @@
 ---
 title: "ByteByteGo: N Queens"
 date: 2025-11-30T21:14:24-03:00
-rss: false
 categories:
   - coding
 ---

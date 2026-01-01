@@ -1,7 +1,6 @@
 ---
 title: "LLM as online judge"
 date: 2025-09-16T12:56:59+02:00
-rss: false
 categories:
   - coding
 ---

@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #1021: Remove Outermost Parentheses"
 date: 2025-12-31T02:06:03-03:00
-rss: false
 categories:
   - coding
 ---

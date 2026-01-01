@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #349: Intersection of Two Arrays"
 date: 2025-12-26T17:04:50-03:00
-rss: false
 categories:
   - coding
 ---

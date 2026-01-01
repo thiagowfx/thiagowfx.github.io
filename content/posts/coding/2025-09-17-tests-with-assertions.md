@@ -1,7 +1,6 @@
 ---
 title: "tests with assertions"
 date: 2025-09-17T14:47:41+02:00
-rss: false
 categories:
   - coding
 ---

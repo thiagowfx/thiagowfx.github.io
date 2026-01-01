@@ -1,7 +1,6 @@
 ---
 title: "binary search, bias to the left"
 date: 2025-12-28T05:34:09-03:00
-rss: false
 categories:
   - coding
 ---

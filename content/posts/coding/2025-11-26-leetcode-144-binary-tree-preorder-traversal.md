@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #144: Binary Tree Preorder Traversal"
 date: 2025-11-26T00:08:23-03:00
-rss: false
 categories:
   - coding
 ---

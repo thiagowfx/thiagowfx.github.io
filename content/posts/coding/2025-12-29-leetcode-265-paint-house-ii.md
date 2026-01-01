@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #265: Paint House II"
 date: 2025-12-29T13:51:31-03:00
-rss: false
 categories:
   - coding
 ---

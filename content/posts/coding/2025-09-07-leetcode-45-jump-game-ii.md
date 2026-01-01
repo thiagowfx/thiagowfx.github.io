@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #45: Jump Game II"
 date: 2025-09-07T16:44:31+02:00
-rss: false
 categories:
   - coding
 ---

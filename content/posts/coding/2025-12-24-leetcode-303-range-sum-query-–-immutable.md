@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #303: Range Sum Query – Immutable"
 date: 2025-12-24T17:10:09-03:00
-rss: false
 categories:
   - coding
 ---

@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #145: Binary Tree Postorder Traversal"
 date: 2025-11-25T23:38:11-03:00
-rss: false
 categories:
   - coding
 ---

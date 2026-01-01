@@ -1,7 +1,6 @@
 ---
 title: "ByteByteGo: Reverse 32-Bit Integer"
 date: 2025-11-26T15:06:17-03:00
-rss: false
 categories:
   - coding
 ---

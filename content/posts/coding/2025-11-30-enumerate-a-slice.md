@@ -1,7 +1,6 @@
 ---
 title: "enumerate a slice"
 date: 2025-11-30T14:47:03-03:00
-rss: false
 categories:
   - coding
 ---

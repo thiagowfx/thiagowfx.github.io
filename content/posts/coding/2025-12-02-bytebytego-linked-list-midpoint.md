@@ -1,7 +1,6 @@
 ---
 title: "ByteByteGo: Linked List Midpoint"
 date: 2025-12-02T16:10:08-03:00
-rss: false
 categories:
   - coding
 ---

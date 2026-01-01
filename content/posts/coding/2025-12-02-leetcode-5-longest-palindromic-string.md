@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #5: Longest Palindromic String"
 date: 2025-12-02T01:28:06-03:00
-rss: false
 categories:
   - coding
 ---

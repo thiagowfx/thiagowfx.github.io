@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #195: Tenth line"
 date: 2025-12-06T04:05:42-03:00
-rss: false
 categories:
   - coding
 ---

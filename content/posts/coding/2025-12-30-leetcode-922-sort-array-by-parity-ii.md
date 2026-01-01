@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #922: Sort Array By Parity II"
 date: 2025-12-30T19:43:29-03:00
-rss: false
 categories:
   - coding
 ---

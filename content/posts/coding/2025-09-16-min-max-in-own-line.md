@@ -1,7 +1,6 @@
 ---
 title: "min, max in own line"
 date: 2025-09-16T23:15:44+02:00
-rss: false
 categories:
   - coding
 ---

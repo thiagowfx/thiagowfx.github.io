@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #876: Middle of the Linked List"
 date: 2025-12-30T05:16:38-03:00
-rss: false
 categories:
   - coding
 ---

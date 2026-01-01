@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #518: Coin Change II"
 date: 2025-12-28T07:51:45-03:00
-rss: false
 categories:
   - coding
 ---

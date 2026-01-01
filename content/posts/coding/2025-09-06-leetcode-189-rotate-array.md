@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #189: Rotate Array"
 date: 2025-09-06T20:18:36+02:00
-rss: false
 categories:
   - coding
 ---

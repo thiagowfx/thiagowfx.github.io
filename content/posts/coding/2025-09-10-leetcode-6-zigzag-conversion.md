@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #6: Zigzag Conversion"
 date: 2025-09-10T10:43:01+02:00
-rss: false
 categories:
   - coding
 ---

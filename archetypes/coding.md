@@ -3,7 +3,6 @@ title: "{{ getenv "HUGO_TITLE" }}"
 date: {{ .Date }}
 categories:
   - coding
-rss: false
 ---
 
 {{- $leetcode_slug := getenv "HUGO_LEETCODE_SLUG" }}

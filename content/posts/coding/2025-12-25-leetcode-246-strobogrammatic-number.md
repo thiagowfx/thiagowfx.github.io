@@ -1,7 +1,6 @@
 ---
 title: "LeetCode #246: Strobogrammatic Number"
 date: 2025-12-25T05:39:43-03:00
-rss: false
 categories:
   - coding
 ---
