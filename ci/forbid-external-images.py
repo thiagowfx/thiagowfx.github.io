@@ -15,8 +15,10 @@ EXTERNAL_IMAGE_PATTERN = re.compile(
     re.IGNORECASE
 )
 
-# Allowed external domains (empty by default - all external images should be local)
-ALLOWED_EXTERNAL_DOMAINS = set()
+# Allowed external domains (only for specific libraries like chart.js)
+ALLOWED_EXTERNAL_DOMAINS = {
+    'cdn.jsdelivr.net',  # Chart.js and related libraries
+}
 
 
 def check_file(filepath: str) -> bool:
@@ -32,7 +34,10 @@ def check_file(filepath: str) -> bool:
 
     for line_num, line in enumerate(lines, 1):
         if EXTERNAL_IMAGE_PATTERN.search(line):
-            errors.append(f"{filepath}:{line_num}: External image URL found: {line.strip()}")
+            # Check if this is an allowed domain
+            is_allowed = any(domain in line for domain in ALLOWED_EXTERNAL_DOMAINS)
+            if not is_allowed:
+                errors.append(f"{filepath}:{line_num}: External image URL found: {line.strip()}")
 
     if errors:
         for error in errors:
