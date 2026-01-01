@@ -79,8 +79,9 @@
 {{- end }}
 <content> {{ .Content }} </content>
 {{- $showEmail := .Params.email | default true -}}
+{{- $hasCategories := gt (len (.GetTerms "categories")) 0 -}}
 {{- $hasTags := gt (len (.GetTerms "tags")) 0 -}}
-{{- if or $showEmail $hasTags -}}
+{{- if or $showEmail $hasCategories $hasTags -}}
 <p style="text-align: center; margin: 2em 0 1em;">— § —</p>
 <div style="display: flex; justify-content: space-between">
   {{ if $showEmail }}
@@ -92,8 +93,11 @@
     >
   </p>
   {{ end }}
-  {{ if $hasTags }}
+  {{ if or $hasCategories $hasTags }}
   <p style="margin: 0;">
+    {{- range (.GetTerms "categories") }}
+    <a href="{{ .Permalink }}">%{{ .Name }}</a>
+    {{- end }}
     {{- range (.GetTerms "tags") }}
     <a href="{{ .Permalink }}">#{{ .Name }}</a>
     {{- end }}
