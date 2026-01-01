@@ -1,11 +1,20 @@
 {{- define "main" }}
 <content>
-  <h2>{{ .Title }}</h2>
+  <h2 id="{{ .Data.Plural }}">
+    {{- if eq .Data.Plural "categories" }}{{ i18n "categories" }}{{- else }}Tags{{- end }}
+    <a href='{{ printf "%s#%s" (.Permalink | absURL) .Data.Plural }}'>#</a>
+  </h2>
 
+  {{- if .Pages }}
   <div class="tag-cloud">
-    {{- range .Pages }}
-    <a href="{{ .Permalink }}" class="tag-pill">#{{ .Name }}<span class="tag-count">{{ len .Pages }}</span></a>
+    {{- range sort .Pages "Title" }}
+    <a href="{{ .Permalink }}" class="tag-pill">#{{ .Title | lower }}<span class="tag-count">{{ len .Pages }}</span></a>
     {{- end }}
   </div>
+  {{- else }}
+  <p>
+    {{- if eq .Data.Plural "categories" }}{{ i18n "noCategories" }}{{- else }}{{ i18n "noTags" }}{{- end }}
+  </p>
+  {{- end }}
 </content>
 {{- end }}

@@ -82,20 +82,35 @@
   {{ end }}
   {{- if not .Data.Singular }}
   <hr>
+  <h2 id="categories">
+    {{ i18n "categories" }}
+    <a href='{{ "categories/#categories" | absURL }}'>#</a>
+  </h2>
+  {{- $categories := sort .Site.Taxonomies.categories "Page.Name" }}
+  {{- if $categories }}
+  <div class="tag-cloud">
+    {{- range $categories }}
+    <a href="{{ .Page.Permalink }}" class="tag-pill">#{{ .Page.Name | lower }}<span class="tag-count">{{ len .Pages }}</span></a>
+    {{- end }}
+  </div>
+  {{- else }}
+  <p>{{ i18n "noCategories" }}</p>
+  {{- end }}
+  <hr>
   <h2 id="tags">
     Tags
     <a href='{{ "posts/#tags" | absURL }}'>#</a>
   </h2>
   <div class="tag-cloud">
-    {{- range .Site.Taxonomies.tags }}
-    <a href="{{ .Page.Permalink }}" class="tag-pill">#{{ .Page.Name }}<span class="tag-count">{{ len .Pages }}</span></a>
-    {{- else }} No tags yet {{- end }}
+    {{- range sort .Site.Taxonomies.tags "Page.Name" }}
+    <a href="{{ .Page.Permalink }}" class="tag-pill">#{{ .Page.Name | lower }}<span class="tag-count">{{ len .Pages }}</span></a>
+    {{- else }} {{ i18n "noTags" }} {{- end }}
   </div>
   {{- end }}
   </div>
-</content>
+  </content>
 
-{{- if and .Data.Singular (eq .Name "coding") }}
+  {{- if and .Data.Singular (eq .Name "coding") }}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script>

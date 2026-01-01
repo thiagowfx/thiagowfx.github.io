@@ -1,0 +1,44 @@
+{{- $currentLang := .Site.Language.Lang }}
+{{- $otherLang := cond (eq $currentLang "en") "pt" "en" }}
+{{- $otherLangName := cond (eq $otherLang "pt") "PT" "EN" }}
+{{- $currentPath := .RelPermalink }}
+{{- $otherPath := "/" }}
+{{- $pageExists := false }}
+
+{{- if eq $otherLang "pt" }}
+  {{- /* Convert EN to PT: prepend /pt/ */ -}}
+  {{- if eq $currentPath "/" }}
+    {{- $otherPath = "/pt/" }}
+  {{- else }}
+    {{- $otherPath = printf "/pt%s" $currentPath }}
+  {{- end }}
+{{- else }}
+  {{- /* Convert PT to EN: strip /pt/ from beginning */ -}}
+  {{- if eq $currentPath "/pt/" }}
+    {{- $otherPath = "/" }}
+  {{- else if strings.HasPrefix $currentPath "/pt/" }}
+    {{- $otherPath = strings.TrimPrefix "/pt" $currentPath }}
+  {{- else }}
+    {{- /* Fallback to homepage if path doesn't start with /pt/ */ -}}
+    {{- $otherPath = "/" }}
+  {{- end }}
+{{- end }}
+
+{{- /* Check if the translated page exists */ -}}
+{{- if eq $otherPath "/" }}
+  {{- $pageExists = true }}
+{{- else }}
+  {{- range $.Site.Sites }}
+    {{- if eq .Language.Lang $otherLang }}
+      {{- range .Pages }}
+        {{- if eq .RelPermalink $otherPath }}
+          {{- $pageExists = true }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- if $pageExists }}
+<a href="{{ $otherPath }}" id="lang-toggle" class="lang-toggle-link" aria-label="Switch to {{ $otherLangName }}" title="Switch to {{ $otherLangName }}">{{ $otherLangName }}</a>
+{{- end }}
