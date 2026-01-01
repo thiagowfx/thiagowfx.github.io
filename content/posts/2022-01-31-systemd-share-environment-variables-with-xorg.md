@@ -2,8 +2,8 @@
 title: "systemd: share environment variables with xorg"
 date: 2022-01-31T21:38:54-05:00
 tags:
-  - dev
   - bestof
+  - dev
 ---
 
 In this post we will learn how to share environment variables (e.g.

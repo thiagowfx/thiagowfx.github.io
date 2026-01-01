@@ -2,8 +2,8 @@
 title: "Personal blogs are back"
 date: 2025-11-23T14:48:36-03:00
 tags:
-  - dev
   - bestof
+  - dev
   - serenity
 ---
 

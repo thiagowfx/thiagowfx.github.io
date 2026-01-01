@@ -2,8 +2,8 @@
 title: "Watch files and react to changes during development"
 date: 2022-01-30T21:32:17-05:00
 tags:
-  - dev
   - bestof
+  - dev
 ---
 
 This post describes some tooling usages to watch for file changes and run or reload a command whenever they happen.

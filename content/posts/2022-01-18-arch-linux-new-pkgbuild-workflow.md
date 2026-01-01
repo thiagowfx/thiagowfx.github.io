@@ -2,8 +2,8 @@
 title: "Arch Linux: New PKGBUILD Workflow"
 date: 2022-01-18T21:59:07-05:00
 tags:
-  - dev
   - bestof
+  - dev
 ---
 
 This document describes my workflow to manage `PKGBUILDs` for the [AUR][aur] (Arch User Repository) in [Arch Linux][arch-linux].

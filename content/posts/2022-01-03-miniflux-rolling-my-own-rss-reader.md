@@ -2,8 +2,8 @@
 title: "Miniflux: Rolling my own RSS Reader"
 date: 2022-01-03T17:56:56-05:00
 tags:
-  - dev
   - bestof
+  - dev
 ---
 
 This article describes my experience transitioning to, setting up and using the

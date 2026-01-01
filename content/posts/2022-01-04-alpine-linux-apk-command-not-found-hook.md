@@ -2,8 +2,8 @@
 title: "Alpine Linux: apk command not found hook"
 date: 2022-01-04T16:25:51-05:00
 tags:
-  - dev
   - bestof
+  - dev
 ---
 
 In this post we will learn how to define a command-not-found hook to the `apk(8)` package manager in Alpine Linux.

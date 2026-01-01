@@ -2,8 +2,8 @@
 title: "Alpine Linux: New APKBUILD Workflow"
 date: 2022-01-23T19:15:02-05:00
 tags:
-  - dev
   - bestof
+  - dev
 ---
 
 This document describes my workflow to manage `APKBUILDs` for the
