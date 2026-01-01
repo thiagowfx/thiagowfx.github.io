@@ -36,15 +36,6 @@
 </head>
 
 <body>
-  <script>
-    // Initialize snowflake state on page load
-    if (localStorage.getItem('snowflakes-enabled') === null) {
-      localStorage.setItem('snowflakes-enabled', 'true');
-    }
-    if (localStorage.getItem('snowflakes-enabled') === 'true') {
-      document.documentElement.classList.add('snowflakes-enabled');
-    }
-  </script>
   <div class="h-card" style="display:none;">
     <a class="p-name u-url" href="{{ "" | absURL }}">{{ .Site.Params.Author.name }}</a>
     <span class="p-nickname">{{ .Site.Params.Author.nickname }}</span>
@@ -58,14 +49,11 @@
         <h1 class="title">{{ .Site.Title }}</h1>
       </a>
       <div class="header-buttons">
-        {{- partial "lang-switcher.html" . }}
-        <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-          <span id="theme-toggle-icon">☀️</span>
-        </button>
-        <button id="snowflake-toggle" aria-label="Toggle snowflake animation" title="Toggle snowflake animation">
-          <span id="snowflake-toggle-icon">❄️</span>
-        </button>
-      </div>
+         {{- partial "lang-switcher.html" . }}
+         <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+           <span id="theme-toggle-icon">☀️</span>
+         </button>
+       </div>
     </div>
     <nav>
       {{- range .Site.Menus.main }}
@@ -201,103 +189,6 @@
     </p>
   </footer>
   <script>
-    {{- if .Site.Params.enableSnowflakes }}
-    // Snowflake falling animation
-    window.snowflakeAnimation = {
-      canvas: null,
-      ctx: null,
-      particles: [],
-      animationFrameId: null,
-      isRunning: false,
-      christmasEmojis: ['❄️', '🎄', '🎅', '🎁', '⛄', '🔔'],
-
-      init: function() {
-        this.canvas = document.createElement('canvas');
-        this.canvas.id = 'snowflake-canvas';
-        this.canvas.style.position = 'fixed';
-        this.canvas.style.top = '0';
-        this.canvas.style.left = '0';
-        this.canvas.style.pointerEvents = 'none';
-        this.canvas.style.zIndex = '-1';
-        document.body.insertBefore(this.canvas, document.body.firstChild);
-
-        this.ctx = this.canvas.getContext('2d');
-        this.resizeCanvas();
-        window.addEventListener('resize', this.resizeCanvas.bind(this));
-      },
-
-      resizeCanvas: function() {
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-      },
-
-      createSnowflakes: function() {
-        this.particles = [];
-        for (let i = 0; i < 15; i++) {
-          this.particles.push(new this.Snowflake(this));
-        }
-      },
-
-      Snowflake: class {
-        constructor(animation) {
-          this.animation = animation;
-          this.x = Math.random() * animation.canvas.width;
-          this.y = -20;
-          this.size = Math.random() * 20 + 10;
-          this.speedY = Math.random() * 2 + 1;
-          this.speedX = (Math.random() - 0.5) * 2;
-          this.opacity = Math.random() * 0.5 + 0.5;
-          this.emoji = animation.christmasEmojis[Math.floor(Math.random() * animation.christmasEmojis.length)];
-        }
-        update() {
-          this.y += this.speedY;
-          this.x += this.speedX;
-          if (this.y > this.animation.canvas.height) {
-            this.y = -20;
-            this.x = Math.random() * this.animation.canvas.width;
-            this.emoji = this.animation.christmasEmojis[Math.floor(Math.random() * this.animation.christmasEmojis.length)];
-          }
-        }
-        draw() {
-          this.animation.ctx.globalAlpha = this.opacity;
-          this.animation.ctx.font = `${this.size}px Arial`;
-          this.animation.ctx.fillText(this.emoji, this.x, this.y);
-          this.animation.ctx.globalAlpha = 1;
-        }
-      },
-
-      animate: function() {
-        if (!this.isRunning) return;
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.particles.forEach(p => {
-          p.update();
-          p.draw();
-        });
-        this.animationFrameId = requestAnimationFrame(this.animate.bind(this));
-      },
-
-      start: function() {
-        if (this.isRunning) return;
-        this.isRunning = true;
-        this.createSnowflakes();
-        this.animate();
-      },
-
-      stop: function() {
-        this.isRunning = false;
-        if (this.animationFrameId) {
-          cancelAnimationFrame(this.animationFrameId);
-        }
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      }
-    };
-
-    window.snowflakeAnimation.init();
-    if (localStorage.getItem('snowflakes-enabled') === 'true') {
-      window.snowflakeAnimation.start();
-    }
-    {{- end }}
-
     function setTheme(theme) {
       if (theme === 'auto') {
         document.documentElement.removeAttribute('data-theme');
@@ -319,45 +210,12 @@
       document.getElementById('theme-toggle-icon').textContent = icons[state];
     }
 
-    // Snowflake toggle functionality
-    function getSnowflakeState() {
-      return localStorage.getItem('snowflakes-enabled') === 'true';
-    }
-
-    function updateSnowflakeIcon() {
-      const icon = document.getElementById('snowflake-toggle-icon');
-      const isEnabled = getSnowflakeState();
-      icon.textContent = isEnabled ? '❄️' : '☃️';
-    }
-
-    function setSnowflakeState(enabled) {
-      if (enabled) {
-        localStorage.setItem('snowflakes-enabled', 'true');
-        document.documentElement.classList.add('snowflakes-enabled');
-        {{- if .Site.Params.enableSnowflakes }}
-        if (window.snowflakeAnimation) {
-          window.snowflakeAnimation.start();
-        }
-        {{- end }}
-      } else {
-        localStorage.setItem('snowflakes-enabled', 'false');
-        document.documentElement.classList.remove('snowflakes-enabled');
-        {{- if .Site.Params.enableSnowflakes }}
-        if (window.snowflakeAnimation) {
-          window.snowflakeAnimation.stop();
-        }
-        {{- end }}
-      }
-      updateSnowflakeIcon();
-    }
-
     // Initialize
     const saved = localStorage.getItem('theme');
     if (saved) {
       document.documentElement.setAttribute('data-theme', saved);
     }
     updateThemeIcon();
-    updateSnowflakeIcon();
 
     // Toggle between auto, light, dark
     document.getElementById('theme-toggle').addEventListener('click', function () {
@@ -365,11 +223,6 @@
       const cycle = { 'auto': 'light', 'light': 'dark', 'dark': 'auto' };
       const next = cycle[current];
       setTheme(next);
-    });
-
-    document.getElementById('snowflake-toggle').addEventListener('click', function () {
-      const current = getSnowflakeState();
-      setSnowflakeState(!current);
     });
 
     // Dropdown menu functionality
