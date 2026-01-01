@@ -1,7 +1,7 @@
 ---
 title: "{{ getenv "HUGO_TITLE" }}"
 date: {{ .Date }}
-tags:
+categories:
   - coding
 rss: false
 ---

@@ -47,7 +47,7 @@ code *args:
     set -euo pipefail
 
     filename=$(echo "{{ args }}" | sed -e 's/#//g' | tr '[:upper:]' '[:lower:]' | sed -e 's/:/ /g' | tr -s ' ' | tr ' ' '-')
-    filepath="content/posts/`date "+%Y-%m-%d"`-${filename}.md"
+    filepath="content/posts/coding/`date "+%Y-%m-%d"`-${filename}.md"
 
     hugo_title="{{ args }}"
     hugo_leetcode_slug=""
