@@ -62,6 +62,9 @@ The only diff is `.Content` instead of `.Summary` for full-text RSS feeds.
       <link>{{ .Permalink }}</link>
       <pubDate>{{ .PublishDate.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
       {{- with $authorEmail }}<author>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</author>{{ end }}
+      {{- range .Params.categories }}
+      <category>{{ . }}</category>
+      {{- end }}
       {{- range .Params.tags }}
       <category>{{ . }}</category>
       {{- end }}
@@ -74,14 +77,24 @@ The only diff is `.Content` instead of `.Summary` for full-text RSS feeds.
       {{- if .Params.email | default true }}
         {{- $content = print $content (printf `Reply via <a href="mailto:%s?subject=Reply to: %s">email</a>` $authorEmail .Title) }}
       {{- end }}
-      {{- if .Params.tags }}
+      {{- $hasCategories := gt (len (.GetTerms "categories")) 0 }}
+      {{- $hasTags := gt (len (.GetTerms "tags")) 0 }}
+      {{- if or $hasCategories $hasTags }}
         {{- if .Params.email | default true }}
           {{- $content = print $content ` • ` }}
         {{- end }}
-        {{- $content = print $content `<strong>Tags:</strong> ` }}
-        {{- range $index, $tag := .Params.tags }}
+        {{- if $hasCategories }}
+        {{- range $index, $cat := (.GetTerms "categories") }}
           {{- if gt $index 0 }}{{ $content = print $content `, ` }}{{ end }}
-          {{- $content = print $content (printf `<a href="%stags/%s/">%s</a>` (strings.TrimSuffix site.BaseURL "/") (lower $tag) $tag) }}
+          {{- $content = print $content (printf `<a href="%scategories/%s/">%%%s</a>` (strings.TrimSuffix site.BaseURL "/") (lower $cat.Name) $cat.Name) }}
+        {{- end }}
+        {{- end }}
+        {{- if $hasTags }}
+        {{- if $hasCategories }}{{ $content = print $content ` ` }}{{ end }}
+        {{- range $index, $tag := (.GetTerms "tags") }}
+          {{- if gt $index 0 }}{{ $content = print $content `, ` }}{{ end }}
+          {{- $content = print $content (printf `<a href="%stags/%s/">#%s</a>` (strings.TrimSuffix site.BaseURL "/") (lower $tag.Name) $tag.Name) }}
+        {{- end }}
         {{- end }}
       {{- end }}
       {{- $content = print $content `</p>` }}
