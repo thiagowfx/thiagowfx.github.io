@@ -1,15 +1,7 @@
 {{- define "main" }}
 <content>
   {{- $pages := where .Pages "Site.Language.Lang" .Site.Language.Lang }}
-  {{- if and (not .Data.Singular) (eq .Type "section") }}
-    {{- $filteredPages := slice }}
-    {{- range $pages }}
-      {{- if not (in .Params.categories "coding") }}
-        {{- $filteredPages = $filteredPages | append . }}
-      {{- end }}
-    {{- end }}
-    {{- $pages = $filteredPages }}
-  {{- end }}
+  {{- $excludeCategories := slice "coding" "recipes" }}
 
   <h2 id="posts" style="display: flex; align-items: center; gap: 0;">
     {{- if .Data.Singular }}
@@ -27,7 +19,7 @@
    {{- partial "search-widget.html" (dict "contentSelector" "#posts-content" "includeCategories" (slice .Name) "lang" .Site.Language.Lang) }}
    {{- end }}
    {{- else }}
-   {{- partial "search-widget.html" (dict "contentSelector" "#posts-content" "excludeCategories" (slice "coding") "lang" .Site.Language.Lang) }}
+   {{- partial "search-widget.html" (dict "contentSelector" "#posts-content" "excludeCategories" (slice "coding" "recipes") "lang" .Site.Language.Lang) }}
    {{- end }}
 
   <div id="posts-content">
@@ -42,6 +34,32 @@
 
   {{ $currentYear := now.Year | printf "%d" }}
   {{ $pagesGroupedByYear := $pages.GroupByDate "2006" }}
+  {{- if and (not .Data.Singular) (eq .Section "posts") }}
+    {{- $filteredGroups := slice }}
+    {{- range $group := $pagesGroupedByYear }}
+      {{- $filteredPages := slice }}
+      {{- range $page := $group.Pages }}
+        {{- $isExcluded := false }}
+        {{- $isSectionPage := eq .Kind "section" }}
+        {{- if $isSectionPage }}
+          {{- $isExcluded = true }}
+        {{- else }}
+          {{- range $cat := $page.Params.categories }}
+            {{- if in $excludeCategories $cat }}
+              {{- $isExcluded = true }}
+            {{- end }}
+          {{- end }}
+        {{- end }}
+        {{- if not $isExcluded }}
+          {{- $filteredPages = $filteredPages | append $page }}
+        {{- end }}
+      {{- end }}
+      {{- if gt (len $filteredPages) 0 }}
+        {{- $filteredGroups = $filteredGroups | append (dict "Key" $group.Key "Pages" $filteredPages) }}
+      {{- end }}
+    {{- end }}
+    {{- $pagesGroupedByYear = $filteredGroups }}
+  {{- end }}
 
   {{ if not $pagesGroupedByYear }}
     <ul class="blog-posts">
