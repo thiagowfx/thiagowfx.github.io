@@ -73,12 +73,26 @@
         </button>
         <div class="nav-dropdown-menu">
           {{- range .Children }}
-          <a href="{{ .URL }}" class="nav-dropdown-item{{- if eq .URL "/categories/coding/" }} nav-dropdown-item-coding{{- end }}">{{- if eq .URL "/categories/coding/" }}▸  {{ end }}{{ .Name }}</a>
+          {{- $url := .URL }}
+          {{- $langCode := $.Site.Language.Lang }}
+          {{- if ne $langCode "en" }}
+            {{- if or (eq .URL "/tags/") (eq .URL "/tags/bestof/") (eq .URL "/categories/") (eq .URL "/posts/") (eq .URL "/search/") }}
+              {{- $url = printf "/%s%s" $langCode .URL }}
+            {{- end }}
+          {{- end }}
+          <a href="{{ $url }}" class="nav-dropdown-item{{- if eq .URL "/categories/coding/" }} nav-dropdown-item-coding{{- end }}">{{- if eq .URL "/categories/coding/" }}▸  {{ end }}{{ .Name }}</a>
           {{- end }}
         </div>
       </div>
       {{- else }}
-      <a href="{{ .URL }}"{{- if .Params.emoji }} class="has-emoji{{- if or (eq $.RelPermalink .URL) (and (eq .URL "/tags/bestof/") (or (in $.RelPermalink "/tags/bestof/") (and (eq $.Type "posts") (in $.Params.tags "bestof")))) }} active-star{{- end }}"{{- end }}>
+      {{- $url := .URL }}
+      {{- $langCode := $.Site.Language.Lang }}
+      {{- if ne $langCode "en" }}
+        {{- if or (eq .URL "/tags/") (eq .URL "/tags/bestof/") (eq .URL "/categories/") (eq .URL "/posts/") (eq .URL "/search/") }}
+          {{- $url = printf "/%s%s" $langCode .URL }}
+        {{- end }}
+      {{- end }}
+      <a href="{{ $url }}"{{- if .Params.emoji }} class="has-emoji{{- if or (eq $.RelPermalink $url) (and (eq .URL "/tags/bestof/") (or (in $.RelPermalink "/tags/bestof/") (and (eq $.Type "posts") (in $.Params.tags "bestof")))) }} active-star{{- end }}"{{- end }}>
         {{- with .Params.emoji }}<span class="nav-emoji">{{ . }}</span>{{- end }}
         <span class="nav-text">{{ .Name }}</span>
       </a>
