@@ -152,7 +152,13 @@
         </div>
 
         <div class="feed-info">
-          <h2 style="display: flex; align-items: center; gap: 0.25em;">RSS feed <svg xmlns="http://www.w3.org/2000/svg" aria-label="RSS" role="img" viewBox="0 0 512 512" height="1em" width="1em"><path d="m0 0H512V512H0" fill="#f80"/><path fill="#fff" d="m109 271A132 133 0 01241 403h60A192 193 0 00109 211v-54A246 247 0 01355 403h60A306 307 0 00109 97m35 235a35 35 0 102 0"/></svg></h2>
+          <h2 style="display: flex; align-items: center; gap: 0.25em;">
+            RSS feed
+            <svg xmlns="http://www.w3.org/2000/svg" aria-label="RSS" role="img" viewBox="0 0 512 512" height="1em" width="1em">
+              <path d="m0 0H512V512H0" fill="#f80"/>
+              <path fill="#fff" d="m109 271A132 133 0 01241 403h60A192 193 0 00109 211v-54A246 247 0 01355 403h60A306 307 0 00109 97m35 235a35 35 0 102 0"/>
+            </svg>
+          </h2>
           <p>This is an RSS feed. You can subscribe to it using your favorite RSS reader to get updates when new posts are published.</p>
           <p><strong>Feed URL:</strong></p>
           <div class="feed-url">
