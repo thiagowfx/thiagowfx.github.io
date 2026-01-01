@@ -83,18 +83,19 @@ The only diff is `.Content` instead of `.Summary` for full-text RSS feeds.
         {{- if .Params.email | default true }}
           {{- $content = print $content ` • ` }}
         {{- end }}
-        {{- $items := slice }}
+        {{- $categoryLinks := slice }}
         {{- if $hasCategories }}
         {{- range $cat := (.GetTerms "categories") }}
-          {{- $items = $items | append (printf `<a href="%scategories/%s/">%%%s</a>` (strings.TrimSuffix site.BaseURL "/") (lower $cat.Name) $cat.Name) }}
+          {{- $categoryLinks = $categoryLinks | append (printf `<a href="%scategories/%s/">%%%s</a>` (strings.TrimSuffix site.BaseURL "/") (lower $cat.Name) $cat.Name) }}
         {{- end }}
         {{- end }}
+        {{- $tagLinks := slice }}
         {{- if $hasTags }}
         {{- range $tag := (.GetTerms "tags") }}
-          {{- $items = $items | append (printf `<a href="%stags/%s/">#%s</a>` (strings.TrimSuffix site.BaseURL "/") (lower $tag.Name) $tag.Name) }}
+          {{- $tagLinks = $tagLinks | append (printf `<a href="%stags/%s/">#%s</a>` (strings.TrimSuffix site.BaseURL "/") (lower $tag.Name) $tag.Name) }}
         {{- end }}
         {{- end }}
-        {{- $content = print $content (delimit $items " • ") }}
+        {{- $content = print $content (delimit $categoryLinks " ") }}{{- if and $hasCategories $hasTags }}{{ $content = print $content ` • ` }}{{- end }}{{- $content = print $content (delimit $tagLinks " ") }}
       {{- end }}
       {{- $content = print $content `</p>` }}
       <description>{{ $content | transform.XMLEscape | safeHTML }}</description>
