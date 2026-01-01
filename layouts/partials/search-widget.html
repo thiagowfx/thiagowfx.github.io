@@ -83,16 +83,20 @@
     searchInfo.textContent = `${results.length} result${results.length === 1 ? '' : 's'} found`;
 
     searchResults.innerHTML = results.map(({ post }) => {
+      const categories = (post.categories ?? [])
+        .map(c => `<a href="${langPath}/categories/${c}/" class="search-tag">%${escapeHtml(c)}</a>`)
+        .join(' ');
       const tags = (post.tags ?? [])
         .map(t => `<a href="${langPath}/tags/${t}/" class="search-tag">#${escapeHtml(t)}</a>`)
         .join(' ');
+      const allTags = [categories, tags].filter(Boolean).join(' ');
 
       return `
         <div class="search-result">
           <a href="${escapeHtml(post.url)}" class="search-result-title">${highlightMatch(post.title, query)}</a>
           <div class="search-result-meta">
             <span class="search-result-date">${escapeHtml(post.date)}</span>
-            ${tags ? `<span class="search-result-tags">${tags}</span>` : ''}
+            ${allTags ? `<span class="search-result-tags">${allTags}</span>` : ''}
           </div>
           ${post.summary ? `<p class="search-result-summary">${highlightMatch(post.summary, query)}</p>` : ''}
         </div>
