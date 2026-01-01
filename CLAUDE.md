@@ -8,6 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Hugo layouts and theme customizations in `layouts/`
 - Static assets in `static/`
 - Hugo configuration in `config.yml`
+- Internal plans/notes in `plans/` with naming pattern `YYYY-MM-DD-description.md` (not served by Hugo)
 - This is a Hugo-based blog using a custom fork of the bearblog theme
 
 ## Build Commands
