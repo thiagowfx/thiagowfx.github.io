@@ -1,12 +1,14 @@
 {{- $index := slice -}}
-{{- range where .Site.RegularPages "Type" "posts" -}}
-  {{- $entry := dict
-    "title" .Title
-    "url" .RelPermalink
-    "date" (.Date.Format "2006-01-02")
-    "tags" .Params.tags
-    "summary" ((.Summary | plainify | truncate 150) | default "")
-  -}}
-  {{- $index = $index | append $entry -}}
+{{- range .Site.RegularPages -}}
+  {{- if and (eq .Type "posts") (eq .Lang $.Site.Language.Lang) -}}
+    {{- $entry := dict
+      "title" .Title
+      "url" .RelPermalink
+      "date" (.Date.Format "2006-01-02")
+      "tags" .Params.tags
+      "summary" ((.Summary | plainify | truncate 150) | default "")
+    -}}
+    {{- $index = $index | append $entry -}}
+  {{- end -}}
 {{- end -}}
 {{- $index | jsonify -}}

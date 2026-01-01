@@ -3,7 +3,6 @@ title: 'Recovery típico via USB'
 date: 2014-04-18T16:38:36+00:00
 tags:
   - dev
-  - pt
 ---
 
   1. Meu computador não boota! E agora? Possíveis sintomas: tela preta congelada, tela de splash congelada, `systemd` travado, `upstart` travado, corrupção (`fsck` não ficou satisfeito), bootloader (grub, syslinux, EFI) mal configurado (ou não configurado)

@@ -2,7 +2,6 @@
 title: "Pare de receber telemarketing: Não Me Perturbe"
 date: 2025-01-13T02:13:41-03:00
 tags:
-  - pt
   - privacy
   - serenity
 ---

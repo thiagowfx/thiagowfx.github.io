@@ -26,4 +26,4 @@ Arch Linux Installation Notes (Macbook, UEFI, LVM ON LUKS, swap, btrfs root and 
 ## Post-installation
 
 * https://wiki.archlinux.org/index.php/Mac#Arch_Linux_only
-* https://github.com/yantis/instant-archlinux-on-mac%
+* https://github.com/yantis/instant-archlinux-on-mac
