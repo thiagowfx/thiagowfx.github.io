@@ -1,9 +1,10 @@
 {{- define "main" }}
+<div class="h-feed">
 <content>
   {{- $pages := where .Pages "Site.Language.Lang" .Site.Language.Lang }}
   {{- $excludeCategories := slice "coding" "recipes" }}
 
-  <h2 id="posts" style="display: flex; align-items: center; gap: 0;">
+  <h2 id="posts" class="p-name" style="display: flex; align-items: center; gap: 0;">
     {{- if .Data.Singular }}
       {{- if eq .Section "tags" }} {{ i18n "postsTaggedWith" }} #{{ .Name }}
       {{- else if eq .Section "categories" }} {{ i18n "postsCategorizedAs" }} %{{ .Name }}
@@ -23,6 +24,7 @@
    {{- end }}
 
   <div id="posts-content">
+  <div class="e-content">
   {{- if and .Data.Singular (eq .Name "coding") }}
   <!-- Cumulative Problems Solved Graph -->
   <div style="margin: 2rem 0;">
@@ -80,22 +82,22 @@
             {{ $lastDate := "" }}
             {{ range $group.Pages }}
             {{ $currentDate := .Date.Format "02 Jan, 2006" }}
-            <li>
+            <li class="h-entry">
               <span>
                 <time
-                  datetime='{{ .Date.Format "2006-01-02" }}'
+                  class="dt-published"
+                  datetime='{{ .Date.Format "2006-01-02T15:04:05-07:00" }}'
                   pubdate
-                  class="pubdate-list"
                 >
                   {{ if ne $currentDate $lastDate }}
                     {{ .Date.Format (default "02 Jan, 2006" .Site.Params.dateFormat) }}
                   {{ end }}
                 </time>
               </span>
-              <a href="{{ .Permalink }}">
+              <a class="u-url" href="{{ .Permalink }}">
                 {{- if in .Params.tags "bestof" }}
                 <span>★</span>
-                {{- end }} {{ .Title }}
+                {{- end }} <span class="p-name">{{ .Title }}</span>
               </a>
             </li>
             {{ $lastDate = $currentDate }}
@@ -134,7 +136,9 @@
   </div>
   {{- end }}
   </div>
+  </div>
   </content>
+</div>
 
   {{- if and .Data.Singular (eq .Name "coding") }}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
