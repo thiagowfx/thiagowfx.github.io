@@ -26,7 +26,7 @@ A few directories I like[^1]:
 - ✪ https://static.quest
 - ✪ https://rss.social/
 - ✪ https://250kb.club/ / https://256kb.club/
-- https://xn--sr8hvo.ws/dashboard (an indieweb webring)
+- ✪ https://xn--sr8hvo.ws/dashboard (an indieweb webring)
 - https://ooh.directory/
 
 I tend to visit them occasionally, whenever I crave for new content, perhaps like
