@@ -73,16 +73,14 @@ The only diff is `.Content` instead of `.Summary` for full-text RSS feeds.
       {{- $content = $content | replaceRE `(<img[^>]+src=")(/[^"]+)` (printf `${1}%s${2}` site.BaseURL) }}
       {{- $content = $content | replaceRE `(<img[^>]+src=")([^/"h][^"]*)` (printf `${1}%s${2}` .Permalink) }}
       {{- $content = $content | replaceRE `(href=")(#[^"]+)` (printf `${1}%s${2}` .Permalink) }}
-      {{- $content = print $content `<p style="text-align: center; margin-top: 2em;">— § —</p><p>` }}
+      {{- $content = print $content `<p style="text-align: center; margin-top: 2em;">— § —</p><div style="display: flex; justify-content: space-between;"><p style="margin: 0;">` }}
       {{- if .Params.email | default true }}
         {{- $content = print $content (printf `Reply via <a href="mailto:%s?subject=Reply to: %s">email</a>` $authorEmail .Title) }}
       {{- end }}
+      {{- $content = print $content `</p><p style="margin: 0;">` }}
       {{- $hasCategories := gt (len (.GetTerms "categories")) 0 }}
       {{- $hasTags := gt (len (.GetTerms "tags")) 0 }}
       {{- if or $hasCategories $hasTags }}
-        {{- if .Params.email | default true }}
-          {{- $content = print $content ` • ` }}
-        {{- end }}
         {{- $categoryLinks := slice }}
         {{- if $hasCategories }}
         {{- range $cat := (.GetTerms "categories") }}
@@ -97,7 +95,7 @@ The only diff is `.Content` instead of `.Summary` for full-text RSS feeds.
         {{- end }}
         {{- $content = print $content (delimit $categoryLinks " ") }}{{- if and $hasCategories $hasTags }}{{ $content = print $content ` • ` }}{{- end }}{{- $content = print $content (delimit $tagLinks " ") }}
       {{- end }}
-      {{- $content = print $content `</p>` }}
+      {{- $content = print $content `</p></div>` }}
       <description>{{ $content | transform.XMLEscape | safeHTML }}</description>
     </item>
     {{- end }}
