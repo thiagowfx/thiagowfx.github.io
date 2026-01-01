@@ -8,7 +8,7 @@ categories:
   - recipes
 ---
 
-This post premieres a [`#recipe`](/tags/recipe) tag in this blog.
+This post premieres the [`#recipes`](/categories/recipes) category in this blog.
 
 What I like about this recipe is that it is quite freestyle, one can mix and
 match whichever ingredients are available at hand. In my place most
