@@ -1,48 +1,74 @@
 {{- $currentLang := .Site.Language.Lang }}
-{{- $otherLang := cond (eq $currentLang "en") "pt" "en" }}
-{{- $otherLangName := cond (eq $otherLang "pt") "PT" "EN" }}
+{{- $currentLangName := cond (eq $currentLang "pt") "PT" "EN" }}
+{{- $currentLangFlag := cond (eq $currentLang "pt") "🇧🇷" "🇬🇧" }}
 {{- $currentPath := .RelPermalink }}
-{{- $otherPath := "/" }}
-{{- $pageExists := false }}
 
-{{- if eq $otherLang "pt" }}
-  {{- /* Convert EN to PT: prepend /pt/ */ -}}
-  {{- if eq $currentPath "/" }}
-    {{- $otherPath = "/pt/" }}
-  {{- else }}
-    {{- $otherPath = printf "/pt%s" $currentPath }}
-  {{- end }}
+{{- /* Build paths for both languages */ -}}
+{{- $enPath := "/" }}
+{{- $ptPath := "/" }}
+
+{{- /* Calculate PT path */ -}}
+{{- if eq $currentPath "/" }}
+  {{- $ptPath = "/pt/" }}
+{{- else if strings.HasPrefix $currentPath "/pt/" }}
+  {{- $ptPath = $currentPath }}
 {{- else }}
-  {{- /* Convert PT to EN: strip /pt/ from beginning */ -}}
-  {{- if eq $currentPath "/pt/" }}
-    {{- $otherPath = "/" }}
-  {{- else if strings.HasPrefix $currentPath "/pt/" }}
-    {{- $otherPath = strings.TrimPrefix "/pt" $currentPath }}
-  {{- else }}
-    {{- /* Fallback to homepage if path doesn't start with /pt/ */ -}}
-    {{- $otherPath = "/" }}
-  {{- end }}
+  {{- $ptPath = printf "/pt%s" $currentPath }}
 {{- end }}
 
-{{- /* Check if the translated page exists */ -}}
-{{- if eq $otherPath "/pt/" }}
-  {{- /* /pt/ homepage doesn't exist for users - they use /pt/posts/ instead */ -}}
-  {{- $pageExists = false }}
-{{- else if eq $otherPath "/" }}
-  {{- /* Homepage only exists for EN */ -}}
-  {{- $pageExists = (eq $otherLang "en") }}
+{{- /* Calculate EN path */ -}}
+{{- if eq $currentPath "/pt/" }}
+  {{- $enPath = "/" }}
+{{- else if strings.HasPrefix $currentPath "/pt/" }}
+  {{- $enPath = strings.TrimPrefix "/pt" $currentPath }}
+{{- else }}
+  {{- $enPath = $currentPath }}
+{{- end }}
+
+{{- /* Check if translated pages exist */ -}}
+{{- $enExists := false }}
+{{- $ptExists := false }}
+
+{{- if eq $enPath "/" }}
+  {{- $enExists = true }}
+{{- else if eq $enPath "/pt/" }}
+  {{- $enExists = false }}
 {{- else }}
   {{- range $.Site.Sites }}
-    {{- if eq .Language.Lang $otherLang }}
+    {{- if eq .Language.Lang "en" }}
       {{- range .Pages }}
-        {{- if eq .RelPermalink $otherPath }}
-          {{- $pageExists = true }}
+        {{- if eq .RelPermalink $enPath }}
+          {{- $enExists = true }}
         {{- end }}
       {{- end }}
     {{- end }}
   {{- end }}
 {{- end }}
 
-{{- if $pageExists }}
-<a href="{{ $otherPath }}" id="lang-toggle" class="lang-toggle-link" aria-label="Switch to {{ $otherLangName }}" title="Switch to {{ $otherLangName }}">{{ $otherLangName }}</a>
+{{- if eq $ptPath "/pt/" }}
+  {{- $ptExists = false }}
+{{- else }}
+  {{- range $.Site.Sites }}
+    {{- if eq .Language.Lang "pt" }}
+      {{- range .Pages }}
+        {{- if eq .RelPermalink $ptPath }}
+          {{- $ptExists = true }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- /* Only show language switcher if both languages exist */ -}}
+{{- if and $enExists $ptExists }}
+<div class="lang-dropdown">
+  <button id="lang-toggle" class="lang-toggle-button" aria-label="Switch language" title="Switch language">
+    <span class="lang-toggle-text">{{ $currentLangFlag }}</span>
+    <span class="lang-dropdown-arrow">▼</span>
+  </button>
+  <div class="lang-dropdown-menu">
+    <a href="{{ $enPath }}" class="lang-dropdown-item{{ if eq $currentLang "en" }} lang-active{{ end }}" title="English">🇬🇧 English</a>
+    <a href="{{ $ptPath }}" class="lang-dropdown-item{{ if eq $currentLang "pt" }} lang-active{{ end }}" title="Português">🇧🇷 Português</a>
+  </div>
+</div>
 {{- end }}
