@@ -1,9 +1,10 @@
 ---
-title: "1password CLI + direnv integration"
+title: "1Password CLI + direnv integration"
 date: 2025-03-26T14:15:15+01:00
 tags:
   - bestof
   - dev
+  - security
 ---
 
 Let's stay you're working on a terraform module that has a sensitive variable

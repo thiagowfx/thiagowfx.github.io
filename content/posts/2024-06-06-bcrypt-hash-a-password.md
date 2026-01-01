@@ -3,6 +3,7 @@ title: "Bcrypt-hash a password"
 date: 2024-06-06T13:35:05+02:00
 tags:
   - dev
+  - security
 ---
 
 Given the password `correct horse battery staple`, we would like to bcrypt-hash

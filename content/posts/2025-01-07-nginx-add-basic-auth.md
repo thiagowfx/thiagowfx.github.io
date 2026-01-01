@@ -3,6 +3,7 @@ title: "nginx: add basic auth"
 date: 2025-01-07T03:28:02-03:00
 tags:
   - dev
+  - security
 ---
 
 **Problem statement**: You want to expose a HTTPS service from your cloud VPS to

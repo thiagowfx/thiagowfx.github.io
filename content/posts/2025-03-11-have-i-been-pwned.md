@@ -5,6 +5,7 @@ tags:
   - bestof
   - dev
   - privacy
+  - security
 ---
 
 [Have I Been Pwned?](https://haveibeenpwned.com/) by the great [Troy Hunt](https://www.troyhunt.com/):

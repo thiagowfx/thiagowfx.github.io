@@ -4,6 +4,7 @@ date: 2024-05-03T16:46:28+02:00
 tags:
   - dev
   - privacy
+  - security
 ---
 
 If you have a GitHub account configured with SSH, your public keys are available

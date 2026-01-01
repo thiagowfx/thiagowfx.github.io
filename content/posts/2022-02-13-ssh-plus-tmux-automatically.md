@@ -2,8 +2,9 @@
 title: "SSH plus tmux automatically"
 date: 2022-02-13T20:20:27-05:00
 tags:
-  - dev
   - bestof
+  - dev
+  - security
 ---
 
 One of the most classic sysadmin/DevOps tasks is to use secure shell to connect to remote machines.

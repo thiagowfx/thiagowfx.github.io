@@ -4,6 +4,7 @@ date: 2025-07-27T18:49:30+02:00
 tags:
   - dev
   - privacy
+  - security
 ---
 
 More specifically, enroll into 2FA other than

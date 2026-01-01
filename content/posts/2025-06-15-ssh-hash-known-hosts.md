@@ -4,6 +4,7 @@ date: 2025-06-15T12:05:11+02:00
 tags:
   - dev
   - privacy
+  - security
 ---
 
 A security / privacy tip: hash ssh hosts, especially in machines you have

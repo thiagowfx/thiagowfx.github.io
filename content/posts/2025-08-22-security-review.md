@@ -3,6 +3,7 @@ title: "/security-review"
 date: 2025-08-22T15:31:01+02:00
 tags:
   - dev
+  - security
 ---
 
 Anthropic, [Automated Security Reviews in Claude Code](https://support.anthropic.com/en/articles/11932705-automated-security-reviews-in-claude-code):

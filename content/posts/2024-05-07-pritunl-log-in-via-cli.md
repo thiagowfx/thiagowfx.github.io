@@ -3,6 +3,7 @@ title: "Pritunl log in via CLI"
 date: 2024-05-07T16:03:27+02:00
 tags:
   - dev
+  - security
 ---
 
 [Pritunl](https://pritunl.com/) is an Enterprise Distributed OpenVPN server.

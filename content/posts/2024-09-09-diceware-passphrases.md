@@ -3,6 +3,7 @@ title: "Diceware passphrases"
 date: 2024-09-09T23:10:57+02:00
 tags:
   - dev
+  - security
 ---
 
 I wanted to create a new secure passphrase for my WLAN (Wi-Fi).

@@ -3,6 +3,7 @@ title: "New script: AWS China MFA login"
 date: 2025-10-04T11:34:58+02:00
 tags:
   - dev
+  - security
 ---
 
 [Previously]({{< ref "2024-12-17-skopeo-operate-container-images-and-registries" >}}).

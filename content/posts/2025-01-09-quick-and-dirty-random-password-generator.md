@@ -4,6 +4,7 @@ date: 2025-01-09T16:41:15-03:00
 tags:
   - dev
   - privacy
+  - security
 ---
 
 On Linux / macOS, use `/dev/urandom`, with a `tr` pass-through filter:

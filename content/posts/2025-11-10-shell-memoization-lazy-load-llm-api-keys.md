@@ -4,6 +4,7 @@ date: 2025-11-10T13:55:56+01:00
 tags:
   - bestof
   - dev
+  - security
 ---
 
 **Problem statement**: Given LLM keys shell environment variables:
