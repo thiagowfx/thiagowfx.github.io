@@ -1,0 +1,23 @@
+
+[Alpine Linux 3.21.0](https://alpinelinux.org/posts/Alpine-3.21.0-released.html)
+got released last Thursday.
+
+So what? I am credited as an aports commit contributor! :-)
+
+[Alpine package
+search](https://pkgs.alpinelinux.org/packages?name=&branch=edge&repo=&arch=x86_64&origin=&flagged=&maintainer=Thiago+Perrotta):
+a list of all the packages I currently maintain, excluding dependencies:
+
+- argocd
+- autotrash
+- bkt
+- fpp
+- gliderlabs-sigil
+- kubeseal
+- tfupdate
+- typos
+- urlwatch
+- yamlfmt
+
+...a total of **10** packages.
+

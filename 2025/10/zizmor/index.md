@@ -1,0 +1,32 @@
+
+I originally heard of [zizmor](https://docs.zizmor.sh/) at [FOSDEM 2025](https://fosdem.org/2025/):
+
+> zizmor is a static analysis tool for GitHub Actions. It can find and fix many
+> common security issues in typical GitHub Actions CI/CD setups.
+
+One month later, I adopted it in the most important repos of our company.
+
+A few months later, I [added]({{< ref
+"2025-06-03-alpine-linux-packaging-track-new-software-releases" >}}) it to the
+Alpine Linux repositories, and am happily
+[maintaining](https://pkgs.alpinelinux.org/packages?name=zizmor) it there.
+
+Now I use it _everywhere_, via a git [pre-commit](https://pre-commit.com/) hook:
+
+```yaml
+repos:
+  - repo: https://github.com/woodruffw/zizmor-pre-commit
+    rev: b933184438555436e38621f46ceb0c417cbed400 # frozen: v1.13.0
+    hooks:
+      - id: zizmor
+```
+
+The project has recently reached a milestone: [it has turned one year
+old](https://blog.yossarian.net/2025/09/14/one-year-of-zizmor). Its adoption,
+community and feature set have all significantly increased during that time, in
+a good way.
+
+The goal, impact and spirit of the project are all really great. And I'm sure
+this is mainly thanks to the initiative and dedication of its author, [William
+Woodruff](https://blog.yossarian.net/).
+

@@ -1,0 +1,61 @@
+
+Use [`flock`](https://man.archlinux.org/man/flock.1) to manage file/directory
+locks from shell scripts.
+
+## File
+
+Shell #1:
+
+```shell
+lockfile=lock
+flock "$lockfile" vim foo
+```
+
+`vim` will open.
+
+Shell #2:
+
+```shell
+lockfile=lock
+flock "$lockfile" vim foo
+```
+
+`vim` will block, waiting until the lock is released.
+
+Once we `:q` (quit) `vim` in the first shell, the second `vim` will immediately
+open.
+
+`lock` is a file. It can be anything e.g. `lockfile=/tmp/lock` or
+`lockfile=$(mktemp)` or `lockfile=my.lock`.
+
+`lockfile` is just an arbitrary name for the variable. We don't even need to use
+a variable, this is just for illustration purposes, and to make it easier to
+reuse its value in the second shell. Passing the lockfile directly to `flock` is
+perfectly acceptable.
+
+## Directory
+
+We can lock entire directories as well.
+
+Shell #1:
+
+```shell
+flock . vim foo
+```
+
+`vim` will open.
+
+Shell #2:
+
+```shell
+flock . vim bar
+```
+
+`vim` will block, waiting until the lock is released. Same as before.
+
+Once we `:q` (quit) `vim` in the first shell, the second `vim` will immediately
+open.
+
+When is this handy? For example, when multiple parties need to edit the same
+file, and we need to ensure they do not overwrite each other's changes.
+

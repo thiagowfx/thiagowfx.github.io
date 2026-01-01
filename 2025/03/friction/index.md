@@ -1,0 +1,29 @@
+
+[Cassidy Williams](https://cassidoo.co/post/introduce-friction/) – Introduce
+Friction:
+
+> Right now we live lives of incredible convenience. Everything that comes out
+> is designed to introduce more and more instant gratification. And that's a
+> really nice thing… to a point.
+
+> I see so many stories of people, daily, talking about how people (especially
+> students) today have worse and worse attention spans and patience than ever
+> before, and I think that's the result of our world working as designed. We've
+> made people addicted to instantly getting the object they want, the food they
+> want, the information they want, the answers they want, to the point of them
+> not being willing to do their own research or wait just a bit longer for…
+> anything. We're lazy about seeking answers and unhappy with having to wait for
+> results. We can't be bored.
+>
+> [...]
+>
+> Anyway. I think we could all benefit from a bit more friction in our lives,
+> whether it's via boycotting something, adding limits to something, cutting
+> something out entirely, or just stepping back before letting ourselves succumb
+> to the addictive feeds of the world. There's strength in numbers, so if you
+> don't mind the call to action: Let's work on that, together!
+
+There's somewhat of a meta application here as well: blogging comes with its own
+friction. It's certainly harder than tweeting or posting a story or a status
+update.
+

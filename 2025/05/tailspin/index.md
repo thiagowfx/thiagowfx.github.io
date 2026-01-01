@@ -1,0 +1,42 @@
+
+[tailspin](https://github.com/bensadeh/tailspin):
+
+> `tailspin` works by reading through a log file line by line, running a series
+> of regexes against each line. The regexes recognize patterns you expect to
+> find in a logfile, like dates, numbers, severity keywords and more.
+>
+> `tailspin` does not make any assumptions on the format or position of the
+> items it wants to highlight. For this reason, it requires no configuration and
+> the highlighting will work consistently across different logfiles.
+
+The binary name is `tspin(1)`, not `tailspin(1)` (confusing!). MacOS has an
+existing `/usr/bin/tailspin` binary, which appears to be kernel-related.
+
+It supports `-f` (`--follow`), just like `tail(1)`. In fact, you can think of
+`tspin -f` as a drop-in replacement for `tail -f`.
+
+It is available in [most package
+managers](https://repology.org/project/tailspin/versions).
+
+It supports custom highlight rules (groups) via a `~/.config/tailspin` file.
+
+Usage:
+
+```shell
+# against a log file
+% tspin -f /var/log/system.log
+
+# against a command
+% kubectl logs mypod -n myns -f | tspin
+
+# built-in highlighters showcase
+% echo "2025-01-01 hello null true false 42 https://example.com?param1=foo&param2=bar ERROR WARNING WARN INFO 127.0.0.1 /etc/passwd foo='bar'"  | tspin
+```
+
+It's possible to add one-off highlighters from the command line (note: case
+sensitive).
+
+```shell
+% tspin --highlight=red:err,error,fail --highlight=green:success,ok
+```
+

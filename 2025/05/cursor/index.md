@@ -1,0 +1,20 @@
+
+Meanwhile, in a conversation with a coworker...
+
+> **Me**: My _aha!_ moment from this week was to use
+> [Cline](https://cline.bot/)[^1] with this new "Use the browser" integration.
+> It opens an embedded web browser within its pane and starts to use the cursor
+> to click around.
+>
+> **Coworker**: [Cursor](https://www.cursor.com/)[^2], the IDE?
+>
+> **Me**: Nooo, I mean, the mouse cursor, the pointer.
+
+I was waiting for this moment when the overloaded "Cursor" term would become
+ambiguous. It's just somewhat of a funny coincidence that it appeared in the
+context of one of its main competitors.
+
+[^1]: Cline: _an AI-powered coding assistant that runs in VS Code_
+
+[^2]: Cursor: _the AI Code Editor_
+
