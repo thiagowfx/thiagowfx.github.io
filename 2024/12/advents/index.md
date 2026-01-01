@@ -1,7 +1,7 @@
 
 Too many advents:
 
-- [Advent of Code](https://adventofcode.com/): my favorite. See [coding]({{< ref "/tags/coding" >}}).
+- [Advent of Code](https://adventofcode.com/): my favorite. See [coding]({{< ref "/categories/coding" >}}).
 - [Advent of Papers](https://jimmyhmiller.github.io/advent-of-papers)
 - [Debug December](https://www.debugdecember.com/)
 - [HTMLHell Advent Calendar](https://htmhell.dev/adventcalendar/)
