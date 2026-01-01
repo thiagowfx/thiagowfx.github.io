@@ -4,7 +4,7 @@ date: 2025-05-23T00:45:57+02:00
 tags:
   - serenity
 categories:
-  - recipe
+  - recipes
 ---
 
 ## Apfel-Ingwer Heißgetränk (Apple-Ginger Hot Drink)

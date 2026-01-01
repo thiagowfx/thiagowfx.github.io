@@ -5,7 +5,7 @@ tags:
   - bestof
   - serenity
 categories:
-  - recipe
+  - recipes
 ---
 
 This post premieres a [`#recipe`](/tags/recipe) tag in this blog.
