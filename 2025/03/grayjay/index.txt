@@ -1,0 +1,16 @@
+
+https://grayjay.app/:
+
+> Grayjay enables you to create and watch video content in your own terms, fully
+> retaining ownership and having control over what you watch. Your content on
+> your terms.
+
+It has an YouTube plug-in. It behaves similarly to [SmartTube]({{< ref
+"2025-01-30-smarttube" >}}): there's built-in adblocking and
+[SponsorBlock](https://sponsor.ajay.app/). You can log in with your Google
+account to integrate history, subscriptions, etc. It acts effectively as a
+no-frills YouTube Desktop client. Additionally it supports Chromecast and AirPlay.
+
+Works as advertised on macOS, and it's super easy to install. There's no Cask
+available on Homebrew though (sadly).
+

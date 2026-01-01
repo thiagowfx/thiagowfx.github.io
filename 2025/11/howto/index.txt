@@ -1,0 +1,65 @@
+
+https://github.com/nalgeon/howto ([via](https://antonz.org/howto/)):
+
+> Humble command-line assistant
+>
+> Howto helps you solve command-line tasks with AI. Describe the task, and howto
+> will suggest a solution:
+>
+> Howto works with any OpenAI-compatible provider and local Ollama models. It's
+> a simple tool that doesn't interfere with your terminal. Not an "intelligent
+> terminal" or anything. You ask, and howto answers. That's the deal.
+
+Installation:
+
+```shell
+brew tap nalgeon/howto https://github.com/nalgeon/howto
+brew install howto
+```
+
+Configuration: add to my shell startup file:
+
+```shell
+# Lazy-load API keys only when needed to avoid shell startup delay
+if command -v howto &>/dev/null; then
+	_load_api_keys_howto() {
+		export HOWTO_AI_TOKEN="$(command llm keys get openai)"
+		# Redefine itself to be a no-op after first call
+		_load_api_keys_howto() { :; }
+	}
+
+	# Wrap all AI CLI commands to auto-load keys
+	command -v howto &>/dev/null && eval "howto() { _load_api_keys_howto; command howto \"\$@\"; }"
+fi
+```
+
+In this case, I retrieve the API token from
+[`llm`](https://github.com/simonw/llm).
+
+Usage examples:
+
+```shell
+% howto curl post request
+curl -X POST [URL] -d "[data]"
+
+The `curl` command is used to make HTTP requests from the command line.
+The `-X POST` option specifies that the request method is POST.
+The `-d "[data]"` option is used to send the specified data in the POST request
+body.
+```
+
+```shell
+% howto terraform init given a backend and a tfvars
+terraform init -backend-config=<backend-config-file> -var-file=<variables-file>
+
+The `terraform init` command initializes a Terraform working directory,
+preparing it for other commands.
+The `-backend-config=<backend-config-file>` option specifies a file containing
+backend configuration settings.
+The `-var-file=<variables-file>` option specifies a file containing variable
+definitions.
+```
+
+Workflow: when stuck, press `Ctrl + a` (go to beginning of line), type `howto`,
+press `<Enter>`.
+

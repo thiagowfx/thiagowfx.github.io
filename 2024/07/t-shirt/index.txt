@@ -1,0 +1,8 @@
+
+When attending tech conferences, wear T-shirts from previous conferences, or
+from prior editions of the same conference. It is a good icebreaker when people
+recognize them.
+
+Of course, there is no need to buy a T-shirt from every single conference you
+attend; owning one or two of them is enough.
+

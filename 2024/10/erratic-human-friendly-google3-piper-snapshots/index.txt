@@ -1,0 +1,96 @@
+
+In the google3 codebase, when working with Piper directly (i.e. not
+Fig[-on-CitC]), I often liked to use this tool called `erratic` (abbrev: `er`),
+which was a 20% project of another Software Engineer[^1].
+
+## google3 workflow
+
+The workflow is as follows:
+
+- Make some changes: `g4 open`, `g4 edit`, etc
+- Create a CL (ChangeList) `g4 change`
+
+Now let's say you're anticipating some heavy refactoring, in the same CL[^2],
+that you could potentially regret and want to revert.
+
+This would be a great moment to use `erratic`. After installing it (or aliasing
+it, if using it via X20), run:
+
+```shell
+% er explain "this is working perfectly before bob@ asked me to refactor it"
+```
+
+- Make additional changes
+- Feel free to make more snapshots (checkpoints), as you see fit
+
+If you ever want to roll back, run `er list`. It will list all explicit
+snapshots you annotated so far. Locate the one you want to roll back to:
+
+```shell
+% er list
+42 "this is working perfectly before bob@ asked me to refactor it"
+78 "second refactoring"
+```
+
+Now just roll back to it:
+
+```
+% er restore 42
+```
+
+Sometimes you'll need to run `g4 add` afterwards. And we're done!
+
+**Colophon**: Why use `erratic` at all, since CitC already does automatic
+periodic snapshots out-of-the-box? Because these automatic snapshots are meant
+for machines, not humans; they are not very developer-friendly. You could get
+  your way around `rsync` + finding the correct timestamps to copy from, but
+  that's not fun at all, and not a good use of time either.
+
+## git workflow
+
+How to replicate a similar workflow in a non-Google world?
+
+For most of us, non-Google necessarily means `git`. Let's ignore `hg`
+(mercurial) in this context.
+
+There is not much to do, actually: https://github.blog/open-source/git/commits-are-snapshots-not-diffs/
+
+`git` commits are already snapshots. The workflow is:
+
+- Make some changes, then `git add`
+- Create a branch (`git switch --create`), commit your changes
+- To make a snapshot, just make a new commit and annotate it (`git commit -m
+  "foo"`)
+- To list your snapshots, run `git rev-list $(git show-branch --merge-base
+  HEAD)^..HEAD --pretty`. This will list all commits since your branch diverted.
+  You could add an alias to it in your `~/.gitconfig`.
+- To roll back, run `git reset --hard {commit}`.
+
+**Caveat**: You will lose track of all commits after `{commit}`. Although it
+would still be possible to recover them with `git reflog` (in case of a
+mistake), that is not a developer-friendly workflow.
+
+Then the follow-up question is: how to roll back without losing track of
+intermediate work?
+
+One way is to create a new branch that points out to `{commit}` instead of
+hard-resetting your entire worktree:
+
+```shell
+% git checkout -b mynewbranch {commit}
+```
+
+Once you are satisfied, just delete the previous branch and then rename the
+current one to it.
+
+Another possibility is the use of [git
+worktrees](https://git-scm.com/docs/git-worktree) to divert (spin-off) branches.
+
+This becomes a very natural workflow once you repeat it a couple of times.
+
+[^1]: I have gladly peer bonused him. You should _always_ peer bonus those folks
+    who helped you become more productive.
+
+[^2]: Arguably you should create a separate CL for that (go/small-cls), but who
+    am I to judge? Unless I am your teammate...
+

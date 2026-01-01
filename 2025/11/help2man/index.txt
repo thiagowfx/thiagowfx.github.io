@@ -1,0 +1,64 @@
+
+Thanks to [`help2man`](https://www.gnu.org/software/help2man/):
+
+> `help2man` produces simple manual pages from the `--help` and `--version`
+> output of other commands.
+>
+> [...]
+>
+> This program is intended to provide an easy way for software authors to
+> include a manual page in their distribution without having to maintain that
+> document.
+>
+> Given a program which produces reasonably standard `--help` and `--version`
+> outputs, `help2man` can re-arrange that output into something which resembles
+> a manual page.
+
+...[pancake](https://github.com/thiagowfx/pancake) scripts/tools now all have
+man pages! The integration was quite straightforward[^1]:
+
+```diff
+% git --no-pager show HEAD~3
+commit fd319657199d740138236b0b56eb47a4fb9dc1d9 (tag: 2025.11.23.1)
+Author: Thiago Perrotta <{redacted}>
+Date:   Sun Nov 23 00:45:19 2025 -0300
+
+    formula: add man page generation with help2man
+
+    🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+    Co-Authored-By: Claude <noreply@anthropic.com>
+
+diff --git Formula/pancake.rb Formula/pancake.rb
+index 921df77..808eac6 100644
+--- Formula/pancake.rb
++++ Formula/pancake.rb
+@@ -5,6 +5,8 @@ class Pancake < Formula
+   sha256 "1e2ee2a7cd22a659c541361b1d50761e672a197a76176aa04683eb430bb080fd"
+   head "https://github.com/thiagowfx/pancake.git", branch: "master"
+
++  depends_on "help2man" => :build
++
+   # Script definitions: [directory, script_file, command_name]
+   SCRIPTS = [
+@@ -39,6 +41,14 @@ class Pancake < Formula
+
+     # aws_login_headless requires additional Python script
+     bin.install "aws_login_headless/aws_login_headless_playwright.py"
++
++    # Generate and install man pages
++    SCRIPTS.each do |_, _, command|
++      system "help2man", "--no-info", "--no-discard-stderr",
++             "--version-string=#{version}", "--output=#{command}.1",
++             "--name=#{command}", bin/command
++      man1.install "#{command}.1"
++    end
+   end
+
+   test do
+```
+
+It parses the output of `--help` to compose a man page. DRY.
+
+[^1]: With the assistance of an LLM, as (can't believe I'll say this) _usual_.
+

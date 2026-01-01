@@ -1,0 +1,6 @@
+
+Whenever we play badminton and someone hits the shuttle in such a way that it
+gently touches the net from the top, followed up by a point, the person
+instantly apologizes. It makes me smile every single time this unspoken
+tradition happens.
+

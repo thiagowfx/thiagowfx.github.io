@@ -1,0 +1,20 @@
+
+**Immersion**.
+
+You know you are reading a great book[^1] when you feel immersed, constantly pausing
+and deliberating, like having a daydream about its characters and overarching
+plot.
+
+You know you are reading a great book when you constantly stop and identify
+yourself with one of the characters, or perhaps with all of them,
+understanding their unique personality traits, intimate thoughts, deep wishes
+and ongoing struggles.
+
+You know you are reading a great book when you momentarily disappear – even
+if only for a tiny bit – underneath your own thoughts and experiences.
+
+[^1]: Replace
+    _boo[k](https://www.goodreads.com/book/show/58784475-tomorrow-and-tomorrow-and-tomorrow)_
+    with _videogam[e](https://store.steampowered.com/app/383870/Firewatch/)_:
+    the impact is comparable, if not even more.
+

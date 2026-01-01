@@ -1,0 +1,47 @@
+
+Mario Zechner's pi ([via Peter Steinberger](https://steipete.me/posts/2025/signature-flicker)):
+
+> Mario Zechner's pi is currently the gold-standard for differential rendering,
+> while also using all tricks of modern terminals — including showing inline
+> images:
+
+This paragraph was enough to entice my curiosity to try it out.
+
+https://shittycodingagent.ai/:
+
+> There are many shitty coding agents, but this one is mine.
+
+> **Features**
+>
+> Minimal. Opinionated. Extensible.
+>
+> Lean core keeps your context clean. Use only what you need.
+
+This was love at first sight.
+
+Sounds [familiar](https://miniflux.app/)?
+
+I love its philosophy:
+
+> What we didn't build
+>
+> pi is opinionated about what it won't do. These are intentional design
+> decisions to minimize context bloat and avoid anti-patterns.
+>
+> - No MCP. Build CLI tools with READMEs (see Skills). The agent reads them on demand. Would you like to know more? If you must, use mcporter.
+> - No sub-agents. Spawn pi instances via tmux, or build your own sub-agent tool. Observability and steerability for you and the agent.
+> - No permission popups. Security theater. Run in a container or build your own with Hooks.
+> - No plan mode. Gather context in one session, write plans to file, start fresh for implementation.
+> - No built-in to-dos. They confuse models. Use a TODO.md file, or build your own with custom tools.
+> - No background bash. Use tmux. Full observability, direct interaction.
+
+The full rationale is in the [blog
+post](https://mariozechner.at/posts/2025-11-30-pi-coding-agent/), which is a
+very recommended read.
+
+We need more of this. It is currently one of my favorite CLI agents, alongside
+Claude Code (the golden standard) and Amp Code.
+
+Note that `pi` is model agnostic, comparable to
+[OpenCode](https://opencode.ai/).
+

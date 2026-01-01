@@ -1,0 +1,22 @@
+
+Gerrit [3.9](https://www.gerritcodereview.com/3.9.html) has been released recently. This is a dear release to me because I was responsible for some of its changes[^1]:
+
+```shell
+$ PAGER="cat" git shortlog --author="Thiago Perrotta" v3.8.0..v3.9.0
+Thiago Perrotta (3):
+      Add 'description', 'd' aliases for the 'message' search operator
+      Add 'm' alias for the 'message' search operator
+      UX: "Your Turn" -> "Your turn"
+```
+
+This is not the first Google open source project I contributed to, however I
+wanted to note these contributions here nonetheless.
+
+One of my favorite aspects of Google culture is the ability to contribute to
+any project in the company at any time in any capacity (the so called "20%
+contributions").
+
+[^1]: The output was edited to remove duplicate entries and merge commits
+    because the Gerrit project does not maintain a clean history of their
+    commits i.e. they do not adopt a rebase workflow.
+
