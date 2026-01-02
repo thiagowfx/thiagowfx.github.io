@@ -21,21 +21,23 @@ Enter [blog directories](https://en.wikipedia.org/wiki/Web_directory):
 
 A few directories I like[^1]:
 
-- ✪ https://diff.blog/
+<!-- keep-sorted start prefix_order=["- ✪","- https","- ✗"] -->
+- ✪ https://250kb.club/ / https://256kb.club/
 - ✪ https://512kb.club/ (Kev)
 - ✪ https://blogroll.org/ (Manu)
-- ✪ https://kagi.com/smallweb
-- ✪ https://marginalia-search.com/
 - ✪ https://clew.se/
 - ✪ https://darktheme.club/
-- ✪ https://powrss.com/
+- ✪ https://diff.blog/
 - ✪ https://feedle.world/
-- ✪ https://static.quest
+- ✪ https://kagi.com/smallweb
+- ✪ https://marginalia-search.com/
+- ✪ https://powrss.com/
 - ✪ https://rss.social/
-- ✪ https://250kb.club/ / https://256kb.club/
+- ✪ https://static.quest
 - ✪ https://xn--sr8hvo.ws/dashboard (an indieweb webring)
 - https://ooh.directory/
 - ✗ https://baccyflap.com/noai/?slug=njs#links
+<!-- keep-sorted end -->
 
 I tend to visit them occasionally, whenever I crave for new content, perhaps like
 [doomscrolling](https://en.wikipedia.org/wiki/Doomscrolling) in social media.
