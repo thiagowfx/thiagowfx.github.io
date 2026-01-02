@@ -27,6 +27,7 @@ A few directories I like[^1]:
 - ✪ https://rss.social/
 - ✪ https://250kb.club/ / https://256kb.club/
 - ✪ https://xn--sr8hvo.ws/dashboard (an indieweb webring)
+- https://baccyflap.com/noai/?slug=njs#links
 - https://ooh.directory/
 
 I tend to visit them occasionally, whenever I crave for new content, perhaps like
