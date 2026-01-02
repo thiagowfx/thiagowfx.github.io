@@ -34,8 +34,8 @@ A few directories I like[^1]:
 - ✪ https://rss.social/
 - ✪ https://250kb.club/ / https://256kb.club/
 - ✪ https://xn--sr8hvo.ws/dashboard (an indieweb webring)
-- https://baccyflap.com/noai/?slug=njs#links
 - https://ooh.directory/
+- ✗ https://baccyflap.com/noai/?slug=njs#links
 
 I tend to visit them occasionally, whenever I crave for new content, perhaps like
 [doomscrolling](https://en.wikipedia.org/wiki/Doomscrolling) in social media.
@@ -54,4 +54,5 @@ blogs](https://nelson.cloud/how-i-discover-new-blogs/) by Nelson Figueroa.
 
 [Previously]({{< ref "2022-02-17-praise-for-blog-aggregators">}}).
 
-[^1]: My blog is indexed in the ones marked with a ✪ star.
+[^1]: My blog is indexed in the ones marked with a ✪ star. Not qualified in the
+    ones marked with a ✗.
