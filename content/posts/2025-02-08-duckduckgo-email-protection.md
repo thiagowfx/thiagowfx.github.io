@@ -4,6 +4,7 @@ date: 2025-02-08T14:50:39+01:00
 tags:
   - bestof
   - privacy
+  - security
 ---
 
 One of my best discoveries this year: [DuckDuckGo email

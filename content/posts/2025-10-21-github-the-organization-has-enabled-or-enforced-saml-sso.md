@@ -3,6 +3,7 @@ title: "GitHub: the organization has enabled or enforced SAML sso"
 date: 2025-10-21T08:15:41+02:00
 tags:
   - dev
+  - security
 ---
 
 Error message when doing `git push`:

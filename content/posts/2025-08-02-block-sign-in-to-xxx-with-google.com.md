@@ -4,6 +4,7 @@ date: 2025-08-02T21:26:25+02:00
 tags:
   - dev
   - privacy
+  - security
 ---
 
 Jeff Johnson, [Sign in with Google in Chrome](https://underpassapp.com/news/2025/7/5.html):

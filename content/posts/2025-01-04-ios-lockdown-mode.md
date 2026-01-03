@@ -4,6 +4,7 @@ date: 2025-01-04T23:58:11-03:00
 tags:
   - dev
   - privacy
+  - security
 ---
 
 [dedoimedo](https://www.dedoimedo.com/computers/iphone-lockdown-mode.html) makes
