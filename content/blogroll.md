@@ -45,4 +45,8 @@ An <a href="https://xn--sr8hvo.ws">IndieWeb Webring</a> 🕸💍
 <a href="https://static.quest">Static.Quest</a> — A dynamic webring
 <a href="https://static.quest/random">→</a>
 
+<a href="https://powrss.com/random">←</a>
+<a href="https://powrss.com">powRSS</a>
+<a href="https://powrss.com/random">→</a>
+
 [^1]: This list is not exhaustive and does not necessarily express endorsement.
