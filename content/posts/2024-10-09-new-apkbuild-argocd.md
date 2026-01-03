@@ -4,6 +4,7 @@ date: 2024-10-09T23:03:32+02:00
 tags:
   - alpine-linux
   - dev
+  - kubernetes
 ---
 
 [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) is a widely used GitOps

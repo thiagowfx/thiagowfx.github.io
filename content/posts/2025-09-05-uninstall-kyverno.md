@@ -3,6 +3,7 @@ title: "Uninstall Kyverno"
 date: 2025-09-05T17:03:04+02:00
 tags:
   - dev
+  - kubernetes
 ---
 
 It's always a bit frustrating to do it.
