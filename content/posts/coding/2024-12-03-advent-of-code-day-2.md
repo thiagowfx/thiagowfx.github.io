@@ -7,6 +7,10 @@ categories:
   - coding
 ---
 
+Refer to the [previous post]({{< ref "2022-01-28-advent-of-code" >}}) about AoC,
+and to the [git repository](https://github.com/thiagowfx/adventofcode) with my
+solutions in Python 3.
+
 Link to [Day #2](https://adventofcode.com/2024/day/2) puzzle.
 
 The first part is straightforward. It felt right to use [`pairwise`](https://docs.python.org/3/library/itertools.html#itertools.pairwise) to compute the differences between each adjacent pair:
