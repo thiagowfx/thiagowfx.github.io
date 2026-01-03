@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Aws on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Aws on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
+[some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 03 Jan 2026 19:26:40 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/aws/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform: AWS deployment to random availability zones</title><link>https://perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/</link><pubDate>Tue, 21 May 2024 14:31:03 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>aws</category><category>dev</category><category>terraform</category><guid>https://perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/</guid><description>&lt;p&gt;A common scenario: there&amp;rsquo;s a new deployment you would like to roll out to AWS.
+Let&amp;rsquo;s say you pick &amp;ldquo;us-east-1&amp;rdquo; as your cloud region. There are multiple
+availability zones within it:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;us-east-1a&lt;/li&gt;
+&lt;li&gt;us-east-1b&lt;/li&gt;
+&lt;li&gt;us-east-1c&lt;/li&gt;
+&lt;li&gt;us-east-1d&lt;/li&gt;
+&lt;li&gt;us-east-1e&lt;/li&gt;
+&lt;li&gt;us-east-1f&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Suppose you want to pick two of them for your service/app, and you don&amp;rsquo;t
+particularly care about which one. How to proceed?&lt;/p&gt;
+&lt;h2 id="option-1-hard-coding"&gt;Option #1: Hard-coding&lt;/h2&gt;
+&lt;p&gt;Pick two arbitrary zones and hard-code them.&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="terraform"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;terraform&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-terraform" data-lang="terraform"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;variable&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;availability_zones&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;type&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; list(&lt;span style="color:#a6e22e"&gt;string&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;default&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; [&lt;span style="color:#e6db74"&gt;&amp;#34;us-east-1a&amp;#34;&lt;/span&gt;, &lt;span style="color:#e6db74"&gt;&amp;#34;us-east-1b&amp;#34;&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;resource&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;aws_subnet&amp;#34;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;private&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;vpc_id&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;aws_vpc&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;chartmuseum&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cidr_block&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; element(var.&lt;span style="color:#a6e22e"&gt;private_subnets&lt;/span&gt;, count.&lt;span style="color:#a6e22e"&gt;index&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;availability_zone&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; element(var.&lt;span style="color:#a6e22e"&gt;availability_zones&lt;/span&gt;, count.&lt;span style="color:#a6e22e"&gt;index&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; count &lt;span style="color:#f92672"&gt;=&lt;/span&gt; length(var.&lt;span style="color:#a6e22e"&gt;private_subnets&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Caveat&lt;/strong&gt;: &lt;a href="https://www.goodreads.com/book/show/10639.The_Paradox_of_Choice"&gt;The paradox of
+choice&lt;/a&gt;,
+unnecessary decision fatigue.&lt;/p&gt;
+&lt;h2 id="option-2-pick-the-first-two"&gt;Option #2: Pick the first two&lt;/h2&gt;
+&lt;p&gt;Use the AWS data source to dynamically find all zones, and pick the first two.&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="terraform"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;terraform&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-terraform" data-lang="terraform"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;data&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;aws_availability_zones&amp;#34;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;available&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;state&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;available&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;resource&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;aws_subnet&amp;#34;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;private&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;vpc_id&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;aws_vpc&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;chartmuseum&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cidr_block&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; element(var.&lt;span style="color:#a6e22e"&gt;private_subnets&lt;/span&gt;, count.&lt;span style="color:#a6e22e"&gt;index&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;availability_zone&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; element(data.&lt;span style="color:#a6e22e"&gt;aws_availability_zones&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;available&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;names&lt;/span&gt;, count.&lt;span style="color:#a6e22e"&gt;index&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; count &lt;span style="color:#f92672"&gt;=&lt;/span&gt; length(var.&lt;span style="color:#a6e22e"&gt;private_subnets&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Note that &lt;code&gt;terraform plan&lt;/code&gt; should display the full zone list.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Caveat&lt;/strong&gt;: Heavily biased towards the first two zones.&lt;/p&gt;
+&lt;h2 id="option-3-random-shuffling"&gt;Option #3: Random shuffling&lt;/h2&gt;
+&lt;p&gt;Pick two zones at random!&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="terraform"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;terraform&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-terraform" data-lang="terraform"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;data&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;aws_availability_zones&amp;#34;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;available&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;state&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;available&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;resource&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;random_shuffle&amp;#34;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;aws_availability_zone_names&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;input&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; data.&lt;span style="color:#a6e22e"&gt;aws_availability_zones&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;available&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;names&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;result_count&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;resource&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;aws_subnet&amp;#34;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;private&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;vpc_id&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;aws_vpc&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;chartmuseum&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;cidr_block&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; element(var.&lt;span style="color:#a6e22e"&gt;private_subnets&lt;/span&gt;, count.&lt;span style="color:#a6e22e"&gt;index&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#a6e22e"&gt;availability_zone&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; element(&lt;span style="color:#a6e22e"&gt;random_shuffle&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;aws_availability_zone_names&lt;/span&gt;.&lt;span style="color:#a6e22e"&gt;result&lt;/span&gt;, count.&lt;span style="color:#a6e22e"&gt;index&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; count &lt;span style="color:#f92672"&gt;=&lt;/span&gt; length(var.&lt;span style="color:#a6e22e"&gt;private_subnets&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Winner&lt;/strong&gt;: In my opinion, this is the most elegant approach.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;random_shuffle&lt;/code&gt; will output the selected regions upon running &lt;code&gt;terraform apply&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Terraform: AWS deployment to random availability zones"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/aws/"&gt;#aws&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/terraform/"&gt;#terraform&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
