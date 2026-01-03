@@ -117,7 +117,11 @@ last:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    latest=$(find content/posts -name "*.md" -type f -exec ls -t {} + 2>/dev/null | head -n 1 || true)
+    if command -v fd >/dev/null 2>&1; then
+        latest=$(fd -e md . content/posts -0 | xargs -0 ls -dt 2>/dev/null | head -n 1 || true)
+    else
+        latest=$(find content/posts -name "*.md" -type f -exec ls -t {} + 2>/dev/null | head -n 1 || true)
+    fi
     if [ -z "$latest" ]; then
       echo "No posts found in content/posts/"
       exit 1
