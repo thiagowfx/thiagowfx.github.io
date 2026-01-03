@@ -45,3 +45,28 @@ class Solution:
             return -1
         return index if nums[index] == target else -1
 ```
+
+From scratch, recursively:
+
+```python
+import bisect
+
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        def bsearch(left, right, target):
+            ## if not 0 <= left <= right < len(nums):
+            ##     return -1
+            if left > right:
+                return -1
+
+            mid = left + (right - left) // 2
+
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                return bsearch(mid + 1, right, target)
+            else:  ## nums[mid] > target
+                return bsearch(left, mid - 1, target)
+
+        return bsearch(0, len(nums) - 1, target)
+```
