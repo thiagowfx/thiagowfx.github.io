@@ -3,6 +3,7 @@ title: "new script: copy"
 date: 2025-11-04T14:05:47+01:00
 tags:
   - dev
+  - macos
 ---
 
 [Previously]({{< ref "2025-10-30-new-script-ssh-mux-restart" >}}).

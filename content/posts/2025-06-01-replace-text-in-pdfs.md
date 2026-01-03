@@ -3,6 +3,7 @@ title: "Replace text in PDFs"
 date: 2025-06-01T22:39:36+02:00
 tags:
   - dev
+  - macos
 ---
 
 **Problem statement**: Given an existing PDF file, replace text in it.

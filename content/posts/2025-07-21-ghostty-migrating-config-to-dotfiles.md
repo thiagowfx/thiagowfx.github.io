@@ -3,6 +3,7 @@ title: "Ghostty: migrating config to dotfiles"
 date: 2025-07-21T14:56:27+02:00
 tags:
   - dev
+  - macos
 ---
 
 [This year]({{< ref "2024-12-28-ghostty" >}}) I migrated my terminal

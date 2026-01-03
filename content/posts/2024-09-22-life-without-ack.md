@@ -3,6 +3,7 @@ title: "Life without ack"
 date: 2024-09-22T14:30:29+02:00
 tags:
   - dev
+  - macos
 ---
 
 Every macOS upgrade comes with disappointment and sorrow in the form of some
