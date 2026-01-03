@@ -4,6 +4,7 @@ date: 2025-01-09T13:22:32-03:00
 tags:
   - bestof
   - dev
+  - pre-commit
 ---
 
 [YAML](https://yaml.org/) files can have a schema associated to them.

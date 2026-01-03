@@ -5,6 +5,7 @@ tags:
   - bestof
   - dev
   - git
+  - pre-commit
 ---
 
 We recently adopted Andrew Ring's "Distributed CODEOWNERS"

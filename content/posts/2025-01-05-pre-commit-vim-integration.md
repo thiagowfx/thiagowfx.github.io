@@ -3,6 +3,7 @@ title: "pre-commit + vim integration"
 date: 2025-01-05T01:46:06-03:00
 tags:
   - dev
+  - pre-commit
   - vim
 ---
 

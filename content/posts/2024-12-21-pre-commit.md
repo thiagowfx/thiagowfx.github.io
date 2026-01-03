@@ -4,6 +4,7 @@ date: 2024-12-21T23:24:23-03:00
 tags:
   - bestof
   - dev
+  - pre-commit
 ---
 
 [pre-commit](https://pre-commit.com/) is a CI framework for `git`.

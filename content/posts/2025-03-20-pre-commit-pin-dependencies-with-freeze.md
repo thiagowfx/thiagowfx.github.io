@@ -3,6 +3,7 @@ title: "pre-commit: pin dependencies with --freeze"
 date: 2025-03-20T18:12:57+01:00
 tags:
   - dev
+  - pre-commit
 ---
 
 **Today I learned**: [`pre-commit

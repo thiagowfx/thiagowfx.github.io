@@ -3,6 +3,7 @@ title: "pre-commit: autoupdate"
 date: 2025-09-01T12:05:52+02:00
 tags:
   - dev
+  - pre-commit
 ---
 
 When using [`pre-commit`](https://pre-commit.com/), you can take advantage of

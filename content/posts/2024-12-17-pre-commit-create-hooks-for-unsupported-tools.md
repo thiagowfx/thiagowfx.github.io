@@ -4,6 +4,7 @@ date: 2024-12-17T22:46:41-03:00
 tags:
   - bestof
   - dev
+  - pre-commit
 ---
 
 When using [pre-commit.com](https://pre-commit.com/), in an ideal world, every

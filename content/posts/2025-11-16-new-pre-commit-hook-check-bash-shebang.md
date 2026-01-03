@@ -3,6 +3,7 @@ title: "new pre-commit hook: check-bash-shebang"
 date: 2025-11-16T20:48:17-03:00
 tags:
   - dev
+  - pre-commit
 ---
 
 [Previously]({{< ref "2025-11-16-bash-shebang" >}}).

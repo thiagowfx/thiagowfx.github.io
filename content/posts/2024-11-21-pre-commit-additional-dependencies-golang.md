@@ -3,6 +3,7 @@ title: "pre-commit: additional dependencies in golang"
 date: 2024-11-21T12:36:35+01:00
 tags:
   - dev
+  - pre-commit
 ---
 
 When working with [pre-commit.com](https://pre-commit.com/) and specifying

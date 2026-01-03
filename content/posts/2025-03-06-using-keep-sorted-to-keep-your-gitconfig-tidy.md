@@ -5,6 +5,7 @@ tags:
   - bestof
   - dev
   - git
+  - pre-commit
 ---
 
 I tend to sort my

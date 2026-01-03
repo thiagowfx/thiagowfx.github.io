@@ -5,6 +5,7 @@ tags:
   - bestof
   - dev
   - git
+  - pre-commit
 ---
 
 Now I am becoming one of the snobs™ with the first sentence in the following

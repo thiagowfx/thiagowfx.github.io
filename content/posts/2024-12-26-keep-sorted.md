@@ -4,6 +4,7 @@ date: 2024-12-26T15:07:02-03:00
 tags:
   - bestof
   - dev
+  - pre-commit
 ---
 
 [keep-sorted](https://github.com/google/keep-sorted) is, by far, one of my

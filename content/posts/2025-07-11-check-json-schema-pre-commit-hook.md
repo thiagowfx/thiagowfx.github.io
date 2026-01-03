@@ -4,6 +4,7 @@ date: 2025-07-11T22:05:32+02:00
 tags:
   - bestof
   - dev
+  - pre-commit
 ---
 
 **Problem statement**: given an `entry.json` file, validate it against a given

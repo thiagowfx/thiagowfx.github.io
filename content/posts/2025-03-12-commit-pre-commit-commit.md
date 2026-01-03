@@ -3,6 +3,7 @@ title: "commit, pre-commit, commit"
 date: 2025-03-12T16:41:53+01:00
 tags:
   - dev
+  - pre-commit
 ---
 
 [Premature optimization is the root of all

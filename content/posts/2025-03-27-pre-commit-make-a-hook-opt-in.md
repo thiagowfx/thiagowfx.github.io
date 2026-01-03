@@ -3,6 +3,7 @@ title: "pre-commit: make a hook opt-in"
 date: 2025-03-27T13:22:44+01:00
 tags:
   - dev
+  - pre-commit
 ---
 
 Recently we added the following hook to our [pre-commit](https://pre-commit.com)

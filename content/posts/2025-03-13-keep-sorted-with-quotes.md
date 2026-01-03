@@ -3,6 +3,7 @@ title: "keep-sorted, with quotes"
 date: 2025-03-13T13:00:06+01:00
 tags:
   - dev
+  - pre-commit
 ---
 
 [keep-sorted]({{< ref "2024-12-26-keep-sorted" >}}) has been previously covered.

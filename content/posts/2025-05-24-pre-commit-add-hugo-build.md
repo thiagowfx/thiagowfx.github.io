@@ -3,6 +3,7 @@ title: "pre-commit: add hugo build"
 date: 2025-05-24T17:29:48+02:00
 tags:
   - dev
+  - pre-commit
 ---
 
 Sometimes I make changes to this blog that yield build errors with its static

@@ -3,6 +3,7 @@ title: "go/keep-sorted"
 date: 2025-09-22T11:12:59+02:00
 tags:
   - dev
+  - pre-commit
 ---
 
 [Previously]({{< ref "2024-12-26-keep-sorted" >}}),
