@@ -3,6 +3,10 @@ title: "{{ getenv "HUGO_TITLE" }}"
 date: {{ .Date }}
 tags:
   - dev
+  {{- $extra_tag := getenv "HUGO_TAGS" }}
+  {{- if ne $extra_tag "" }}
+  - {{ $extra_tag }}
+  {{- end }}
 categories:
   - coding
 ---
