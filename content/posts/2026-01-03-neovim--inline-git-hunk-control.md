@@ -49,9 +49,9 @@ What now>
 
 It's also possible to manage hunks via git TUIs (=from the terminal) such as:
 
-- **gitui**
-- tig
-- lazygit
+- **[gitui](https://github.com/gitui-org/gitui)**
+- [tig](https://github.com/jonas/tig)
+- [lazygit](https://github.com/jesseduffield/lazygit)
 
 ...or graphically with IDEs with as VSCode.
 
