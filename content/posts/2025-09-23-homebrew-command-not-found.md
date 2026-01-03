@@ -4,6 +4,7 @@ date: 2025-09-23T10:14:21+02:00
 tags:
   - bestof
   - dev
+  - macos
   - serenity
 ---
 

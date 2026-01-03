@@ -3,6 +3,7 @@ title: "macOS homebrew: downgrade a package"
 date: 2025-10-07T10:47:02+02:00
 tags:
   - dev
+  - macos
 ---
 
 Yesterday we could no longer ssh to deploy servers (via a ruby-based wrapper we

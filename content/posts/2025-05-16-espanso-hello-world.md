@@ -3,6 +3,7 @@ title: "Espanso: hello world"
 date: 2025-05-16T17:40:26+02:00
 tags:
   - dev
+  - macos
 ---
 
 [Previously]({{< ref "2025-03-24-maccy-pin-items" >}}):

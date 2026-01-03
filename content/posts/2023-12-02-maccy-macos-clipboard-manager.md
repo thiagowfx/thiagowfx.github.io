@@ -3,6 +3,7 @@ title: "Maccy macOS clipboard manager"
 date: 2023-12-02T15:27:06+01:00
 tags:
   - dev
+  - macos
 ---
 
 **Strongly recommended** to all software developers who use macOS: [Maccy](https://maccy.app/).

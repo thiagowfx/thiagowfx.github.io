@@ -3,6 +3,7 @@ title: "Compress a .pdf in macOS with Preview.app"
 date: 2024-11-30T00:22:38+01:00
 tags:
   - dev
+  - macos
 ---
 
 All hail to [Apple

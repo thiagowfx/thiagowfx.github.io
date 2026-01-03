@@ -3,6 +3,7 @@ title: "Upcoming calendar meeting in macOS menu bar with Raycast"
 date: 2025-02-08T13:56:42+01:00
 tags:
   - dev
+  - macos
   - serenity
 ---
 

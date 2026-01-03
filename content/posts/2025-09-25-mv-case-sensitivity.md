@@ -3,6 +3,7 @@ title: "mv: case sensitivity"
 date: 2025-09-25T12:22:47+02:00
 tags:
   - dev
+  - macos
 ---
 
 From the series: why you should always use a case sensitive file system (like

@@ -3,6 +3,7 @@ title: "macOS app shortcuts"
 date: 2024-12-31T22:26:00-03:00
 tags:
   - dev
+  - macos
 ---
 
 Let's say you want to assign a keyboard shortcut within a given app to invoke a

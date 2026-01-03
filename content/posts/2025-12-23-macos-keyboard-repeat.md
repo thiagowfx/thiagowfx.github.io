@@ -3,6 +3,7 @@ title: "macOS: keyboard repeat"
 date: 2025-12-23T11:54:44-03:00
 tags:
   - dev
+  - macos
 ---
 
 Run:

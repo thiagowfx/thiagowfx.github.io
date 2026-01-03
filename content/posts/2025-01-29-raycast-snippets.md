@@ -4,6 +4,7 @@ date: 2025-01-29T13:52:23+01:00
 tags:
   - bestof
   - dev
+  - macos
 ---
 
 [Raycast](https://www.raycast.com/):

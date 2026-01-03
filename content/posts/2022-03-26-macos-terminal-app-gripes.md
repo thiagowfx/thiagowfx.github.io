@@ -3,6 +3,7 @@ title: "macOS terminal app gripes"
 date: 2022-03-26T02:28:15-03:00
 tags:
   - dev
+  - macos
 ---
 
 `Terminal.app` is a pretty decent terminal emulator for macOS, with sensible

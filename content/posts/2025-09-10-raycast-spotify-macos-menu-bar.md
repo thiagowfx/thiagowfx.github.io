@@ -2,6 +2,7 @@
 title: "RayCast: spotify in macOS menu bar"
 date: 2025-09-10T14:32:19+02:00
 tags:
+  - macos
   - serenity
 ---
 

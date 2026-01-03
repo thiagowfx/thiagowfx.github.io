@@ -4,6 +4,7 @@ date: 2022-02-16T20:48:02-05:00
 tags:
   - bestof
   - dev
+  - macos
 ---
 
 I am currently evaluating [Nix](https://nixos.org/download.html) as a

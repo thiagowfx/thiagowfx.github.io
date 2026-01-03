@@ -3,6 +3,7 @@ title: "Folderify: Generate macOS folder icons natively"
 date: 2024-12-28T06:15:58-03:00
 tags:
   - dev
+  - macos
 ---
 
 [via Mike Rockwell](https://initialcharge.net/2024/06/folderify/):

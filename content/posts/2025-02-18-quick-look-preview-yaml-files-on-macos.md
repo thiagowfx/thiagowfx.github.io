@@ -4,6 +4,7 @@ date: 2025-02-18T13:18:33+01:00
 tags:
   - bestof
   - dev
+  - macos
 ---
 
 You may be familiar with [Quick

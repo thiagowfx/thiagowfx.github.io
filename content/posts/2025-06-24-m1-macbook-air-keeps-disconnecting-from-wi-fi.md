@@ -3,6 +3,7 @@ title: "M1 Macbook Air keeps disconnecting from Wi-Fi"
 date: 2025-06-24T13:34:50+02:00
 tags:
   - dev
+  - macos
 ---
 
 [M1 Macbook air keeps disconnecting from

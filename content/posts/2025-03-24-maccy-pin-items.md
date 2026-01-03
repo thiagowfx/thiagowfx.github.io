@@ -3,6 +3,7 @@ title: "maccy: pin items"
 date: 2025-03-24T13:21:46+01:00
 tags:
   - dev
+  - macos
 ---
 
 [Previously]({{< ref "2023-12-02-maccy-macos-clipboard-manager" >}}).

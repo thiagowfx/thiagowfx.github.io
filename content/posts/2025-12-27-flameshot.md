@@ -3,6 +3,7 @@ title: "Flameshot"
 date: 2025-12-27T17:42:44-03:00
 tags:
   - dev
+  - macos
 ---
 
 Install Flameshot.app on macOS:

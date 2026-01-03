@@ -4,6 +4,7 @@ date: 2025-11-30T00:22:28-03:00
 tags:
   - bestof
   - dev
+  - macos
 ---
 
 I face this annoyance all the time:
