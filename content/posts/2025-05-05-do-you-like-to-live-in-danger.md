@@ -5,7 +5,7 @@ tags:
   - dev
 ---
 
-```shell
+```
 % claude --dangerously-skip-permissions "fix the zizmor issue: pre-commit run --all-files zizmor"
 ╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │                                                                                                                                                             │
