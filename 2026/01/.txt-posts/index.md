@@ -70,3 +70,9 @@ While we're here, [`/index.md`]({{< ref "posts/2024-12-31-sourcegraph"
 
 [^1]: The original diff was slightly tweaked for readability.
 
+- - -
+
+**Update(2026-01-03)**: I removed .txt support. Only .md is left. Which is the
+most logical course of action, if you think about it. The Markdown format is
+more useful since it preserves the post structure.
+
