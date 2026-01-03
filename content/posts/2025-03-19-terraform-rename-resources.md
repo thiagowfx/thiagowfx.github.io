@@ -3,6 +3,7 @@ title: "Terraform: rename resources"
 date: 2025-03-19T11:40:43+01:00
 tags:
   - dev
+  - terraform
 ---
 
 Sometimes I need to make a simple refactoring rename change to a terraform

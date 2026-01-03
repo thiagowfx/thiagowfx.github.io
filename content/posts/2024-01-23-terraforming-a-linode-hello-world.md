@@ -5,6 +5,7 @@ tags:
   - alpine-linux
   - bestof
   - dev
+  - terraform
 ---
 
 I host my own [Miniflux](https://miniflux.app/) instance, which happens to be

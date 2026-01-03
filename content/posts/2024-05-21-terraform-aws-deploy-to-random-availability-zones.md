@@ -2,7 +2,9 @@
 title: "Terraform: AWS deployment to random availability zones"
 date: 2024-05-21T14:31:03+02:00
 tags:
+  - aws
   - dev
+  - terraform
 ---
 
 A common scenario: there's a new deployment you would like to roll out to AWS.

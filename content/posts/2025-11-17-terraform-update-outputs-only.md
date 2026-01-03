@@ -3,6 +3,7 @@ title: "terraform: update outputs only"
 date: 2025-11-17T12:04:26-03:00
 tags:
   - dev
+  - terraform
 ---
 
 **Problem statement**: Given a Terraform project full of pending changes

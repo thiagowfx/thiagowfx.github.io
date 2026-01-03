@@ -3,6 +3,7 @@ title: "Terraform: create zip files"
 date: 2025-03-17T21:06:28+01:00
 tags:
   - dev
+  - terraform
 ---
 
 When creating `.zip` files with terraform, for example, with the purpose of

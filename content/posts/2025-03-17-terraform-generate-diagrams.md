@@ -3,6 +3,7 @@ title: "Terraform: generate diagrams"
 date: 2025-03-17T13:42:57+01:00
 tags:
   - dev
+  - terraform
 ---
 
 There are a few options to visualize a `terraform` module in the form of a graph
