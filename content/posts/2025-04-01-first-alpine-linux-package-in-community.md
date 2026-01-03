@@ -2,6 +2,7 @@
 title: "First Alpine Linux package in Community"
 date: 2025-04-01T14:27:41+02:00
 tags:
+  - alpine-linux
   - bestof
   - dev
   - serenity
