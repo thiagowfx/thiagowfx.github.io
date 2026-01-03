@@ -2,6 +2,7 @@
 title: "claude code: custom commands"
 date: 2025-10-06T17:31:30+02:00
 tags:
+  - ai
   - bestof
   - dev
 ---

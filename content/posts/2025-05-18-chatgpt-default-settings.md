@@ -2,6 +2,7 @@
 title: "ChatGPT default settings"
 date: 2025-05-18T19:31:16+02:00
 tags:
+  - ai
   - dev
   - privacy
 ---

@@ -2,6 +2,7 @@
 title: "Pipe to Claude"
 date: 2025-04-09T17:56:05+02:00
 tags:
+  - ai
   - dev
   - serenity
 ---

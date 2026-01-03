@@ -2,6 +2,7 @@
 title: "MCP: model context protocol considered harmful"
 date: 2025-10-17T13:07:03+02:00
 tags:
+  - ai
   - dev
 ---
 

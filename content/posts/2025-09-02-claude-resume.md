@@ -2,6 +2,7 @@
 title: "claude --resume"
 date: 2025-09-02T14:12:07+02:00
 tags:
+  - ai
   - dev
 ---
 

@@ -2,6 +2,7 @@
 title: "Shell memoization: lazy-load LLM API keys"
 date: 2025-11-10T13:55:56+01:00
 tags:
+  - ai
   - bestof
   - dev
   - security

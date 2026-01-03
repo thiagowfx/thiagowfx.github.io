@@ -2,6 +2,7 @@
 title: "The LLM journey"
 date: 2025-04-24T03:14:32+02:00
 tags:
+  - ai
   - dev
 ---
 

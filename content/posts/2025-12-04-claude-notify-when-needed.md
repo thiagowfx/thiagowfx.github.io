@@ -2,6 +2,7 @@
 title: "Claude Code: notify when needed"
 date: 2025-12-04T02:36:16-03:00
 tags:
+  - ai
   - bestof
   - dev
   - serenity

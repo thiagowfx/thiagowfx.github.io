@@ -2,6 +2,7 @@
 title: "Reply to: CoPilot having a normal one"
 date: 2024-12-30T17:49:59-03:00
 tags:
+  - ai
   - dev
   - serenity
 ---

@@ -2,6 +2,7 @@
 title: "claude: ccusage"
 date: 2025-09-04T14:55:15+02:00
 tags:
+  - ai
   - dev
 ---
 

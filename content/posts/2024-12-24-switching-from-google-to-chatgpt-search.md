@@ -2,6 +2,7 @@
 title: "Switching from Google to ChatGPT search"
 date: 2024-12-24T21:14:04-03:00
 tags:
+  - ai
   - dev
 ---
 

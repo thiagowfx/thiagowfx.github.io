@@ -2,6 +2,7 @@
 title: "Disclosing AI in pull requests"
 date: 2025-03-26T13:07:52+01:00
 tags:
+  - ai
   - dev
 ---
 

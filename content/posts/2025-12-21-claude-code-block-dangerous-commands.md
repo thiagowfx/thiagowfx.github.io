@@ -2,6 +2,7 @@
 title: "Claude Code: block dangerous commands"
 date: 2025-12-21T18:16:12-03:00
 tags:
+  - ai
   - dev
 ---
 

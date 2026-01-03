@@ -2,6 +2,7 @@
 title: "Our most powerful model yet"
 date: 2025-05-24T20:05:20+02:00
 tags:
+  - ai
   - serenity
 ---
 

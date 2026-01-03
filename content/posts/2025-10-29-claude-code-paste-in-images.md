@@ -2,6 +2,7 @@
 title: "Claude Code: paste in images"
 date: 2025-10-29T16:37:57+01:00
 tags:
+  - ai
   - dev
 ---
 

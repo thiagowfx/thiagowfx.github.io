@@ -2,6 +2,7 @@
 title: "Slack: AI plug-in"
 date: 2024-09-18T14:15:56+02:00
 tags:
+  - ai
   - serenity
 ---
 
