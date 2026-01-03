@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #274: H-Index"
 date: 2025-12-24T02:59:31-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

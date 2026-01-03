@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #8: String to Integer (atoi)"
 date: 2025-12-02T02:59:31-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

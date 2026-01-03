@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #1295: Find Numbers with Even Number of Digits"
 date: 2025-12-30T05:34:56-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

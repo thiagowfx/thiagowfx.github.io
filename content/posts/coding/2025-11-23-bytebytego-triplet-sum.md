@@ -1,6 +1,9 @@
 ---
 title: "ByteByteGo: Triplet Sum"
 date: 2025-11-23T17:00:21-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

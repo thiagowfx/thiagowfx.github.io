@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #69: Sqrt(x)"
 date: 2025-11-25T22:34:18-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

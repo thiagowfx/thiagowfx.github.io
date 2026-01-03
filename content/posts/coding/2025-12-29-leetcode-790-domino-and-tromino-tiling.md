@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #790: Domino and Tromino Tiling"
 date: 2025-12-29T19:31:05-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

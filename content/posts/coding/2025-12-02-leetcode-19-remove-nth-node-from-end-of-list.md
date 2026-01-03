@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #19: Remove Nth Node From End of List"
 date: 2025-12-02T03:50:43-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

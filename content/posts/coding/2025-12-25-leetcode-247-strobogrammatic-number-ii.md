@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #247: Strobogrammatic Number II"
 date: 2025-12-25T05:55:33-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

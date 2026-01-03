@@ -1,6 +1,9 @@
 ---
 title: "ByteByteGo: Find the Insertion Index"
 date: 2025-11-26T13:48:52-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

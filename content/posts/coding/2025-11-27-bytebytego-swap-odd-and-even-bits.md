@@ -1,6 +1,9 @@
 ---
 title: "ByteByteGo: Swap Odd and Even Bits"
 date: 2025-11-27T03:06:15-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

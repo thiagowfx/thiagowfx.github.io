@@ -1,6 +1,9 @@
 ---
 title: "Memoization"
 date: 2025-09-16T01:53:38+02:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

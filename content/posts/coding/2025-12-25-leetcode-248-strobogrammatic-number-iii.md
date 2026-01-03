@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #248: Strobogrammatic Number III"
 date: 2025-12-25T06:08:15-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

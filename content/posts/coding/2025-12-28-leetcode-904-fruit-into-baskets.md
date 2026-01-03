@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #904: Fruit Into Baskets"
 date: 2025-12-28T04:22:09-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

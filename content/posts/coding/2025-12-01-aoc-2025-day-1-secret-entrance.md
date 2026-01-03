@@ -1,6 +1,9 @@
 ---
 title: "AoC 2025 Day 1: Secret Entrance"
 date: 2025-12-01T02:33:03-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

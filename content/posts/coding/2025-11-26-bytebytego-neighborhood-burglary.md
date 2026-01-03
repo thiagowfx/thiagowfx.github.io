@@ -1,6 +1,9 @@
 ---
 title: "ByteByteGo: Neighborhood Burglary"
 date: 2025-11-26T21:17:39-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

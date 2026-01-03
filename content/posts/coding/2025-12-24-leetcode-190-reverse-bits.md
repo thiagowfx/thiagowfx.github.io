@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #190: Reverse Bits"
 date: 2025-12-24T04:47:07-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #563: Binary Tree Tilt"
 date: 2026-01-03T02:56:33-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

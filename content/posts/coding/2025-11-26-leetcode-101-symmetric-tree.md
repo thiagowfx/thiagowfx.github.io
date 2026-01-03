@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #101: Symmetric Tree"
 date: 2025-11-26T00:26:58-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

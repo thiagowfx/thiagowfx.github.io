@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #3: Longest Substring Without Repeating Characters"
 date: 2025-12-02T01:13:12-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

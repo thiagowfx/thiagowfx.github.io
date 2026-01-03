@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #429: N-ary Tree Level Order Traversal"
 date: 2026-01-03T02:48:11-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

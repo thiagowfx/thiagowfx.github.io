@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #24: Swap Nodes in Pairs"
 date: 2025-12-31T03:25:59-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

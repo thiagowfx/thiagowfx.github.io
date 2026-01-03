@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #293: Flip Game"
 date: 2025-12-24T17:02:58-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

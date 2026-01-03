@@ -1,6 +1,9 @@
 ---
 title: "ByteByteGo: Product Array Without Current Element"
 date: 2025-12-02T23:12:24-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

@@ -1,6 +1,9 @@
 ---
 title: "set and dict are not ordered"
 date: 2025-11-24T00:44:07-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

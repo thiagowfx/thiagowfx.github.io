@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #412: FizzBuzz"
 date: 2025-12-30T05:04:41-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

@@ -1,6 +1,9 @@
 ---
 title: "ByteByteGo: Dutch National Flag"
 date: 2025-11-26T14:03:26-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

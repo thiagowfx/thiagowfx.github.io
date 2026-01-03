@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #931: Minimum Falling Path Sum"
 date: 2025-12-28T22:17:55-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

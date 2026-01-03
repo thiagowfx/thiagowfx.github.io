@@ -1,6 +1,9 @@
 ---
 title: "ByteByteGo: Longest Chain of Consecutive Numbers"
 date: 2025-11-24T00:41:57-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

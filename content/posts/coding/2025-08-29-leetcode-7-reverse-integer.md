@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #7: Reverse Integer"
 date: 2025-08-29T02:17:23+02:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

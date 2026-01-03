@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #283: Move Zeroes"
 date: 2025-09-12T23:07:57+02:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

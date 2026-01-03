@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #590: N-ary Tree Postorder Traversal"
 date: 2026-01-03T02:43:02-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

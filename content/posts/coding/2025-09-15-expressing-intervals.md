@@ -1,6 +1,9 @@
 ---
 title: "Expressing intervals"
 date: 2025-09-15T22:59:06+02:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

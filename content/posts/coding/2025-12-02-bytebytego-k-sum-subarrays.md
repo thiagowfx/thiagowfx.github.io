@@ -1,6 +1,9 @@
 ---
 title: "ByteByteGo: K-Sum Subarrays"
 date: 2025-12-02T22:56:27-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

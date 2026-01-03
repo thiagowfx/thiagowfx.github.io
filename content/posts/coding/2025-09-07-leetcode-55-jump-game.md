@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #55: Jump Game"
 date: 2025-09-07T15:56:17+02:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

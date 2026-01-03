@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #125: Valid Palindrome"
 date: 2025-09-13T06:34:01+02:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

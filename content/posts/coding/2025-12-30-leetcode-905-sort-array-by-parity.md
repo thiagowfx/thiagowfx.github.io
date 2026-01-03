@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #905: Sort Array By Parity"
 date: 2025-12-30T19:29:46-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

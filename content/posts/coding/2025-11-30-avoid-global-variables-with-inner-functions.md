@@ -1,6 +1,9 @@
 ---
 title: "avoid global variables with inner functions"
 date: 2025-11-30T13:20:33-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

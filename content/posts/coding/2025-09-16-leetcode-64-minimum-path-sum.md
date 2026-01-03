@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #64: Minimum Path Sum"
 date: 2025-09-16T01:41:29+02:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

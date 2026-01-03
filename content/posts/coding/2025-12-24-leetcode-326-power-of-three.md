@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #326: Power of Three"
 date: 2025-12-24T17:16:14-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

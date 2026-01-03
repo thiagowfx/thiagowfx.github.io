@@ -1,6 +1,9 @@
 ---
 title: "star import dunder methods"
 date: 2026-01-03T01:25:00-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

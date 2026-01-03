@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #112: Path Sum"
 date: 2025-12-24T04:22:53-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

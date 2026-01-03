@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #1: Two Sum"
 date: 2025-09-11T16:09:32+02:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #22: Generate Parentheses"
 date: 2025-12-06T03:58:02-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #266: Palindrome Permutation"
 date: 2025-12-24T17:22:36-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

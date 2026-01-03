@@ -1,6 +1,9 @@
 ---
 title: "ByteByteGo: Josephus"
 date: 2025-11-30T17:26:22-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

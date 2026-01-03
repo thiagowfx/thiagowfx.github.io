@@ -1,6 +1,9 @@
 ---
 title: "ByteByteGo: 0/1 Knapsack"
 date: 2025-11-26T22:06:31-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

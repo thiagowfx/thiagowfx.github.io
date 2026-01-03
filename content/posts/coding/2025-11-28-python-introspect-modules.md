@@ -1,6 +1,9 @@
 ---
 title: "python: introspect modules"
 date: 2025-11-28T12:09:41-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

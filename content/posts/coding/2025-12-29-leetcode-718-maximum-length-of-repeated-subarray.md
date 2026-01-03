@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #718: Maximum Length of Repeated Subarray"
 date: 2025-12-29T15:38:48-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

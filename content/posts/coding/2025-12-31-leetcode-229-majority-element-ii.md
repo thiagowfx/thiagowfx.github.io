@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #229: Majority Element II"
 date: 2025-12-31T01:51:18-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

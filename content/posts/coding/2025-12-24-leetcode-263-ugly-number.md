@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #263: Ugly Number"
 date: 2025-12-24T17:19:27-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

@@ -1,6 +1,9 @@
 ---
 title: "ByteByteGo: Happy Number"
 date: 2025-12-02T16:32:31-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

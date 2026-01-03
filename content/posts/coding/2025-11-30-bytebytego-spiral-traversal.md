@@ -1,6 +1,9 @@
 ---
 title: "ByteByteGo: Spiral Traversal"
 date: 2025-11-30T16:49:27-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

@@ -1,6 +1,9 @@
 ---
 title: "Python: nested loops"
 date: 2025-08-29T20:30:39+02:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

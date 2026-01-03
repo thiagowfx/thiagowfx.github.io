@@ -1,6 +1,9 @@
 ---
 title: "LeetCode #243: Shortest Word Distance"
 date: 2025-12-25T05:17:07-03:00
+tags:
+  - dev
+
 categories:
   - coding
 ---

@@ -1,6 +1,8 @@
 ---
 title: "{{ getenv "HUGO_TITLE" }}"
 date: {{ .Date }}
+tags:
+  - dev
 categories:
   - coding
 ---
