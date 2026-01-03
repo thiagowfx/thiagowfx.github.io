@@ -3,6 +3,7 @@ title: "git pull: authentication issues"
 date: 2025-06-03T14:35:04+02:00
 tags:
   - dev
+  - git
   - security
 ---
 

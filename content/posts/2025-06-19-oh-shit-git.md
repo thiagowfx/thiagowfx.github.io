@@ -3,6 +3,7 @@ title: "Oh Shit, Git!?!"
 date: 2025-06-19T13:55:45+02:00
 tags:
   - dev
+  - git
 ---
 
 https://ohshitgit.com/ by Katie Sylor-Miller:

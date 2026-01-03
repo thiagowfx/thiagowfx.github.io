@@ -3,6 +3,7 @@ title: "git: create a throwaway branch"
 date: 2024-09-04T22:01:29+02:00
 tags:
   - dev
+  - git
 ---
 
 Let's say you want to submit a quick, perhaps even trivial, one-off pull request

@@ -3,6 +3,7 @@ title: "git: commit with the wrong email"
 date: 2025-10-14T13:50:36+02:00
 tags:
   - dev
+  - git
 ---
 
 You are sending a PR upstream.

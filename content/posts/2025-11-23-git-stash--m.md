@@ -3,6 +3,7 @@ title: "git stash -m"
 date: 2025-11-23T13:14:09-03:00
 tags:
   - dev
+  - git
 ---
 
 When running `git stash`, it's possible to pass a "stash message" to it with

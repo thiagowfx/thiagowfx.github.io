@@ -3,6 +3,7 @@ title: "git: blank commit"
 date: 2025-02-14T13:50:36+01:00
 tags:
   - dev
+  - git
 ---
 
 ## How can we create an empty commit in `git`?

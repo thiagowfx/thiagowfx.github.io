@@ -3,6 +3,7 @@ title: "git: prefer switch over checkout"
 date: 2025-03-20T13:29:15+01:00
 tags:
   - dev
+  - git
 ---
 
 [Preliminaries](https://stackoverflow.com/questions/57265785/whats-the-difference-between-git-switch-and-git-checkout-branch#57266005):

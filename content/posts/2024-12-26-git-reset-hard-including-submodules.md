@@ -3,6 +3,7 @@ title: "git reset --hard including submodules"
 date: 2024-12-26T13:04:27-03:00
 tags:
   - dev
+  - git
 ---
 
 **Problem statement**: Whenever I open [Rancher

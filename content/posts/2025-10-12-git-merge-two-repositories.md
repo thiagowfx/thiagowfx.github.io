@@ -3,6 +3,7 @@ title: "git: merge two repositories"
 date: 2025-10-12T15:52:06+02:00
 tags:
   - dev
+  - git
 ---
 
 Daniel Roy Greenfeld, [TIL: Merging two git projects](https://daniel.feldroy.com/posts/til-2025-09-merging-two-git-projects):

@@ -4,6 +4,7 @@ date: 2025-11-27T18:04:45-03:00
 tags:
   - bestof
   - dev
+  - git
 ---
 
 **Problem statement**: Delete all local git branches whose counterpart remote

@@ -4,6 +4,7 @@ date: 2025-03-19T13:27:43+01:00
 tags:
   - bestof
   - dev
+  - git
 ---
 
 Now I am becoming one of the snobs™ with the first sentence in the following

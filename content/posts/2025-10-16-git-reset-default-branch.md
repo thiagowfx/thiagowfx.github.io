@@ -3,6 +3,7 @@ title: "git: reset default branch"
 date: 2025-10-16T17:20:45+02:00
 tags:
   - dev
+  - git
 ---
 
 **Problem statement**: Given an existing repository whose default branch is

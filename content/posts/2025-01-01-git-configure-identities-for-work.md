@@ -4,6 +4,7 @@ date: 2025-01-01T17:22:05-03:00
 tags:
   - bestof
   - dev
+  - git
 ---
 
 **Problem statement**: Given two sets of git configurations, one for personal

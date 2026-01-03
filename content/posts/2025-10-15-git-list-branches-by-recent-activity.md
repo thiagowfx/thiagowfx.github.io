@@ -3,6 +3,7 @@ title: "git: list branches by recent activity"
 date: 2025-10-15T10:59:58+02:00
 tags:
   - dev
+  - git
 ---
 
 Tweak `~/.gitconfig`:

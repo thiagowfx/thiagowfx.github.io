@@ -3,6 +3,7 @@ title: "git: prune gone upstream branches"
 date: 2025-02-20T11:43:04+01:00
 tags:
   - dev
+  - git
 ---
 
 **Problem statement**: Delete all local git branches whose upstream counterparts

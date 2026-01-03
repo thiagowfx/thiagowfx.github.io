@@ -3,6 +3,7 @@ title: ".gitignore .claude/settings.local.json"
 date: 2025-06-12T22:17:43+02:00
 tags:
   - dev
+  - git
 ---
 
 The initial attempt:

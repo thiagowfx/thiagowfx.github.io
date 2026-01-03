@@ -4,6 +4,7 @@ date: 2025-08-12T12:21:22+02:00
 tags:
   - bestof
   - dev
+  - git
 ---
 
 Let's say you use color highlighting to visually inspect diffs with `git`, such

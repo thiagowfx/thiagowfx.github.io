@@ -3,6 +3,7 @@ title: "myrepos: chain configs"
 date: 2025-12-22T14:45:45-03:00
 tags:
   - dev
+  - git
 ---
 
 [myrepos](https://myrepos.branchable.com/):

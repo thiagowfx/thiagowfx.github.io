@@ -3,6 +3,7 @@ title: "git diff interactively"
 date: 2025-11-04T11:21:24+01:00
 tags:
   - dev
+  - git
 ---
 
 It's possible to do `git patch -p` to review diff hunks interactively, one by

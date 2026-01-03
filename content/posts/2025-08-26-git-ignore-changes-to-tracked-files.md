@@ -3,6 +3,7 @@ title: "git: ignore changes to tracked files"
 date: 2025-08-26T14:46:44+02:00
 tags:
   - dev
+  - git
 ---
 
 [Previously]({{< ref "2025-08-26-midnight-commander-colorscheme" >}}).

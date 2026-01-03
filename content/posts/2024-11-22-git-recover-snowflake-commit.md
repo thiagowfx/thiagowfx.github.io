@@ -3,6 +3,7 @@ title: "git: recover a snowflake commit"
 date: 2024-11-22T11:51:26+01:00
 tags:
   - dev
+  - git
 ---
 
 When working with `git`, sometimes we make

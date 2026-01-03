@@ -4,6 +4,7 @@ date: 2025-06-12T21:09:36+02:00
 tags:
   - bestof
   - dev
+  - git
 ---
 
 GitHub supports [pull request

@@ -3,6 +3,7 @@ title: "git: update master to main"
 date: 2025-01-03T12:16:44-03:00
 tags:
   - dev
+  - git
 ---
 
 In your Forge (most likely Github or Gitlab), update the default branch from

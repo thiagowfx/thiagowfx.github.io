@@ -3,6 +3,7 @@ title: "Markdown headings and git comments"
 date: 2025-07-08T13:18:09+02:00
 tags:
   - dev
+  - git
 ---
 
 Our team uses a PR template that resembles the following:

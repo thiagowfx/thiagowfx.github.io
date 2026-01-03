@@ -4,6 +4,7 @@ date: 2025-12-22T02:30:06-03:00
 tags:
   - bestof
   - dev
+  - git
 ---
 
 As I write this very post, this is what my git repository status looks like:

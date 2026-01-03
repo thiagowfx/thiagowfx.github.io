@@ -3,6 +3,7 @@ title: "How core git developers configure git"
 date: 2025-03-10T15:03:24+01:00
 tags:
   - dev
+  - git
 ---
 
 [How Core Git Developers Configure

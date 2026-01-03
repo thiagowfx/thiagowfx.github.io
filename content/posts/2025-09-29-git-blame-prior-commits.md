@@ -3,6 +3,7 @@ title: "git blame: prior commits"
 date: 2025-09-29T10:41:15+02:00
 tags:
   - dev
+  - git
 ---
 
 Let's say you want to inspect the history of a given file tracked in a git

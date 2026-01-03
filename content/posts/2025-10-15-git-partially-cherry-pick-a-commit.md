@@ -3,6 +3,7 @@ title: "git: partially cherry-pick a commit"
 date: 2025-10-15T11:08:27+02:00
 tags:
   - dev
+  - git
 ---
 
 **OR**: "cherry-pick a cherry-pick".

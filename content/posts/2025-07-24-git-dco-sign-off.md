@@ -3,6 +3,7 @@ title: "git: developer certificate of origin (DCO) sign-off"
 date: 2025-07-24T12:37:31+02:00
 tags:
   - dev
+  - git
 ---
 
 The [Developer Certificate of Origin](https://developercertificate.org/) (DCO

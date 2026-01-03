@@ -3,6 +3,7 @@ title: "git reset --keep"
 date: 2024-12-31T18:54:59-03:00
 tags:
   - dev
+  - git
 ---
 
 In all these years of `git`, I've only heard about it now: via [Adam

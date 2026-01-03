@@ -4,6 +4,7 @@ date: 2025-02-12T13:57:29+01:00
 tags:
   - bestof
   - dev
+  - git
 ---
 
 We recently adopted Andrew Ring's "Distributed CODEOWNERS"

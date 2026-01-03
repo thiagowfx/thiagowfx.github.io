@@ -3,6 +3,7 @@ title: "Create a git commit with multiple contributors"
 date: 2025-03-03T14:55:23+01:00
 tags:
   - dev
+  - git
 ---
 
 - **Step 1**: Create a commit / pull request as usual.
