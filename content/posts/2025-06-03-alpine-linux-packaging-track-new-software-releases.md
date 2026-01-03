@@ -2,6 +2,7 @@
 title: "Alpine Linux packaging: track new software releases"
 date: 2025-06-03T01:36:53+02:00
 tags:
+  - alpine-linux
   - bestof
   - dev
 ---

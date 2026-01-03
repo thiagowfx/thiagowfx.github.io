@@ -2,6 +2,7 @@
 title: "New series: Raspberry Pi fun with DevOps"
 date: 2024-10-13T11:31:13+02:00
 tags:
+  - alpine-linux
   - bestof
   - dev
 ---

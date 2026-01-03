@@ -2,6 +2,7 @@
 title: "New APKBUILD: argocd"
 date: 2024-10-09T23:03:32+02:00
 tags:
+  - alpine-linux
   - dev
 ---
 

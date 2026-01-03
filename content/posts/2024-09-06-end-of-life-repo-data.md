@@ -2,6 +2,7 @@
 title: "End of life package info"
 date: 2024-09-06T17:41:30+02:00
 tags:
+  - alpine-linux
   - dev
 ---
 
