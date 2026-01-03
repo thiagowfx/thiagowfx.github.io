@@ -3,6 +3,7 @@ title: "LeetCode #256: Paint House"
 date: 2025-12-29T13:48:38-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

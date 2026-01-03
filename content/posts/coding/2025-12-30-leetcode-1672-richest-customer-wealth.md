@@ -3,6 +3,7 @@ title: "LeetCode #1672: Richest Customer Wealth"
 date: 2025-12-30T05:01:38-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

@@ -3,6 +3,7 @@ title: "LeetCode #485: Max Consecutive Ones"
 date: 2025-12-30T05:32:45-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

@@ -3,6 +3,7 @@ title: "LeetCode #257: Binary Tree Paths"
 date: 2025-12-06T04:30:43-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

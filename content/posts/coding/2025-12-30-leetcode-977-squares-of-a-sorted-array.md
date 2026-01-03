@@ -3,6 +3,7 @@ title: "LeetCode #977: Squares of a Sorted Array"
 date: 2025-12-30T05:42:17-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

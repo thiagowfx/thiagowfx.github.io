@@ -3,6 +3,7 @@ title: "LeetCode #3479: Fruit Into Baskets III"
 date: 2025-12-28T04:56:30-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

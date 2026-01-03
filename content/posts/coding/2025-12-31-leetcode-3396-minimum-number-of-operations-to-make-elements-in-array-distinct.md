@@ -3,6 +3,7 @@ title: "LeetCode #3396: Minimum Number of Operations to Make Elements in Array D
 date: 2025-12-31T02:53:37-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

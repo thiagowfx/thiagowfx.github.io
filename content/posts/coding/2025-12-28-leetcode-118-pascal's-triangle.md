@@ -3,6 +3,7 @@ title: "LeetCode #118: Pascal's Triangle"
 date: 2025-12-28T03:48:19-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

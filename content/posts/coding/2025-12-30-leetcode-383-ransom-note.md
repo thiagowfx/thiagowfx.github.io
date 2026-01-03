@@ -3,6 +3,7 @@ title: "LeetCode #383: Ransom Note"
 date: 2025-12-30T05:19:04-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

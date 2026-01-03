@@ -3,6 +3,7 @@ title: "LeetCode #1351: Count Negative Numbers in a Sorted Matrix"
 date: 2025-12-28T03:23:02-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

@@ -3,6 +3,7 @@ title: "LeetCode #501: Find Mode in Binary Search Tree"
 date: 2025-12-31T18:24:32-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

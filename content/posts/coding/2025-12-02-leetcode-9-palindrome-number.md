@@ -3,6 +3,7 @@ title: "LeetCode #9: Palindrome Number"
 date: 2025-12-02T03:01:32-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

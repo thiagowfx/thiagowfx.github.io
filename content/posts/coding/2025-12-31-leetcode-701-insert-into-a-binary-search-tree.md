@@ -3,6 +3,7 @@ title: "LeetCode #701: Insert into a Binary Search Tree"
 date: 2025-12-31T18:40:50-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

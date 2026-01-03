@@ -3,6 +3,7 @@ title: "LeetCode #300: Longest Increasing Subsequence"
 date: 2025-09-16T00:45:07+02:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

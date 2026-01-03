@@ -3,6 +3,7 @@ title: "LeetCode #983: Minimum Cost For Tickets"
 date: 2025-12-30T03:39:59-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

@@ -3,6 +3,7 @@ title: "Kagi: Add LeetCode !bang"
 date: 2025-12-30T10:56:00-03:00
 tags:
   - dev
+  - leetcode
 ---
 
 [Kagi](https://kagi.com/), a paid search engine, allows adding [custom](https://duckduckgo.com/bangs) [bangs](https://help.kagi.com/kagi/features/bangs.html).

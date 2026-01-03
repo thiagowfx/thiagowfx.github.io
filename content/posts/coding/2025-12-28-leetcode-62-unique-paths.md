@@ -3,6 +3,7 @@ title: "LeetCode #62: Unique Paths"
 date: 2025-12-28T21:50:55-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

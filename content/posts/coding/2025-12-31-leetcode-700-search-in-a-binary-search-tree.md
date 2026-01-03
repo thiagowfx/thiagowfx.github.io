@@ -3,6 +3,7 @@ title: "LeetCode #700: Search in a Binary Search Tree"
 date: 2025-12-31T17:59:05-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

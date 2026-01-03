@@ -3,6 +3,7 @@ title: "LeetCode #231: Power of Two"
 date: 2025-12-25T05:10:24-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

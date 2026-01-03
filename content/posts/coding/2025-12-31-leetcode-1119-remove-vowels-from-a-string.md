@@ -3,6 +3,7 @@ title: "LeetCode #1119: Remove Vowels from a String"
 date: 2025-12-31T02:10:14-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

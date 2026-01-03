@@ -3,6 +3,7 @@ title: "LeetCode #1480: Running Sum of 1d Array"
 date: 2025-12-30T04:58:24-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

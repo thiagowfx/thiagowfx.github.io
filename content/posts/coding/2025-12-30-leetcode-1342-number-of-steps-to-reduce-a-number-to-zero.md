@@ -3,6 +3,7 @@ title: "LeetCode #1342: Number of Steps to Reduce a Number to Zero"
 date: 2025-12-30T05:06:03-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

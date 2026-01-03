@@ -3,6 +3,7 @@ title: "LeetCode #278: First Bad Version"
 date: 2025-12-25T04:50:40-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

@@ -3,6 +3,7 @@ title: "LeetCode #1220: Count Vowels Permutation"
 date: 2025-12-29T14:39:50-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

@@ -3,6 +3,7 @@ title: "LeetCode #68: Text Justification"
 date: 2025-09-09T00:37:44+02:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

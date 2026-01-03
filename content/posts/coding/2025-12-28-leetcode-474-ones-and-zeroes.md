@@ -3,6 +3,7 @@ title: "LeetCode #474: Ones and Zeroes"
 date: 2025-12-28T05:24:05-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

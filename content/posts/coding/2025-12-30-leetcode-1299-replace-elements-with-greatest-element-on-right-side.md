@@ -3,6 +3,7 @@ title: "LeetCode #1299: Replace Elements with Greatest Element on Right Side"
 date: 2025-12-30T10:52:29-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

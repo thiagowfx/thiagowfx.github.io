@@ -3,6 +3,7 @@ title: "LeetCode #276: Paint Fence"
 date: 2025-12-28T07:43:07-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

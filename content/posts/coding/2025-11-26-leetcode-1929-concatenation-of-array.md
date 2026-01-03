@@ -3,6 +3,7 @@ title: "LeetCode #1929: Concatenation of Array"
 date: 2025-11-26T00:14:26-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

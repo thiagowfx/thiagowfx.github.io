@@ -3,6 +3,7 @@ title: "LeetCode #1155: Number of Dice Rolls With Target Sum"
 date: 2025-12-29T19:02:58-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

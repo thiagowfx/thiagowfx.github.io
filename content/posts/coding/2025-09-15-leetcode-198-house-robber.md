@@ -3,6 +3,7 @@ title: "LeetCode #198: House Robber"
 date: 2025-09-15T22:47:23+02:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding

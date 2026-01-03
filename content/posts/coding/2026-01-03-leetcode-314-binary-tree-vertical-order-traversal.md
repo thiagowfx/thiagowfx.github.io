@@ -3,6 +3,7 @@ title: "LeetCode #314: Binary Tree Vertical Order Traversal"
 date: 2026-01-03T02:28:59-03:00
 tags:
   - dev
+  - leetcode
 
 categories:
   - coding
