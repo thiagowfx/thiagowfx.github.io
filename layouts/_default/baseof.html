@@ -315,8 +315,12 @@
     const fullscreenIcon = document.getElementById('fullscreen-icon');
 
     if (fullscreenBtn) {
-      // Load fullscreen state from localStorage
-      if (localStorage.getItem('fullscreen-mode') === 'true') {
+      // Check for fullscreen parameter in URL or localStorage
+      const urlParams = new URLSearchParams(window.location.search);
+      const isFullscreenParam = urlParams.has('fullscreen');
+      const isFullscreenLocal = localStorage.getItem('fullscreen-mode') === 'true';
+
+      if (isFullscreenParam || isFullscreenLocal) {
         document.body.classList.add('fullscreen-mode');
         fullscreenIcon.textContent = '✕';
       }
@@ -326,6 +330,15 @@
         const isFullscreen = document.body.classList.contains('fullscreen-mode');
         fullscreenIcon.textContent = isFullscreen ? '✕' : '⛶';
         localStorage.setItem('fullscreen-mode', isFullscreen);
+
+        // Update URL with fullscreen parameter
+        const url = new URL(window.location);
+        if (isFullscreen) {
+          url.searchParams.set('fullscreen', 'true');
+        } else {
+          url.searchParams.delete('fullscreen');
+        }
+        window.history.replaceState({}, '', url);
       });
 
       // Keyboard shortcut (f key)
