@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Kubernetes on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
+[some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 03 Jan 2026 19:21:08 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes: pod memory usage</title><link>https://perrotta.dev/2025/09/kubernetes-pod-memory-usage/</link><pubDate>Fri, 26 Sep 2025 11:54:57 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2025/09/kubernetes-pod-memory-usage/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Given a pod in Kubernetes, check its memory (RAM) usage.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://stackoverflow.com/questions/54531646/checking-kubernetes-pod-cpu-and-memory-utilization"&gt;Stack
+Overflow&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;kubectl top pod -n &lt;span style="color:#f92672"&gt;{&lt;/span&gt;namespace&lt;span style="color:#f92672"&gt;}&lt;/span&gt; &lt;span style="color:#f92672"&gt;{&lt;/span&gt;pod name&lt;span style="color:#f92672"&gt;}&lt;/span&gt; &lt;span style="color:#f92672"&gt;[&lt;/span&gt;--containers&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;--containers=false:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; If present, print usage of containers within a pod.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This only works if &lt;a href="https://github.com/kubernetes-sigs/metrics-server"&gt;metrics
+server&lt;/a&gt; is installed (it
+should be!).&lt;/p&gt;
+&lt;p&gt;There&amp;rsquo;s an alternative:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;kubectl describe PodMetrics &lt;span style="color:#f92672"&gt;{&lt;/span&gt;pod name&lt;span style="color:#f92672"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It must be &lt;code&gt;PodMetrics&lt;/code&gt;. &lt;code&gt;PodMetric&lt;/code&gt; does not work (ugh!&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2025/09/kubernetes-pod-memory-usage/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;):&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% kubectl get PodMetric
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;error: the server doesn&lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;#39;&lt;/span&gt;t have a resource type &lt;span style="color:#e6db74"&gt;&amp;#34;PodMetric&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If metrics server is not available for some reason, then one needs to dive into
+the container:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;kubectl exec -it &lt;span style="color:#f92672"&gt;{&lt;/span&gt;pod name&lt;span style="color:#f92672"&gt;}&lt;/span&gt; -n &lt;span style="color:#f92672"&gt;{&lt;/span&gt;namespace&lt;span style="color:#f92672"&gt;}&lt;/span&gt; -- /bin/sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;which won&amp;rsquo;t always work; not every container has &lt;code&gt;/bin/sh&lt;/code&gt;. Then read the
+contents of &lt;code&gt;/sys/fs/cgroup/memory/memory.usage_in_bytes&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;Who designed this? Is it so hard to achieve consistency? Both &lt;code&gt;kubectl get pod&lt;/code&gt; and &lt;code&gt;kubectl get pods&lt;/code&gt; work. Why can&amp;rsquo;t it be the same with &lt;code&gt;PodMetric&lt;/code&gt;?
+And, no, &lt;code&gt;PodMetricses&lt;/code&gt; does not work either.&amp;#160;&lt;a href="https://perrotta.dev/2025/09/kubernetes-pod-memory-usage/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Kubernetes: pod memory usage"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>★ Kubernetes: list all ImagePullBackOff container images</title><link>https://perrotta.dev/2025/08/kubernetes-list-all-imagepullbackoff-container-images/</link><pubDate>Thu, 21 Aug 2025 13:34:27 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>bestof</category><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2025/08/kubernetes-list-all-imagepullbackoff-container-images/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt; Upgrade the
+&lt;a href="https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack"&gt;&lt;code&gt;kube-prometheus-stack&lt;/code&gt;&lt;/a&gt;
+helm chart in &lt;a href="https://portal.azure.cn/"&gt;Azure China&lt;/a&gt; to the latest version.
+&lt;em&gt;Side effect&lt;/em&gt;: Many container images are now missing from our internal
+&lt;a href="https://azure.microsoft.com/en-us/products/container-registry"&gt;ACR&lt;/a&gt; (Azure
+Container Registry). They need to be synced with &lt;a href="https://github.com/containers/skopeo"&gt;&lt;code&gt;skopeo&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Which images need to be synced? Use the command below, it is quite readable&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2025/08/kubernetes-list-all-imagepullbackoff-container-images/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;kubectl get pods --all-namespaces -o json | jq -r &lt;span style="color:#e6db74"&gt;&amp;#39;.items[] | select(any(.status.containerStatuses[]; .state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;)) | .metadata.namespace + &amp;#34;/&amp;#34; + .metadata.name + &amp;#34;\t&amp;#34; + ( [.status.containerStatuses[] | select(.state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;).image] | join(&amp;#34;, &amp;#34;) )&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Sample run:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ubuntu@universe:~ $ kubectl get pods --all-namespaces -o json | jq -r &lt;span style="color:#e6db74"&gt;&amp;#39;.items[]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; | select(any(.status.containerStatuses[]; .state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;))
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; | .metadata.namespace + &amp;#34;/&amp;#34; + .metadata.name + &amp;#34;\t&amp;#34; +
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; ( [.status.containerStatuses[] | select(.state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;).image] | join(&amp;#34;, &amp;#34;) )&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;monitoring/clustermon-kube-prometheus-operator-67c8b6c87c-w72km &lt;span style="color:#f92672"&gt;{&lt;/span&gt;my-registry-name&lt;span style="color:#f92672"&gt;}&lt;/span&gt;.azurecr.cn/quay.io/prometheus-operator/prometheus-operator:v0.83.0
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;monitoring/clustermon-prometheus-node-exporter-v7bpt &lt;span style="color:#f92672"&gt;{&lt;/span&gt;my-registry-name&lt;span style="color:#f92672"&gt;}&lt;/span&gt;.azurecr.cn/quay.io/prometheus/node-exporter:v1.9.1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;How to &lt;code&gt;skopeo&lt;/code&gt;? First, log in:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;echo -n &lt;span style="color:#e6db74"&gt;&amp;#34;{password}&amp;#34;&lt;/span&gt; | skopeo login &lt;span style="color:#f92672"&gt;{&lt;/span&gt;my-registry-name&lt;span style="color:#f92672"&gt;}&lt;/span&gt;.azurecr.cn --password-stdin --username &lt;span style="color:#f92672"&gt;{&lt;/span&gt;my-username&lt;span style="color:#f92672"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;How do you get these credentials? Log in to the Azure China Portal, find the ACR
+resource, navigate to Settings &amp;gt; Access keys.&lt;/p&gt;
+&lt;p&gt;Then sync each image&lt;sup id="fnref:2"&gt;&lt;a href="https://perrotta.dev/2025/08/kubernetes-list-all-imagepullbackoff-container-images/#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% skopeo sync &lt;span style="color:#ae81ff"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;&lt;/span&gt; --override-os linux --override-arch amd64 &lt;span style="color:#ae81ff"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;&lt;/span&gt; --src docker --dest docker &lt;span style="color:#ae81ff"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;&lt;/span&gt; quay.io/prometheus/node-exporter:v1.9.1 &lt;span style="color:#ae81ff"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;&lt;/span&gt; &lt;span style="color:#f92672"&gt;{&lt;/span&gt;my-registry-name&lt;span style="color:#f92672"&gt;}&lt;/span&gt;.azurecr.cn/quay.io/prometheus&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;I cannot promise I am able to craft this by hand without looking up man
+pages or getting assistance from an LLM. &lt;em&gt;C&amp;rsquo;est la vie&lt;/em&gt;.&amp;#160;&lt;a href="https://perrotta.dev/2025/08/kubernetes-list-all-imagepullbackoff-container-images/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;If there are many images, consider using an
+&lt;a href="https://www.gnu.org/software/bash/manual/html_node/Arrays.html"&gt;array&lt;/a&gt; +
+&lt;code&gt;for&lt;/code&gt; loop.&amp;#160;&lt;a href="https://perrotta.dev/2025/08/kubernetes-list-all-imagepullbackoff-container-images/#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Kubernetes: list all ImagePullBackOff container images"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>★ ArgoCD: every application in unknown state</title><link>https://perrotta.dev/2025/06/argocd-every-application-in-unknown-state/</link><pubDate>Fri, 13 Jun 2025 22:34:33 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>bestof</category><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2025/06/argocd-every-application-in-unknown-state/</guid><description>&lt;p&gt;&lt;strong&gt;Symptom&lt;/strong&gt;: Every single application in the Kubernetes cluster that is managed
+by Argo is in &lt;code&gt;Unknown&lt;/code&gt; sync status. A disaster! 😱&lt;/p&gt;
+&lt;p&gt;This has only happened in one of our clusters. More specifically, in an
+&lt;a href="https://learn.microsoft.com/en-us/azure/aks/core-aks-concepts"&gt;AKS&lt;/a&gt; cluster
+(from Microsoft Azure).&lt;/p&gt;
+&lt;p&gt;An observed effect:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% kubectl get --raw&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;/openapi/v2&amp;#39;&lt;/span&gt; | head -c &lt;span style="color:#ae81ff"&gt;200&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Error from server &lt;span style="color:#f92672"&gt;(&lt;/span&gt;ServiceUnavailable&lt;span style="color:#f92672"&gt;)&lt;/span&gt;: the server is currently unable to handle the request&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Aha! The Kubernetes OpenAPI server is not responding properly.
+That explains why Argo is having so much trouble to figure out the state of affairs in
+the cluster.&lt;/p&gt;
+&lt;p&gt;It was quite difficult to troubleshoot this issue. There are barely any
+resources about it in the open web. We filed an Azure Support ticket, but it was
+completely useless. They offered to restart&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2025/06/argocd-every-application-in-unknown-state/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt; the OpenAPI server, but that
+didn&amp;rsquo;t help (of course it wouldn&amp;rsquo;t!).&lt;/p&gt;
+&lt;p&gt;Because this is a managed Kubernetes cluster, we have limited access to it,
+which includes lack of access to raw logs. The Azure portal doesn&amp;rsquo;t make it easy
+but, after digging quite deep into it, eventually we found this error message in
+the logs:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; {&amp;#34;pod&amp;#34;:&amp;#34;kube-apiserver-7785d59f4f-scqmp&amp;#34;,&amp;#34;stream&amp;#34;:&amp;#34;stderr&amp;#34;,&amp;#34;containerID&amp;#34;:&amp;#34;925345f6501626aa6cd40dd187d5cf57837389eec9cb39b2292fb9ae3f66242f&amp;#34;,&amp;#34;log&amp;#34;:&amp;#34;E0512 12:01:36.876768 1 handler.go:160] Error in OpenAPI handler: failed to build merge specs: unable to merge: duplicated path \/apis\/reports.kyverno.io\/v1\/clusterephemeralreports\n&amp;#34;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;That was the first clue! Now we know it&amp;rsquo;s related to
+&lt;a href="https://kyverno.io/"&gt;Kyverno&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;That error eventually led us to
+&lt;a href="https://github.com/kubernetes/kubernetes/issues/122668#issuecomment-2531243040"&gt;this&lt;/a&gt;
+issue in Kubernetes:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;We have the same issue here, actually also triggered by installing the kyverno
+reports-server with both apiservices (different groups served by the same
+api-server).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Aha!&lt;/p&gt;
+&lt;p&gt;Deleting the duplicate CRDs installed by &lt;a href="https://github.com/kyverno/reports-server"&gt;kyverno reports
+server&lt;/a&gt; has immediately resolved the
+OpenAPI server unresponsiveness. It wasn&amp;rsquo;t even necessary to restart it:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% kubectl delete crd ephemeralreports.reports.kyverno.io clusterephemeralreports.reports.kyverno.io clusterpolicyreports.wgpolicyk8s.io policyreports.wgpolicyk8s.io
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#e6db74"&gt;&amp;#34;ephemeralreports.reports.kyverno.io&amp;#34;&lt;/span&gt; deleted
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#e6db74"&gt;&amp;#34;clusterephemeralreports.reports.kyverno.io&amp;#34;&lt;/span&gt; deleted
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#e6db74"&gt;&amp;#34;clusterpolicyreports.wgpolicyk8s.io&amp;#34;&lt;/span&gt; deleted
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;customresourcedefinition.apiextensions.k8s.io &lt;span style="color:#e6db74"&gt;&amp;#34;policyreports.wgpolicyk8s.io&amp;#34;&lt;/span&gt; deleted&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;And now:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ kubectl get --raw&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;/openapi/v2&amp;#39;&lt;/span&gt; | head -c &lt;span style="color:#ae81ff"&gt;200&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;{&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;swagger&amp;#34;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#34;2.0&amp;#34;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#34;info&amp;#34;&lt;/span&gt;:&lt;span style="color:#f92672"&gt;{&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;title&amp;#34;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#34;Kubernetes&amp;#34;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#34;version&amp;#34;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#34;v1.30.11&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;}&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#34;paths&amp;#34;&lt;/span&gt;:&lt;span style="color:#f92672"&gt;{&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;/.well-known/openid-configuration/&amp;#34;&lt;/span&gt;:&lt;span style="color:#f92672"&gt;{&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;get&amp;#34;&lt;/span&gt;:&lt;span style="color:#f92672"&gt;{&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;description&amp;#34;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#34;get service account issuer OpenID configuration, also known as&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;That was a tricky one! Interestingly: it has only occurred in AKS.
+&lt;a href="https://aws.amazon.com/eks/"&gt;EKS&lt;/a&gt; was fine.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;&lt;a href="https://en.wikiquote.org/wiki/The_IT_Crowd"&gt;Hello, IT. Have you tried turning it off and on
+again?&lt;/a&gt;.&amp;#160;&lt;a href="https://perrotta.dev/2025/06/argocd-every-application-in-unknown-state/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: every application in unknown state"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>★ ArgoCD: custom health check for StatefulSet (OnDelete)</title><link>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</link><pubDate>Fri, 13 Jun 2025 21:40:01 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>bestof</category><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/</guid><description>&lt;p&gt;It turns out the
+&lt;a href="https://github.com/argoproj/gitops-engine/blob/master/pkg/health/health_statefulset.go"&gt;built-in&lt;/a&gt;
+health check for
+&lt;a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/"&gt;StatefulSets&lt;/a&gt;
+in ArgoCD is not comprehensive enough.&lt;/p&gt;
+&lt;p&gt;It covers
+&lt;a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies"&gt;&lt;code&gt;RollingUpdate&lt;/code&gt;&lt;/a&gt;
+well enough, but &lt;code&gt;OnDelete&lt;/code&gt; is incomplete.&lt;/p&gt;
+&lt;p&gt;More specifically:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Observed&lt;/strong&gt;: whenever you push an update to an STS whose &lt;code&gt;.spec.updateStrategy&lt;/code&gt;
+is &lt;code&gt;OnDelete&lt;/code&gt;, its health status stays as &lt;code&gt;Healthy&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Expected&lt;/strong&gt;: there should be an indication that the STS pods are not
+up-to-date, and hence need to be restarted to incorporate the latest changes.&lt;/p&gt;
+&lt;p&gt;There is &lt;a href="https://github.com/argoproj/argo-cd/issues/6527"&gt;an open bug&lt;/a&gt;:
+&lt;code&gt;Statefulset healthcheck does not work #6527&lt;/code&gt; for it.&lt;/p&gt;
+&lt;p&gt;I managed to work around it by defining my own health check. This is an use case
+where Gen AI is helpful, though it does not shine. I could not have Gen AI
+produce a fully working health check for this scenario. Instead, I used it to
+bootstrap a basic example, then had to tweak it until it worked. This has been
+tested multiple times, I am reasonably confident it works well (some edge cases
+could be missing though).&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="lua"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;lua&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-lua" data-lang="lua"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;health_status &lt;span style="color:#f92672"&gt;=&lt;/span&gt; {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; obj.status &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;nil&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; health_status.status &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;Progressing&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; health_status.message &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;Waiting for status to be reported&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; health_status
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;local&lt;/span&gt; strategy &lt;span style="color:#f92672"&gt;=&lt;/span&gt; obj.spec.updateStrategy &lt;span style="color:#f92672"&gt;and&lt;/span&gt; obj.spec.updateStrategy.type &lt;span style="color:#f92672"&gt;or&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;RollingUpdate&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;local&lt;/span&gt; spec_replicas &lt;span style="color:#f92672"&gt;=&lt;/span&gt; obj.spec.replicas &lt;span style="color:#f92672"&gt;or&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;local&lt;/span&gt; ready_replicas &lt;span style="color:#f92672"&gt;=&lt;/span&gt; obj.status.readyReplicas &lt;span style="color:#f92672"&gt;or&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;local&lt;/span&gt; updated_replicas &lt;span style="color:#f92672"&gt;=&lt;/span&gt; obj.status.updatedReplicas &lt;span style="color:#f92672"&gt;or&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;local&lt;/span&gt; status_replicas &lt;span style="color:#f92672"&gt;=&lt;/span&gt; obj.status.replicas &lt;span style="color:#f92672"&gt;or&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;local&lt;/span&gt; current_revision &lt;span style="color:#f92672"&gt;=&lt;/span&gt; obj.status.currentRevision &lt;span style="color:#f92672"&gt;or&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;local&lt;/span&gt; update_revision &lt;span style="color:#f92672"&gt;=&lt;/span&gt; obj.status.updateRevision &lt;span style="color:#f92672"&gt;or&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; strategy &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;OnDelete&amp;#34;&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; ready_replicas &lt;span style="color:#f92672"&gt;==&lt;/span&gt; status_replicas &lt;span style="color:#f92672"&gt;and&lt;/span&gt; updated_replicas &lt;span style="color:#f92672"&gt;==&lt;/span&gt; spec_replicas &lt;span style="color:#66d9ef"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; health_status.status &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;Healthy&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; health_status.message &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;All replicas are ready and updated (OnDelete strategy)&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;elseif&lt;/span&gt; updated_replicas &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; health_status.status &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;Degraded&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; health_status.message &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;No replicas have been updated (OnDelete strategy): 0/&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;..&lt;/span&gt; spec_replicas &lt;span style="color:#f92672"&gt;..&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34; updated. Still running an old revision!&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; health_status.status &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;Progressing&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; health_status.message &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;Progressing (OnDelete): &amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;..&lt;/span&gt; ready_replicas &lt;span style="color:#f92672"&gt;..&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;/&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;..&lt;/span&gt; status_replicas &lt;span style="color:#f92672"&gt;..&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34; ready, &amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;..&lt;/span&gt; updated_replicas &lt;span style="color:#f92672"&gt;..&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;/&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;..&lt;/span&gt; spec_replicas &lt;span style="color:#f92672"&gt;..&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34; updated&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; ready_replicas &lt;span style="color:#f92672"&gt;==&lt;/span&gt; status_replicas &lt;span style="color:#f92672"&gt;and&lt;/span&gt; updated_replicas &lt;span style="color:#f92672"&gt;==&lt;/span&gt; spec_replicas &lt;span style="color:#66d9ef"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; current_revision &lt;span style="color:#f92672"&gt;~=&lt;/span&gt; update_revision &lt;span style="color:#66d9ef"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; health_status.status &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;Progressing&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; health_status.message &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;Waiting for rollout to complete: revision mismatch (&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;..&lt;/span&gt; current_revision &lt;span style="color:#f92672"&gt;..&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34; ≠ &amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;..&lt;/span&gt; update_revision &lt;span style="color:#f92672"&gt;..&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;)&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; health_status.status &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;Healthy&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; health_status.message &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;All replicas updated, ready, and revisions match&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; health_status.status &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;Progressing&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; health_status.message &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;RollingUpdate progressing: &amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;..&lt;/span&gt; ready_replicas &lt;span style="color:#f92672"&gt;..&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;/&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;..&lt;/span&gt; status_replicas &lt;span style="color:#f92672"&gt;..&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34; ready, &amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;..&lt;/span&gt; updated_replicas &lt;span style="color:#f92672"&gt;..&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;/&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;..&lt;/span&gt; spec_replicas &lt;span style="color:#f92672"&gt;..&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34; updated&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; health_status&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It is necessary to distinguish between &lt;code&gt;OnDelete&lt;/code&gt; and &lt;code&gt;RollingUpdate&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;OnDelete&lt;/code&gt; should not use &lt;code&gt;currentRevision&lt;/code&gt; / &lt;code&gt;update_revision&lt;/code&gt;, as these values
+don&amp;rsquo;t mean anything for that update strategy. This can be observed
+&lt;a href="https://github.com/argoproj/gitops-engine/blob/f8f1b61ba3fd5fcb647563db3106977e1364de31/pkg/health/health_statefulset.go#L63"&gt;upstream&lt;/a&gt;
+as well.&lt;/p&gt;
+&lt;p&gt;It is easy to write / tweak the health check when you look at the live STS
+resource / manifest in the cluster. &lt;code&gt;obj&lt;/code&gt; refers to the STS manifest (&lt;code&gt;kubectl get sts -o yaml&lt;/code&gt;). The most relevant field is &lt;code&gt;status:&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;If you deploy ArgoCD via its helm chart, add that check for &lt;code&gt;argocd-cm&lt;/code&gt;. The
+&lt;code&gt;values.yaml&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;argo-cd&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;configs&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;cm&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;resource.customizations.health.apps_StatefulSet&lt;/span&gt;: |&lt;span style="color:#e6db74"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; health_status = {}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; [...]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This custom health check was partly inspired by a Prometheus alert we have:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;alert&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;StatefulSetUpdateNotRolledOut&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;expr&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;max without (revision) (kube_statefulset_status_current_revision unless kube_statefulset_status_update_revision) * (kube_statefulset_replicas != kube_statefulset_status_replicas_updated)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;How long will it take until LLMs &lt;del&gt;steal&lt;/del&gt; adopt this novel solution from me?&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: custom health check for StatefulSet (OnDelete)"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>ArgoCD: upgrade to v3, remove helm labels</title><link>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</link><pubDate>Mon, 02 Jun 2025 13:03:24 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</guid><description>&lt;p&gt;I am leading the effort to upgrade ArgoCD to its &lt;a href="https://blog.argoproj.io/announcing-argo-cd-v3-small-but-mighty-df05c0b39ad6"&gt;newest major version
+(v3)&lt;/a&gt;
+across our fleet.&lt;/p&gt;
+&lt;p&gt;One of its &lt;a href="https://argo-cd.readthedocs.io/en/stable/operator-manual/upgrading/2.14-3.0/"&gt;breaking
+changes&lt;/a&gt;
+is the removal of helm labels from argo applications, like such:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;metadata&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# [...]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;labels&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;app.kubernetes.io/managed-by&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;Helm&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Applying a normal sync does not get rid of the label.&lt;/p&gt;
+&lt;p&gt;I found out that doing an one-off &lt;a href="https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/#server-side-apply"&gt;server-side apply
+sync&lt;/a&gt;
+addresses the label removal, and it is safe to do (incurs no downtime):&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;However, there are some cases where you want to use &lt;code&gt;kubectl apply --server-side&lt;/code&gt; over &lt;code&gt;kubectl apply&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;[&amp;hellip;]&lt;/p&gt;
+&lt;p&gt;Patching of existing resources on the cluster that are not fully managed by
+Argo CD.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;There&amp;rsquo;s no need to make the server-side apply a permanent config, i.e.:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;apiVersion&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;argoproj.io/v1alpha1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;kind&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;Application&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;spec&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;syncPolicy&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;syncOptions&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#ae81ff"&gt;ServerSideApply=true&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;though there&amp;rsquo;s no harm either in doing so.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: upgrade to v3, remove helm labels"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>PDB: minAvailable and maxUnavailable cannot be both set</title><link>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</link><pubDate>Mon, 02 Jun 2025 12:00:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</guid><description>&lt;p&gt;In Kubernetes it&amp;rsquo;s not possible to have a &lt;a href="https://kubernetes.io/docs/tasks/run-application/configure-pdb/"&gt;&lt;code&gt;PodDisruptionBudget&lt;/code&gt;
+(PDB)&lt;/a&gt; with
+both &lt;code&gt;minAvailable&lt;/code&gt; and &lt;code&gt;maxUnavailable&lt;/code&gt; set simultaneously:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;one or more objects failed to apply, reason: PodDisruptionBudget.policy &amp;#34;pgbouncer-pgbouncer&amp;#34; is invalid: spec: Invalid value: policy.PodDisruptionBudgetSpec{MinAvailable:(*intstr.IntOrString)(0xc02c03dd20), Selector:(*v1.LabelSelector)(0xc02c03dd40), MaxUnavailable:(*intstr.IntOrString)(0xc02c03dd60), UnhealthyPodEvictionPolicy:(*policy.UnhealthyPodEvictionPolicyType)(nil)}: minAvailable and maxUnavailable cannot be both set (retried 5 times).&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Our manifests did not violate this rule though. Then where did the error message
+come from?&lt;/p&gt;
+&lt;p&gt;It turns out &lt;a href="https://argo-cd.readthedocs.io/en/stable/"&gt;ArgoCD&lt;/a&gt; was creating an
+intermediate state containing both properties:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# [...]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;spec&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;minAvailable&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;maxUnavailable&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# [...]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;One solution is to sync the underlying application PDB manifest with
+&lt;a href="https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/#replace-resource-instead-of-applying-changes"&gt;replace&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;: It&amp;rsquo;s better to &amp;ldquo;sync with replace&amp;rdquo; &lt;strong&gt;only&lt;/strong&gt; the PDB. Do not do it
+in the entire application.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: PDB: minAvailable and maxUnavailable cannot be both set"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>kubernetes: list pending pods in daemonset</title><link>https://perrotta.dev/2025/05/kubernetes-list-pending-pods-in-daemonset/</link><pubDate>Tue, 20 May 2025 16:41:00 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2025/05/kubernetes-list-pending-pods-in-daemonset/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Given a DaemonSet with a couple of pods stuck in
+&amp;ldquo;Pending&amp;rdquo; state during their rollout, find out which nodes did not yet complete
+the pod initialization.&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% kubectl get nodes -o name | grep -vFf &amp;lt;&lt;span style="color:#f92672"&gt;(&lt;/span&gt;kubectl get pods -n &lt;span style="color:#f92672"&gt;{&lt;/span&gt;namespace&lt;span style="color:#f92672"&gt;}&lt;/span&gt; -l &lt;span style="color:#f92672"&gt;{&lt;/span&gt;ds-label-selector&lt;span style="color:#f92672"&gt;}&lt;/span&gt; -o wide --no-headers | awk &lt;span style="color:#e6db74"&gt;&amp;#39;{print &amp;#34;node/&amp;#34; $7}&amp;#39;&lt;/span&gt;&lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;node/aks-database-12345678-vmss000000
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;node/aks-database-12345678-vmss000002
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;node/aks-systempool-87654321-vmss000000
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;node/aks-systempool-87654321-vmss000001&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Notes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;kubectl get nodes -o name&lt;/code&gt;: list all node names in the &lt;code&gt;node/&amp;lt;name&amp;gt;&lt;/code&gt; form&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kubectl get pods [...] -o wide&lt;/code&gt;: get the node name for each running DaemonSet pod&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;awk '{print &amp;quot;node/&amp;quot; $7}'&lt;/code&gt;: get the node name matching the output of &lt;code&gt;get nodes&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;grep [...]&lt;/code&gt;: find the nodes we are looking for&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Surely there must be an easier way to accomplish this?&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: kubernetes: list pending pods in daemonset"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>Kubernetes: create a pod in pending state</title><link>https://perrotta.dev/2025/02/kubernetes-create-a-pod-in-pending-state/</link><pubDate>Fri, 07 Feb 2025 13:58:36 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2025/02/kubernetes-create-a-pod-in-pending-state/</guid><description>&lt;p&gt;We are making a non-trivial change to our cluster monitoring architecture, and I
+needed to verify the new rollout is properly working in our infratesting
+environment.&lt;/p&gt;
+&lt;p&gt;A simple way to do so is to create a pod that never leaves the &amp;ldquo;Pending&amp;rdquo; state,
+because we have an alert (a prometheus rule) that fires whenever a pod is in
+that stack for too long (15 minutes is our threshold in most cases).&lt;/p&gt;
+&lt;p&gt;Use the following manifest:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;apiVersion&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;v1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;kind&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;Pod&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;metadata&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;name&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;pending-pod&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;spec&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;affinity&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;podAffinity&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;requiredDuringSchedulingIgnoredDuringExecution&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#f92672"&gt;labelSelector&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;matchExpressions&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#f92672"&gt;key&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;non/existent&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;operator&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;In&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;values&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#e6db74"&gt;&amp;#34;true&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;topologyKey&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;kubernetes.io/hostname&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;containers&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#f92672"&gt;name&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;busybox&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;image&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;busybox&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;command&lt;/span&gt;: [&lt;span style="color:#e6db74"&gt;&amp;#39;sh&amp;#39;&lt;/span&gt;, &lt;span style="color:#e6db74"&gt;&amp;#39;-c&amp;#39;&lt;/span&gt;, &lt;span style="color:#e6db74"&gt;&amp;#39;echo Hello, Kubernetes! &amp;amp;&amp;amp; sleep 3600&amp;#39;&lt;/span&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;it creates a &lt;code&gt;pending-pod&lt;/code&gt; in the &lt;code&gt;default&lt;/code&gt; namespace that should never be
+scheduled, due to its strict pod affinity rules.&lt;/p&gt;
+&lt;p&gt;Save it as &lt;code&gt;pending-pod.yaml&lt;/code&gt;, deploy it with &lt;code&gt;kubectl apply -f pending-pod.yaml&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ kubectl get pod pending-pod -w
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;NAME READY STATUS RESTARTS AGE
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pending-pod 0/1 Pending 0 21s
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; pending-pod 0/1 Pending 0 65s
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pending-pod 0/1 Pending 0 74s
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pending-pod 0/1 Pending 0 2m6s
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pending-pod 0/1 Pending 0 3m8s
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pending-pod 0/1 Pending 0 4m8s
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pending-pod 0/1 Pending 0 4m18s&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;At some point the alert fires, as expected.
+And now we can roll out these changes to prod!&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Kubernetes: create a pod in pending state"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>Kubernetes: tail logs from pods with stern</title><link>https://perrotta.dev/2024/12/kubernetes-tail-logs-from-pods-with-stern/</link><pubDate>Tue, 17 Dec 2024 16:37:16 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2024/12/kubernetes-tail-logs-from-pods-with-stern/</guid><description>&lt;p&gt;You can always use &lt;code&gt;kubectl logs -n {namespace} {pod} [-c {container}] -f&lt;/code&gt; to
+inspect logs from a specific pod&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2024/12/kubernetes-tail-logs-from-pods-with-stern/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;Nonetheless that doesn&amp;rsquo;t scale when you don&amp;rsquo;t know which pod you want in the
+first place.&lt;/p&gt;
+&lt;p&gt;You could start with deployments, dive into replica sets, and then into
+individual pods, one by one, but&amp;hellip; that is tedious and slow.&lt;/p&gt;
+&lt;p&gt;We can do better with &lt;a href="https://github.com/stern/stern"&gt;stern&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;⎈ Multi pod and container log tailing for Kubernetes&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Usage:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;stern pod-query [flags]&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The pod-query is a regular expression or a Kubernetes resource in the form
+&lt;code&gt;&amp;lt;resource&amp;gt;/&amp;lt;name&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% stern -n argocd argocd&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;We can also &lt;code&gt;grep&lt;/code&gt; for specific strings in log lines with &lt;code&gt;--include&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% stern -n argocd argocd --include level&lt;span style="color:#f92672"&gt;=&lt;/span&gt;error&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Or &lt;code&gt;grep -v&lt;/code&gt; with &lt;code&gt;--exclude&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s better to use &lt;code&gt;--include&lt;/code&gt; / &lt;code&gt;--exclude&lt;/code&gt; than to &lt;code&gt;| grep&lt;/code&gt;, because it
+preserves color attributes (each pod has a different color in the aggregated
+log output).&lt;/p&gt;
+&lt;p&gt;The logs stream by default (like &lt;code&gt;tail -f&lt;/code&gt;, or &lt;code&gt;kubectl logs -f&lt;/code&gt;).&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;&lt;code&gt;-c&lt;/code&gt; to specify a container within it, and &lt;code&gt;-f&lt;/code&gt; to stream logs à la &lt;code&gt;tail -f&lt;/code&gt;.&amp;#160;&lt;a href="https://perrotta.dev/2024/12/kubernetes-tail-logs-from-pods-with-stern/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Kubernetes: tail logs from pods with stern"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>Kubernetes: debugging services</title><link>https://perrotta.dev/2024/12/kubernetes-debugging-services/</link><pubDate>Mon, 16 Dec 2024 10:14:11 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2024/12/kubernetes-debugging-services/</guid><description>&lt;p&gt;I am deploying a new helm chart to our staging environments, and needed a way to
+ensure its dependencies in &lt;code&gt;values.yaml&lt;/code&gt; are properly configured.&lt;/p&gt;
+&lt;p&gt;From the official kubernetes
+&lt;a href="https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/"&gt;documentation&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;An issue that comes up rather frequently for new installations of Kubernetes
+is that a Service is not working properly. You&amp;rsquo;ve run your Pods through a
+Deployment (or other workload controller) and created a Service, but you get
+no response when you try to access it. This document will hopefully help you
+to figure out what&amp;rsquo;s going wrong.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="run-commands-in-a-brand-new-pod"&gt;Run commands in a brand new pod&lt;/h2&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% kubectl run -it --rm --restart&lt;span style="color:#f92672"&gt;=&lt;/span&gt;Never busybox --image&lt;span style="color:#f92672"&gt;=&lt;/span&gt;gcr.io/google-containers/busybox sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;quite verbose, but it works reliably, spawning a basic pod with
+&lt;a href="https://www.busybox.net/"&gt;busybox&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I prefer to have a package manager at my fingertips, hence &lt;code&gt;alpine&lt;/code&gt; is arguably
+a better choice:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% kubectl run -it --rm --restart&lt;span style="color:#f92672"&gt;=&lt;/span&gt;Never busybox --image&lt;span style="color:#f92672"&gt;=&lt;/span&gt;alpine ash&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;You don&amp;rsquo;t need to remember that alpine uses &lt;code&gt;ash&lt;/code&gt; by default, &lt;code&gt;sh&lt;/code&gt; works as
+well. In fact:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/ &lt;span style="color:#75715e"&gt;# ls -al /bin | grep sh&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;lrwxrwxrwx &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; root root &lt;span style="color:#ae81ff"&gt;12&lt;/span&gt; Dec &lt;span style="color:#ae81ff"&gt;5&lt;/span&gt; 12:17 ash -&amp;gt; /bin/busybox
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;lrwxrwxrwx &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; root root &lt;span style="color:#ae81ff"&gt;12&lt;/span&gt; Dec &lt;span style="color:#ae81ff"&gt;5&lt;/span&gt; 12:17 fdflush -&amp;gt; /bin/busybox
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;lrwxrwxrwx &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; root root &lt;span style="color:#ae81ff"&gt;12&lt;/span&gt; Dec &lt;span style="color:#ae81ff"&gt;5&lt;/span&gt; 12:17 sh -&amp;gt; /bin/busybox&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Then I could do, for example, &lt;code&gt;apk update&lt;/code&gt; + &lt;code&gt;apk add mtr nmap&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Alpine is marvellous for this because &lt;code&gt;apk&lt;/code&gt; is very lightweight (and, hence,
+fast!) and the available packages from upstream are quite comprehensive.&lt;/p&gt;
+&lt;h2 id="run-commands-in-an-already-existing-pod"&gt;Run commands in an already existing pod&lt;/h2&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% kubectl exec &amp;lt;POD-NAME&amp;gt; -c &amp;lt;CONTAINER-NAME&amp;gt; -- &amp;lt;COMMAND&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;however you cannot choose a custom image this way. You&amp;rsquo;re stuck with whatever
+the pod is running.&lt;/p&gt;
+&lt;p&gt;The way around this is with the use of ephemeral debug containers. Newer
+versions of kubernetes have the &lt;code&gt;kubectl debug&lt;/code&gt; command:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% kubectl debug -it &amp;lt;POD-NAME&amp;gt; --image&lt;span style="color:#f92672"&gt;=&lt;/span&gt;alpine &lt;span style="color:#f92672"&gt;[&lt;/span&gt;--target&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&amp;lt;POD-NAME&amp;gt;&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Happy debugging!&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Kubernetes: debugging services"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>kubectl: list all node pods</title><link>https://perrotta.dev/2024/10/kubectl-list-all-node-pods/</link><pubDate>Wed, 16 Oct 2024 12:26:24 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2024/10/kubectl-list-all-node-pods/</guid><description>&lt;p&gt;Recipe to list all pods that belong to a given node:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ kubectl get pod -o wide --field-selector spec.nodeName&lt;span style="color:#f92672"&gt;={&lt;/span&gt;node_name&lt;span style="color:#f92672"&gt;}&lt;/span&gt; -A&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Source&lt;/strong&gt;: &lt;a href="https://stackoverflow.com/questions/39231880/kubernetes-api-get-pods-on-specific-nodes"&gt;https://stackoverflow.com/questions/39231880/kubernetes-api-get-pods-on-specific-nodes&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This &lt;em&gt;ought to&lt;/em&gt; be easier to remember&amp;hellip;&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: kubectl: list all node pods"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>helm: list recent chart upgrades</title><link>https://perrotta.dev/2024/09/helm-list-recent-chart-upgrades/</link><pubDate>Tue, 24 Sep 2024 14:21:20 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2024/09/helm-list-recent-chart-upgrades/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Given a kubernetes cluster with many helm charts in
+different namespaces, how to use &lt;code&gt;helm&lt;/code&gt; to query the list of the last recently
+&amp;ldquo;touched&amp;rdquo; charts?&lt;/p&gt;
+&lt;p&gt;By &amp;ldquo;touched&amp;rdquo; we mean either installed (via &lt;code&gt;helm install&lt;/code&gt;) or upgraded (via
+&lt;code&gt;helm upgrade&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Something like: &lt;code&gt;helm ls --all --sort-by updated&lt;/code&gt;. Using &lt;code&gt;kubectl&lt;/code&gt; directly
+would also be OK.&lt;/p&gt;
+&lt;h2 id="solution"&gt;Solution&lt;/h2&gt;
+&lt;p&gt;The brute force way:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;helm ls --max &lt;span style="color:#ae81ff"&gt;99999&lt;/span&gt; -A -o json | jq -r &lt;span style="color:#e6db74"&gt;&amp;#39;.[] | &amp;#34;\(.updated)\t\(.name)&amp;#34;&amp;#39;&lt;/span&gt; | sort | tail | column -t&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-A&lt;/code&gt; for all namespaces&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--max 99999&lt;/code&gt; to &amp;ldquo;disable&amp;rdquo; &lt;a href="https://github.com/helm/helm/issues/3322"&gt;paging&lt;/a&gt; (there&amp;rsquo;s no better way as of 2024-09-24)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;jq&lt;/code&gt; to filter out on the &amp;ldquo;updated&amp;rdquo; field&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note that a sample json entry looks like the following:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="json"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;name&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;hoth-cb7f8a327&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;namespace&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;default&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;revision&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;2&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;updated&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;2024-06-14 15:02:16.775174131 +0000 UTC&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;status&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;deployed&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;chart&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;hoth-0.1.0&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;app_version&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;1.0.0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Sample output of the aforementioned command:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;2024-09-24 10:56:15.655674586 +0000 UTC geonosis
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;2024-09-24 10:56:15.731630075 +0000 UTC coruscant
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;2024-09-24 11:01:35.156973247 +0000 UTC endor
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;2024-09-24 11:02:30.314014351 +0000 UTC hoth&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: helm: list recent chart upgrades"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>kubectl: print all secret values in plain text</title><link>https://perrotta.dev/2024/08/kubectl-print-all-secret-values-in-plain-text/</link><pubDate>Tue, 06 Aug 2024 13:37:31 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2024/08/kubectl-print-all-secret-values-in-plain-text/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Given a &lt;a href="https://kubernetes.io/docs/concepts/configuration/secret/"&gt;kubernetes
+secret&lt;/a&gt; with more
+than one key-value pair, print &lt;strong&gt;all&lt;/strong&gt; of them in plain text (i.e.
+base64-decoded in this context).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Edit(2024-08-08)&lt;/strong&gt;: It turns out I made a mistake. The effect of the post
+below is akin to &lt;code&gt;kubectl get [...] -o yaml&lt;/code&gt;. I&amp;rsquo;ll keep the post for
+bookkeeping purposes anyway.&lt;/p&gt;
+&lt;p&gt;Basically, something like:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;kubectl cat secret -n infra-services my-cool-secret&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Except that there is no &lt;code&gt;kubectl cat&lt;/code&gt;, what a shame. It would be really great if
+we had it, for consistency with &lt;code&gt;systemctl cat&lt;/code&gt;. Oh well.&lt;/p&gt;
+&lt;p&gt;There is &lt;code&gt;kubectl edit&lt;/code&gt; though – amen, just like &lt;code&gt;systemctl edit&lt;/code&gt;. This will
+open your &lt;code&gt;$EDITOR&lt;/code&gt;. It&amp;rsquo;s often inconvenient to copy text to the clipboard from
+your terminal-based editor though, due to intricacies of different terminals,
+shells, terminal multiplexers, and OSC-52, therefore I don&amp;rsquo;t deem this as an
+acceptable solution.&lt;/p&gt;
+&lt;p&gt;There is a simple trick though:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;EDITOR&lt;span style="color:#f92672"&gt;=&lt;/span&gt;cat kubectl edit secret -n infra-services my-cool-secret&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;which works exactly as you would expect &lt;code&gt;kubectl cat&lt;/code&gt; to behave. It displays
+a warning at the end:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Edit cancelled, no changes made.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;however it can be duly ignored.&lt;/p&gt;
+&lt;p&gt;If we didn&amp;rsquo;t have this trick, we could have:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;written a bloated tool in golang to pipe to e.g. &lt;a href="https://github.com/ashleyschuett/kubernetes-secret-decode"&gt;https://github.com/ashleyschuett/kubernetes-secret-decode&lt;/a&gt; (&lt;a href="https://itnext.io/secrets-in-plain-text-13a98f54ef97"&gt;via&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;used the &lt;code&gt;kubectl edit&lt;/code&gt; trick above, with a decent terminal and OSC-52 setup&lt;/li&gt;
+&lt;li&gt;used &lt;code&gt;jq&lt;/code&gt; with its &lt;code&gt;map&lt;/code&gt; and &lt;code&gt;base64d&lt;/code&gt; constructs (c.f. &lt;a href="https://stackoverflow.com/questions/50286066/kubernetes-kubectl-print-all-secrets"&gt;Stack
+Overflow&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;used &lt;code&gt;kubectl describe&lt;/code&gt; with &lt;code&gt;-o jsonpath&lt;/code&gt;, specifying every single field, one
+by one (super tedious) c.f. &lt;a href="https://perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/"&gt;this previous post&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: kubectl: print all secret values in plain text"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>kubectl: get all logs from all pods</title><link>https://perrotta.dev/2024/07/kubectl-get-all-logs-from-all-pods/</link><pubDate>Mon, 15 Jul 2024 13:23:35 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2024/07/kubectl-get-all-logs-from-all-pods/</guid><description>&lt;p&gt;Frequently:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;kubectl logs -n argocd argocd-repo-server-5d59975687-dxnh7&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;But how do you know what hash to use after &lt;code&gt;server-&lt;/code&gt;?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Option 1)&lt;/strong&gt;: TAB auto-completion:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;kubectl logs -n argocd argocd-repo-server-&amp;lt;TAB&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Caveats&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;tab completion for &lt;code&gt;kubectl&lt;/code&gt; isn&amp;rsquo;t always properly set up&lt;/li&gt;
+&lt;li&gt;if there is more than one pod, you would have to type in the first few letters
+of the hash before hitting TAB again, that&amp;rsquo;s annoying and non-ergonomic&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Option 2)&lt;/strong&gt;: subshell&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;kubectl logs -n argocd &lt;span style="color:#66d9ef"&gt;$(&lt;/span&gt;kubectl get pod -n argocd | grep argocd-repo-server | cut -f1 -d&lt;span style="color:#e6db74"&gt;&amp;#39; &amp;#39;&lt;/span&gt; | head -1&lt;span style="color:#66d9ef"&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Caveats&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a lot of typing&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;head -1&lt;/code&gt; is necessary in case there are multiple pods&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2024/07/kubectl-get-all-logs-from-all-pods/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Option 3)&lt;/strong&gt;: get all logs from all pods that match a given label&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;kubectl logs -n argocd -l app&lt;span style="color:#f92672"&gt;=&lt;/span&gt;app.kubernetes.io/instance&lt;span style="color:#f92672"&gt;=&lt;/span&gt;argocd
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;--all-containers&lt;span style="color:#f92672"&gt;]&lt;/span&gt; &lt;span style="color:#f92672"&gt;[&lt;/span&gt;--ignore-errors&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This is much more ergonomic.&lt;/p&gt;
+&lt;p&gt;You still need to figure out what label to use though:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ kubectl describe pod -n argocd argocd-repo-server-5d59975687-dxnh7 | grep -A7 -i labels:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Labels: app.kubernetes.io/component&lt;span style="color:#f92672"&gt;=&lt;/span&gt;repo-server
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; app.kubernetes.io/instance&lt;span style="color:#f92672"&gt;=&lt;/span&gt;argocd
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; app.kubernetes.io/managed-by&lt;span style="color:#f92672"&gt;=&lt;/span&gt;Helm
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; app.kubernetes.io/name&lt;span style="color:#f92672"&gt;=&lt;/span&gt;argocd-repo-server
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; app.kubernetes.io/part-of&lt;span style="color:#f92672"&gt;=&lt;/span&gt;argocd
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; app.kubernetes.io/version&lt;span style="color:#f92672"&gt;=&lt;/span&gt;v2.11.4
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; helm.sh/chart&lt;span style="color:#f92672"&gt;=&lt;/span&gt;argo-cd-7.3.4
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; pod-template-hash&lt;span style="color:#f92672"&gt;=&lt;/span&gt;5d59975687&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Source&lt;/strong&gt;: &lt;a href="https://stackoverflow.com/questions/33069736/how-do-i-get-logs-from-all-pods-of-a-kubernetes-replication-controller"&gt;https://stackoverflow.com/questions/33069736/how-do-i-get-logs-from-all-pods-of-a-kubernetes-replication-controller&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Happy logging!&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;Or &lt;code&gt;tail -1&lt;/code&gt;, for that matter.&amp;#160;&lt;a href="https://perrotta.dev/2024/07/kubectl-get-all-logs-from-all-pods/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: kubectl: get all logs from all pods"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
