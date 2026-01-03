@@ -3,6 +3,7 @@ title: "kubectl: get secret with jsonpath and add a newline"
 date: 2024-07-09T11:36:34+02:00
 tags:
   - dev
+  - kubernetes
 ---
 
 When retrieving opaque secrets with `kubectl`, one will often invoke this
