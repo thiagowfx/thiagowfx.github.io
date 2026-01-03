@@ -4,6 +4,7 @@ date: 2025-06-13T22:34:33+02:00
 tags:
   - bestof
   - dev
+  - kubernetes
 ---
 
 **Symptom**: Every single application in the Kubernetes cluster that is managed

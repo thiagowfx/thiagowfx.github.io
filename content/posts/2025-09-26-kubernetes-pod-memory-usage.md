@@ -3,6 +3,7 @@ title: "Kubernetes: pod memory usage"
 date: 2025-09-26T11:54:57+02:00
 tags:
   - dev
+  - kubernetes
 ---
 
 **Problem statement**: Given a pod in Kubernetes, check its memory (RAM) usage.

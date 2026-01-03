@@ -3,6 +3,7 @@ title: "Kubernetes: create a pod in pending state"
 date: 2025-02-07T13:58:36+01:00
 tags:
   - dev
+  - kubernetes
 ---
 
 We are making a non-trivial change to our cluster monitoring architecture, and I

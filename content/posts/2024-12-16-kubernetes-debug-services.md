@@ -3,6 +3,7 @@ title: "Kubernetes: debugging services"
 date: 2024-12-16T10:14:11-03:00
 tags:
   - dev
+  - kubernetes
 ---
 
 I am deploying a new helm chart to our staging environments, and needed a way to
