@@ -3,6 +3,7 @@ title: "Github: dependabot: group updates"
 date: 2025-05-14T15:08:40+02:00
 tags:
   - dev
+  - security
 ---
 
 [dependabot](https://docs.github.com/en/code-security/getting-started/dependabot-quickstart-guide)

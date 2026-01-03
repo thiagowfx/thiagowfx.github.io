@@ -4,6 +4,7 @@ date: 2025-06-05T19:22:15+02:00
 tags:
   - dev
   - privacy
+  - security
 ---
 
 Apple Accounts are tied to a specific country. You can have one and only one

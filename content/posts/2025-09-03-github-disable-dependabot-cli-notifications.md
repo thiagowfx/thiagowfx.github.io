@@ -3,6 +3,7 @@ title: "GitHub: disable dependabot CLI notifications"
 date: 2025-09-03T10:51:49+02:00
 tags:
   - dev
+  - security
 ---
 
 Good morning!

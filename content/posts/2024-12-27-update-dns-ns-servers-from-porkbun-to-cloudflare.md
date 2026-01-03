@@ -5,6 +5,7 @@ tags:
   - bestof
   - dev
   - privacy
+  - security
 ---
 
 [Porkbun](porkbun.com) is my registrar of choice. It is quite decent but alas it
