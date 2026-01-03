@@ -2,6 +2,7 @@
 title: "Disallow AI scraping"
 date: 2024-08-01T00:54:55+02:00
 tags:
+  - ai
   - privacy
   - security
 ---
