@@ -3,6 +3,7 @@ title: "codespell: ignore words"
 date: 2025-01-20T10:54:55-03:00
 tags:
   - dev
+  - pre-commit
 ---
 
 When using [codespell](https://github.com/codespell-project/codespell) to spell

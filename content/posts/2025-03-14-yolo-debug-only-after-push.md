@@ -4,6 +4,7 @@ date: 2025-03-14T15:16:57+01:00
 tags:
   - dev
   - meta
+  - pre-commit
   - serenity
 ---
 
