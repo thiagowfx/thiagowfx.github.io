@@ -4,6 +4,7 @@ date: 2025-05-23T01:13:56+02:00
 tags:
   - dev
   - privacy
+  - security
 ---
 
 [Privacy Tests](https://privacytests.org/):

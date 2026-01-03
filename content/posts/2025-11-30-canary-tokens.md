@@ -5,6 +5,7 @@ tags:
   - bestof
   - dev
   - privacy
+  - security
 ---
 
 [Canary Tokens](https://canarytokens.org/),

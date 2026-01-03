@@ -3,6 +3,7 @@ title: "HTTP: a few acronyms"
 date: 2022-02-27T21:48:03-05:00
 tags:
   - dev
+  - security
 ---
 
 I keep forgetting these, so I wrote a small summary for my own reference.

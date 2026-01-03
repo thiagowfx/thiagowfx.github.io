@@ -3,6 +3,7 @@ title: "Pin all github actions"
 date: 2024-12-28T20:49:27-03:00
 tags:
   - dev
+  - security
 ---
 
 [via Connor Edwards](https://cedwards.xyz/github-actions-are-an-impending-security-disaster/):
