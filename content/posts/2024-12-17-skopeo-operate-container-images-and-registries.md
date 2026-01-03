@@ -2,9 +2,10 @@
 title: "skopeo: operate container images and registries"
 date: 2024-12-17T17:49:31-03:00
 tags:
-  - bestof
-  - dev
-  - kubernetes
+   - aws
+   - bestof
+   - dev
+   - kubernetes
 ---
 
 When working with `docker` and private image registries, a common workflow is to copy images from one private registry in the cloud to another. This can be done with [`skopeo`](https://github.com/containers/skopeo/).

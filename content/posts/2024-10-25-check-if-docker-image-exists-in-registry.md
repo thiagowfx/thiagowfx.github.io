@@ -2,7 +2,8 @@
 title: "Check if docker image exists in registry"
 date: 2024-10-25T14:11:14+02:00
 tags:
-  - dev
+   - aws
+   - dev
 ---
 
 Given a docker registry, image and tag, run the following command:

@@ -2,8 +2,9 @@
 title: "Terraformer"
 date: 2025-11-19T10:22:18-03:00
 tags:
-  - dev
-  - terraform
+   - aws
+   - dev
+   - terraform
 ---
 
 [terraformer](https://github.com/GoogleCloudPlatform/terraformer):
