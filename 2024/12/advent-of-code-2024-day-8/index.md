@@ -1,4 +1,8 @@
 
+Refer to the [previous post]({{< ref "2022-01-28-advent-of-code" >}}) about AoC,
+and to the [git repository](https://github.com/thiagowfx/adventofcode) with my
+solutions in Python 3.
+
 Link to [Day #8](https://adventofcode.com/2024/day/8) puzzle.
 
 This is a problem in a 2D grid. I like to start by making a frequency map
