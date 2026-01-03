@@ -2,6 +2,7 @@
 title: "ByteByteGo: Zero Striping"
 date: 2025-11-25T00:13:43-03:00
 tags:
+  - bytebytego
   - dev
 
 categories:

@@ -2,6 +2,7 @@
 title: "ByteByteGo: Lonely Integer"
 date: 2025-11-27T02:58:33-03:00
 tags:
+  - bytebytego
   - dev
 
 categories:

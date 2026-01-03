@@ -2,6 +2,7 @@
 title: "ByteByteGo: Matrix Pathways"
 date: 2025-11-26T21:01:40-03:00
 tags:
+  - bytebytego
   - dev
 
 categories:

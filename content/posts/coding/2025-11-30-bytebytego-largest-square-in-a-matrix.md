@@ -2,6 +2,7 @@
 title: "ByteByteGo: Largest Square in a Matrix"
 date: 2025-11-30T23:18:37-03:00
 tags:
+  - bytebytego
   - dev
 
 categories:
