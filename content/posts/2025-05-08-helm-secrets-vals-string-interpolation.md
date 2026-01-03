@@ -3,6 +3,7 @@ title: "helm-secrets + vals: string interpolation"
 date: 2025-05-08T15:25:14+02:00
 tags:
   - dev
+  - security
 ---
 
 [helm-secrets](https://github.com/jkroepke/helm-secrets) is:
