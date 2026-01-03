@@ -3,6 +3,7 @@ title: "vim: spellchecker suggestions"
 date: 2025-11-02T11:37:57+01:00
 tags:
   - dev
+  - vim
 ---
 
 [Previously]({{< ref "2025-07-26-vim-add-word-to-spellchecker" >}}):

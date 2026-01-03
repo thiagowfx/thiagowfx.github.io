@@ -3,6 +3,7 @@ title: "pre-commit + vim integration"
 date: 2025-01-05T01:46:06-03:00
 tags:
   - dev
+  - vim
 ---
 
 Is it possible to transparently invoke `pre-commit` in the background upon saving in `vim` (`:w`)?

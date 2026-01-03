@@ -3,6 +3,7 @@ title: "vim: join lines without producing a space"
 date: 2025-07-22T11:50:28+02:00
 tags:
   - dev
+  - vim
 ---
 
 Here's a common issue I have when blogging, when inserting a markdown link with

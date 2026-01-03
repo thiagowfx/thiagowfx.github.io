@@ -3,6 +3,7 @@ title: "vim: remove trailing whitespace"
 date: 2025-09-16T14:27:55+02:00
 tags:
   - dev
+  - vim
 ---
 
 A simple addition to remove all trailing whitespace from the current buffer by

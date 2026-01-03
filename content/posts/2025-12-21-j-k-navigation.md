@@ -4,6 +4,7 @@ date: 2025-12-21T02:31:10-03:00
 tags:
   - dev
   - meta
+  - vim
 ---
 
 I just added vim-style keybindings to this site.

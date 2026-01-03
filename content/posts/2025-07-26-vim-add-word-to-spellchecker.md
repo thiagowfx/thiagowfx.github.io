@@ -4,6 +4,7 @@ date: 2025-07-26T12:13:42+02:00
 tags:
   - dev
   - serenity
+  - vim
 ---
 
 When you have the spellchecker from `vim` turned on (`:set spell`), it

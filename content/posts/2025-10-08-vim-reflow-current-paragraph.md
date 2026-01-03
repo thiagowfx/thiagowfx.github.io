@@ -3,6 +3,7 @@ title: "vim: reflow current paragraph"
 date: 2025-10-08T18:03:57+02:00
 tags:
   - dev
+  - vim
 ---
 
 **Problem statement**: Given a paragraph (`lorem_ipsum.txt`):
