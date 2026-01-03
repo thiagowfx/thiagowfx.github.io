@@ -4,6 +4,7 @@ date: 2025-01-21T01:42:59-03:00
 tags:
   - dev
   - privacy
+  - security
 ---
 
 [Cloudflare](https://developers.cloudflare.com/1.1.1.1/ip-addresses/) has one of
