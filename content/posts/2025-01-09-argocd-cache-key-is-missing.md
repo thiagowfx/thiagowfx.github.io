@@ -3,6 +3,7 @@ title: "ArgoCD: cache: key is missing"
 date: 2025-01-09T20:20:03-03:00
 tags:
   - dev
+  - kubernetes
 ---
 
 If you experience the title error message in ArgoCD (e.g. via its web UI and/or

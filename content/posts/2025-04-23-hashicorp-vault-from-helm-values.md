@@ -3,6 +3,7 @@ title: "HashiCorp Vault from helm values"
 date: 2025-04-23T16:56:16+02:00
 tags:
   - dev
+  - kubernetes
   - security
 ---
 

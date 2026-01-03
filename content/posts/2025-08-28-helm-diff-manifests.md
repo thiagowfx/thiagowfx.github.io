@@ -3,6 +3,7 @@ title: "helm: diff manifests"
 date: 2025-08-28T17:57:32+02:00
 tags:
   - dev
+  - kubernetes
 ---
 
 Lately I've been employing (with great success) the following pattern in order

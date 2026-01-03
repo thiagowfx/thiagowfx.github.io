@@ -3,6 +3,7 @@ title: "Helm repository with a trailing slash"
 date: 2025-06-24T11:32:50+02:00
 tags:
   - dev
+  - kubernetes
 ---
 
 [A repository URL with a trailing slash, and the same URL without a trailing

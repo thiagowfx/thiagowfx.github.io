@@ -3,6 +3,7 @@ title: "ArgoCD: recovery when traefik is broken"
 date: 2025-08-09T15:24:53+02:00
 tags:
   - dev
+  - kubernetes
 ---
 
 It's Friday. The best day to push to prod™.

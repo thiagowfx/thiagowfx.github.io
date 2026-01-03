@@ -4,6 +4,7 @@ date: 2025-08-23T12:39:14+02:00
 tags:
   - dev
   - git
+  - kubernetes
 ---
 
 **Problem statement**: Every ArgoCD application is stuck in _Unknown_ state,

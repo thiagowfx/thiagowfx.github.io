@@ -3,6 +3,7 @@ title: "ArgoCD: all applications stuck on refresh"
 date: 2025-08-01T14:30:58+02:00
 tags:
   - dev
+  - kubernetes
 ---
 
 The problem is very likely the Application Controller.
