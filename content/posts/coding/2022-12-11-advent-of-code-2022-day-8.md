@@ -2,6 +2,7 @@
 title: "Advent of Code 2022: Day 8"
 date: 2022-12-11T00:00:00+00:00
 tags:
+  - advent-of-code
   - dev
 categories:
   - coding

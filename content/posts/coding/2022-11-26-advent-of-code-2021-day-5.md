@@ -2,6 +2,7 @@
 title: "Advent of Code 2021: Day 5"
 date: 2022-11-26T00:00:00+00:00
 tags:
+  - advent-of-code
   - dev
 categories:
   - coding

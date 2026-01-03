@@ -2,6 +2,7 @@
 title: "Advent of Code 2022: Day 3"
 date: 2022-12-03T00:00:00+00:00
 tags:
+  - advent-of-code
   - dev
 categories:
   - coding

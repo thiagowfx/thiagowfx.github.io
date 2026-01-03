@@ -2,6 +2,7 @@
 title: "Advent of Code 2024: Day 9"
 date: 2024-12-25T16:09:53-03:00
 tags:
+  - advent-of-code
   - dev
 categories:
   - coding
