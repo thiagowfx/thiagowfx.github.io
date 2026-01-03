@@ -4,7 +4,7 @@ date: 2025-09-06T02:02:24+02:00
 tags:
   - bestof
   - dev
-  - leetcodde
+  - leetcode
   - serenity
 ---
 
