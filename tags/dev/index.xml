@@ -1,6 +1,101 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 04 Jan 2026 02:48:36 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>LogSeq: slowness on macOS</title><link>https://perrotta.dev/2026/01/logseq-slowness-on-macos/</link><pubDate>Sat, 03 Jan 2026 23:53:13 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>macos</category><category>pkm</category><guid>https://perrotta.dev/2026/01/logseq-slowness-on-macos/</guid><description>&lt;p&gt;Last week LogSeq was super slow on my Mac, it was pretty much unusable. I had to
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 04 Jan 2026 04:40:45 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>git: diff untracked</title><link>https://perrotta.dev/2026/01/git-diff-untracked/</link><pubDate>Sun, 04 Jan 2026 04:29:01 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/01/git-diff-untracked/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2025/12/git-stash-untracked-files/"&gt;Previously&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;If we can stash untracked files (&lt;code&gt;git stash -u&lt;/code&gt;), should we be able to &lt;code&gt;git diff&lt;/code&gt; untracked files?&lt;/p&gt;
+&lt;p&gt;Naturally, diffing an untracked file would output the entire file contents.
+Still, this can be desirable sometimes.&lt;/p&gt;
+&lt;p&gt;When reviewing multiple files, some of which are modified, and some of which
+are brand new, you may want to review the entire list at once.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s try it out:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% cdtmp
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/var/folders/yr/6sw3yylx6gjcy5jr38d6j6000000gn/T/thiago.perrotta-2026-01-04-l8Co7f
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git init
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Initialized empty Git repository in /private/var/folders/yr/6sw3yylx6gjcy5jr38d6j6000000gn/T/thiago.perrotta-2026-01-04-l8Co7f/.git/
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% echo world &amp;gt; hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git status
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## No commits yet on master&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;?? hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git diff
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git diff -u&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Err, no luck. In fact, from &lt;a href="https://man.archlinux.org/man/git-diff.1"&gt;&lt;code&gt;git-diff(1)&lt;/code&gt;&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;-p, -u, &amp;ndash;patch&lt;/p&gt;
+&lt;p&gt;Generate patch (see the section called &amp;ldquo;GENERATING PATCH TEXT WITH -P&amp;rdquo;).
+This is the default.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Ouch. That&amp;rsquo;s not the &lt;code&gt;-u&lt;/code&gt; we&amp;rsquo;re looking for!&lt;/p&gt;
+&lt;p&gt;We can attempt a similar test with &lt;code&gt;git add -p&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% cdtmp
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/var/folders/yr/6sw3yylx6gjcy5jr38d6j6000000gn/T/thiago.perrotta-2026-01-04-l8Co7f
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git init
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Initialized empty Git repository in /private/var/folders/yr/6sw3yylx6gjcy5jr38d6j6000000gn/T/thiago.perrotta-2026-01-04-l8Co7f/.git/
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% echo world &amp;gt; hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git status
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## No commits yet on master&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;?? hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git add -p
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;No changes.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;No luck either.&lt;/p&gt;
+&lt;p&gt;Not all hope is lost though.&lt;/p&gt;
+&lt;p&gt;Enter &lt;a href="https://man.archlinux.org/man/git-add.1#:~:text=ignored%20removed%20files.-,%2DN%2C%20%2D%2Dintent%2Dto%2Dadd,-Record%20only%20the"&gt;&lt;code&gt;git add -N&lt;/code&gt; (&lt;code&gt;--intent-to-add&lt;/code&gt;)&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt; -N, --intent-to-add
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt; Record only the fact that the path will be added later. An entry for the
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt; path is placed in the index with no content. This is useful for, among other
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt; things, showing the unstaged content of such files with git diff and
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt; committing them with git commit -a.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If we do &lt;code&gt;git add -N hello.md&lt;/code&gt;, the following happens:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git add -N hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git --no-pager diff
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;diff --git hello.md hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;new file mode &lt;span style="color:#ae81ff"&gt;100644&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;index 0000000..cc628cc
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;--- /dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+++ hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;@@ -0,0 +1 @@
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+world&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Yes! There&amp;rsquo;s our diff. Now &lt;code&gt;git add -p&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git add -N hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git add -p
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;diff --git a/hello.md b/hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;new file mode &lt;span style="color:#ae81ff"&gt;100644&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;index 0000000..cc628cc
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;--- /dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+++ b/hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;@@ -0,0 +1 @@
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+world
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;(&lt;/span&gt;1/1&lt;span style="color:#f92672"&gt;)&lt;/span&gt; Stage addition &lt;span style="color:#f92672"&gt;[&lt;/span&gt;y,n,q,a,d,e,p,P,?&lt;span style="color:#f92672"&gt;]&lt;/span&gt;?&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It works too!&lt;/p&gt;
+&lt;p&gt;In order to make this workflow ergonomic, run &lt;code&gt;git add -AN&lt;/code&gt; (&lt;code&gt;-A&lt;/code&gt; = &lt;code&gt;--all&lt;/code&gt;)
+prior to &lt;code&gt;git diff&lt;/code&gt; or &lt;code&gt;git add -p&lt;/code&gt;, so that all new files are accounted for.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git: diff untracked"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>LogSeq: slowness on macOS</title><link>https://perrotta.dev/2026/01/logseq-slowness-on-macos/</link><pubDate>Sat, 03 Jan 2026 23:53:13 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>macos</category><category>pkm</category><guid>https://perrotta.dev/2026/01/logseq-slowness-on-macos/</guid><description>&lt;p&gt;Last week LogSeq was super slow on my Mac, it was pretty much unusable. I had to
 manually kill its process multiple times as it kept freezing.&lt;/p&gt;
 &lt;p&gt;Eventually I figured out &lt;a href="https://discuss.logseq.com/t/my-logseq-become-too-slow-recently/31985/4"&gt;the issue&lt;/a&gt;:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -2558,17 +2653,4 @@ base path of the URL instead&amp;rdquo;)&lt;/li&gt;
 settings&lt;/a&gt;, just set the shortcut starting with an exclamation mark / bang (&lt;code&gt;!&lt;/code&gt;).&lt;/p&gt;
 &lt;p&gt;When to choose which?
 Kagi settings will work seamlessly on mobile.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Kagi: Add LeetCode !bang"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/leetcode/"&gt;#leetcode&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>LeetCode #1299: Replace Elements with Greatest Element on Right Side</title><link>https://perrotta.dev/2025/12/leetcode-%231299-replace-elements-with-greatest-element-on-right-side/</link><pubDate>Tue, 30 Dec 2025 10:52:29 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>coding</category><category>dev</category><category>leetcode</category><guid>https://perrotta.dev/2025/12/leetcode-%231299-replace-elements-with-greatest-element-on-right-side/</guid><description>&lt;p&gt;&lt;a href="https://leetcode.com/problems/leetcode-#1299:-replace-elements-with-greatest-element-on-right-side"&gt;LeetCode #1299: Replace Elements with Greatest Element on Right Side&lt;/a&gt;:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="python"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;python&lt;/span&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;class&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;Solution&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;replaceElements&lt;/span&gt;(self, arr: List[int]) &lt;span style="color:#f92672"&gt;-&amp;gt;&lt;/span&gt; List[int]:
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; prev_max &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; i &lt;span style="color:#f92672"&gt;in&lt;/span&gt; range(len(arr) &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;, &lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;, &lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;):
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; arr[i], prev_max &lt;span style="color:#f92672"&gt;=&lt;/span&gt; prev_max, max(prev_max, arr[i])
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; arr&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: LeetCode #1299: Replace Elements with Greatest Element on Right Side"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/leetcode/"&gt;#leetcode&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Kagi: Add LeetCode !bang"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/leetcode/"&gt;#leetcode&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>

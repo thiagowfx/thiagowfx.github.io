@@ -1,6 +1,101 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>LogSeq: slowness on macOS</title><link>https://perrotta.dev/2026/01/logseq-slowness-on-macos/</link><pubDate>Sat, 03 Jan 2026 23:53:13 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>macos</category><category>pkm</category><guid>https://perrotta.dev/2026/01/logseq-slowness-on-macos/</guid><description>&lt;p&gt;Last week LogSeq was super slow on my Mac, it was pretty much unusable. I had to
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>git: diff untracked</title><link>https://perrotta.dev/2026/01/git-diff-untracked/</link><pubDate>Sun, 04 Jan 2026 04:29:01 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/01/git-diff-untracked/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2025/12/git-stash-untracked-files/"&gt;Previously&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;If we can stash untracked files (&lt;code&gt;git stash -u&lt;/code&gt;), should we be able to &lt;code&gt;git diff&lt;/code&gt; untracked files?&lt;/p&gt;
+&lt;p&gt;Naturally, diffing an untracked file would output the entire file contents.
+Still, this can be desirable sometimes.&lt;/p&gt;
+&lt;p&gt;When reviewing multiple files, some of which are modified, and some of which
+are brand new, you may want to review the entire list at once.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s try it out:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% cdtmp
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/var/folders/yr/6sw3yylx6gjcy5jr38d6j6000000gn/T/thiago.perrotta-2026-01-04-l8Co7f
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git init
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Initialized empty Git repository in /private/var/folders/yr/6sw3yylx6gjcy5jr38d6j6000000gn/T/thiago.perrotta-2026-01-04-l8Co7f/.git/
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% echo world &amp;gt; hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git status
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## No commits yet on master&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;?? hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git diff
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git diff -u&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Err, no luck. In fact, from &lt;a href="https://man.archlinux.org/man/git-diff.1"&gt;&lt;code&gt;git-diff(1)&lt;/code&gt;&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;-p, -u, &amp;ndash;patch&lt;/p&gt;
+&lt;p&gt;Generate patch (see the section called &amp;ldquo;GENERATING PATCH TEXT WITH -P&amp;rdquo;).
+This is the default.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Ouch. That&amp;rsquo;s not the &lt;code&gt;-u&lt;/code&gt; we&amp;rsquo;re looking for!&lt;/p&gt;
+&lt;p&gt;We can attempt a similar test with &lt;code&gt;git add -p&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% cdtmp
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/var/folders/yr/6sw3yylx6gjcy5jr38d6j6000000gn/T/thiago.perrotta-2026-01-04-l8Co7f
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git init
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Initialized empty Git repository in /private/var/folders/yr/6sw3yylx6gjcy5jr38d6j6000000gn/T/thiago.perrotta-2026-01-04-l8Co7f/.git/
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% echo world &amp;gt; hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git status
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## No commits yet on master&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;?? hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git add -p
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;No changes.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;No luck either.&lt;/p&gt;
+&lt;p&gt;Not all hope is lost though.&lt;/p&gt;
+&lt;p&gt;Enter &lt;a href="https://man.archlinux.org/man/git-add.1#:~:text=ignored%20removed%20files.-,%2DN%2C%20%2D%2Dintent%2Dto%2Dadd,-Record%20only%20the"&gt;&lt;code&gt;git add -N&lt;/code&gt; (&lt;code&gt;--intent-to-add&lt;/code&gt;)&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt; -N, --intent-to-add
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt; Record only the fact that the path will be added later. An entry for the
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt; path is placed in the index with no content. This is useful for, among other
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt; things, showing the unstaged content of such files with git diff and
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt; committing them with git commit -a.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If we do &lt;code&gt;git add -N hello.md&lt;/code&gt;, the following happens:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git add -N hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git --no-pager diff
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;diff --git hello.md hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;new file mode &lt;span style="color:#ae81ff"&gt;100644&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;index 0000000..cc628cc
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;--- /dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+++ hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;@@ -0,0 +1 @@
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+world&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Yes! There&amp;rsquo;s our diff. Now &lt;code&gt;git add -p&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git add -N hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git add -p
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;diff --git a/hello.md b/hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;new file mode &lt;span style="color:#ae81ff"&gt;100644&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;index 0000000..cc628cc
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;--- /dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+++ b/hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;@@ -0,0 +1 @@
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+world
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;(&lt;/span&gt;1/1&lt;span style="color:#f92672"&gt;)&lt;/span&gt; Stage addition &lt;span style="color:#f92672"&gt;[&lt;/span&gt;y,n,q,a,d,e,p,P,?&lt;span style="color:#f92672"&gt;]&lt;/span&gt;?&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It works too!&lt;/p&gt;
+&lt;p&gt;In order to make this workflow ergonomic, run &lt;code&gt;git add -AN&lt;/code&gt; (&lt;code&gt;-A&lt;/code&gt; = &lt;code&gt;--all&lt;/code&gt;)
+prior to &lt;code&gt;git diff&lt;/code&gt; or &lt;code&gt;git add -p&lt;/code&gt;, so that all new files are accounted for.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git: diff untracked"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>LogSeq: slowness on macOS</title><link>https://perrotta.dev/2026/01/logseq-slowness-on-macos/</link><pubDate>Sat, 03 Jan 2026 23:53:13 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>macos</category><category>pkm</category><guid>https://perrotta.dev/2026/01/logseq-slowness-on-macos/</guid><description>&lt;p&gt;Last week LogSeq was super slow on my Mac, it was pretty much unusable. I had to
 manually kill its process multiple times as it kept freezing.&lt;/p&gt;
 &lt;p&gt;Eventually I figured out &lt;a href="https://discuss.logseq.com/t/my-logseq-become-too-slow-recently/31985/4"&gt;the issue&lt;/a&gt;:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -2099,37 +2194,4 @@ workspace.&lt;/p&gt;
 around, should I need to recall something from them.&lt;/p&gt;
 &lt;p&gt;For &lt;em&gt;truly&lt;/em&gt; throwaway directories, use &lt;a href="https://perrotta.dev/2024/10/cdtmp-change-to-a-temporary-directory/"&gt;&lt;code&gt;cdtmp&lt;/code&gt;&lt;/a&gt;
 instead.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Try"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>Snippets manager</title><link>https://perrotta.dev/2025/12/snippets-manager/</link><pubDate>Tue, 02 Dec 2025 11:52:39 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>pkm</category><guid>https://perrotta.dev/2025/12/snippets-manager/</guid><description>&lt;p&gt;Humans are terrible at remembering complex command lines.&lt;/p&gt;
-&lt;p&gt;This issue compounds whenever there is a myriad of commands to remember.&lt;/p&gt;
-&lt;p&gt;I&amp;rsquo;ve been thinking for ages on how to address this gap efficiently. I finally
-got a decent workflow.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Unlimited + synchronized shell history: &lt;a href="https://perrotta.dev/2025/11/atuin/"&gt;&lt;code&gt;atuin&lt;/code&gt;&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Text expander: &lt;a href="https://perrotta.dev/2025/05/espanso-hello-world/"&gt;&lt;code&gt;espanso&lt;/code&gt;&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;And now, the missing piece: a snippets manager.&lt;/p&gt;
-&lt;p&gt;There are three good options:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://masscode.io/"&gt;MassCode&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.renfei.org/snippets-lab/"&gt;Snippets Lab&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/knqyf263/pet"&gt;&lt;code&gt;pet&lt;/code&gt;&lt;/a&gt;: command-line&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;I am piloting Snippets Lab&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2025/12/snippets-manager/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;. It has integration with
-&lt;a href="https://www.raycast.com/renfei_song/snippetslab"&gt;Raycast&lt;/a&gt;, and also a system
-tray icon.&lt;/p&gt;
-&lt;p&gt;These three solutions are enough to manage anything I may ever want to recall.
-Commands at my fingertips.&lt;/p&gt;
-&lt;p&gt;We can finish with the cherry on top: &lt;a href="https://logseq.com/"&gt;LogSeq&lt;/a&gt; entries to
-archive deprecated or &lt;em&gt;potentially&lt;/em&gt; useful commands.&lt;/p&gt;
-&lt;p&gt;From 2026 onwards, no command shall ever be lost.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: The aforementioned programs are intended for macOS. Atuin, Espanso,
-MassCode, &lt;code&gt;pet&lt;/code&gt; and LogSeq are cross-platform. Snippets Lab is macOS only.&lt;/p&gt;
-&lt;div class="footnotes" role="doc-endnotes"&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id="fn:1"&gt;
-&lt;p&gt;It is very comparable to MassCode. This choice was a bit arbitrary.&amp;#160;&lt;a href="https://perrotta.dev/2025/12/snippets-manager/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Snippets manager"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/pkm/"&gt;#pkm&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Try"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>

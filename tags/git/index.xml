@@ -1,6 +1,101 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Git on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Git on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 03 Jan 2026 19:47:27 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>★ neovim: inline git hunk control</title><link>https://perrotta.dev/2026/01/neovim-inline-git-hunk-control/</link><pubDate>Sat, 03 Jan 2026 15:41:21 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>bestof</category><category>dev</category><category>git</category><category>vim</category><guid>https://perrotta.dev/2026/01/neovim-inline-git-hunk-control/</guid><description>&lt;p&gt;What is a
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 04 Jan 2026 04:40:45 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>git: diff untracked</title><link>https://perrotta.dev/2026/01/git-diff-untracked/</link><pubDate>Sun, 04 Jan 2026 04:29:01 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/01/git-diff-untracked/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2025/12/git-stash-untracked-files/"&gt;Previously&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;If we can stash untracked files (&lt;code&gt;git stash -u&lt;/code&gt;), should we be able to &lt;code&gt;git diff&lt;/code&gt; untracked files?&lt;/p&gt;
+&lt;p&gt;Naturally, diffing an untracked file would output the entire file contents.
+Still, this can be desirable sometimes.&lt;/p&gt;
+&lt;p&gt;When reviewing multiple files, some of which are modified, and some of which
+are brand new, you may want to review the entire list at once.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s try it out:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% cdtmp
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/var/folders/yr/6sw3yylx6gjcy5jr38d6j6000000gn/T/thiago.perrotta-2026-01-04-l8Co7f
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git init
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Initialized empty Git repository in /private/var/folders/yr/6sw3yylx6gjcy5jr38d6j6000000gn/T/thiago.perrotta-2026-01-04-l8Co7f/.git/
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% echo world &amp;gt; hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git status
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## No commits yet on master&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;?? hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git diff
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git diff -u&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Err, no luck. In fact, from &lt;a href="https://man.archlinux.org/man/git-diff.1"&gt;&lt;code&gt;git-diff(1)&lt;/code&gt;&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;-p, -u, &amp;ndash;patch&lt;/p&gt;
+&lt;p&gt;Generate patch (see the section called &amp;ldquo;GENERATING PATCH TEXT WITH -P&amp;rdquo;).
+This is the default.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Ouch. That&amp;rsquo;s not the &lt;code&gt;-u&lt;/code&gt; we&amp;rsquo;re looking for!&lt;/p&gt;
+&lt;p&gt;We can attempt a similar test with &lt;code&gt;git add -p&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% cdtmp
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/var/folders/yr/6sw3yylx6gjcy5jr38d6j6000000gn/T/thiago.perrotta-2026-01-04-l8Co7f
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git init
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Initialized empty Git repository in /private/var/folders/yr/6sw3yylx6gjcy5jr38d6j6000000gn/T/thiago.perrotta-2026-01-04-l8Co7f/.git/
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% echo world &amp;gt; hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git status
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## No commits yet on master&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;?? hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git add -p
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;No changes.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;No luck either.&lt;/p&gt;
+&lt;p&gt;Not all hope is lost though.&lt;/p&gt;
+&lt;p&gt;Enter &lt;a href="https://man.archlinux.org/man/git-add.1#:~:text=ignored%20removed%20files.-,%2DN%2C%20%2D%2Dintent%2Dto%2Dadd,-Record%20only%20the"&gt;&lt;code&gt;git add -N&lt;/code&gt; (&lt;code&gt;--intent-to-add&lt;/code&gt;)&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt; -N, --intent-to-add
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt; Record only the fact that the path will be added later. An entry for the
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt; path is placed in the index with no content. This is useful for, among other
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt; things, showing the unstaged content of such files with git diff and
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;gt; committing them with git commit -a.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If we do &lt;code&gt;git add -N hello.md&lt;/code&gt;, the following happens:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git add -N hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git --no-pager diff
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;diff --git hello.md hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;new file mode &lt;span style="color:#ae81ff"&gt;100644&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;index 0000000..cc628cc
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;--- /dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+++ hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;@@ -0,0 +1 @@
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+world&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Yes! There&amp;rsquo;s our diff. Now &lt;code&gt;git add -p&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git add -N hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git add -p
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;diff --git a/hello.md b/hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;new file mode &lt;span style="color:#ae81ff"&gt;100644&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;index 0000000..cc628cc
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;--- /dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+++ b/hello.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;@@ -0,0 +1 @@
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+world
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;(&lt;/span&gt;1/1&lt;span style="color:#f92672"&gt;)&lt;/span&gt; Stage addition &lt;span style="color:#f92672"&gt;[&lt;/span&gt;y,n,q,a,d,e,p,P,?&lt;span style="color:#f92672"&gt;]&lt;/span&gt;?&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It works too!&lt;/p&gt;
+&lt;p&gt;In order to make this workflow ergonomic, run &lt;code&gt;git add -AN&lt;/code&gt; (&lt;code&gt;-A&lt;/code&gt; = &lt;code&gt;--all&lt;/code&gt;)
+prior to &lt;code&gt;git diff&lt;/code&gt; or &lt;code&gt;git add -p&lt;/code&gt;, so that all new files are accounted for.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git: diff untracked"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>★ neovim: inline git hunk control</title><link>https://perrotta.dev/2026/01/neovim-inline-git-hunk-control/</link><pubDate>Sat, 03 Jan 2026 15:41:21 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>bestof</category><category>dev</category><category>git</category><category>vim</category><guid>https://perrotta.dev/2026/01/neovim-inline-git-hunk-control/</guid><description>&lt;p&gt;What is a
 &lt;a href="https://stackoverflow.com/questions/37620729/in-the-context-of-git-and-diff-what-is-a-hunk"&gt;hunk&lt;/a&gt;?&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;When comparing two files, diff finds sequences of lines common to both files,
@@ -1962,22 +2057,4 @@ snowflake in the snow&lt;/em&gt;.&amp;#160;&lt;a href="https://perrotta.dev/2024
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git: recover a snowflake commit"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>git misspellings</title><link>https://perrotta.dev/2024/10/git-misspellings/</link><pubDate>Thu, 10 Oct 2024 13:26:57 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><category>serenity</category><guid>https://perrotta.dev/2024/10/git-misspellings/</guid><description>&lt;p&gt;Buried into a &lt;code&gt;~/.bashrc&lt;/code&gt; far away&amp;hellip;&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2024/10/git-misspellings/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# misspellings for git
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;alias t=git
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;alias it=git
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;alias gi=git
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;alias gt=git
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;alias gti=git&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="footnotes" role="doc-endnotes"&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id="fn:1"&gt;
-&lt;p&gt;History makes &lt;em&gt;no mistake&lt;/em&gt;: all these have occurred at least once.&amp;#160;&lt;a href="https://perrotta.dev/2024/10/git-misspellings/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git misspellings"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git: recover a snowflake commit"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
