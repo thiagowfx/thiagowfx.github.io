@@ -95,6 +95,8 @@ index 0000000..cc628cc
 
 It works too!
 
+`git reset --hard` picks it up as well.
+
 In order to make this workflow ergonomic, run `git add -AN` (`-A` = `--all`)
 prior to `git diff` or `git add -p`, so that all new files are accounted for.
 
