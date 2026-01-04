@@ -5,8 +5,6 @@ tags:
   - meta
   - privacy
   - serenity
-aliases:
-  - /instagram
 ---
 
 Following the footsteps of enacting 2025 as a year of [Tech Independence]({{< ref

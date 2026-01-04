@@ -3,8 +3,6 @@ title: "Emissor NFE Sebrae v4.01 para emissão de notas fiscais"
 date: 2025-01-08T00:29:46-03:00
 tags:
   - dev
-aliases:
-  - /nfe
 ---
 
 _To my English-speaking readers: this post contains Brazilian bureaucracy and

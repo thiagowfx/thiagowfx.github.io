@@ -4,8 +4,6 @@ date: 2025-01-19T18:53:57-03:00
 tags:
   - bestof
   - serenity
-aliases:
-  - /deutschland-ticket
 ---
 
 This post is written as a reference for friends who would visit me in Germany 🇩🇪.
