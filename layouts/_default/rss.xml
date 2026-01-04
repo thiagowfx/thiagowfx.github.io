@@ -58,7 +58,17 @@ The only diff is `.Content` instead of `.Summary` for full-text RSS feeds.
     {{- end }}
     {{- range $pages }}
     <item>
-      <title>{{ if in .Params.tags "bestof" }}★ {{ end }}{{ .Title }}</title>
+      <title>
+        {{- if in .Params.tags "bestof" }}★ {{ end }}
+        {{- $hasCommentaryCategory := false }}
+        {{- range (.GetTerms "categories") }}
+          {{- if eq .Name "commentary" }}
+            {{- $hasCommentaryCategory = true }}
+          {{- end }}
+        {{- end }}
+        {{- if and (.Params.external_link) $hasCommentaryCategory }}🔗 {{ end }}
+        {{- .Title }}
+      </title>
       <link>{{ .Permalink }}</link>
       <pubDate>{{ .PublishDate.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
       {{- with $authorEmail }}<author>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</author>{{ end }}

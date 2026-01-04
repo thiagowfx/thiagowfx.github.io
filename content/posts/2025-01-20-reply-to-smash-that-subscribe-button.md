@@ -1,10 +1,13 @@
 ---
 title: "Reply to: smash that subscribe button"
 date: 2025-01-20T01:01:23-03:00
+categories:
+  - commentary
 tags:
   - dev
   - meta
   - serenity
+external_link: "https://wilwheaton.net/2025/01/smash-that-subscribe-button/"
 ---
 
 [Wil Wheaton](https://wilwheaton.net/2025/01/smash-that-subscribe-button/):

@@ -31,13 +31,24 @@
 </script>
 <a href="{{ with $prevPost }}{{ .Permalink }}{{ end }}" data-nav="prev" style="display: none;"></a>
 <a href="{{ with $nextPost }}{{ .Permalink }}{{ end }}" data-nav="next" style="display: none;"></a>
+{{- $hasCommentaryCategory := false }}
+{{- range (.GetTerms "categories") }}
+  {{- if eq .Name "commentary" }}
+    {{- $hasCommentaryCategory = true }}
+  {{- end }}
+{{- end }}
 {{- if not .Params.menu }}
 <article class="h-entry">
 <div class="article-header">
   <h2>
     {{- if in .Params.tags "bestof" }}
     <span>★</span>
-    {{- end }} <span class="p-name">{{ .Title }}</span>
+    {{- end }}
+    {{- if and (.Params.external_link) $hasCommentaryCategory }}
+    🔗 Reply to: <a href="{{ .Params.external_link }}" class="p-name u-in-reply-to" target="_blank" rel="noopener noreferrer">{{ replace .Title "Reply to: " "" }}</a>
+    {{- else }}
+    <span class="p-name">{{ .Title }}</span>
+    {{- end }}
   </h2>
   <button id="fullscreen-btn" class="fullscreen-btn" aria-label="Toggle fullscreen mode" title="Toggle fullscreen mode (f)">
     <span id="fullscreen-icon">⛶</span>
@@ -77,7 +88,9 @@
     </div>
   {{- end }}
 {{- end }}
-{{- if gt (len .TableOfContents) 100 }}
+
+{{- $showToc := .Params.toc | default true -}}
+{{- if and (gt (len .TableOfContents) 100) $showToc }}
 <details class="toc">
   <summary>Table of Contents</summary>
   {{ .TableOfContents }}

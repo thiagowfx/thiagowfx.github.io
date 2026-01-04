@@ -1,8 +1,11 @@
 ---
-title: "100 days to offload"
+title: "Reply to: 100 days to offload"
 date: 2025-01-03T00:25:28-03:00
+categories:
+  - commentary
 tags:
   - meta
+external_link: "https://100daystooffload.com/"
 ---
 
 [Post

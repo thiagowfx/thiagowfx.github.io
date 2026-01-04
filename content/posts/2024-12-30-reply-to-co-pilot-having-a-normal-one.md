@@ -1,10 +1,13 @@
 ---
 title: "Reply to: CoPilot having a normal one"
 date: 2024-12-30T17:49:59-03:00
+categories:
+  - commentary
 tags:
   - ai
   - dev
   - serenity
+external_link: "https://davidkrider.com/copilot-having-a-normal-one/"
 ---
 
 ([via David Krider](https://davidkrider.com/copilot-having-a-normal-one/)):

@@ -1,10 +1,13 @@
 ---
 title: "Reply to: Growth at BigTech"
 date: 2025-03-06T23:40:25+01:00
+categories:
+  - commentary
 tags:
   - bestof
   - dev
   - serenity
+external_link: "https://bhardwajrish.blogspot.com/2025/03/growth-at-bigtech.html"
 ---
 
 Original article: [Growth at

@@ -1,8 +1,11 @@
 ---
 title: "Reply to: Mistakes engineers make in large established codebases"
 date: 2025-01-05T03:15:47-03:00
+categories:
+  - commentary
 tags:
   - dev
+external_link: "https://www.seangoedecke.com/large-established-codebases/"
 ---
 
 [Sean Goedecke](https://www.seangoedecke.com/large-established-codebases/):

@@ -93,6 +93,26 @@ code *args:
 
 alias coding := code
 
+# Create a new commentary post (link blog). Usage: `just commentary https://example.com "optional title"`
+commentary url *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    # Extract title from remaining args or use empty string
+    title="{{ args }}"
+    if [ -z "$title" ]; then
+        # If no title provided, use URL domain as fallback
+        title=$(echo "{{ url }}" | sed -E 's|https?://([^/]+).*|\1|' | tr '[:upper:]' '[:lower:]')
+    fi
+
+    filename=$(echo "$title" | tr '[:upper:]' '[:lower:]' | sed -e 's/[:/]/-/g' | tr -s ' ' | tr ' ' '-')
+    filepath="content/posts/`date "+%Y-%m-%d"`-${filename}.md"
+
+    HUGO_EXTERNAL_LINK="{{ url }}" hugo new --kind commentary "${filepath}"
+    {{ editor }} "${filepath}"
+
+alias comment := commentary
+
 # Search for and edit a blog post. Usage: `just edit` or `just edit <term>`
 edit *args:
     #!/usr/bin/env bash

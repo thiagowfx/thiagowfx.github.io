@@ -1,8 +1,11 @@
 ---
-title: "Independence"
+title: "Reply to: Here's how to live: Be independent"
 date: 2024-12-31T15:26:46-03:00
+categories:
+  - commentary
 tags:
   - serenity
+external_link: "https://sive.rs/htl01"
 ---
 
 [Here's how to live: Be independent](https://sive.rs/htl01) by Derek Sivers.

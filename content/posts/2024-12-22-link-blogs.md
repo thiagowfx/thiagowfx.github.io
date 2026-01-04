@@ -1,8 +1,11 @@
 ---
-title: "Link blogs"
+title: "Reply to: My approach to running a link blog"
 date: 2024-12-22T22:16:59-03:00
+categories:
+  - commentary
 tags:
   - meta
+external_link: "https://simonwillison.net/2024/Dec/22/link-blog/"
 ---
 
 Simon Willison's "My approach to running a link blog"

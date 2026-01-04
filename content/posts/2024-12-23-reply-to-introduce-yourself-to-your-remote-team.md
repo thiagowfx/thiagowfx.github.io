@@ -1,9 +1,12 @@
 ---
 title: "Reply to: Introduce yourself to your remote team"
 date: 2024-12-23T20:47:55-03:00
+categories:
+  - commentary
 tags:
   - meta
   - serenity
+external_link: "https://cassidoo.co/post/remote-intros/"
 ---
 
 ([via](https://cassidoo.co/post/remote-intros/)) Cassidy Williams:

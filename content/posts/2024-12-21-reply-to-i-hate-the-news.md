@@ -1,9 +1,12 @@
 ---
 title: "Reply to: I Hate the News"
 date: 2024-12-21T01:44:16-03:00
+categories:
+  - commentary
 tags:
   - meta
   - serenity
+external_link: "http://www.aaronsw.com/weblog/hatethenews"
 ---
 
 Link to the [original article](http://www.aaronsw.com/weblog/hatethenews) from

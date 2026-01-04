@@ -1,9 +1,12 @@
 ---
 title: "Reply to: My approach to running a link blog"
 date: 2025-01-05T00:16:09-03:00
+categories:
+  - commentary
 tags:
   - meta
   - serenity
+external_link: "https://simonwillison.net/2024/Dec/22/link-blog/"
 ---
 
 [Simon Willison](https://simonwillison.net/2024/Dec/22/link-blog/):

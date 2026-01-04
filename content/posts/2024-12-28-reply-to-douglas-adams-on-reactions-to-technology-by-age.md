@@ -1,8 +1,11 @@
 ---
 title: "Reply to: Douglas Adams on reactions to technology by age"
 date: 2024-12-28T06:09:47-03:00
+categories:
+  - commentary
 tags:
   - serenity
+external_link: "https://daringfireball.net/linked/2024/06/01/douglas-adams-reactions-to-technology"
 ---
 
 [via John
