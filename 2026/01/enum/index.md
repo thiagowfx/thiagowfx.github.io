@@ -1,0 +1,47 @@
+
+**Problem statement**:
+
+- with `auto()`
+- without `auto()`
+- without `Enum`
+
+```python
+from enum import Enum, auto
+
+class Fruit(Enum):
+    BANANA = auto()
+    APPLE = auto()
+
+class Color(Enum):
+    GREEN = auto()
+    ORANGE = auto()
+
+f1: Fruit = Fruit.BANANA
+f2: Fruit = Fruit.APPLE
+
+assert f1 != f2
+
+assert Fruit.BANANA != Color.GREEN
+
+# Without auto
+class Language(Enum):
+    PYTHON = 1
+    JAVA = 2
+
+assert Language.PYTHON != Language.JAVA
+
+# Enums do not allow reassignments
+try:
+    Language.PYTHON = 3
+    assert False
+except Exception:
+    ...
+
+# Without enum
+PYTHON = 1
+JAVA = 2
+
+# Whereas plain variables do
+PYTHON = 3
+```
+
