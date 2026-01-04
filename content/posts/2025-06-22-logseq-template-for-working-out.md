@@ -3,6 +3,7 @@ title: "Logseq template for working out"
 date: 2025-06-22T02:19:09+02:00
 tags:
   - bestof
+  - pkm
   - serenity
 ---
 

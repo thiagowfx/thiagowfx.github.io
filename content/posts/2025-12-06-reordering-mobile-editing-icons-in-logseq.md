@@ -3,6 +3,7 @@ title: "Reordering mobile editing icons in logseq"
 date: 2025-12-06T00:42:32-03:00
 tags:
   - dev
+  - pkm
   - serenity
 ---
 

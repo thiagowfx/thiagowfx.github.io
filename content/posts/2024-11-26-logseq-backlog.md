@@ -3,6 +3,7 @@ title: "logseq: backlog"
 date: 2024-11-26T18:53:22+01:00
 tags:
   - dev
+  - pkm
 ---
 
 Assume you use `TODO` and `DOING` for workflow tracking in

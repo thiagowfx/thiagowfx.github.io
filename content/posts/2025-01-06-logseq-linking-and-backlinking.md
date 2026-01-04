@@ -3,6 +3,7 @@ title: "Logseq: linking and backlinking"
 date: 2025-01-06T22:49:44-03:00
 tags:
   - dev
+  - pkm
 ---
 
 This is the first post about LogSeq / PKM. Run before it's [too

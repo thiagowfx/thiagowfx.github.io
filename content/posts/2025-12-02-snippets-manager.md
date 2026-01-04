@@ -3,6 +3,7 @@ title: "Snippets manager"
 date: 2025-12-02T11:52:39-03:00
 tags:
   - dev
+  - pkm
 ---
 
 Humans are terrible at remembering complex command lines.
