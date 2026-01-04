@@ -4,7 +4,7 @@
 
 Whenever the LLM is too confident after performing some work:
 
-**Prompt**: Anything else you may have missed?
+**Prompt**: _Anything else you may have missed?_
 
 Repeat a few times in a row.
 
