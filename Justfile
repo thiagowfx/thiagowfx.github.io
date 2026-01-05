@@ -46,7 +46,7 @@ code *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    filename=$(echo "{{ args }}" | sed -e 's/#//g' | tr '[:upper:]' '[:lower:]' | sed -e 's/:/ /g' | tr -s ' ' | tr ' ' '-')
+    filename=$(echo "{{ args }}" | sed -e 's/#//g' -e 's/\.//g' | tr '[:upper:]' '[:lower:]' | sed -e 's/:/ /g' | tr -s ' ' | tr ' ' '-')
     filepath="content/posts/coding/`date "+%Y-%m-%d"`-${filename}.md"
 
     hugo_title="{{ args }}"
