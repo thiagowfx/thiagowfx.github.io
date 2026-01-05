@@ -6,6 +6,8 @@ tags:
   - dev
 ---
 
+[Previously]({{< ref "2026-01-05-claude-code-tips" >}}).
+
 Stay up-to-date with the [Claude Code](https://claude.com/product/claude-code)
 [CHANGELOG](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md).
 
