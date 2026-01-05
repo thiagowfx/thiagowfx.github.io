@@ -39,7 +39,7 @@ you, thanks to airplane mode being off + "do not disturb" being on.
 In the past I would leave Wi-Fi on (=airplane mode off) + "do not disturb" on,
 but every once in a while I would get paged, even before 5am. Why? Because our
 oncall rotation is configured to eventually alert the entire team if the current
-oncall person does not timely ACK the page, which happens seldomly. I'd rather
+oncall person does not timely ACK the page, which happens seldom. I'd rather
 not take the risk and have my sleep interrupted.
 
 This scheme only works in practice for oncall rotations that do not have a
