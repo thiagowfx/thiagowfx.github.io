@@ -10,7 +10,7 @@ messages in a row results in the second message interrupting the first.
 
 Most other agents (e.g. Claude Code, OpenAI Codex, Google Gemini) support
 message queueing by default, wherein the second message "waits" until the first
-promt is complete.
+prompt is complete.
 
 To achieve the same behavior in `amp`, use `/queue`. There's also `/dequeue` to
 undo it.

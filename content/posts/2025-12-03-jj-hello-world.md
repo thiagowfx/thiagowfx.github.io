@@ -113,7 +113,7 @@ Fancy! Now what? I learned that whenever I am lost, `jj` is your friend. `jj`
 │ ○  oqwvuopo {redacted email} 2025-12-03 03:36:43 likes 907c5e72
 ├─╯  git-freeze
 ◆  oqwnlpuv {redacted email} 2025-12-02 23:12:39 master a9efb058
-│  bytebytego: Product Array Without Current Elemen
+│  bytebytego: Product Array Without Current Element
 ~
 ```
 

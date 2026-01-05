@@ -62,7 +62,7 @@ An honorable mention also goes to
 originally discovered by looking for an open source alternative to Google's
 Fig[^1] interactive commit and split commands.
 
-Now that you see how my mind is overloaded with many possibilies to manipulate
+Now that you see how my mind is overloaded with many possibilities to manipulate
 git hunks, the natural follow-up question is: how to do so right from within our
 favorite text editor (`vim`)?
 
