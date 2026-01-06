@@ -19,7 +19,7 @@ class Solution:
         prev = 0
         for num in nums:
             if num == 0:
-                prev = False
+                prev = 0
 
             elif num == 1:
                 prev += 1
