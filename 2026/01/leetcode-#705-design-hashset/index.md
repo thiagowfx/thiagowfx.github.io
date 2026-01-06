@@ -1,6 +1,8 @@
 
 [LeetCode #705: Design HashSet](https://leetcode.com/problems/design-hashset):
 
+Shortcut:
+
 ```python
 class MyHashSet:
 
@@ -16,6 +18,41 @@ class MyHashSet:
 
     def contains(self, key: int) -> bool:
         return key in self.s
+
+
+# Your MyHashSet object will be instantiated and called as such:
+# obj = MyHashSet()
+# obj.add(key)
+# obj.remove(key)
+# param_3 = obj.contains(key)
+```
+
+Proper:
+
+```python
+class MyHashSet:
+
+    def __init__(self):
+        self.size = 1000
+        self.s = [[] for _ in range(self.size)]
+
+    def hash(self, key):
+        assert isinstance(key, int)
+        return key % self.size
+
+    def add(self, key: int) -> None:
+        bucket = self.s[self.hash(key)]
+        if key not in bucket:
+            bucket.append(key)
+
+    def remove(self, key: int) -> None:
+        bucket = self.s[self.hash(key)]
+        if key in bucket:
+            del bucket[bucket.index(key)]
+
+    def contains(self, key: int) -> bool:
+        bucket = self.s[self.hash(key)]
+        return key in bucket
 
 
 # Your MyHashSet object will be instantiated and called as such:
