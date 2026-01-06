@@ -79,11 +79,11 @@ code *args:
 
     HUGO_TITLE="${hugo_title}" HUGO_LEETCODE_SLUG="${hugo_leetcode_slug}" HUGO_BYTEBYTEGO_SLUG="${hugo_bytebytego_slug}" HUGO_AOC_SLUG="${hugo_aoc_slug}" HUGO_TAGS="${hugo_tags}" hugo new --kind coding "${filepath}"
 
-    # Check for duplicate LeetCode posts before opening editor
-    if [[ "{{ args }}" == "LeetCode"* ]]; then
+    # Check for duplicate posts before opening editor
+    if [[ "{{ args }}" == "LeetCode"* ]] || [[ "{{ args }}" == "ByteByteGo"* ]]; then
         if ! ci/check_duplicate_leetcode_posts.py; then
             echo ""
-            echo "❌ Duplicate LeetCode post detected! Please resolve the duplicate before editing."
+            echo "❌ Duplicate post detected! Please resolve the duplicate before editing."
             rm "${filepath}"
             exit 1
         fi
