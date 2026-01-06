@@ -81,7 +81,7 @@ code *args:
 
     # Check for duplicate posts before opening editor
     if [[ "{{ args }}" == "LeetCode"* ]] || [[ "{{ args }}" == "ByteByteGo"* ]]; then
-        if ! ci/check_duplicate_leetcode_posts.py; then
+        if ! ci/check_duplicate_coding_posts.py; then
             echo ""
             echo "❌ Duplicate post detected! Please resolve the duplicate before editing."
             rm "${filepath}"
