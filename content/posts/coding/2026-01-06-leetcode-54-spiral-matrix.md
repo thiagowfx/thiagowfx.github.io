@@ -10,6 +10,8 @@ categories:
 
 [LeetCode #54: Spiral Matrix](https://leetcode.com/problems/spiral-matrix):
 
+Modify input (easier):
+
 ```python
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
@@ -56,6 +58,46 @@ class Solution:
                     pos[1] = new_pos[1]
                 else:
                     return ans
+
+        return ans
+```
+
+Classic:
+
+```
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        ans = []
+
+        start = (0, 0)
+        end = (len(matrix) - 1, len(matrix[0]) - 1)
+
+        def debian_once(start, end):
+            (x1, y1) = start
+            (x2, y2) = end
+
+            # -> right
+            for y in range(y1, y2 + 1):
+                ans.append(matrix[x1][y])
+
+            # \/ down
+            for x in range(x1 + 1, x2):
+                ans.append(matrix[x][y2])
+
+            # <- left
+            if x2 > x1:
+                for y in range(y2, y1 - 1, -1):
+                    ans.append(matrix[x2][y])
+
+            # /\ up
+            if y2 > y1:
+                for x in range(x2 - 1, x1, -1):
+                    ans.append(matrix[x][y1])
+
+        while all(x <= y for (x, y) in zip(start, end)):
+            debian_once(start, end)
+            start = tuple(el + 1 for el in start)
+            end = tuple(el - 1 for el in end)
 
         return ans
 ```
