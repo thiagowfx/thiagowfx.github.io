@@ -39,7 +39,7 @@ def main():
     # Map problem number to list of files
     problems = defaultdict(list)
 
-    for filepath in content_dir.glob('*leetcode*.md'):
+    for filepath in content_dir.glob('**/coding/*leetcode*.md'):
         problem_num = extract_problem_number(filepath)
         if problem_num is not None:
             problems[problem_num].append(filepath.name)
