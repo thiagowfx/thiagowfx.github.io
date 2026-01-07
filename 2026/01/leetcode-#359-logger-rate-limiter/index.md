@@ -13,7 +13,7 @@ class Logger:
             self.log[message] = timestamp
             return True
 
-        if timestamp - self.log[message] <= 10:
+        if timestamp - self.log[message] < 10:
             return False
 
         self.log[message] = timestamp
