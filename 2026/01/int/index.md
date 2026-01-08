@@ -1,0 +1,60 @@
+
+Integers, bits and bytes:
+
+```python
+assert int('10') == 10
+assert int('010') == 10
+assert int('0x10', base=16) == 16
+assert int('10', base=16) == 16
+assert int('0o10', base=8) == 8
+assert int('10', base=8) == 8
+assert int('0b10', base=2) == 2
+assert int('10', base=2) == 2
+
+assert bin(10) == "0b1010"
+assert bin(1) == "0b1"
+assert bin(0) == "0b0"
+
+assert oct(10) == "0o12"
+
+assert hex(10) == "0xa"
+assert int('0xFF', base=16)  == 255
+
+assert abs(-10) == 10
+
+assert 5 % 3 == 2 ## mod
+
+assert 5 ** 2 == 25
+
+## 0b110
+assert (6).bit_count() == 2
+assert int(6).bit_count() == 2
+# assert 6.bit_count() == 2  ## this fails
+
+assert int(6).bit_length() == 3
+
+def bit_length(n):
+    assert isinstance(n, int)
+    ans = 0
+    while n > 0:
+        n >>= 1
+        ans += 1
+    return ans
+
+assert bit_length(6) == 3
+assert bit_length(7) == 3
+assert bit_length(8) == 4
+
+def bit_count(n):
+    assert isinstance(n, int)
+    ans = 0
+    while n > 0:
+        ans += n & 1
+        n >>= 1
+    return ans
+
+assert bit_count(6) == 2
+assert bit_count(7) == 3
+assert bit_count(8) == 1
+```
+
