@@ -1,0 +1,29 @@
+
+```python
+from collections import ChainMap
+
+a = {1: 2}
+b = {1: 3}
+c = {2: 4}
+
+# a has more priority than b, which has more priority than c
+d = ChainMap(a, b, c)
+
+assert len(d) == 2
+assert d[1] == 2
+assert d[2] == 4
+d[1] = 3
+assert d[1] == 3
+assert a[1] == 3
+d[2] = 10
+assert d[2] == 10
+assert a[2] == 10
+assert c[2] == 4
+
+del d[2]
+assert 2 not in a
+
+e = d.new_child({1: 10})
+assert e[1] == 10
+```
+
