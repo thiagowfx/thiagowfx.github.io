@@ -1,0 +1,51 @@
+{{- /* Find older posts with overlapping tags, jwz-style "previously" links */ -}}
+{{- if .Params.tags -}}
+{{- $currentPage := . -}}
+{{- $posts := where .Site.RegularPages "Section" "posts" -}}
+{{- $posts = where $posts "Permalink" "ne" .Permalink -}}
+{{- $posts = where $posts "Date" "lt" .Date -}}
+
+{{- /* Score by number of shared tags */ -}}
+{{- $scored := slice -}}
+{{- range $posts -}}
+  {{- $sharedTags := intersect $currentPage.Params.tags .Params.tags -}}
+  {{- $score := len $sharedTags -}}
+  {{- if gt $score 0 -}}
+    {{- $scored = $scored | append (dict "page" . "score" $score) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Sort by score desc, then by date desc (most recent first) */ -}}
+{{- $sorted := sort $scored "score" "desc" -}}
+{{- $byDate := slice -}}
+{{- $maxScore := 0 -}}
+{{- range $sorted -}}
+  {{- if eq $maxScore 0 -}}
+    {{- $maxScore = .score -}}
+  {{- end -}}
+  {{- if eq .score $maxScore -}}
+    {{- $byDate = $byDate | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- $byDate = sort $byDate "page.Date" "desc" -}}
+{{- $remaining := where $sorted "score" "lt" $maxScore -}}
+{{- $sorted = $byDate | append $remaining -}}
+
+{{- $previously := slice -}}
+{{- range first 5 $sorted -}}
+  {{- $previously = $previously | append .page -}}
+{{- end -}}
+
+{{- if $previously -}}
+<p class="previously">
+  {{- range $i, $p := $previously -}}
+    {{- if eq $i 0 -}}
+      <a href="{{ $p.Permalink }}" title="{{ $p.Title }}">Previously</a>
+    {{- else -}}
+      , <a href="{{ $p.Permalink }}" title="{{ $p.Title }}">previously</a>
+    {{- end -}}
+  {{- end -}}.
+</p>
+{{- end -}}
+
+{{- end -}}
