@@ -32,3 +32,24 @@ class Solution:
 
         return ans
 ```
+
+Better:
+
+```python
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        v = set()
+        left = right = 0
+
+        ans = 0
+
+        for right in range(len(s)):
+            while s[right] in v:
+                v.remove(s[left])
+                left += 1
+            v.add(s[right])
+
+            ans = max(ans, right - left + 1)
+
+        return ans
+```
