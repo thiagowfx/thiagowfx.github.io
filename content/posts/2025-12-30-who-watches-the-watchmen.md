@@ -52,3 +52,5 @@ Here is a practical example when iterating on [`stack.py`]({{< ref
 [Running: ty check]
 [Command was successful]
 ```
+
+Alternative: [fswatch](https://github.com/emcrisostomo/fswatch).
