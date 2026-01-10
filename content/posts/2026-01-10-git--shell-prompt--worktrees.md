@@ -2,6 +2,7 @@
 title: "git: shell prompt: worktrees"
 date: 2026-01-10T15:15:21-03:00
 tags:
+  - ai
   - dev
   - git
 ---
