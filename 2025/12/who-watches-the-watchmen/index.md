@@ -46,3 +46,5 @@ Here is a practical example when iterating on [`stack.py`]({{< ref
 [Command was successful]
 ```
 
+Alternative: [fswatch](https://github.com/emcrisostomo/fswatch).
+
