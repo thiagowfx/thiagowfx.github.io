@@ -1,5 +1,5 @@
 
-My shell prompt displays git branch my repository has
+My shell prompt displays the git branch my repository has
 currently checked out:
 
 ```
