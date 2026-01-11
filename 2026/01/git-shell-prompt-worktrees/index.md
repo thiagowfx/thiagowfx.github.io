@@ -13,7 +13,7 @@ checked out [git worktree](https://git-scm.com/docs/git-worktree).
 This is helpful because lately multiple repository worktrees have been
 popularized thanks to LLM coding agents.
 
-The following change to [starship](({{< ref "2025-12-27-starship" >}})) does the
+The following change to [starship]({{< ref "2025-12-27-starship" >}}) does the
 trick:
 
 ```diff
