@@ -6,7 +6,7 @@ tags:
   - dev
 ---
 
-After starting a coding start on the web with [Claude Code on
+After starting a coding session on the web with [Claude Code on
 Web](https://code.claude.com/docs/en/claude-code-on-the-web)[^1], you can [resume it
 in the
 terminal](https://code.claude.com/docs/en/claude-code-on-the-web#from-web-to-terminal)
