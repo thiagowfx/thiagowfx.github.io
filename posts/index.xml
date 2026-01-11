@@ -1,6 +1,159 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>new script: uwatch</title><link>https://perrotta.dev/2026/01/new-script-uwatch/</link><pubDate>Sat, 10 Jan 2026 22:39:53 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/01/new-script-uwatch/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: &lt;code&gt;watch -- git diff&lt;/code&gt; / &lt;code&gt;watch -- git status&lt;/code&gt; should emit
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>★ ADRs and LLMs</title><link>https://perrotta.dev/2026/01/adrs-and-llms/</link><pubDate>Sun, 11 Jan 2026 09:07:46 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><guid>https://perrotta.dev/2026/01/adrs-and-llms/</guid><description>&lt;p&gt;The first time I heard about &lt;a href="https://adr.github.io/"&gt;Architectural Decision
+Records&lt;/a&gt; (ADRs) was with &lt;a href="https://www.georgefairbanks.com/"&gt;George
+Fairbanks&lt;/a&gt; (GHF) and &lt;a href="https://www.linkedin.com/in/tituswinters"&gt;Titus
+Winters&lt;/a&gt; in an internal training for
+software engineers at Google Canada.&lt;/p&gt;
+&lt;p&gt;The concept has reasonated with me:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;An Architectural Decision (AD) is a justified design choice that addresses a
+functional or non-functional requirement that is architecturally significant.&lt;/p&gt;
+&lt;p&gt;[&amp;hellip;]&lt;/p&gt;
+&lt;p&gt;An Architectural Decision Record (ADR) captures a single AD and its rationale;
+Put it simply, ADR can help you understand the reasons for a chosen
+architectural decision, along with its trade-offs and consequences.&lt;/p&gt;
+&lt;p&gt;The collection of ADRs created and maintained in a project constitute its
+decision log. All these are within the topic of Architectural Knowledge
+Management (AKM), but ADR usage can be extended to design and other decisions
+(&amp;ldquo;any decision record&amp;rdquo;).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Some people liken these to
+&lt;a href="https://en.wikipedia.org/wiki/Request_for_Comments"&gt;RFCs&lt;/a&gt;, although they are
+not quite the same concept. RFCs tend to be much more formal and go through
+rigorous review/approval before it becomes a standard.&lt;/p&gt;
+&lt;p&gt;ADRs, on the other hand, tend to be lightweight and objective. An archetypical
+ADR captures a single decision about architecture in document form, alongside
+its &lt;strong&gt;rationale&lt;/strong&gt;, context and alternatives considered. &lt;strong&gt;Rationale&lt;/strong&gt; is the
+keyword here.&lt;/p&gt;
+&lt;p&gt;Rephrasing, in simpler terms: ADRs are a collection of rationales about a
+project (software repository, if you will). They are incremental, long-living,
+ever-evolving guidelines / rules of engagement for a given software realm.&lt;/p&gt;
+&lt;p&gt;ADRs (and RFCs as well, for that matter) are typically stored alongside source
+code in a version‑controlled repository (&lt;em&gt;cof&lt;/em&gt; git &lt;em&gt;cof&lt;/em&gt;):&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% tree
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;└── adrs
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ├── 0001-foo.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ├── 0002-bar.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; └── 0003-baz.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;They are usually numbered, though there&amp;rsquo;s no hard rule saying that you have to
+do so with monotonically increasing numbers. You could use calendar versioning
+(&lt;code&gt;2025-11-11-foo.md&lt;/code&gt;), or any other numbering scheme if desired.&lt;/p&gt;
+&lt;p&gt;GHF has an introductory
+&lt;a href="https://www.georgefairbanks.com/blog/comparch-wicsa-2011-panel-discussion-and-haiku-tutorial/"&gt;article&lt;/a&gt;
+about them. At the time (2011!), the coined term was &amp;ldquo;Architecture Haiku&amp;rdquo;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You can&amp;rsquo;t say anything in one page — or can you? An Architecture Haiku is a
+one-page, quick-to-build, über-terse design description. No project wants
+&amp;ldquo;shelfware&amp;rdquo; documentation, but many must communicate their design to others.
+Brevity is hard — what would you say in one page? With no page limit, experts
+suggest documenting everything but the kitchen sink. The one-page limit forces
+you to convey the essence of your design using compact language and concepts.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Enough introduction, here is my hot take.&lt;/p&gt;
+&lt;p&gt;I would like to argue that codebases that continually evolve with heavy usage of
+LLM coding agents will strongly benefit from ADRs now, and especially in the
+future.&lt;/p&gt;
+&lt;p&gt;The &lt;a href="https://agents.md/"&gt;AGENTS.md&lt;/a&gt; format is a starting point, but it&amp;rsquo;s a far
+cry from disciplined ADR enactment. Bootstrapping your git repository with
+scattered &lt;code&gt;AGENTS.md&lt;/code&gt; / &lt;code&gt;CLAUDE.md&lt;/code&gt; all over the place is a good initial
+practice to tell the agent what to do and/or how to behave, but it does not
+capture &lt;em&gt;decision records&lt;/em&gt; effectively.&lt;/p&gt;
+&lt;p&gt;The workflow I am starting to adopt in important repositories wherein I work
+with teammates resembles this:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;❯ tree docs/
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;docs/
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;├── adrs
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;│ ├── 0001-aws-secrets-manager-migration.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;│ ├── 0002-cluster-infrastructure-architecture.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;│ ├── 0003-slack-drift-notifications.md
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;│ └── README.md&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;A top-level &lt;code&gt;docs/&lt;/code&gt; directory is the entrypoint for all &lt;code&gt;.md&lt;/code&gt; files docs. Inside
+it, we store our ADRs.&lt;/p&gt;
+&lt;p&gt;A &lt;code&gt;README.md&lt;/code&gt; describes how to define an ADR:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Architecture Decision Records&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;This directory contains Architecture Decision Records &lt;span style="color:#f92672"&gt;(&lt;/span&gt;ADRs&lt;span style="color:#f92672"&gt;)&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; significant
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;technical decisions in the Terraform infrastructure.
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## ADRs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;!-- markdownlint-disable MD013 --&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt;`&lt;/span&gt;&amp;gt; echo &lt;span style="color:#e6db74"&gt;&amp;#34;| Number | Title | Status | Date |&amp;#34;&lt;/span&gt;; echo &lt;span style="color:#e6db74"&gt;&amp;#34;|--------|-------|--------|------|&amp;#34;&lt;/span&gt;; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; f in 0*.md; &lt;span style="color:#66d9ef"&gt;do&lt;/span&gt; num&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;$(&lt;/span&gt;basename &lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;$f&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt; .md | cut -d- -f1&lt;span style="color:#66d9ef"&gt;)&lt;/span&gt;; title&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;$(&lt;/span&gt;head -1 &lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;$f&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt; | sed &lt;span style="color:#e6db74"&gt;&amp;#39;s/^# ADR-[0-9]*: //&amp;#39;&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;)&lt;/span&gt;; status&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;$(&lt;/span&gt;awk &lt;span style="color:#e6db74"&gt;&amp;#39;/^## Status/{getline;getline;print}&amp;#39;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;$f&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;)&lt;/span&gt;; date&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;$(&lt;/span&gt;awk &lt;span style="color:#e6db74"&gt;&amp;#39;/^## Date/{getline;getline;print}&amp;#39;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;$f&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;)&lt;/span&gt;; echo &lt;span style="color:#e6db74"&gt;&amp;#34;| [&lt;/span&gt;$num&lt;span style="color:#e6db74"&gt;](&lt;/span&gt;$f&lt;span style="color:#e6db74"&gt;) | &lt;/span&gt;$title&lt;span style="color:#e6db74"&gt; | &lt;/span&gt;$status&lt;span style="color:#e6db74"&gt; | &lt;/span&gt;$date&lt;span style="color:#e6db74"&gt; |&amp;#34;&lt;/span&gt;; &lt;span style="color:#66d9ef"&gt;done&lt;/span&gt;&lt;span style="color:#e6db74"&gt;`&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;!-- BEGIN mdsh --&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;| Number | Title | Status | Date |
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;|--------|-------|--------|------|
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;| &lt;span style="color:#f92672"&gt;[&lt;/span&gt;0001&lt;span style="color:#f92672"&gt;](&lt;/span&gt;0001-aws-secrets-manager-migration.md&lt;span style="color:#f92672"&gt;)&lt;/span&gt; | AWS Secrets Manager Migration | Proposed &lt;span style="color:#f92672"&gt;(&lt;/span&gt;Not Yet Implemented&lt;span style="color:#f92672"&gt;)&lt;/span&gt; | 2025-11-22 |
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;| &lt;span style="color:#f92672"&gt;[&lt;/span&gt;0002&lt;span style="color:#f92672"&gt;](&lt;/span&gt;0002-cluster-infrastructure-architecture.md&lt;span style="color:#f92672"&gt;)&lt;/span&gt; | Cluster Infrastructure Architecture | Accepted | 2025-12-01 |
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;| &lt;span style="color:#f92672"&gt;[&lt;/span&gt;0003&lt;span style="color:#f92672"&gt;](&lt;/span&gt;0003-slack-drift-notifications.md&lt;span style="color:#f92672"&gt;)&lt;/span&gt; | Slack Drift Notifications | Accepted | 2024-12-01 |
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;!-- END mdsh --&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;!-- markdownlint-enable MD013 --&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## Adding New ADRs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1. Create a new file: &lt;span style="color:#e6db74"&gt;`&lt;/span&gt;NNNN-short-title.md&lt;span style="color:#e6db74"&gt;`&lt;/span&gt; &lt;span style="color:#f92672"&gt;(&lt;/span&gt;increment the number&lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;2. Use this template:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt;```&lt;/span&gt;markdown
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# ADR-NNNN: Title&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## Status&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Proposed | Accepted | Deprecated | Superseded
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## Date&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;YYYY-MM-DD
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## Context&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;What is the issue that we&lt;span style="color:#e6db74"&gt;&amp;#39;re seeing that is motivating this decision?
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt;## Decision
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt;What is the change that we&amp;#39;&lt;/span&gt;re proposing and/or doing?
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Include its rationale.
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Include alternatives considered where applicable.
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;## Consequences&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;What becomes easier or more difficult to &lt;span style="color:#66d9ef"&gt;do&lt;/span&gt; because of this change?&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Whenever a new significant direction is adopted in the repository, or whenever
+something (a tool, a dependency, a process) &lt;em&gt;quasi&lt;/em&gt;-disrupting is introduced, it
+probably deserves its own ADR.&lt;/p&gt;
+&lt;p&gt;It used to be tedious to write them by hand, but nowadays your LLM agent can
+draft ADRs for you. Arguably, a plan&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2026/01/adrs-and-llms/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt; file maps naturally to an ADR. All you
+have to do is to add &lt;em&gt;some&lt;/em&gt; structure to them&lt;sup id="fnref:2"&gt;&lt;a href="https://perrotta.dev/2026/01/adrs-and-llms/#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;See also&lt;/strong&gt;: &lt;a href="https://en.wikipedia.org/wiki/Architectural_decision"&gt;https://en.wikipedia.org/wiki/Architectural_decision&lt;/a&gt;&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;&lt;em&gt;Plan&lt;/em&gt; in the context of &amp;ldquo;planning mode&amp;rdquo; that various agents have these
+days e.g. &lt;a href="https://code.claude.com/docs/en/model-config"&gt;Claude Code&lt;/a&gt;,
+&lt;a href="https://opencode.ai/docs/modes/#plan"&gt;OpenCode&lt;/a&gt;.&amp;#160;&lt;a href="https://perrotta.dev/2026/01/adrs-and-llms/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;But &lt;a href="https://danielmiessler.com/blog/personal-ai-infrastructure"&gt;don&amp;rsquo;t&lt;/a&gt;
+&lt;a href="https://github.com/steveyegge/beads"&gt;&lt;em&gt;overdo&lt;/em&gt;&lt;/a&gt; it.&amp;#160;&lt;a href="https://perrotta.dev/2026/01/adrs-and-llms/#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ADRs and LLMs"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>new script: uwatch</title><link>https://perrotta.dev/2026/01/new-script-uwatch/</link><pubDate>Sat, 10 Jan 2026 22:39:53 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/01/new-script-uwatch/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: &lt;code&gt;watch -- git diff&lt;/code&gt; / &lt;code&gt;watch -- git status&lt;/code&gt; should emit
 colors. Yet it doesn&amp;rsquo;t.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://man.archlinux.org/man/watch.1"&gt;watch(1)&lt;/a&gt;:&lt;/p&gt;
 
@@ -1937,14 +2090,4 @@ Miniflux to support an off-line mode&lt;/li&gt;
 &lt;li&gt;It caches articles and posts locally: a) saving mobile data when syncing
 upfront via Wi-Fi and b) yielding faster transitions between feed entries&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Miniflux: NetNewsWire integration"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>Offloading iOS apps</title><link>https://perrotta.dev/2025/12/offloading-ios-apps/</link><pubDate>Sat, 06 Dec 2025 00:51:48 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>privacy</category><category>serenity</category><guid>https://perrotta.dev/2025/12/offloading-ios-apps/</guid><description>&lt;p&gt;Going on vacation?&lt;/p&gt;
-&lt;p&gt;Have an iPhone?&lt;/p&gt;
-&lt;p&gt;There&amp;rsquo;s no need to delete Slack, or your &lt;del&gt;favorite&lt;/del&gt; on-call app.&lt;/p&gt;
-&lt;p&gt;Simply &lt;a href="https://support.apple.com/en-al/guide/iphone/iph47c931112/ios"&gt;offload&lt;/a&gt;
-noisy apps.&lt;/p&gt;
-&lt;p&gt;Why is this better than uninstalling them?&lt;/p&gt;
-&lt;p&gt;Because it&amp;rsquo;s much easier to restore them once you are back. You do so with a
-single tap in each app.&lt;/p&gt;
-&lt;p&gt;Of course, this method is only effective if you don&amp;rsquo;t have the urge to tap your
-offloaded apps. Some people have more self-control than others.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Offloading iOS apps"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/privacy/"&gt;#privacy&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Miniflux: NetNewsWire integration"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
