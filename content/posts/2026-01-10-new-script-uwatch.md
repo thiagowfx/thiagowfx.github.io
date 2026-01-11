@@ -40,7 +40,7 @@ switch (the default is typically `auto`).
 Without diving deep into what's happening underneath (terminal ANSI escape
 colors, TTY output detection), the magical solution is to use
 [`unbuffer(1)`](https://man.archlinux.org/man/unbuffer.1), which was
-[previously](({{< ref "2024-12-23-unbuffer" >}})) covered. `unbuffer` is
+[previously]({{< ref "2024-12-23-unbuffer" >}}) covered. `unbuffer` is
 agnostic of the underlying program; it doesn't matter whether it uses `--color`,
 or `CLICOLOR`, or another mechanism.
 
