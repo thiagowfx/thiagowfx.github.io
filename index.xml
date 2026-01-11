@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>claude --teleport</title><link>https://perrotta.dev/2026/01/claude--teleport/</link><pubDate>Sat, 10 Jan 2026 22:26:21 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><guid>https://perrotta.dev/2026/01/claude--teleport/</guid><description>&lt;p&gt;After starting a coding session on the web with &lt;a href="https://code.claude.com/docs/en/claude-code-on-the-web"&gt;Claude Code on
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>new script: uwatch</title><link>https://perrotta.dev/2026/01/new-script-uwatch/</link><pubDate>Sat, 10 Jan 2026 22:39:53 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/01/new-script-uwatch/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: &lt;code&gt;watch -- git diff&lt;/code&gt; / &lt;code&gt;watch -- git status&lt;/code&gt; should emit
+colors. Yet it doesn&amp;rsquo;t.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://man.archlinux.org/man/watch.1"&gt;watch(1)&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;NAME
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;watch - execute a program periodically, showing output fullscreen
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;SYNOPSIS
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;watch [option ...] command
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;DESCRIPTION
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;watch runs command repeatedly, displaying its output and errors (the first screenful). This allows you to watch the program output change over time. By default, command is run every 2 seconds and watch will run until interrupted. A header informs of the start and running time of command as well as its exit code.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;You typically address this with &lt;code&gt;watch -c&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;-c, --color
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; Interpret ANSI color and style sequences.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;And yet, &lt;code&gt;watch -c -- git status&lt;/code&gt; still won&amp;rsquo;t emit colors. This is because &lt;code&gt;git&lt;/code&gt;
+&amp;ldquo;knows&amp;rdquo; the output is going through a TTY (&lt;code&gt;watch&lt;/code&gt;), and thus defensively
+disables colors. Some programs control this behavior with a &lt;code&gt;--color=always&lt;/code&gt;
+switch (the default is typically &lt;code&gt;auto&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Without diving deep into what&amp;rsquo;s happening underneath (terminal ANSI escape
+colors, TTY output detection), the magical solution is to use
+&lt;a href="https://man.archlinux.org/man/unbuffer.1"&gt;&lt;code&gt;unbuffer(1)&lt;/code&gt;&lt;/a&gt;, which was
+&lt;a href="%28https://perrotta.dev/2024/12/unbuffer/%29"&gt;previously&lt;/a&gt; covered. &lt;code&gt;unbuffer&lt;/code&gt; is
+agnostic of the underlying program; it doesn&amp;rsquo;t matter whether it uses &lt;code&gt;--color&lt;/code&gt;,
+or &lt;code&gt;CLICOLOR&lt;/code&gt;, or another mechanism.&lt;/p&gt;
+&lt;p&gt;Thus we achieve this form:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% watch -c -- unbuffer git status&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;But it&amp;rsquo;s super tedious to remember and to type out the &lt;code&gt;-c -- unbuffer&lt;/code&gt; bits.&lt;/p&gt;
+&lt;p&gt;To resolve this, I created a wrapper:
+&lt;a href="https://github.com/thiagowfx/pancake/tree/master/uwatch"&gt;&lt;code&gt;uwatch(1)&lt;/code&gt;&lt;/a&gt;. The &lt;code&gt;u&lt;/code&gt;
+alludes to &amp;ldquo;unbuffer&amp;rdquo;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Run a command repeatedly using watch, preserving colored output.
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Uses unbuffer to maintain color codes through watch&amp;#39;s output. Useful for monitoring git status, test output, or any command with color formatting.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Usage:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;uwatch &lt;span style="color:#f92672"&gt;[&lt;/span&gt;--&lt;span style="color:#f92672"&gt;]&lt;/span&gt; git status&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;--&lt;/code&gt; separator is optional.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: new script: uwatch"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>claude --teleport</title><link>https://perrotta.dev/2026/01/claude--teleport/</link><pubDate>Sat, 10 Jan 2026 22:26:21 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><guid>https://perrotta.dev/2026/01/claude--teleport/</guid><description>&lt;p&gt;After starting a coding session on the web with &lt;a href="https://code.claude.com/docs/en/claude-code-on-the-web"&gt;Claude Code on
 Web&lt;/a&gt;&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2026/01/claude--teleport/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;, you can &lt;a href="https://code.claude.com/docs/en/claude-code-on-the-web#from-web-to-terminal"&gt;resume it
 in the
 terminal&lt;/a&gt;
@@ -1887,35 +1947,4 @@ noisy apps.&lt;/p&gt;
 single tap in each app.&lt;/p&gt;
 &lt;p&gt;Of course, this method is only effective if you don&amp;rsquo;t have the urge to tap your
 offloaded apps. Some people have more self-control than others.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Offloading iOS apps"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/privacy/"&gt;#privacy&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>Reordering mobile editing icons in logseq</title><link>https://perrotta.dev/2025/12/reordering-mobile-editing-icons-in-logseq/</link><pubDate>Sat, 06 Dec 2025 00:42:32 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>pkm</category><category>serenity</category><guid>https://perrotta.dev/2025/12/reordering-mobile-editing-icons-in-logseq/</guid><description>&lt;p&gt;&lt;a href="https://bate.dev/posts/logseq-mobile/"&gt;Reordering mobile editing icons in
-logseq&lt;/a&gt; by Colin Bate:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;I found a way to avoid needing to constantly scroll sideways to access the
-icons I need.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;This is why I love the indie web.&lt;/p&gt;
-&lt;p&gt;I was looking for how to do exactly the same operation, for exactly the same
-icon.&lt;/p&gt;
-&lt;p&gt;Isn&amp;rsquo;t it so amazing when a person documents their solutions publicly online, in
-the open? Colin, you are my hero.&lt;/p&gt;
-&lt;p&gt;Update &lt;code&gt;custom.css&lt;/code&gt; in LogSeq settings:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="css"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;css&lt;/span&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-css" data-lang="css"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;/* Move icons 3+ to order 2 */&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;#mobile-editor-toolbar .&lt;span style="color:#a6e22e"&gt;toolbar-commands&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt; &lt;span style="color:#f92672"&gt;div&lt;/span&gt;:&lt;span style="color:#a6e22e"&gt;nth-child&lt;/span&gt;&lt;span style="color:#f92672"&gt;(&lt;/span&gt;&lt;span style="color:#f92672"&gt;n&lt;/span&gt;&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#f92672"&gt;3&lt;/span&gt;&lt;span style="color:#f92672"&gt;)&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;order&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;color&lt;/span&gt;: &lt;span style="color:#a6e22e"&gt;var&lt;/span&gt;(&lt;span style="color:#f92672"&gt;--&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;cyan&lt;/span&gt;);
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;/* Insert icon 11 (brackets) at order 1 */&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;#mobile-editor-toolbar .&lt;span style="color:#a6e22e"&gt;toolbar-commands&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt; &lt;span style="color:#f92672"&gt;div&lt;/span&gt;:&lt;span style="color:#a6e22e"&gt;nth-child&lt;/span&gt;&lt;span style="color:#f92672"&gt;(&lt;/span&gt;&lt;span style="color:#f92672"&gt;11&lt;/span&gt;&lt;span style="color:#f92672"&gt;)&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;order&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;color&lt;/span&gt;: &lt;span style="color:#a6e22e"&gt;var&lt;/span&gt;(&lt;span style="color:#f92672"&gt;--&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;orange&lt;/span&gt;);
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;Side effect&lt;/strong&gt;: The &lt;code&gt;[]&lt;/code&gt; wikilink button will be moved to be the third one in
-the editor toolbar.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Reordering mobile editing icons in logseq"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/pkm/"&gt;#pkm&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Offloading iOS apps"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/privacy/"&gt;#privacy&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>

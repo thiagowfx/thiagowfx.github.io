@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 10 Jan 2026 22:36:02 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>claude --teleport</title><link>https://perrotta.dev/2026/01/claude--teleport/</link><pubDate>Sat, 10 Jan 2026 22:26:21 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><guid>https://perrotta.dev/2026/01/claude--teleport/</guid><description>&lt;p&gt;After starting a coding session on the web with &lt;a href="https://code.claude.com/docs/en/claude-code-on-the-web"&gt;Claude Code on
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 10 Jan 2026 22:58:20 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>new script: uwatch</title><link>https://perrotta.dev/2026/01/new-script-uwatch/</link><pubDate>Sat, 10 Jan 2026 22:39:53 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/01/new-script-uwatch/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: &lt;code&gt;watch -- git diff&lt;/code&gt; / &lt;code&gt;watch -- git status&lt;/code&gt; should emit
+colors. Yet it doesn&amp;rsquo;t.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://man.archlinux.org/man/watch.1"&gt;watch(1)&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;NAME
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;watch - execute a program periodically, showing output fullscreen
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;SYNOPSIS
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;watch [option ...] command
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;DESCRIPTION
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;watch runs command repeatedly, displaying its output and errors (the first screenful). This allows you to watch the program output change over time. By default, command is run every 2 seconds and watch will run until interrupted. A header informs of the start and running time of command as well as its exit code.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;You typically address this with &lt;code&gt;watch -c&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;-c, --color
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; Interpret ANSI color and style sequences.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;And yet, &lt;code&gt;watch -c -- git status&lt;/code&gt; still won&amp;rsquo;t emit colors. This is because &lt;code&gt;git&lt;/code&gt;
+&amp;ldquo;knows&amp;rdquo; the output is going through a TTY (&lt;code&gt;watch&lt;/code&gt;), and thus defensively
+disables colors. Some programs control this behavior with a &lt;code&gt;--color=always&lt;/code&gt;
+switch (the default is typically &lt;code&gt;auto&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Without diving deep into what&amp;rsquo;s happening underneath (terminal ANSI escape
+colors, TTY output detection), the magical solution is to use
+&lt;a href="https://man.archlinux.org/man/unbuffer.1"&gt;&lt;code&gt;unbuffer(1)&lt;/code&gt;&lt;/a&gt;, which was
+&lt;a href="%28https://perrotta.dev/2024/12/unbuffer/%29"&gt;previously&lt;/a&gt; covered. &lt;code&gt;unbuffer&lt;/code&gt; is
+agnostic of the underlying program; it doesn&amp;rsquo;t matter whether it uses &lt;code&gt;--color&lt;/code&gt;,
+or &lt;code&gt;CLICOLOR&lt;/code&gt;, or another mechanism.&lt;/p&gt;
+&lt;p&gt;Thus we achieve this form:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% watch -c -- unbuffer git status&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;But it&amp;rsquo;s super tedious to remember and to type out the &lt;code&gt;-c -- unbuffer&lt;/code&gt; bits.&lt;/p&gt;
+&lt;p&gt;To resolve this, I created a wrapper:
+&lt;a href="https://github.com/thiagowfx/pancake/tree/master/uwatch"&gt;&lt;code&gt;uwatch(1)&lt;/code&gt;&lt;/a&gt;. The &lt;code&gt;u&lt;/code&gt;
+alludes to &amp;ldquo;unbuffer&amp;rdquo;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Run a command repeatedly using watch, preserving colored output.
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Uses unbuffer to maintain color codes through watch&amp;#39;s output. Useful for monitoring git status, test output, or any command with color formatting.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Usage:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;uwatch &lt;span style="color:#f92672"&gt;[&lt;/span&gt;--&lt;span style="color:#f92672"&gt;]&lt;/span&gt; git status&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;--&lt;/code&gt; separator is optional.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: new script: uwatch"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>claude --teleport</title><link>https://perrotta.dev/2026/01/claude--teleport/</link><pubDate>Sat, 10 Jan 2026 22:26:21 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><guid>https://perrotta.dev/2026/01/claude--teleport/</guid><description>&lt;p&gt;After starting a coding session on the web with &lt;a href="https://code.claude.com/docs/en/claude-code-on-the-web"&gt;Claude Code on
 Web&lt;/a&gt;&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2026/01/claude--teleport/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;, you can &lt;a href="https://code.claude.com/docs/en/claude-code-on-the-web#from-web-to-terminal"&gt;resume it
 in the
 terminal&lt;/a&gt;
@@ -1799,14 +1859,4 @@ a QoL improvement :)&amp;#160;&lt;a href="https://perrotta.dev/2026/01/ghostty-s
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# param_1 = obj.popSmallest()&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# obj.addBack(num)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: LeetCode #2336: Smallest Number in Infinite Set"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/leetcode/"&gt;#leetcode&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>LeetCode #3370: Smallest Number With All Set Bits</title><link>https://perrotta.dev/2026/01/leetcode-%233370-smallest-number-with-all-set-bits/</link><pubDate>Tue, 06 Jan 2026 19:40:00 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>coding</category><category>dev</category><category>leetcode</category><guid>https://perrotta.dev/2026/01/leetcode-%233370-smallest-number-with-all-set-bits/</guid><description>&lt;p&gt;&lt;a href="https://leetcode.com/problems/smallest-number-with-all-set-bits"&gt;LeetCode #3370: Smallest Number With All Set Bits&lt;/a&gt;:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="python"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;python&lt;/span&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;class&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;Solution&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;smallestNumber&lt;/span&gt;(self, n: int) &lt;span style="color:#f92672"&gt;-&amp;gt;&lt;/span&gt; int:
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; n &lt;span style="color:#f92672"&gt;|&lt;/span&gt; (&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;&amp;lt;&lt;/span&gt; n&lt;span style="color:#f92672"&gt;.&lt;/span&gt;bit_length()) &lt;span style="color:#f92672"&gt;-&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: LeetCode #3370: Smallest Number With All Set Bits"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/leetcode/"&gt;#leetcode&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: LeetCode #2336: Smallest Number in Infinite Set"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/leetcode/"&gt;#leetcode&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>

@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Git on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Git on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 10 Jan 2026 15:34:00 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>git: shell prompt: worktrees</title><link>https://perrotta.dev/2026/01/git-shell-prompt-worktrees/</link><pubDate>Sat, 10 Jan 2026 15:15:21 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/01/git-shell-prompt-worktrees/</guid><description>&lt;p&gt;My shell prompt displays the git branch my repository has
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 10 Jan 2026 22:58:20 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>new script: uwatch</title><link>https://perrotta.dev/2026/01/new-script-uwatch/</link><pubDate>Sat, 10 Jan 2026 22:39:53 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/01/new-script-uwatch/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: &lt;code&gt;watch -- git diff&lt;/code&gt; / &lt;code&gt;watch -- git status&lt;/code&gt; should emit
+colors. Yet it doesn&amp;rsquo;t.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://man.archlinux.org/man/watch.1"&gt;watch(1)&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;NAME
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;watch - execute a program periodically, showing output fullscreen
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;SYNOPSIS
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;watch [option ...] command
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;DESCRIPTION
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;watch runs command repeatedly, displaying its output and errors (the first screenful). This allows you to watch the program output change over time. By default, command is run every 2 seconds and watch will run until interrupted. A header informs of the start and running time of command as well as its exit code.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;You typically address this with &lt;code&gt;watch -c&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;-c, --color
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; Interpret ANSI color and style sequences.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;And yet, &lt;code&gt;watch -c -- git status&lt;/code&gt; still won&amp;rsquo;t emit colors. This is because &lt;code&gt;git&lt;/code&gt;
+&amp;ldquo;knows&amp;rdquo; the output is going through a TTY (&lt;code&gt;watch&lt;/code&gt;), and thus defensively
+disables colors. Some programs control this behavior with a &lt;code&gt;--color=always&lt;/code&gt;
+switch (the default is typically &lt;code&gt;auto&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Without diving deep into what&amp;rsquo;s happening underneath (terminal ANSI escape
+colors, TTY output detection), the magical solution is to use
+&lt;a href="https://man.archlinux.org/man/unbuffer.1"&gt;&lt;code&gt;unbuffer(1)&lt;/code&gt;&lt;/a&gt;, which was
+&lt;a href="%28https://perrotta.dev/2024/12/unbuffer/%29"&gt;previously&lt;/a&gt; covered. &lt;code&gt;unbuffer&lt;/code&gt; is
+agnostic of the underlying program; it doesn&amp;rsquo;t matter whether it uses &lt;code&gt;--color&lt;/code&gt;,
+or &lt;code&gt;CLICOLOR&lt;/code&gt;, or another mechanism.&lt;/p&gt;
+&lt;p&gt;Thus we achieve this form:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% watch -c -- unbuffer git status&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;But it&amp;rsquo;s super tedious to remember and to type out the &lt;code&gt;-c -- unbuffer&lt;/code&gt; bits.&lt;/p&gt;
+&lt;p&gt;To resolve this, I created a wrapper:
+&lt;a href="https://github.com/thiagowfx/pancake/tree/master/uwatch"&gt;&lt;code&gt;uwatch(1)&lt;/code&gt;&lt;/a&gt;. The &lt;code&gt;u&lt;/code&gt;
+alludes to &amp;ldquo;unbuffer&amp;rdquo;:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Run a command repeatedly using watch, preserving colored output.
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Uses unbuffer to maintain color codes through watch&amp;#39;s output. Useful for monitoring git status, test output, or any command with color formatting.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Usage:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;uwatch &lt;span style="color:#f92672"&gt;[&lt;/span&gt;--&lt;span style="color:#f92672"&gt;]&lt;/span&gt; git status&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;--&lt;/code&gt; separator is optional.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: new script: uwatch"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>git: shell prompt: worktrees</title><link>https://perrotta.dev/2026/01/git-shell-prompt-worktrees/</link><pubDate>Sat, 10 Jan 2026 15:15:21 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/01/git-shell-prompt-worktrees/</guid><description>&lt;p&gt;My shell prompt displays the git branch my repository has
 currently checked out:&lt;/p&gt;
 
 &lt;div class="codeblock"&gt;
@@ -2005,59 +2065,4 @@ unless I intentionally override it with &lt;code&gt;--no-force-with-lease&lt;/co
 instead of force. As such the next best available option is, as so often, to
 create an alias which serves this purpose.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git: push --force with style"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>★ .gitignore without .gitignore</title><link>https://perrotta.dev/2024/12/.gitignore-without-.gitignore/</link><pubDate>Wed, 11 Dec 2024 11:44:12 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>bestof</category><category>dev</category><category>git</category><guid>https://perrotta.dev/2024/12/.gitignore-without-.gitignore/</guid><description>&lt;p&gt;&lt;code&gt;.gitignore&lt;/code&gt; is the canonical way to exclude files from your git repository.&lt;/p&gt;
-&lt;p&gt;In some situations, however, you may want to exclude files without adding them
-to &lt;code&gt;.gitignore&lt;/code&gt;, because they are only relevant to you, as opposed to your
-teammates.&lt;/p&gt;
-&lt;p&gt;Common examples:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;.ackrc&lt;/code&gt;: exclude file patterns from search with &lt;code&gt;ack&lt;/code&gt; – not everyone in your
-team may use &lt;code&gt;ack&lt;/code&gt; at all&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.envrc&lt;/code&gt;: &lt;code&gt;direnv&lt;/code&gt; integration to automatically run a couple of commands
-whenever &lt;code&gt;cd&lt;/code&gt;&amp;lsquo;ing to within the repository – not everyone in your team may use
-&lt;code&gt;direnv&lt;/code&gt; at all&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&amp;hellip;and so on.&lt;/p&gt;
-&lt;p&gt;Is there a way to have a &amp;ldquo;personal&amp;rdquo; &lt;code&gt;.gitignore&lt;/code&gt; file? Yes, in fact, many ways!&lt;/p&gt;
-&lt;h2 id="1-per-repository"&gt;1) Per repository&lt;/h2&gt;
-&lt;p&gt;Use the &lt;code&gt;.git/info/exclude&lt;/code&gt; file instead of &lt;code&gt;.gitignore&lt;/code&gt;. Edits in this file are
-not tracked by version control. The documentation says:&lt;/p&gt;
-
-&lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# git ls-files --others --exclude-from=.git/info/exclude
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# Lines that start with &amp;#39;#&amp;#39; are comments.
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# For a project mostly in C, the following would be a good set of
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# exclude patterns (uncomment them if you want to use them):
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# *.[oa]
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# *~
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;.ackrc
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;.envrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;For example, I could add &lt;code&gt;.ackrc&lt;/code&gt; to it.&lt;/p&gt;
-&lt;h2 id="2-git-update-index"&gt;2) &lt;code&gt;git update-index&lt;/code&gt;&lt;/h2&gt;
-
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git update-index --assume-unchanged .ackrc .envrc&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;If you make a mistake, it can be reversed with &lt;code&gt;--no-assume-unchanged&lt;/code&gt;.&lt;/p&gt;
-&lt;h2 id="3-globally"&gt;3) Globally&lt;/h2&gt;
-&lt;p&gt;This approach takes effect in &lt;em&gt;all&lt;/em&gt; repositories.&lt;/p&gt;
-&lt;p&gt;Set &lt;a href="https://git-scm.com/docs/gitignore#_configuration"&gt;&lt;code&gt;core.excludesFile&lt;/code&gt;&lt;/a&gt; in
-your &lt;code&gt;~/.gitconfig&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git config --global core.excludesFile &lt;span style="color:#e6db74"&gt;&amp;#39;~/.gitignore&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;Now populate it as you normally would your repo &lt;code&gt;.gitignore&lt;/code&gt;.&lt;/p&gt;
-&lt;h2 id="references"&gt;References&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://stackoverflow.com/questions/653454/how-do-you-make-git-ignore-files-without-using-gitignore"&gt;https://stackoverflow.com/questions/653454/how-do-you-make-git-ignore-files-without-using-gitignore&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://gist.github.com/subfuzion/db7f57fff2fb6998a16c"&gt;https://gist.github.com/subfuzion/db7f57fff2fb6998a16c&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: .gitignore without .gitignore"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git: push --force with style"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
