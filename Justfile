@@ -5,22 +5,20 @@ editor := env_var_or_default("EDITOR", "vim")
 port := env_var_or_default("PORT", "1313")
 
 # Start a hugo server in watch mode
-watch preview="true" *args:
+watch *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    if [ "{{ preview }}" = "true" ]; then
-      open "http://localhost:{{ port }}/posts/" &
-    fi
+    open "http://localhost:{{ port }}/posts/" &
 
     hugo server --port {{ port }} --watch {{ args }}
 
 # Build the blog as in production
-build with-openring="false" *args:
+build *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    if [ "{{ with-openring }}" = "true" ]; then
+    if [ "false" = "true" ]; then
         ./ci/build_openring.sh
     fi
     hugo --environment production --gc {{ args }}
