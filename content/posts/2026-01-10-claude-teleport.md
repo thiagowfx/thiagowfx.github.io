@@ -13,7 +13,18 @@ terminal](https://code.claude.com/docs/en/claude-code-on-the-web#from-web-to-ter
 with the traditional Claude Code CLI app by running `claude --teleport`.
 
 Without arguments, it prompts you to interactively choose an existing session to
-resume.
+resume:
+
+```
+ Select a session to resume:
+
+   Updated  Session Title
+ ❯ 1. 52m ago  Migrate secrets from Gringotts to AWS Secrets Manager
+   2. 53m ago  Plan Hoth integration with dual provider OIDC
+   3. 54m ago  Add Strangereal terraform state bucket standalone project
+   4. 2w ago   Write a CLAUDE.md
+   5. 1mo ago  Address review comments on pull request 42123
+```
 
 With a provided session ID argument, the session is immediately resumed.
 
