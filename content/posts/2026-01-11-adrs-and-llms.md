@@ -13,7 +13,7 @@ Fairbanks](https://www.georgefairbanks.com/) (GHF) and [Titus
 Winters](https://www.linkedin.com/in/tituswinters) in an internal training for
 software engineers at Google Canada.
 
-The concept has reasonated with me:
+The concept has resonated with me:
 
 > An Architectural Decision (AD) is a justified design choice that addresses a
 > functional or non-functional requirement that is architecturally significant.
