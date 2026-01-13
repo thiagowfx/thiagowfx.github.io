@@ -1,6 +1,106 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>2026</title><link>https://perrotta.dev/2026/01/2026/</link><pubDate>Mon, 12 Jan 2026 17:15:37 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>posse</category><category>serenity</category><guid>https://perrotta.dev/2026/01/2026/</guid><description>&lt;p&gt;Tech. Geopolitics. 2026 is terrifying. 2026 is exciting. Both can be
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>git aicommit</title><link>https://perrotta.dev/2026/01/git-aicommit/</link><pubDate>Tue, 13 Jan 2026 15:58:48 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/01/git-aicommit/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: auto-generate a commit message for &lt;code&gt;git&lt;/code&gt; from the
+command-line. The solution should be vendor agnostic.&lt;/p&gt;
+&lt;p&gt;Given a &lt;code&gt;git-foo.sh&lt;/code&gt; in &lt;code&gt;$PATH&lt;/code&gt;, it can be invoked as &lt;code&gt;git foo&lt;/code&gt;, as if it
+were a built-in &lt;code&gt;git&lt;/code&gt; command.&lt;/p&gt;
+&lt;p&gt;This is helpful to enable seamless integration with &lt;code&gt;git&lt;/code&gt;. I chose to call the
+subcommand &lt;code&gt;aicommit&lt;/code&gt;. I suppose &lt;code&gt;commit-ai&lt;/code&gt; would also be sensible.&lt;/p&gt;
+&lt;p&gt;The goal is to create &lt;code&gt;git-aicommit.sh&lt;/code&gt; in &lt;code&gt;~/.bin&lt;/code&gt; (which is in my &lt;code&gt;$PATH&lt;/code&gt; via
+my &lt;code&gt;[.dotfiles](https://github.com/thiagowfx/.dotfiles/blob/018c50ebd86b70b30578d4a1393054fd04bd4553/profile/.profilerc#L42)&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;This initial draft worked well:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#75715e"&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# git-aicommit - Create a commit with an AI-generated title based on staged changes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;set -e
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Check if we&amp;#39;re inside a git repository&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#f92672"&gt;[&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;$(&lt;/span&gt;git rev-parse --is-inside-work-tree 2&amp;gt;/dev/null&lt;span style="color:#66d9ef"&gt;)&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt; !&lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;true&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;]&lt;/span&gt;; &lt;span style="color:#66d9ef"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; echo &lt;span style="color:#e6db74"&gt;&amp;#34;Error: Not in a git repository&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; exit &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Check if there are staged changes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; git diff --cached --quiet; &lt;span style="color:#66d9ef"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; echo &lt;span style="color:#e6db74"&gt;&amp;#34;Error: No staged changes to commit&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; exit &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Select AI agent (default: claude)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;agent&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;&lt;span style="color:#e6db74"&gt;${&lt;/span&gt;GIT_AI_AGENT&lt;span style="color:#66d9ef"&gt;:-&lt;/span&gt;claude&lt;span style="color:#e6db74"&gt;}&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;case&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;$agent&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt; in
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# keep-sorted start&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; amp|ampcode&lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ai_prompt&lt;span style="color:#f92672"&gt;()&lt;/span&gt; &lt;span style="color:#f92672"&gt;{&lt;/span&gt; amp -x &lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;$1&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;; &lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; claude&lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ai_prompt&lt;span style="color:#f92672"&gt;()&lt;/span&gt; &lt;span style="color:#f92672"&gt;{&lt;/span&gt; claude -p &lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;$1&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;; &lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# keep-sorted end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; *&lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; echo &lt;span style="color:#e6db74"&gt;&amp;#34;Error: Unknown AI agent: &lt;/span&gt;$agent&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; exit &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;esac&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;prompt&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;Look at the staged git changes and create a summarizing git commit title. Only respond with the title and no affirmation.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Generate commit message and commit&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;echo &lt;span style="color:#e6db74"&gt;&amp;#34;Generating commit message with &lt;/span&gt;$agent&lt;span style="color:#e6db74"&gt;...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git commit -m &lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;$(&lt;/span&gt;ai_prompt &lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;$prompt&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;)&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;$@&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;echo &lt;span style="color:#e6db74"&gt;&amp;#34;AI commit created successfully&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Refer to &lt;a href="https://github.com/thiagowfx/.dotfiles/blob/master/git/.bin/git-aicommit-quick"&gt;this
+source&lt;/a&gt;
+for an up-to-date version as it evolves.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s break it down:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://perrotta.dev/2026/01/oneshot-prompting/"&gt;Previously&lt;/a&gt;: we employ an
+oneshot command to call an LLM agent, so that there&amp;rsquo;s no need to do it
+interactively. Initially I added only Claude Code and Amp because they are the
+agents I use the most; perhaps this list will be expanded later on but it is
+not intended to be exhaustive&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2026/01/git-aicommit/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/li&gt;
+&lt;li&gt;The command is intended to run in O(seconds). If it takes too long, then it
+should be simplified (via a better prompt).&lt;/li&gt;
+&lt;li&gt;By default it uses Claude. To use another agent, call it like:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;GIT_AI_AGENT&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;amp&amp;#34;&lt;/span&gt; git aicommit&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This preference could be trivially made persistent on a per-repo basis by using
+&lt;a href="https://perrotta.dev/2022/01/direnv-automate-your-environment-variables/"&gt;direnv&lt;/a&gt;.
+For example, use Claude at work and Amp in personal git repositories&lt;sup id="fnref:2"&gt;&lt;a href="https://perrotta.dev/2026/01/git-aicommit/#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;Later on I split the command into two: &lt;code&gt;git aicommit&lt;/code&gt; and &lt;code&gt;git aicommit-quick&lt;/code&gt;.
+&amp;ldquo;Quick&amp;rdquo; populates the commit message title only (think &lt;code&gt;git commit -m &amp;quot;foo&amp;quot;&lt;/code&gt;),
+whereas the non-quick version populates the body as well, accounting for &lt;a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/creating-a-pull-request-template-for-your-repository"&gt;GitHub
+PR
+templates&lt;/a&gt;
+when they exist. Time will tell whether I need this distinction.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;This gives me the idea to create a separate script for &amp;ldquo;oneshotting&amp;rdquo; LLMs
+in &lt;a href="https://github.com/thiagowfx/pancake"&gt;pancake&lt;/a&gt;.&amp;#160;&lt;a href="https://perrotta.dev/2026/01/git-aicommit/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;&lt;a href="https://ampcode.com/news/opus-4.5"&gt;It&amp;rsquo;s all Claude anyway&lt;/a&gt;, this
+distinction is mostly for the sake of discretionary billing.&amp;#160;&lt;a href="https://perrotta.dev/2026/01/git-aicommit/#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git aicommit"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>2026</title><link>https://perrotta.dev/2026/01/2026/</link><pubDate>Mon, 12 Jan 2026 17:15:37 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>posse</category><category>serenity</category><guid>https://perrotta.dev/2026/01/2026/</guid><description>&lt;p&gt;Tech. Geopolitics. 2026 is terrifying. 2026 is exciting. Both can be
 simultaneously true. You can both like and dislike the current state of affairs
 (yes, this includes LLMs), but your individual stance won&amp;rsquo;t change the pace in
 which the world evolves.&lt;/p&gt;
@@ -2095,17 +2195,4 @@ restored upon completion.&lt;/p&gt;
 &lt;p&gt;Alternatively, press &lt;code&gt;C-s&lt;/code&gt; again to restore the initial prompt.&lt;/p&gt;
 &lt;p&gt;This is a simple quality-of-life improvement, but it&amp;rsquo;s specific to Claude Code.
 &lt;code&gt;C-u&lt;/code&gt; + &lt;code&gt;C-y&lt;/code&gt; works almost everywhere though.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Claude Code: stash"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>j,k for navigation</title><link>https://perrotta.dev/2025/12/jk-for-navigation/</link><pubDate>Sun, 21 Dec 2025 02:31:10 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>meta</category><category>vim</category><guid>https://perrotta.dev/2025/12/jk-for-navigation/</guid><description>&lt;p&gt;I just added vim-style keybindings to this site.&lt;/p&gt;
-&lt;p&gt;Press &lt;strong&gt;j&lt;/strong&gt; to go to the previous post (chronologically, going down the list ⬇️)
-and &lt;strong&gt;k&lt;/strong&gt; to go to the next post (going up the list ⬆️)&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2025/12/jk-for-navigation/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-&lt;p&gt;The boundary between &lt;em&gt;general&lt;/em&gt; vs &lt;em&gt;coding&lt;/em&gt; posts is respected.&lt;/p&gt;
-&lt;div class="footnotes" role="doc-endnotes"&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id="fn:1"&gt;
-&lt;p&gt;I also added arrow keys (⬅️ for the previous post and ➡️ right for the next
-one).&amp;#160;&lt;a href="https://perrotta.dev/2025/12/jk-for-navigation/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: j,k for navigation"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/meta/"&gt;#meta&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/vim/"&gt;#vim&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Claude Code: stash"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
