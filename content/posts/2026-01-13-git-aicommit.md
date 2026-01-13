@@ -17,7 +17,7 @@ This is helpful to enable seamless integration with `git`. I chose to call the
 subcommand `aicommit`. I suppose `commit-ai` would also be sensible.
 
 The goal is to create `git-aicommit.sh` in `~/.bin` (which is in my `$PATH` via
-my `[.dotfiles](https://github.com/thiagowfx/.dotfiles/blob/018c50ebd86b70b30578d4a1393054fd04bd4553/profile/.profilerc#L42)`)
+my [.dotfiles](https://github.com/thiagowfx/.dotfiles/blob/018c50ebd86b70b30578d4a1393054fd04bd4553/profile/.profilerc#L42))
 
 This initial draft worked well:
 
