@@ -117,5 +117,5 @@ Do not forget hooks! Even Claude Code has them.
 A Software Bill of Materials is a structured list that enumerates every
 component, library, and dependency that makes up a software product. It provides
 provenance and version information for each item, enabling stakeholders to
-assess security, licensing, and supply‑chain risks.
+assess security, licensing, and supply‑chain risks. Good for CVEs.
 
