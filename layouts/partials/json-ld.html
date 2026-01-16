@@ -1,0 +1,48 @@
+{{- $author := dict "@type" "Person" "name" .Site.Params.Author.name "url" .Site.BaseURL -}}
+
+{{- if .IsHome -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": {{ .Site.Title | jsonify }},
+  "description": {{ .Site.Params.description | jsonify }},
+  "url": {{ .Site.BaseURL | jsonify }},
+  "author": {{ $author | jsonify }}
+}
+</script>
+{{- else if .IsPage -}}
+{{- $schemaType := cond (eq .Section "posts") "BlogPosting" "Article" -}}
+{{- $datePublished := "" -}}
+{{- $dateModified := "" -}}
+{{- with .Date -}}
+  {{- $datePublished = .Format "2006-01-02T15:04:05-07:00" -}}
+{{- end -}}
+{{- with .Lastmod -}}
+  {{- $dateModified = .Format "2006-01-02T15:04:05-07:00" -}}
+{{- end -}}
+{{- $description := .Description | default .Summary | plainify | truncate 160 -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": {{ $schemaType | jsonify }},
+  "headline": {{ .Title | jsonify }},
+  "description": {{ $description | jsonify }},
+  "url": {{ .Permalink | jsonify }},
+  {{- if $datePublished }}
+  "datePublished": {{ $datePublished | jsonify }},
+  {{- end }}
+  {{- if $dateModified }}
+  "dateModified": {{ $dateModified | jsonify }},
+  {{- end }}
+  "author": {{ $author | jsonify }},
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{ .Permalink | jsonify }}
+  }
+  {{- with .Params.tags -}}
+  ,"keywords": {{ . | jsonify }}
+  {{- end -}}
+}
+</script>
+{{- end -}}
