@@ -1,0 +1,37 @@
+{{- /* Skip backlinks in quick builds (pre-commit) */ -}}
+{{- if ne hugo.Environment "quick" -}}
+
+{{- $currentPage := . -}}
+{{- $posts := where .Site.RegularPages "Section" "posts" -}}
+{{- $posts = where $posts "Permalink" "ne" .Permalink -}}
+
+{{- /* Extract current post filename for link detection */ -}}
+{{- $currentFilename := path.Base $currentPage.File.Path | replaceRE "\\.md$" "" -}}
+
+{{- /* Find posts that link to this one */ -}}
+{{- $backlinks := slice -}}
+{{- range $posts -}}
+  {{- $linksToCurrentPost := findRE (printf `ref\s+"[^"]*%s` $currentFilename) .RawContent -}}
+  {{- if $linksToCurrentPost -}}
+    {{- $backlinks = $backlinks | append . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Sort by date descending (newest first) */ -}}
+{{- $backlinks = sort $backlinks "Date" "desc" -}}
+
+{{- if $backlinks -}}
+<div class="backlinks" style="border: 2px solid var(--border-color); border-radius: .5rem; padding: 1.5rem 1.5rem 1rem; margin-top: 1.5rem;">
+  <h4 style="margin-top: 0; margin-bottom: 0.25rem;">Backlinks</h4>
+  <ul style="margin-bottom: 0;">
+    {{- range $backlinks -}}
+    <li>
+      <a href="{{ .Permalink }}">{{ .Title }}</a>
+      <small style="color: var(--color-gray);">({{ .Date.Format "Jan 02, 2006" }})</small>
+    </li>
+    {{- end -}}
+  </ul>
+</div>
+{{- end -}}
+
+{{- end -}}
