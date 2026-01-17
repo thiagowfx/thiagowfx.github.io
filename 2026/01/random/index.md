@@ -25,3 +25,5 @@ The initial implementation was very simple:
 
 ...later on it was updated to exclude "coding" posts.
 
+Randomness is often a great source of serendipity!
+
