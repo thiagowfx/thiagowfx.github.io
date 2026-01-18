@@ -20,7 +20,7 @@ nix-env, nix-darwin, home-manager, ...). The good news is that those components
 are for the most part modular, there's no need to adopt them all in order to
 reap the benefits that Nix provides.
 
-For now, I am only adopting `nix-env` and `nix-shell`, with no `*.nix` config
+For now, I am only adopting `nix-env` and [`nix-shell`]({{< ref "2022-02-10-nix-shell-in-a-nutshell" >}}), with no `*.nix` config
 files. This post covers `nix-env`.
 
 For simplicity, think of `nix-env` as a package manager, akin to `apk`,
