@@ -8,7 +8,8 @@ while increasing my DevOps toolkit knowledge.
 
 The roadblock to do so was the most classic excuse: lack of non-interrupted time.
 
-There's plenty of motivation, and ideas. These will likely _never_ run out, any time soon.
+There's plenty of motivation, and ideas. These will likely _never_ run out, any
+time soon.
 
 That said: It's very easy to get distracted and lose focus.
 There is so much information today, in the form of
