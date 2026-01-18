@@ -185,8 +185,8 @@ ping sitemap="https://perrotta.dev/sitemap.xml":
     curl -sS -o /dev/null "https://www.google.com/ping?sitemap={{ sitemap }}"
     curl -sS -o /dev/null "https://www.bing.com/ping?sitemap={{ sitemap }}"
 
-# Update git submodules, pre-commit hooks and JSON schemas
-update: update-git update-pre-commit update-json-schemas
+# Update git submodules, pre-commit hooks, JSON schemas, and vendored dependencies
+update: update-git update-pre-commit update-json-schemas update-vendor
 
 # Update git submodules
 update-git:
@@ -199,3 +199,7 @@ update-pre-commit:
 # Update JSON schemas
 update-json-schemas:
     pre-commit run -a update-json-schemas --hook-stage manual
+
+# Update vendored dependencies (d3.js)
+update-vendor:
+    curl -sL "https://d3js.org/d3.v7.min.js" -o static/vendor/d3.v7.min.js
