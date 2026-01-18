@@ -25,6 +25,6 @@ it](https://github.com/p0deje/Maccy?tab=readme-ov-file#usage):
 
 This workflow is decent for temporary entries.
 For semi-permanent ones, I should
-look into [Espanso](https://espanso.org/) at some point. For now, [Raycast
+look into [Espanso]({{< ref "2025-05-16-espanso-hello-world" >}}) at some point. For now, [Raycast
 Snippets]({{< ref "2025-01-29-raycast-snippets" >}}) fills in this role.
 

@@ -100,5 +100,5 @@ It works too!
 In order to make this workflow ergonomic, run `git add -AN` (`-A` = `--all`)
 prior to `git diff` or `git add -p`, so that all new files are accounted for.
 
-[See also](https://stackoverflow.com/questions/855767/can-i-use-git-diff-on-untracked-files).
+[See also](https://stackoverflow.com/questions/855767/can-i-use-git-diff-on-untracked-files), [git diff interactively]({{< ref "2025-11-04-git-diff-interactively" >}}).
 
