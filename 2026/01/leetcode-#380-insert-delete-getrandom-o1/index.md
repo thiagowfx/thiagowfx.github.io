@@ -124,8 +124,10 @@ class RandomizedSet:
             self.l[i] = last_val
             self.l.pop()
 
-            # Update the dictionary for the swapped element only if it's not the same as removed val
+            # Update the dictionary for the swapped element only if it's not the same as removed valA
+            # i.e. not the last element
             if i < len(self.l):
+            ## if i != len(self.l):
                 self.d[last_val] = i
 
             return True
