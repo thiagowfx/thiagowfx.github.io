@@ -127,13 +127,15 @@ class RandomizedSet:
             i = self.d[val]
             del self.d[val]
 
-            # swap with the last element
-            self.l[i], self.l[len(self.l) - 1] = self.l[len(self.l) - 1], self.l[i]
-            self.l = self.l[:-1]
-            ## self.l.pop()
+            last_val = self.l[-1]
 
-            swapped_val = self.l[i]
-            self.d[swapped_val] = i
+            # Swap with the last element
+            self.l[i] = last_val
+            self.l.pop()
+
+            # Update the dictionary for the swapped element only if it's not the same as removed val
+            if i < len(self.l):
+                self.d[last_val] = i
 
             return True
 
