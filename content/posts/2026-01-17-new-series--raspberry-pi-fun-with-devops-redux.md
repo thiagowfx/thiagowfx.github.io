@@ -4,7 +4,6 @@ date: 2026-01-17T23:14:21-03:00
 tags:
   - alpine-linux
   - dev
-draft: true
 ---
 
 Once upon a time, [a few mistakes
