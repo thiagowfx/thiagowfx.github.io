@@ -1,0 +1,146 @@
+
+[LeetCode #380: Insert Delete GetRandom O(1)](https://leetcode.com/problems/insert-delete-getrandom-o(1)):
+
+Initial solution:
+
+```python
+import random
+
+class RandomizedSet:
+
+    def __init__(self):
+        self.l = []
+
+        self.d = {}
+        ## self.d = dict()
+
+    def insert(self, val: int) -> bool:
+        if val not in self.d:
+            self.d[val] = len(self.l)
+            self.l.append(val)
+            return True
+
+        return False
+
+
+    def remove(self, val: int) -> bool:
+        if val in self.d:
+            del self.d[val]
+            ## self.l: do not touch. Removal is O(n)
+            return True
+
+        return False
+
+
+    def getRandom(self) -> int:
+        return random.choice(list(self.d.keys()))
+
+
+# Your RandomizedSet object will be instantiated and called as such:
+# obj = RandomizedSet()
+# param_1 = obj.insert(val)
+# param_2 = obj.remove(val)
+# param_3 = obj.getRandom()
+```
+
+However, `getRandom()` is `O(n)`.
+
+Better solution:
+
+```python
+import random
+
+class RandomizedSet:
+
+    def __init__(self):
+        self.l = []
+
+        self.d = {}
+        ## self.d = dict()
+
+    def insert(self, val: int) -> bool:
+        if val not in self.d:
+            self.d[val] = len(self.l)
+            self.l.append(val)
+            return True
+
+        return False
+
+
+    def remove(self, val: int) -> bool:
+        if val in self.d:
+            i = self.d[val]
+            del self.d[val]
+
+            del self.l[i]
+            return True
+
+        return False
+
+
+    def getRandom(self) -> int:
+        return random.choice(self.l)
+
+
+# Your RandomizedSet object will be instantiated and called as such:
+# obj = RandomizedSet()
+# param_1 = obj.insert(val)
+# param_2 = obj.remove(val)
+# param_3 = obj.getRandom()
+```
+
+But it's still `O(n)` because of the list deletion.
+
+Even better:
+
+```python
+import random
+
+class RandomizedSet:
+
+    def __init__(self):
+        self.l = []
+
+        self.d = {}
+        ## self.d = dict()
+
+    def insert(self, val: int) -> bool:
+        if val not in self.d:
+            self.d[val] = len(self.l)
+            self.l.append(val)
+            return True
+
+        return False
+
+
+    def remove(self, val: int) -> bool:
+        if val in self.d:
+            i = self.d[val]
+            del self.d[val]
+
+            last_val = self.l[-1]
+
+            # Swap with the last element
+            self.l[i] = last_val
+            self.l.pop()
+
+            # Update the dictionary for the swapped element only if it's not the same as removed val
+            if i < len(self.l):
+                self.d[last_val] = i
+
+            return True
+
+        return False
+
+
+    def getRandom(self) -> int:
+        return random.choice(self.l)
+
+
+# Your RandomizedSet object will be instantiated and called as such:
+# obj = RandomizedSet()
+# param_1 = obj.insert(val)
+# param_2 = obj.remove(val)
+# param_3 = obj.getRandom()
+```
+
