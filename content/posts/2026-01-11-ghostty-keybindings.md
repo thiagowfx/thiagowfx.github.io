@@ -3,6 +3,7 @@ title: "ghostty: keybindings"
 date: 2026-01-11T10:05:08-03:00
 tags:
   - dev
+  - ghostty
   - macos
 ---
 

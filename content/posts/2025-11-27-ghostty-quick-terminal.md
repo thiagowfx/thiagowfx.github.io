@@ -3,6 +3,7 @@ title: "ghostty: quick terminal"
 date: 2025-11-27T01:43:35-03:00
 tags:
   - dev
+  - ghostty
 ---
 
 [Ghostty](https://ghostty.org/) has a

@@ -3,6 +3,7 @@ title: "ghostty: find popular themes"
 date: 2025-01-09T02:56:37-03:00
 tags:
   - dev
+  - ghostty
 ---
 
 [Ghostty 1.0](https://ghostty.org/) was barely released and it's already quite

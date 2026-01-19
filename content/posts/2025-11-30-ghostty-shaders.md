@@ -3,6 +3,7 @@ title: "Ghostty shaders"
 date: 2025-11-30T18:17:36-03:00
 tags:
   - dev
+  - ghostty
   - serenity
 ---
 

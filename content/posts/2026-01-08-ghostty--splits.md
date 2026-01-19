@@ -3,6 +3,7 @@ title: "ghostty: splits"
 date: 2026-01-08T12:28:27-03:00
 tags:
   - dev
+  - ghostty
   - macos
 ---
 
