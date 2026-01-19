@@ -1,40 +1,21 @@
 {{- /* Find older posts with overlapping tags, jwz-style "previously" links */ -}}
 {{- if .Params.tags -}}
-{{- $currentPage := . -}}
-{{- $posts := where .Site.RegularPages "Section" "posts" -}}
-{{- $posts = where $posts "Permalink" "ne" .Permalink -}}
-{{- $posts = where $posts "Date" "lt" .Date -}}
 
-{{- /* Score by number of shared tags */ -}}
-{{- $scored := slice -}}
-{{- range $posts -}}
-  {{- $sharedTags := intersect $currentPage.Params.tags .Params.tags -}}
-  {{- $score := len $sharedTags -}}
-  {{- if gt $score 0 -}}
-    {{- $scored = $scored | append (dict "page" . "score" $score) -}}
-  {{- end -}}
-{{- end -}}
+{{- $currentFilename := path.Base .File.Path | replaceRE "\\.md$" "" -}}
+{{- $linkData := index $.Site.Data.links.posts $currentFilename -}}
+{{- $previouslyIds := $linkData.previously | default slice -}}
+{{- $paths := $.Site.Data.links.paths -}}
 
-{{- /* Sort by score desc, then by date desc (most recent first) */ -}}
-{{- $sorted := sort $scored "score" "desc" -}}
-{{- $byDate := slice -}}
-{{- $maxScore := 0 -}}
-{{- range $sorted -}}
-  {{- if eq $maxScore 0 -}}
-    {{- $maxScore = .score -}}
-  {{- end -}}
-  {{- if eq .score $maxScore -}}
-    {{- $byDate = $byDate | append . -}}
-  {{- end -}}
-{{- end -}}
-{{- $byDate = sort $byDate "page.Date" "desc" -}}
-{{- $remaining := where $sorted "score" "lt" $maxScore -}}
-{{- $sorted = $byDate | append $remaining -}}
-
-{{- $limit := .Site.Params.jwzPreviouslyLimit | default 5 -}}
+{{- /* Resolve previously IDs to page objects */ -}}
 {{- $previously := slice -}}
-{{- range first $limit $sorted -}}
-  {{- $previously = $previously | append .page -}}
+{{- range $previouslyIds -}}
+  {{- $hugoPath := index $paths . -}}
+  {{- if $hugoPath -}}
+    {{- $page := $.Site.GetPage $hugoPath -}}
+    {{- if $page -}}
+      {{- $previously = $previously | append $page -}}
+    {{- end -}}
+  {{- end -}}
 {{- end -}}
 
 {{- if $previously -}}

@@ -15,8 +15,12 @@ watch preview="true" *args:
 
     hugo server --port {{ port }} --watch {{ args }}
 
+# Pre-compute post relationships (backlinks, related, previously, graph)
+precompute:
+    python3 ci/precompute_links.py
+
 # Build the blog as in production
-build with-openring="false" *args:
+build with-openring="false" *args: precompute
     #!/usr/bin/env bash
     set -euo pipefail
 

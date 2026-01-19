@@ -1,179 +1,162 @@
 {{- define "main" }}
-{{- /* Skip graph in quick builds (pre-commit) and development */ -}}
-{{- if or (eq hugo.Environment "quick") (eq hugo.Environment "development") -}}
-<p>Graph visualization is disabled in this environment.</p>
-{{- else -}}
-
-{{- /* Build nodes and edges data */ -}}
-{{- $posts := where .Site.RegularPages "Section" "posts" -}}
-{{- $nodes := slice -}}
-{{- $edges := slice -}}
-
-{{- /* Create nodes for all posts */ -}}
-{{- range $posts -}}
-  {{- $filename := path.Base .File.Path | replaceRE "\\.md$" "" -}}
-  {{- $nodes = $nodes | append (dict "id" $filename "title" .Title "url" .Permalink "date" (.Date.Format "2006-01-02")) -}}
-{{- end -}}
-
-{{- /* Create edges based on ref links */ -}}
-{{- range $source := $posts -}}
-  {{- $sourceFilename := path.Base $source.File.Path | replaceRE "\\.md$" "" -}}
-  {{- range $target := $posts -}}
-    {{- if ne $source.Permalink $target.Permalink -}}
-      {{- $targetFilename := path.Base $target.File.Path | replaceRE "\\.md$" "" -}}
-      {{- $linksToTarget := findRE (printf `ref\s+"[^"]*%s` $targetFilename) $source.RawContent -}}
-      {{- if $linksToTarget -}}
-        {{- $edges = $edges | append (dict "source" $sourceFilename "target" $targetFilename) -}}
-      {{- end -}}
-    {{- end -}}
-  {{- end -}}
-{{- end -}}
-
 <h2>{{ .Title }}</h2>
 <p>Interactive graph of blog posts and their connections. Drag nodes to rearrange. Click a node to visit the post.</p>
 
-<div id="graph-container" style="width: 100%; height: 600px; border: 2px solid var(--border-color); border-radius: .5rem; overflow: hidden;"></div>
+<div id="graph-container" style="width: 100%; height: 600px; border: 2px solid var(--border-color); border-radius: .5rem; overflow: hidden;">
+  <p id="graph-loading" style="padding: 1rem; color: var(--color-gray);">Loading graph data...</p>
+</div>
 
-<p style="margin-top: 1rem; color: var(--color-gray); font-size: 0.9rem;">
-  {{ len $nodes }} posts · {{ len $edges }} links
-</p>
+<p id="graph-stats" style="margin-top: 1rem; color: var(--color-gray); font-size: 0.9rem;"></p>
 
 <script src="/vendor/d3.v7.min.js"></script>
 <script>
 (function() {
-  const nodes = {{ $nodes | jsonify | safeJS }};
-  const links = {{ $edges | jsonify | safeJS }};
+  fetch('/graph.json')
+    .then(response => response.json())
+    .then(data => {
+      const nodes = data.nodes;
+      const links = data.edges;
 
-  const container = document.getElementById('graph-container');
-  const width = container.clientWidth;
-  const height = container.clientHeight;
+      // Remove loading message
+      document.getElementById('graph-loading').remove();
 
-  const svg = d3.select('#graph-container')
-    .append('svg')
-    .attr('width', '100%')
-    .attr('height', '100%')
-    .attr('viewBox', [0, 0, width, height]);
+      // Update stats
+      document.getElementById('graph-stats').textContent = `${nodes.length} posts \u00b7 ${links.length} links`;
 
-  // Add zoom behavior
-  const g = svg.append('g');
-  svg.call(d3.zoom()
-    .scaleExtent([0.1, 4])
-    .on('zoom', (event) => g.attr('transform', event.transform)));
+      const container = document.getElementById('graph-container');
+      const width = container.clientWidth;
+      const height = container.clientHeight;
 
-  // Get colors from CSS variables
-  const style = getComputedStyle(document.documentElement);
-  const textColor = style.getPropertyValue('--text-color').trim() || '#333';
-  const linkColor = style.getPropertyValue('--border-color').trim() || '#ccc';
-  const nodeColor = style.getPropertyValue('--link-color').trim() || '#0066cc';
+      const svg = d3.select('#graph-container')
+        .append('svg')
+        .attr('width', '100%')
+        .attr('height', '100%')
+        .attr('viewBox', [0, 0, width, height]);
 
-  // Create simulation
-  const simulation = d3.forceSimulation(nodes)
-    .force('link', d3.forceLink(links).id(d => d.id).distance(80))
-    .force('charge', d3.forceManyBody().strength(-200))
-    .force('center', d3.forceCenter(width / 2, height / 2))
-    .force('collision', d3.forceCollide().radius(20));
+      // Add zoom behavior
+      const g = svg.append('g');
+      svg.call(d3.zoom()
+        .scaleExtent([0.1, 4])
+        .on('zoom', (event) => g.attr('transform', event.transform)));
 
-  // Draw links
-  const link = g.append('g')
-    .selectAll('line')
-    .data(links)
-    .join('line')
-    .attr('stroke', linkColor)
-    .attr('stroke-opacity', 0.6)
-    .attr('stroke-width', 1.5);
+      // Get colors from CSS variables
+      const style = getComputedStyle(document.documentElement);
+      const textColor = style.getPropertyValue('--text-color').trim() || '#333';
+      const linkColor = style.getPropertyValue('--border-color').trim() || '#ccc';
+      const nodeColor = style.getPropertyValue('--link-color').trim() || '#0066cc';
 
-  // Draw nodes
-  const node = g.append('g')
-    .selectAll('circle')
-    .data(nodes)
-    .join('circle')
-    .attr('r', d => {
-      // Size based on number of connections
-      const connections = links.filter(l => l.source.id === d.id || l.target.id === d.id).length;
-      return Math.max(5, Math.min(15, 5 + connections * 2));
+      // Create simulation
+      const simulation = d3.forceSimulation(nodes)
+        .force('link', d3.forceLink(links).id(d => d.id).distance(80))
+        .force('charge', d3.forceManyBody().strength(-200))
+        .force('center', d3.forceCenter(width / 2, height / 2))
+        .force('collision', d3.forceCollide().radius(20));
+
+      // Draw links
+      const link = g.append('g')
+        .selectAll('line')
+        .data(links)
+        .join('line')
+        .attr('stroke', linkColor)
+        .attr('stroke-opacity', 0.6)
+        .attr('stroke-width', 1.5);
+
+      // Draw nodes
+      const node = g.append('g')
+        .selectAll('circle')
+        .data(nodes)
+        .join('circle')
+        .attr('r', d => {
+          // Size based on number of connections
+          const connections = links.filter(l => l.source.id === d.id || l.target.id === d.id).length;
+          return Math.max(5, Math.min(15, 5 + connections * 2));
+        })
+        .attr('fill', nodeColor)
+        .attr('stroke', style.getPropertyValue('--bg-color').trim() || '#fff')
+        .attr('stroke-width', 1.5)
+        .style('cursor', 'pointer')
+        .call(d3.drag()
+          .on('start', dragstarted)
+          .on('drag', dragged)
+          .on('end', dragended));
+
+      // Add titles (tooltips)
+      node.append('title')
+        .text(d => d.title);
+
+      // Click to navigate
+      node.on('click', (event, d) => {
+        window.location.href = d.url;
+      });
+
+      // Highlight on hover
+      node.on('mouseover', function(event, d) {
+        d3.select(this).attr('fill', '#ff6600');
+        // Highlight connected links
+        link.attr('stroke', l => (l.source.id === d.id || l.target.id === d.id) ? '#ff6600' : linkColor)
+            .attr('stroke-width', l => (l.source.id === d.id || l.target.id === d.id) ? 2.5 : 1.5);
+      });
+
+      node.on('mouseout', function(event, d) {
+        d3.select(this).attr('fill', nodeColor);
+        link.attr('stroke', linkColor).attr('stroke-width', 1.5);
+      });
+
+      // Add labels for all nodes
+      const labelGroup = g.append('g');
+      const label = labelGroup.selectAll('text')
+        .data(nodes)
+        .join('text')
+        .text(d => d.title.length > 25 ? d.title.substring(0, 25) + '\u2026' : d.title)
+        .attr('font-size', '9px')
+        .attr('fill', 'var(--heading-color, #000)')
+        .attr('font-weight', '500')
+        .attr('dx', 10)
+        .attr('dy', 3)
+        .attr('stroke', 'var(--bg-color, #fff)')
+        .attr('stroke-width', 3)
+        .attr('paint-order', 'stroke')
+        .style('pointer-events', 'none');
+
+      // Update positions on tick
+      simulation.on('tick', () => {
+        link
+          .attr('x1', d => d.source.x)
+          .attr('y1', d => d.source.y)
+          .attr('x2', d => d.target.x)
+          .attr('y2', d => d.target.y);
+
+        node
+          .attr('cx', d => d.x)
+          .attr('cy', d => d.y);
+
+        label
+          .attr('x', d => d.x)
+          .attr('y', d => d.y);
+      });
+
+      function dragstarted(event) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        event.subject.fx = event.subject.x;
+        event.subject.fy = event.subject.y;
+      }
+
+      function dragged(event) {
+        event.subject.fx = event.x;
+        event.subject.fy = event.y;
+      }
+
+      function dragended(event) {
+        if (!event.active) simulation.alphaTarget(0);
+        event.subject.fx = null;
+        event.subject.fy = null;
+      }
     })
-    .attr('fill', nodeColor)
-    .attr('stroke', style.getPropertyValue('--bg-color').trim() || '#fff')
-    .attr('stroke-width', 1.5)
-    .style('cursor', 'pointer')
-    .call(d3.drag()
-      .on('start', dragstarted)
-      .on('drag', dragged)
-      .on('end', dragended));
-
-  // Add titles (tooltips)
-  node.append('title')
-    .text(d => d.title);
-
-  // Click to navigate
-  node.on('click', (event, d) => {
-    window.location.href = d.url;
-  });
-
-  // Highlight on hover
-  node.on('mouseover', function(event, d) {
-    d3.select(this).attr('fill', '#ff6600');
-    // Highlight connected links
-    link.attr('stroke', l => (l.source.id === d.id || l.target.id === d.id) ? '#ff6600' : linkColor)
-        .attr('stroke-width', l => (l.source.id === d.id || l.target.id === d.id) ? 2.5 : 1.5);
-  });
-
-  node.on('mouseout', function(event, d) {
-    d3.select(this).attr('fill', nodeColor);
-    link.attr('stroke', linkColor).attr('stroke-width', 1.5);
-  });
-
-  // Add labels for all nodes
-  const labelGroup = g.append('g');
-  const label = labelGroup.selectAll('text')
-    .data(nodes)
-    .join('text')
-    .text(d => d.title.length > 25 ? d.title.substring(0, 25) + '…' : d.title)
-    .attr('font-size', '9px')
-    .attr('fill', 'var(--heading-color, #000)')
-    .attr('font-weight', '500')
-    .attr('dx', 10)
-    .attr('dy', 3)
-    .attr('stroke', 'var(--bg-color, #fff)')
-    .attr('stroke-width', 3)
-    .attr('paint-order', 'stroke')
-    .style('pointer-events', 'none');
-
-  // Update positions on tick
-  simulation.on('tick', () => {
-    link
-      .attr('x1', d => d.source.x)
-      .attr('y1', d => d.source.y)
-      .attr('x2', d => d.target.x)
-      .attr('y2', d => d.target.y);
-
-    node
-      .attr('cx', d => d.x)
-      .attr('cy', d => d.y);
-
-    label
-      .attr('x', d => d.x)
-      .attr('y', d => d.y);
-  });
-
-  function dragstarted(event) {
-    if (!event.active) simulation.alphaTarget(0.3).restart();
-    event.subject.fx = event.subject.x;
-    event.subject.fy = event.subject.y;
-  }
-
-  function dragged(event) {
-    event.subject.fx = event.x;
-    event.subject.fy = event.y;
-  }
-
-  function dragended(event) {
-    if (!event.active) simulation.alphaTarget(0);
-    event.subject.fx = null;
-    event.subject.fy = null;
-  }
+    .catch(error => {
+      document.getElementById('graph-loading').textContent = 'Failed to load graph data.';
+      console.error('Error loading graph data:', error);
+    });
 })();
 </script>
 
-{{- end -}}
 {{- end -}}

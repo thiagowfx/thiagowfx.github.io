@@ -1,0 +1,13 @@
+{{- /* Output graph data from pre-computed links.json */ -}}
+{{- $graphData := $.Site.Data.links.graph -}}
+{{- $nodes := slice -}}
+
+{{- /* Add URLs to nodes by looking up each page */ -}}
+{{- range $graphData.nodes -}}
+  {{- $page := $.Site.GetPage .hugo_path -}}
+  {{- if $page -}}
+    {{- $nodes = $nodes | append (dict "id" .id "title" .title "url" $page.Permalink "date" .date) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- dict "nodes" $nodes "edges" $graphData.edges | jsonify -}}

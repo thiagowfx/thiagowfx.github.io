@@ -1,58 +1,21 @@
 {{- /* Skip related posts in quick builds (pre-commit) */ -}}
 {{- if ne hugo.Environment "quick" -}}
 
-{{- $currentPage := . -}}
-{{- $currentTitle := .Title | lower -}}
-{{- $posts := where .Site.RegularPages "Section" "posts" -}}
-{{- $posts = where $posts "Permalink" "ne" .Permalink -}}
+{{- $currentFilename := path.Base .File.Path | replaceRE "\\.md$" "" -}}
+{{- $linkData := index $.Site.Data.links.posts $currentFilename -}}
+{{- $relatedIds := $linkData.related | default slice -}}
+{{- $paths := $.Site.Data.links.paths -}}
 
-{{- /* Extract words from current title (min 4 chars to skip common words) */ -}}
-{{- $titleWords := slice -}}
-{{- range split $currentTitle " " -}}
-  {{- $word := . | replaceRE "[^a-z0-9]+" "" -}}
-  {{- if ge (len $word) 4 -}}
-    {{- $titleWords = $titleWords | append $word -}}
-  {{- end -}}
-{{- end -}}
-
-{{- /* Extract current post filename for link detection */ -}}
-{{- $currentFilename := path.Base $currentPage.File.Path | replaceRE "\\.md$" "" -}}
-
-{{- /* Score posts by matching title words */ -}}
-{{- $scored := slice -}}
-{{- range $posts -}}
-  {{- $otherTitle := .Title | lower -}}
-  {{- $score := 0 -}}
-  {{- range $titleWords -}}
-    {{- if in $otherTitle . -}}
-      {{- $score = add $score 1 -}}
+{{- /* Resolve related IDs to page objects */ -}}
+{{- $related := slice -}}
+{{- range $relatedIds -}}
+  {{- $hugoPath := index $paths . -}}
+  {{- if $hugoPath -}}
+    {{- $page := $.Site.GetPage $hugoPath -}}
+    {{- if $page -}}
+      {{- $related = $related | append $page -}}
     {{- end -}}
   {{- end -}}
-  {{- /* Also boost if they share tags */ -}}
-  {{- $sharedTags := intersect $currentPage.Params.tags .Params.tags -}}
-  {{- $score = add $score (len $sharedTags) -}}
-  {{- /* Also boost if they share categories */ -}}
-  {{- $sharedCategories := intersect $currentPage.Params.categories .Params.categories -}}
-  {{- $score = add $score (mul (len $sharedCategories) 2) -}}
-  {{- /* Boost if either post links to the other (bidirectional) */ -}}
-  {{- $otherFilename := path.Base .File.Path | replaceRE "\\.md$" "" -}}
-  {{- $currentLinksToOther := findRE (printf `ref\s+"[^"]*%s` $otherFilename) $currentPage.RawContent -}}
-  {{- $otherLinksToCurrent := findRE (printf `ref\s+"[^"]*%s` $currentFilename) .RawContent -}}
-  {{- if or $currentLinksToOther $otherLinksToCurrent -}}
-    {{- $score = add $score 5 -}}
-  {{- end -}}
-  {{- if gt $score 0 -}}
-    {{- /* Composite key: score * 10^12 + unix timestamp (newer wins ties) */ -}}
-    {{- $sortKey := add (mul $score 1000000000000) .Date.Unix -}}
-    {{- $scored = $scored | append (dict "page" . "score" $score "sortKey" $sortKey) -}}
-  {{- end -}}
-{{- end -}}
-
-{{- /* Sort by score descending, with date as tiebreaker (newer wins) */ -}}
-{{- $sorted := sort $scored "sortKey" "desc" -}}
-{{- $related := slice -}}
-{{- range first 2 $sorted -}}
-  {{- $related = $related | append .page -}}
 {{- end -}}
 
 {{- if $related -}}

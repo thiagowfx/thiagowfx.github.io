@@ -1,24 +1,22 @@
 {{- /* Skip backlinks in quick builds (pre-commit) */ -}}
 {{- if ne hugo.Environment "quick" -}}
 
-{{- $currentPage := . -}}
-{{- $posts := where .Site.RegularPages "Section" "posts" -}}
-{{- $posts = where $posts "Permalink" "ne" .Permalink -}}
+{{- $currentFilename := path.Base .File.Path | replaceRE "\\.md$" "" -}}
+{{- $linkData := index $.Site.Data.links.posts $currentFilename -}}
+{{- $backlinkIds := $linkData.backlinks | default slice -}}
+{{- $paths := $.Site.Data.links.paths -}}
 
-{{- /* Extract current post filename for link detection */ -}}
-{{- $currentFilename := path.Base $currentPage.File.Path | replaceRE "\\.md$" "" -}}
-
-{{- /* Find posts that link to this one */ -}}
+{{- /* Resolve backlink IDs to page objects */ -}}
 {{- $backlinks := slice -}}
-{{- range $posts -}}
-  {{- $linksToCurrentPost := findRE (printf `ref\s+"[^"]*%s` $currentFilename) .RawContent -}}
-  {{- if $linksToCurrentPost -}}
-    {{- $backlinks = $backlinks | append . -}}
+{{- range $backlinkIds -}}
+  {{- $hugoPath := index $paths . -}}
+  {{- if $hugoPath -}}
+    {{- $page := $.Site.GetPage $hugoPath -}}
+    {{- if $page -}}
+      {{- $backlinks = $backlinks | append $page -}}
+    {{- end -}}
   {{- end -}}
 {{- end -}}
-
-{{- /* Sort by date descending (newest first) */ -}}
-{{- $backlinks = sort $backlinks "Date" "desc" -}}
 
 {{- if $backlinks -}}
 <div class="backlinks" style="border: 2px solid var(--border-color); border-radius: .5rem; padding: 1.5rem 1.5rem 1rem; margin-top: 1.5rem;">
