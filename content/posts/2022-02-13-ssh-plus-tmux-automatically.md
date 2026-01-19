@@ -5,6 +5,7 @@ tags:
   - bestof
   - dev
   - security
+  - ssh
 ---
 
 One of the most classic sysadmin/DevOps tasks is to use secure shell to connect to remote machines.

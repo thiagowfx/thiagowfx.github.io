@@ -5,6 +5,7 @@ tags:
   - dev
   - privacy
   - security
+  - ssh
 ---
 
 A security / privacy tip: hash ssh hosts, especially in machines you have

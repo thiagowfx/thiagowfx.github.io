@@ -5,6 +5,7 @@ tags:
   - dev
   - macos
   - security
+  - ssh
 ---
 
 A day in the life:

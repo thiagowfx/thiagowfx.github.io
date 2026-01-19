@@ -5,6 +5,7 @@ tags:
   - dev
   - git
   - security
+  - ssh
 ---
 
 `git pull` authentication issues is _really_ a disguise for `ssh` auth issues.

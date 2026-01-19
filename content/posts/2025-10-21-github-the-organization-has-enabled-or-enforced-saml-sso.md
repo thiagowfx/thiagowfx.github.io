@@ -4,6 +4,7 @@ date: 2025-10-21T08:15:41+02:00
 tags:
   - dev
   - security
+  - ssh
 ---
 
 Error message when doing `git push`:

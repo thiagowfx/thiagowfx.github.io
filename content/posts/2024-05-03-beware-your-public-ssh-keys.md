@@ -5,6 +5,7 @@ tags:
   - dev
   - privacy
   - security
+  - ssh
 ---
 
 If you have a GitHub account configured with SSH, your public keys are available

@@ -4,6 +4,7 @@ date: 2025-10-30T12:59:53+01:00
 tags:
   - bestof
   - dev
+  - ssh
 ---
 
 [Previously]({{< ref "2025-10-21-github-the-organization-has-enabled-or-enforced-saml-sso" >}}),
