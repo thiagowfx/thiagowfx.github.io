@@ -4,22 +4,40 @@
 {{- $currentFilename := path.Base .File.Path | replaceRE "\\.md$" "" -}}
 {{- $linkData := index $.Site.Data.links.posts $currentFilename -}}
 {{- $relatedIds := $linkData.related | default slice -}}
+{{- $previouslyIds := $linkData.previously | default slice -}}
 {{- $paths := $.Site.Data.links.paths -}}
 
 {{- /* Resolve related IDs to page objects */ -}}
 {{- $related := slice -}}
+{{- $relatedSet := slice -}}
 {{- range $relatedIds -}}
   {{- $hugoPath := index $paths . -}}
   {{- if $hugoPath -}}
     {{- $page := $.Site.GetPage $hugoPath -}}
     {{- if $page -}}
       {{- $related = $related | append $page -}}
+      {{- $relatedSet = $relatedSet | append . -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
 
-{{- if $related -}}
+{{- /* Resolve previously IDs to page objects, excluding those already in related */ -}}
+{{- $previously := slice -}}
+{{- range $previouslyIds -}}
+  {{- if not (in $relatedSet .) -}}
+    {{- $hugoPath := index $paths . -}}
+    {{- if $hugoPath -}}
+      {{- $page := $.Site.GetPage $hugoPath -}}
+      {{- if $page -}}
+        {{- $previously = $previously | append $page -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if or $related $previously -}}
 <div class="related-posts" style="border: 2px solid var(--border-color); border-radius: .5rem; padding: 1.5rem; margin-top: 1.5rem;">
+  {{- if $related -}}
   <h4 style="margin-top: 0;">Related Posts</h4>
   <section style="display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0;">
     {{- range $related -}}
@@ -34,6 +52,18 @@
     </article>
     {{- end -}}
   </section>
+  {{- end -}}
+  {{- if $previously -}}
+  <p class="previously" style="margin-bottom: 0;{{ if $related }} margin-top: 0.5rem;{{ end }}">
+    {{- range $i, $p := $previously -}}
+      {{- if eq $i 0 -}}
+        <a href="{{ $p.Permalink }}" title="{{ $p.Title }}">Previously</a>
+      {{- else -}}
+        , <a href="{{ $p.Permalink }}" title="{{ $p.Title }}">previously</a>
+      {{- end -}}
+    {{- end -}}.
+  </p>
+  {{- end -}}
 </div>
 {{- end -}}
 
