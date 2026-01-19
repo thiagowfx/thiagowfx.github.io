@@ -4,6 +4,7 @@ date: 2024-05-17T11:15:09+02:00
 tags:
    - aws
    - dev
+   - docker
    - kubernetes
 ---
 
