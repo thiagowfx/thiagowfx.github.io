@@ -3,6 +3,7 @@ title: "Github Actions: multiple docker images"
 date: 2024-11-05T17:05:22+01:00
 tags:
   - dev
+  - docker
 ---
 
 **Problem statement**: Given a monorepo on Github with multiple docker images in

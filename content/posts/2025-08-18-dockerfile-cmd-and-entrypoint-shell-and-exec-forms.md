@@ -3,6 +3,7 @@ title: "Dockerfile: CMD and ENTRYPOINT: shell and exec forms"
 date: 2025-08-18T15:09:28+02:00
 tags:
   - dev
+  - docker
 ---
 
 Today I filed a github issue against the

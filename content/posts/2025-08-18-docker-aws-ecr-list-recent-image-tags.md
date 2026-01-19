@@ -3,6 +3,7 @@ title: "Docker: AWS ECR: list recent image tags"
 date: 2025-08-18T15:38:21+02:00
 tags:
   - dev
+  - docker
 ---
 
 **Problem statement**: Given a docker repository hosted in

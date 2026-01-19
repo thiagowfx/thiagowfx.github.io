@@ -4,6 +4,7 @@ date: 2024-12-10T19:45:42-03:00
 tags:
    - aws
    - dev
+   - docker
 ---
 
 To build a docker image completely from scratch, without reusing cache layers on

@@ -4,6 +4,7 @@ date: 2024-10-25T14:11:14+02:00
 tags:
    - aws
    - dev
+   - docker
 ---
 
 Given a docker registry, image and tag, run the following command:

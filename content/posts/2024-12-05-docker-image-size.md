@@ -3,6 +3,7 @@ title: "Docker image size"
 date: 2024-12-05T13:05:44+01:00
 tags:
   - dev
+  - docker
 ---
 
 When trying to optimize docker images in terms of size, the workflow is as

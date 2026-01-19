@@ -4,6 +4,7 @@ date: 2024-07-30T22:56:58+02:00
 tags:
   - alpine-linux
   - dev
+  - docker
 ---
 
 In this post: how to properly start `docker` on an Alpine Linux server.

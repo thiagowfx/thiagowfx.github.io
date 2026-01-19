@@ -3,6 +3,7 @@ title: "docker: dive into images"
 date: 2025-08-11T13:20:08+02:00
 tags:
   - dev
+  - docker
 ---
 
 Recently bitnami has [pulled the
