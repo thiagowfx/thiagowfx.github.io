@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docker on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Docker on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
+[some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 18 Jan 2026 22:14:57 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker: AWS ECR: list recent image tags</title><link>https://perrotta.dev/2025/08/docker-aws-ecr-list-recent-image-tags/</link><pubDate>Mon, 18 Aug 2025 15:38:21 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>docker</category><guid>https://perrotta.dev/2025/08/docker-aws-ecr-list-recent-image-tags/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Given a docker repository hosted in
+&lt;a href="https://aws.amazon.com/ecr/"&gt;ECR&lt;/a&gt; (AWS), list its &lt;strong&gt;most recent&lt;/strong&gt; image tags.&lt;/p&gt;
+&lt;p&gt;Assuming you&amp;rsquo;re already authenticated to AWS in the CLI:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% aws ecr describe-images &lt;span style="color:#ae81ff"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;&lt;/span&gt; --repository-name &lt;span style="color:#f92672"&gt;{&lt;/span&gt;corp&lt;span style="color:#f92672"&gt;}&lt;/span&gt;/&lt;span style="color:#f92672"&gt;{&lt;/span&gt;repo&lt;span style="color:#f92672"&gt;}&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;&lt;/span&gt; --filter tagStatus&lt;span style="color:#f92672"&gt;=&lt;/span&gt;TAGGED &lt;span style="color:#ae81ff"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;&lt;/span&gt; --query &lt;span style="color:#e6db74"&gt;&amp;#39;reverse(sort_by(imageDetails, &amp;amp;imagePushedAt))[*].{Tag: imageTags[0], PushedAt: imagePushedAt}&amp;#39;&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;&lt;/span&gt; &lt;span style="color:#f92672"&gt;[&lt;/span&gt;--output table&lt;span style="color:#f92672"&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The output looks like this:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;-------------------------------------------------------------------------------------------
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;| DescribeImages |
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+-----------------------------------+-----------------------------------------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;| PushedAt | Tag |
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+-----------------------------------+-----------------------------------------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;| 2025-08-14T14:44:49.285000+02:00 | 1.0.2 |
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;| 2025-08-14T14:07:53.526000+02:00 | app-839403421 |
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;| 2025-08-07T19:38:21.452000+02:00 | app-1134bfa1d |
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;| 2025-08-06T14:54:23.314000+02:00 | app-pr-5033-07f01dd66 |
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;| 2025-08-06T14:33:27.171000+02:00 | app-pr-5033-643536a2b |
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;| 2025-07-23T09:36:20.368000+02:00 | app-pr-4947-fe5f4c618 |
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;| 2025-04-17T03:17:30.937000+02:00 | 1.0.1 |
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;| 2024-12-18T18:50:18.990000+01:00 | latest |
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;| 2024-12-05T17:52:09.775000+01:00 | 1.0.0 |
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+-----------------------------------+-----------------------------------------------------+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If you omit &lt;code&gt;--output table&lt;/code&gt;, it emits JSON instead.&lt;/p&gt;
+&lt;p&gt;This is faster than logging into the AWS Console.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Docker: AWS ECR: list recent image tags"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/docker/"&gt;#docker&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>Dockerfile: CMD and ENTRYPOINT: shell and exec forms</title><link>https://perrotta.dev/2025/08/dockerfile-cmd-and-entrypoint-shell-and-exec-forms/</link><pubDate>Mon, 18 Aug 2025 15:09:28 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>docker</category><guid>https://perrotta.dev/2025/08/dockerfile-cmd-and-entrypoint-shell-and-exec-forms/</guid><description>&lt;p&gt;Today I filed a github issue against the
+&lt;a href="https://github.com/reteps/dockerfmt/"&gt;&lt;code&gt;dockerfmt&lt;/code&gt;&lt;/a&gt; project, which I copy
+verbatim here given its surprising behavior.&lt;/p&gt;
+&lt;h2 id="retepsdockerfmt33"&gt;&lt;a href="https://github.com/reteps/dockerfmt/issues/33"&gt;reteps/dockerfmt#33&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Consider this sample &lt;code&gt;Dockerfile&lt;/code&gt; (abridged version of a real-world scenario):&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ENTRYPOINT sleep infinity
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;CMD sleep infinity&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Let&amp;rsquo;s run &lt;code&gt;dockerfmt&lt;/code&gt; (v0.3.7) in it:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% dockerfmt Dockerfile
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ENTRYPOINT [&amp;#34;sleep&amp;#34;, &amp;#34;infinity&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;CMD [&amp;#34;sleep&amp;#34;, &amp;#34;infinity&amp;#34;]&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;At first glance, everything looks OK. The problem is that this transformation is not a no-op.&lt;/p&gt;
+&lt;p&gt;Looking at the docs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://docs.docker.com/reference/dockerfile/#cmd"&gt;https://docs.docker.com/reference/dockerfile/#cmd&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://docs.docker.com/reference/dockerfile/#shell-and-exec-form"&gt;https://docs.docker.com/reference/dockerfile/#shell-and-exec-form&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If CMD is used to provide default arguments for the ENTRYPOINT instruction, both the CMD and ENTRYPOINT instructions should be specified in the &lt;a href="https://docs.docker.com/reference/dockerfile/#exec-form"&gt;exec form&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The difference is:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the original code yields &lt;code&gt;sleep infinity&lt;/code&gt; (correct!)&lt;/li&gt;
+&lt;li&gt;the transformed code yields &lt;code&gt;sleep infinity sleep infinity&lt;/code&gt;, which is an error (sleep: &lt;code&gt;no such argument sleep&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;One could argue that the original code is odd – the following would be conceptually simpler, and more idiomatic:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ENTRYPOINT [&amp;#34;sleep&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;CMD [&amp;#34;infinity&amp;#34;]&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Or even:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ENTRYPOINT [&amp;#34;sleep&amp;#34;, &amp;#34;infinity&amp;#34;]&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Nonetheless, IMHO &lt;code&gt;dockerfmt&lt;/code&gt; should not change the behavior in this case.&lt;/p&gt;
+&lt;h2 id="notes"&gt;Notes&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://docs.docker.com/reference/dockerfile/#shell-and-exec-form"&gt;&lt;code&gt;shell&lt;/code&gt; and &lt;code&gt;exec&lt;/code&gt;
+forms&lt;/a&gt; have
+distinct forms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;INSTRUCTION [&amp;quot;executable&amp;quot;, &amp;quot;param1&amp;quot;, &amp;quot;param2&amp;quot;]&lt;/code&gt; (exec form)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;INSTRUCTION command param1 param2&lt;/code&gt; (shell form)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The exec form makes it possible to avoid shell string munging, and to invoke
+commands using a specific command shell, or any other executable. It uses a
+JSON array syntax, where each element in the array is a command, flag, or
+argument.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The shell form is more relaxed, and emphasizes ease of use, flexibility, and
+readability. The shell form automatically uses a command shell, whereas the
+exec form does not.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;dockerfmt&lt;/code&gt;
+&lt;a href="https://github.com/reteps/dockerfmt/blob/290b5f78fbf3134024eb3366880754beee5dbe69/lib/format.go#L483"&gt;prefers&lt;/a&gt;
+the exec form, for whatever reason.&lt;/p&gt;
+&lt;p&gt;There&amp;rsquo;s even a &lt;a href="https://github.com/reteps/dockerfmt/blob/290b5f78fbf3134024eb3366880754beee5dbe69/lib/format.go#L480"&gt;code
+comment&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;// this can technically change behavior. https://docs.docker.com/reference/dockerfile/#understand-how-cmd-and-entrypoint-interact&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Surprise surprise! The issue I reported is precisely due to a change of
+behavior.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Dockerfile: CMD and ENTRYPOINT: shell and exec forms"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/docker/"&gt;#docker&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>docker: dive into images</title><link>https://perrotta.dev/2025/08/docker-dive-into-images/</link><pubDate>Mon, 11 Aug 2025 13:20:08 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>docker</category><guid>https://perrotta.dev/2025/08/docker-dive-into-images/</guid><description>&lt;p&gt;Recently bitnami has &lt;a href="https://github.com/bitnami/charts/issues/35164"&gt;pulled the
+plug&lt;/a&gt; off their public docker
+images offering&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2025/08/docker-dive-into-images/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;We are relying on their
+&lt;a href="https://hub.docker.com/r/bitnami/kubectl"&gt;&lt;code&gt;bitnami/kubectl&lt;/code&gt;&lt;/a&gt; image. Now what?&lt;/p&gt;
+&lt;p&gt;We could build our own, or use another upstream image. Looking at the &lt;a href="https://hub.docker.com/search?q=kubectl"&gt;Docker
+Hub&lt;/a&gt; catalog, I was pleased to find
+&lt;a href="https://hub.docker.com/r/rancher/kubectl"&gt;&lt;code&gt;rancher/kubectl&lt;/code&gt;&lt;/a&gt; (backed by SUSE)
+there.&lt;/p&gt;
+&lt;p&gt;This is enough for our needs.&lt;/p&gt;
+&lt;p&gt;It would have been trivial to build our own image otherwise if needed:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="dockerfile"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;dockerfile&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-dockerfile" data-lang="dockerfile"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;FROM&lt;/span&gt; &lt;span style="color:#e6db74"&gt;alpine:3.22&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;RUN&lt;/span&gt; apk add --no-cache kubectl&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;How can we ensure these images are equivalent, for practical purposes?&lt;/p&gt;
+&lt;p&gt;One way is to use &lt;a href="https://github.com/wagoodman/dive"&gt;&lt;code&gt;dive&lt;/code&gt;&lt;/a&gt; to introspect
+each of them:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A tool for exploring each layer in a docker image&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% dive bitnami/kubectl:latest
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% dive rancher/kubectl:v1.30.14&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The rancher image has 50MB in size and contains &lt;em&gt;only&lt;/em&gt; the &lt;code&gt;kubectl&lt;/code&gt; binary.
+There&amp;rsquo;s no shell, not even &lt;code&gt;/bin/sh&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The bitnami image has 326MB and contains a bunch of other stuff.&lt;/p&gt;
+&lt;p&gt;It turns out we will get some (unexpected) efficiency gains out of this
+migration!&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Enshittification"&gt;&amp;ldquo;&amp;ldquo;&amp;ldquo;Recession&amp;rdquo;&amp;rdquo;&amp;rdquo;&lt;/a&gt;.&amp;#160;&lt;a href="https://perrotta.dev/2025/08/docker-dive-into-images/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: docker: dive into images"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/docker/"&gt;#docker&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>Alpine Linux: Dockerfile: install package from edge</title><link>https://perrotta.dev/2025/06/alpine-linux-dockerfile-install-package-from-edge/</link><pubDate>Wed, 04 Jun 2025 12:37:47 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>alpine-linux</category><category>dev</category><category>docker</category><guid>https://perrotta.dev/2025/06/alpine-linux-dockerfile-install-package-from-edge/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Given a &lt;code&gt;Dockerfile&lt;/code&gt; based on a fixed release of Alpine
+Linux (e.g. &lt;code&gt;FROM alpine:3.22&lt;/code&gt;), install a package from &lt;code&gt;edge&lt;/code&gt; (i.e. a package
+that did not yet make it to a fixed release).&lt;/p&gt;
+&lt;p&gt;The approach is similar to package &lt;a href="https://perrotta.dev/2025/01/alpine-linux-install-/-pin-old-packages/"&gt;pinning&lt;/a&gt;, by providing a custom
+&lt;code&gt;--repository&lt;/code&gt; to &lt;code&gt;apk add&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="dockerfile"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;dockerfile&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-dockerfile" data-lang="dockerfile"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;RUN&lt;/span&gt; apk add --no-cache --repository&lt;span style="color:#f92672"&gt;=&lt;/span&gt;https://dl-cdn.alpinelinux.org/alpine/edge/testing gliderlabs-sigil vals&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Replace &amp;ldquo;testing&amp;rdquo; with &amp;ldquo;community&amp;rdquo; or &amp;ldquo;main&amp;rdquo; as needed.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Alpine Linux: Dockerfile: install package from edge"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/alpine-linux/"&gt;#alpine-linux&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/docker/"&gt;#docker&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>Docker build: ignore cache</title><link>https://perrotta.dev/2024/12/docker-build-ignore-cache/</link><pubDate>Tue, 10 Dec 2024 19:45:42 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>aws</category><category>dev</category><category>docker</category><guid>https://perrotta.dev/2024/12/docker-build-ignore-cache/</guid><description>&lt;p&gt;To build a docker image completely from scratch, without reusing cache layers on
+your system:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;docker build --no-cache -f Dockerfile . -t &lt;span style="color:#f92672"&gt;{&lt;/span&gt;image name&lt;span style="color:#f92672"&gt;}&lt;/span&gt;:&lt;span style="color:#f92672"&gt;{&lt;/span&gt;image tag&lt;span style="color:#f92672"&gt;}&lt;/span&gt; --platform
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;linux/amd64&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;Pass an explicit platform in case e.g. you&amp;rsquo;re building on a Mac M1 (arm64)
+with the intent of running it on Linux in the cloud (amd64 typically).&lt;/li&gt;
+&lt;li&gt;The docker image full specification is: image =
+&lt;code&gt;{registry}/{repository}:{tag}&lt;/code&gt;. For example, the registry could be an AWS ECR
+URL, whereas the repository is something like &amp;ldquo;bitnami/sealed-secrets&amp;rdquo;, and
+the tag typically follows semantic versioning.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Docker build: ignore cache"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/aws/"&gt;#aws&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/docker/"&gt;#docker&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>Docker image size</title><link>https://perrotta.dev/2024/12/docker-image-size/</link><pubDate>Thu, 05 Dec 2024 13:05:44 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>docker</category><guid>https://perrotta.dev/2024/12/docker-image-size/</guid><description>&lt;p&gt;When trying to optimize docker images in terms of size, the workflow is as
+follows:&lt;/p&gt;
+&lt;h2 id="terminal-1"&gt;Terminal 1&lt;/h2&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% docker build -f Dockerfile . -t argocd-download-tools&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;possibly paired up with &lt;code&gt;entr&lt;/code&gt; or &lt;code&gt;fswatch&lt;/code&gt; depending on your eagerness for
+automatic builds.&lt;/p&gt;
+&lt;h2 id="terminal-2"&gt;Terminal 2&lt;/h2&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% docker image inspect argocd-download-tools | jq -r &lt;span style="color:#e6db74"&gt;&amp;#39;.[0].Size&amp;#39;&lt;/span&gt; | numfmt --to&lt;span style="color:#f92672"&gt;=&lt;/span&gt;iec
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;134M&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;possibly prepended with &lt;code&gt;watch&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I wasn&amp;rsquo;t aware of &lt;a href="https://man.archlinux.org/man/numfmt.1"&gt;&lt;code&gt;numfmt&lt;/code&gt;&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;numfmt - Convert numbers from/to human-readable strings&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&amp;hellip;instead of displaying plain bytes, it converts numbers to human-readable
+strings (à la &lt;code&gt;df -h&lt;/code&gt; or &lt;code&gt;free -h&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Regarding the &lt;a href="https://en.wikipedia.org/wiki/Binary_prefix"&gt;units&lt;/a&gt;: they don&amp;rsquo;t
+matter much, because we are only interested in an approximation, no need to
+shave bytes off here. &lt;code&gt;SI&lt;/code&gt; has 1k = 1000, whereas &lt;code&gt;IEC&lt;/code&gt; has 1Ki = 1024.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Docker image size"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/docker/"&gt;#docker&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>Github Actions: multiple docker images</title><link>https://perrotta.dev/2024/11/github-actions-multiple-docker-images/</link><pubDate>Tue, 05 Nov 2024 17:05:22 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>docker</category><guid>https://perrotta.dev/2024/11/github-actions-multiple-docker-images/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Given a monorepo on Github with multiple docker images in
+it, write a github workflow to build and push all of them.&lt;/p&gt;
+&lt;p&gt;Here is an abridged version of the resulting workflow. The images are listed one
+by one for fine-grained control purposes, but it would also be possible to glob
+them with a single command.&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;name&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;Global services&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;permissions&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;id-token&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;write&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;contents&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;read&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Replace with workflow trigger conditions.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;on&lt;/span&gt;: {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;jobs&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;global-services&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;name&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;${{ matrix.image }}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;runs-on&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;ubuntu-latest&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;strategy&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;fail-fast&lt;/span&gt;: &lt;span style="color:#66d9ef"&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;matrix&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;include&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# keep-sorted start&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#f92672"&gt;dockerfile&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;path/to/one/Dockerfile&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;image&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;org/one&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#f92672"&gt;dockerfile&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;path/to/two/Dockerfile&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;image&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;org/two&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# keep-sorted end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;steps&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#f92672"&gt;name&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;Check out source code&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;uses&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;actions/checkout@v4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#f92672"&gt;name&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;Get git SHA&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;id&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;git-sha&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;run&lt;/span&gt;: |&lt;span style="color:#e6db74"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; ./scripts/get-versions.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; echo &amp;#34;sha=$(grep &amp;#39;^services_sha&amp;#39; versions.yaml | cut -d&amp;#39; &amp;#39; -f 2)&amp;#34; &amp;gt;&amp;gt; &amp;#34;$GITHUB_OUTPUT&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#f92672"&gt;uses&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;./.github/actions/setup-ecr-buildx&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;id&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;setup-ecr-buildx&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#f92672"&gt;name&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;Build and push global service images&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;uses&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;docker/build-push-action@6.9.0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;with&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;cache-from&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;type=gha&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;cache-to&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;type=gha,mode=max&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;context&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;path/to&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;file&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;${{ matrix.dockerfile }}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;provenance&lt;/span&gt;: &lt;span style="color:#66d9ef"&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;push&lt;/span&gt;: &lt;span style="color:#66d9ef"&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;tags&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;${{ steps.setup-ecr-buildx.outputs.ecr_registry }}/${{ matrix.image }}:${{ steps.git-sha.outputs.sha }}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;A matrix strategy kicks off independent multiple build jobs all at once.&lt;/p&gt;
+&lt;p&gt;Docs: &lt;a href="https://github.com/docker/build-push-action"&gt;https://github.com/docker/build-push-action&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Github Actions: multiple docker images"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/docker/"&gt;#docker&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>Check if docker image exists in registry</title><link>https://perrotta.dev/2024/10/check-if-docker-image-exists-in-registry/</link><pubDate>Fri, 25 Oct 2024 14:11:14 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>aws</category><category>dev</category><category>docker</category><guid>https://perrotta.dev/2024/10/check-if-docker-image-exists-in-registry/</guid><description>&lt;p&gt;Given a docker registry, image and tag, run the following command:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% docker manifest inspect 9876543210.foo.ecr.us-east-1.amazonaws.com/org/image:123456789&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If it does not exist, you&amp;rsquo;ll see:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;no such manifest: 9876543210.foo.ecr.us-east-1.amazonaws.com/org/image:123456789&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Ensure you are authenticated and/or connected to the VPN in case of a private registry.&lt;/p&gt;
+&lt;p&gt;When using ECR (AWS&amp;rsquo;s registry), you can authenticate this way:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% which docker_login
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;docker_login &lt;span style="color:#f92672"&gt;()&lt;/span&gt; &lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 9876543210.foo.ecr.us-east-1.amazonaws.com
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Check if docker image exists in registry"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/aws/"&gt;#aws&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/docker/"&gt;#docker&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>Docker on Alpine Linux</title><link>https://perrotta.dev/2024/07/docker-on-alpine-linux/</link><pubDate>Tue, 30 Jul 2024 22:56:58 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>alpine-linux</category><category>dev</category><category>docker</category><guid>https://perrotta.dev/2024/07/docker-on-alpine-linux/</guid><description>&lt;p&gt;In this post: how to properly start &lt;code&gt;docker&lt;/code&gt; on an Alpine Linux server.&lt;/p&gt;
+&lt;p&gt;First, install &lt;code&gt;docker&lt;/code&gt; and friends:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;doas apk add docker docker-cli docker-compose&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Then start the &lt;code&gt;docker&lt;/code&gt; service:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;doas service docker start&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Check if it started successfully:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;service docker status&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If not, then look at the logs:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;less /var/log/docker.log&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;I got an error:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;failed to start daemon: error initializing graphdriver: driver not supported&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The suggestion was to change the driver to &lt;code&gt;overlay2&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% $EDITOR /etc/docker/daemon.json
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;storage-driver&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;overlay2&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Then restart &lt;code&gt;docker&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I got another error:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;level&lt;span style="color:#f92672"&gt;=&lt;/span&gt;error msg&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;failed to mount overlay: no such device&amp;#34;&lt;/span&gt; storage-driver&lt;span style="color:#f92672"&gt;=&lt;/span&gt;overlay2&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The suggestion was to reboot:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;doas reboot&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Then start &lt;code&gt;docker&lt;/code&gt; again:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;doas service docker start&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;And now everything works!&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Docker on Alpine Linux"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/alpine-linux/"&gt;#alpine-linux&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/docker/"&gt;#docker&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
