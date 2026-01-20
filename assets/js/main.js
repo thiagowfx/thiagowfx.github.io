@@ -32,6 +32,11 @@ document.getElementById("theme-toggle").addEventListener("click", function () {
   const cycle = { auto: "light", light: "dark", dark: "auto" };
   const next = cycle[current];
   setTheme(next);
+
+  // Animate the icon
+  const button = this;
+  button.classList.add("spinning");
+  setTimeout(() => button.classList.remove("spinning"), 600);
 });
 
 // Dropdown menu functionality
