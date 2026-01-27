@@ -11,6 +11,11 @@ Recently I had to opportunity to watch [this classic](https://www.imdb.com/title
 
 It's such a great movie[^2].
 
+<!-- from IMDB -->
+<p style="text-align: center">
+  <img src="https://m.media-amazon.com/images/M/MV5BMTk5MjM4OTU1OV5BMl5BanBnXkFtZTcwODkzNDIzMw@@._V1_FMjpg_UX400_.jpg" alt="cover">
+</p>
+
 It was the second time I watched it. The first one was during my teenage years,
 probably around 15-16.
 
@@ -53,6 +58,8 @@ beautifully complex[^1].
 
 I love the direction of the movie. The narration. The flashbacks. _This
 is not a love story_[^3].
+
+_Is is true? Do you like me?_
 
 Joseph-Gordon Levitt and Zooey Deschanel are peak charisma.
 
