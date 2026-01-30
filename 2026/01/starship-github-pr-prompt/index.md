@@ -21,8 +21,8 @@ problem: it makes a network call on every prompt. This is super inefficient.
 Can't do.
 
 That's why we use [`bkt`]({{< ref "2024-12-29-bkt-cache-command-outputs" >}}):
-it caches the PR for a certain amount of time (10 minutes in the aforementioned
-example), which makes this a feasible prompt.
+it caches the PR info for a certain amount of time (10 minutes in the
+aforementioned example), which makes this a feasible prompt.
 
 The full prompt (without colors) looks roughly like this:
 
