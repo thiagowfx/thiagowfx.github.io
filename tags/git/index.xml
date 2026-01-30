@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Git on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Git on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 18 Jan 2026 22:12:57 -0300</lastBuildDate><atom:link href="https://perrotta.dev/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>git aicommit</title><link>https://perrotta.dev/2026/01/git-aicommit/</link><pubDate>Tue, 13 Jan 2026 15:58:48 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/01/git-aicommit/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: auto-generate a commit message for &lt;code&gt;git&lt;/code&gt; from the
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 30 Jan 2026 01:03:39 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>starship: github PR prompt</title><link>https://perrotta.dev/2026/01/starship-github-pr-prompt/</link><pubDate>Fri, 30 Jan 2026 00:51:51 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/01/starship-github-pr-prompt/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2025/12/starship/"&gt;Previously&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: add to &lt;a href="https://starship.rs/"&gt;starship&lt;/a&gt; the GitHub PR
+associated with the current git branch.&lt;/p&gt;
+&lt;p&gt;The following starship custom module does the trick:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;[custom.github_pr]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;command = &amp;#34;bkt --ttl=10m --scope=\&amp;#34;$(git rev-parse --show-toplevel):$(git branch --show-current)\&amp;#34; -- gh pr view --json number --jq &amp;#39;\&amp;#34;#\&amp;#34; + (.number | tostring)&amp;#39; 2&amp;gt;/dev/null&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;when = &amp;#34;git rev-parse --is-inside-work-tree 2&amp;gt;/dev/null&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;format = &amp;#34; [$output](magenta)&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ignore_timeout = true&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The module is activated only within git repositories (see the &lt;code&gt;when&lt;/code&gt; variable).&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;command&lt;/code&gt; consists of the &lt;code&gt;gh&lt;/code&gt; CLI, as you would expect. There&amp;rsquo;s one major
+problem: it makes a network call on every prompt. This is super inefficient.
+Can&amp;rsquo;t do.&lt;/p&gt;
+&lt;p&gt;That&amp;rsquo;s why we use &lt;a href="https://perrotta.dev/2024/12/bkt-cache-command-outputs/"&gt;&lt;code&gt;bkt&lt;/code&gt;&lt;/a&gt;:
+it caches the PR for a certain amount of time (10 minutes in the aforementioned
+example), which makes this a feasible prompt.&lt;/p&gt;
+&lt;p&gt;The full prompt (without colors) looks roughly like this:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;thiago.perrotta ~/.dotfiles git:master! ⎇ #466
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;❯&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The full git commit that implements and uses it:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;❯ git --no-pager show
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;commit d2a80f6b8edfa6a07204a1d97b278abacba57813 (HEAD -&amp;gt; master)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Author: Thiago Perrotta &amp;lt;{redacted}&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Date: Fri Jan 30 00:55:02 2026 +0100
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; starship: add github pr
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;diff --git starship/.config/starship.toml starship/.config/starship.toml
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;index 2c5e78e..9fbf19b 100644
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;--- starship/.config/starship.toml
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+++ starship/.config/starship.toml
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;@@ -1,5 +1,5 @@
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; # Minimal starship config matching grml prompt
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;-format = &amp;#34;$status$sudo$username$hostname$directory$git_branch$git_state$git_status${custom.git_worktree}$line_break$character&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+format = &amp;#34;$status$sudo$username$hostname$directory$git_branch$git_state$git_status${custom.git_worktree}${custom.github_pr}$line_break$character&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; right_format = &amp;#34;$cmd_duration$jobs&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; add_newline = true
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;@@ -52,3 +52,9 @@ command = &amp;#34;printf &amp;#39;⎇&amp;#39;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; when = &amp;#34;[ -f .git ]&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; format = &amp;#34; [$output]($style)&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; style = &amp;#34;bold yellow&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+[custom.github_pr]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+command = &amp;#34;bkt --ttl=10m --scope=\&amp;#34;$(git rev-parse --show-toplevel):$(git branch --show-current)\&amp;#34; -- gh pr view --json number --jq &amp;#39;\&amp;#34;#\&amp;#34; + (.number | tostring)&amp;#39; 2&amp;gt;/dev/null&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+when = &amp;#34;git rev-parse --is-inside-work-tree 2&amp;gt;/dev/null&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+format = &amp;#34; [$output](magenta)&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+ignore_timeout = true&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: starship: github PR prompt"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>git aicommit</title><link>https://perrotta.dev/2026/01/git-aicommit/</link><pubDate>Tue, 13 Jan 2026 15:58:48 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/01/git-aicommit/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: auto-generate a commit message for &lt;code&gt;git&lt;/code&gt; from the
 command-line. The solution should be vendor agnostic.&lt;/p&gt;
 &lt;p&gt;Given a &lt;code&gt;git-foo.sh&lt;/code&gt; in &lt;code&gt;$PATH&lt;/code&gt;, it can be invoked as &lt;code&gt;git foo&lt;/code&gt;, as if it
 were a built-in &lt;code&gt;git&lt;/code&gt; command.&lt;/p&gt;
@@ -2032,102 +2089,4 @@ everything&amp;rdquo;.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;git reset --keep&lt;/code&gt; seems like a safer &lt;code&gt;git reset --hard&lt;/code&gt;. Adam did a good job
 describing how it works, so go read it directly there.&lt;/p&gt;
 &lt;p&gt;This has the same spirit as &lt;a href="https://perrotta.dev/2024/12/git-push--force-with-style/"&gt;&lt;code&gt;git push --force-with-lease&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git reset --keep"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>git reset --hard including submodules</title><link>https://perrotta.dev/2024/12/git-reset--hard-including-submodules/</link><pubDate>Thu, 26 Dec 2024 13:04:27 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2024/12/git-reset--hard-including-submodules/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Whenever I open &lt;a href="https://rancherdesktop.io/"&gt;Rancher
-Desktop&lt;/a&gt; it insists on modifying my shell rc files.
-Make it stop!&lt;/p&gt;
-&lt;p&gt;bash:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="diff"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;diff&lt;/span&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-diff" data-lang="diff"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;# diff --git bash/.bash_profile bash/.bash_profile
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;index c3962b2..89f475b 100644
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;--- bash/.bash_profile
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;+++ bash/.bash_profile
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;&lt;/span&gt;&lt;span style="color:#75715e"&gt;@@ -7,3 +7,7 @@
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; #
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; # The following line sources .bashrc and is recommended by http://mywiki.wooledge.org/DotFiles
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; [ -r ~/.bashrc ] &amp;amp;&amp;amp; . ~/.bashrc
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;+
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;+export PATH=&amp;#34;/Users/thiago.perrotta/.rd/bin:$PATH&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;&lt;/span&gt;diff --git bash/.bashrc bash/.bashrc
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;index 7074bca..9ca8ffa 100644
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;--- bash/.bashrc
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;+++ bash/.bashrc
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;&lt;/span&gt;&lt;span style="color:#75715e"&gt;@@ -61,3 +61,7 @@ src_files &amp;#34;/etc/bash_completion&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; # Load user scripts and functions if existing. Order is important.
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; # Corp config is handled as part of .bashrc.d.
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; src_files &amp;#34;$HOME/.profile.d&amp;#34; &amp;#34;$HOME/.bashrc.d&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;+
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;+export PATH=&amp;#34;/Users/thiago.perrotta/.rd/bin:$PATH&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;zsh:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="diff"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;diff&lt;/span&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-diff" data-lang="diff"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;diff --git etc/zsh/zshrc etc/zsh/zshrc
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;index efe5f79..02e0539 100644
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;--- etc/zsh/zshrc
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;+++ etc/zsh/zshrc
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;&lt;/span&gt;&lt;span style="color:#75715e"&gt;@@ -3959,3 +3959,7 @@ unfunction grml_status_feature
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; # Local variables:
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; # mode: sh
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; # End:
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;+
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;+export PATH=&amp;#34;/Users/thiago.perrotta/.rd/bin:$PATH&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;You could say it&amp;rsquo;s well-intentioned, but I think it&amp;rsquo;s rude to change the
-developer&amp;rsquo;s rc files without telling them so, and without providing an opt-out
-mechanism&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2024/12/git-reset--hard-including-submodules/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-&lt;p&gt;Thus I wanted to revert their changes whenever I was done using Rancher Desktop.
-This worked:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd ~/.dotfiles &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git reset --hard
-&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd vendor/grml-etc-core &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git reset --hard&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;The second &lt;code&gt;git reset --hard&lt;/code&gt; is needed because I employ a submodule for my
-&lt;code&gt;zsh&lt;/code&gt; config.&lt;/p&gt;
-&lt;p&gt;However, after doing this many times in a row, it became tedious. And somehow I
-have the urge to improve this workflow&amp;hellip;&lt;/p&gt;
-&lt;figure&gt;&lt;a href="https://xkcd.com/1205/"&gt;&lt;img src="https://imgs.xkcd.com/comics/is_it_worth_the_time.png"
- alt="Don&amp;#39;t forget the time you spend finding the chart to look up what you save. And the time spent reading this reminder about the time spent. And the time trying to figure out if either of those actually make sense. Remember, every second counts toward your life total, including these right now."&gt;&lt;/a&gt;&lt;figcaption&gt;
- &lt;p&gt;XKCD Courtesy of Randall Munroe&lt;/p&gt;
- &lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Then I found out it&amp;rsquo;s possible to do it with an one-shot command, via:&lt;/p&gt;
-
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;% git reset --hard --recurse-submodules&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;I knew of &lt;code&gt;--recurse-submodules&lt;/code&gt; for &lt;code&gt;git clone&lt;/code&gt;, but it never occurred to me it
-would also exist for &lt;code&gt;git reset&lt;/code&gt;.&lt;/p&gt;
-&lt;div class="footnotes" role="doc-endnotes"&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id="fn:1"&gt;
-&lt;p&gt;I ended up finding an opt-out mechanism, which isn&amp;rsquo;t very intuitive to
-self-discover:
-&lt;a href="https://github.com/rancher-sandbox/rancher-desktop/issues/7315"&gt;rancher-sandbox/rancher-desktop#7315&lt;/a&gt;.&amp;#160;&lt;a href="https://perrotta.dev/2024/12/git-reset--hard-including-submodules/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git reset --hard including submodules"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git reset --keep"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>

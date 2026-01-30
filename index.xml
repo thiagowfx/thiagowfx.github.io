@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>GitHub: disable coding agent</title><link>https://perrotta.dev/2026/01/github-disable-coding-agent/</link><pubDate>Wed, 28 Jan 2026 15:15:14 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><guid>https://perrotta.dev/2026/01/github-disable-coding-agent/</guid><description>&lt;p&gt;If you don&amp;rsquo;t like the new &amp;ldquo;Agents&amp;rdquo; tab in GitHub (repo view), you can disable
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>starship: github PR prompt</title><link>https://perrotta.dev/2026/01/starship-github-pr-prompt/</link><pubDate>Fri, 30 Jan 2026 00:51:51 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/01/starship-github-pr-prompt/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2025/12/starship/"&gt;Previously&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: add to &lt;a href="https://starship.rs/"&gt;starship&lt;/a&gt; the GitHub PR
+associated with the current git branch.&lt;/p&gt;
+&lt;p&gt;The following starship custom module does the trick:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;[custom.github_pr]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;command = &amp;#34;bkt --ttl=10m --scope=\&amp;#34;$(git rev-parse --show-toplevel):$(git branch --show-current)\&amp;#34; -- gh pr view --json number --jq &amp;#39;\&amp;#34;#\&amp;#34; + (.number | tostring)&amp;#39; 2&amp;gt;/dev/null&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;when = &amp;#34;git rev-parse --is-inside-work-tree 2&amp;gt;/dev/null&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;format = &amp;#34; [$output](magenta)&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ignore_timeout = true&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The module is activated only within git repositories (see the &lt;code&gt;when&lt;/code&gt; variable).&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;command&lt;/code&gt; consists of the &lt;code&gt;gh&lt;/code&gt; CLI, as you would expect. There&amp;rsquo;s one major
+problem: it makes a network call on every prompt. This is super inefficient.
+Can&amp;rsquo;t do.&lt;/p&gt;
+&lt;p&gt;That&amp;rsquo;s why we use &lt;a href="https://perrotta.dev/2024/12/bkt-cache-command-outputs/"&gt;&lt;code&gt;bkt&lt;/code&gt;&lt;/a&gt;:
+it caches the PR for a certain amount of time (10 minutes in the aforementioned
+example), which makes this a feasible prompt.&lt;/p&gt;
+&lt;p&gt;The full prompt (without colors) looks roughly like this:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;thiago.perrotta ~/.dotfiles git:master! ⎇ #466
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;❯&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;The full git commit that implements and uses it:&lt;/p&gt;
+
+&lt;div class="codeblock"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;❯ git --no-pager show
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;commit d2a80f6b8edfa6a07204a1d97b278abacba57813 (HEAD -&amp;gt; master)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Author: Thiago Perrotta &amp;lt;{redacted}&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Date: Fri Jan 30 00:55:02 2026 +0100
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; starship: add github pr
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;diff --git starship/.config/starship.toml starship/.config/starship.toml
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;index 2c5e78e..9fbf19b 100644
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;--- starship/.config/starship.toml
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+++ starship/.config/starship.toml
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;@@ -1,5 +1,5 @@
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; # Minimal starship config matching grml prompt
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;-format = &amp;#34;$status$sudo$username$hostname$directory$git_branch$git_state$git_status${custom.git_worktree}$line_break$character&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+format = &amp;#34;$status$sudo$username$hostname$directory$git_branch$git_state$git_status${custom.git_worktree}${custom.github_pr}$line_break$character&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; right_format = &amp;#34;$cmd_duration$jobs&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; add_newline = true
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;@@ -52,3 +52,9 @@ command = &amp;#34;printf &amp;#39;⎇&amp;#39;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; when = &amp;#34;[ -f .git ]&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; format = &amp;#34; [$output]($style)&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; style = &amp;#34;bold yellow&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+[custom.github_pr]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+command = &amp;#34;bkt --ttl=10m --scope=\&amp;#34;$(git rev-parse --show-toplevel):$(git branch --show-current)\&amp;#34; -- gh pr view --json number --jq &amp;#39;\&amp;#34;#\&amp;#34; + (.number | tostring)&amp;#39; 2&amp;gt;/dev/null&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+when = &amp;#34;git rev-parse --is-inside-work-tree 2&amp;gt;/dev/null&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+format = &amp;#34; [$output](magenta)&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;+ignore_timeout = true&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: starship: github PR prompt"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>GitHub: disable coding agent</title><link>https://perrotta.dev/2026/01/github-disable-coding-agent/</link><pubDate>Wed, 28 Jan 2026 15:15:14 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><guid>https://perrotta.dev/2026/01/github-disable-coding-agent/</guid><description>&lt;p&gt;If you don&amp;rsquo;t like the new &amp;ldquo;Agents&amp;rdquo; tab in GitHub (repo view), you can disable
 it here: &lt;a href="https://github.com/settings/copilot/coding_agent"&gt;https://github.com/settings/copilot/coding_agent&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Set it to &amp;ldquo;No repositories&amp;rdquo;.&lt;/p&gt;
 &lt;hr&gt;
@@ -2131,11 +2188,4 @@ vim-mkdir&lt;/li&gt;
 &lt;/div&gt;
 &lt;p&gt;We can still access &lt;code&gt;vim&lt;/code&gt; with &lt;code&gt;\vim&lt;/code&gt; (or &lt;code&gt;unalias vim&lt;/code&gt; if needed).&lt;/p&gt;
 &lt;p&gt;Now let&amp;rsquo;s evaluate whether the &lt;code&gt;nvim&lt;/code&gt; switch is worth it.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: vim → nvim"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/vim/"&gt;#vim&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>atuin: limit scope to current directory</title><link>https://perrotta.dev/2025/12/atuin-limit-scope-to-current-directory/</link><pubDate>Tue, 23 Dec 2025 12:08:44 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><guid>https://perrotta.dev/2025/12/atuin-limit-scope-to-current-directory/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2025/12/atuin-delete-history-entries/"&gt;Previously&lt;/a&gt;,
-&lt;a href="https://perrotta.dev/2025/11/atuin/"&gt;previously&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Pressing &lt;code&gt;C-r&lt;/code&gt; opens the global history search by default.&lt;/p&gt;
-&lt;p&gt;To limit the history lookup to the current directory only, keep pressing &lt;code&gt;C-r&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;The scope will cycle through:&lt;/p&gt;
-&lt;p&gt;Global &amp;gt; Host &amp;gt; Session &amp;gt; Workspace &amp;gt; Directory&lt;/p&gt;
-&lt;p&gt;This makes it easier to find commands previously executed in a given directory.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: atuin: limit scope to current directory"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: vim → nvim"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/vim/"&gt;#vim&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item></channel></rss>
