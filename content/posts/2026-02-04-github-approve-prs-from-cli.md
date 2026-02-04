@@ -1,5 +1,6 @@
 ---
 title: "GitHub: approve PRs from CLI"
+date: 2026-02-04T11:10:58+01:00
 tags:
   - dev
   - git
