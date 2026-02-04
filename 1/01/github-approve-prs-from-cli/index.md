@@ -15,7 +15,7 @@ First, check the PR out:
 
 ```shell
 thiago.perrotta ~/Corp/terraform git:main
-❯ gh co
+% gh co
 ? Select a pull request  [Use arrows to move, type to filter]
 > 509   OPEN Change ai-resources repository visibility to internal [fix/ai-resources-visibility-internal]
 [...]
@@ -25,14 +25,14 @@ Now approve it:
 
 ```shell
 thiago.perrotta ~/Corp/terraform git:fix/ai-resources-visibility-internal? #509
-❯ gh pr review --approve
+% gh pr review --approve
 ✓ Approved pull request corp/terraform#509
 ```
 
 It's possible to approve the PR without checking it out:
 
 ```shell
-❯ gh pr review -h
+% gh pr review -h
 Add a review to a pull request.
 
 Without an argument, the pull request that belongs to the current branch is reviewed.
