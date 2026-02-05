@@ -3,8 +3,8 @@ title: "just apply it"
 date: 2026-02-04T11:08:58+01:00
 tags:
   - dev
-  - terraform
   - serenity
+  - terraform
 ---
 
 > **Thiago**: now that your PR is merged, you can _just apply_ it
