@@ -18,16 +18,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Build for production: `just build`
 - Create new post: `just new "post title"` (auto-generates filename with current date)
 - Clean build artifacts: `just clean`
-- Update dependencies: `just update` (updates git submodules and pre-commit hooks)
+- Update dependencies: `just update` (updates git submodules and prek hooks)
 - Ping search engines: `just ping` (notifies Google and Bing of sitemap changes)
 
 ## Test/Lint Commands
 
-- Run pre-commit hooks: `pre-commit run --all-files`
-- Lint specific file: `pre-commit run --files <file>`
-- Check links: `pre-commit run markdown-link-check --files <file>` (expensive, runs manually)
-- Run misspell check: `pre-commit run misspell --files <file>` (manual stage only)
-- Hugo build validation is included in pre-commit hooks
+- Run prek hooks: `prek run --all-files`
+- Lint specific file: `prek run --files <file>`
+- Check links: `prek run markdown-link-check --files <file>` (expensive, runs manually)
+- Run misspell check: `prek run misspell --files <file>` (manual stage only)
+- Hugo build validation is included in prek hooks
 - Build and test changes: `hugo` (always test changes before committing, especially Hugo template, shortcode, or config changes)
 
 ## Style Guidelines

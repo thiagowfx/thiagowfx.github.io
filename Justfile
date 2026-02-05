@@ -188,15 +188,15 @@ clean:
     rm -rf public/ resources/
     git clean -x -f -d
 
-# Lint and validate with pre-commit hooks
+# Lint and validate with prek hooks
 lint *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
     if [ -z "{{ args }}" ]; then
-        pre-commit run --all-files
+        prek run --all-files
     else
-        pre-commit run --files {{ args }}
+        prek run --files {{ args }}
     fi
 
 # Ping search engines about changes in the sitemap
@@ -204,20 +204,20 @@ ping sitemap="https://perrotta.dev/sitemap.xml":
     curl -sS -o /dev/null "https://www.google.com/ping?sitemap={{ sitemap }}"
     curl -sS -o /dev/null "https://www.bing.com/ping?sitemap={{ sitemap }}"
 
-# Update git submodules, pre-commit hooks, JSON schemas, and vendored dependencies
-update: update-git update-pre-commit update-json-schemas update-vendor
+# Update git submodules, prek hooks, JSON schemas, and vendored dependencies
+update: update-git update-prek update-json-schemas update-vendor
 
 # Update git submodules
 update-git:
     git submodule update --remote --jobs "$(nproc)"
 
-# Update pre-commit hooks
-update-pre-commit:
-    pre-commit autoupdate --freeze --jobs "$(nproc)" && pre-commit run --all-files
+# Update prek hooks
+update-prek:
+    prek auto-update --freeze --jobs "$(nproc)" && prek run --all-files
 
 # Update JSON schemas
 update-json-schemas:
-    pre-commit run -a update-json-schemas --hook-stage manual
+    prek run -a update-json-schemas --hook-stage manual
 
 # Update vendored dependencies (d3.js)
 update-vendor:

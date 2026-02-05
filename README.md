@@ -5,8 +5,8 @@
 <!-- BEGIN mdsh -->
 [![gh-pages.yml](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/gh-pages.yml)
 [![ls-lint.yml](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/ls-lint.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/ls-lint.yml)
-[![pre-commit-autoupdate.yml](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit-autoupdate.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit-autoupdate.yml)
-[![pre-commit.yml](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/pre-commit.yml)
+[![prek-autoupdate.yml](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/prek-autoupdate.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/prek-autoupdate.yml)
+[![prek.yml](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/prek.yml/badge.svg)](https://github.com/thiagowfx/thiagowfx.github.io/actions/workflows/prek.yml)
 <!-- END mdsh -->
 
 This blog is built with [`hugo`][hugo].
