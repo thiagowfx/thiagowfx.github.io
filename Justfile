@@ -168,6 +168,10 @@ lazy *args:
     fi
     git commit -m "$msg" -n && git pushm
 
+# List all available Hugo tags
+list-tags:
+    @fd -e md . content/posts -x awk '/^tags:/{f=1;next} f && /^  - /{print substr($0,5)} f && /^[^ ]/{f=0}' | sort -u
+
 # Delete hugo build artifacts
 clean:
     rm -rf public/ resources/
