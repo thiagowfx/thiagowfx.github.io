@@ -1,9 +1,9 @@
 function setTheme(theme) {
   if (theme === "auto") {
-    document.documentElement.removeAttribute("data-theme");
+    document.documentElement.style.colorScheme = "light dark";
     localStorage.removeItem("theme");
   } else {
-    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.style.colorScheme = theme;
     localStorage.setItem("theme", theme);
   }
   updateThemeIcon();
@@ -22,7 +22,9 @@ function updateThemeIcon() {
 // Initialize
 const saved = localStorage.getItem("theme");
 if (saved) {
-  document.documentElement.setAttribute("data-theme", saved);
+  document.documentElement.style.colorScheme = saved;
+} else {
+  document.documentElement.style.colorScheme = "light dark";
 }
 updateThemeIcon();
 
