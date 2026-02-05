@@ -115,6 +115,17 @@ commentary url *args:
     HUGO_EXTERNAL_LINK="{{ url }}" hugo new --kind commentary "${filepath}"
     {{ editor }} "${filepath}"
 
+    # Rename file based on the actual title from frontmatter
+    actual_title=$(sed -n 's/^title: "\(.*\)"$/\1/p' "${filepath}" | head -1)
+    if [ -n "$actual_title" ]; then
+        new_filename=$(echo "$actual_title" | tr '[:upper:]' '[:lower:]' | sed -e 's/[:/]/-/g' | tr -s ' ' | tr ' ' '-')
+        new_filepath="content/posts/$(date "+%Y-%m-%d")-${new_filename}.md"
+        if [ "${filepath}" != "${new_filepath}" ]; then
+            mv "${filepath}" "${new_filepath}"
+            echo "Renamed to: ${new_filepath}"
+        fi
+    fi
+
 alias comment := commentary
 
 # Search for and edit a blog post. Usage: `just edit` or `just edit <term>`
