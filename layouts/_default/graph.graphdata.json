@@ -1,13 +1,23 @@
 {{- /* Output graph data from pre-computed links.json */ -}}
 {{- $graphData := $.Site.Data.links.graph -}}
 {{- $nodes := slice -}}
+{{- $nodeIDs := slice -}}
 
 {{- /* Add URLs to nodes by looking up each page */ -}}
 {{- range $graphData.nodes -}}
   {{- $page := $.Site.GetPage .hugo_path -}}
   {{- if $page -}}
     {{- $nodes = $nodes | append (dict "id" .id "title" .title "url" $page.Permalink "date" .date) -}}
+    {{- $nodeIDs = $nodeIDs | append .id -}}
   {{- end -}}
 {{- end -}}
 
-{{- dict "nodes" $nodes "edges" $graphData.edges | jsonify -}}
+{{- /* Filter edges to only include those where both source and target nodes exist */ -}}
+{{- $edges := slice -}}
+{{- range $graphData.edges -}}
+  {{- if and (in $nodeIDs .source) (in $nodeIDs .target) -}}
+    {{- $edges = $edges | append . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- dict "nodes" $nodes "edges" $edges | jsonify -}}
