@@ -10,8 +10,8 @@ tags:
 
 Symptom:
 
-```
-❯ pre-commit run -a
+```shell
+% pre-commit run -a
 [INFO] Installing environment for https://github.com/rbubley/mirrors-prettier.
 [INFO] Once installed this environment will be reused.
 [INFO] This may take a few minutes...

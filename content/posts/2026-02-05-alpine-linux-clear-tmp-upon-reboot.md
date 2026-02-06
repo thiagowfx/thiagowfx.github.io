@@ -16,8 +16,8 @@ tags:
 
 My current config:
 
-```
-❯ cat /etc/conf.d/bootmisc
+```shell
+% cat /etc/conf.d/bootmisc
 
 # List of /tmp directories we should clean up
 clean_tmp_dirs="/tmp"

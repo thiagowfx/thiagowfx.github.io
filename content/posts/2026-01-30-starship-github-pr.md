@@ -40,8 +40,8 @@ thiago.perrotta ~/.dotfiles git:master! ⎇ #466
 
 The full git commit that implements and uses it:
 
-```
-❯ git --no-pager show
+```shell
+% git --no-pager show
 commit d2a80f6b8edfa6a07204a1d97b278abacba57813 (HEAD -> master)
 Author: Thiago Perrotta <{redacted}>
 Date:   Fri Jan 30 00:55:02 2026 +0100
