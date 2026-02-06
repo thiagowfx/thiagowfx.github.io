@@ -77,8 +77,8 @@ capture _decision records_ effectively.
 The workflow I am starting to adopt in important repositories wherein I work
 with teammates resembles this:
 
-```
-❯ tree docs/
+```shell
+% tree docs/
 docs/
 ├── adrs
 │   ├── 0001-aws-secrets-manager-migration.md
