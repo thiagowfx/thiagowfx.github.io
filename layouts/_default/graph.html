@@ -27,17 +27,24 @@
     background: var(--bg-color);
     width: 14rem;
   }
-  #graph-search:focus, #graph-tag-filter:focus {
+  #graph-search:focus, #graph-tag-filter:focus, .graph-year-filter:focus {
     outline: none;
     border-color: var(--link-color);
   }
-  #graph-tag-filter {
+  #graph-tag-filter, .graph-year-filter {
     border: 1px solid var(--border-color);
     border-radius: .25rem;
     padding: 0.25rem 0.5rem;
     font-size: 0.85rem;
     color: var(--text-color);
     background: var(--bg-color);
+  }
+  #graph-year-range {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+    color: var(--color-gray);
   }
   #graph-controls button {
     background: none;
@@ -93,6 +100,11 @@
   <select id="graph-tag-filter" aria-label="Filter by tag">
     <option value="">All tags</option>
   </select>
+  <span id="graph-year-range">
+    <select id="graph-year-from" class="graph-year-filter" aria-label="From year"></select>
+    –
+    <select id="graph-year-to" class="graph-year-filter" aria-label="To year"></select>
+  </span>
   <span id="graph-stats" style="color: var(--color-gray); font-size: 0.9rem;"></span>
   <button id="toggle-singletons">Show all posts</button>
 </div>
@@ -279,6 +291,19 @@
         tagFilter.appendChild(opt);
       });
 
+      // Populate year range dropdowns
+      const yearFrom = document.getElementById('graph-year-from');
+      const yearTo = document.getElementById('graph-year-to');
+      const allYears = [...new Set(allNodes.map(n => n.date ? n.date.substring(0, 4) : '').filter(Boolean))].sort();
+      const minYear = allYears[0];
+      const maxYear = allYears[allYears.length - 1];
+      allYears.forEach(y => {
+        yearFrom.appendChild(Object.assign(document.createElement('option'), { value: y, textContent: y }));
+        yearTo.appendChild(Object.assign(document.createElement('option'), { value: y, textContent: y }));
+      });
+      yearFrom.value = minYear;
+      yearTo.value = maxYear;
+
       const searchInput = document.getElementById('graph-search');
       const toggleBtn = document.getElementById('toggle-singletons');
 
@@ -289,14 +314,19 @@
       function rebuildGraph() {
         const query = searchInput.value.toLowerCase().trim();
         const tag = tagFilter.value;
+        const yFrom = yearFrom.value;
+        const yTo = yearTo.value;
+        const hasYearFilter = yFrom !== minYear || yTo !== maxYear;
         const baseNodes = getBaseNodes();
 
-        // Filter nodes by search and tag
-        if (query || tag) {
+        // Filter nodes by search, tag, and year range
+        if (query || tag || hasYearFilter) {
           activeNodes = baseNodes.filter(n => {
             const matchesSearch = !query || n.title.toLowerCase().includes(query);
             const matchesTag = !tag || (n.tags || []).includes(tag);
-            return matchesSearch && matchesTag;
+            const year = n.date ? n.date.substring(0, 4) : '';
+            const matchesYear = !hasYearFilter || (year >= yFrom && year <= yTo);
+            return matchesSearch && matchesTag && matchesYear;
           });
         } else {
           activeNodes = baseNodes;
@@ -345,7 +375,7 @@
         // Update simulation
         simulation.nodes(activeNodes);
         simulation.force('link', d3.forceLink(activeLinks).id(d => d.id).distance(80));
-        if (showingSingletons && !query && !tag) {
+        if (showingSingletons && !query && !tag && !hasYearFilter) {
           simulation.force('charge', d3.forceManyBody().strength(d => connectedNodeIds.has(d.id) ? -200 : -30));
         } else {
           simulation.force('charge', d3.forceManyBody().strength(-200));
@@ -385,9 +415,11 @@
         rebuildGraph();
       });
 
-      // Search and tag filtering
+      // Search, tag, and year filtering
       searchInput.addEventListener('input', rebuildGraph);
       tagFilter.addEventListener('change', rebuildGraph);
+      yearFrom.addEventListener('change', rebuildGraph);
+      yearTo.addEventListener('change', rebuildGraph);
 
       function dragstarted(event) {
         if (!event.active) simulation.alphaTarget(0.3).restart();
