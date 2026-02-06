@@ -129,6 +129,7 @@
 
       // Start with connected nodes only
       let activeNodes = [...connectedNodes];
+      let activeLinks = [...links];
       let showingSingletons = false;
 
       // Remove loading message
@@ -137,7 +138,7 @@
       const updateStats = () => {
         const singletonText = showingSingletons ? '' : ` · ${singletonNodes.length} singletons hidden`;
         document.getElementById('graph-stats').textContent =
-          `${activeNodes.length} posts · ${links.length} links${singletonText}`;
+          `${activeNodes.length} posts · ${activeLinks.length} links${singletonText}`;
       };
       updateStats();
 
@@ -267,7 +268,61 @@
 
       bindNodeEvents(node);
 
-      function rebuildNodes() {
+      // Populate tag filter dropdown
+      const tagFilter = document.getElementById('graph-tag-filter');
+      const allTags = new Set();
+      allNodes.forEach(n => (n.tags || []).forEach(t => allTags.add(t)));
+      [...allTags].sort().forEach(tag => {
+        const opt = document.createElement('option');
+        opt.value = tag;
+        opt.textContent = tag;
+        tagFilter.appendChild(opt);
+      });
+
+      const searchInput = document.getElementById('graph-search');
+      const toggleBtn = document.getElementById('toggle-singletons');
+
+      function getBaseNodes() {
+        return showingSingletons ? [...connectedNodes, ...singletonNodes] : [...connectedNodes];
+      }
+
+      function rebuildGraph() {
+        const query = searchInput.value.toLowerCase().trim();
+        const tag = tagFilter.value;
+        const baseNodes = getBaseNodes();
+
+        // Filter nodes by search and tag
+        if (query || tag) {
+          activeNodes = baseNodes.filter(n => {
+            const matchesSearch = !query || n.title.toLowerCase().includes(query);
+            const matchesTag = !tag || (n.tags || []).includes(tag);
+            return matchesSearch && matchesTag;
+          });
+        } else {
+          activeNodes = baseNodes;
+        }
+
+        // Filter links to only those where both endpoints are visible
+        const visibleIds = new Set(activeNodes.map(n => n.id));
+        activeLinks = links.filter(l => {
+          const sid = typeof l.source === 'object' ? l.source.id : l.source;
+          const tid = typeof l.target === 'object' ? l.target.id : l.target;
+          return visibleIds.has(sid) && visibleIds.has(tid);
+        });
+
+        // Rebuild links
+        link = linkGroup.selectAll('line')
+          .data(activeLinks, l => {
+            const sid = typeof l.source === 'object' ? l.source.id : l.source;
+            const tid = typeof l.target === 'object' ? l.target.id : l.target;
+            return sid + '-' + tid;
+          })
+          .join('line')
+          .attr('stroke', linkColor)
+          .attr('stroke-opacity', 0.6)
+          .attr('stroke-width', 1.5);
+
+        // Rebuild nodes
         node = nodeGroup.selectAll('circle')
           .data(activeNodes, d => d.id)
           .join(
@@ -286,6 +341,18 @@
             exit => exit.remove()
           );
         bindNodeEvents(node);
+
+        // Update simulation
+        simulation.nodes(activeNodes);
+        simulation.force('link', d3.forceLink(activeLinks).id(d => d.id).distance(80));
+        if (showingSingletons && !query && !tag) {
+          simulation.force('charge', d3.forceManyBody().strength(d => connectedNodeIds.has(d.id) ? -200 : -30));
+        } else {
+          simulation.force('charge', d3.forceManyBody().strength(-200));
+        }
+        simulation.alpha(0.5).restart();
+
+        updateStats();
       }
 
       // Update positions on tick
@@ -302,69 +369,25 @@
       });
 
       // Toggle singletons
-      const toggleBtn = document.getElementById('toggle-singletons');
       toggleBtn.addEventListener('click', () => {
         showingSingletons = !showingSingletons;
         toggleBtn.textContent = showingSingletons ? 'Show connected only' : 'Show all posts';
 
         if (showingSingletons) {
-          // Scatter singletons around the periphery
           singletonNodes.forEach((n, i) => {
             const angle = (2 * Math.PI * i) / singletonNodes.length;
             const r = Math.min(width, height) * 0.45;
             n.x = width / 2 + r * Math.cos(angle);
             n.y = height / 2 + r * Math.sin(angle);
           });
-          activeNodes = [...connectedNodes, ...singletonNodes];
-        } else {
-          activeNodes = [...connectedNodes];
         }
 
-        simulation.nodes(activeNodes);
-        rebuildNodes();
-        updateStats();
-
-        if (showingSingletons) {
-          simulation.force('charge', d3.forceManyBody().strength(d => connectedNodeIds.has(d.id) ? -200 : -30));
-        } else {
-          simulation.force('charge', d3.forceManyBody().strength(-200));
-        }
-        simulation.alpha(0.5).restart();
-      });
-
-      // Populate tag filter dropdown
-      const tagFilter = document.getElementById('graph-tag-filter');
-      const allTags = new Set();
-      allNodes.forEach(n => (n.tags || []).forEach(t => allTags.add(t)));
-      [...allTags].sort().forEach(tag => {
-        const opt = document.createElement('option');
-        opt.value = tag;
-        opt.textContent = tag;
-        tagFilter.appendChild(opt);
+        rebuildGraph();
       });
 
       // Search and tag filtering
-      const searchInput = document.getElementById('graph-search');
-      function applyFilters() {
-        const query = searchInput.value.toLowerCase().trim();
-        const tag = tagFilter.value;
-        if (!query && !tag) {
-          node.attr('fill', nodeColor).attr('opacity', 1);
-          link.attr('stroke', linkColor).attr('stroke-width', 1.5).attr('stroke-opacity', 0.6);
-          return;
-        }
-        const matchIds = new Set();
-        activeNodes.forEach(n => {
-          const matchesSearch = !query || n.title.toLowerCase().includes(query);
-          const matchesTag = !tag || (n.tags || []).includes(tag);
-          if (matchesSearch && matchesTag) matchIds.add(n.id);
-        });
-        node.attr('fill', n => matchIds.has(n.id) ? '#ff6600' : nodeColor)
-            .attr('opacity', n => matchIds.has(n.id) ? 1 : 0.15);
-        link.attr('stroke-opacity', 0.1);
-      }
-      searchInput.addEventListener('input', applyFilters);
-      tagFilter.addEventListener('change', applyFilters);
+      searchInput.addEventListener('input', rebuildGraph);
+      tagFilter.addEventListener('change', rebuildGraph);
 
       function dragstarted(event) {
         if (!event.active) simulation.alphaTarget(0.3).restart();
