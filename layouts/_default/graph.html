@@ -27,9 +27,17 @@
     background: var(--bg-color);
     width: 14rem;
   }
-  #graph-search:focus {
+  #graph-search:focus, #graph-tag-filter:focus {
     outline: none;
     border-color: var(--link-color);
+  }
+  #graph-tag-filter {
+    border: 1px solid var(--border-color);
+    border-radius: .25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    background: var(--bg-color);
   }
   #graph-controls button {
     background: none;
@@ -82,6 +90,9 @@
 
 <div id="graph-controls">
   <input id="graph-search" type="text" placeholder="Search posts..." aria-label="Search graph nodes">
+  <select id="graph-tag-filter" aria-label="Filter by tag">
+    <option value="">All tags</option>
+  </select>
   <span id="graph-stats" style="color: var(--color-gray); font-size: 0.9rem;"></span>
   <button id="toggle-singletons">Show all posts</button>
 </div>
@@ -228,7 +239,8 @@
           const count = connectionCount.get(d.id) || 0;
           tooltipTitle.textContent = d.title;
           const datePart = d.date ? d.date.substring(0, 10) : '';
-          tooltipMeta.textContent = `${datePart}${datePart ? ' · ' : ''}${count} connection${count !== 1 ? 's' : ''}`;
+          const tagsPart = (d.tags || []).length ? ' · ' + d.tags.join(', ') : '';
+          tooltipMeta.textContent = `${datePart}${datePart ? ' · ' : ''}${count} connection${count !== 1 ? 's' : ''}${tagsPart}`;
           tooltip.style.display = 'block';
 
           const rect = container.getBoundingClientRect();
@@ -320,24 +332,39 @@
         simulation.alpha(0.5).restart();
       });
 
-      // Search highlighting
+      // Populate tag filter dropdown
+      const tagFilter = document.getElementById('graph-tag-filter');
+      const allTags = new Set();
+      allNodes.forEach(n => (n.tags || []).forEach(t => allTags.add(t)));
+      [...allTags].sort().forEach(tag => {
+        const opt = document.createElement('option');
+        opt.value = tag;
+        opt.textContent = tag;
+        tagFilter.appendChild(opt);
+      });
+
+      // Search and tag filtering
       const searchInput = document.getElementById('graph-search');
-      let searchQuery = '';
-      searchInput.addEventListener('input', () => {
-        searchQuery = searchInput.value.toLowerCase().trim();
-        if (!searchQuery) {
+      function applyFilters() {
+        const query = searchInput.value.toLowerCase().trim();
+        const tag = tagFilter.value;
+        if (!query && !tag) {
           node.attr('fill', nodeColor).attr('opacity', 1);
           link.attr('stroke', linkColor).attr('stroke-width', 1.5).attr('stroke-opacity', 0.6);
           return;
         }
         const matchIds = new Set();
         activeNodes.forEach(n => {
-          if (n.title.toLowerCase().includes(searchQuery)) matchIds.add(n.id);
+          const matchesSearch = !query || n.title.toLowerCase().includes(query);
+          const matchesTag = !tag || (n.tags || []).includes(tag);
+          if (matchesSearch && matchesTag) matchIds.add(n.id);
         });
         node.attr('fill', n => matchIds.has(n.id) ? '#ff6600' : nodeColor)
             .attr('opacity', n => matchIds.has(n.id) ? 1 : 0.15);
         link.attr('stroke-opacity', 0.1);
-      });
+      }
+      searchInput.addEventListener('input', applyFilters);
+      tagFilter.addEventListener('change', applyFilters);
 
       function dragstarted(event) {
         if (!event.active) simulation.alphaTarget(0.3).restart();
