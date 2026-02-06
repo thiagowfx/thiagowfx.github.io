@@ -16,6 +16,20 @@
     gap: 0.75rem;
     align-items: center;
     margin-top: 0.75rem;
+    flex-wrap: wrap;
+  }
+  #graph-search {
+    border: 1px solid var(--border-color);
+    border-radius: .25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    background: var(--bg-color);
+    width: 14rem;
+  }
+  #graph-search:focus {
+    outline: none;
+    border-color: var(--link-color);
   }
   #graph-controls button {
     background: none;
@@ -67,6 +81,7 @@
 </div>
 
 <div id="graph-controls">
+  <input id="graph-search" type="text" placeholder="Search posts..." aria-label="Search graph nodes">
   <span id="graph-stats" style="color: var(--color-gray); font-size: 0.9rem;"></span>
   <button id="toggle-singletons">Show all posts</button>
 </div>
@@ -303,6 +318,25 @@
           simulation.force('charge', d3.forceManyBody().strength(-200));
         }
         simulation.alpha(0.5).restart();
+      });
+
+      // Search highlighting
+      const searchInput = document.getElementById('graph-search');
+      let searchQuery = '';
+      searchInput.addEventListener('input', () => {
+        searchQuery = searchInput.value.toLowerCase().trim();
+        if (!searchQuery) {
+          node.attr('fill', nodeColor).attr('opacity', 1);
+          link.attr('stroke', linkColor).attr('stroke-width', 1.5).attr('stroke-opacity', 0.6);
+          return;
+        }
+        const matchIds = new Set();
+        activeNodes.forEach(n => {
+          if (n.title.toLowerCase().includes(searchQuery)) matchIds.add(n.id);
+        });
+        node.attr('fill', n => matchIds.has(n.id) ? '#ff6600' : nodeColor)
+            .attr('opacity', n => matchIds.has(n.id) ? 1 : 0.15);
+        link.attr('stroke-opacity', 0.1);
       });
 
       function dragstarted(event) {
