@@ -29,7 +29,7 @@ https://wiki.alpinelinux.org/wiki/APKBUILD_Reference https://wiki.alpinelinux.or
 <a href=/random/ class=nav-dropdown-item>🎲 Random</a></div></div></nav></header><main><script>document.addEventListener("keydown",function(e){if(e.target.closest('input:not([type="hidden"]), textarea, [contenteditable="true"]'))return;if(e.key==="j"||e.key==="ArrowLeft"){const e=document.querySelector('[data-nav="prev"]');e&&e.href&&(window.location.href=e.href)}else if(e.key==="k"||e.key==="ArrowRight"){const e=document.querySelector('[data-nav="next"]');e&&e.href&&(window.location.href=e.href)}})</script><a href=https://perrotta.dev/2022/01/introspect-the-local-network-for-pihole/ data-nav=prev hidden></a><a href=https://perrotta.dev/2022/01/pihole-add-custom-dns-mappings/ data-nav=next hidden></a><article class=h-entry><div class=article-header><h2><span>★</span>
 <span class=p-name>Alpine Linux: New APKBUILD Workflow</span></h2><button id=fullscreen-btn class=fullscreen-btn aria-label="Toggle fullscreen mode" title="Toggle fullscreen mode (f)">
 <span id=fullscreen-icon>⛶</span></button></div><p><span class=pubdate-single><time class=dt-published datetime=2022-01-23T19:15:02-05:00>23 Jan, 2022
-</time>• 995 words • 5 min
+</time>• 992 words • 5 min
 • updated <time datetime=2026-01-03>03 Jan, 2026</time></span></p><div class=old-entry-warning role=note>⚠️ This post is over one year old. It may no longer be up to date or relevant. Opinions may have changed.</div><div class=e-content><p>This document describes my workflow to manage <code>APKBUILDs</code> for the
 <a href=https://gitlab.alpinelinux.org/alpine/aports>aports</a> repository in <a href=https://alpinelinux.org/>Alpine Linux</a>.</p><h2 id=disclaimer>Disclaimer</h2><p>First of all, this post is not a substitute to the <a href=https://wiki.alpinelinux.org/wiki/Main_Page>AlpineWiki</a>
 and it will likely get outdated at some point. In particular, refer to the
@@ -48,13 +48,13 @@ aports
 ├── scripts
 ├── testing
 └── unmaintained</code></pre></div><h2 id=bootstrapping>Bootstrapping</h2><p>I am going to illustrate with a package I added recently, <a href=https://packages.debian.org/source/sensible-utils><code>sensible-utils</code></a>:</p><ul><li><p>Before you even begin, check if the package already exists, do a quick search in the <a href="https://pkgs.alpinelinux.org/packages?name=sensible%2Dutils">Alpine Repositories</a><sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>.</p></li><li><p>Start by scaffolding a new <code>APKBUILD</code> from the base template:</p></li></ul><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>$ cd aports/testing  # Always add new packages in testing/ first.
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>$ cd aports/testing  # Always add new packages in testing/ first.
 $ newapkbuild sensible-utils
 $ cd sensible-utils
 $ $EDITOR APKBUILD</code></pre></div><p><strong>Note</strong>: If you have a language-specific package (e.g. perl, python, rust),
 use the language-specific template instead of the base one. Run <code>newapkbuild -h</code> to list available templates. There are also some <code>apkbuild-*</code> helpers such
 as <code>apkbuild-pypi</code> and <code>apkbuild-cpan</code>.</p><ul><li><p>Fill in <code>APKBUILD</code> metadata like <code>pkgname=</code>, <code>url=</code>, etc. Refer to the AlpineWiki for up-to-date best practices.</p></li><li><p>By doing so, I produced the following <code>APKBUILD</code>:</p></li></ul><div class=codeblock data-lang=bash><div class=codeblock-header><span class=codeblock-language>bash</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>pkgname=sensible-utils
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>pkgname=sensible-utils
 pkgver=0.0.14
 pkgrel=0
 pkgdesc=&#34;Utilities for sensible alternative selection&#34;
@@ -100,7 +100,7 @@ steps at
 (GitHub / BitBucket / GitLab) wherein you fork the main repository, create
 a branch in your own clone, push it and then initiate a pull request<sup id=fnref:4><a href=#fn:4 class=footnote-ref role=doc-noteref>4</a></sup>.</p></li><li><p>Alternatively, send an email with your patch to the <code>aports</code> mailing list
 with <a href=https://git-send-email.io/><code>git send-email</code></a>:</p></li></ol><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>$ git config sendemail.to &#34;alpine-aports@lists.alpinelinux.org&#34;
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>$ git config sendemail.to &#34;alpine-aports@lists.alpinelinux.org&#34;
 $ git send-email -1  # Implicitly uses --to=alpine-linux@lists.alpinelinux.org as set above</code></pre></div><p><strong>Tip</strong>: The second approach has a steep learning curve, however once you
 figure it out it&rsquo;s actually faster, simpler and more streamlined. Whenever
 a new email is sent to the aports mailing list, a MR is automatically created
@@ -128,4 +128,4 @@ a fork of <a href=https://github.com/janraasch/hugo-bearblog/>hugo ʕ•ᴥ•ʔ
 </a><a target=_blank href="https://validator.w3.org/feed/check.cgi?url=https://perrotta.dev/index.xml" title="Valid RSS feed"><img src=https://perrotta.dev/vendor/valid-rss-rogers.webp width=88 height=31 alt="Valid RSS feed" loading=lazy></a></div><p class=footer-statement>This site respects your privacy by not containing <a href=https://www.nevermonetize.com/>ads</a>,
 not using tracking cookies,
 and not collecting any personally identifiable information.
-<a href=/ai>Gen AI policy</a>.</p></footer><script src=/js/main.min.9a99260bd1f235f4fbf04d3606e2b25322d9051baae3755aa7bde0065919473b.js defer></script></body></html>
+<a href=/ai>Gen AI policy</a>.</p></footer><script src=/js/main.min.3fcd283aaea6e141b5813adb828d5040011a1c27d0a48a8fde9504d9939c7994.js defer></script></body></html>

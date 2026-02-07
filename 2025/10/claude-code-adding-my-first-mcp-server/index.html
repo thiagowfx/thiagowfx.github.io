@@ -29,23 +29,23 @@ And, now that I am slowly incorporating Claude Code in my daily workflow for git
 <a href=/random/ class=nav-dropdown-item>🎲 Random</a></div></div></nav></header><main><script>document.addEventListener("keydown",function(e){if(e.target.closest('input:not([type="hidden"]), textarea, [contenteditable="true"]'))return;if(e.key==="j"||e.key==="ArrowLeft"){const e=document.querySelector('[data-nav="prev"]');e&&e.href&&(window.location.href=e.href)}else if(e.key==="k"||e.key==="ArrowRight"){const e=document.querySelector('[data-nav="next"]');e&&e.href&&(window.location.href=e.href)}})</script><a href=https://perrotta.dev/2025/10/post-its-in-the-laptop/ data-nav=prev hidden></a><a href=https://perrotta.dev/2025/10/vim-reflow-current-paragraph/ data-nav=next hidden></a><article class=h-entry><div class=article-header><h2><span>★</span>
 <span class=p-name>Claude Code: adding my first MCP server</span></h2><button id=fullscreen-btn class=fullscreen-btn aria-label="Toggle fullscreen mode" title="Toggle fullscreen mode (f)">
 <span id=fullscreen-icon>⛶</span></button></div><p><span class=pubdate-single><time class=dt-published datetime=2025-10-08T00:31:31+02:00>08 Oct, 2025
-</time>• 595 words • 3 min
+</time>• 590 words • 3 min
 • updated <time datetime=2026-01-03>03 Jan, 2026</time></span></p><div class=e-content><p>Lovely readers, I promise this is not turning into an AI blog<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>. I am merely
 documenting my baby steps.</p><p>I use JIRA all the time. It&rsquo;s our <del>bug</del><sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup> issue tracker of choice.</p><p>And, now that I am slowly incorporating Claude Code in my daily workflow for git
 commits and pull requests, it only feels natural to connect JIRA to it, even if
 only for the sake of retrieving information from existing tickets and/or adding
 context to PRs.</p><p>So here we go.</p><p><a href=https://docs.claude.com/en/docs/claude-code/mcp>From the Anthropic documentation</a>:</p><blockquote><p><strong>Atlassian</strong></p><p>Manage your Jira tickets and Confluence docs</p></blockquote><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>% cd &lt;gitops project&gt;
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>% cd &lt;gitops project&gt;
 % claude mcp add --transport sse atlassian https://mcp.atlassian.com/v1/sse
 Added SSE MCP server atlassian with URL: https://mcp.atlassian.com/v1/sse to local config
 File modified: /Users/thiago.perrotta/.claude.json [project: /Users/thiago.perrotta/gitops]</code></pre></div><p><a href=https://docs.claude.com/en/docs/claude-code/mcp#option-2%3A-add-a-remote-sse-server>SSE</a> stands for &ldquo;Server-Side Events&rdquo;:</p><blockquote><p>SSE (Server-Sent Events) servers provide real-time streaming connections. Many
 cloud services use this for live updates.</p></blockquote><p>That command is idempotent:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>% claude mcp add --transport sse atlassian https://mcp.atlassian.com/v1/sse
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>% claude mcp add --transport sse atlassian https://mcp.atlassian.com/v1/sse
 MCP server atlassian already exists in local config</code></pre></div><p>What if I want to have it available for all projects? Use <code>--scope user</code>:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>% claude mcp add --scope user --transport sse atlassian https://mcp.atlassian.com/v1/sse
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>% claude mcp add --scope user --transport sse atlassian https://mcp.atlassian.com/v1/sse
 Added SSE MCP server atlassian with URL: https://mcp.atlassian.com/v1/sse to user config
 File modified: /Users/thiago.perrotta/.claude.json</code></pre></div><p>The modification to <code>~/.claude.json</code>:</p><div class=codeblock data-lang=json><div class=codeblock-header><span class=codeblock-language>json</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-json>{
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-json>{
   [...]
   &#34;mcpServers&#34;: {
     &#34;atlassian&#34;: {
@@ -58,7 +58,7 @@ File modified: /Users/thiago.perrotta/.claude.json</code></pre></div><p>The modi
 Manage MCP servers
 ❯ 1. atlassian            △ disconnected · Enter to login</code></pre></div><p>After pressing Enter and authenticating against our JIRA instance in a web
 browser:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>% claude mcp list
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>% claude mcp list
 Checking MCP server health...
 
 atlassian: https://mcp.atlassian.com/v1/sse (SSE) - ✓ Connected
@@ -131,4 +131,4 @@ a fork of <a href=https://github.com/janraasch/hugo-bearblog/>hugo ʕ•ᴥ•ʔ
 </a><a target=_blank href="https://validator.w3.org/feed/check.cgi?url=https://perrotta.dev/index.xml" title="Valid RSS feed"><img src=https://perrotta.dev/vendor/valid-rss-rogers.webp width=88 height=31 alt="Valid RSS feed" loading=lazy></a></div><p class=footer-statement>This site respects your privacy by not containing <a href=https://www.nevermonetize.com/>ads</a>,
 not using tracking cookies,
 and not collecting any personally identifiable information.
-<a href=/ai>Gen AI policy</a>.</p></footer><script src=/js/main.min.9a99260bd1f235f4fbf04d3606e2b25322d9051baae3755aa7bde0065919473b.js defer></script></body></html>
+<a href=/ai>Gen AI policy</a>.</p></footer><script src=/js/main.min.3fcd283aaea6e141b5813adb828d5040011a1c27d0a48a8fde9504d9939c7994.js defer></script></body></html>

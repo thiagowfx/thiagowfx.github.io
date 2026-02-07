@@ -31,17 +31,17 @@ I thought of using reduce to do blink(blink(stone))... and so on:"><script type=
 <a href=/graph/ class=nav-dropdown-item>🕸️ Graph</a>
 <a href=/random/ class=nav-dropdown-item>🎲 Random</a></div></div></nav></header><main><script>document.addEventListener("keydown",function(e){if(e.target.closest('input:not([type="hidden"]), textarea, [contenteditable="true"]'))return;if(e.key==="j"||e.key==="ArrowLeft"){const e=document.querySelector('[data-nav="prev"]');e&&e.href&&(window.location.href=e.href)}else if(e.key==="k"||e.key==="ArrowRight"){const e=document.querySelector('[data-nav="next"]');e&&e.href&&(window.location.href=e.href)}})</script><a href=https://perrotta.dev/2024/12/advent-of-code-2024-day-6/ data-nav=prev hidden></a><a href=https://perrotta.dev/2024/12/advent-of-code-discussion-group/ data-nav=next hidden></a><article class=h-entry><div class=article-header><h2><span class=p-name>Advent of Code 2024: Day 11</span></h2><button id=fullscreen-btn class=fullscreen-btn aria-label="Toggle fullscreen mode" title="Toggle fullscreen mode (f)">
 <span id=fullscreen-icon>⛶</span></button></div><p><span class=pubdate-single><time class=dt-published datetime=2024-12-12T19:15:35-03:00>12 Dec, 2024
-</time>• 465 words • 3 min
+</time>• 459 words • 3 min
 • updated <time datetime=2026-01-03>03 Jan, 2026</time></span></p><div class=old-entry-warning role=note>⚠️ This post is over one year old. It may no longer be up to date or relevant. Opinions may have changed.</div><div class=e-content><p>Link to <a href=https://adventofcode.com/2024/day/11>Day #11</a> puzzle.</p><p>Part one can be done with a simulation.</p><p>It is very delightful to do it in python: lists are quite flexible, and
 converting from integers to strings and vice-versa is seamless. Counting the
 number of digits of <code>x</code> is just a matter of <code>len(str(x))</code>. In C++ it&rsquo;s a bit
 kludgier with <code>std::string(x).size()</code> and <code>std::stoi(s)</code>, but then you need to
 remember which header to import<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>.</p><p>I thought of using <code>reduce</code> to do <code>blink(blink(stone))...</code> and so on:</p><div class=codeblock data-lang=python><div class=codeblock-header><span class=codeblock-language>python</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-python>print(len(reduce(lambda stone: blink(stone), range(25), stones)))</code></pre></div><p>&mldr;nonetheless it&rsquo;s more readable to simply use a plain <code>for-range</code> loop:</p><div class=codeblock data-lang=python><div class=codeblock-header><span class=codeblock-language>python</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-python>for _ in range(25):
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-python>print(len(reduce(lambda stone: blink(stone), range(25), stones)))</code></pre></div><p>&mldr;nonetheless it&rsquo;s more readable to simply use a plain <code>for-range</code> loop:</p><div class=codeblock data-lang=python><div class=codeblock-header><span class=codeblock-language>python</span>
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-python>for _ in range(25):
     stones = blink(stones)
 print(len(stones))</code></pre></div><p>The secret sauce is in <code>blink</code>:</p><div class=codeblock data-lang=python><div class=codeblock-header><span class=codeblock-language>python</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-python>def blink(stones):
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-python>def blink(stones):
     stones_next = []
 
     for stone in stones:
@@ -64,8 +64,8 @@ I can get up to the 42nd <code>blink</code> iteration without losing my patience
 even longer.</p><p>The main observation to account for is that we only care about the length of the
 stone sequence, hence the original task transforms into a simple 2D dynamic
 programming problem.</p><p>I call:</p><div class=codeblock data-lang=python><div class=codeblock-header><span class=codeblock-language>python</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-python>print(dp_blink(stones, 75))</code></pre></div><p>Which is defined this way:</p><div class=codeblock data-lang=python><div class=codeblock-header><span class=codeblock-language>python</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-python>def dp_blink(stones, times):
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-python>print(dp_blink(stones, 75))</code></pre></div><p>Which is defined this way:</p><div class=codeblock data-lang=python><div class=codeblock-header><span class=codeblock-language>python</span>
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-python>def dp_blink(stones, times):
     from functools import lru_cache
 
     @lru_cache(maxsize=None)
@@ -76,7 +76,7 @@ programming problem.</p><p>I call:</p><div class=codeblock data-lang=python><div
         return sum([dp(stone, times - 1) for stone in blink([stone])])
 
     return sum([dp(stone, times) for stone in stones])</code></pre></div><p>The DP consists of the stone, and how many times are left for you to blink at it.</p><p>The full solution:</p><div class=codeblock data-lang=python><div class=codeblock-header><span class=codeblock-language>python</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-python>#!/usr/bin/env python3
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-python>#!/usr/bin/env python3
 import sys
 
 def blink(stones):
@@ -160,4 +160,4 @@ a fork of <a href=https://github.com/janraasch/hugo-bearblog/>hugo ʕ•ᴥ•ʔ
 </a><a target=_blank href="https://validator.w3.org/feed/check.cgi?url=https://perrotta.dev/index.xml" title="Valid RSS feed"><img src=https://perrotta.dev/vendor/valid-rss-rogers.webp width=88 height=31 alt="Valid RSS feed" loading=lazy></a></div><p class=footer-statement>This site respects your privacy by not containing <a href=https://www.nevermonetize.com/>ads</a>,
 not using tracking cookies,
 and not collecting any personally identifiable information.
-<a href=/ai>Gen AI policy</a>.</p></footer><script src=/js/main.min.9a99260bd1f235f4fbf04d3606e2b25322d9051baae3755aa7bde0065919473b.js defer></script></body></html>
+<a href=/ai>Gen AI policy</a>.</p></footer><script src=/js/main.min.3fcd283aaea6e141b5813adb828d5040011a1c27d0a48a8fde9504d9939c7994.js defer></script></body></html>

@@ -31,7 +31,7 @@ Linode is a very beginner-friendly (and cheap) VPS Alpine Linux is a first-class
 <a href=/random/ class=nav-dropdown-item>🎲 Random</a></div></div></nav></header><main><script>document.addEventListener("keydown",function(e){if(e.target.closest('input:not([type="hidden"]), textarea, [contenteditable="true"]'))return;if(e.key==="j"||e.key==="ArrowLeft"){const e=document.querySelector('[data-nav="prev"]');e&&e.href&&(window.location.href=e.href)}else if(e.key==="k"||e.key==="ArrowRight"){const e=document.querySelector('[data-nav="next"]');e&&e.href&&(window.location.href=e.href)}})</script><a href=https://perrotta.dev/2024/01/the-fundamental-right-to-paste/ data-nav=prev hidden></a><a href=https://perrotta.dev/2024/01/google-chrome-for-testing-reliable-downloads-for-browser-automation/ data-nav=next hidden></a><article class=h-entry><div class=article-header><h2><span>★</span>
 <span class=p-name>Terraforming a Linode: hello world</span></h2><button id=fullscreen-btn class=fullscreen-btn aria-label="Toggle fullscreen mode" title="Toggle fullscreen mode (f)">
 <span id=fullscreen-icon>⛶</span></button></div><p><span class=pubdate-single><time class=dt-published datetime=2024-01-23T23:27:04-03:00>23 Jan, 2024
-</time>• 916 words • 5 min
+</time>• 900 words • 5 min
 • updated <time datetime=2026-01-03>03 Jan, 2026</time></span></p><div class=old-entry-warning role=note>⚠️ This post is over one year old. It may no longer be up to date or relevant. Opinions may have changed.</div><div class=e-content><p>I host my own <a href=https://miniflux.app/>Miniflux</a> instance, which happens to be
 my favorite RSS reader. Currently it is hosted on Linode (Akamai Cloud)
 running <a href=https://www.alpinelinux.org/>Alpine Linux</a>.</p><p>My current setup was performed manually. I was thinking that, for fun, it would
@@ -40,21 +40,21 @@ be cool to fully automate it under the principles of
 possible at the time:</p><ol><li>Linode is a very beginner-friendly (and cheap) VPS</li><li>Alpine Linux is a first-class citizen on Linode</li><li>There&rsquo;s an <code>apk</code> <a href="https://pkgs.alpinelinux.org/packages?name=miniflux">package</a> for <code>miniflux</code></li><li>There&rsquo;s an OpenRC<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup> script for <code>miniflux</code> (so that it can be controlled via <code>service</code>)</li></ol><p>For the first part of this automation we will look into provisioning a Linode
 with an Alpine Linux installation. In order to do so we will use HashiCorp
 <a href=https://www.terraform.io/>Terraform</a>.</p><h2 id=requirements>Requirements</h2><ul><li>Provision a new Linode</li><li>Deploy it in Europe</li><li>Use the smallest shape (a so-called <a href=https://www.linode.com/community/questions/211/what-is-a-nanode>Nanode</a>)</li><li>Run Alpine Linux</li><li>Set it up with my <a href=https://github.com/thiagowfx.keys>public ssh key</a>, which is hosted on Github</li></ul><h2 id=terraform-setup>Terraform setup</h2><ul><li>Install a provider for Linode: <a href=https://registry.terraform.io/providers/linode/linode/latest/docs>https://registry.terraform.io/providers/linode/linode/latest/docs</a></li></ul><p>Scaffold it like this, in a <code>main.tf</code> file:</p><div class=codeblock data-lang=terraform><div class=codeblock-header><span class=codeblock-language>terraform</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-terraform>terraform {
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-terraform>terraform {
   required_providers {
     linode = {
       source = &#34;linode/linode&#34;
     }
   }
 }</code></pre></div><p>Then run:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>% terraform init</code></pre></div><ul><li>Generate a Linode API token</li></ul><p>Go to <a href=https://cloud.linode.com/profile/tokens>https://cloud.linode.com/profile/tokens</a>, create a new token called
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>% terraform init</code></pre></div><ul><li>Generate a Linode API token</li></ul><p>Go to <a href=https://cloud.linode.com/profile/tokens>https://cloud.linode.com/profile/tokens</a>, create a new token called
 <code>terraform</code>. with the &ldquo;Linodes&rdquo; scope set to &ldquo;Read/Write&rdquo;.</p><ul><li>Append this API token to <code>main.tf</code>:</li></ul><div class=codeblock data-lang=terraform><div class=codeblock-header><span class=codeblock-language>terraform</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-terraform>provider &#34;linode&#34; {
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-terraform>provider &#34;linode&#34; {
   token = &#34;&lt;your token here&gt;&#34;
 }</code></pre></div><ul><li>Add a
 <a href=https://registry.terraform.io/providers/linode/linode/latest/docs/resources/instance><code>linode_instance</code></a>
 with the appropriate fields set according to the documentation:</li></ul><div class=codeblock data-lang=terraform><div class=codeblock-header><span class=codeblock-language>terraform</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-terraform>resource &#34;linode_instance&#34; &#34;coruscant&#34; {
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-terraform>resource &#34;linode_instance&#34; &#34;coruscant&#34; {
   label  = &#34;coruscant&#34;
   image  = &#34;linode/alpine3.19&#34;
   region = &#34;eu-central&#34;
@@ -64,10 +64,10 @@ with the appropriate fields set according to the documentation:</li></ul><div cl
   watchdog_enabled = &#34;true&#34;
   booted           = &#34;true&#34;
 }</code></pre></div><p>Then run:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>% terraform plan</code></pre></div><p>&ldquo;Plan&rdquo; is basically a dry-run. Terraform will output what it intends to do, but nothing will be done yet.</p><ul><li>Analyze the output and double check that it looks correct.</li></ul><p>To actually perform the provisioning, run:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>% terraform apply</code></pre></div><p>Then confirm the prompt.</p><p>Within a few seconds (or maybe minutes), you should see your new Linode in the
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>% terraform plan</code></pre></div><p>&ldquo;Plan&rdquo; is basically a dry-run. Terraform will output what it intends to do, but nothing will be done yet.</p><ul><li>Analyze the output and double check that it looks correct.</li></ul><p>To actually perform the provisioning, run:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>% terraform apply</code></pre></div><p>Then confirm the prompt.</p><p>Within a few seconds (or maybe minutes), you should see your new Linode in the
 <a href=https://cloud.linode.com/>Linode Console</a>.</p><p>We can test our deployment by ssh&rsquo;ing to our new machine:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>% ssh root@&lt;public IP address&gt; -i ~/.ssh/my_ssh_key
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>% ssh root@&lt;public IP address&gt; -i ~/.ssh/my_ssh_key
 Welcome to Alpine!
 
 The Alpine Wiki contains a large amount of how-to guides and general
@@ -77,14 +77,14 @@ See &lt;https://wiki.alpinelinux.org/&gt;.
 You can setup the system with the command: setup-alpine
 
 You may change this message by editing /etc/motd.</code></pre></div><p>Let&rsquo;s take a pause to appreciate how lightweight it is:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>localhost:~# df -h
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>localhost:~# df -h
 Filesystem                Size      Used Available Use% Mounted on
 devtmpfs                 10.0M         0     10.0M   0% /dev
 shm                     487.8M         0    487.8M   0% /dev/shm
 /dev/sda                 24.1G    238.1M     22.6G   1% /
 tmpfs                   195.1M    268.0K    194.8M   0% /run</code></pre></div><p>Only 238 MiB!</p><p>To deprovision it, run:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>% terraform plan -destroy</code></pre></div><p>If everything looks correct, run:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>% terraform destroy</code></pre></div><p><strong>Warning</strong>: It turns out the &ldquo;Linodes&rdquo; scope was not enough to do the
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>% terraform plan -destroy</code></pre></div><p>If everything looks correct, run:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>% terraform destroy</code></pre></div><p><strong>Warning</strong>: It turns out the &ldquo;Linodes&rdquo; scope was not enough to do the
 deprovisioning. I needed to create a new scope, with more permissions, in order
 to do so.</p><p>As you can see, terraform makes it very trivial to deprovision systems.</p><p><strong>Bonus points</strong>: run <code>terraform fmt</code> to format your file. Never go <a href="https://www.youtube.com/watch?v=-CmadmM5cOk">out of
 style</a>.</p><p><strong>Tip</strong>: At any point you can run <code>terraform validate</code> to verify your <code>main.tf</code>
@@ -92,7 +92,7 @@ file is syntactically correct.</p><p>Two things could be improved in the previou
 SSH key to our linode account, then that key would be automatically deployed
 to the system, thereby removing the need to specify <code>authorized_keys</code>.</li><li>Alternatively, we could fetch our key from an URL endpoint with the use of
 the <code>hashicorp/http</code> provider, like so:</li></ul><div class=codeblock data-lang=terraform><div class=codeblock-header><span class=codeblock-language>terraform</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-terraform>terraform {
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-terraform>terraform {
   required_providers {
     http = {
       source = &#34;hashicorp/http&#34;
@@ -110,7 +110,7 @@ resource &#34;linode_instance&#34; &#34;coruscant&#34; {
   # ...
 }</code></pre></div><p>The &ldquo;list comprehension&rdquo; above does line splitting magic to convert them to a
 list of string, and the <code>compact</code> removes the empty new line at the end.</p><p>We could improve the example above even further.</p><p>For starters, let&rsquo;s parameterize out the username to a variable:</p><div class=codeblock data-lang=terraform><div class=codeblock-header><span class=codeblock-language>terraform</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-terraform>variable &#34;github_username&#34; {
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-terraform>variable &#34;github_username&#34; {
   type    = string
   default = &#34;thiagowfx&#34;
 }
@@ -124,8 +124,8 @@ resource &#34;linode_instance&#34; &#34;coruscant&#34; {
   authorized_keys  = compact([for line in split(&#34;\n&#34;, data.http.user_ssh_keys.response_body) : chomp(line)])
   # ...
 }</code></pre></div><p>We could then easily supply another username with <code>-var</code>:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>% terraform plan -var github_username=torvalds</code></pre></div><p>Note that the above example leverages <a href=https://developer.hashicorp.com/terraform/language/expressions/strings>string interpolation</a>.</p><p>We could also extract the SSH keys list to its own &ldquo;variable&rdquo; (<a href=https://developer.hashicorp.com/terraform/language/values/locals>locals</a>):</p><div class=codeblock data-lang=terraform><div class=codeblock-header><span class=codeblock-language>terraform</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-terraform>locals {
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>% terraform plan -var github_username=torvalds</code></pre></div><p>Note that the above example leverages <a href=https://developer.hashicorp.com/terraform/language/expressions/strings>string interpolation</a>.</p><p>We could also extract the SSH keys list to its own &ldquo;variable&rdquo; (<a href=https://developer.hashicorp.com/terraform/language/values/locals>locals</a>):</p><div class=codeblock data-lang=terraform><div class=codeblock-header><span class=codeblock-language>terraform</span>
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-terraform>locals {
   ssh_keys = compact([for line in split(&#34;\n&#34;, data.http.user_ssh_keys.response_body) : chomp(line)])
 }
 
@@ -134,14 +134,14 @@ resource &#34;linode_instance&#34; &#34;coruscant&#34; {
   authorized_keys  = local.ssh_keys
   # ...
 }</code></pre></div><p>A more robust (and stable) way to query the key though is through the Github API:</p><div class=codeblock data-lang=terraform><div class=codeblock-header><span class=codeblock-language>terraform</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-terraform>data &#34;http&#34; &#34;github_keys&#34; {
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-terraform>data &#34;http&#34; &#34;github_keys&#34; {
   url = &#34;https://api.github.com/users/${var.github_username}/keys&#34;
 }
 
 locals {
   ssh_keys = jsondecode(data.http.github_keys.response_body)[*].key
 }</code></pre></div><p>Note that a typical response body looks like the following:</p><div class=codeblock data-lang=json><div class=codeblock-header><span class=codeblock-language>json</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-json>[
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-json>[
   {
     &#34;id&#34;: &#34;&lt;id&gt;&#34;,
     &#34;key&#34;: &#34;&lt;ssh key&gt;&#34;
@@ -171,4 +171,4 @@ a fork of <a href=https://github.com/janraasch/hugo-bearblog/>hugo ʕ•ᴥ•ʔ
 </a><a target=_blank href="https://validator.w3.org/feed/check.cgi?url=https://perrotta.dev/index.xml" title="Valid RSS feed"><img src=https://perrotta.dev/vendor/valid-rss-rogers.webp width=88 height=31 alt="Valid RSS feed" loading=lazy></a></div><p class=footer-statement>This site respects your privacy by not containing <a href=https://www.nevermonetize.com/>ads</a>,
 not using tracking cookies,
 and not collecting any personally identifiable information.
-<a href=/ai>Gen AI policy</a>.</p></footer><script src=/js/main.min.9a99260bd1f235f4fbf04d3606e2b25322d9051baae3755aa7bde0065919473b.js defer></script></body></html>
+<a href=/ai>Gen AI policy</a>.</p></footer><script src=/js/main.min.3fcd283aaea6e141b5813adb828d5040011a1c27d0a48a8fde9504d9939c7994.js defer></script></body></html>

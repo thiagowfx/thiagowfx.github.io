@@ -31,13 +31,13 @@ First of all, here’s an overview of where I stopped last time. There were a co
 <a href=/random/ class=nav-dropdown-item>🎲 Random</a></div></div></nav></header><main><script>document.addEventListener("keydown",function(e){if(e.target.closest('input:not([type="hidden"]), textarea, [contenteditable="true"]'))return;if(e.key==="j"||e.key==="ArrowLeft"){const e=document.querySelector('[data-nav="prev"]');e&&e.href&&(window.location.href=e.href)}else if(e.key==="k"||e.key==="ArrowRight"){const e=document.querySelector('[data-nav="next"]');e&&e.href&&(window.location.href=e.href)}})</script><a href=https://perrotta.dev/2024/02/jumblie/ data-nav=prev hidden></a><a href=https://perrotta.dev/2024/02/anki-custom-language-card/ data-nav=next hidden></a><article class=h-entry><div class=article-header><h2><span>★</span>
 <span class=p-name>Integrating terraform with ansible</span></h2><button id=fullscreen-btn class=fullscreen-btn aria-label="Toggle fullscreen mode" title="Toggle fullscreen mode (f)">
 <span id=fullscreen-icon>⛶</span></button></div><p><span class=pubdate-single><time class=dt-published datetime=2024-02-01T14:02:28-03:00>01 Feb, 2024
-</time>• 700 words • 4 min
+</time>• 692 words • 4 min
 • updated <time datetime=2026-01-03>03 Jan, 2026</time></span></p><div class=old-entry-warning role=note>⚠️ This post is over one year old. It may no longer be up to date or relevant. Opinions may have changed.</div><div class=e-content><p>This post is a follow-up of <a href=https://perrotta.dev/2024/01/terraforming-a-linode-hello-world/>Terraforming a Linode: hello world</a>.</p><blockquote><p>In a future post, we will continue from here by using Ansible to install and
 set up Miniflux in our new Linode.</p></blockquote><p>Before we extensively use Ansible to configure our VPS instance, first let&rsquo;s
 set up a basic integration between Terraform and Ansible.</p><p>First of all, here&rsquo;s an overview of where I stopped last time. There were a
 couple of lightweight modifications since then. I&rsquo;ll explain some of them
 below.</p><div class=codeblock data-lang=terraform><div class=codeblock-header><span class=codeblock-language>terraform</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-terraform>% cat variables.tf
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-terraform>% cat variables.tf
 variable &#34;github_username&#34; {
   type    = string
   default = &#34;thiagowfx&#34;
@@ -56,7 +56,7 @@ terraform
 <a href=https://developer.hashicorp.com/terraform/language/modules/develop/structure>conventions</a>
 / recommendations for module structures. Furthermore, it becomes easier to
 manage variables when they are all stored in a single place.</p><p>The main module file now looks like this:</p><div class=codeblock data-lang=terraform><div class=codeblock-header><span class=codeblock-language>terraform</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-terraform>% cat main.tf
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-terraform>% cat main.tf
 terraform {
   required_providers {
     http = {
@@ -90,7 +90,7 @@ resource &#34;linode_instance&#34; &#34;nanode&#34; {
 }</code></pre></div><p>I removed the token from the linode provider. Now it is supplied via the
 <code>LINODE_TOKEN</code> environment variable. In order to automatically populate that
 variable, I use <a href=https://perrotta.dev/2022/01/direnv-automate-your-environment-variables/><code>direnv</code></a>. There&rsquo;s an <code>.envrc</code> file that provides its value, like so:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>#!/bin/sh
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>#!/bin/sh
 # terraform init
 
 export LINODE_TOKEN=&#34;my-token-here&#34;</code></pre></div><p>I also created a repository for this project:
@@ -99,7 +99,7 @@ go back to Ansible.</p><p>The first component we&rsquo;ll need is an Ansible
 <a href=https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html>inventory</a>
 file, containing the IP address of the host we&rsquo;ll manage. It could look like
 this:</p><div class=codeblock data-lang=ini><div class=codeblock-header><span class=codeblock-language>ini</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-ini>[all]
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-ini>[all]
 1.2.3.4 ansible_user=root</code></pre></div><p>&mldr;wherein <code>1.2.3.4</code> is the IP address of our VPS.</p><p>That said, due to the fact the VPS instance is created dynamically, maintaining
 that IP address manually would be tedious. Therefore, let&rsquo;s have Terraform
 manage it.</p><p>We can do so with a
@@ -121,14 +121,14 @@ with the above contents.</p><p>Because the IP address is ephemeral and dynamic, 
 straightforward way to see its value. A terraform
 <a href=https://developer.hashicorp.com/terraform/language/values/outputs><code>output</code></a>
 is perfect for that:</p><div class=codeblock data-lang=terraform><div class=codeblock-header><span class=codeblock-language>terraform</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-terraform>% cat outputs.tf
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-terraform>% cat outputs.tf
 output &#34;ip_address&#34; {
   value = linode_instance.nanode.ip_address
 }</code></pre></div><p>Later on (after terraforming) we will be able to use <code>terraform output</code> to see
 the server IP address.</p><p>We have the inventory file. Now we need a
 <a href=https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html>playbook</a>.
 A playbook contains a sequence of tasks to be applied to our server.</p><p>Let&rsquo;s start with a basic playbook that just installs and starts <code>nginx</code>:</p><div class=codeblock data-lang=yaml><div class=codeblock-header><span class=codeblock-language>yaml</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-yaml>---
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-yaml>---
 - hosts: all
   tasks:
     - name: Install the web server (nginx)
@@ -139,8 +139,8 @@ A playbook contains a sequence of tasks to be applied to our server.</p><p>Let&r
       service:
         name: nginx
         state: started</code></pre></div><p>Save this to a <code>playbook.yml</code> file.</p><p>After terraforming, we should now be able to run ansible:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>% ansible-playbook -i inventory.ini playbook.yml</code></pre></div><p>In order to make this setup more ergonomic, let&rsquo;s create a <code>Makefile</code>:</p><div class=codeblock data-lang=makefile><div class=codeblock-header><span class=codeblock-language>makefile</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-makefile>TERRAFORM := terraform
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-bash>% ansible-playbook -i inventory.ini playbook.yml</code></pre></div><p>In order to make this setup more ergonomic, let&rsquo;s create a <code>Makefile</code>:</p><div class=codeblock data-lang=makefile><div class=codeblock-header><span class=codeblock-language>makefile</span>
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></div><pre><code class=language-makefile>TERRAFORM := terraform
 
 all: terraform ansible
 
@@ -177,4 +177,4 @@ a fork of <a href=https://github.com/janraasch/hugo-bearblog/>hugo ʕ•ᴥ•ʔ
 </a><a target=_blank href="https://validator.w3.org/feed/check.cgi?url=https://perrotta.dev/index.xml" title="Valid RSS feed"><img src=https://perrotta.dev/vendor/valid-rss-rogers.webp width=88 height=31 alt="Valid RSS feed" loading=lazy></a></div><p class=footer-statement>This site respects your privacy by not containing <a href=https://www.nevermonetize.com/>ads</a>,
 not using tracking cookies,
 and not collecting any personally identifiable information.
-<a href=/ai>Gen AI policy</a>.</p></footer><script src=/js/main.min.9a99260bd1f235f4fbf04d3606e2b25322d9051baae3755aa7bde0065919473b.js defer></script></body></html>
+<a href=/ai>Gen AI policy</a>.</p></footer><script src=/js/main.min.3fcd283aaea6e141b5813adb828d5040011a1c27d0a48a8fde9504d9939c7994.js defer></script></body></html>
