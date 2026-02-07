@@ -12,7 +12,7 @@ tags:
 
 [Open Source security in spite of
 AI](https://daniel.haxx.se/blog/2026/02/03/open-source-security-in-spite-of-ai/)
-by [Daniel Stenberg](https://daniel.haxx.se/blog/)[^1]:
+by [Daniel Stenberg](https://daniel.haxx.se/blog/)[^1] (of _curl_ fame):
 
 > The title of my ending keynote at FOSDEM February 1, 2026.
 >
