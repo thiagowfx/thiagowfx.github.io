@@ -117,15 +117,15 @@ document.addEventListener("click", function (event) {
     .writeText(text)
     .then(function () {
       button.dataset.originalLabel = button.textContent;
-      button.textContent = "Copied!";
+      button.textContent = "✅";
       setTimeout(function () {
-        button.textContent = button.dataset.originalLabel || "Copy";
+        button.textContent = button.dataset.originalLabel || "📋";
       }, 1500);
     })
     .catch(function () {
-      button.textContent = "Failed";
+      button.textContent = "❌";
       setTimeout(function () {
-        button.textContent = button.dataset.originalLabel || "Copy";
+        button.textContent = button.dataset.originalLabel || "📋";
       }, 1500);
     });
 });
