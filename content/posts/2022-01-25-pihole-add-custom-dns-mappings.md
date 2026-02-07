@@ -15,8 +15,7 @@ There are several ways to do so:
 Edit `/etc/pihole/custom.list`, set one mapping per line, just as you would for
 `/etc/hosts`:
 
-```shell
-$ cat /etc/pihole/custom.list
+```text {filename="/etc/pihole/custom.list"}
 127.0.0.1     localhost.corp.google.com
 192.168.1.75  myhostname.home.arpa
 ```
@@ -34,8 +33,7 @@ From [Gentoo Wiki][gentoo-wiki]:
 
 ## 2. The CLI way: `/etc/dnsmasq.d/`
 
-```shell
-$ cat /etc/dnsmasq.d/03-pihole-custom-dns.conf
+```conf {filename="/etc/dnsmasq.d/03-pihole-custom-dns.conf"}
 address=/localhost.corp.google.com/127.0.0.1
 address=/myhostname.home.arpa/192.168.1.75
 ```

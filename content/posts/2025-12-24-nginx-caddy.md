@@ -19,8 +19,7 @@ Next, migrate the existing nginx config to caddy.
 
 The stock config:
 
-```shell
-% cat /etc/caddy/Caddyfile
+```caddyfile {filename="/etc/caddy/Caddyfile"}
 # Caddy's configuration file
 # see: https://caddyserver.com/docs/caddyfile
 ```

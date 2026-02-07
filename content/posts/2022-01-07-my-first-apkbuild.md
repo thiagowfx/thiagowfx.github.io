@@ -153,8 +153,7 @@ Let's highlight a few similarities and differences in them, excluding the fact t
 
 Last but not least, in Arch one can install package tarballs[^tarball] with `makepkg -i` or `pacman -U`. In Alpine that approach doesn't seem to be directly supported. The workflow is to add a local repository directory in `/etc/apk/repositories` (notice the last two lines):
 
-```shell
-$ cat /etc/apk/repositories
+```text {filename="/etc/apk/repositories"}
 # http://dl-cdn.alpinelinux.org/alpine/v3.15/main
 # http://dl-cdn.alpinelinux.org/alpine/v3.15/community
 # http://dl-cdn.alpinelinux.org/alpine/latest-stable/main

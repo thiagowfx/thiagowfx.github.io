@@ -108,8 +108,7 @@ If you would like to see what is going to be committed, run `lbu status` or `lbu
 
 It's possible to keep more than one backup file by changing `BACKUP_LIMIT=` in `/etc/lbu/lbu.conf`. This is specially handy if you decide to revert to an earlier system snapshot / state later on. The stock config looks like this:
 
-```shell
-% cat /etc/lbu/lbu.conf
+```conf {filename="/etc/lbu/lbu.conf"}
 # what cipher to use with -e option
 DEFAULT_CIPHER=aes-256-cbc
 

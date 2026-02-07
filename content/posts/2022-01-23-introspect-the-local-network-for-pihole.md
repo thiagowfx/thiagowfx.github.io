@@ -114,8 +114,7 @@ There are several ways to do so, in order of recommendation:
 
 - `dhcpcd`: This is typically done as part of the standard pihole setup.
 
-```shell
-$ cat /etc/dhcpcd.conf
+```conf {filename="/etc/dhcpcd.conf"}
 ...
 # fallback to static profile on eth0
 #interface eth0

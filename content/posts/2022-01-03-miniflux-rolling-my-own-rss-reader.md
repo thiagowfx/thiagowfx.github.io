@@ -59,8 +59,7 @@ The next step is to configure the PostgreSQL server. Refer to the upstream docum
 
 Then configure miniflux:
 
-```shell
-$ cat /etc/miniflux.conf
+```conf {filename="/etc/miniflux.conf"}
 # Purge articles after a few days: These values are actually the default. Listed here just for reference.
 CLEANUP_ARCHIVE_READ_DAYS=30
 CLEANUP_ARCHIVE_UNREAD_DAYS=90

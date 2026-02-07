@@ -20,8 +20,7 @@ Completely empty (_flush_) swap space:
 Emptying is too extreme. Why did you get so much swap in the first place?
 A small tweak is to decrease the sensibility of the system to swap:
 
-```shell
-$ cat /etc/sysctl.d/90-custom.conf
+```conf {filename="/etc/sysctl.d/90-custom.conf"}
 vm.swappiness=20
 vm.vfs_cache_pressure=50
 ```
@@ -77,8 +76,7 @@ a file](https://en.wikipedia.org/wiki/Everything_is_a_file) anyway!
 
 You can check it's working correctly by inspecting `/proc/swaps`:
 
-```shell
-% cat /proc/swaps
+```text {filename="/proc/swaps"}
 Filename				Type		Size		Used		Priority
 /swapfile                               file		8388604		0		-2
 ```
@@ -101,8 +99,7 @@ The recipe I use in Arch Linux is the [`zramswap`](https://aur.archlinux.org/pac
 1. Install the package.
 2. Set desired zram swap percentage, I picked 20%:
 
-```shell
-% cat /etc/zramswap.conf
+```conf {filename="/etc/zramswap.conf"}
 ZRAM_SIZE_PERCENT=20
 ```
 
@@ -125,8 +122,7 @@ Feb 01 16:13:37 localhost.localdomain systemd[1]: Finished Zram-based swap (comp
 
 You can inspect `/proc/swaps` again to check it's working properly[^1]:
 
-```shell
-% cat /proc/swaps
+```text {filename="/proc/swaps"}
 Filename				Type		Size		Used		Priority
 /swapfile                               file		8388604		0		-2
 /dev/zram0                              partition	1615244		0		100
