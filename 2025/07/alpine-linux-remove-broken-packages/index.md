@@ -90,8 +90,7 @@ apk-tools 3.0.0_rc5_git20250715-r0, compiled for x86_64.
 Aha! I am running a release candidate version of `apk`, because I am using
 Alpine Linux edge repositories:
 
-```shell
-% cat /etc/apk/repositories
+```text {filename="/etc/apk/repositories"}
 http://dl-cdn.alpinelinux.org/alpine/edge/main
 http://dl-cdn.alpinelinux.org/alpine/edge/community
 http://dl-cdn.alpinelinux.org/alpine/edge/testing

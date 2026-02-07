@@ -12,8 +12,7 @@ Next, migrate the existing nginx config to caddy.
 
 The stock config:
 
-```shell
-% cat /etc/caddy/Caddyfile
+```caddyfile {filename="/etc/caddy/Caddyfile"}
 # Caddy's configuration file
 # see: https://caddyserver.com/docs/caddyfile
 ```
@@ -149,7 +148,7 @@ And here's the cleanest possible startup:
 How did I know which user to `chown` to? `/etc/init.d/caddy` has the following
 line:
 
-```ini
+```ini {filename="/etc/init.d/caddy"}
 command_user=caddy:caddy
 ```
 

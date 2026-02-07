@@ -46,8 +46,7 @@ Switch slots by pressing `Fn + <n>` once. There is some light feedback to indica
 Bluetooth works well out-of-the-box, but the keyboard automatically sleeps after 10 minutes of inactivity to save energy.
 While it is possible to disable this behavior, I find it welcome. It is a hassle though because the bluetooth device refuses to reconnect once the keyboard is awaken. The naive solution is to pair it again from scratch, but a better user experience is to change bluetooth settings:
 
-```shell
-$ cat /etc/bluetooth/main.conf
+```ini {filename="/etc/bluetooth/main.conf"}
 ...
 [General]
 FastConnectable=true
@@ -70,9 +69,11 @@ I also find it convenient to leave bluetooth enabled on startup:
 ```shell
 # Enable the bluetooth daemon.
 % systemctl enable bluetooth
+```
 
-# Enable the bluetooth adapter.
-$ cat /etc/bluetooth/main.conf
+Enable the bluetooth adapter:
+
+```ini {filename="/etc/bluetooth/main.conf"}
 ...
 [Policy]
 AutoEnable=true
@@ -81,8 +82,7 @@ AutoEnable=true
 
 Finally, another tweak is to make the bluetooth adapter stay awake otherwise it may periodically disconnect:
 
-```shell
-$ cat /etc/modprobe.d/btusb.conf
+```conf {filename="/etc/modprobe.d/btusb.conf"}
 # Turn off bluetooth autosuspend.
 options btusb enable_autosuspend=0
 ```
@@ -115,8 +115,7 @@ If you do not have a root shell, use `sudo` / `doas` + `tee`:
 
 Change it permanently:
 
-```shell
-$ cat /etc/modprobe.d/hid_apple.conf
+```conf {filename="/etc/modprobe.d/hid_apple.conf"}
 # Use function keys by default. Press Fn to use multimedia keys.
 options hid_apple fnmode=2
 ```
