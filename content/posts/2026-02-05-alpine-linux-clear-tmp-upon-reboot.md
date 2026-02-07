@@ -16,9 +16,7 @@ tags:
 
 My current config:
 
-```shell
-% cat /etc/conf.d/bootmisc
-
+```conf {filename="/etc/conf.d/bootmisc"}
 # List of /tmp directories we should clean up
 clean_tmp_dirs="/tmp"
 
@@ -34,7 +32,6 @@ log_dmesg="YES"
 # This may be useful if you need to compare the current boot to the
 # previous one.
 #previous_dmesg=no
-
 ```
 
 I find that to be a sensible change indeed:
@@ -48,8 +45,7 @@ I find that to be a sensible change indeed:
 
 I left my config like this:
 
-```shell
-% cat /etc/conf.d/bootmisc
+```conf {filename="/etc/conf.d/bootmisc"}
 [...]
 # Should we wipe the tmp paths completely or just selectively remove known
 # locks / files / etc... ?
