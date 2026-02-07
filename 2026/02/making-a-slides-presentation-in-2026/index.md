@@ -54,7 +54,10 @@ I am not using the default theme. Sorry, that's just not gonna happen.
 Built-in
 [beamer](https://deic.uab.cat/~iblanes/beamer_gallery/index_by_theme.html)
 [themes](https://www.overleaf.com/learn/latex/Beamer) inspire me. I choose
-[metropolis](https://typst.app/universe/package/metropolis-polylux/).
+[metropolis](https://typst.app/universe/package/metropolis-polylux/), with a few
+bits of [beamer
+frankfurt](https://deic.uab.cat/~iblanes/beamer_gallery/large/Frankfurt-default-default-12.png)
+sprinkled in (mainly the top navigation guides).
 
 Such a short section, so cute! ✨
 
