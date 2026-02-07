@@ -165,33 +165,45 @@
 
   const lang = 'en' || 'en';
   const langPath = lang === 'en' ? '' : '/' + lang;
-  fetch(langPath + '/search/index.json')
-    .then(response => response.json())
-    .then(data => {
-      searchIndex = data;
-      if (includeTags.size > 0) {
-        searchIndex = searchIndex.filter(post => (post.tags ?? []).some(t => includeTags.has(t)));
-      }
-      if (excludeTags.size > 0) {
-        searchIndex = searchIndex.filter(post => !(post.tags ?? []).some(t => excludeTags.has(t)));
-      }
-      if (includeCategories.size > 0) {
-        searchIndex = searchIndex.filter(post => (post.categories ?? []).some(c => includeCategories.has(c)));
-      }
-      if (excludeCategories.size > 0) {
-        searchIndex = searchIndex.filter(post => !(post.categories ?? []).some(c => excludeCategories.has(c)));
-      }
-      searchInfo.textContent = `${searchIndex.length} ${i18n.postsIndexed}`;
-      const q = new URLSearchParams(window.location.search).get('q');
-      if (q) {
-        searchInput.value = q;
-        performSearch(q);
-      }
-    })
-    .catch(err => {
-      searchInfo.textContent = 'Error loading search index';
-      console.error('Search index load error:', err);
-    });
+
+  const loadSearchIndex = () => {
+    if (searchIndex !== null) return;
+    fetch(langPath + '/search/index.json')
+      .then(response => response.json())
+      .then(data => {
+        searchIndex = data;
+        if (includeTags.size > 0) {
+          searchIndex = searchIndex.filter(post => (post.tags ?? []).some(t => includeTags.has(t)));
+        }
+        if (excludeTags.size > 0) {
+          searchIndex = searchIndex.filter(post => !(post.tags ?? []).some(t => excludeTags.has(t)));
+        }
+        if (includeCategories.size > 0) {
+          searchIndex = searchIndex.filter(post => (post.categories ?? []).some(c => includeCategories.has(c)));
+        }
+        if (excludeCategories.size > 0) {
+          searchIndex = searchIndex.filter(post => !(post.categories ?? []).some(c => excludeCategories.has(c)));
+        }
+        searchInfo.textContent = `${searchIndex.length} ${i18n.postsIndexed}`;
+        const q = searchInput.value.trim();
+        if (q) {
+          performSearch(q);
+        }
+      })
+      .catch(err => {
+        searchInfo.textContent = 'Error loading search index';
+        console.error('Search index load error:', err);
+      });
+  };
+
+  
+  const q = new URLSearchParams(window.location.search).get('q');
+  if (q) {
+    searchInput.value = q;
+    loadSearchIndex();
+  } else {
+    searchInput.addEventListener('focus', loadSearchIndex, { once: true });
+  }
 
   searchInput.addEventListener('input', debounce(e => performSearch(e.target.value), 150));
 </script><div id=posts-content><div class=e-content><ul class=blog-posts><li>No posts yet</li></ul><hr><h2 id=categories>Categories
