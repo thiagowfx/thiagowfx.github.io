@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev//rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pre-Commit on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Pre-Commit on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 06 Feb 2026 17:50:26 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/pre-commit/index.xml" rel="self" type="application/rss+xml"/><item><title>npm error code EBADF</title><link>https://perrotta.dev/2026/02/npm-error-code-ebadf/</link><pubDate>Thu, 05 Feb 2026 13:21:00 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>macos</category><category>pre-commit</category><category>security</category><guid>https://perrotta.dev/2026/02/npm-error-code-ebadf/</guid><description>&lt;p&gt;Symptom:&lt;/p&gt;
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sat, 07 Feb 2026 11:37:55 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/pre-commit/index.xml" rel="self" type="application/rss+xml"/><item><title>pre-commit: hazmat n1</title><link>https://perrotta.dev/2026/02/pre-commit-hazmat-n1/</link><pubDate>Fri, 06 Feb 2026 18:28:16 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>pre-commit</category><guid>https://perrotta.dev/2026/02/pre-commit-hazmat-n1/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: some CLI tools accept only a single file as an argument.
+Create a &lt;a href="https://pre-commit.com/"&gt;pre-commit&lt;/a&gt; local hook for them.&lt;/p&gt;
+&lt;p&gt;A common workaround is to wrap it in a bash for-loop:&lt;/p&gt;
+
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;repos&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#f92672"&gt;repo&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;local&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;hooks&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#f92672"&gt;id&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;my-formatter&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;name&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;my-formatter&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;language&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;system&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;entry&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;bash -c &amp;#39;for file in &amp;#34;$@&amp;#34;; do my-formatter fmt &amp;#34;$file&amp;#34;; done&amp;#39; --&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;files&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;^path/to/files/&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This works, but it&amp;rsquo;s noisy and easy to get wrong. Plus it&amp;rsquo;s not elegant at all.&lt;/p&gt;
+&lt;p&gt;It turns out pre-commit has a built-in mechanism for this: &lt;a href="https://pre-commit.com/#codepre-commit-hazmat-n1code"&gt;&lt;code&gt;hazmat n1&lt;/code&gt;&lt;/a&gt;. It runs the hook
+once per file, one at a time:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;some hooks only take one filename argument. this runs them one at a time
+(which is super slow!)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;repos&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#f92672"&gt;repo&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;local&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;hooks&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#f92672"&gt;id&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;my-formatter&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;name&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;my-formatter&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;language&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;system&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;entry&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;pre-commit hazmat n1 my-formatter fmt --&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;files&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;^path/to/files/&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Note the trailing &lt;code&gt;--&lt;/code&gt; at the end of &lt;code&gt;entry&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;This is a super recent feature, added in &lt;a href="https://github.com/pre-commit/pre-commit/commit/1af6c8fa9502336c6977c2ff3e79185bd97a6e57"&gt;pre-commit 4.5.0, in Nov
+2025&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The name &amp;ldquo;hazmat&amp;rdquo; is supposedly intended to discourage people from using it.
+Yet, here we are.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;hazardous materials&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;pre-commit provides a few entry prefix &amp;ldquo;helpers&amp;rdquo; for unusual situations.&lt;/p&gt;
+&lt;p&gt;in case it&amp;rsquo;s not clear, using these is usually a bad idea.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It is a bad idea, but sometimes the underlying hook / script simply does not
+support multiple arguments.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: pre-commit: hazmat n1"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/pre-commit/"&gt;#pre-commit&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</description></item><item><title>npm error code EBADF</title><link>https://perrotta.dev/2026/02/npm-error-code-ebadf/</link><pubDate>Thu, 05 Feb 2026 13:21:00 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>macos</category><category>pre-commit</category><category>security</category><guid>https://perrotta.dev/2026/02/npm-error-code-ebadf/</guid><description>&lt;p&gt;Symptom:&lt;/p&gt;
 
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
