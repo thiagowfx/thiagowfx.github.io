@@ -38,17 +38,17 @@ log in every day is quite tedious.</p><p>Let&rsquo;s automate it so that we can 
 using 1password. <a href=https://www.passwordstore.org/><code>pass</code></a> would have worked just
 as fine.</p><p>First, configure Pritunl via its app UI, creating a profile for your corp
 credentials.</p><p>Then figure out what the profile ID you just created is:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code>Copy</button></span></div><pre><code class=language-bash>profile_id=$(/Applications/Pritunl.app/Contents/Resources/pritunl-client list --json | jq -r &#39;.[0].id&#39;)</code></pre></div><p>Now, create an entry in 1Password for your Pritunl credentials associated with
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>profile_id=$(/Applications/Pritunl.app/Contents/Resources/pritunl-client list --json | jq -r &#39;.[0].id&#39;)</code></pre></div><p>Now, create an entry in 1Password for your Pritunl credentials associated with
 the profile above.</p><p>Let&rsquo;s use the <code>op</code> official CLI tool from 1Password to fetch the password and
 the OTP (one-time password) for the &ldquo;Pritunl (VPN)&rdquo; entry (change it
 accordingly).</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code>Copy</button></span></div><pre><code class=language-bash>op_id=&#34;$(op item get &#39;Pritunl (VPN)&#39; --format json | jq -r &#39;.id&#39;)&#34;
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>op_id=&#34;$(op item get &#39;Pritunl (VPN)&#39; --format json | jq -r &#39;.id&#39;)&#34;
 password=&#34;$(op read &#34;op://private/$op_id/password&#34;)&#34;
 otp=&#34;$(op item get &#34;$op_id&#34; --totp)&#34;</code></pre></div><p>Now we can use the <code>pritunl-client</code> to log in programmatically:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code>Copy</button></span></div><pre><code class=language-bash>pritunl-client start &#34;$profile_id&#34; --password &#34;$password$otp&#34;</code></pre></div><p>Then verify it has indeed connected:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code>Copy</button></span></div><pre><code class=language-bash>pritunl-client list</code></pre></div><p>The trick is that it accepts the concatenation of the password with the OTP as
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>pritunl-client start &#34;$profile_id&#34; --password &#34;$password$otp&#34;</code></pre></div><p>Then verify it has indeed connected:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash>pritunl-client list</code></pre></div><p>The trick is that it accepts the concatenation of the password with the OTP as
 the password. There&rsquo;s not a separate <code>--otp</code> flag.</p><p>Putting everything together, we can create a function for our favorite shell:</p><div class=codeblock data-lang=shell><div class=codeblock-header><span class=codeblock-language>shell</span>
-<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code>Copy</button></span></div><pre><code class=language-bash># Log into corp VPN
+<span class=codeblock-actions><button class=codeblock-copy type=button data-copy-code title=Copy>📋</button></span></div><pre><code class=language-bash># Log into corp VPN
 pritunl_login() {
 	local profile_id=$(/Applications/Pritunl.app/Contents/Resources/pritunl-client list --json | jq -r &#39;.[0].id&#39;)
 
@@ -81,4 +81,4 @@ a fork of <a href=https://github.com/janraasch/hugo-bearblog/>hugo ʕ•ᴥ•ʔ
 </a><a target=_blank href="https://validator.w3.org/feed/check.cgi?url=https://perrotta.dev/index.xml" title="Valid RSS feed"><img src=https://perrotta.dev/vendor/valid-rss-rogers.webp width=88 height=31 alt="Valid RSS feed" loading=lazy></a></div><p class=footer-statement>This site respects your privacy by not containing <a href=https://www.nevermonetize.com/>ads</a>,
 not using tracking cookies,
 and not collecting any personally identifiable information.
-<a href=/ai>Gen AI policy</a>.</p></footer><script src=/js/main.min.b095a8369812a0c3ea05698e98857c7518745a9d90166f348a1702f821362b59.js defer></script></body></html>
+<a href=/ai>Gen AI policy</a>.</p></footer><script src=/js/main.min.9a99260bd1f235f4fbf04d3606e2b25322d9051baae3755aa7bde0065919473b.js defer></script></body></html>
