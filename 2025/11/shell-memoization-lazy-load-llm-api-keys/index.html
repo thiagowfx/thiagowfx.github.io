@@ -1,45 +1,6 @@
-<!doctype html><html lang=en id=root-html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><title class=title>Shell memoization: lazy-load LLM API keys | ¬ just serendipity 🍀</title><meta name=title content="Shell memoization: lazy-load LLM API keys"><meta name=description content='Problem statement: Given LLM keys shell environment variables:
-
-ANTHROPIC_API_KEY
-GEMINI_API_KEY
-OPENAI_API_KEY
-
-Export them only when they are needed.
-When are they needed? If I launch any one of these binaries:
-
-llm (generic)
-aider (generic)
-gemini (provider-specific: Google)
-codex (provider-specific: OpenAI)
-claude (provider-specific: Anthropic)
-
-I added the following snippet in my shell profile:
-
-
-   
-     shell
-     Copy
-   
-   # Lazy-load API keys only when needed to avoid shell startup delay
-if command -v llm &>/dev/null; then
-        _load_api_keys() {
-                export ANTHROPIC_API_KEY="$(command llm keys get anthropic)"
-                export GEMINI_API_KEY="$(command llm keys get gemini)"
-                export OPENAI_API_KEY="$(command llm keys get openai)"
-                # Redefine itself to be a no-op after first call
-                _load_api_keys() { :; }
-        }
-
-        # Wrap all AI CLI commands to auto-load keys
-        for cmd in claude llm aider codex gemini; do
-                command -v $cmd &>/dev/null && eval "${cmd}() { _load_api_keys; command ${cmd} \"\$@\"; }"
-        done
-fi
-
-The keys are loaded via llm keys get. This is not secure, but it is practical.
-A more secure approach would be to read the credentials directly from a password
-manager. This trade-off is acceptable in the environment I am currently
-operating on, but I would not recommend it as an universal approach.'><meta name=keywords content="ai,bestof,dev,security,"><meta property="og:url" content="https://perrotta.dev/2025/11/shell-memoization-lazy-load-llm-api-keys/"><meta property="og:site_name" content="¬ just serendipity 🍀"><meta property="og:title" content="Shell memoization: lazy-load LLM API keys"><meta property="og:description" content='Problem statement: Given LLM keys shell environment variables:
+<!doctype html><html lang=en id=root-html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><title class=title>Shell memoization: lazy-load LLM API keys | ¬ just serendipity 🍀</title><meta name=title content="Shell memoization: lazy-load LLM API keys"><meta name=description content="Problem statement: Given LLM keys shell environment variables:
+ANTHROPIC_API_KEY GEMINI_API_KEY OPENAI_API_KEY Export them only when they are needed.
+When are …"><meta name=keywords content="ai,bestof,dev,security,"><meta property="og:url" content="https://perrotta.dev/2025/11/shell-memoization-lazy-load-llm-api-keys/"><meta property="og:site_name" content="¬ just serendipity 🍀"><meta property="og:title" content="Shell memoization: lazy-load LLM API keys"><meta property="og:description" content='Problem statement: Given LLM keys shell environment variables:
 ANTHROPIC_API_KEY GEMINI_API_KEY OPENAI_API_KEY Export them only when they are needed.
 When are they needed? If I launch any one of these binaries:
 llm (generic) aider (generic) gemini (provider-specific: Google) codex (provider-specific: OpenAI) claude (provider-specific: Anthropic) I added the following snippet in my shell profile:
