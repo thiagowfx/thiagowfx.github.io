@@ -2,7 +2,7 @@
 **Problem statement**: some CLI tools accept only a single file as an argument.
 Create a [pre-commit](https://pre-commit.com/) local hook for them.
 
-A common workaround is to wrap it in a bash for-loop:
+A common workaround is to wrap it in a bash for-loop (`.pre-commit-config.yaml`):
 
 ```yaml
 repos:
