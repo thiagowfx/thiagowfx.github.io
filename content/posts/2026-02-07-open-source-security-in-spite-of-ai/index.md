@@ -36,6 +36,7 @@ not disappointed.
 I was the volunteer who held the Q&A at the end for his talk, and that was a
 pleasure.
 
-[^1]: [Slides](https://daniel.haxx.se/media/FOSDEM%202026%20OSS%20security%20in%20spite%20of%20AI.pdf).
+[^1]: [Recording](https://www.youtube.com/watch?v=6wYSwZ20NJU).
+    [Slides](https://daniel.haxx.se/media/FOSDEM%202026%20OSS%20security%20in%20spite%20of%20AI.pdf).
 
 ![Open Source security in spite of AI - Daniel Stenberg](open-source-security-in-spite-of-ai-daniel-stenberg.webp)
