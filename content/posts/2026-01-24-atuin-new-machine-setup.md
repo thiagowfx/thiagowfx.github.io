@@ -3,6 +3,7 @@ title: "atuin: new machine setup"
 date: 2026-01-24T18:46:02+01:00
 tags:
   - dev
+  - fosdem
   - selfhosted
 ---
 

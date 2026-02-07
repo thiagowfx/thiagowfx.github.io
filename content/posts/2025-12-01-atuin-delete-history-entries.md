@@ -3,6 +3,7 @@ title: "Atuin: delete history entries"
 date: 2025-12-01T13:35:27-03:00
 tags:
   - dev
+  - fosdem
 ---
 
 Deleting, scrubbing, redacting old shell history entries is now easier
