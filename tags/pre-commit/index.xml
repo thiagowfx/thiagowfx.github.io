@@ -7,14 +7,14 @@ Create a &lt;a href="https://pre-commit.com/"&gt;pre-commit&lt;/a&gt; local hook
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;local&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;my-formatter&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;my-formatter&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;language&lt;/span&gt;: &lt;span&gt;system&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;entry&lt;/span&gt;: &lt;span&gt;bash -c &amp;#39;for file in &amp;#34;$@&amp;#34;; do my-formatter fmt &amp;#34;$file&amp;#34;; done&amp;#39; --&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;files&lt;/span&gt;: &lt;span&gt;^path/to/files/&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ - repo: local
+ hooks:
+ - id: my-formatter
+ name: my-formatter
+ language: system
+ entry: bash -c &amp;#39;for file in &amp;#34;$@&amp;#34;; do my-formatter fmt &amp;#34;$file&amp;#34;; done&amp;#39; --
+ files: ^path/to/files/&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;This works, but it&amp;rsquo;s noisy and easy to get wrong. Plus it&amp;rsquo;s not elegant at all.&lt;/p&gt;
 &lt;p&gt;It turns out pre-commit has a built-in mechanism for this: &lt;a href="https://pre-commit.com/#codepre-commit-hazmat-n1code"&gt;&lt;code&gt;hazmat n1&lt;/code&gt;&lt;/a&gt;. It runs the hook
@@ -27,14 +27,14 @@ once per file, one at a time:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;local&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;my-formatter&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;my-formatter&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;language&lt;/span&gt;: &lt;span&gt;system&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;entry&lt;/span&gt;: &lt;span&gt;pre-commit hazmat n1 my-formatter fmt --&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;files&lt;/span&gt;: &lt;span&gt;^path/to/files/&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ - repo: local
+ hooks:
+ - id: my-formatter
+ name: my-formatter
+ language: system
+ entry: pre-commit hazmat n1 my-formatter fmt --
+ files: ^path/to/files/&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Note the trailing &lt;code&gt;--&lt;/code&gt; at the end of &lt;code&gt;entry&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;This is a super recent feature, added in &lt;a href="https://github.com/pre-commit/pre-commit/commit/1af6c8fa9502336c6977c2ff3e79185bd97a6e57"&gt;pre-commit 4.5.0, in Nov
@@ -53,19 +53,19 @@ support multiple arguments.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% pre-commit run -a
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[&lt;/span&gt;INFO&lt;span&gt;]&lt;/span&gt; Installing environment &lt;span&gt;for&lt;/span&gt; https://github.com/rbubley/mirrors-prettier.
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[&lt;/span&gt;INFO&lt;span&gt;]&lt;/span&gt; Once installed this environment will be reused.
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[&lt;/span&gt;INFO&lt;span&gt;]&lt;/span&gt; This may take a few minutes...
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;An unexpected error has occurred: CalledProcessError: command: &lt;span&gt;(&lt;/span&gt;&lt;span&gt;&amp;#39;/Users/thiago.perrotta/.cache/pre-commit/repo78y8p1fk/node_env-system/bin/node&amp;#39;&lt;/span&gt;, &lt;span&gt;&amp;#39;/opt/homebrew/bin/npm&amp;#39;&lt;/span&gt;, &lt;span&gt;&amp;#39;install&amp;#39;&lt;/span&gt;, &lt;span&gt;&amp;#39;-g&amp;#39;&lt;/span&gt;, &lt;span&gt;&amp;#39;/Users/thiago.perrotta/.cache/pre-commit/repo78y8p1fk/placeholder_package-0.0.0.tgz&amp;#39;&lt;/span&gt;, &lt;span&gt;&amp;#39;prettier@3.8.1&amp;#39;&lt;/span&gt;&lt;span&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;return&lt;/span&gt; code: &lt;span&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;stdout: &lt;span&gt;(&lt;/span&gt;none&lt;span&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;stderr:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; npm error code EBADF
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; npm error errno EBADF
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; npm error request to https://registry.npmjs.org/prettier failed, reason:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; npm error A complete log of this run can be found in: /Users/thiago.perrotta/.npm/_logs/2026-02-04T12_22_05_104Z-debug-0.log
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Check the log at /Users/thiago.perrotta/.cache/pre-commit/pre-commit.log&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% pre-commit run -a
+[INFO] Installing environment for https://github.com/rbubley/mirrors-prettier.
+[INFO] Once installed this environment will be reused.
+[INFO] This may take a few minutes...
+An unexpected error has occurred: CalledProcessError: command: (&amp;#39;/Users/thiago.perrotta/.cache/pre-commit/repo78y8p1fk/node_env-system/bin/node&amp;#39;, &amp;#39;/opt/homebrew/bin/npm&amp;#39;, &amp;#39;install&amp;#39;, &amp;#39;-g&amp;#39;, &amp;#39;/Users/thiago.perrotta/.cache/pre-commit/repo78y8p1fk/placeholder_package-0.0.0.tgz&amp;#39;, &amp;#39;prettier@3.8.1&amp;#39;)
+return code: 1
+stdout: (none)
+stderr:
+ npm error code EBADF
+ npm error errno EBADF
+ npm error request to https://registry.npmjs.org/prettier failed, reason:
+ npm error A complete log of this run can be found in: /Users/thiago.perrotta/.npm/_logs/2026-02-04T12_22_05_104Z-debug-0.log
+Check the log at /Users/thiago.perrotta/.cache/pre-commit/pre-commit.log&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Initially I thought it was an issue with &lt;code&gt;prettier&lt;/code&gt;. The pre-commit repository
 is deprecated after all:&lt;/p&gt;
@@ -91,34 +91,34 @@ this:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;https://github.com/thiagowfx/pre-commit-hooks/&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;rev&lt;/span&gt;: &lt;span&gt;v0.0.11&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;check-bash-shebang&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;types&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;shell&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ - repo: https://github.com/thiagowfx/pre-commit-hooks/
+ rev: v0.0.11
+ hooks:
+ - id: check-bash-shebang
+ types:
+ - shell&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;In action:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% cd &lt;span&gt;{&lt;/span&gt;pancake&lt;span&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;% pre-commit run -a check-bash-shebang
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Check bash scripts use portable shebang..................................Failed
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- hook id: check-bash-shebang
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- exit code: &lt;span&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;error: &lt;span&gt;&amp;#39;aws_china_mfa/aws_china_mfa.sh&amp;#39;&lt;/span&gt; uses &lt;span&gt;&amp;#39;#!/bin/bash&amp;#39;&lt;/span&gt; instead of &lt;span&gt;&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;error: &lt;span&gt;&amp;#39;aws_login_headless/aws_login_headless.sh&amp;#39;&lt;/span&gt; uses &lt;span&gt;&amp;#39;#!/bin/bash&amp;#39;&lt;/span&gt; instead of &lt;span&gt;&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;error: &lt;span&gt;&amp;#39;pritunl_login/pritunl_login.sh&amp;#39;&lt;/span&gt; uses &lt;span&gt;&amp;#39;#!/bin/bash&amp;#39;&lt;/span&gt; instead of &lt;span&gt;&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;error: &lt;span&gt;&amp;#39;sd_world/sd_world.sh&amp;#39;&lt;/span&gt; uses &lt;span&gt;&amp;#39;#!/bin/bash&amp;#39;&lt;/span&gt; instead of &lt;span&gt;&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;error: &lt;span&gt;&amp;#39;pdf_password_remove/pdf_password_remove.sh&amp;#39;&lt;/span&gt; uses &lt;span&gt;&amp;#39;#!/bin/bash&amp;#39;&lt;/span&gt; instead of &lt;span&gt;&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;error: &lt;span&gt;&amp;#39;img_optimize/img_optimize.sh&amp;#39;&lt;/span&gt; uses &lt;span&gt;&amp;#39;#!/bin/bash&amp;#39;&lt;/span&gt; instead of &lt;span&gt;&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;error: &lt;span&gt;&amp;#39;copy/copy.sh&amp;#39;&lt;/span&gt; uses &lt;span&gt;&amp;#39;#!/bin/bash&amp;#39;&lt;/span&gt; instead of &lt;span&gt;&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;error: &lt;span&gt;&amp;#39;ssh_mux_restart/ssh_mux_restart.sh&amp;#39;&lt;/span&gt; uses &lt;span&gt;&amp;#39;#!/bin/bash&amp;#39;&lt;/span&gt; instead of &lt;span&gt;&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;error: &lt;span&gt;&amp;#39;op_login_all/op_login_all.sh&amp;#39;&lt;/span&gt; uses &lt;span&gt;&amp;#39;#!/bin/bash&amp;#39;&lt;/span&gt; instead of &lt;span&gt;&amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% cd {pancake}
+% pre-commit run -a check-bash-shebang
+Check bash scripts use portable shebang..................................Failed
+- hook id: check-bash-shebang
+- exit code: 1
+
+error: &amp;#39;aws_china_mfa/aws_china_mfa.sh&amp;#39; uses &amp;#39;#!/bin/bash&amp;#39; instead of &amp;#39;#!/usr/bin/env bash&amp;#39;
+error: &amp;#39;aws_login_headless/aws_login_headless.sh&amp;#39; uses &amp;#39;#!/bin/bash&amp;#39; instead of &amp;#39;#!/usr/bin/env bash&amp;#39;
+error: &amp;#39;pritunl_login/pritunl_login.sh&amp;#39; uses &amp;#39;#!/bin/bash&amp;#39; instead of &amp;#39;#!/usr/bin/env bash&amp;#39;
+error: &amp;#39;sd_world/sd_world.sh&amp;#39; uses &amp;#39;#!/bin/bash&amp;#39; instead of &amp;#39;#!/usr/bin/env bash&amp;#39;
+error: &amp;#39;pdf_password_remove/pdf_password_remove.sh&amp;#39; uses &amp;#39;#!/bin/bash&amp;#39; instead of &amp;#39;#!/usr/bin/env bash&amp;#39;
+error: &amp;#39;img_optimize/img_optimize.sh&amp;#39; uses &amp;#39;#!/bin/bash&amp;#39; instead of &amp;#39;#!/usr/bin/env bash&amp;#39;
+error: &amp;#39;copy/copy.sh&amp;#39; uses &amp;#39;#!/bin/bash&amp;#39; instead of &amp;#39;#!/usr/bin/env bash&amp;#39;
+error: &amp;#39;ssh_mux_restart/ssh_mux_restart.sh&amp;#39; uses &amp;#39;#!/bin/bash&amp;#39; instead of &amp;#39;#!/usr/bin/env bash&amp;#39;
+error: &amp;#39;op_login_all/op_login_all.sh&amp;#39; uses &amp;#39;#!/bin/bash&amp;#39; instead of &amp;#39;#!/usr/bin/env bash&amp;#39;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: new pre-commit hook: check-bash-shebang"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/pre-commit/"&gt;#pre-commit&lt;/a&gt;&lt;/p&gt;</description></item><item><title>go/keep-sorted</title><link>https://perrotta.dev/2025/09/go/keep-sorted/</link><pubDate>Mon, 22 Sep 2025 11:12:59 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>pre-commit</category><guid>https://perrotta.dev/2025/09/go/keep-sorted/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2024/12/keep-sorted/"&gt;Previously&lt;/a&gt;,
 &lt;a href="https://perrotta.dev/2025/03/using-keep-sorted-to-keep-your-~/.gitconfig-tidy/"&gt;previously&lt;/a&gt;,
@@ -165,11 +165,11 @@ config file to skip certain hooks from &lt;code&gt;autoupdate&lt;/code&gt;.&lt;/
 trivially adopted in a git repository via a &lt;a href="https://pre-commit.com/"&gt;pre-commit
 hook&lt;/a&gt;:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;repos:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - repo: https://github.com/codespell-project/codespell
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; rev: 63c8f8312b7559622c0d82815639671ae42132ac # frozen: v2.4.1
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; hooks:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - id: codespell&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;repos:
+ - repo: https://github.com/codespell-project/codespell
+ rev: 63c8f8312b7559622c0d82815639671ae42132ac # frozen: v2.4.1
+ hooks:
+ - id: codespell&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: "Fix typo""&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/pre-commit/"&gt;#pre-commit&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;</description></item><item><title>★ check-json-schema: pre-commit hook</title><link>https://perrotta.dev/2025/07/check-json-schema-pre-commit-hook/</link><pubDate>Fri, 11 Jul 2025 22:05:32 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>bestof</category><category>dev</category><category>pre-commit</category><guid>https://perrotta.dev/2025/07/check-json-schema-pre-commit-hook/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: given an &lt;code&gt;entry.json&lt;/code&gt; file, validate it against a given
 &lt;code&gt;schema.json&lt;/code&gt; file (for example, found via the &lt;a href="https://www.schemastore.org/"&gt;schema
@@ -181,7 +181,7 @@ package:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;pipx run check-jsonschema --schemafile schema.json entry.json&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;pipx run check-jsonschema --schemafile schema.json entry.json&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;What if we want to do the validation via a
 &lt;a href="https://pre-commit.com"&gt;pre-commit.com&lt;/a&gt; hook?&lt;/p&gt;
@@ -189,15 +189,15 @@ package:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;https://github.com/python-jsonschema/check-jsonschema&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;rev&lt;/span&gt;: &lt;span&gt;0.33.2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;check-jsonschema&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;files&lt;/span&gt;: &lt;span&gt;^entry\.json$&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;args&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - --&lt;span&gt;schemafile&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;schema.json&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ - repo: https://github.com/python-jsonschema/check-jsonschema
+ rev: 0.33.2
+ hooks:
+ - id: check-jsonschema
+ files: ^entry\.json$
+ args:
+ - --schemafile
+ - schema.json&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;This approach works well, but it requires the upkeep of a mapping from JSON file
 to JSON schema.&lt;/p&gt;
@@ -208,22 +208,22 @@ maintenance burden in the pre-commit config file.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;https://github.com/python-jsonschema/check-jsonschema&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;rev&lt;/span&gt;: &lt;span&gt;0.33.2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;check-jsonschema&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;alias&lt;/span&gt;: &lt;span&gt;check-jsonschema-entry1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;files&lt;/span&gt;: &lt;span&gt;^entry1\.json$&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;args&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - --&lt;span&gt;schemafile&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;schema1.json&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;check-jsonschema&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;alias&lt;/span&gt;: &lt;span&gt;check-jsonschema-entry2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;files&lt;/span&gt;: &lt;span&gt;^entry2\.json$&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;args&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - --&lt;span&gt;schemafile&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;schema2.json&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ - repo: https://github.com/python-jsonschema/check-jsonschema
+ rev: 0.33.2
+ hooks:
+ - id: check-jsonschema
+ alias: check-jsonschema-entry1
+ files: ^entry1\.json$
+ args:
+ - --schemafile
+ - schema1.json
+ - id: check-jsonschema
+ alias: check-jsonschema-entry2
+ files: ^entry2\.json$
+ args:
+ - --schemafile
+ - schema2.json&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;It&amp;rsquo;s somewhat annoying to maintain multiple entries in that fashion. Furthermore
 it can easily get outdated: upon the deletion of &lt;code&gt;entry1.json&lt;/code&gt; from the
@@ -236,18 +236,18 @@ from the pre-commit config file.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span&gt;&lt;span&gt;{
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;$schema&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;schema.json&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-json"&gt;{
+ &amp;#34;$schema&amp;#34;: &amp;#34;schema.json&amp;#34;
+}&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Or with a remote schema URI, via HTTPS:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="json"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span&gt;&lt;span&gt;{
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;$schema&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;https://example.com/schema.json&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-json"&gt;{
+ &amp;#34;$schema&amp;#34;: &amp;#34;https://example.com/schema.json&amp;#34;
+}&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Now the JSON file is self-contained, and there&amp;rsquo;s no need to define a mapping
 from it to its JSON schema elsewhere.&lt;/p&gt;
@@ -269,11 +269,11 @@ my own pre-commit hook definition.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;https://github.com/thiagowfx/check-json-schema-meta&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;rev&lt;/span&gt;: &lt;span&gt;v0.0.2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;check-json-schema-meta&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ - repo: https://github.com/thiagowfx/check-json-schema-meta
+ rev: v0.0.2
+ hooks:
+ - id: check-json-schema-meta&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;It goes through each JSON file in the repository, looking for an optional
 top-level &lt;code&gt;$schema&lt;/code&gt; key. When found, the file is validated against the defined
@@ -295,7 +295,7 @@ slash, are treated as different
 repos&lt;/a&gt;. We found this out the
 hard way:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;Failed to load target state: failed to generate manifest for source 1 of 2: rpc error: code = Unknown desc = error building helm chart dependencies: failed to add helm repository https://chartmuseum.{corp intranet}/orgs/{corp}/: failed to add repository: failed to get command args to log: `helm repo add https:--chartmuseum.{corp intranet}-orgs-{corp}- https://chartmuseum.{corp intranet}/orgs/{corp}/` failed exit status 1: Error: looks like &amp;#34;https://chartmuseum.{corp intranet}/orgs/{corp}/&amp;#34; is not a valid chart repository or cannot be reached: failed to fetch https://chartmuseum.{corp intranet}/orgs/{corp}/index.yaml : 401 Unauthorized&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;Failed to load target state: failed to generate manifest for source 1 of 2: rpc error: code = Unknown desc = error building helm chart dependencies: failed to add helm repository https://chartmuseum.{corp intranet}/orgs/{corp}/: failed to add repository: failed to get command args to log: `helm repo add https:--chartmuseum.{corp intranet}-orgs-{corp}- https://chartmuseum.{corp intranet}/orgs/{corp}/` failed exit status 1: Error: looks like &amp;#34;https://chartmuseum.{corp intranet}/orgs/{corp}/&amp;#34; is not a valid chart repository or cannot be reached: failed to fetch https://chartmuseum.{corp intranet}/orgs/{corp}/index.yaml : 401 Unauthorized&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Let&amp;rsquo;s put aside the fact the error message REALLY likes to repeat the repo name.&lt;/p&gt;
 &lt;p&gt;This is a repository that we&amp;rsquo;ve already configured, with proper authentication
@@ -305,30 +305,30 @@ credentials. Why would it start to fail now, all of a sudden?&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;apiVersion&lt;/span&gt;: &lt;span&gt;v2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;name&lt;/span&gt;: &lt;span&gt;corp-postgres-operator&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;description&lt;/span&gt;: &lt;span&gt;Corp Postgres Operator&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;type&lt;/span&gt;: &lt;span&gt;application&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;version&lt;/span&gt;: &lt;span&gt;1.1.13&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;dependencies&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;postgres-operator&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;repository&lt;/span&gt;: &lt;span&gt;https://chartmuseum.{corp intranet}/orgs/archive&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;apiVersion: v2
+name: corp-postgres-operator
+description: Corp Postgres Operator
+type: application
+version: 1.1.13
+
+dependencies:
+ - name: postgres-operator
+ repository: https://chartmuseum.{corp intranet}/orgs/archive&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;And also:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="yaml"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;apiVersion&lt;/span&gt;: &lt;span&gt;v2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;name&lt;/span&gt;: &lt;span&gt;corp-postgres-operator&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;description&lt;/span&gt;: &lt;span&gt;Corp Postgres Operator&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;type&lt;/span&gt;: &lt;span&gt;application&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;version&lt;/span&gt;: &lt;span&gt;1.1.13&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;dependencies&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;postgres-operator&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;repository&lt;/span&gt;: &lt;span&gt;https://chartmuseum.{corp intranet}/orgs/archive/&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;apiVersion: v2
+name: corp-postgres-operator
+description: Corp Postgres Operator
+type: application
+version: 1.1.13
+
+dependencies:
+ - name: postgres-operator
+ repository: https://chartmuseum.{corp intranet}/orgs/archive/&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;These two dependencies end up being treated differently by Argo, even though
 they are effectively the same. It&amp;rsquo;s an upstream bug.&lt;/p&gt;
@@ -339,14 +339,14 @@ helm repository dependencies. Canonicalize everything!&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;local&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;helm-repo-trailing-slash&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;Helm repositories must not contain trailing slashes in Chart.yaml&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;files&lt;/span&gt;: &lt;span&gt;Chart.yaml$&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;language&lt;/span&gt;: &lt;span&gt;pygrep&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;entry: &amp;#39;\s*repository&lt;/span&gt;: [&lt;span&gt;\w:/.]+/$&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ repo: local
+ hooks:
+ - id: helm-repo-trailing-slash
+ name: Helm repositories must not contain trailing slashes in Chart.yaml
+ files: Chart.yaml$
+ language: pygrep
+ entry: &amp;#39;\s*repository: [\w:/.]&amp;#43;/$&amp;#39;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Run &lt;code&gt;pre-commit run -a helm-repo-trailing-slash&lt;/code&gt;, fix all violations, and then
 never think about this again.&lt;/p&gt;
@@ -357,26 +357,26 @@ site generator (&lt;a href="https://gohugo.io/"&gt;hugo&lt;/a&gt;).&lt;/p&gt;
 run it&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s what a typical error looks like:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;% hugo build
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Start building sites …
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;hugo v0.147.5+extended+withdeploy darwin/arm64 BuildDate=2025-05-22T11:37:19Z VendorInfo=brew
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;ERROR [en] REF_NOT_FOUND: Ref &amp;#34;nonexistent/2025-03-24-maccy-pin-items&amp;#34;: &amp;#34;/Users/tperrotta/Workspace/perrotta.dev/content/posts/2025-05-16-espanso-hello-world.md:10:14&amp;#34;: page not found
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Total in 242 ms
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Error: error building site: logged 1 error(s)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;% hugo build
+Start building sites …
+hugo v0.147.5&amp;#43;extended&amp;#43;withdeploy darwin/arm64 BuildDate=2025-05-22T11:37:19Z VendorInfo=brew
+
+ERROR [en] REF_NOT_FOUND: Ref &amp;#34;nonexistent/2025-03-24-maccy-pin-items&amp;#34;: &amp;#34;/Users/tperrotta/Workspace/perrotta.dev/content/posts/2025-05-16-espanso-hello-world.md:10:14&amp;#34;: page not found
+Total in 242 ms
+Error: error building site: logged 1 error(s)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;The same happens when invoking &lt;a href="https://just.systems/man/en/"&gt;&lt;code&gt;just&lt;/code&gt;&lt;/a&gt;, as you
 would expect:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;% just build
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;hugo --environment production --gc --minify
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Start building sites …
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;hugo v0.147.5+extended+withdeploy darwin/arm64 BuildDate=2025-05-22T11:37:19Z VendorInfo=brew
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;ERROR [en] REF_NOT_FOUND: Ref &amp;#34;nonexistent/2025-03-24-maccy-pin-items&amp;#34;: &amp;#34;/Users/tperrotta/Workspace/perrotta.dev/content/posts/2025-05-16-espanso-hello-world.md:10:14&amp;#34;: page not found
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Total in 280 ms
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Error: error building site: logged 1 error(s)
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;error: Recipe `build` failed on line 17 with exit code 1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;% just build
+hugo --environment production --gc --minify
+Start building sites …
+hugo v0.147.5&amp;#43;extended&amp;#43;withdeploy darwin/arm64 BuildDate=2025-05-22T11:37:19Z VendorInfo=brew
+
+ERROR [en] REF_NOT_FOUND: Ref &amp;#34;nonexistent/2025-03-24-maccy-pin-items&amp;#34;: &amp;#34;/Users/tperrotta/Workspace/perrotta.dev/content/posts/2025-05-16-espanso-hello-world.md:10:14&amp;#34;: page not found
+Total in 280 ms
+Error: error building site: logged 1 error(s)
+error: Recipe `build` failed on line 17 with exit code 1&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: catch such build errors at git pre-commit time.&lt;/p&gt;
 &lt;p&gt;This is trivial with a &lt;a href="https://pre-commit.com/"&gt;pre-commit.com&lt;/a&gt; hook:&lt;/p&gt;
@@ -384,48 +384,47 @@ would expect:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;diff&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-diff" data-lang="diff"&gt;&lt;span&gt;&lt;span&gt;Author: Thiago Perrotta &amp;lt;{email redacted}&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Date: Sat May 24 17:26:59 2025 +0200
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; pre-commit: add just build
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;diff --git .pre-commit-config.yaml .pre-commit-config.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;index 60eb2022..623e135d 100644
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;--- .pre-commit-config.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;+++ .pre-commit-config.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;@@ -112,5 +112,10 @@ repos:
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; language: pygrep
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; types:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - markdown
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;+ - id: hugo
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;+ name: Hugo
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;+ language: system
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;+ entry: just build
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;+ pass_filenames: false
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-diff"&gt;Author: Thiago Perrotta &amp;lt;{email redacted}&amp;gt;
+Date: Sat May 24 17:26:59 2025 &amp;#43;0200
+
+ pre-commit: add just build
+
+diff --git .pre-commit-config.yaml .pre-commit-config.yaml
+index 60eb2022..623e135d 100644
+--- .pre-commit-config.yaml
+&amp;#43;&amp;#43;&amp;#43; .pre-commit-config.yaml
+@@ -112,5 &amp;#43;112,10 @@ repos:
+ language: pygrep
+ types:
+ - markdown
+&amp;#43; - id: hugo
+&amp;#43; name: Hugo
+&amp;#43; language: system
+&amp;#43; entry: just build
+&amp;#43; pass_filenames: false&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Here&amp;rsquo;s the end result:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% git commit -m &lt;span&gt;&amp;#34;test&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Check hooks apply to the repository.............................................&lt;span&gt;(&lt;/span&gt;no files to check&lt;span&gt;)&lt;/span&gt;Skipped
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Check &lt;span&gt;for&lt;/span&gt; useless excludes......................................................&lt;span&gt;(&lt;/span&gt;no files to check&lt;span&gt;)&lt;/span&gt;Skipped
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[&lt;/span&gt;...&lt;span&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Forbid usage of UTM analytics / tracking............................................................Passed
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Hugo................................................................................................Failed
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- hook id: hugo
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- exit code: &lt;span&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;hugo --environment production --gc --minify
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Start building sites …
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;hugo v0.147.5+extended+withdeploy darwin/arm64 BuildDate&lt;span&gt;=&lt;/span&gt;2025-05-22T11:37:19Z VendorInfo&lt;span&gt;=&lt;/span&gt;brew
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;ERROR &lt;span&gt;[&lt;/span&gt;en&lt;span&gt;]&lt;/span&gt; REF_NOT_FOUND: Ref &lt;span&gt;&amp;#34;a/2024-12-23-unbuffer&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;/Users/tperrotta/Workspace/perrotta.dev/content/posts/2025-05-24-watch-with-color.md:54:54&amp;#34;&lt;/span&gt;: page not found
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Total in &lt;span&gt;276&lt;/span&gt; ms
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Error: error building site: logged &lt;span&gt;1&lt;/span&gt; error&lt;span&gt;(&lt;/span&gt;s&lt;span&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;error: Recipe &lt;span&gt;`&lt;/span&gt;build&lt;span&gt;`&lt;/span&gt; failed on line &lt;span&gt;19&lt;/span&gt; with exit code &lt;span&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% git commit -m &amp;#34;test&amp;#34;
+Check hooks apply to the repository.............................................(no files to check)Skipped
+Check for useless excludes......................................................(no files to check)Skipped
+[...]
+Forbid usage of UTM analytics / tracking............................................................Passed
+Hugo................................................................................................Failed
+- hook id: hugo
+- exit code: 1
+
+hugo --environment production --gc --minify
+Start building sites …
+hugo v0.147.5&amp;#43;extended&amp;#43;withdeploy darwin/arm64 BuildDate=2025-05-22T11:37:19Z VendorInfo=brew
+
+ERROR [en] REF_NOT_FOUND: Ref &amp;#34;a/2024-12-23-unbuffer&amp;#34;: &amp;#34;/Users/tperrotta/Workspace/perrotta.dev/content/posts/2025-05-24-watch-with-color.md:54:54&amp;#34;: page not found
+Total in 276 ms
+Error: error building site: logged 1 error(s)
+error: Recipe `build` failed on line 19 with exit code 1&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: pre-commit: add hugo build"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/pre-commit/"&gt;#pre-commit&lt;/a&gt;&lt;/p&gt;</description></item><item><title>pre-commit: make a hook opt-in</title><link>https://perrotta.dev/2025/03/pre-commit-make-a-hook-opt-in/</link><pubDate>Thu, 27 Mar 2025 13:22:44 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>pre-commit</category><guid>https://perrotta.dev/2025/03/pre-commit-make-a-hook-opt-in/</guid><description>&lt;p&gt;Recently we added the following hook to our &lt;a href="https://pre-commit.com"&gt;pre-commit&lt;/a&gt;
 setup:&lt;/p&gt;
@@ -433,11 +432,11 @@ setup:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;https://github.com/sbrunner/hooks&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;rev: ee105bd276e163fce85744b39104ca563f923c47 # frozen&lt;/span&gt;: &lt;span&gt;1.4.0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;helm-lock&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ - repo: https://github.com/sbrunner/hooks
+ rev: ee105bd276e163fce85744b39104ca563f923c47 # frozen: 1.4.0
+ hooks:
+ - id: helm-lock&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;It can be triggered with &lt;code&gt;pre-commit run --all-files helm-lock&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;It turned out to be an issue because not every developer has read-only access
@@ -448,13 +447,13 @@ to our helm repositories.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;https://github.com/sbrunner/hooks&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;rev: ee105bd276e163fce85744b39104ca563f923c47 # frozen&lt;/span&gt;: &lt;span&gt;1.4.0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;helm-lock&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;stages&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;manual&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ - repo: https://github.com/sbrunner/hooks
+ rev: ee105bd276e163fce85744b39104ca563f923c47 # frozen: 1.4.0
+ hooks:
+ - id: helm-lock
+ stages:
+ - manual&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;It can be then invoked like this: &lt;code&gt;pre-commit run --all-files helm-lock --hook-stage manual&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;An alternative could have been to instruct people to set
@@ -465,68 +464,67 @@ to our helm repositories.&lt;/p&gt;
 (dependencies).&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s how to adopt them, using this blog as an example:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;% pre-commit autoupdate --jobs $(nproc) --freeze
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;[https://github.com/lalten/check-gha-pinning] updating v1.3.0 -&amp;gt; v1.3.0 (frozen)
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;[https://github.com/google/keep-sorted] updating v0.6.0 -&amp;gt; v0.6.0 (frozen)
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;[https://github.com/sirosen/texthooks] updating 0.6.8 -&amp;gt; 0.6.8 (frozen)
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;[https://github.com/google/yamlfmt] updating v0.16.0 -&amp;gt; v0.16.0 (frozen)
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;[https://github.com/pre-commit/pre-commit-hooks] updating v5.0.0 -&amp;gt; v5.0.0 (frozen)
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;[https://github.com/shssoichiro/oxipng] updating v9.1.3 -&amp;gt; v9.1.4 (frozen)
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;[https://github.com/codespell-project/codespell] updating v2.4.1 -&amp;gt; v2.4.1 (frozen)
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;[https://github.com/gitleaks/gitleaks] updating v8.23.3 -&amp;gt; v8.24.0 (frozen)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;% pre-commit autoupdate --jobs $(nproc) --freeze
+[https://github.com/lalten/check-gha-pinning] updating v1.3.0 -&amp;gt; v1.3.0 (frozen)
+[https://github.com/google/keep-sorted] updating v0.6.0 -&amp;gt; v0.6.0 (frozen)
+[https://github.com/sirosen/texthooks] updating 0.6.8 -&amp;gt; 0.6.8 (frozen)
+[https://github.com/google/yamlfmt] updating v0.16.0 -&amp;gt; v0.16.0 (frozen)
+[https://github.com/pre-commit/pre-commit-hooks] updating v5.0.0 -&amp;gt; v5.0.0 (frozen)
+[https://github.com/shssoichiro/oxipng] updating v9.1.3 -&amp;gt; v9.1.4 (frozen)
+[https://github.com/codespell-project/codespell] updating v2.4.1 -&amp;gt; v2.4.1 (frozen)
+[https://github.com/gitleaks/gitleaks] updating v8.23.3 -&amp;gt; v8.24.0 (frozen)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;The resulting diff (redacted one of the hooks for brevity):&lt;/p&gt;
 &lt;div class="codeblock" data-lang="diff"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;diff&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-diff" data-lang="diff"&gt;&lt;span&gt;&lt;span&gt;diff --git .pre-commit-config.yaml .pre-commit-config.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;index 30aac4a2..841eac9b 100644
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;--- .pre-commit-config.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;+++ .pre-commit-config.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;@@ -23,7 +23,7 @@ repos:
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; - id: check-hooks-apply
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - id: check-useless-excludes
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - repo: https://github.com/pre-commit/pre-commit-hooks
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;- rev: v5.0.0
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;+ rev: cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b # frozen: v5.0.0
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; hooks:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - id: check-executables-have-shebangs
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;@@ -41,27 +41,27 @@ repos:
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; - -D .codespell-dictionary.txt
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - -I .codespell-ignore-words.txt
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - repo: https://github.com/gitleaks/gitleaks
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;- rev: v8.23.3
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;+ rev: f565e4e10c6c8081e374235bb4e4bcb8c0c2fa63 # frozen: v8.24.0
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; hooks:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - id: gitleaks
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - repo: https://github.com/google/keep-sorted
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;- rev: v0.6.0
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;+ rev: df93c2722b6126556183749880f16a9beb664bb4 # frozen: v0.6.0
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; hooks:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - id: keep-sorted
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - repo: https://github.com/google/yamlfmt
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;- rev: v0.16.0
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;+ rev: ac76bb931851dda64a55ef746ca9b8bb41634b98 # frozen: v0.16.0
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; hooks:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - id: yamlfmt
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - repo: https://github.com/lalten/check-gha-pinning
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;- rev: v1.3.0
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;+ rev: 225deee5dff16fae532978007ce6e37045e14c68 # frozen: v1.3.0
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; hooks:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - id: check-gha-pinning
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - repo: https://github.com/shssoichiro/oxipng
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;- rev: v9.1.3
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;+ rev: bc8c36456858fe4678460bdea520a4ec0bc50dc4 # frozen: v9.1.4
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; hooks:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - id: oxipng
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - repo: https://github.com/sirosen/texthooks
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;- rev: 0.6.8
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;+ rev: 13a42592dd28b6b688bb1c23fa769234984d4ca7 # frozen: 0.6.8
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; hooks:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - id: fix-ligatures
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - id: fix-smartquotes
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-diff"&gt;diff --git .pre-commit-config.yaml .pre-commit-config.yaml
+index 30aac4a2..841eac9b 100644
+--- .pre-commit-config.yaml
+&amp;#43;&amp;#43;&amp;#43; .pre-commit-config.yaml
+@@ -23,7 &amp;#43;23,7 @@ repos:
+ - id: check-hooks-apply
+ - id: check-useless-excludes
+ - repo: https://github.com/pre-commit/pre-commit-hooks
+- rev: v5.0.0
+&amp;#43; rev: cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b # frozen: v5.0.0
+ hooks:
+ - id: check-executables-have-shebangs
+@@ -41,27 &amp;#43;41,27 @@ repos:
+ - -D .codespell-dictionary.txt
+ - -I .codespell-ignore-words.txt
+ - repo: https://github.com/gitleaks/gitleaks
+- rev: v8.23.3
+&amp;#43; rev: f565e4e10c6c8081e374235bb4e4bcb8c0c2fa63 # frozen: v8.24.0
+ hooks:
+ - id: gitleaks
+ - repo: https://github.com/google/keep-sorted
+- rev: v0.6.0
+&amp;#43; rev: df93c2722b6126556183749880f16a9beb664bb4 # frozen: v0.6.0
+ hooks:
+ - id: keep-sorted
+ - repo: https://github.com/google/yamlfmt
+- rev: v0.16.0
+&amp;#43; rev: ac76bb931851dda64a55ef746ca9b8bb41634b98 # frozen: v0.16.0
+ hooks:
+ - id: yamlfmt
+ - repo: https://github.com/lalten/check-gha-pinning
+- rev: v1.3.0
+&amp;#43; rev: 225deee5dff16fae532978007ce6e37045e14c68 # frozen: v1.3.0
+ hooks:
+ - id: check-gha-pinning
+ - repo: https://github.com/shssoichiro/oxipng
+- rev: v9.1.3
+&amp;#43; rev: bc8c36456858fe4678460bdea520a4ec0bc50dc4 # frozen: v9.1.4
+ hooks:
+ - id: oxipng
+ - repo: https://github.com/sirosen/texthooks
+- rev: 0.6.8
+&amp;#43; rev: 13a42592dd28b6b688bb1c23fa769234984d4ca7 # frozen: 0.6.8
+ hooks:
+ - id: fix-ligatures
+ - id: fix-smartquotes&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;This is useful to mitigate supply-chain attacks such as the recent
 &lt;a href="https://www.wiz.io/blog/github-action-tj-actions-changed-files-supply-chain-attack-cve-2025-30066"&gt;&lt;code&gt;tj-actions/changed-files&lt;/code&gt;&lt;/a&gt;
@@ -565,66 +563,66 @@ Linux distributions in the first place.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;#!/bin/sh
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;#&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# git-freeze - Stage all files and create a git-freeze commit&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;set -e
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# Check if we&amp;#39;re inside a git repository&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;if&lt;/span&gt; &lt;span&gt;[&lt;/span&gt; &lt;span&gt;&amp;#34;&lt;/span&gt;&lt;span&gt;$(&lt;/span&gt;git rev-parse --is-inside-work-tree 2&amp;gt;/dev/null&lt;span&gt;)&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt; !&lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;true&amp;#34;&lt;/span&gt; &lt;span&gt;]&lt;/span&gt;; &lt;span&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; echo &lt;span&gt;&amp;#34;Error: Not in a git repository&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; exit &lt;span&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;fi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# Stage all changes (tracked and untracked)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;git add -A
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# Create a commit with the freeze message&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;git commit -m &lt;span&gt;&amp;#34;git-freeze&amp;#34;&lt;/span&gt; -n
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;echo &lt;span&gt;&amp;#34;Git freeze created successfully&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;#!/bin/sh
+#
+# git-freeze - Stage all files and create a git-freeze commit
+
+set -e
+
+# Check if we&amp;#39;re inside a git repository
+if [ &amp;#34;$(git rev-parse --is-inside-work-tree 2&amp;gt;/dev/null)&amp;#34; != &amp;#34;true&amp;#34; ]; then
+ echo &amp;#34;Error: Not in a git repository&amp;#34;
+ exit 1
+fi
+
+# Stage all changes (tracked and untracked)
+git add -A
+
+# Create a commit with the freeze message
+git commit -m &amp;#34;git-freeze&amp;#34; -n
+
+echo &amp;#34;Git freeze created successfully&amp;#34;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;h2 id="git-thaw"&gt;&lt;a href="https://github.com/thiagowfx/.dotfiles/blob/master/git/.bin/git-thaw"&gt;&lt;code&gt;git-thaw&lt;/code&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;#!/bin/sh
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;#&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# git-thaw - Undo a git-freeze operation&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;set -e
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# Check if we&amp;#39;re inside a git repository&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;if&lt;/span&gt; &lt;span&gt;[&lt;/span&gt; &lt;span&gt;&amp;#34;&lt;/span&gt;&lt;span&gt;$(&lt;/span&gt;git rev-parse --is-inside-work-tree 2&amp;gt;/dev/null&lt;span&gt;)&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt; !&lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;true&amp;#34;&lt;/span&gt; &lt;span&gt;]&lt;/span&gt;; &lt;span&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; echo &lt;span&gt;&amp;#34;Error: Not in a git repository&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; exit &lt;span&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;fi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# Check if there&amp;#39;s at least one commit&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;if&lt;/span&gt; ! git rev-parse --verify HEAD &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; &lt;span&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; echo &lt;span&gt;&amp;#34;Error: No commits yet&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; exit &lt;span&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;fi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# Check if the last commit is a git-freeze commit&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;if&lt;/span&gt; ! git log -n &lt;span&gt;1&lt;/span&gt; --pretty&lt;span&gt;=&lt;/span&gt;%B | grep -q &lt;span&gt;&amp;#34;^git-freeze&lt;/span&gt;$&lt;span&gt;&amp;#34;&lt;/span&gt;; &lt;span&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; echo &lt;span&gt;&amp;#34;Error: Last commit is not a git-freeze commit&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; exit &lt;span&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;fi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# Undo the git-freeze commit&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;if&lt;/span&gt; git rev-parse --verify HEAD^ &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; &lt;span&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;# If there&amp;#39;s a parent commit, reset to it&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; git reset &lt;span&gt;&amp;#34;HEAD^&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;else&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;# If it&amp;#39;s the initial commit, delete the reference and unstage everything&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; git update-ref -d HEAD
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; git restore --staged .
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;fi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;echo &lt;span&gt;&amp;#34;Git freeze thawed successfully&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;#!/bin/sh
+#
+# git-thaw - Undo a git-freeze operation
+
+set -e
+
+# Check if we&amp;#39;re inside a git repository
+if [ &amp;#34;$(git rev-parse --is-inside-work-tree 2&amp;gt;/dev/null)&amp;#34; != &amp;#34;true&amp;#34; ]; then
+ echo &amp;#34;Error: Not in a git repository&amp;#34;
+ exit 1
+fi
+
+# Check if there&amp;#39;s at least one commit
+if ! git rev-parse --verify HEAD &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then
+ echo &amp;#34;Error: No commits yet&amp;#34;
+ exit 1
+fi
+
+# Check if the last commit is a git-freeze commit
+if ! git log -n 1 --pretty=%B | grep -q &amp;#34;^git-freeze$&amp;#34;; then
+ echo &amp;#34;Error: Last commit is not a git-freeze commit&amp;#34;
+ exit 1
+fi
+
+# Undo the git-freeze commit
+if git rev-parse --verify HEAD^ &amp;gt;/dev/null 2&amp;gt;&amp;amp;1; then
+ # If there&amp;#39;s a parent commit, reset to it
+ git reset &amp;#34;HEAD^&amp;#34;
+else
+ # If it&amp;#39;s the initial commit, delete the reference and unstage everything
+ git update-ref -d HEAD
+ git restore --staged .
+fi
+
+echo &amp;#34;Git freeze thawed successfully&amp;#34;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;h2 id="post-ai-cleanup"&gt;Post-AI cleanup&lt;/h2&gt;
 &lt;p&gt;The only change I had to make was to add &lt;code&gt;-n&lt;/code&gt; to &lt;code&gt;git commit&lt;/code&gt; in &lt;code&gt;git-freeze&lt;/code&gt; so
@@ -713,36 +711,36 @@ professionally&amp;rdquo;. What you read is what comes straight off my brain.&am
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;azure-workload-identity&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;clustermon&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;flatfile&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;kube2iam&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;mongo&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;node-local-dns&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;&amp;#34;pgbouncer*&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;&amp;#34;rabbitmq*&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;&amp;#34;redis*&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;traefik&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;vault&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;- azure-workload-identity
+- clustermon
+- flatfile
+- kube2iam
+- mongo
+- node-local-dns
+- &amp;#34;pgbouncer*&amp;#34;
+- &amp;#34;rabbitmq*&amp;#34;
+- &amp;#34;redis*&amp;#34;
+- traefik
+- vault&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;I would naturally add &lt;code&gt;keep-sorted&lt;/code&gt; to it, but the result is not what I expected:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="yaml"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted start&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;&amp;#34;pgbouncer*&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;&amp;#34;rabbitmq*&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;&amp;#34;redis*&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;azure-workload-identity&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;clustermon&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;flatfile&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;kube2iam&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;mongo&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;node-local-dns&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;traefik&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;vault&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted end&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;# keep-sorted start
+- &amp;#34;pgbouncer*&amp;#34;
+- &amp;#34;rabbitmq*&amp;#34;
+- &amp;#34;redis*&amp;#34;
+- azure-workload-identity
+- clustermon
+- flatfile
+- kube2iam
+- mongo
+- node-local-dns
+- traefik
+- vault
+# keep-sorted end&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Quotes are coming first!&lt;/p&gt;
 &lt;p&gt;Which does indeed make sense. They are ASCII characters
@@ -755,19 +753,19 @@ avail.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted start by_regex=[&amp;#39;\w+[\w ]*&amp;#39;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;azure-workload-identity&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;clustermon&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;flatfile&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;kube2iam&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;mongo&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;node-local-dns&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;&amp;#34;pgbouncer*&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;&amp;#34;rabbitmq*&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;&amp;#34;redis*&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;traefik&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;vault&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted end&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;# keep-sorted start by_regex=[&amp;#39;\w&amp;#43;[\w ]*&amp;#39;]
+- azure-workload-identity
+- clustermon
+- flatfile
+- kube2iam
+- mongo
+- node-local-dns
+- &amp;#34;pgbouncer*&amp;#34;
+- &amp;#34;rabbitmq*&amp;#34;
+- &amp;#34;redis*&amp;#34;
+- traefik
+- vault
+# keep-sorted end&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&amp;hellip;but it&amp;rsquo;s a mouthful. I filed an upstream bug:
 &lt;a href="https://github.com/google/keep-sorted/issues/76"&gt;https://github.com/google/keep-sorted/issues/76&lt;/a&gt;.&lt;/p&gt;
@@ -776,19 +774,19 @@ avail.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted start by_regex=\w+&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;azure-workload-identity&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;clustermon&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;flatfile&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;kube2iam&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;mongo&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;node-local-dns&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;&amp;#34;pgbouncer*&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;&amp;#34;rabbitmq*&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;&amp;#34;redis*&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;traefik&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;vault&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted end&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;# keep-sorted start by_regex=\w&amp;#43;
+- azure-workload-identity
+- clustermon
+- flatfile
+- kube2iam
+- mongo
+- node-local-dns
+- &amp;#34;pgbouncer*&amp;#34;
+- &amp;#34;rabbitmq*&amp;#34;
+- &amp;#34;redis*&amp;#34;
+- traefik
+- vault
+# keep-sorted end&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: keep-sorted, with quotes"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/pre-commit/"&gt;#pre-commit&lt;/a&gt;&lt;/p&gt;</description></item><item><title>commit, pre-commit, commit</title><link>https://perrotta.dev/2025/03/commit-pre-commit-commit/</link><pubDate>Wed, 12 Mar 2025 16:41:53 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>pre-commit</category><guid>https://perrotta.dev/2025/03/commit-pre-commit-commit/</guid><description>&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Program_optimization"&gt;Premature optimization is the root of all
 evil&lt;/a&gt; but I run into this
@@ -817,7 +815,7 @@ built-in&lt;/a&gt;:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% repeat &lt;span&gt;2&lt;/span&gt; git commit -a -m &lt;span&gt;&amp;#34;feat: bootstrap time travel&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% repeat 2 git commit -a -m &amp;#34;feat: bootstrap time travel&amp;#34;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;This only works iff I &lt;em&gt;really&lt;/em&gt; want to commit everything that is in the staging
 area (the git index).&lt;/p&gt;
@@ -829,22 +827,22 @@ headings to keep the config tidy.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;ini&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-ini" data-lang="ini"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[...]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# https://git-scm.com/docs/git-rerere&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[rerere]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;autoUpdate&lt;/span&gt; &lt;span&gt;=&lt;/span&gt; &lt;span&gt;true
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;	enabled = true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[status]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;# Show individual files in untracked directories.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;showUntrackedFiles&lt;/span&gt; &lt;span&gt;=&lt;/span&gt; &lt;span&gt;all
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;	short = true
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;	branch = true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[submodule]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;# Clone new submodules in parallel with as many jobs.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;fetchJobs&lt;/span&gt; &lt;span&gt;=&lt;/span&gt; &lt;span&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[...]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-ini"&gt;[...]
+# https://git-scm.com/docs/git-rerere
+[rerere]
+	autoUpdate = true
+	enabled = true
+
+[status]
+	# Show individual files in untracked directories.
+	showUntrackedFiles = all
+	short = true
+	branch = true
+
+[submodule]
+	# Clone new submodules in parallel with as many jobs.
+	fetchJobs = 0
+[...]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;This was done manually. Until&amp;hellip;today.&lt;/p&gt;
 &lt;p&gt;It has just occurred to me&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2025/03/using-keep-sorted-to-keep-your-~/.gitconfig-tidy/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt; I could use
@@ -859,20 +857,20 @@ headings to keep the config tidy.&lt;/p&gt;
 &lt;p&gt;But&amp;hellip;how?!&lt;/p&gt;
 &lt;p&gt;The usage to sort, say, aliases, is quite straightforward&lt;sup id="fnref:2"&gt;&lt;a href="https://perrotta.dev/2025/03/using-keep-sorted-to-keep-your-~/.gitconfig-tidy/#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;[alias]
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	# keep-sorted begin
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	bd = !branch=&amp;#34;$(git branch --show-current)&amp;#34; &amp;amp;&amp;amp; git default &amp;amp;&amp;amp; git branch -D &amp;#34;${branch:-$1}&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	blank = desc -m \&amp;#34;blank commit\&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	cm = commit
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	co = checkout
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	cp = cherry-pick
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	dc = diff --cached
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	default = !git checkout main &amp;amp;&amp;gt;/dev/null || git checkout master
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	desc = commit --allow-empty -n
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	emerge = !git add -A . &amp;amp;&amp;amp; git amend -n &amp;amp;&amp;amp; git pushm --force-with-lease
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	nb = switch --create
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; [...]
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	# keep-sorted finish&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;[alias]
+	# keep-sorted begin
+	bd = !branch=&amp;#34;$(git branch --show-current)&amp;#34; &amp;amp;&amp;amp; git default &amp;amp;&amp;amp; git branch -D &amp;#34;${branch:-$1}&amp;#34;
+	blank = desc -m \&amp;#34;blank commit\&amp;#34;
+	cm = commit
+	co = checkout
+	cp = cherry-pick
+	dc = diff --cached
+	default = !git checkout main &amp;amp;&amp;gt;/dev/null || git checkout master
+	desc = commit --allow-empty -n
+	emerge = !git add -A . &amp;amp;&amp;amp; git amend -n &amp;amp;&amp;amp; git pushm --force-with-lease
+	nb = switch --create
+ [...]
+	# keep-sorted finish&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;How can you apply the same technique to headings?&lt;/p&gt;
 &lt;p&gt;The out-of-the-box utilization is OK-ish, but not great:&lt;/p&gt;
@@ -881,33 +879,33 @@ headings to keep the config tidy.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;ini&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-ini" data-lang="ini"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted begin&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[fetch]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;prune&lt;/span&gt; &lt;span&gt;=&lt;/span&gt; &lt;span&gt;true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[help]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;autocorrect&lt;/span&gt; &lt;span&gt;=&lt;/span&gt; &lt;span&gt;10&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[format]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;# Automatically sign-off patches when using format-patch.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;signoff&lt;/span&gt; &lt;span&gt;=&lt;/span&gt; &lt;span&gt;true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted finish&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-ini"&gt;# keep-sorted begin
+[fetch]
+	prune = true
+
+[help]
+	autocorrect = 10
+
+[format]
+	# Automatically sign-off patches when using format-patch.
+	signoff = true
+# keep-sorted finish&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;To:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="ini"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;ini&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-ini" data-lang="ini"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted start&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[fetch]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;prune&lt;/span&gt; &lt;span&gt;=&lt;/span&gt; &lt;span&gt;true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[format]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;# Automatically sign-off patches when using format-patch.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;signoff&lt;/span&gt; &lt;span&gt;=&lt;/span&gt; &lt;span&gt;true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[help]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;autocorrect&lt;/span&gt; &lt;span&gt;=&lt;/span&gt; &lt;span&gt;10&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted end&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-ini"&gt;# keep-sorted start
+
+[fetch]
+	prune = true
+[format]
+	# Automatically sign-off patches when using format-patch.
+	signoff = true
+[help]
+	autocorrect = 10
+# keep-sorted end&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;(including the blank line at the top)&lt;/p&gt;
 &lt;p&gt;It turns out all we have to do is a little bit of tweaking:&lt;/p&gt;
@@ -915,34 +913,34 @@ headings to keep the config tidy.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;ini&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-ini" data-lang="ini"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted begin block=yes newline_separated=yes&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[fetch]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;prune&lt;/span&gt; &lt;span&gt;=&lt;/span&gt; &lt;span&gt;true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[help]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;autocorrect&lt;/span&gt; &lt;span&gt;=&lt;/span&gt; &lt;span&gt;10&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[format]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;# Automatically sign-off patches when using format-patch.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;signoff&lt;/span&gt; &lt;span&gt;=&lt;/span&gt; &lt;span&gt;true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted finish&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-ini"&gt;# keep-sorted begin block=yes newline_separated=yes
+[fetch]
+	prune = true
+
+[help]
+	autocorrect = 10
+
+[format]
+	# Automatically sign-off patches when using format-patch.
+	signoff = true
+# keep-sorted finish&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&amp;hellip;which then becomes:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="ini"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;ini&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-ini" data-lang="ini"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted begin block=yes newline_separated=yes&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[fetch]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;prune&lt;/span&gt; &lt;span&gt;=&lt;/span&gt; &lt;span&gt;true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[format]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;# Automatically sign-off patches when using format-patch.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;signoff&lt;/span&gt; &lt;span&gt;=&lt;/span&gt; &lt;span&gt;true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[help]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;autocorrect&lt;/span&gt; &lt;span&gt;=&lt;/span&gt; &lt;span&gt;10&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted finish&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-ini"&gt;# keep-sorted begin block=yes newline_separated=yes
+[fetch]
+	prune = true
+
+[format]
+	# Automatically sign-off patches when using format-patch.
+	signoff = true
+
+[help]
+	autocorrect = 10
+# keep-sorted finish&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;How nice!&lt;/p&gt;
 &lt;div class="footnotes" role="doc-endnotes"&gt;
@@ -973,12 +971,12 @@ It&amp;rsquo;s pretty much the same concept, it&amp;rsquo;s just implemented dif
 &lt;p&gt;You have distributed &lt;code&gt;OWNERS&lt;/code&gt; files throughout the whole repository. For
 example:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;java/
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; OWNERS (a)
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; project1/
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; OWNERS (b)
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; project2/
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; OWNERS (c)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;java/
+ OWNERS (a)
+ project1/
+ OWNERS (b)
+ project2/
+ OWNERS (c)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;code&gt;OWNERS&lt;/code&gt; in (b) have CL (ChangeList) / PR (Pull Request) approval permissions
 for &lt;code&gt;java/project1&lt;/code&gt;, but not for &lt;code&gt;java/project2&lt;/code&gt;.&lt;/p&gt;
@@ -986,9 +984,9 @@ for &lt;code&gt;java/project1&lt;/code&gt;, but not for &lt;code&gt;java/project
 &lt;h2 id="github"&gt;GitHub&lt;/h2&gt;
 &lt;p&gt;There&amp;rsquo;s a single &lt;code&gt;.github/CODEOWNERS&lt;/code&gt; file that controls the whole repository:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;* a
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;/java/project1 b
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;/java/project2 c&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;* a
+/java/project1 b
+/java/project2 c&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;h2 id="distributed-codeowners"&gt;Distributed CODEOWNERS&lt;/h2&gt;
 &lt;p&gt;What if we wanted to adopt the Google approach in GitHub? Use Andrew&amp;rsquo;s tool!&lt;/p&gt;
@@ -1000,12 +998,12 @@ Win-win!&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;https://github.com/andrewring/github-distributed-owners&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;rev&lt;/span&gt;: &lt;span&gt;v0.1.9&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;github-distributed-owners&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;files&lt;/span&gt;: &lt;span&gt;.*/OWNERS$|^\.github/CODEOWNERS$&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ - repo: https://github.com/andrewring/github-distributed-owners
+ rev: v0.1.9
+ hooks:
+ - id: github-distributed-owners
+ files: .*/OWNERS$|^\.github/CODEOWNERS$&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Then it gets automatically managed via CI and/or local commits. It can also be
 triggered manually with:&lt;/p&gt;
@@ -1013,7 +1011,7 @@ triggered manually with:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;pre-commit run -a github-distributed-codeowners&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;pre-commit run -a github-distributed-codeowners&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: GitHub Distributed CODEOWNERS"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/pre-commit/"&gt;#pre-commit&lt;/a&gt;&lt;/p&gt;</description></item><item><title>codespell: ignore words</title><link>https://perrotta.dev/2025/01/codespell-ignore-words/</link><pubDate>Mon, 20 Jan 2025 10:54:55 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>pre-commit</category><guid>https://perrotta.dev/2025/01/codespell-ignore-words/</guid><description>&lt;p&gt;When using &lt;a href="https://github.com/codespell-project/codespell"&gt;codespell&lt;/a&gt; to spell
 check a git repository, sometimes you may run into false positive words.&lt;/p&gt;
@@ -1023,26 +1021,26 @@ check a git repository, sometimes you may run into false positive words.&lt;/p&g
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;codespell -L&lt;span&gt;=&lt;/span&gt;ist -L&lt;span&gt;=&lt;/span&gt;regio&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;codespell -L=ist -L=regio&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;or&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;codespell -L&lt;span&gt;=&lt;/span&gt;ist,regio&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;codespell -L=ist,regio&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;The second one is with a dedicated &lt;code&gt;.ignore-words.txt&lt;/code&gt; file:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% cat .ignore-words.txt
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted start&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;ist
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;regio
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# keep-sorted end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;% codespell -I .ignore-words.txt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% cat .ignore-words.txt
+# keep-sorted start
+ist
+regio
+# keep-sorted end
+% codespell -I .ignore-words.txt&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: codespell: ignore words"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/pre-commit/"&gt;#pre-commit&lt;/a&gt;&lt;/p&gt;</description></item><item><title>★ YAML: enforce schema linting</title><link>https://perrotta.dev/2025/01/yaml-enforce-schema-linting/</link><pubDate>Thu, 09 Jan 2025 13:22:32 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>bestof</category><category>dev</category><category>pre-commit</category><guid>https://perrotta.dev/2025/01/yaml-enforce-schema-linting/</guid><description>&lt;p&gt;&lt;a href="https://yaml.org/"&gt;YAML&lt;/a&gt; files can have a schema associated to them.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://schemastore.org/"&gt;Schema store&lt;/a&gt; is a popular source for schemas. Or you
@@ -1051,8 +1049,8 @@ could &lt;a href="https://json-schema.org/"&gt;write your own&lt;/a&gt;.&lt;/p&g
 &lt;p&gt;Let&amp;rsquo;s say you found a schema. For example, for &lt;a href="https://json.schemastore.org/json-patch.json"&gt;JSON Patch&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Assume this sample &lt;code&gt;.yaml&lt;/code&gt; file:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;- op: remove
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; path: /spec/syncPolicy/automated&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;- op: remove
+ path: /spec/syncPolicy/automated&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;How to enforce the schema above in CI?&lt;/p&gt;
 &lt;p&gt;One approach I like is with &lt;a href="https://github.com/redhat-developer/yaml-language-server"&gt;YAML Language
@@ -1062,19 +1060,19 @@ Server&lt;/a&gt; by Red Hat.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# yaml-language-server: $schema=https://json.schemastore.org/json-patch.json&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;op&lt;/span&gt;: &lt;span&gt;remove&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;path&lt;/span&gt;: &lt;span&gt;/spec/syncPolicy/automated&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;# yaml-language-server: $schema=https://json.schemastore.org/json-patch.json
+- op: remove
+ path: /spec/syncPolicy/automated&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;And then you integrate it with a CI tool that is aware of it. I like
 &lt;a href="https://pre-commit.com/"&gt;pre-commit.com&lt;/a&gt;. Assuming you follow the pre-commit
 setup, integrate the hook:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;repos:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - repo: https://github.com/jmlrt/check-yamlschema
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; rev: v0.0.4
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; hooks:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - id: check-yamlschema&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;repos:
+ - repo: https://github.com/jmlrt/check-yamlschema
+ rev: v0.0.4
+ hooks:
+ - id: check-yamlschema&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Then &lt;code&gt;pre-commit run [--all-files] check-yamlschema&lt;/code&gt; shall perform its job.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/jmlrt/check-yamlschema"&gt;https://github.com/jmlrt/check-yamlschema&lt;/a&gt;:&lt;/p&gt;
@@ -1090,18 +1088,18 @@ opt-out mechanism:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span&gt;&lt;span&gt;{
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;$schema&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;http://json-schema.org/draft-07/schema#&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;$id&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;https://json.schemastore.org/any.json&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;anyOf&amp;#34;&lt;/span&gt;: [
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; { &lt;span&gt;&amp;#34;type&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;object&amp;#34;&lt;/span&gt; },
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; { &lt;span&gt;&amp;#34;type&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;array&amp;#34;&lt;/span&gt; },
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; { &lt;span&gt;&amp;#34;type&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;string&amp;#34;&lt;/span&gt; },
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; { &lt;span&gt;&amp;#34;type&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;number&amp;#34;&lt;/span&gt; },
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; { &lt;span&gt;&amp;#34;type&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;boolean&amp;#34;&lt;/span&gt; },
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; { &lt;span&gt;&amp;#34;type&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;null&amp;#34;&lt;/span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; ]
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-json"&gt;{
+ &amp;#34;$schema&amp;#34;: &amp;#34;http://json-schema.org/draft-07/schema#&amp;#34;,
+ &amp;#34;$id&amp;#34;: &amp;#34;https://json.schemastore.org/any.json&amp;#34;,
+ &amp;#34;anyOf&amp;#34;: [
+ { &amp;#34;type&amp;#34;: &amp;#34;object&amp;#34; },
+ { &amp;#34;type&amp;#34;: &amp;#34;array&amp;#34; },
+ { &amp;#34;type&amp;#34;: &amp;#34;string&amp;#34; },
+ { &amp;#34;type&amp;#34;: &amp;#34;number&amp;#34; },
+ { &amp;#34;type&amp;#34;: &amp;#34;boolean&amp;#34; },
+ { &amp;#34;type&amp;#34;: &amp;#34;null&amp;#34; }
+ ]
+}&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class="footnotes" role="doc-endnotes"&gt;
 &lt;hr&gt;
@@ -1120,7 +1118,7 @@ question, but it had no answer.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;vim&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-vim" data-lang="vim"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;autocmd&lt;/span&gt; &lt;span&gt;BufWritePost&lt;/span&gt; * &lt;span&gt;execute&lt;/span&gt; &lt;span&gt;&amp;#39;! if [ -e $(git root)/.pre-commit-config.yaml &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 ]; then pre-commit run; fi&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-vim"&gt;autocmd BufWritePost * execute &amp;#39;! if [ -e $(git root)/.pre-commit-config.yaml &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 ]; then pre-commit run; fi&amp;#39;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;That trashes the screen upon completion. This can be resolved by invoking
 &lt;code&gt;:redraw!&lt;/code&gt; afterwards:&lt;/p&gt;
@@ -1128,7 +1126,7 @@ question, but it had no answer.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;vim&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-vim" data-lang="vim"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;autocmd&lt;/span&gt; &lt;span&gt;BufWritePost&lt;/span&gt; * &lt;span&gt;execute&lt;/span&gt; &lt;span&gt;&amp;#39;! if [ -e $(git root)/.pre-commit-config.yaml &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 ]; then pre-commit run; fi&amp;#39;&lt;/span&gt; | &lt;span&gt;redraw&lt;/span&gt;!&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-vim"&gt;autocmd BufWritePost * execute &amp;#39;! if [ -e $(git root)/.pre-commit-config.yaml &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 ]; then pre-commit run; fi&amp;#39; | redraw!&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;We can be less intrusive by prepending &lt;code&gt;silent!&lt;/code&gt; so that, even if the command
 fails, it doesn&amp;rsquo;t get in the way:&lt;/p&gt;
@@ -1136,7 +1134,7 @@ fails, it doesn&amp;rsquo;t get in the way:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;vim&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-vim" data-lang="vim"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;autocmd&lt;/span&gt; &lt;span&gt;BufWritePost&lt;/span&gt; * &lt;span&gt;silent&lt;/span&gt;! &lt;span&gt;execute&lt;/span&gt; &lt;span&gt;&amp;#39;! if [ -e $(git root)/.pre-commit-config.yaml &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 ]; then pre-commit run; fi&amp;#39;&lt;/span&gt; | &lt;span&gt;redraw&lt;/span&gt;!&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-vim"&gt;autocmd BufWritePost * silent! execute &amp;#39;! if [ -e $(git root)/.pre-commit-config.yaml &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 ]; then pre-commit run; fi&amp;#39; | redraw!&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;And last but not least, ideally &lt;code&gt;pre-commit&lt;/code&gt; should run only on the file
 associated with the current buffer. Pass &lt;code&gt;--files&lt;/code&gt; to pre-commit with the &lt;code&gt;%&lt;/code&gt;
@@ -1145,14 +1143,14 @@ argument:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;vim&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-vim" data-lang="vim"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;autocmd&lt;/span&gt; &lt;span&gt;BufWritePost&lt;/span&gt; * &lt;span&gt;silent&lt;/span&gt;! &lt;span&gt;execute&lt;/span&gt; &lt;span&gt;&amp;#39;! if [ -e $(git root)/.pre-commit-config.yaml &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 ]; then pre-commit run --files %; fi&amp;#39;&lt;/span&gt; | &lt;span&gt;redraw&lt;/span&gt;!&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-vim"&gt;autocmd BufWritePost * silent! execute &amp;#39;! if [ -e $(git root)/.pre-commit-config.yaml &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 ]; then pre-commit run --files %; fi&amp;#39; | redraw!&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;This approach works as intended.
 There&amp;rsquo;s a brief period in which you can see &lt;code&gt;pre-commit&lt;/code&gt; running in the
 background. It&amp;rsquo;s arguable whether that&amp;rsquo;s a feature or a bug.&lt;/p&gt;
 &lt;p&gt;Ah, and &lt;code&gt;git root&lt;/code&gt; is simply an alias in my &lt;code&gt;~/.gitconfig&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;root = rev-parse --show-toplevel&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;root = rev-parse --show-toplevel&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Whenever there are pre-commit violations (e.g. &lt;code&gt;end-of-file-fixer&lt;/code&gt;) they are
 applied inplace. There&amp;rsquo;s no need to run &lt;code&gt;:e!&lt;/code&gt;.&lt;/p&gt;
@@ -1167,38 +1165,38 @@ keymap e.g. &lt;code&gt;&amp;lt;leader&amp;gt;p&lt;/code&gt; instead of an &lt;c
 &lt;/blockquote&gt;
 &lt;p&gt;Hence, bad:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;uses: actions/checkout@v4&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;uses: actions/checkout@v4&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Good:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;I find an effective way to address and enforce this practice is via &lt;a href="https://pre-commit.com/"&gt;pre-commit&lt;/a&gt;:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="yaml"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;https://github.com/lalten/check-gha-pinning&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;rev&lt;/span&gt;: &lt;span&gt;v1.2.0&lt;/span&gt; &lt;span&gt;# or whatever is the latest version&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;check-gha-pinning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;- repo: https://github.com/lalten/check-gha-pinning
+ rev: v1.2.0 # or whatever is the latest version
+ hooks:
+ - id: check-gha-pinning&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Try this to check whether there are any existing violations in your repositories:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% pre-commit try-repo https://github.com/lalten/check-gha-pinning --all-files&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% pre-commit try-repo https://github.com/lalten/check-gha-pinning --all-files&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;I had some in my blog:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;GitHub Actions Pinning...................................................Failed
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- hook id: check-gha-pinning
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;- exit code: 1
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;.github/workflows/gh-pages.yml:22: peaceiris/actions-hugo@v3 is not pinned to commit (should be e3b661c523413d13d642651a5ba5fc0d2b344c0d # v3)
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;.github/workflows/gh-pages.yml:27: extractions/setup-just@v2 is not pinned to commit (should be dd310ad5a97d8e7b41793f8ef055398d51ad4de6 # v2.0.0)
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;.github/workflows/gh-pages.yml:33: peaceiris/actions-gh-pages@v4 is not pinned to commit (should be e9c66a37f080288a11235e32cbe2dc5fb3a679cc # v4)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;GitHub Actions Pinning...................................................Failed
+- hook id: check-gha-pinning
+- exit code: 1
+
+.github/workflows/gh-pages.yml:22: peaceiris/actions-hugo@v3 is not pinned to commit (should be e3b661c523413d13d642651a5ba5fc0d2b344c0d # v3)
+.github/workflows/gh-pages.yml:27: extractions/setup-just@v2 is not pinned to commit (should be dd310ad5a97d8e7b41793f8ef055398d51ad4de6 # v2.0.0)
+.github/workflows/gh-pages.yml:33: peaceiris/actions-gh-pages@v4 is not pinned to commit (should be e9c66a37f080288a11235e32cbe2dc5fb3a679cc # v4)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;They are now fixed.&lt;/p&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Pin all github actions"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/pre-commit/"&gt;#pre-commit&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/security/"&gt;#security&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Optimize images</title><link>https://perrotta.dev/2024/12/optimize-images/</link><pubDate>Sat, 28 Dec 2024 16:14:19 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>pre-commit</category><guid>https://perrotta.dev/2024/12/optimize-images/</guid><description>&lt;p&gt;I like to use &lt;a href="https://github.com/shssoichiro/oxipng"&gt;oxipng&lt;/a&gt; to optimize PNG (and other) images.&lt;/p&gt;
@@ -1207,10 +1205,10 @@ keymap e.g. &lt;code&gt;&amp;lt;leader&amp;gt;p&lt;/code&gt; instead of an &lt;c
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;https://github.com/shssoichiro/oxipng&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;rev&lt;/span&gt;: &lt;span&gt;v9.1.3&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;oxipng&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;- repo: https://github.com/shssoichiro/oxipng
+ rev: v9.1.3
+ hooks:
+ - id: oxipng&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Surely you could run it in github actions as well, if you don&amp;rsquo;t use pre-commit.com.&lt;/p&gt;
 &lt;p&gt;If I need to use it as an one-off, I can either run the &lt;code&gt;oxipng&lt;/code&gt; binary directly,
@@ -1230,13 +1228,13 @@ newline-separated list be sorted. For example, this hypothetical Java array:&lt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;java&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span&gt;&lt;span&gt;String&lt;span&gt;[]&lt;/span&gt; capitals &lt;span&gt;=&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Tokyo&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Paris&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;London&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Berlin&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;New Delhi&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;};&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-java"&gt;String[] capitals = {
+ &amp;#34;Tokyo&amp;#34;,
+ &amp;#34;Paris&amp;#34;,
+ &amp;#34;London&amp;#34;,
+ &amp;#34;Berlin&amp;#34;,
+ &amp;#34;New Delhi&amp;#34;
+};&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;It would be more deterministic and canonical to initialize it with sorted
 values:&lt;/p&gt;
@@ -1244,13 +1242,13 @@ values:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;java&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span&gt;&lt;span&gt;String&lt;span&gt;[]&lt;/span&gt; capitals &lt;span&gt;=&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Berlin&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;London&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;New Delhi&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Paris&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Tokyo&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;};&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-java"&gt;String[] capitals = {
+ &amp;#34;Berlin&amp;#34;,
+ &amp;#34;London&amp;#34;,
+ &amp;#34;New Delhi&amp;#34;
+ &amp;#34;Paris&amp;#34;,
+ &amp;#34;Tokyo&amp;#34;,
+};&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;code&gt;:sort&lt;/code&gt; in &lt;code&gt;vim&lt;/code&gt; is my favorite way to do so.&lt;/p&gt;
 &lt;p&gt;By doing this, you make it easier for the next developer to add a new item:&lt;/p&gt;
@@ -1258,14 +1256,14 @@ values:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;java&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span&gt;&lt;span&gt;String&lt;span&gt;[]&lt;/span&gt; capitals &lt;span&gt;=&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Berlin&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;London&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;New Delhi&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Paris&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Rio de Janeiro&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Tokyo&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;};&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-java"&gt;String[] capitals = {
+ &amp;#34;Berlin&amp;#34;,
+ &amp;#34;London&amp;#34;,
+ &amp;#34;New Delhi&amp;#34;
+ &amp;#34;Paris&amp;#34;,
+ &amp;#34;Rio de Janeiro&amp;#34;,
+ &amp;#34;Tokyo&amp;#34;,
+};&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;But surely at some point one
 &lt;a href="https://www.seangoedecke.com/programmer-archetypes/"&gt;coaster&lt;/a&gt;&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2024/12/keep-sorted/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt; will ruin it:&lt;/p&gt;
@@ -1273,15 +1271,15 @@ values:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;java&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span&gt;&lt;span&gt;String&lt;span&gt;[]&lt;/span&gt; capitals &lt;span&gt;=&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Berlin&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;London&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;New Delhi&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Paris&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Rio de Janeiro&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Tokyo&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Ottawa&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;};&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-java"&gt;String[] capitals = {
+ &amp;#34;Berlin&amp;#34;,
+ &amp;#34;London&amp;#34;,
+ &amp;#34;New Delhi&amp;#34;
+ &amp;#34;Paris&amp;#34;,
+ &amp;#34;Rio de Janeiro&amp;#34;,
+ &amp;#34;Tokyo&amp;#34;,
+ &amp;#34;Ottawa&amp;#34;,
+};&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;I mean, it&amp;rsquo;s only natural to append new items to the end, right? Who said it has
 to be sorted?&lt;/p&gt;
@@ -1290,15 +1288,15 @@ to be sorted?&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;java&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span&gt;&lt;span&gt;String&lt;span&gt;[]&lt;/span&gt; capitals &lt;span&gt;=&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;// keep this list sorted, as this is the order displayed to the end-user in a dropdown menu&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Berlin&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;London&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;New Delhi&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Paris&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Rio de Janeiro&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Tokyo&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;};&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-java"&gt;String[] capitals = {
+ // keep this list sorted, as this is the order displayed to the end-user in a dropdown menu
+ &amp;#34;Berlin&amp;#34;,
+ &amp;#34;London&amp;#34;,
+ &amp;#34;New Delhi&amp;#34;
+ &amp;#34;Paris&amp;#34;,
+ &amp;#34;Rio de Janeiro&amp;#34;,
+ &amp;#34;Tokyo&amp;#34;,
+};&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;But developers don&amp;rsquo;t read documentation, right?&lt;sup id="fnref:2"&gt;&lt;a href="https://perrotta.dev/2024/12/keep-sorted/#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt; Some of them do, but they
 don&amp;rsquo;t have time to read documentation all day. There are so many tickets in our
@@ -1315,20 +1313,20 @@ for you.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;java&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;import&lt;/span&gt; java.util.Arrays;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;String&lt;span&gt;[]&lt;/span&gt; capitals &lt;span&gt;=&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;// keep this list sorted, as this is the order displayed to the end-user in a dropdown menu&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Berlin&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;London&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;New Delhi&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Paris&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Rio de Janeiro&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Tokyo&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;Ottawa&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;};
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Arrays.&lt;span&gt;sort&lt;/span&gt;(capitals); &lt;span&gt;//&lt;/span&gt; sort in place&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-java"&gt;import java.util.Arrays;
+
+String[] capitals = {
+ // keep this list sorted, as this is the order displayed to the end-user in a dropdown menu
+ &amp;#34;Berlin&amp;#34;,
+ &amp;#34;London&amp;#34;,
+ &amp;#34;New Delhi&amp;#34;
+ &amp;#34;Paris&amp;#34;,
+ &amp;#34;Rio de Janeiro&amp;#34;,
+ &amp;#34;Tokyo&amp;#34;,
+ &amp;#34;Ottawa&amp;#34;,
+};
+
+Arrays.sort(capitals); // sort in place&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;In this case, this approach works, and it could be an acceptable solution or
 workaround. But it won&amp;rsquo;t always work. What if we had an YAML file instead?&lt;/p&gt;
@@ -1336,15 +1334,15 @@ workaround. But it won&amp;rsquo;t always work. What if we had an YAML file inst
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;capitals&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;# keep this list sorted, as this is the order displayed to the end-user in a dropdown menu&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;Berlin&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;London&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;New Delhi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;Paris&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;Rio de Janeiro&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;Tokyo&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;Ottawa&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;capitals:
+ # keep this list sorted, as this is the order displayed to the end-user in a dropdown menu
+ - Berlin
+ - London
+ - New Delhi
+ - Paris
+ - Rio de Janeiro
+ - Tokyo
+ - Ottawa&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;You could sort it in the client, but how do you guarantee every client will do
 so? Maybe you don&amp;rsquo;t control all clients.&lt;/p&gt;
@@ -1354,32 +1352,32 @@ file&lt;sup id="fnref:3"&gt;&lt;a href="https://perrotta.dev/2024/12/keep-sorted
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;capitals&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;# keep-sortedd start&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;Berlin&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;London&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;New Delhi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;Paris&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;Rio de Janeiro&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;Tokyo&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;Ottawa&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;# keep-sortedd end&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;capitals:
+ # keep-sortedd start
+ - Berlin
+ - London
+ - New Delhi
+ - Paris
+ - Rio de Janeiro
+ - Tokyo
+ - Ottawa
+ # keep-sortedd end&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&amp;hellip;the end result will be:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="yaml"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;capitals&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;# keep-sorted start&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;Berlin&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;London&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;New Delhi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;Ottawa&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;Paris&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;Rio de Janeiro&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;Tokyo&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;# keep-sorted end&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;capitals:
+ # keep-sorted start
+ - Berlin
+ - London
+ - New Delhi
+ - Ottawa
+ - Paris
+ - Rio de Janeiro
+ - Tokyo
+ # keep-sorted end&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;This invariant can be enforced at CI time. The &lt;code&gt;keep-sorted&lt;/code&gt; binary guarantees
 it by automatically sorting everything between the &lt;code&gt;start&lt;/code&gt; and &lt;code&gt;end&lt;/code&gt; lines.&lt;/p&gt;
@@ -1435,46 +1433,46 @@ For those who are used to google3 tooling: it&amp;rsquo;s akin to the configurat
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;https://github.com/pre-commit/pre-commit-hooks&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;rev&lt;/span&gt;: &lt;span&gt;v5.0.0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;# keep-sorted start&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;check-executables-have-shebangs&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;check-symlinks&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;check-yaml&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;detect-private-key&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;pretty-format-json&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;args&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - --&lt;span&gt;autofix&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - --&lt;span&gt;no&lt;/span&gt;-&lt;span&gt;sort-keys&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;sort-simple-yaml&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;trailing-whitespace&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;# keep-sorted end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;https://github.com/google/keep-sorted&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;rev&lt;/span&gt;: &lt;span&gt;v0.5.1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;keep-sorted&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;https://github.com/google/yamlfmt&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;rev&lt;/span&gt;: &lt;span&gt;v0.14.0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;yamlfmt&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;https://github.com/codespell-project/codespell&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;rev&lt;/span&gt;: &lt;span&gt;v2.3.0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;codespell&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;exclude&lt;/span&gt;: &lt;span&gt;^content/posts/(2014|2015|2016)|content/posts/2024-07-09-kubectl-get-secret-with-jsonpath-add-newline.md|content/posts/2024-06-27-a-little.md&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;args&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;# keep-sorted start&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - -&lt;span&gt;L=DeVault&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - -&lt;span&gt;L=als&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - -&lt;span&gt;L=ist&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - -&lt;span&gt;L=sive&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;# keep-sorted end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;https://github.com/jmlrt/check-yamlschema&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;rev&lt;/span&gt;: &lt;span&gt;v0.0.4&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;check-yamlschema&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ - repo: https://github.com/pre-commit/pre-commit-hooks
+ rev: v5.0.0
+ hooks:
+ # keep-sorted start
+ - id: check-executables-have-shebangs
+ - id: check-symlinks
+ - id: check-yaml
+ - id: detect-private-key
+ - id: pretty-format-json
+ args:
+ - --autofix
+ - --no-sort-keys
+ - id: sort-simple-yaml
+ - id: trailing-whitespace
+ # keep-sorted end
+ - repo: https://github.com/google/keep-sorted
+ rev: v0.5.1
+ hooks:
+ - id: keep-sorted
+ - repo: https://github.com/google/yamlfmt
+ rev: v0.14.0
+ hooks:
+ - id: yamlfmt
+ - repo: https://github.com/codespell-project/codespell
+ rev: v2.3.0
+ hooks:
+ - id: codespell
+ exclude: ^content/posts/(2014|2015|2016)|content/posts/2024-07-09-kubectl-get-secret-with-jsonpath-add-newline.md|content/posts/2024-06-27-a-little.md
+ args:
+ # keep-sorted start
+ - -L=DeVault
+ - -L=als
+ - -L=ist
+ - -L=sive
+ # keep-sorted end
+ - repo: https://github.com/jmlrt/check-yamlschema
+ rev: v0.0.4
+ hooks:
+ - id: check-yamlschema&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Repository versions are always pinned. You would think this is tedious, but it&amp;rsquo;s highly desirable for reproducibility, and they can all be automatically updated with &lt;code&gt;pre-commit autoupdate&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;To run only a single hook: &lt;code&gt;pre-commit run [--all-files] codespell&lt;/code&gt;.&lt;/p&gt;
@@ -1484,12 +1482,12 @@ For those who are used to google3 tooling: it&amp;rsquo;s akin to the configurat
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;- &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;codespell&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;codespell&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;description&lt;/span&gt;: &lt;span&gt;Checks for common misspellings in text files.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;entry&lt;/span&gt;: &lt;span&gt;codespell&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;language&lt;/span&gt;: &lt;span&gt;python&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;types&lt;/span&gt;: [&lt;span&gt;text]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;- id: codespell
+ name: codespell
+ description: Checks for common misspellings in text files.
+ entry: codespell
+ language: python
+ types: [text]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&amp;hellip;it&amp;rsquo;s just metadata that teaches the framework to run the &lt;code&gt;codespell&lt;/code&gt; python file, and that it should only run in text files.&lt;/p&gt;
 &lt;p&gt;The definition of what a text file is lives in the &lt;a href="https://github.com/pre-commit/identify"&gt;identify&lt;/a&gt; pre-commit library, &lt;a href="https://github.com/pre-commit/identify/blob/main/identify/extensions.py"&gt;this&lt;/a&gt; file has all the mappings. You could also specify &lt;code&gt;shell&lt;/code&gt;, for example.&lt;/p&gt;
@@ -1520,18 +1518,18 @@ repository.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;local&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;pint&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;Validate prometheus rules with pint&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;language&lt;/span&gt;: &lt;span&gt;golang&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;additional_dependencies&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;github.com/cloudflare/pint/cmd/pint@v0.69.1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;entry&lt;/span&gt;: &lt;span&gt;pint --offline lint&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;types&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;yaml&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;files&lt;/span&gt;: &lt;span&gt;^helm/clustermon-alerts/rules/&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ - repo: local
+ hooks:
+ - id: pint
+ name: Validate prometheus rules with pint
+ language: golang
+ additional_dependencies:
+ - github.com/cloudflare/pint/cmd/pint@v0.69.1
+ entry: pint --offline lint
+ types:
+ - yaml
+ files: ^helm/clustermon-alerts/rules/&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;That simply works™. How did I get there? Starting with the references:&lt;/p&gt;
 &lt;ol&gt;
@@ -1543,15 +1541,15 @@ repository.&lt;/p&gt;
 &lt;p&gt;The key part is &lt;code&gt;language: golang&lt;/code&gt; + &lt;code&gt;additional_dependencies&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Specifying &lt;code&gt;additional_dependencies&lt;/code&gt; is a bit tricky. Initially, I did:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;github.com/cloudflare/pint@v0.69.1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;github.com/cloudflare/pint@v0.69.1&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&amp;hellip;but that yields nothing. In fact:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% go run github.com/cloudflare/pint@v0.69.1
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;go: github.com/cloudflare/pint@v0.69.1: module github.com/cloudflare/pint@v0.69.1 found, but does not contain package github.com/cloudflare/pint&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% go run github.com/cloudflare/pint@v0.69.1
+go: github.com/cloudflare/pint@v0.69.1: module github.com/cloudflare/pint@v0.69.1 found, but does not contain package github.com/cloudflare/pint&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;We must always specify the module that contains the &lt;code&gt;main&lt;/code&gt; function with &lt;code&gt;go run&lt;/code&gt;, and that is &lt;code&gt;cmd/pint&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: pre-commit: create hooks for unsupported tools"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/pre-commit/"&gt;#pre-commit&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Finding linters</title><link>https://perrotta.dev/2024/12/finding-linters/</link><pubDate>Sun, 08 Dec 2024 23:40:26 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>pre-commit</category><guid>https://perrotta.dev/2024/12/finding-linters/</guid><description>&lt;p&gt;A no-brainer and effective way to increase code quality in an organization is by
@@ -1576,7 +1574,7 @@ root of the git repo.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% fd Dockerfile.dockerignore | xargs -n &lt;span&gt;1&lt;/span&gt; rename &lt;span&gt;&amp;#39;s/Dockerfile\.dockerignore/.dockerignore/&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% fd Dockerfile.dockerignore | xargs -n 1 rename &amp;#39;s/Dockerfile\.dockerignore/.dockerignore/&amp;#39;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;The pre-commit &lt;a href="https://github.com/pre-commit/identify"&gt;identify&lt;/a&gt; library
 currently mistags these files as Dockerfiles, even though they are not&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2024/11/rename-files-in-bulk-cont/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;,
@@ -1598,16 +1596,16 @@ part of the hook bootstrapping process.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;local&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;helm-dirname-must-match-chart-name&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;Helm chart directory name must match the chart name&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;files&lt;/span&gt;: &lt;span&gt;/Chart\.(yml|yaml)$&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;entry&lt;/span&gt;: &lt;span&gt;ci/helm_check_match_dirname_chart_name.sh&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;language&lt;/span&gt;: &lt;span&gt;golang&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;additional_dependencies&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;https://github.com/mikefarah/yq&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ - repo: local
+ hooks:
+ - id: helm-dirname-must-match-chart-name
+ name: Helm chart directory name must match the chart name
+ files: /Chart\.(yml|yaml)$
+ entry: ci/helm_check_match_dirname_chart_name.sh
+ language: golang
+ additional_dependencies:
+ - https://github.com/mikefarah/yq&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Context for the hook and the script: &lt;a href="https://stackoverflow.com/q/79166730/1745064"&gt;https://stackoverflow.com/q/79166730/1745064&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;It didn&amp;rsquo;t work. It&amp;rsquo;s necessary to drop the &lt;code&gt;https://&lt;/code&gt; prefix.&lt;/p&gt;
@@ -1615,16 +1613,16 @@ part of the hook bootstrapping process.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;local&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;helm-dirname-must-match-chart-name&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;Helm chart directory name must match the chart name&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;files&lt;/span&gt;: &lt;span&gt;/Chart\.(yml|yaml)$&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;entry&lt;/span&gt;: &lt;span&gt;ci/helm_check_match_dirname_chart_name.sh&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;language&lt;/span&gt;: &lt;span&gt;golang&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;additional_dependencies&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;github.com/mikefarah/yq&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ - repo: local
+ hooks:
+ - id: helm-dirname-must-match-chart-name
+ name: Helm chart directory name must match the chart name
+ files: /Chart\.(yml|yaml)$
+ entry: ci/helm_check_match_dirname_chart_name.sh
+ language: golang
+ additional_dependencies:
+ - github.com/mikefarah/yq&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;That didn&amp;rsquo;t work either. Then I realized I needed to specify an exact
 version&lt;sup id="fnref:2"&gt;&lt;a href="https://perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
@@ -1632,16 +1630,16 @@ version&lt;sup id="fnref:2"&gt;&lt;a href="https://perrotta.dev/2024/11/pre-comm
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;local&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;helm-dirname-must-match-chart-name&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;Helm chart directory name must match the chart name&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;files&lt;/span&gt;: &lt;span&gt;/Chart\.(yml|yaml)$&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;entry&lt;/span&gt;: &lt;span&gt;ci/helm_check_match_dirname_chart_name.sh&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;language&lt;/span&gt;: &lt;span&gt;golang&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;additional_dependencies&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;github.com/mikefarah/yq@v4.44.3&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ - repo: local
+ hooks:
+ - id: helm-dirname-must-match-chart-name
+ name: Helm chart directory name must match the chart name
+ files: /Chart\.(yml|yaml)$
+ entry: ci/helm_check_match_dirname_chart_name.sh
+ language: golang
+ additional_dependencies:
+ - github.com/mikefarah/yq@v4.44.3&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;It also didn&amp;rsquo;t work! There was an error message about the need to specify &lt;code&gt;/v4&lt;/code&gt;
 in the path for whatever reason:&lt;/p&gt;
@@ -1649,23 +1647,23 @@ in the path for whatever reason:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;local&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;helm-dirname-must-match-chart-name&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;Helm chart directory name must match the chart name&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;files&lt;/span&gt;: &lt;span&gt;/Chart\.(yml|yaml)$&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;entry&lt;/span&gt;: &lt;span&gt;ci/helm_check_match_dirname_chart_name.sh&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;language&lt;/span&gt;: &lt;span&gt;golang&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;additional_dependencies&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;github.com/mikefarah/yq/v4@v4.44.3&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ - repo: local
+ hooks:
+ - id: helm-dirname-must-match-chart-name
+ name: Helm chart directory name must match the chart name
+ files: /Chart\.(yml|yaml)$
+ entry: ci/helm_check_match_dirname_chart_name.sh
+ language: golang
+ additional_dependencies:
+ - github.com/mikefarah/yq/v4@v4.44.3&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;That worked! Test it:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;pre-commit run --all-files helm-dirname-must-match-chart-name &lt;span&gt;[&lt;/span&gt;--verbose&lt;span&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;pre-commit run --all-files helm-dirname-must-match-chart-name [--verbose]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class="footnotes" role="doc-endnotes"&gt;
 &lt;hr&gt;

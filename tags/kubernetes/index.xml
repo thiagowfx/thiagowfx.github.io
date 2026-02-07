@@ -7,11 +7,11 @@ Overflow&lt;/a&gt;:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl top pod -n &lt;span&gt;{&lt;/span&gt;namespace&lt;span&gt;}&lt;/span&gt; &lt;span&gt;{&lt;/span&gt;pod name&lt;span&gt;}&lt;/span&gt; &lt;span&gt;[&lt;/span&gt;--containers&lt;span&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl top pod -n {namespace} {pod name} [--containers]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;--containers=false:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; If present, print usage of containers within a pod.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;--containers=false:
+ If present, print usage of containers within a pod.&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;This only works if &lt;a href="https://github.com/kubernetes-sigs/metrics-server"&gt;metrics
 server&lt;/a&gt; is installed (it
@@ -21,15 +21,15 @@ should be!).&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl describe PodMetrics &lt;span&gt;{&lt;/span&gt;pod name&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl describe PodMetrics {pod name}&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;It must be &lt;code&gt;PodMetrics&lt;/code&gt;. &lt;code&gt;PodMetric&lt;/code&gt; does not work (ugh!&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2025/09/kubernetes-pod-memory-usage/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;):&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% kubectl get PodMetric
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;error: the server doesn&lt;span&gt;&amp;#39;&lt;/span&gt;t have a resource type &lt;span&gt;&amp;#34;PodMetric&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% kubectl get PodMetric
+error: the server doesn&amp;#39;t have a resource type &amp;#34;PodMetric&amp;#34;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;If metrics server is not available for some reason, then one needs to dive into
 the container:&lt;/p&gt;
@@ -37,7 +37,7 @@ the container:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl exec -it &lt;span&gt;{&lt;/span&gt;pod name&lt;span&gt;}&lt;/span&gt; -n &lt;span&gt;{&lt;/span&gt;namespace&lt;span&gt;}&lt;/span&gt; -- /bin/sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl exec -it {pod name} -n {namespace} -- /bin/sh&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&amp;hellip;which won&amp;rsquo;t always work; not every container has &lt;code&gt;/bin/sh&lt;/code&gt;. Then read the
 contents of &lt;code&gt;/sys/fs/cgroup/memory/memory.usage_in_bytes&lt;/code&gt;.&lt;/p&gt;
@@ -57,14 +57,14 @@ hood, pass &lt;code&gt;-v={N}&lt;/code&gt; to it.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% kubectl get pod -n argocd -v&lt;span&gt;=&lt;/span&gt;&lt;span&gt;6&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;I0905 16:10:19.893576 &lt;span&gt;3929356&lt;/span&gt; loader.go:395&lt;span&gt;]&lt;/span&gt; Config loaded from file: /home/ubuntu/.kube/config
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;I0905 16:10:19.919935 &lt;span&gt;3929356&lt;/span&gt; round_trippers.go:553&lt;span&gt;]&lt;/span&gt; GET https://&lt;span&gt;{&lt;/span&gt;REDACTED&lt;span&gt;}&lt;/span&gt;.us-east-1.elb.amazonaws.com/api/v1/namespaces/argocd/pods?limit&lt;span&gt;=&lt;/span&gt;&lt;span&gt;500&lt;/span&gt; &lt;span&gt;200&lt;/span&gt; OK in &lt;span&gt;17&lt;/span&gt; milliseconds
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;NAME READY STATUS RESTARTS AGE
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;argo-workflows-server-6ffcfbb779-kxdzk 1/1 Running &lt;span&gt;0&lt;/span&gt; 4d18h
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;argo-workflows-workflow-controller-85c667cf96-rm9dw 1/1 Running &lt;span&gt;0&lt;/span&gt; 2d4h
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;argocd-application-controller-0 1/1 Running &lt;span&gt;0&lt;/span&gt; 48m
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[&lt;/span&gt;...&lt;span&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% kubectl get pod -n argocd -v=6
+I0905 16:10:19.893576 3929356 loader.go:395] Config loaded from file: /home/ubuntu/.kube/config
+I0905 16:10:19.919935 3929356 round_trippers.go:553] GET https://{REDACTED}.us-east-1.elb.amazonaws.com/api/v1/namespaces/argocd/pods?limit=500 200 OK in 17 milliseconds
+NAME READY STATUS RESTARTS AGE
+argo-workflows-server-6ffcfbb779-kxdzk 1/1 Running 0 4d18h
+argo-workflows-workflow-controller-85c667cf96-rm9dw 1/1 Running 0 2d4h
+argocd-application-controller-0 1/1 Running 0 48m
+[...]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;code&gt;-v=10&lt;/code&gt; is super verbose. Fine-tune as needed.&lt;/p&gt;
 &lt;p&gt;Another example:&lt;/p&gt;
@@ -72,19 +72,19 @@ hood, pass &lt;code&gt;-v={N}&lt;/code&gt; to it.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% kubectl get deploy -n argocd -w -v6
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;I0905 16:12:49.277471 &lt;span&gt;3929550&lt;/span&gt; loader.go:395&lt;span&gt;]&lt;/span&gt; Config loaded from file: /home/ubuntu/.kube/config
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;I0905 16:12:49.302783 &lt;span&gt;3929550&lt;/span&gt; round_trippers.go:553&lt;span&gt;]&lt;/span&gt; GET https://&lt;span&gt;{&lt;/span&gt;REDACTED&lt;span&gt;}&lt;/span&gt;.us-east-1.elb.amazonaws.com/apis/apps/v1/namespaces/argocd/deployments?limit&lt;span&gt;=&lt;/span&gt;&lt;span&gt;500&lt;/span&gt; &lt;span&gt;200&lt;/span&gt; OK in &lt;span&gt;17&lt;/span&gt; milliseconds
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;NAME READY UP-TO-DATE AVAILABLE AGE
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;argo-workflows-server 1/1 &lt;span&gt;1&lt;/span&gt; &lt;span&gt;1&lt;/span&gt; 91d
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;argo-workflows-workflow-controller 1/1 &lt;span&gt;1&lt;/span&gt; &lt;span&gt;1&lt;/span&gt; 44d
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;argocd-applicationset-controller 1/1 &lt;span&gt;1&lt;/span&gt; &lt;span&gt;1&lt;/span&gt; 23d
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;argocd-dex-server 1/1 &lt;span&gt;1&lt;/span&gt; &lt;span&gt;1&lt;/span&gt; 451d
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;argocd-notifications-controller 1/1 &lt;span&gt;1&lt;/span&gt; &lt;span&gt;1&lt;/span&gt; 449d
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;argocd-redis 1/1 &lt;span&gt;1&lt;/span&gt; &lt;span&gt;1&lt;/span&gt; 451d
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;argocd-repo-server 1/1 &lt;span&gt;1&lt;/span&gt; &lt;span&gt;1&lt;/span&gt; 451d
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;argocd-server 3/3 &lt;span&gt;3&lt;/span&gt; &lt;span&gt;3&lt;/span&gt; 428d
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;I0905 16:12:49.316961 &lt;span&gt;3929550&lt;/span&gt; round_trippers.go:553&lt;span&gt;]&lt;/span&gt; GET https://&lt;span&gt;{&lt;/span&gt;REDACTED&lt;span&gt;}&lt;/span&gt;.us-east-1.elb.amazonaws.com/apis/apps/v1/namespaces/argocd/deployments?resourceVersion&lt;span&gt;=&lt;/span&gt;695374153&amp;amp;watch&lt;span&gt;=&lt;/span&gt;true &lt;span&gt;200&lt;/span&gt; OK in &lt;span&gt;2&lt;/span&gt; milliseconds&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% kubectl get deploy -n argocd -w -v6
+I0905 16:12:49.277471 3929550 loader.go:395] Config loaded from file: /home/ubuntu/.kube/config
+I0905 16:12:49.302783 3929550 round_trippers.go:553] GET https://{REDACTED}.us-east-1.elb.amazonaws.com/apis/apps/v1/namespaces/argocd/deployments?limit=500 200 OK in 17 milliseconds
+NAME READY UP-TO-DATE AVAILABLE AGE
+argo-workflows-server 1/1 1 1 91d
+argo-workflows-workflow-controller 1/1 1 1 44d
+argocd-applicationset-controller 1/1 1 1 23d
+argocd-dex-server 1/1 1 1 451d
+argocd-notifications-controller 1/1 1 1 449d
+argocd-redis 1/1 1 1 451d
+argocd-repo-server 1/1 1 1 451d
+argocd-server 3/3 3 3 428d
+I0905 16:12:49.316961 3929550 round_trippers.go:553] GET https://{REDACTED}.us-east-1.elb.amazonaws.com/apis/apps/v1/namespaces/argocd/deployments?resourceVersion=695374153&amp;amp;watch=true 200 OK in 2 milliseconds&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: kubectl: verbose logging"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Uninstall Kyverno</title><link>https://perrotta.dev/2025/09/uninstall-kyverno/</link><pubDate>Fri, 05 Sep 2025 17:03:04 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2025/09/uninstall-kyverno/</guid><description>&lt;p&gt;It&amp;rsquo;s always a bit frustrating to do it.&lt;/p&gt;
 &lt;p&gt;Despite the excellent &lt;a href="https://kyverno.io/docs/installation/uninstallation/"&gt;upstream
@@ -94,16 +94,16 @@ Kubernetes clusters often leave cruft behind when doing so.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% kubectl rollout restart sts -n argocd argocd-redis-ha-server
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;E0905 12:29:24.284879 &lt;span&gt;3908207&lt;/span&gt; memcache.go:287&lt;span&gt;]&lt;/span&gt; couldn&lt;span&gt;&amp;#39;t get resource list for wgpolicyk8s.io/v1alpha2: the server is currently unable to handle the request
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;E0905 12:29:24.287856 3908207 memcache.go:287] couldn&amp;#39;&lt;/span&gt;t get resource list &lt;span&gt;for&lt;/span&gt; reports.kyverno.io/v1: the server is currently unable to handle the request
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;E0905 12:29:24.290250 &lt;span&gt;3908207&lt;/span&gt; memcache.go:121&lt;span&gt;]&lt;/span&gt; couldn&lt;span&gt;&amp;#39;t get resource list for reports.kyverno.io/v1: the server is currently unable to handle the request
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;E0905 12:29:24.292666 3908207 memcache.go:121] couldn&amp;#39;&lt;/span&gt;t get resource list &lt;span&gt;for&lt;/span&gt; wgpolicyk8s.io/v1alpha2: the server is currently unable to handle the request
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;E0905 12:29:24.295959 &lt;span&gt;3908207&lt;/span&gt; memcache.go:121&lt;span&gt;]&lt;/span&gt; couldn&lt;span&gt;&amp;#39;t get resource list for reports.kyverno.io/v1: the server is currently unable to handle the request
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;E0905 12:29:24.298226 3908207 memcache.go:121] couldn&amp;#39;&lt;/span&gt;t get resource list &lt;span&gt;for&lt;/span&gt; wgpolicyk8s.io/v1alpha2: the server is currently unable to handle the request
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;E0905 12:29:24.302703 &lt;span&gt;3908207&lt;/span&gt; memcache.go:121&lt;span&gt;]&lt;/span&gt; couldn&lt;span&gt;&amp;#39;t get resource list for reports.kyverno.io/v1: the server is currently unable to handle the request
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;E0905 12:29:24.305009 3908207 memcache.go:121] couldn&amp;#39;&lt;/span&gt;t get resource list &lt;span&gt;for&lt;/span&gt; wgpolicyk8s.io/v1alpha2: the server is currently unable to handle the request
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[&lt;/span&gt;...&lt;span&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% kubectl rollout restart sts -n argocd argocd-redis-ha-server
+E0905 12:29:24.284879 3908207 memcache.go:287] couldn&amp;#39;t get resource list for wgpolicyk8s.io/v1alpha2: the server is currently unable to handle the request
+E0905 12:29:24.287856 3908207 memcache.go:287] couldn&amp;#39;t get resource list for reports.kyverno.io/v1: the server is currently unable to handle the request
+E0905 12:29:24.290250 3908207 memcache.go:121] couldn&amp;#39;t get resource list for reports.kyverno.io/v1: the server is currently unable to handle the request
+E0905 12:29:24.292666 3908207 memcache.go:121] couldn&amp;#39;t get resource list for wgpolicyk8s.io/v1alpha2: the server is currently unable to handle the request
+E0905 12:29:24.295959 3908207 memcache.go:121] couldn&amp;#39;t get resource list for reports.kyverno.io/v1: the server is currently unable to handle the request
+E0905 12:29:24.298226 3908207 memcache.go:121] couldn&amp;#39;t get resource list for wgpolicyk8s.io/v1alpha2: the server is currently unable to handle the request
+E0905 12:29:24.302703 3908207 memcache.go:121] couldn&amp;#39;t get resource list for reports.kyverno.io/v1: the server is currently unable to handle the request
+E0905 12:29:24.305009 3908207 memcache.go:121] couldn&amp;#39;t get resource list for wgpolicyk8s.io/v1alpha2: the server is currently unable to handle the request
+[...]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;That output junk is emitted on every &lt;code&gt;kubectl&lt;/code&gt; command.&lt;/p&gt;
 &lt;p&gt;This time the culprit was:&lt;/p&gt;
@@ -111,16 +111,16 @@ Kubernetes clusters often leave cruft behind when doing so.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% kubectl get apiservice | egrep -i &lt;span&gt;&amp;#34;(kyverno|wgpolicy)&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;v1.reports.kyverno.io reports-server/kyverno-reports-server False &lt;span&gt;(&lt;/span&gt;MissingEndpoints&lt;span&gt;)&lt;/span&gt; 76d
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;v1alpha2.wgpolicyk8s.io reports-server/kyverno-reports-server False &lt;span&gt;(&lt;/span&gt;MissingEndpoints&lt;span&gt;)&lt;/span&gt; 76d&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% kubectl get apiservice | egrep -i &amp;#34;(kyverno|wgpolicy)&amp;#34;
+v1.reports.kyverno.io reports-server/kyverno-reports-server False (MissingEndpoints) 76d
+v1alpha2.wgpolicyk8s.io reports-server/kyverno-reports-server False (MissingEndpoints) 76d&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Deleting these two entries resolves the issue:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% kubectl delete apiservice v1.reports.kyverno.io v1alpha2.wgpolicyk8s.io -n reports-server&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% kubectl delete apiservice v1.reports.kyverno.io v1alpha2.wgpolicyk8s.io -n reports-server&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Uninstall Kyverno"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;</description></item><item><title>helm: diff manifests</title><link>https://perrotta.dev/2025/08/helm-diff-manifests/</link><pubDate>Thu, 28 Aug 2025 17:57:32 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2025/08/helm-diff-manifests/</guid><description>&lt;p&gt;Lately I&amp;rsquo;ve been employing (with great success) the following pattern in order
 to test whether changes to helm charts are harmless (and expected):&lt;/p&gt;
@@ -128,13 +128,13 @@ to test whether changes to helm charts are harmless (and expected):&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;cd path/to/my/helm/chart
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;git checkout origin/master &lt;span&gt;# or main&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;helm template -f values.yaml . &amp;gt; golden
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;git switch --create thiagowfx/my-feature-branch
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# develop, develop, develop&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;helm template -f values.yaml . &amp;gt; candidate
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;diff candidate golden &lt;span&gt;# or icdiff&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;cd path/to/my/helm/chart
+git checkout origin/master # or main
+helm template -f values.yaml . &amp;gt; golden
+git switch --create thiagowfx/my-feature-branch
+# develop, develop, develop
+helm template -f values.yaml . &amp;gt; candidate
+diff candidate golden # or icdiff&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;The &lt;code&gt;diff&lt;/code&gt; output will reliably demonstrate whether your changes are WAI.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: If needed, pass &lt;code&gt;--release-name {foo}&lt;/code&gt; to &lt;code&gt;helm template&lt;/code&gt;.&lt;/p&gt;
@@ -144,15 +144,15 @@ candidate in the cluster.&lt;/p&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: helm: diff manifests"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: git index.lock issue</title><link>https://perrotta.dev/2025/08/argocd-git-index.lock-issue/</link><pubDate>Sat, 23 Aug 2025 12:39:14 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><category>kubernetes</category><guid>https://perrotta.dev/2025/08/argocd-git-index.lock-issue/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Every ArgoCD application is stuck in &lt;em&gt;Unknown&lt;/em&gt; state,
 with the following error:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;Failed to load target state: failed to generate manifest for source 1 of 2:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;rpc error: code = Unknown desc = failed to initialize repository resources: rpc
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;error: code = Internal desc = Failed to checkout FETCH_HEAD: failed to checkout
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;FETCH_HEAD: `git checkout --force FETCH_HEAD` failed exit status 128: fatal:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Unable to create &amp;#39;&amp;lt;path to cached source&amp;gt;/.git/index.lock&amp;#39;: File exists. Another
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;git process seems to be running in this repository, e.g. an editor opened by
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&amp;#39;git commit&amp;#39;. Please make sure all processes are terminated then try again. If
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;it still fails, a git process may have crashed in this repository earlier:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;remove the file manually to continue.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;Failed to load target state: failed to generate manifest for source 1 of 2:
+rpc error: code = Unknown desc = failed to initialize repository resources: rpc
+error: code = Internal desc = Failed to checkout FETCH_HEAD: failed to checkout
+FETCH_HEAD: `git checkout --force FETCH_HEAD` failed exit status 128: fatal:
+Unable to create &amp;#39;&amp;lt;path to cached source&amp;gt;/.git/index.lock&amp;#39;: File exists. Another
+git process seems to be running in this repository, e.g. an editor opened by
+&amp;#39;git commit&amp;#39;. Please make sure all processes are terminated then try again. If
+it still fails, a git process may have crashed in this repository earlier:
+remove the file manually to continue.&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;It is a lock contention race condition issue within the ArgoCD repo server
 component, with the git &lt;code&gt;index.lock&lt;/code&gt;.&lt;/p&gt;
@@ -161,7 +161,7 @@ component, with the git &lt;code&gt;index.lock&lt;/code&gt;.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl rollout restart deploy -n argocd argocd-repo-server&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl rollout restart deploy -n argocd argocd-repo-server&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Afterwards, refresh all applications in the cluster via the web UI:&lt;/p&gt;
 &lt;ul&gt;
@@ -181,26 +181,26 @@ Container Registry). They need to be synced with &lt;a href="https://github.com/
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl get pods --all-namespaces -o json | jq -r &lt;span&gt;&amp;#39;.items[] | select(any(.status.containerStatuses[]; .state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;)) | .metadata.namespace + &amp;#34;/&amp;#34; + .metadata.name + &amp;#34;\t&amp;#34; + ( [.status.containerStatuses[] | select(.state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;).image] | join(&amp;#34;, &amp;#34;) )&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl get pods --all-namespaces -o json | jq -r &amp;#39;.items[] | select(any(.status.containerStatuses[]; .state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;)) | .metadata.namespace &amp;#43; &amp;#34;/&amp;#34; &amp;#43; .metadata.name &amp;#43; &amp;#34;\t&amp;#34; &amp;#43; ( [.status.containerStatuses[] | select(.state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;).image] | join(&amp;#34;, &amp;#34;) )&amp;#39;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Sample run:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;ubuntu@universe:~ $ kubectl get pods --all-namespaces -o json | jq -r &lt;span&gt;&amp;#39;.items[]
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt; | select(any(.status.containerStatuses[]; .state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;))
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt; | .metadata.namespace + &amp;#34;/&amp;#34; + .metadata.name + &amp;#34;\t&amp;#34; +
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt; ( [.status.containerStatuses[] | select(.state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;).image] | join(&amp;#34;, &amp;#34;) )&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;monitoring/clustermon-kube-prometheus-operator-67c8b6c87c-w72km &lt;span&gt;{&lt;/span&gt;my-registry-name&lt;span&gt;}&lt;/span&gt;.azurecr.cn/quay.io/prometheus-operator/prometheus-operator:v0.83.0
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;monitoring/clustermon-prometheus-node-exporter-v7bpt &lt;span&gt;{&lt;/span&gt;my-registry-name&lt;span&gt;}&lt;/span&gt;.azurecr.cn/quay.io/prometheus/node-exporter:v1.9.1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;ubuntu@universe:~ $ kubectl get pods --all-namespaces -o json | jq -r &amp;#39;.items[]
+ | select(any(.status.containerStatuses[]; .state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;))
+ | .metadata.namespace &amp;#43; &amp;#34;/&amp;#34; &amp;#43; .metadata.name &amp;#43; &amp;#34;\t&amp;#34; &amp;#43;
+ ( [.status.containerStatuses[] | select(.state.waiting.reason == &amp;#34;ImagePullBackOff&amp;#34;).image] | join(&amp;#34;, &amp;#34;) )&amp;#39;
+monitoring/clustermon-kube-prometheus-operator-67c8b6c87c-w72km {my-registry-name}.azurecr.cn/quay.io/prometheus-operator/prometheus-operator:v0.83.0
+monitoring/clustermon-prometheus-node-exporter-v7bpt {my-registry-name}.azurecr.cn/quay.io/prometheus/node-exporter:v1.9.1&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;How to &lt;code&gt;skopeo&lt;/code&gt;? First, log in:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;echo -n &lt;span&gt;&amp;#34;{password}&amp;#34;&lt;/span&gt; | skopeo login &lt;span&gt;{&lt;/span&gt;my-registry-name&lt;span&gt;}&lt;/span&gt;.azurecr.cn --password-stdin --username &lt;span&gt;{&lt;/span&gt;my-username&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;echo -n &amp;#34;{password}&amp;#34; | skopeo login {my-registry-name}.azurecr.cn --password-stdin --username {my-username}&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;How do you get these credentials? Log in to the Azure China Portal, find the ACR
 resource, navigate to Settings &amp;gt; Access keys.&lt;/p&gt;
@@ -209,11 +209,11 @@ resource, navigate to Settings &amp;gt; Access keys.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% skopeo sync &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; --override-os linux --override-arch amd64 &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; --src docker --dest docker &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; quay.io/prometheus/node-exporter:v1.9.1 &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; &lt;span&gt;{&lt;/span&gt;my-registry-name&lt;span&gt;}&lt;/span&gt;.azurecr.cn/quay.io/prometheus&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% skopeo sync \
+ --override-os linux --override-arch amd64 \
+ --src docker --dest docker \
+ quay.io/prometheus/node-exporter:v1.9.1 \
+ {my-registry-name}.azurecr.cn/quay.io/prometheus&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class="footnotes" role="doc-endnotes"&gt;
 &lt;hr&gt;
@@ -237,36 +237,35 @@ print the app chart version in addition to existing information.&lt;/p&gt;
 &lt;p&gt;More specifically, currently, a Slack notification message from Argo looks like
 the following:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;Cluster 37: Application heart-of-gold is unhealthy.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;Cluster 37: Application heart-of-gold is unhealthy.&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;We want to improve it to:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;Cluster 37: Application heart-of-gold (~1.18.3) is unhealthy.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;Cluster 37: Application heart-of-gold (~1.18.3) is unhealthy.&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;The following diff (under a &lt;code&gt;template&lt;/code&gt; block) accomplishes that:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="diff"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;diff&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-diff" data-lang="diff"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;- {{if eq .serviceType &amp;#34;slack&amp;#34;}}:interrobang:{{end}} Cluster &amp;lt;{{.context.argocdUrl}}|*{{.context.clusterId}}*&amp;gt;: Application &amp;lt;{{.context.argocdUrl}}/applications/{{.app.metadata.name}}|`{{.app.metadata.name}}`&amp;gt; _sync_ by {{.app.status.operationState.operation.initiatedBy.username | default &amp;#34;_automation_&amp;#34; }} is _unknown_.
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;+ {{if eq .serviceType &amp;#34;slack&amp;#34;}}:interrobang:{{end}} Cluster &amp;lt;{{.context.argocdUrl}}|*{{.context.clusterId}}*&amp;gt;: Application &amp;lt;{{.context.argocdUrl}}/applications/{{.app.metadata.name}}|`{{.app.metadata.name}}`&amp;gt;{{if .app.spec.source.targetRevision}} ({{.app.spec.source.targetRevision}}){{else}}{{range .app.spec.sources}}{{if .targetRevision}} ({{.targetRevision}}){{break}}{{end}}{{end}}{{end}} _sync_ by {{.app.status.operationState.operation.initiatedBy.username | default &amp;#34;_automation_&amp;#34; }} is _unknown_.
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-diff"&gt;- {{if eq .serviceType &amp;#34;slack&amp;#34;}}:interrobang:{{end}} Cluster &amp;lt;{{.context.argocdUrl}}|*{{.context.clusterId}}*&amp;gt;: Application &amp;lt;{{.context.argocdUrl}}/applications/{{.app.metadata.name}}|`{{.app.metadata.name}}`&amp;gt; _sync_ by {{.app.status.operationState.operation.initiatedBy.username | default &amp;#34;_automation_&amp;#34; }} is _unknown_.
+&amp;#43; {{if eq .serviceType &amp;#34;slack&amp;#34;}}:interrobang:{{end}} Cluster &amp;lt;{{.context.argocdUrl}}|*{{.context.clusterId}}*&amp;gt;: Application &amp;lt;{{.context.argocdUrl}}/applications/{{.app.metadata.name}}|`{{.app.metadata.name}}`&amp;gt;{{if .app.spec.source.targetRevision}} ({{.app.spec.source.targetRevision}}){{else}}{{range .app.spec.sources}}{{if .targetRevision}} ({{.targetRevision}}){{break}}{{end}}{{end}}{{end}} _sync_ by {{.app.status.operationState.operation.initiatedBy.username | default &amp;#34;_automation_&amp;#34; }} is _unknown_.&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Diving into it with pretty-printing&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2025/08/argocd-app-version-notifications/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="go-template"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;go-template&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-go-template" data-lang="go-template"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;{{&lt;/span&gt;&lt;span&gt;if&lt;/span&gt; &lt;span&gt;.app.spec.source.targetRevision&lt;/span&gt;&lt;span&gt;}}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; (&lt;span&gt;{{&lt;/span&gt;&lt;span&gt;.app.spec.source.targetRevision&lt;/span&gt;&lt;span&gt;}}&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;{{&lt;/span&gt;&lt;span&gt;else&lt;/span&gt;&lt;span&gt;}}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;{{&lt;/span&gt;&lt;span&gt;range&lt;/span&gt; &lt;span&gt;.app.spec.sources&lt;/span&gt;&lt;span&gt;}}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;{{&lt;/span&gt;&lt;span&gt;if&lt;/span&gt; &lt;span&gt;.targetRevision&lt;/span&gt;&lt;span&gt;}}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; (&lt;span&gt;{{&lt;/span&gt;&lt;span&gt;.targetRevision&lt;/span&gt;&lt;span&gt;}}&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;{{&lt;/span&gt;&lt;span&gt;break&lt;/span&gt;&lt;span&gt;}}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;{{&lt;/span&gt;&lt;span&gt;end&lt;/span&gt;&lt;span&gt;}}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;{{&lt;/span&gt;&lt;span&gt;end&lt;/span&gt;&lt;span&gt;}}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;{{&lt;/span&gt;&lt;span&gt;end&lt;/span&gt;&lt;span&gt;}}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-go-template"&gt;{{if .app.spec.source.targetRevision}}
+ ({{.app.spec.source.targetRevision}})
+{{else}}
+ {{range .app.spec.sources}}
+ {{if .targetRevision}}
+ ({{.targetRevision}})
+ {{break}}
+ {{end}}
+ {{end}}
+{{end}}&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;If there&amp;rsquo;s a single source in the helm chart, we extract its &lt;code&gt;targetRevision&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Otherwise, when using a &lt;a href="https://argo-cd.readthedocs.io/en/latest/user-guide/multiple_sources/"&gt;multi-source
@@ -311,15 +310,15 @@ directly.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl edit app -n argocd root&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl edit app -n argocd root&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;We remove the &lt;code&gt;automated&lt;/code&gt; block, to effectively pause auto sync, otherwise our
 subsequent changes to traefik would be immediately reverted:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;spec:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;# automated:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;# prune: [..]
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;# selfHeal: [...]&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;spec:
+# automated:
+# prune: [..]
+# selfHeal: [...]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;You can comment or delete the &lt;code&gt;automated:&lt;/code&gt; block, either is fine.&lt;/p&gt;
 &lt;p&gt;Next, we need to remove traefik from all application project (app project) sync
@@ -328,7 +327,7 @@ windows, so that changes to it will be immediately applied:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl edit appproject -n argocd cluster&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl edit appproject -n argocd cluster&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;The traefik entry got removed from all sync windows.&lt;/p&gt;
 &lt;p&gt;Now, finally, let&amp;rsquo;s instruct Argo to roll traefik back.&lt;/p&gt;
@@ -337,7 +336,7 @@ windows, so that changes to it will be immediately applied:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl edit app -n argocd traefik&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl edit app -n argocd traefik&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Update &lt;code&gt;targetRevision: 2.4.1&lt;/code&gt; under the &lt;code&gt;helm&lt;/code&gt; block.&lt;/p&gt;
 &lt;p&gt;Wait a few seconds. Observe traefik pods as they are rolling restarted:&lt;/p&gt;
@@ -345,7 +344,7 @@ windows, so that changes to it will be immediately applied:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl get deploy -n kube-system traefik -w&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl get deploy -n kube-system traefik -w&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Finally, all services are once again accessible!&lt;/p&gt;
 &lt;p&gt;From this point on, we can go back to &lt;code&gt;git&lt;/code&gt; and do a proper pull request revert
@@ -362,27 +361,27 @@ day-to-day problems.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl rollout restart sts -n argocd argocd-application-controller&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl rollout restart sts -n argocd argocd-application-controller&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Or inspect its logs:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl logs -n argocd argocd-application-controller-0 --tail&lt;span&gt;=&lt;/span&gt;&lt;span&gt;100&lt;/span&gt; | less&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl logs -n argocd argocd-application-controller-0 --tail=100 | less&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;While we&amp;rsquo;re here, make sure there is at least one replica running:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;% kubectl get sts -n argocd argocd-application-controller
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;NAME READY AGE
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;argocd-application-controller 1/1 415d&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;% kubectl get sts -n argocd argocd-application-controller
+NAME READY AGE
+argocd-application-controller 1/1 415d&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;a href="https://github.com/argoproj/argo-cd/issues/11831"&gt;Upstream issue&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: all applications stuck on refresh"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: deployment spec.selector: field is immutable</title><link>https://perrotta.dev/2025/06/argocd-deployment-spec.selector-field-is-immutable/</link><pubDate>Mon, 30 Jun 2025 13:04:51 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2025/06/argocd-deployment-spec.selector-field-is-immutable/</guid><description>&lt;p&gt;When using &lt;a href="https://argo-cd.readthedocs.io/en/stable/"&gt;ArgoCD&lt;/a&gt; to manage an app,
 the Deployment manifest needs to undergo significant changes, updating its
 selector labels. When trying to sync the argocd app, we get the following error:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;one or more objects failed to apply, reason: error when patching &amp;#34;/dev/shm/3469418025&amp;#34;: Deployment.apps &amp;#34;myapp&amp;#34; is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:v1.LabelSelectorRequirement(nil)}: field is immutable. Retrying attempt #2 at 11:02AM.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;one or more objects failed to apply, reason: error when patching &amp;#34;/dev/shm/3469418025&amp;#34;: Deployment.apps &amp;#34;myapp&amp;#34; is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:v1.LabelSelectorRequirement(nil)}: field is immutable. Retrying attempt #2 at 11:02AM.&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;This error doesn&amp;rsquo;t come directly from Argo, it is from &lt;code&gt;kubectl apply&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;There are two ways to address it:&lt;/p&gt;
@@ -399,18 +398,18 @@ aforementioned option maps to).&lt;/p&gt;
 &lt;/ol&gt;
 &lt;p&gt;In action (&lt;code&gt;-w&lt;/code&gt; is short for &lt;code&gt;--watch&lt;/code&gt;):&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;% kubectl get endpoints -w
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;NAME ENDPOINTS AGE
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;myapp &amp;lt;none&amp;gt; 5y44d
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;myapp 5y44d
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;myapp 10.1.13.40:8080 5y44d&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;% kubectl get endpoints -w
+NAME ENDPOINTS AGE
+myapp &amp;lt;none&amp;gt; 5y44d
+myapp 5y44d
+myapp 10.1.13.40:8080 5y44d&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: deployment spec.selector: field is immutable"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Helm repository with a trailing slash</title><link>https://perrotta.dev/2025/06/helm-repository-with-a-trailing-slash/</link><pubDate>Tue, 24 Jun 2025 11:32:50 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><category>pre-commit</category><guid>https://perrotta.dev/2025/06/helm-repository-with-a-trailing-slash/</guid><description>&lt;p&gt;&lt;a href="https://github.com/argoproj/argo-cd/issues/9857"&gt;A repository URL with a trailing slash, and the same URL without a trailing
 slash, are treated as different
 repos&lt;/a&gt;. We found this out the
 hard way:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;Failed to load target state: failed to generate manifest for source 1 of 2: rpc error: code = Unknown desc = error building helm chart dependencies: failed to add helm repository https://chartmuseum.{corp intranet}/orgs/{corp}/: failed to add repository: failed to get command args to log: `helm repo add https:--chartmuseum.{corp intranet}-orgs-{corp}- https://chartmuseum.{corp intranet}/orgs/{corp}/` failed exit status 1: Error: looks like &amp;#34;https://chartmuseum.{corp intranet}/orgs/{corp}/&amp;#34; is not a valid chart repository or cannot be reached: failed to fetch https://chartmuseum.{corp intranet}/orgs/{corp}/index.yaml : 401 Unauthorized&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;Failed to load target state: failed to generate manifest for source 1 of 2: rpc error: code = Unknown desc = error building helm chart dependencies: failed to add helm repository https://chartmuseum.{corp intranet}/orgs/{corp}/: failed to add repository: failed to get command args to log: `helm repo add https:--chartmuseum.{corp intranet}-orgs-{corp}- https://chartmuseum.{corp intranet}/orgs/{corp}/` failed exit status 1: Error: looks like &amp;#34;https://chartmuseum.{corp intranet}/orgs/{corp}/&amp;#34; is not a valid chart repository or cannot be reached: failed to fetch https://chartmuseum.{corp intranet}/orgs/{corp}/index.yaml : 401 Unauthorized&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Let&amp;rsquo;s put aside the fact the error message REALLY likes to repeat the repo name.&lt;/p&gt;
 &lt;p&gt;This is a repository that we&amp;rsquo;ve already configured, with proper authentication
@@ -420,30 +419,30 @@ credentials. Why would it start to fail now, all of a sudden?&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;apiVersion&lt;/span&gt;: &lt;span&gt;v2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;name&lt;/span&gt;: &lt;span&gt;corp-postgres-operator&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;description&lt;/span&gt;: &lt;span&gt;Corp Postgres Operator&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;type&lt;/span&gt;: &lt;span&gt;application&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;version&lt;/span&gt;: &lt;span&gt;1.1.13&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;dependencies&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;postgres-operator&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;repository&lt;/span&gt;: &lt;span&gt;https://chartmuseum.{corp intranet}/orgs/archive&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;apiVersion: v2
+name: corp-postgres-operator
+description: Corp Postgres Operator
+type: application
+version: 1.1.13
+
+dependencies:
+ - name: postgres-operator
+ repository: https://chartmuseum.{corp intranet}/orgs/archive&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;And also:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="yaml"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;apiVersion&lt;/span&gt;: &lt;span&gt;v2&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;name&lt;/span&gt;: &lt;span&gt;corp-postgres-operator&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;description&lt;/span&gt;: &lt;span&gt;Corp Postgres Operator&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;type&lt;/span&gt;: &lt;span&gt;application&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;version&lt;/span&gt;: &lt;span&gt;1.1.13&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;dependencies&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;postgres-operator&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;repository&lt;/span&gt;: &lt;span&gt;https://chartmuseum.{corp intranet}/orgs/archive/&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;apiVersion: v2
+name: corp-postgres-operator
+description: Corp Postgres Operator
+type: application
+version: 1.1.13
+
+dependencies:
+ - name: postgres-operator
+ repository: https://chartmuseum.{corp intranet}/orgs/archive/&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;These two dependencies end up being treated differently by Argo, even though
 they are effectively the same. It&amp;rsquo;s an upstream bug.&lt;/p&gt;
@@ -454,14 +453,14 @@ helm repository dependencies. Canonicalize everything!&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;repos&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;repo&lt;/span&gt;: &lt;span&gt;local&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;hooks&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;id&lt;/span&gt;: &lt;span&gt;helm-repo-trailing-slash&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;Helm repositories must not contain trailing slashes in Chart.yaml&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;files&lt;/span&gt;: &lt;span&gt;Chart.yaml$&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;language&lt;/span&gt;: &lt;span&gt;pygrep&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;entry: &amp;#39;\s*repository&lt;/span&gt;: [&lt;span&gt;\w:/.]+/$&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
+ repo: local
+ hooks:
+ - id: helm-repo-trailing-slash
+ name: Helm repositories must not contain trailing slashes in Chart.yaml
+ files: Chart.yaml$
+ language: pygrep
+ entry: &amp;#39;\s*repository: [\w:/.]&amp;#43;/$&amp;#39;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Run &lt;code&gt;pre-commit run -a helm-repo-trailing-slash&lt;/code&gt;, fix all violations, and then
 never think about this again.&lt;/p&gt;
@@ -476,8 +475,8 @@ by Argo is in &lt;code&gt;Unknown&lt;/code&gt; sync status. A disaster! 😱&lt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% kubectl get --raw&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#39;/openapi/v2&amp;#39;&lt;/span&gt; | head -c &lt;span&gt;200&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Error from server &lt;span&gt;(&lt;/span&gt;ServiceUnavailable&lt;span&gt;)&lt;/span&gt;: the server is currently unable to handle the request&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% kubectl get --raw=&amp;#39;/openapi/v2&amp;#39; | head -c 200
+Error from server (ServiceUnavailable): the server is currently unable to handle the request&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Aha! The Kubernetes OpenAPI server is not responding properly.
 That explains why Argo is having so much trouble to figure out the state of affairs in
@@ -491,7 +490,7 @@ which includes lack of access to raw logs. The Azure portal doesn&amp;rsquo;t ma
 but, after digging quite deep into it, eventually we found this error message in
 the logs:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt; {&amp;#34;pod&amp;#34;:&amp;#34;kube-apiserver-7785d59f4f-scqmp&amp;#34;,&amp;#34;stream&amp;#34;:&amp;#34;stderr&amp;#34;,&amp;#34;containerID&amp;#34;:&amp;#34;925345f6501626aa6cd40dd187d5cf57837389eec9cb39b2292fb9ae3f66242f&amp;#34;,&amp;#34;log&amp;#34;:&amp;#34;E0512 12:01:36.876768 1 handler.go:160] Error in OpenAPI handler: failed to build merge specs: unable to merge: duplicated path \/apis\/reports.kyverno.io\/v1\/clusterephemeralreports\n&amp;#34;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt; {&amp;#34;pod&amp;#34;:&amp;#34;kube-apiserver-7785d59f4f-scqmp&amp;#34;,&amp;#34;stream&amp;#34;:&amp;#34;stderr&amp;#34;,&amp;#34;containerID&amp;#34;:&amp;#34;925345f6501626aa6cd40dd187d5cf57837389eec9cb39b2292fb9ae3f66242f&amp;#34;,&amp;#34;log&amp;#34;:&amp;#34;E0512 12:01:36.876768 1 handler.go:160] Error in OpenAPI handler: failed to build merge specs: unable to merge: duplicated path \/apis\/reports.kyverno.io\/v1\/clusterephemeralreports\n&amp;#34;}&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;That was the first clue! Now we know it&amp;rsquo;s related to
 &lt;a href="https://kyverno.io/"&gt;Kyverno&lt;/a&gt;.&lt;/p&gt;
@@ -511,19 +510,19 @@ OpenAPI server unresponsiveness. It wasn&amp;rsquo;t even necessary to restart i
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% kubectl delete crd ephemeralreports.reports.kyverno.io clusterephemeralreports.reports.kyverno.io clusterpolicyreports.wgpolicyk8s.io policyreports.wgpolicyk8s.io
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;customresourcedefinition.apiextensions.k8s.io &lt;span&gt;&amp;#34;ephemeralreports.reports.kyverno.io&amp;#34;&lt;/span&gt; deleted
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;customresourcedefinition.apiextensions.k8s.io &lt;span&gt;&amp;#34;clusterephemeralreports.reports.kyverno.io&amp;#34;&lt;/span&gt; deleted
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;customresourcedefinition.apiextensions.k8s.io &lt;span&gt;&amp;#34;clusterpolicyreports.wgpolicyk8s.io&amp;#34;&lt;/span&gt; deleted
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;customresourcedefinition.apiextensions.k8s.io &lt;span&gt;&amp;#34;policyreports.wgpolicyk8s.io&amp;#34;&lt;/span&gt; deleted&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% kubectl delete crd ephemeralreports.reports.kyverno.io clusterephemeralreports.reports.kyverno.io clusterpolicyreports.wgpolicyk8s.io policyreports.wgpolicyk8s.io
+customresourcedefinition.apiextensions.k8s.io &amp;#34;ephemeralreports.reports.kyverno.io&amp;#34; deleted
+customresourcedefinition.apiextensions.k8s.io &amp;#34;clusterephemeralreports.reports.kyverno.io&amp;#34; deleted
+customresourcedefinition.apiextensions.k8s.io &amp;#34;clusterpolicyreports.wgpolicyk8s.io&amp;#34; deleted
+customresourcedefinition.apiextensions.k8s.io &amp;#34;policyreports.wgpolicyk8s.io&amp;#34; deleted&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;And now:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;$ kubectl get --raw&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#39;/openapi/v2&amp;#39;&lt;/span&gt; | head -c &lt;span&gt;200&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;{&lt;/span&gt;&lt;span&gt;&amp;#34;swagger&amp;#34;&lt;/span&gt;:&lt;span&gt;&amp;#34;2.0&amp;#34;&lt;/span&gt;,&lt;span&gt;&amp;#34;info&amp;#34;&lt;/span&gt;:&lt;span&gt;{&lt;/span&gt;&lt;span&gt;&amp;#34;title&amp;#34;&lt;/span&gt;:&lt;span&gt;&amp;#34;Kubernetes&amp;#34;&lt;/span&gt;,&lt;span&gt;&amp;#34;version&amp;#34;&lt;/span&gt;:&lt;span&gt;&amp;#34;v1.30.11&amp;#34;&lt;/span&gt;&lt;span&gt;}&lt;/span&gt;,&lt;span&gt;&amp;#34;paths&amp;#34;&lt;/span&gt;:&lt;span&gt;{&lt;/span&gt;&lt;span&gt;&amp;#34;/.well-known/openid-configuration/&amp;#34;&lt;/span&gt;:&lt;span&gt;{&lt;/span&gt;&lt;span&gt;&amp;#34;get&amp;#34;&lt;/span&gt;:&lt;span&gt;{&lt;/span&gt;&lt;span&gt;&amp;#34;description&amp;#34;&lt;/span&gt;:&lt;span&gt;&amp;#34;get service account issuer OpenID configuration, also known as&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;$ kubectl get --raw=&amp;#39;/openapi/v2&amp;#39; | head -c 200
+{&amp;#34;swagger&amp;#34;:&amp;#34;2.0&amp;#34;,&amp;#34;info&amp;#34;:{&amp;#34;title&amp;#34;:&amp;#34;Kubernetes&amp;#34;,&amp;#34;version&amp;#34;:&amp;#34;v1.30.11&amp;#34;},&amp;#34;paths&amp;#34;:{&amp;#34;/.well-known/openid-configuration/&amp;#34;:{&amp;#34;get&amp;#34;:{&amp;#34;description&amp;#34;:&amp;#34;get service account issuer OpenID configuration, also known as&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;That was a tricky one! Interestingly: it has only occurred in AKS.
 &lt;a href="https://aws.amazon.com/eks/"&gt;EKS&lt;/a&gt; was fine.&lt;/p&gt;
@@ -561,48 +560,48 @@ could be missing though).&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;lua&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-lua" data-lang="lua"&gt;&lt;span&gt;&lt;span&gt;health_status &lt;span&gt;=&lt;/span&gt; {}
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;if&lt;/span&gt; obj.status &lt;span&gt;==&lt;/span&gt; &lt;span&gt;nil&lt;/span&gt; &lt;span&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; health_status.status &lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;Progressing&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; health_status.message &lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;Waiting for status to be reported&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;return&lt;/span&gt; health_status
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;local&lt;/span&gt; strategy &lt;span&gt;=&lt;/span&gt; obj.spec.updateStrategy &lt;span&gt;and&lt;/span&gt; obj.spec.updateStrategy.type &lt;span&gt;or&lt;/span&gt; &lt;span&gt;&amp;#34;RollingUpdate&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;local&lt;/span&gt; spec_replicas &lt;span&gt;=&lt;/span&gt; obj.spec.replicas &lt;span&gt;or&lt;/span&gt; &lt;span&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;local&lt;/span&gt; ready_replicas &lt;span&gt;=&lt;/span&gt; obj.status.readyReplicas &lt;span&gt;or&lt;/span&gt; &lt;span&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;local&lt;/span&gt; updated_replicas &lt;span&gt;=&lt;/span&gt; obj.status.updatedReplicas &lt;span&gt;or&lt;/span&gt; &lt;span&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;local&lt;/span&gt; status_replicas &lt;span&gt;=&lt;/span&gt; obj.status.replicas &lt;span&gt;or&lt;/span&gt; &lt;span&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;local&lt;/span&gt; current_revision &lt;span&gt;=&lt;/span&gt; obj.status.currentRevision &lt;span&gt;or&lt;/span&gt; &lt;span&gt;&amp;#34;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;local&lt;/span&gt; update_revision &lt;span&gt;=&lt;/span&gt; obj.status.updateRevision &lt;span&gt;or&lt;/span&gt; &lt;span&gt;&amp;#34;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;if&lt;/span&gt; strategy &lt;span&gt;==&lt;/span&gt; &lt;span&gt;&amp;#34;OnDelete&amp;#34;&lt;/span&gt; &lt;span&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;if&lt;/span&gt; ready_replicas &lt;span&gt;==&lt;/span&gt; status_replicas &lt;span&gt;and&lt;/span&gt; updated_replicas &lt;span&gt;==&lt;/span&gt; spec_replicas &lt;span&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; health_status.status &lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;Healthy&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; health_status.message &lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;All replicas are ready and updated (OnDelete strategy)&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;elseif&lt;/span&gt; updated_replicas &lt;span&gt;==&lt;/span&gt; &lt;span&gt;0&lt;/span&gt; &lt;span&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; health_status.status &lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;Degraded&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; health_status.message &lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;No replicas have been updated (OnDelete strategy): 0/&amp;#34;&lt;/span&gt; &lt;span&gt;..&lt;/span&gt; spec_replicas &lt;span&gt;..&lt;/span&gt; &lt;span&gt;&amp;#34; updated. Still running an old revision!&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;else&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; health_status.status &lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;Progressing&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; health_status.message &lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;Progressing (OnDelete): &amp;#34;&lt;/span&gt; &lt;span&gt;..&lt;/span&gt; ready_replicas &lt;span&gt;..&lt;/span&gt; &lt;span&gt;&amp;#34;/&amp;#34;&lt;/span&gt; &lt;span&gt;..&lt;/span&gt; status_replicas &lt;span&gt;..&lt;/span&gt; &lt;span&gt;&amp;#34; ready, &amp;#34;&lt;/span&gt; &lt;span&gt;..&lt;/span&gt; updated_replicas &lt;span&gt;..&lt;/span&gt; &lt;span&gt;&amp;#34;/&amp;#34;&lt;/span&gt; &lt;span&gt;..&lt;/span&gt; spec_replicas &lt;span&gt;..&lt;/span&gt; &lt;span&gt;&amp;#34; updated&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;else&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;if&lt;/span&gt; ready_replicas &lt;span&gt;==&lt;/span&gt; status_replicas &lt;span&gt;and&lt;/span&gt; updated_replicas &lt;span&gt;==&lt;/span&gt; spec_replicas &lt;span&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;if&lt;/span&gt; current_revision &lt;span&gt;~=&lt;/span&gt; update_revision &lt;span&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; health_status.status &lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;Progressing&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; health_status.message &lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;Waiting for rollout to complete: revision mismatch (&amp;#34;&lt;/span&gt; &lt;span&gt;..&lt;/span&gt; current_revision &lt;span&gt;..&lt;/span&gt; &lt;span&gt;&amp;#34; ≠ &amp;#34;&lt;/span&gt; &lt;span&gt;..&lt;/span&gt; update_revision &lt;span&gt;..&lt;/span&gt; &lt;span&gt;&amp;#34;)&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;else&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; health_status.status &lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;Healthy&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; health_status.message &lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;All replicas updated, ready, and revisions match&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;else&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; health_status.status &lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;Progressing&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; health_status.message &lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;RollingUpdate progressing: &amp;#34;&lt;/span&gt; &lt;span&gt;..&lt;/span&gt; ready_replicas &lt;span&gt;..&lt;/span&gt; &lt;span&gt;&amp;#34;/&amp;#34;&lt;/span&gt; &lt;span&gt;..&lt;/span&gt; status_replicas &lt;span&gt;..&lt;/span&gt; &lt;span&gt;&amp;#34; ready, &amp;#34;&lt;/span&gt; &lt;span&gt;..&lt;/span&gt; updated_replicas &lt;span&gt;..&lt;/span&gt; &lt;span&gt;&amp;#34;/&amp;#34;&lt;/span&gt; &lt;span&gt;..&lt;/span&gt; spec_replicas &lt;span&gt;..&lt;/span&gt; &lt;span&gt;&amp;#34; updated&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;return&lt;/span&gt; health_status&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-lua"&gt;health_status = {}
+
+if obj.status == nil then
+ health_status.status = &amp;#34;Progressing&amp;#34;
+ health_status.message = &amp;#34;Waiting for status to be reported&amp;#34;
+ return health_status
+end
+
+local strategy = obj.spec.updateStrategy and obj.spec.updateStrategy.type or &amp;#34;RollingUpdate&amp;#34;
+local spec_replicas = obj.spec.replicas or 1
+local ready_replicas = obj.status.readyReplicas or 0
+local updated_replicas = obj.status.updatedReplicas or 0
+local status_replicas = obj.status.replicas or 0
+local current_revision = obj.status.currentRevision or &amp;#34;&amp;#34;
+local update_revision = obj.status.updateRevision or &amp;#34;&amp;#34;
+
+if strategy == &amp;#34;OnDelete&amp;#34; then
+ if ready_replicas == status_replicas and updated_replicas == spec_replicas then
+ health_status.status = &amp;#34;Healthy&amp;#34;
+ health_status.message = &amp;#34;All replicas are ready and updated (OnDelete strategy)&amp;#34;
+ elseif updated_replicas == 0 then
+ health_status.status = &amp;#34;Degraded&amp;#34;
+ health_status.message = &amp;#34;No replicas have been updated (OnDelete strategy): 0/&amp;#34; .. spec_replicas .. &amp;#34; updated. Still running an old revision!&amp;#34;
+ else
+ health_status.status = &amp;#34;Progressing&amp;#34;
+ health_status.message = &amp;#34;Progressing (OnDelete): &amp;#34; .. ready_replicas .. &amp;#34;/&amp;#34; .. status_replicas .. &amp;#34; ready, &amp;#34; .. updated_replicas .. &amp;#34;/&amp;#34; .. spec_replicas .. &amp;#34; updated&amp;#34;
+ end
+else
+ if ready_replicas == status_replicas and updated_replicas == spec_replicas then
+ if current_revision ~= update_revision then
+ health_status.status = &amp;#34;Progressing&amp;#34;
+ health_status.message = &amp;#34;Waiting for rollout to complete: revision mismatch (&amp;#34; .. current_revision .. &amp;#34; ≠ &amp;#34; .. update_revision .. &amp;#34;)&amp;#34;
+ else
+ health_status.status = &amp;#34;Healthy&amp;#34;
+ health_status.message = &amp;#34;All replicas updated, ready, and revisions match&amp;#34;
+ end
+ else
+ health_status.status = &amp;#34;Progressing&amp;#34;
+ health_status.message = &amp;#34;RollingUpdate progressing: &amp;#34; .. ready_replicas .. &amp;#34;/&amp;#34; .. status_replicas .. &amp;#34; ready, &amp;#34; .. updated_replicas .. &amp;#34;/&amp;#34; .. spec_replicas .. &amp;#34; updated&amp;#34;
+ end
+end
+return health_status&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;It is necessary to distinguish between &lt;code&gt;OnDelete&lt;/code&gt; and &lt;code&gt;RollingUpdate&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;OnDelete&lt;/code&gt; should not use &lt;code&gt;currentRevision&lt;/code&gt; / &lt;code&gt;update_revision&lt;/code&gt;, as these values
@@ -617,20 +616,20 @@ resource / manifest in the cluster. &lt;code&gt;obj&lt;/code&gt; refers to the S
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;argo-cd&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;configs&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;cm&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;resource.customizations.health.apps_StatefulSet&lt;/span&gt;: |&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt; health_status = {}
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt; [...]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;argo-cd:
+ configs:
+ cm:
+ resource.customizations.health.apps_StatefulSet: |
+ health_status = {}
+ [...]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;This custom health check was partly inspired by a Prometheus alert we have:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="yaml"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;alert&lt;/span&gt;: &lt;span&gt;StatefulSetUpdateNotRolledOut&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;expr&lt;/span&gt;: &lt;span&gt;max without (revision) (kube_statefulset_status_current_revision unless kube_statefulset_status_update_revision) * (kube_statefulset_replicas != kube_statefulset_status_replicas_updated)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;alert: StatefulSetUpdateNotRolledOut
+expr: max without (revision) (kube_statefulset_status_current_revision unless kube_statefulset_status_update_revision) * (kube_statefulset_replicas != kube_statefulset_status_replicas_updated)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;How long will it take until LLMs &lt;del&gt;steal&lt;/del&gt; adopt this novel solution from me?&lt;/p&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: custom health check for StatefulSet (OnDelete)"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: application stuck in unknown</title><link>https://perrotta.dev/2025/06/argocd-application-stuck-in-unknown/</link><pubDate>Thu, 12 Jun 2025 11:51:32 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2025/06/argocd-application-stuck-in-unknown/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: An application in ArgoCD that was previously running
@@ -647,8 +646,8 @@ issue:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% kubectl rollout restart deployment argocd-server -n argocd
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;% kubectl rollout restart deployment argocd-repo-server -n argocd&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% kubectl rollout restart deployment argocd-server -n argocd
+% kubectl rollout restart deployment argocd-repo-server -n argocd&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: application stuck in unknown"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ArgoCD: upgrade to v3, remove helm labels</title><link>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</link><pubDate>Mon, 02 Jun 2025 13:03:24 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/</guid><description>&lt;p&gt;I am leading the effort to upgrade ArgoCD to its &lt;a href="https://blog.argoproj.io/announcing-argo-cd-v3-small-but-mighty-df05c0b39ad6"&gt;newest major version
 (v3)&lt;/a&gt;
@@ -660,10 +659,10 @@ is the removal of helm labels from argo applications, like such:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;metadata&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# [...]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;labels&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;app.kubernetes.io/managed-by&lt;/span&gt;: &lt;span&gt;Helm&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;metadata:
+# [...]
+ labels:
+ app.kubernetes.io/managed-by: Helm&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Applying a normal sync does not get rid of the label.&lt;/p&gt;
 &lt;p&gt;I found out that doing an one-off &lt;a href="https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/#server-side-apply"&gt;server-side apply
@@ -680,19 +679,19 @@ Argo CD.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;apiVersion&lt;/span&gt;: &lt;span&gt;argoproj.io/v1alpha1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;kind&lt;/span&gt;: &lt;span&gt;Application&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;spec&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;syncPolicy&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;syncOptions&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;ServerSideApply=true&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;apiVersion: argoproj.io/v1alpha1
+kind: Application
+spec:
+ syncPolicy:
+ syncOptions:
+ - ServerSideApply=true&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&amp;hellip;though there&amp;rsquo;s no harm either in doing so.&lt;/p&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ArgoCD: upgrade to v3, remove helm labels"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;</description></item><item><title>PDB: minAvailable and maxUnavailable cannot be both set</title><link>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</link><pubDate>Mon, 02 Jun 2025 12:00:05 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/</guid><description>&lt;p&gt;In Kubernetes it&amp;rsquo;s not possible to have a &lt;a href="https://kubernetes.io/docs/tasks/run-application/configure-pdb/"&gt;&lt;code&gt;PodDisruptionBudget&lt;/code&gt;
 (PDB)&lt;/a&gt; with
 both &lt;code&gt;minAvailable&lt;/code&gt; and &lt;code&gt;maxUnavailable&lt;/code&gt; set simultaneously:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;one or more objects failed to apply, reason: PodDisruptionBudget.policy &amp;#34;pgbouncer-pgbouncer&amp;#34; is invalid: spec: Invalid value: policy.PodDisruptionBudgetSpec{MinAvailable:(*intstr.IntOrString)(0xc02c03dd20), Selector:(*v1.LabelSelector)(0xc02c03dd40), MaxUnavailable:(*intstr.IntOrString)(0xc02c03dd60), UnhealthyPodEvictionPolicy:(*policy.UnhealthyPodEvictionPolicyType)(nil)}: minAvailable and maxUnavailable cannot be both set (retried 5 times).&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;one or more objects failed to apply, reason: PodDisruptionBudget.policy &amp;#34;pgbouncer-pgbouncer&amp;#34; is invalid: spec: Invalid value: policy.PodDisruptionBudgetSpec{MinAvailable:(*intstr.IntOrString)(0xc02c03dd20), Selector:(*v1.LabelSelector)(0xc02c03dd40), MaxUnavailable:(*intstr.IntOrString)(0xc02c03dd60), UnhealthyPodEvictionPolicy:(*policy.UnhealthyPodEvictionPolicyType)(nil)}: minAvailable and maxUnavailable cannot be both set (retried 5 times).&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Our manifests did not violate this rule though. Then where did the error message
 come from?&lt;/p&gt;
@@ -702,11 +701,11 @@ intermediate state containing both properties:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# [...]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;spec&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;minAvailable&lt;/span&gt;: &lt;span&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;maxUnavailable&lt;/span&gt;: &lt;span&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# [...]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;# [...]
+spec:
+ minAvailable: 1
+ maxUnavailable: 1
+# [...]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;One solution is to sync the underlying application PDB manifest with
 &lt;a href="https://argo-cd.readthedocs.io/en/latest/user-guide/sync-options/#replace-resource-instead-of-applying-changes"&gt;replace&lt;/a&gt;.&lt;/p&gt;
@@ -719,11 +718,11 @@ the pod initialization.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% kubectl get nodes -o name | grep -vFf &amp;lt;&lt;span&gt;(&lt;/span&gt;kubectl get pods -n &lt;span&gt;{&lt;/span&gt;namespace&lt;span&gt;}&lt;/span&gt; -l &lt;span&gt;{&lt;/span&gt;ds-label-selector&lt;span&gt;}&lt;/span&gt; -o wide --no-headers | awk &lt;span&gt;&amp;#39;{print &amp;#34;node/&amp;#34; $7}&amp;#39;&lt;/span&gt;&lt;span&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;node/aks-database-12345678-vmss000000
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;node/aks-database-12345678-vmss000002
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;node/aks-systempool-87654321-vmss000000
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;node/aks-systempool-87654321-vmss000001&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% kubectl get nodes -o name | grep -vFf &amp;lt;(kubectl get pods -n {namespace} -l {ds-label-selector} -o wide --no-headers | awk &amp;#39;{print &amp;#34;node/&amp;#34; $7}&amp;#39;)
+node/aks-database-12345678-vmss000000
+node/aks-database-12345678-vmss000002
+node/aks-systempool-87654321-vmss000000
+node/aks-systempool-87654321-vmss000001&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Notes:&lt;/p&gt;
 &lt;ul&gt;
@@ -763,7 +762,7 @@ is, &lt;code&gt;foo ref+SECRET1+ ref+SECRET2+ bar&lt;/code&gt; evaluates to &lt;
 &lt;/blockquote&gt;
 &lt;p&gt;The final result:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;secrets+literal://ref+vault://kv-v2/services/common/postgres/#url+?ref+vault://kv-v2/services/common/postgres/#params&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;secrets&amp;#43;literal://ref&amp;#43;vault://kv-v2/services/common/postgres/#url&amp;#43;?ref&amp;#43;vault://kv-v2/services/common/postgres/#params&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&amp;hellip;wherein &lt;code&gt;secrets+literal://&lt;/code&gt; comes from &lt;code&gt;helm-secrets&lt;/code&gt;. It needs to appear only
 once. &lt;code&gt;ref+vault://&lt;/code&gt; comes from &lt;code&gt;vals&lt;/code&gt;, it appears once for each vault entry.&lt;/p&gt;
@@ -773,55 +772,55 @@ once. &lt;code&gt;ref+vault://&lt;/code&gt; comes from &lt;code&gt;vals&lt;/code
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;#!/bin/bash
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;# Usage: Tweak entries as needed and then run the script.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;set -euo pipefail
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# It&amp;#39;s an associative array: a dictionary, a hash map&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;#&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# Key: the entry to be populated in vault&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# Value: a `jq` JSON selector from the output of `helm get values -o json`&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;declare -A entries&lt;span&gt;=(&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;# keep-sorted start&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;[&lt;/span&gt;config.aws.accessKey&lt;span&gt;]=&lt;/span&gt;&lt;span&gt;&amp;#34;.config.aws.accessKey&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;[&lt;/span&gt;config.aws.secretKey&lt;span&gt;]=&lt;/span&gt;&lt;span&gt;&amp;#34;.config.aws.secretKey&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;[&lt;/span&gt;config.cronjob.apiPassword&lt;span&gt;]=&lt;/span&gt;&lt;span&gt;&amp;#34;.config.cronjob.apiPassword&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;[&lt;/span&gt;config.cronjob.apiUser&lt;span&gt;]=&lt;/span&gt;&lt;span&gt;&amp;#34;.config.cronjob.apiUser&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;[&lt;/span&gt;config.postgresql.adminpass&lt;span&gt;]=&lt;/span&gt;&lt;span&gt;&amp;#34;.config.postgresql.adminpass&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;[&lt;/span&gt;config.postgresql.password&lt;span&gt;]=&lt;/span&gt;&lt;span&gt;&amp;#34;.config.postgresql.password&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;[&lt;/span&gt;config.postgresql.ropass&lt;span&gt;]=&lt;/span&gt;&lt;span&gt;&amp;#34;.config.postgresql.ropass&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;[&lt;/span&gt;config.postgresql.rwpass&lt;span&gt;]=&lt;/span&gt;&lt;span&gt;&amp;#34;.config.postgresql.rwpass&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;[&lt;/span&gt;config.slack.token&lt;span&gt;]=&lt;/span&gt;&lt;span&gt;&amp;#34;.config.slack.token&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;[&lt;/span&gt;config.slack.verificationToken&lt;span&gt;]=&lt;/span&gt;&lt;span&gt;&amp;#34;.config.slack.verificationToken&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;# keep-sorted end&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;main&lt;span&gt;()&lt;/span&gt; &lt;span&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; vault login
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; FIRST&lt;span&gt;=&lt;/span&gt;&lt;span&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;for&lt;/span&gt; entry in &lt;span&gt;&amp;#34;&lt;/span&gt;&lt;span&gt;${&lt;/span&gt;!entries[@]&lt;span&gt;}&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;; &lt;span&gt;do&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; key&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;$entry&lt;span&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; value&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;&lt;span&gt;${&lt;/span&gt;entries[$entry]&lt;span&gt;}&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; content&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;&lt;span&gt;$(&lt;/span&gt;helm get values -n tools mychart -o json | jq -r &lt;span&gt;&amp;#34;&lt;/span&gt;$value&lt;span&gt;&amp;#34;&lt;/span&gt;&lt;span&gt;)&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; echo &lt;span&gt;&amp;#34;Populating vault &lt;/span&gt;$key&lt;span&gt; from helm value &lt;/span&gt;$key&lt;span&gt;: &lt;/span&gt;$content&lt;span&gt;...&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;if&lt;/span&gt; &lt;span&gt;[[&lt;/span&gt; &lt;span&gt;&amp;#34;&lt;/span&gt;$FIRST&lt;span&gt;&amp;#34;&lt;/span&gt; &lt;span&gt;==&lt;/span&gt; &lt;span&gt;&amp;#34;1&amp;#34;&lt;/span&gt; &lt;span&gt;]]&lt;/span&gt;; &lt;span&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; vault kv put -mount&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#34;kv-v2&amp;#34;&lt;/span&gt; &lt;span&gt;&amp;#34;services/mychart/&amp;#34;&lt;/span&gt; &lt;span&gt;&amp;#34;&lt;/span&gt;$key&lt;span&gt;=&lt;/span&gt;$content&lt;span&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; FIRST&lt;span&gt;=&lt;/span&gt;&lt;span&gt;0&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;else&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; vault kv patch -mount&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#34;kv-v2&amp;#34;&lt;/span&gt; &lt;span&gt;&amp;#34;services/mychart/&amp;#34;&lt;/span&gt; &lt;span&gt;&amp;#34;&lt;/span&gt;$key&lt;span&gt;=&lt;/span&gt;$content&lt;span&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;fi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;done&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; vault kv get -mount&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#34;kv-v2&amp;#34;&lt;/span&gt; &lt;span&gt;&amp;#34;services/mychart&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; rm ~/.vault-token
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;main&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;#!/bin/bash
+# Usage: Tweak entries as needed and then run the script.
+
+set -euo pipefail
+
+# It&amp;#39;s an associative array: a dictionary, a hash map
+#
+# Key: the entry to be populated in vault
+# Value: a `jq` JSON selector from the output of `helm get values -o json`
+declare -A entries=(
+ # keep-sorted start
+ [config.aws.accessKey]=&amp;#34;.config.aws.accessKey&amp;#34;
+ [config.aws.secretKey]=&amp;#34;.config.aws.secretKey&amp;#34;
+ [config.cronjob.apiPassword]=&amp;#34;.config.cronjob.apiPassword&amp;#34;
+ [config.cronjob.apiUser]=&amp;#34;.config.cronjob.apiUser&amp;#34;
+ [config.postgresql.adminpass]=&amp;#34;.config.postgresql.adminpass&amp;#34;
+ [config.postgresql.password]=&amp;#34;.config.postgresql.password&amp;#34;
+ [config.postgresql.ropass]=&amp;#34;.config.postgresql.ropass&amp;#34;
+ [config.postgresql.rwpass]=&amp;#34;.config.postgresql.rwpass&amp;#34;
+ [config.slack.token]=&amp;#34;.config.slack.token&amp;#34;
+ [config.slack.verificationToken]=&amp;#34;.config.slack.verificationToken&amp;#34;
+ # keep-sorted end
+)
+
+main() {
+ vault login
+
+ FIRST=1
+ for entry in &amp;#34;${!entries[@]}&amp;#34;; do
+ key=&amp;#34;$entry&amp;#34;
+ value=&amp;#34;${entries[$entry]}&amp;#34;
+ content=&amp;#34;$(helm get values -n tools mychart -o json | jq -r &amp;#34;$value&amp;#34;)&amp;#34;
+
+ echo &amp;#34;Populating vault $key from helm value $key: $content...&amp;#34;
+
+ if [[ &amp;#34;$FIRST&amp;#34; == &amp;#34;1&amp;#34; ]]; then
+ vault kv put -mount=&amp;#34;kv-v2&amp;#34; &amp;#34;services/mychart/&amp;#34; &amp;#34;$key=$content&amp;#34;
+ FIRST=0
+ else
+ vault kv patch -mount=&amp;#34;kv-v2&amp;#34; &amp;#34;services/mychart/&amp;#34; &amp;#34;$key=$content&amp;#34;
+ fi
+ done
+
+ vault kv get -mount=&amp;#34;kv-v2&amp;#34; &amp;#34;services/mychart&amp;#34;
+
+ rm ~/.vault-token
+}
+
+main&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;code&gt;FIRST&lt;/code&gt;: In the first time we need to create an entry (&lt;code&gt;vault kv put&lt;/code&gt;), in the
 second time we need to patch it (&lt;code&gt;vault kv patch&lt;/code&gt;).&lt;/p&gt;
@@ -842,17 +841,17 @@ is documented and we can see its corresponding manifest
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;apiVersion&lt;/span&gt;: &lt;span&gt;v1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;data&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;ca.crt&lt;/span&gt;: &lt;span&gt;++++++++&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;tls.crt&lt;/span&gt;: &lt;span&gt;++++++++&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;tls.key&lt;/span&gt;: &lt;span&gt;++++++++&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;kind&lt;/span&gt;: &lt;span&gt;Secret&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;metadata&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;[&lt;span&gt;...]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;vertical-pod-autoscaler-admission-controller-tls&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;namespace&lt;/span&gt;: &lt;span&gt;kube-system&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;[&lt;span&gt;...]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;apiVersion: v1
+data:
+ ca.crt: &amp;#43;&amp;#43;&amp;#43;&amp;#43;&amp;#43;&amp;#43;&amp;#43;&amp;#43;
+ tls.crt: &amp;#43;&amp;#43;&amp;#43;&amp;#43;&amp;#43;&amp;#43;&amp;#43;&amp;#43;
+ tls.key: &amp;#43;&amp;#43;&amp;#43;&amp;#43;&amp;#43;&amp;#43;&amp;#43;&amp;#43;
+kind: Secret
+metadata:
+[...]
+ name: vertical-pod-autoscaler-admission-controller-tls
+ namespace: kube-system
+[...]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;The problematic are all the ones under &lt;code&gt;data:&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;I confirmed that was indeed the case in the &lt;a href="https://cloud-native.slack.com/archives/C01TSERG0KZ/p1739442822542539"&gt;CNCF
@@ -865,35 +864,35 @@ Slack&lt;/a&gt;
 Overflow&lt;/a&gt;)
 in the ArgoCD app manifest:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;% git diff HEAD~2..HEAD
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;diff --git apps/base/vertical-pod-autoscaler/vertical-pod-autoscaler.yaml apps/base/vertical-pod-autoscaler/vertical-pod-autoscaler.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;index 92bfbcc..90d8435 100644
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;--- apps/base/vertical-pod-autoscaler/vertical-pod-autoscaler.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;+++ apps/base/vertical-pod-autoscaler/vertical-pod-autoscaler.yaml
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;@@ -34,3 +34,15 @@ spec:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; maxDuration: 1m
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; syncOptions:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - CreateNamespace=true
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;+ - RespectIgnoreDifferences=true
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;+ ignoreDifferences:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;+ - group: &amp;#34;&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;+ kind: Secret
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;+ name: vertical-pod-autoscaler-admission-controller-tls
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;+ jsonPointers:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;+ - /data
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;+ - group: apps
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;+ kind: Deployment
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;+ name: vertical-pod-autoscaler-admission-controller
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;+ jsonPointers:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;+ - /spec/template/metadata/annotations/checksum~1tls-secret&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;% git diff HEAD~2..HEAD
+diff --git apps/base/vertical-pod-autoscaler/vertical-pod-autoscaler.yaml apps/base/vertical-pod-autoscaler/vertical-pod-autoscaler.yaml
+index 92bfbcc..90d8435 100644
+--- apps/base/vertical-pod-autoscaler/vertical-pod-autoscaler.yaml
+&amp;#43;&amp;#43;&amp;#43; apps/base/vertical-pod-autoscaler/vertical-pod-autoscaler.yaml
+@@ -34,3 &amp;#43;34,15 @@ spec:
+ maxDuration: 1m
+ syncOptions:
+ - CreateNamespace=true
+&amp;#43; - RespectIgnoreDifferences=true
+&amp;#43; ignoreDifferences:
+&amp;#43; - group: &amp;#34;&amp;#34;
+&amp;#43; kind: Secret
+&amp;#43; name: vertical-pod-autoscaler-admission-controller-tls
+&amp;#43; jsonPointers:
+&amp;#43; - /data
+&amp;#43; - group: apps
+&amp;#43; kind: Deployment
+&amp;#43; name: vertical-pod-autoscaler-admission-controller
+&amp;#43; jsonPointers:
+&amp;#43; - /spec/template/metadata/annotations/checksum~1tls-secret&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;In &lt;a href="https://www.rfc-editor.org/rfc/rfc6901"&gt;JSON Pointers&lt;/a&gt; (RFC 6901), one
 escapes the slash character with a &lt;code&gt;~1&lt;/code&gt; (c.f. section 3 in the spec):&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;Because the characters &amp;#39;~&amp;#39; (%x7E) and &amp;#39;/&amp;#39; (%x2F) have special meanings in
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;JSON Pointer, &amp;#39;~&amp;#39; needs to be encoded as &amp;#39;~0&amp;#39; and &amp;#39;/&amp;#39; needs to be encoded as
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&amp;#39;~1&amp;#39; when these characters appear in a reference token.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;Because the characters &amp;#39;~&amp;#39; (%x7E) and &amp;#39;/&amp;#39; (%x2F) have special meanings in
+JSON Pointer, &amp;#39;~&amp;#39; needs to be encoded as &amp;#39;~0&amp;#39; and &amp;#39;/&amp;#39; needs to be encoded as
+&amp;#39;~1&amp;#39; when these characters appear in a reference token.&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;Problem resolved!&lt;/p&gt;
@@ -910,39 +909,39 @@ that stack for too long (15 minutes is our threshold in most cases).&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;apiVersion&lt;/span&gt;: &lt;span&gt;v1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;kind&lt;/span&gt;: &lt;span&gt;Pod&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;metadata&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;pending-pod&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;spec&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;affinity&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;podAffinity&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;requiredDuringSchedulingIgnoredDuringExecution&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;labelSelector&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;matchExpressions&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;key&lt;/span&gt;: &lt;span&gt;&amp;#34;non/existent&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;operator&lt;/span&gt;: &lt;span&gt;In&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;values&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;&amp;#34;true&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;topologyKey&lt;/span&gt;: &lt;span&gt;&amp;#34;kubernetes.io/hostname&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;containers&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; - &lt;span&gt;name&lt;/span&gt;: &lt;span&gt;busybox&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;image&lt;/span&gt;: &lt;span&gt;busybox&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;command&lt;/span&gt;: [&lt;span&gt;&amp;#39;sh&amp;#39;&lt;/span&gt;, &lt;span&gt;&amp;#39;-c&amp;#39;&lt;/span&gt;, &lt;span&gt;&amp;#39;echo Hello, Kubernetes! &amp;amp;&amp;amp; sleep 3600&amp;#39;&lt;/span&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;apiVersion: v1
+kind: Pod
+metadata:
+ name: pending-pod
+spec:
+ affinity:
+ podAffinity:
+ requiredDuringSchedulingIgnoredDuringExecution:
+ - labelSelector:
+ matchExpressions:
+ - key: &amp;#34;non/existent&amp;#34;
+ operator: In
+ values:
+ - &amp;#34;true&amp;#34;
+ topologyKey: &amp;#34;kubernetes.io/hostname&amp;#34;
+ containers:
+ - name: busybox
+ image: busybox
+ command: [&amp;#39;sh&amp;#39;, &amp;#39;-c&amp;#39;, &amp;#39;echo Hello, Kubernetes! &amp;amp;&amp;amp; sleep 3600&amp;#39;]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&amp;hellip;it creates a &lt;code&gt;pending-pod&lt;/code&gt; in the &lt;code&gt;default&lt;/code&gt; namespace that should never be
 scheduled, due to its strict pod affinity rules.&lt;/p&gt;
 &lt;p&gt;Save it as &lt;code&gt;pending-pod.yaml&lt;/code&gt;, deploy it with &lt;code&gt;kubectl apply -f pending-pod.yaml&lt;/code&gt;.&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;$ kubectl get pod pending-pod -w
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;NAME READY STATUS RESTARTS AGE
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;pending-pod 0/1 Pending 0 21s
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; pending-pod 0/1 Pending 0 65s
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;pending-pod 0/1 Pending 0 74s
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;pending-pod 0/1 Pending 0 2m6s
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;pending-pod 0/1 Pending 0 3m8s
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;pending-pod 0/1 Pending 0 4m8s
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;pending-pod 0/1 Pending 0 4m18s&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;$ kubectl get pod pending-pod -w
+NAME READY STATUS RESTARTS AGE
+pending-pod 0/1 Pending 0 21s
+ pending-pod 0/1 Pending 0 65s
+pending-pod 0/1 Pending 0 74s
+pending-pod 0/1 Pending 0 2m6s
+pending-pod 0/1 Pending 0 3m8s
+pending-pod 0/1 Pending 0 4m8s
+pending-pod 0/1 Pending 0 4m18s&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;At some point the alert fires, as expected.
 And now we can roll out these changes to prod!&lt;/p&gt;
@@ -951,7 +950,7 @@ in pod logs), it&amp;rsquo;s related to
 &lt;a href="https://github.com/argoproj/argo-cd/issues/5068"&gt;argo-cd#5068&lt;/a&gt;. The full error
 message is:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;Unable to load data: cache: key is missing&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;Unable to load data: cache: key is missing&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;As I
 &lt;a href="https://github.com/argoproj/argo-cd/issues/5068#issuecomment-2580878251"&gt;commented&lt;/a&gt;
@@ -971,11 +970,11 @@ can fully operate without it, but I wouldn&amp;rsquo;t recommend that.&lt;/p&gt;
 blog post.&lt;/p&gt;
 &lt;p&gt;In &lt;code&gt;Chart.yaml&lt;/code&gt;, instead of depending on:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;- https://charts.bitnami.com/bitnami/airflow-18.3.2.tgz&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;- https://charts.bitnami.com/bitnami/airflow-18.3.2.tgz&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Instead, depend on:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;- oci://registry-1.docker.io/bitnamicharts/airflow:18.3.2&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;- oci://registry-1.docker.io/bitnamicharts/airflow:18.3.2&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;The switch is transparent, it works out-of-the-box.&lt;/p&gt;
 &lt;p&gt;However there&amp;rsquo;s one caveat: You cannot &lt;code&gt;helm repo add oci://registry-1.docker.io/bitnamicharts&lt;/code&gt;. That only works for &lt;code&gt;https://&lt;/code&gt;
@@ -990,13 +989,13 @@ browse available tags/versions via docker hub.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;skopeo sync &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; --src-creds &lt;span&gt;&amp;#34;AWS:&lt;/span&gt;&lt;span&gt;$(&lt;/span&gt;aws ecr get-login-password --region &lt;span&gt;{&lt;/span&gt;region&lt;span&gt;}&lt;/span&gt; --profile default&lt;span&gt;)&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt; &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; --dest-creds &lt;span&gt;&amp;#34;AWS:&lt;/span&gt;&lt;span&gt;$(&lt;/span&gt;aws ecr get-login-password --region &lt;span&gt;{&lt;/span&gt;region&lt;span&gt;}&lt;/span&gt; --profile staging&lt;span&gt;)&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt; &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; --override-os linux --override-arch amd64 &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; --src docker --dest docker &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; &lt;span&gt;{&lt;/span&gt;account_id_root&lt;span&gt;}&lt;/span&gt;.dkr.ecr.&lt;span&gt;{&lt;/span&gt;region&lt;span&gt;}&lt;/span&gt;.amazonaws.com/&lt;span&gt;{&lt;/span&gt;org&lt;span&gt;}&lt;/span&gt;/&lt;span&gt;{&lt;/span&gt;repository&lt;span&gt;}&lt;/span&gt;:&lt;span&gt;{&lt;/span&gt;tag&lt;span&gt;}&lt;/span&gt; &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; &lt;span&gt;{&lt;/span&gt;account_id_staging&lt;span&gt;}&lt;/span&gt;.dkr.ecr.&lt;span&gt;{&lt;/span&gt;region&lt;span&gt;}&lt;/span&gt;.amazonaws.com/&lt;span&gt;{&lt;/span&gt;org&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;skopeo sync \
+ --src-creds &amp;#34;AWS:$(aws ecr get-login-password --region {region} --profile default)&amp;#34; \
+ --dest-creds &amp;#34;AWS:$(aws ecr get-login-password --region {region} --profile staging)&amp;#34; \
+ --override-os linux --override-arch amd64 \
+ --src docker --dest docker \
+ {account_id_root}.dkr.ecr.{region}.amazonaws.com/{org}/{repository}:{tag} \
+ {account_id_staging}.dkr.ecr.{region}.amazonaws.com/{org}&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Example values&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2024/12/skopeo-operate-container-images-and-registries/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
 &lt;ul&gt;
@@ -1012,23 +1011,23 @@ browse available tags/versions via docker hub.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;#!/usr/bin/env bash
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;# shellcheck disable=SC2155&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;export AWS_PROFILE&lt;span&gt;=&lt;/span&gt;china
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;echo -n &lt;span&gt;&amp;#34;Enter the MFA token code for your AWS China account: &amp;#34;&lt;/span&gt; &lt;span&gt;&amp;amp;&amp;amp;&lt;/span&gt; read -r token
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;mfa_arn&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;&lt;span&gt;$(&lt;/span&gt;aws iam --profile &lt;span&gt;&amp;#34;&lt;/span&gt;$AWS_PROFILE&lt;span&gt;&amp;#34;&lt;/span&gt; get-user --output text --query User.Arn | sed &lt;span&gt;&amp;#39;s/:user\//:mfa\//&amp;#39;&lt;/span&gt;&lt;span&gt;)&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;credentials&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;&lt;span&gt;$(&lt;/span&gt;aws --profile &lt;span&gt;&amp;#34;&lt;/span&gt;$AWS_PROFILE&lt;span&gt;&amp;#34;&lt;/span&gt; sts get-session-token --serial-number &lt;span&gt;&amp;#34;&lt;/span&gt;$mfa_arn&lt;span&gt;&amp;#34;&lt;/span&gt; --token-code &lt;span&gt;&amp;#34;&lt;/span&gt;$token&lt;span&gt;&amp;#34;&lt;/span&gt; --duration-seconds 86400&lt;span&gt;)&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;echo &lt;span&gt;&amp;#34;Got credentials: &lt;/span&gt;$credentials&lt;span&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;export AWS_ACCESS_KEY_ID&lt;span&gt;=&lt;/span&gt;&lt;span&gt;$(&lt;/span&gt;echo &lt;span&gt;&amp;#34;&lt;/span&gt;$credentials&lt;span&gt;&amp;#34;&lt;/span&gt; | jq -r &lt;span&gt;&amp;#39;.Credentials.AccessKeyId&amp;#39;&lt;/span&gt;&lt;span&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;export AWS_SECRET_ACCESS_KEY&lt;span&gt;=&lt;/span&gt;&lt;span&gt;$(&lt;/span&gt;echo &lt;span&gt;&amp;#34;&lt;/span&gt;$credentials&lt;span&gt;&amp;#34;&lt;/span&gt; | jq -r &lt;span&gt;&amp;#39;.Credentials.SecretAccessKey&amp;#39;&lt;/span&gt;&lt;span&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;export AWS_SESSION_TOKEN&lt;span&gt;=&lt;/span&gt;&lt;span&gt;$(&lt;/span&gt;echo &lt;span&gt;&amp;#34;&lt;/span&gt;$credentials&lt;span&gt;&amp;#34;&lt;/span&gt; | jq -r &lt;span&gt;&amp;#39;.Credentials.SessionToken&amp;#39;&lt;/span&gt;&lt;span&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[[&lt;/span&gt; -n &lt;span&gt;&amp;#34;&lt;/span&gt;$AWS_SESSION_TOKEN&lt;span&gt;&amp;#34;&lt;/span&gt; &lt;span&gt;]&lt;/span&gt; &lt;span&gt;&amp;amp;&amp;amp;&lt;/span&gt; echo &lt;span&gt;&amp;#34;Success!&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;#!/usr/bin/env bash
+# shellcheck disable=SC2155
+
+export AWS_PROFILE=china
+
+echo -n &amp;#34;Enter the MFA token code for your AWS China account: &amp;#34; &amp;amp;&amp;amp; read -r token
+
+mfa_arn=&amp;#34;$(aws iam --profile &amp;#34;$AWS_PROFILE&amp;#34; get-user --output text --query User.Arn | sed &amp;#39;s/:user\//:mfa\//&amp;#39;)&amp;#34;
+credentials=&amp;#34;$(aws --profile &amp;#34;$AWS_PROFILE&amp;#34; sts get-session-token --serial-number &amp;#34;$mfa_arn&amp;#34; --token-code &amp;#34;$token&amp;#34; --duration-seconds 86400)&amp;#34;
+
+echo &amp;#34;Got credentials: $credentials&amp;#34;
+
+export AWS_ACCESS_KEY_ID=$(echo &amp;#34;$credentials&amp;#34; | jq -r &amp;#39;.Credentials.AccessKeyId&amp;#39;)
+export AWS_SECRET_ACCESS_KEY=$(echo &amp;#34;$credentials&amp;#34; | jq -r &amp;#39;.Credentials.SecretAccessKey&amp;#39;)
+export AWS_SESSION_TOKEN=$(echo &amp;#34;$credentials&amp;#34; | jq -r &amp;#39;.Credentials.SessionToken&amp;#39;)
+
+[[ -n &amp;#34;$AWS_SESSION_TOKEN&amp;#34; ] &amp;amp;&amp;amp; echo &amp;#34;Success!&amp;#34;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;Important&lt;/strong&gt;: It is necessary to do &lt;code&gt;source china-mfa.sh&lt;/code&gt;. Doing &lt;code&gt;./china-mfa.sh&lt;/code&gt;
 will &lt;strong&gt;not&lt;/strong&gt; work.&lt;/p&gt;
@@ -1037,13 +1036,13 @@ will &lt;strong&gt;not&lt;/strong&gt; work.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;skopeo sync &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; --dest-creds &lt;span&gt;&amp;#34;AWS:&lt;/span&gt;&lt;span&gt;$(&lt;/span&gt;aws ecr get-login-password --region cn-north-1&lt;span&gt;)&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt; &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; --override-os linux --override-arch amd64 &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; --src docker &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; --dest docker &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; quay.io/argoproj/argocd:v2.12.6 &lt;span&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt; &lt;span&gt;{&lt;/span&gt;account_id_mfa&lt;span&gt;}&lt;/span&gt;.dkr.ecr.cn-north-1.amazonaws.com.cn/quay.io/argoproj&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;skopeo sync \
+ --dest-creds &amp;#34;AWS:$(aws ecr get-login-password --region cn-north-1)&amp;#34; \
+ --override-os linux --override-arch amd64 \
+ --src docker \
+ --dest docker \
+ quay.io/argoproj/argocd:v2.12.6 \
+ {account_id_mfa}.dkr.ecr.cn-north-1.amazonaws.com.cn/quay.io/argoproj&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Notes:&lt;/p&gt;
 &lt;ul&gt;
@@ -1067,7 +1066,7 @@ Azure portal. For example:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;az acr login -n &lt;span&gt;{&lt;/span&gt;container registry name&lt;span&gt;}&lt;/span&gt; --expose-token | jq -r &lt;span&gt;&amp;#39;.accessToken&amp;#39;&lt;/span&gt; | skopeo login &lt;span&gt;{&lt;/span&gt;registry&lt;span&gt;}&lt;/span&gt; --password-stdin --username &lt;span&gt;{&lt;/span&gt;username&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;az acr login -n {container registry name} --expose-token | jq -r &amp;#39;.accessToken&amp;#39; | skopeo login {registry} --password-stdin --username {username}&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -1091,7 +1090,7 @@ individual pods, one by one, but&amp;hellip; that is tedious and slow.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;Usage:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;stern pod-query [flags]&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;stern pod-query [flags]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;blockquote&gt;
 &lt;p&gt;The pod-query is a regular expression or a Kubernetes resource in the form
@@ -1102,14 +1101,14 @@ individual pods, one by one, but&amp;hellip; that is tedious and slow.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% stern -n argocd argocd&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% stern -n argocd argocd&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;We can also &lt;code&gt;grep&lt;/code&gt; for specific strings in log lines with &lt;code&gt;--include&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% stern -n argocd argocd --include level&lt;span&gt;=&lt;/span&gt;error&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% stern -n argocd argocd --include level=error&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Or &lt;code&gt;grep -v&lt;/code&gt; with &lt;code&gt;--exclude&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;It&amp;rsquo;s better to use &lt;code&gt;--include&lt;/code&gt; / &lt;code&gt;--exclude&lt;/code&gt; than to &lt;code&gt;| grep&lt;/code&gt;, because it
@@ -1140,7 +1139,7 @@ to figure out what&amp;rsquo;s going wrong.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% kubectl run -it --rm --restart&lt;span&gt;=&lt;/span&gt;Never busybox --image&lt;span&gt;=&lt;/span&gt;gcr.io/google-containers/busybox sh&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% kubectl run -it --rm --restart=Never busybox --image=gcr.io/google-containers/busybox sh&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&amp;hellip;quite verbose, but it works reliably, spawning a basic pod with
 &lt;a href="https://www.busybox.net/"&gt;busybox&lt;/a&gt;.&lt;/p&gt;
@@ -1150,7 +1149,7 @@ a better choice:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% kubectl run -it --rm --restart&lt;span&gt;=&lt;/span&gt;Never busybox --image&lt;span&gt;=&lt;/span&gt;alpine ash&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% kubectl run -it --rm --restart=Never busybox --image=alpine ash&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;You don&amp;rsquo;t need to remember that alpine uses &lt;code&gt;ash&lt;/code&gt; by default, &lt;code&gt;sh&lt;/code&gt; works as
 well. In fact:&lt;/p&gt;
@@ -1158,10 +1157,10 @@ well. In fact:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;/ &lt;span&gt;# ls -al /bin | grep sh&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;lrwxrwxrwx &lt;span&gt;1&lt;/span&gt; root root &lt;span&gt;12&lt;/span&gt; Dec &lt;span&gt;5&lt;/span&gt; 12:17 ash -&amp;gt; /bin/busybox
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;lrwxrwxrwx &lt;span&gt;1&lt;/span&gt; root root &lt;span&gt;12&lt;/span&gt; Dec &lt;span&gt;5&lt;/span&gt; 12:17 fdflush -&amp;gt; /bin/busybox
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;lrwxrwxrwx &lt;span&gt;1&lt;/span&gt; root root &lt;span&gt;12&lt;/span&gt; Dec &lt;span&gt;5&lt;/span&gt; 12:17 sh -&amp;gt; /bin/busybox&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;/ # ls -al /bin | grep sh
+lrwxrwxrwx 1 root root 12 Dec 5 12:17 ash -&amp;gt; /bin/busybox
+lrwxrwxrwx 1 root root 12 Dec 5 12:17 fdflush -&amp;gt; /bin/busybox
+lrwxrwxrwx 1 root root 12 Dec 5 12:17 sh -&amp;gt; /bin/busybox&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Then I could do, for example, &lt;code&gt;apk update&lt;/code&gt; + &lt;code&gt;apk add mtr nmap&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Alpine is marvellous for this because &lt;code&gt;apk&lt;/code&gt; is very lightweight (and, hence,
@@ -1171,7 +1170,7 @@ fast!) and the available packages from upstream are quite comprehensive.&lt;/p&g
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% kubectl exec &amp;lt;POD-NAME&amp;gt; -c &amp;lt;CONTAINER-NAME&amp;gt; -- &amp;lt;COMMAND&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% kubectl exec &amp;lt;POD-NAME&amp;gt; -c &amp;lt;CONTAINER-NAME&amp;gt; -- &amp;lt;COMMAND&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&amp;hellip;however you cannot choose a custom image this way. You&amp;rsquo;re stuck with whatever
 the pod is running.&lt;/p&gt;
@@ -1181,7 +1180,7 @@ versions of kubernetes have the &lt;code&gt;kubectl debug&lt;/code&gt; command:&
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% kubectl debug -it &amp;lt;POD-NAME&amp;gt; --image&lt;span&gt;=&lt;/span&gt;alpine &lt;span&gt;[&lt;/span&gt;--target&lt;span&gt;=&lt;/span&gt;&amp;lt;POD-NAME&amp;gt;&lt;span&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% kubectl debug -it &amp;lt;POD-NAME&amp;gt; --image=alpine [--target=&amp;lt;POD-NAME&amp;gt;]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Happy debugging!&lt;/p&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Kubernetes: debugging services"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Helm: JSON schema generation</title><link>https://perrotta.dev/2024/11/helm-json-schema-generation/</link><pubDate>Thu, 14 Nov 2024 15:05:49 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2024/11/helm-json-schema-generation/</guid><description>&lt;p&gt;Helm charts support the inclusion of a &lt;code&gt;values.schema.json&lt;/code&gt; file to validate
@@ -1199,16 +1198,16 @@ schema from scratch, by hand.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;helm plugin install https://github.com/karuppiah7890/helm-schema-gen.git
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;cd path/to/helm/chart
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;helm schema-gen values.yaml | tee values.schema.json&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;helm plugin install https://github.com/karuppiah7890/helm-schema-gen.git
+cd path/to/helm/chart
+helm schema-gen values.yaml | tee values.schema.json&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Afterwards, test the generated schema with:&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;helm lint path/to/helm/chart&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;helm lint path/to/helm/chart&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Usually I need to do some follow-up edits to the generated file, including:&lt;/p&gt;
 &lt;ul&gt;
@@ -1244,30 +1243,30 @@ read-only.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;bash&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;#!/usr/bin/env bash
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;#&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# Check that the directory name matches the chart name in Chart.yaml.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;#&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# Examples:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# - foo/Chart.yaml with &amp;#34;name: hey-foo&amp;#34; fails the check.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# - foo/Chart.yaml with &amp;#34;name: foo&amp;#34; passes the check.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;#&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;# Usage: $0 [path/to/chart/Chart.yaml ...]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;for&lt;/span&gt; chart in &lt;span&gt;&amp;#34;&lt;/span&gt;$@&lt;span&gt;&amp;#34;&lt;/span&gt;; &lt;span&gt;do&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	dirname&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;&lt;span&gt;$(&lt;/span&gt;basename &lt;span&gt;&amp;#34;&lt;/span&gt;&lt;span&gt;$(&lt;/span&gt;dirname &lt;span&gt;&amp;#34;&lt;/span&gt;$chart&lt;span&gt;&amp;#34;&lt;/span&gt;&lt;span&gt;)&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;&lt;span&gt;)&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;# Remove trailing slash.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	dirname&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;&lt;span&gt;${&lt;/span&gt;dirname%/&lt;span&gt;}&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;# Fetch chart name from Chart.yaml.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	chart_name&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;&lt;span&gt;$(&lt;/span&gt;yq e &lt;span&gt;&amp;#39;.name&amp;#39;&lt;/span&gt; &lt;span&gt;&amp;#34;&lt;/span&gt;$chart&lt;span&gt;&amp;#34;&lt;/span&gt;&lt;span&gt;)&lt;/span&gt;&lt;span&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;if&lt;/span&gt; &lt;span&gt;[[&lt;/span&gt; $dirname !&lt;span&gt;=&lt;/span&gt; &lt;span&gt;&amp;#34;&lt;/span&gt;$chart_name&lt;span&gt;&amp;#34;&lt;/span&gt; &lt;span&gt;]]&lt;/span&gt;; &lt;span&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;		echo &lt;span&gt;&amp;#34;error: directory name &amp;#39;&lt;/span&gt;&lt;span&gt;${&lt;/span&gt;dirname&lt;span&gt;}&lt;/span&gt;&lt;span&gt;&amp;#39; does not match chart name &amp;#39;&lt;/span&gt;&lt;span&gt;${&lt;/span&gt;chart_name&lt;span&gt;}&lt;/span&gt;&lt;span&gt;&amp;#39;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;		exit &lt;span&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;	&lt;span&gt;fi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;done&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;#!/usr/bin/env bash
+#
+# Check that the directory name matches the chart name in Chart.yaml.
+#
+# Examples:
+# - foo/Chart.yaml with &amp;#34;name: hey-foo&amp;#34; fails the check.
+# - foo/Chart.yaml with &amp;#34;name: foo&amp;#34; passes the check.
+#
+# Usage: $0 [path/to/chart/Chart.yaml ...]
+
+for chart in &amp;#34;$@&amp;#34;; do
+	dirname=&amp;#34;$(basename &amp;#34;$(dirname &amp;#34;$chart&amp;#34;)&amp;#34;)&amp;#34;
+
+	# Remove trailing slash.
+	dirname=&amp;#34;${dirname%/}&amp;#34;
+
+	# Fetch chart name from Chart.yaml.
+	chart_name=&amp;#34;$(yq e &amp;#39;.name&amp;#39; &amp;#34;$chart&amp;#34;)&amp;#34;
+
+	if [[ $dirname != &amp;#34;$chart_name&amp;#34; ]]; then
+		echo &amp;#34;error: directory name &amp;#39;${dirname}&amp;#39; does not match chart name &amp;#39;${chart_name}&amp;#39;&amp;#34;
+		exit 1
+	fi
+done&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;h2 id="reference"&gt;Reference&lt;/h2&gt;
 &lt;p&gt;I asked and self-answered this question on &lt;a href="https://stackoverflow.com/questions/79166730/how-to-enforce-that-the-directory-name-must-match-the-chart-name/79180650#79180650"&gt;Stack Overflow&lt;/a&gt;.&lt;/p&gt;
@@ -1284,7 +1283,7 @@ read-only.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;$ kubectl get pod -o wide --field-selector spec.nodeName&lt;span&gt;={&lt;/span&gt;node_name&lt;span&gt;}&lt;/span&gt; -A&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;$ kubectl get pod -o wide --field-selector spec.nodeName={node_name} -A&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;Source&lt;/strong&gt;: &lt;a href="https://stackoverflow.com/questions/39231880/kubernetes-api-get-pods-on-specific-nodes"&gt;https://stackoverflow.com/questions/39231880/kubernetes-api-get-pods-on-specific-nodes&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;This &lt;em&gt;ought to&lt;/em&gt; be easier to remember&amp;hellip;&lt;/p&gt;
@@ -1296,7 +1295,7 @@ pods did not terminate, even with successive &lt;code&gt;kubectl delete&lt;/code
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl delete pod traefik-&lt;span&gt;{&lt;/span&gt;...&lt;span&gt;}&lt;/span&gt; --grace-period&lt;span&gt;=&lt;/span&gt;&lt;span&gt;0&lt;/span&gt; --force --namespace kube-system&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl delete pod traefik-{...} --grace-period=0 --force --namespace kube-system&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;Source&lt;/strong&gt;: &lt;a href="https://stackoverflow.com/questions/35453792/pods-stuck-in-terminating-status"&gt;https://stackoverflow.com/questions/35453792/pods-stuck-in-terminating-status&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: kubectl: force delete pods"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;</description></item><item><title>New APKBUILD: argocd</title><link>https://perrotta.dev/2024/10/new-apkbuild-argocd/</link><pubDate>Wed, 09 Oct 2024 23:03:32 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>alpine-linux</category><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2024/10/new-apkbuild-argocd/</guid><description>&lt;p&gt;&lt;a href="https://argo-cd.readthedocs.io/en/stable/"&gt;ArgoCD&lt;/a&gt; is a widely used GitOps
@@ -1311,14 +1310,14 @@ There were a couple of issues with &lt;code&gt;-buildmode=pie&lt;/code&gt;, addr
 &lt;p&gt;Also, not every architecture is compatible with it. The following error message
 appears in ARM builds:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;cannot use math.MaxInt64 (untyped int constant 9223372036854775807) as int value in argument to env.ParseNumFromEnv (overflows)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;cannot use math.MaxInt64 (untyped int constant 9223372036854775807) as int value in argument to env.ParseNumFromEnv (overflows)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Anyway, once it is merged upstream, enjoy!&lt;/p&gt;
 &lt;div class="codeblock" data-lang="shell"&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;% doas apk add argocd&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% doas apk add argocd&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: New APKBUILD: argocd"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/alpine-linux/"&gt;#alpine-linux&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;</description></item><item><title>helm: list recent chart upgrades</title><link>https://perrotta.dev/2024/09/helm-list-recent-chart-upgrades/</link><pubDate>Tue, 24 Sep 2024 14:21:20 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2024/09/helm-list-recent-chart-upgrades/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Given a kubernetes cluster with many helm charts in
 different namespaces, how to use &lt;code&gt;helm&lt;/code&gt; to query the list of the last recently
@@ -1333,7 +1332,7 @@ would also be OK.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;helm ls --max &lt;span&gt;99999&lt;/span&gt; -A -o json | jq -r &lt;span&gt;&amp;#39;.[] | &amp;#34;\(.updated)\t\(.name)&amp;#34;&amp;#39;&lt;/span&gt; | sort | tail | column -t&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;helm ls --max 99999 -A -o json | jq -r &amp;#39;.[] | &amp;#34;\(.updated)\t\(.name)&amp;#34;&amp;#39; | sort | tail | column -t&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;-A&lt;/code&gt; for all namespaces&lt;/li&gt;
@@ -1345,46 +1344,46 @@ would also be OK.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span&gt;&lt;span&gt;{
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;name&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;hoth-cb7f8a327&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;namespace&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;default&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;revision&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;2&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;updated&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;2024-06-14 15:02:16.775174131 +0000 UTC&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;status&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;deployed&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;chart&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;hoth-0.1.0&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; &lt;span&gt;&amp;#34;app_version&amp;#34;&lt;/span&gt;: &lt;span&gt;&amp;#34;1.0.0&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-json"&gt;{
+ &amp;#34;name&amp;#34;: &amp;#34;hoth-cb7f8a327&amp;#34;,
+ &amp;#34;namespace&amp;#34;: &amp;#34;default&amp;#34;,
+ &amp;#34;revision&amp;#34;: &amp;#34;2&amp;#34;,
+ &amp;#34;updated&amp;#34;: &amp;#34;2024-06-14 15:02:16.775174131 &amp;#43;0000 UTC&amp;#34;,
+ &amp;#34;status&amp;#34;: &amp;#34;deployed&amp;#34;,
+ &amp;#34;chart&amp;#34;: &amp;#34;hoth-0.1.0&amp;#34;,
+ &amp;#34;app_version&amp;#34;: &amp;#34;1.0.0&amp;#34;
+}&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Sample output of the aforementioned command:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;2024-09-24 10:56:15.655674586 +0000 UTC geonosis
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;2024-09-24 10:56:15.731630075 +0000 UTC coruscant
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;2024-09-24 11:01:35.156973247 +0000 UTC endor
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;2024-09-24 11:02:30.314014351 +0000 UTC hoth&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;2024-09-24 10:56:15.655674586 &amp;#43;0000 UTC geonosis
+2024-09-24 10:56:15.731630075 &amp;#43;0000 UTC coruscant
+2024-09-24 11:01:35.156973247 &amp;#43;0000 UTC endor
+2024-09-24 11:02:30.314014351 &amp;#43;0000 UTC hoth&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: helm: list recent chart upgrades"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Helm: list all installed charts in the cluster</title><link>https://perrotta.dev/2024/08/helm-list-all-installed-charts-in-the-cluster/</link><pubDate>Mon, 26 Aug 2024 17:57:07 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2024/08/helm-list-all-installed-charts-in-the-cluster/</guid><description>&lt;p&gt;In theory this ought to be really easy:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;$ helm ls -h
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;[...]
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; -a, --all show all releases without any filter applied
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; -A, --all-namespaces list releases across all namespaces&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;$ helm ls -h
+[...]
+ -a, --all show all releases without any filter applied
+ -A, --all-namespaces list releases across all namespaces&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;So&amp;hellip;one of these should work, right?&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;helm ls -a
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;helm ls -A&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;helm ls -a
+helm ls -A&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;I have a &lt;code&gt;sms-service&lt;/code&gt; running in the cluster in the &lt;code&gt;default&lt;/code&gt; namespace. If I
 &lt;code&gt;grep&lt;/code&gt; any of the previous commands to &lt;code&gt;sms&lt;/code&gt;, it does not show up though.&lt;/p&gt;
 &lt;p&gt;Then&amp;hellip;maybe &lt;code&gt;helm ls -a -A&lt;/code&gt;? Nope.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s what works:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;$ helm ls -a --max 9999 | grep sms
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;sms-service 	default 	356 	2024-08-26 14:09:50.705277885 +0000 UTC	deployed	sms-v0.1.0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;$ helm ls -a --max 9999 | grep sms
+sms-service 	default 	356 	2024-08-26 14:09:50.705277885 &amp;#43;0000 UTC	deployed	sms-v0.1.0&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Kinda ridiculous, eh?&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt; -m, --max int maximum number of releases to fetch (default 256)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt; -m, --max int maximum number of releases to fetch (default 256)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;From &lt;a href="https://helm.sh/docs/helm/helm_list/"&gt;https://helm.sh/docs/helm/helm_list/&lt;/a&gt;:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -1395,7 +1394,7 @@ flag with the &amp;lsquo;&amp;ndash;offset&amp;rsquo; flag allows you to page th
 &lt;/blockquote&gt;
 &lt;p&gt;Therefore I settle with this form:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;$ helm ls -a -A --max 9999 | grep sms&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;$ helm ls -a -A --max 9999 | grep sms&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Happy helming.&lt;/p&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Helm: list all installed charts in the cluster"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;</description></item><item><title>kubectl: print all secret values in plain text</title><link>https://perrotta.dev/2024/08/kubectl-print-all-secret-values-in-plain-text/</link><pubDate>Tue, 06 Aug 2024 13:37:31 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>kubernetes</category><guid>https://perrotta.dev/2024/08/kubectl-print-all-secret-values-in-plain-text/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Given a &lt;a href="https://kubernetes.io/docs/concepts/configuration/secret/"&gt;kubernetes
@@ -1410,7 +1409,7 @@ bookkeeping purposes anyway.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl cat secret -n infra-services my-cool-secret&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl cat secret -n infra-services my-cool-secret&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Except that there is no &lt;code&gt;kubectl cat&lt;/code&gt;, what a shame. It would be really great if
 we had it, for consistency with &lt;code&gt;systemctl cat&lt;/code&gt;. Oh well.&lt;/p&gt;
@@ -1424,12 +1423,12 @@ acceptable solution.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;EDITOR&lt;span&gt;=&lt;/span&gt;cat kubectl edit secret -n infra-services my-cool-secret&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;EDITOR=cat kubectl edit secret -n infra-services my-cool-secret&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&amp;hellip;which works exactly as you would expect &lt;code&gt;kubectl cat&lt;/code&gt; to behave. It displays
 a warning at the end:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;Edit cancelled, no changes made.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;Edit cancelled, no changes made.&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&amp;hellip;however it can be duly ignored.&lt;/p&gt;
 &lt;p&gt;If we didn&amp;rsquo;t have this trick, we could have:&lt;/p&gt;
@@ -1446,7 +1445,7 @@ by one (super tedious) c.f. &lt;a href="https://perrotta.dev/2024/07/kubectl-get
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl logs -n argocd argocd-repo-server-5d59975687-dxnh7&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl logs -n argocd argocd-repo-server-5d59975687-dxnh7&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;But how do you know what hash to use after &lt;code&gt;server-&lt;/code&gt;?&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Option 1)&lt;/strong&gt;: TAB auto-completion:&lt;/p&gt;
@@ -1454,7 +1453,7 @@ by one (super tedious) c.f. &lt;a href="https://perrotta.dev/2024/07/kubectl-get
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl logs -n argocd argocd-repo-server-&amp;lt;TAB&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl logs -n argocd argocd-repo-server-&amp;lt;TAB&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;Caveats&lt;/strong&gt;:&lt;/p&gt;
 &lt;ul&gt;
@@ -1467,7 +1466,7 @@ of the hash before hitting TAB again, that&amp;rsquo;s annoying and non-ergonomi
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl logs -n argocd &lt;span&gt;$(&lt;/span&gt;kubectl get pod -n argocd | grep argocd-repo-server | cut -f1 -d&lt;span&gt;&amp;#39; &amp;#39;&lt;/span&gt; | head -1&lt;span&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl logs -n argocd $(kubectl get pod -n argocd | grep argocd-repo-server | cut -f1 -d&amp;#39; &amp;#39; | head -1)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;Caveats&lt;/strong&gt;:&lt;/p&gt;
 &lt;ul&gt;
@@ -1479,8 +1478,8 @@ of the hash before hitting TAB again, that&amp;rsquo;s annoying and non-ergonomi
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;kubectl logs -n argocd -l app&lt;span&gt;=&lt;/span&gt;app.kubernetes.io/instance&lt;span&gt;=&lt;/span&gt;argocd
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;&lt;span&gt;[&lt;/span&gt;--all-containers&lt;span&gt;]&lt;/span&gt; &lt;span&gt;[&lt;/span&gt;--ignore-errors&lt;span&gt;]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;kubectl logs -n argocd -l app=app.kubernetes.io/instance=argocd
+[--all-containers] [--ignore-errors]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;This is much more ergonomic.&lt;/p&gt;
 &lt;p&gt;You still need to figure out what label to use though:&lt;/p&gt;
@@ -1488,15 +1487,15 @@ of the hash before hitting TAB again, that&amp;rsquo;s annoying and non-ergonomi
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;$ kubectl describe pod -n argocd argocd-repo-server-5d59975687-dxnh7 | grep -A7 -i labels:
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;Labels: app.kubernetes.io/component&lt;span&gt;=&lt;/span&gt;repo-server
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; app.kubernetes.io/instance&lt;span&gt;=&lt;/span&gt;argocd
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; app.kubernetes.io/managed-by&lt;span&gt;=&lt;/span&gt;Helm
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; app.kubernetes.io/name&lt;span&gt;=&lt;/span&gt;argocd-repo-server
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; app.kubernetes.io/part-of&lt;span&gt;=&lt;/span&gt;argocd
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; app.kubernetes.io/version&lt;span&gt;=&lt;/span&gt;v2.11.4
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; helm.sh/chart&lt;span&gt;=&lt;/span&gt;argo-cd-7.3.4
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt; pod-template-hash&lt;span&gt;=&lt;/span&gt;5d59975687&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;$ kubectl describe pod -n argocd argocd-repo-server-5d59975687-dxnh7 | grep -A7 -i labels:
+Labels: app.kubernetes.io/component=repo-server
+ app.kubernetes.io/instance=argocd
+ app.kubernetes.io/managed-by=Helm
+ app.kubernetes.io/name=argocd-repo-server
+ app.kubernetes.io/part-of=argocd
+ app.kubernetes.io/version=v2.11.4
+ helm.sh/chart=argo-cd-7.3.4
+ pod-template-hash=5d59975687&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;Source&lt;/strong&gt;: &lt;a href="https://stackoverflow.com/questions/33069736/how-do-i-get-logs-from-all-pods-of-a-kubernetes-replication-controller"&gt;https://stackoverflow.com/questions/33069736/how-do-i-get-logs-from-all-pods-of-a-kubernetes-replication-controller&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Happy logging!&lt;/p&gt;
@@ -1514,8 +1513,8 @@ typical command:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;ubuntu@ubuntu:~ $ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#39;{.data.value}&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;eW91IGFyZSBjdXJpb3VzIGFyZW50IHlvdQ&lt;span&gt;==&lt;/span&gt;ubuntu@ubuntu:~ $&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;ubuntu@ubuntu:~ $ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath=&amp;#39;{.data.value}&amp;#39;
+eW91IGFyZSBjdXJpb3VzIGFyZW50IHlvdQ==ubuntu@ubuntu:~ $&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;But isn&amp;rsquo;t this ugly? The prompt is concatenated with the output.&lt;/p&gt;
 &lt;p&gt;It turns out &lt;code&gt;jsonpath&lt;/code&gt; can emit a newline for improved readability:&lt;/p&gt;
@@ -1523,9 +1522,9 @@ typical command:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;ubuntu@ubuntu:~ $ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#39;{.data.value}{&amp;#34;\n&amp;#34;}&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;eW91IGFyZSBjdXJpb3VzIGFyZW50IHlvdQ&lt;span&gt;==&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;ubuntu@ubuntu:~ $&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;ubuntu@ubuntu:~ $ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath=&amp;#39;{.data.value}{&amp;#34;\n&amp;#34;}&amp;#39;
+eW91IGFyZSBjdXJpb3VzIGFyZW50IHlvdQ==
+ubuntu@ubuntu:~ $&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Note that the &lt;code&gt;{&amp;quot;\n&amp;quot;}&lt;/code&gt; &lt;strong&gt;must&lt;/strong&gt; be quoted.&lt;/p&gt;
 &lt;p&gt;And then you could pipe it to &lt;code&gt;base64 -d&lt;/code&gt; afterwards, as usual, and it&amp;rsquo;s a no-op:&lt;/p&gt;
@@ -1533,8 +1532,8 @@ typical command:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;$ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#39;{.data.value}{&amp;#34;\n&amp;#34;}&amp;#39;&lt;/span&gt; | base64 -d
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;you are curious arent youubuntu@ubuntu:~ $&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;$ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath=&amp;#39;{.data.value}{&amp;#34;\n&amp;#34;}&amp;#39; | base64 -d
+you are curious arent youubuntu@ubuntu:~ $&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;However, the &lt;code&gt;base64&lt;/code&gt; output also swallows the newline. This can be resolved
 with a simple &lt;code&gt;echo&lt;/code&gt;:&lt;/p&gt;
@@ -1542,9 +1541,9 @@ with a simple &lt;code&gt;echo&lt;/code&gt;:&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span&gt;&lt;span&gt;$ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath&lt;span&gt;=&lt;/span&gt;&lt;span&gt;&amp;#39;{.data.value}{&amp;#34;\n&amp;#34;}&amp;#39;&lt;/span&gt; | base64 -d &lt;span&gt;&amp;amp;&amp;amp;&lt;/span&gt; echo
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;you are curious arent you
-&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;span&gt;ubuntu@ubuntu:~ $&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;$ kubectl get secret -n argocd argocd-github-webhook-secret -o jsonpath=&amp;#39;{.data.value}{&amp;#34;\n&amp;#34;}&amp;#39; | base64 -d &amp;amp;&amp;amp; echo
+you are curious arent you
+ubuntu@ubuntu:~ $&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Newlines are hard, eh?&lt;/p&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: kubectl: get secret with jsonpath and add a newline"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Adding a healthcheck to chartmuseum in AWS Fargate</title><link>https://perrotta.dev/2024/05/adding-a-healthcheck-to-chartmuseum-in-aws-fargate/</link><pubDate>Fri, 17 May 2024 11:15:09 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>aws</category><category>dev</category><category>docker</category><category>kubernetes</category><guid>https://perrotta.dev/2024/05/adding-a-healthcheck-to-chartmuseum-in-aws-fargate/</guid><description>&lt;p&gt;Assume that you have a &lt;a href="https://chartmuseum.com/"&gt;Chartmuseum&lt;/a&gt; container running
@@ -1557,23 +1556,23 @@ definition associated with the container.&lt;/p&gt;
 docs&lt;/a&gt;
 suggest using &lt;code&gt;curl&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;[&amp;#34;CMD-SHELL&amp;#34;, &amp;#34;curl -f http://localhost/ || exit 1&amp;#34;]&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;[&amp;#34;CMD-SHELL&amp;#34;, &amp;#34;curl -f http://localhost/ || exit 1&amp;#34;]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;For Chartmuseum specifically we&amp;rsquo;re interested in its &lt;code&gt;/health&lt;/code&gt; endpoint, as per
 &lt;a href="https://github.com/helm/chartmuseum/issues/28"&gt;this reference&lt;/a&gt;:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;[&amp;#34;CMD-SHELL&amp;#34;, &amp;#34;curl -f http://localhost/health || exit 1&amp;#34;]&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;[&amp;#34;CMD-SHELL&amp;#34;, &amp;#34;curl -f http://localhost/health || exit 1&amp;#34;]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;But we&amp;rsquo;re using port 8080:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;[&amp;#34;CMD-SHELL&amp;#34;, &amp;#34;curl -f http://localhost:8080/health || exit 1&amp;#34;]&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;[&amp;#34;CMD-SHELL&amp;#34;, &amp;#34;curl -f http://localhost:8080/health || exit 1&amp;#34;]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;If you use this healthcheck for the official chartmuseum image
 (&lt;code&gt;ghcr.io/helm/chartmuseum&lt;/code&gt;) it will fail, because the Alpine Linux environment
 it uses does not contain &lt;code&gt;curl&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;A straightforward fix is to use &lt;code&gt;wget&lt;/code&gt; instead:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-plaintext" data-lang="plaintext"&gt;&lt;span&gt;&lt;span&gt;[&amp;#34;CMD-SHELL&amp;#34;, &amp;#34;wget -q --spider http://localhost:8080/health || exit 1&amp;#34;]&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;[&amp;#34;CMD-SHELL&amp;#34;, &amp;#34;wget -q --spider http://localhost:8080/health || exit 1&amp;#34;]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;code&gt;--spider&lt;/code&gt; is needed because we do not want to download anything, &lt;code&gt;-q&lt;/code&gt; is
 optional and short for &amp;ldquo;quiet&amp;rdquo;.&lt;/p&gt;
@@ -1582,7 +1581,7 @@ optional and short for &amp;ldquo;quiet&amp;rdquo;.&lt;/p&gt;
  &lt;div class="codeblock-header"&gt;
  &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
  &lt;/div&gt;
- &lt;div class="highlight"&gt;&lt;pre tabindex="0"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span&gt;&lt;span&gt;{&lt;span&gt;&amp;#34;healthy&amp;#34;&lt;/span&gt;:&lt;span&gt;true&lt;/span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-json"&gt;{&amp;#34;healthy&amp;#34;:true}&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;References: &lt;a href="https://stackoverflow.com/questions/47722898/how-can-i-make-a-docker-healthcheck-with-wget-instead-of-curl"&gt;https://stackoverflow.com/questions/47722898/how-can-i-make-a-docker-healthcheck-with-wget-instead-of-curl&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Adding a healthcheck to chartmuseum in AWS Fargate"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/aws/"&gt;#aws&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/docker/"&gt;#docker&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/kubernetes/"&gt;#kubernetes&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
