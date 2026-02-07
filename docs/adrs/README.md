@@ -16,6 +16,7 @@ technical decisions in the blog infrastructure.
 | [0005](0005-webmention-support.md) | WebMention Support | Proposed | 2026-01-01 |
 | [0006](0006-precomputed-post-relationships.md) | Pre-computed Post Relationships | Accepted | 2026-01-18 |
 | [0007](0007-full-text-search.md) | Full-Text Search | Proposed | 2026-02-07 |
+| [0008](0008-bearblog-discover-cross-posting.md) | Bear Blog Discover Cross-posting | Proposed | 2026-02-07 |
 
 <!-- markdownlint-enable MD013 -->
 
