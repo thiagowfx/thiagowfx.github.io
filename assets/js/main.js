@@ -97,10 +97,10 @@ document.addEventListener("click", function (e) {
 });
 
 document.addEventListener("click", function (event) {
-  if (!event.target.matches("[data-copy-code]")) {
+  const button = event.target.closest("[data-copy-code]");
+  if (!button) {
     return;
   }
-  const button = event.target;
   const container = button.closest(".codeblock");
   if (!container) {
     return;
@@ -116,16 +116,16 @@ document.addEventListener("click", function (event) {
   navigator.clipboard
     .writeText(text)
     .then(function () {
-      button.dataset.originalLabel = button.textContent;
-      button.textContent = "✅";
+      button.dataset.originalHtml = button.innerHTML;
+      button.innerHTML =
+        '<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><polyline points="20 6 9 17 4 12"></polyline></svg>';
       setTimeout(function () {
-        button.textContent = button.dataset.originalLabel || "📋";
+        button.innerHTML = button.dataset.originalHtml;
       }, 1500);
     })
     .catch(function () {
-      button.textContent = "❌";
       setTimeout(function () {
-        button.textContent = button.dataset.originalLabel || "📋";
+        button.innerHTML = button.dataset.originalHtml;
       }, 1500);
     });
 });
