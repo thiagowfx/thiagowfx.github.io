@@ -50,3 +50,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Posts use frontmatter with title, date, and tags
 - No AI assistance is used for content creation or editing
 - Internal plans, notes, and summaries: Create in `plans/` directory with naming pattern `YYYY_MM_DD_DESCRIPTION.md` in SCREAMING_SNAKE_CASE (never in repo root)
+
+## Blog Post Writing Style
+
+- **Structure**: Problem-solution oriented. Open with a bold **Problem statement**, then context, then solution, then brief closing
+- **Tone**: Direct, concise, conversational first-person. Casual but technical ("That simply works™", "Yet, here we are")
+- **Length**: Short to medium (40–80 lines typical). Don't pad with filler
+- **Code-heavy**: Show before/after YAML/shell snippets, actual command output, and diffs rather than explaining in prose
+- **Show the journey**: When relevant, show what didn't work before showing what did
+- **Links**: Reference official docs, GitHub issues/PRs, and related blog posts (using `{{< ref "..." >}}` Hugo shortcodes for internal links)
+- **Blockquotes**: Use blockquotes for quoting documentation or tool output
+- **Closing**: Keep it brief — a sentence or two of reflection, not a summary of the post
+- **No fluff**: No introductions like "In this post we'll explore...". Jump straight into the problem
+- **Title style**: Lowercase, often namespaced (e.g. "pre-commit: feature name")
