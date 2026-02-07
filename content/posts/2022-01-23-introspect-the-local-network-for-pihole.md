@@ -129,8 +129,7 @@ Note: Restart `dhcpcd` to apply: `systemctl restart dhcpcd`.
 
 - `/etc/network/interfaces` if running Raspberry Pi OS (debian):
 
-```shell
-$ sudoedit /etc/network/interfaces.d/pihole
+```text {filename="/etc/network/interfaces.d/pihole"}
 auto lo
 iface lo inet loopback
 

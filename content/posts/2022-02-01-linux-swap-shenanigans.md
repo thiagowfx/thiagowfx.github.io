@@ -83,7 +83,7 @@ Filename				Type		Size		Used		Priority
 
 Then finally add it to your `/etc/fstab` so that it is automatically mounted in subsequent boots:
 
-```shell
+```text {filename="/etc/fstab"}
 # swap file
 /swapfile none swap defaults 0 0
 ```
