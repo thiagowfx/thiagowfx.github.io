@@ -9,9 +9,13 @@ The following is a carefully curated subset[^1] of them ([OPML](/blogroll.opml))
 
 ---
 
+## Blogs
+
 {{< blogroll >}}
 
 ---
+
+## Friends
 
 {{< blogroll_friends >}}
 
