@@ -88,6 +88,12 @@ other choice is possible. Not if you want to become state-of-the-art. Sorry.
 - have a [workspace]({{< ref "2025-12-02-try" >}}) ready? Check
 - have `git init` run in the workspace? Check
 - have two claude code sessions open, one for content and one for form? Check
+- have a `Justfile` ready? Check
+
+```make {filename="Justfile"}
+watch:
+        typst watch slides.typ
+```
 
 ## Part IV: [The Future Starts With You](https://www.youtube.com/watch?v=XJIgHWnkcnA)
 
