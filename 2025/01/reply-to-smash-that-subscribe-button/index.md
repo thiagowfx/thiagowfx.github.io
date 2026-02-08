@@ -37,6 +37,6 @@ On another note: RSS is still well and
 thank you very much.
 
 It's still a good idea to [hit the brakes]({{< ref
-"2024-12-21-reply-to-i-hate-the-news" >}}) every once in a while though, if not
+"2024-12-21-i-hate-the-news" >}}) every once in a while though, if not
 always.
 
