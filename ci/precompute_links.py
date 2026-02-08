@@ -261,6 +261,12 @@ def main():
     # Sort posts by date for related/previously calculations
     posts_by_date = sorted(posts, key=lambda p: p["date"], reverse=True)
 
+    # Pre-compute valid post IDs for filtering outlinks
+    valid_post_ids = {p["id"] for p in posts}
+
+    # Build date lookup for sorting
+    date_by_id = {p["id"]: p["date"] for p in posts}
+
     # Compute relationships for each post
     print("Computing relationships...", file=sys.stderr)
     links_data = {}
@@ -282,9 +288,14 @@ def main():
 
         previously = compute_previously(post, posts_by_date)
 
+        # Sort outlinks by date (newest first), filtered to valid posts
+        valid_outlinks = [oid for oid in outlinks_index.get(post_id, set()) if oid in valid_post_ids]
+        valid_outlinks.sort(key=lambda oid: date_by_id.get(oid, datetime.min), reverse=True)
+
         links_data[post_id] = {
             "hugo_path": post["hugo_path"],
             "backlinks": sorted_backlinks,
+            "outlinks": valid_outlinks,
             "related": related,
             "previously": previously,
         }

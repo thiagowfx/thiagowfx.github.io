@@ -1,0 +1,224 @@
+{{- /* Skip mini graph in quick builds */ -}}
+{{- if ne hugo.Environment "quick" -}}
+
+{{- $currentFilename := path.Base .File.Path | replaceRE "\\.md$" "" -}}
+{{- $linkData := index $.Site.Data.links.posts $currentFilename -}}
+{{- $backlinkIds := $linkData.backlinks | default slice -}}
+{{- $outlinkIds := $linkData.outlinks | default slice -}}
+{{- $paths := $.Site.Data.links.paths -}}
+
+{{- /* Deduplicate neighbor IDs using a dict */ -}}
+{{- $neighborDict := dict -}}
+{{- range $backlinkIds -}}
+  {{- $neighborDict = merge $neighborDict (dict . true) -}}
+{{- end -}}
+{{- range $outlinkIds -}}
+  {{- $neighborDict = merge $neighborDict (dict . true) -}}
+{{- end -}}
+
+{{- /* Count neighbors */ -}}
+{{- $neighborCount := 0 -}}
+{{- range $id, $_ := $neighborDict -}}
+  {{- $neighborCount = add $neighborCount 1 -}}
+{{- end -}}
+
+{{- /* Only render if connections exist */ -}}
+{{- if gt $neighborCount 0 -}}
+
+{{- /* Collect all node IDs in this neighborhood (current + neighbors) */ -}}
+{{- $nodeIds := dict $currentFilename true -}}
+{{- range $id, $_ := $neighborDict -}}
+  {{- $nodeIds = merge $nodeIds (dict $id true) -}}
+{{- end -}}
+
+{{- /* Filter graph edges: both endpoints must be in the neighborhood */ -}}
+{{- $edges := slice -}}
+{{- range $.Site.Data.links.graph.edges -}}
+  {{- $src := .source -}}
+  {{- $tgt := .target -}}
+  {{- if and (index $nodeIds $src) (index $nodeIds $tgt) -}}
+    {{- $edges = $edges | append . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Resolve node IDs to page objects for titles and URLs */ -}}
+{{- $nodes := slice -}}
+{{- range $id, $_ := $nodeIds -}}
+  {{- $hugoPath := index $paths $id -}}
+  {{- if $hugoPath -}}
+    {{- $page := $.Site.GetPage $hugoPath -}}
+    {{- if $page -}}
+      {{- $nodes = $nodes | append (dict "id" $id "title" $page.Title "url" $page.Permalink "isCurrent" (eq $id $currentFilename)) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+<div class="mini-graph" style="border: 2px solid var(--border-color); border-radius: .5rem; padding: 1.5rem 1.5rem 1rem; margin-top: 1.5rem;">
+  <h4 style="margin-top: 0; margin-bottom: 0.25rem;"><a href="/graph/" style="text-decoration: none;">Connections</a></h4>
+  <div id="mini-graph-container" style="position: relative; width: 100%; height: 180px; overflow: hidden;">
+    <div id="mini-graph-tooltip" style="position: absolute; pointer-events: none; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: .25rem; padding: 0.3rem 0.5rem; font-size: 0.8rem; max-width: 240px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); display: none; z-index: 10; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></div>
+  </div>
+</div>
+
+<script src="/vendor/d3.v7.min.js"></script>
+<script>
+(function() {
+  const nodes = {{ $nodes | jsonify | safeJS }};
+  const edges = {{ $edges | jsonify | safeJS }};
+  const currentId = {{ $currentFilename | jsonify | safeJS }};
+
+  const container = document.getElementById('mini-graph-container');
+  const tooltip = document.getElementById('mini-graph-tooltip');
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  const style = getComputedStyle(document.documentElement);
+  const linkColor = style.getPropertyValue('--border-color').trim() || '#ccc';
+  const currentColor = style.getPropertyValue('--link-color').trim() || '#0066cc';
+  const neighborColor = style.getPropertyValue('--color-gray').trim() || '#999';
+  const bgColor = style.getPropertyValue('--bg-color').trim() || '#fff';
+
+  // Pin current node at center
+  const currentNode = nodes.find(n => n.id === currentId);
+  if (currentNode) {
+    currentNode.fx = width / 2;
+    currentNode.fy = height / 2;
+  }
+
+  const svg = d3.select('#mini-graph-container')
+    .append('svg')
+    .attr('width', '100%')
+    .attr('height', '100%')
+    .attr('viewBox', [0, 0, width, height]);
+
+  const g = svg.append('g');
+
+  // Arrowhead marker
+  svg.append('defs').append('marker')
+    .attr('id', 'mini-arrow')
+    .attr('viewBox', '0 0 10 10')
+    .attr('refX', 10)
+    .attr('refY', 5)
+    .attr('markerWidth', 6)
+    .attr('markerHeight', 6)
+    .attr('orient', 'auto')
+    .append('path')
+    .attr('d', 'M0,0 L10,5 L0,10 Z')
+    .attr('fill', linkColor);
+
+  const nodeRadius = d => d.isCurrent ? 8 : 5;
+
+  const simulation = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(edges).id(d => d.id).distance(80))
+    .force('charge', d3.forceManyBody().strength(-150))
+    .force('center', d3.forceCenter(width / 2, height / 2))
+    .force('collision', d3.forceCollide().radius(25));
+
+  const link = g.append('g')
+    .selectAll('line')
+    .data(edges)
+    .join('line')
+    .attr('stroke', linkColor)
+    .attr('stroke-opacity', 0.6)
+    .attr('stroke-width', 1.5)
+    .attr('marker-end', 'url(#mini-arrow)');
+
+  const node = g.append('g')
+    .selectAll('circle')
+    .data(nodes, d => d.id)
+    .join('circle')
+    .attr('r', nodeRadius)
+    .attr('fill', d => d.isCurrent ? currentColor : neighborColor)
+    .attr('stroke', bgColor)
+    .attr('stroke-width', 1.5)
+    .style('cursor', d => d.isCurrent ? 'default' : 'pointer')
+    .call(d3.drag()
+      .on('start', dragstarted)
+      .on('drag', dragged)
+      .on('end', dragended));
+
+  const label = g.append('g')
+    .selectAll('text')
+    .data(nodes, d => d.id)
+    .join('text')
+    .text(d => d.title.length > 25 ? d.title.slice(0, 24) + '…' : d.title)
+    .attr('font-size', '9px')
+    .attr('fill', 'var(--text-color)')
+    .attr('dx', d => nodeRadius(d) + 4)
+    .attr('dy', '0.35em')
+    .style('pointer-events', 'none');
+
+  node.on('click', (event, d) => {
+    if (!d.isCurrent) window.location.href = d.url;
+  });
+
+  node.on('mouseover', function(event, d) {
+    tooltip.textContent = d.title;
+    tooltip.style.display = 'block';
+    const rect = container.getBoundingClientRect();
+    const x = event.clientX - rect.left + 10;
+    const y = event.clientY - rect.top - 10;
+    tooltip.style.left = Math.min(x, rect.width - 250) + 'px';
+    tooltip.style.top = Math.max(0, y) + 'px';
+
+    d3.select(this).attr('fill', currentColor);
+  });
+
+  node.on('mousemove', function(event) {
+    const rect = container.getBoundingClientRect();
+    const x = event.clientX - rect.left + 10;
+    const y = event.clientY - rect.top - 10;
+    tooltip.style.left = Math.min(x, rect.width - 250) + 'px';
+    tooltip.style.top = Math.max(0, y) + 'px';
+  });
+
+  node.on('mouseout', function(event, d) {
+    tooltip.style.display = 'none';
+    d3.select(this).attr('fill', d.isCurrent ? currentColor : neighborColor);
+  });
+
+  simulation.on('tick', () => {
+    // Shorten lines so arrowheads stop at the node edge
+    link.each(function(d) {
+      const dx = d.target.x - d.source.x;
+      const dy = d.target.y - d.source.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      const r = nodeRadius(d.target);
+      d3.select(this)
+        .attr('x1', d.source.x)
+        .attr('y1', d.source.y)
+        .attr('x2', d.target.x - (dx / dist) * r)
+        .attr('y2', d.target.y - (dy / dist) * r);
+    });
+    node
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y);
+    label
+      .attr('x', d => d.x)
+      .attr('y', d => d.y);
+  });
+
+  function dragstarted(event) {
+    if (!event.active) simulation.alphaTarget(0.3).restart();
+    event.subject.fx = event.subject.x;
+    event.subject.fy = event.subject.y;
+  }
+
+  function dragged(event) {
+    event.subject.fx = event.x;
+    event.subject.fy = event.y;
+  }
+
+  function dragended(event) {
+    if (!event.active) simulation.alphaTarget(0);
+    // Keep current node pinned, release others
+    if (event.subject.id !== currentId) {
+      event.subject.fx = null;
+      event.subject.fy = null;
+    }
+  }
+})();
+</script>
+
+{{- end -}}
+{{- end -}}
