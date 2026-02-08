@@ -102,23 +102,32 @@ commentary url *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    # Extract title from remaining args or use empty string
+    # Extract title from remaining args, or fetch from URL, or use domain as fallback
     title="{{ args }}"
     if [ -z "$title" ]; then
-        # If no title provided, use URL domain as fallback
-        title=$(echo "{{ url }}" | sed -E 's|https?://([^/]+).*|\1|' | tr '[:upper:]' '[:lower:]')
+        # Try to fetch the page title from the URL
+        fetched_title=$(curl -sL "{{ url }}" | htmlq 'title' --text | head -1 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+        if [ -n "$fetched_title" ]; then
+            # Convert to lowercase (only first letter uppercase is handled by keeping first char and lowercasing rest)
+            title=$(echo "$fetched_title" | sed 's/./\L&/g; s/^./\U&/')
+        else
+            # Fallback to URL domain
+            title=$(echo "{{ url }}" | sed -E 's|https?://([^/]+).*|\1|' | tr '[:upper:]' '[:lower:]')
+        fi
     fi
 
     filename=$(echo "$title" | tr '[:upper:]' '[:lower:]' | sed -e 's/[:/]/-/g' | tr -s ' ' | tr ' ' '-')
     filepath="content/posts/`date "+%Y-%m-%d"`-${filename}.md"
 
-    HUGO_EXTERNAL_LINK="{{ url }}" hugo new --kind commentary "${filepath}"
+    HUGO_TITLE="Reply to: ${title}" HUGO_EXTERNAL_LINK="{{ url }}" hugo new --kind commentary "${filepath}"
     {{ editor }} "${filepath}"
 
-    # Rename file based on the actual title from frontmatter
+    # Rename file based on the actual title from frontmatter (strip "Reply to: " prefix for filename)
     actual_title=$(sed -n 's/^title: "\(.*\)"$/\1/p' "${filepath}" | head -1)
     if [ -n "$actual_title" ]; then
-        new_filename=$(echo "$actual_title" | tr '[:upper:]' '[:lower:]' | sed -e 's/[:/]/-/g' | tr -s ' ' | tr ' ' '-')
+        # Remove "Reply to: " prefix for the filename
+        filename_title=$(echo "$actual_title" | sed -e 's/^Reply to: //')
+        new_filename=$(echo "$filename_title" | tr '[:upper:]' '[:lower:]' | sed -e 's/[:/]/-/g' | tr -s ' ' | tr ' ' '-')
         new_filepath="content/posts/$(date "+%Y-%m-%d")-${new_filename}.md"
         if [ "${filepath}" != "${new_filepath}" ]; then
             mv "${filepath}" "${new_filepath}"

@@ -1,6 +1,7 @@
 ---
 {{- $today := now.Format "2006-01-02"}}
-title: "Reply to: {{ replace .Name $today "" | humanize }}"
+{{- $envTitle := getenv "HUGO_TITLE" }}
+title: "{{ if $envTitle }}{{ $envTitle }}{{ else }}Reply to: {{ replace .Name $today "" | humanize }}{{ end }}"
 date: {{ .Date }}
 categories:
   - commentary
