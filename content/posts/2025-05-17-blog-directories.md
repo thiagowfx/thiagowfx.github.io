@@ -4,6 +4,7 @@ date: 2025-05-17T01:16:22+02:00
 tags:
   - dev
   - serenity
+  - socialmedia
 ---
 
 Without social media algorithms, how can you discover new blogs to follow?

@@ -6,6 +6,7 @@ tags:
   - meta
   - privacy
   - serenity
+  - socialmedia
 ---
 
 Sometimes connections simply fade away. Life happens. Privacy prevails. Then why

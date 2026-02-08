@@ -4,6 +4,7 @@ date: 2025-08-09T18:11:39+02:00
 tags:
   - bestof
   - serenity
+  - socialmedia
 ---
 
 I absolutely **never** get any spam calls. This has been true for _many and

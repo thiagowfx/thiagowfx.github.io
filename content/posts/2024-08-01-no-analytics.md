@@ -3,6 +3,7 @@ title: "No analytics"
 date: 2024-08-01T00:48:27+02:00
 tags:
   - serenity
+  - socialmedia
 ---
 
 There are many analytics and tracking offerings for blogs. I don't want any of

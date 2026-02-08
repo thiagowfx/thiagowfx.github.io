@@ -5,6 +5,7 @@ tags:
   - meta
   - privacy
   - serenity
+  - socialmedia
 ---
 
 Following the footsteps of enacting 2025 as a year of [Tech Independence]({{< ref

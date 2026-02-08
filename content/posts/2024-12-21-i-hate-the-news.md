@@ -6,6 +6,7 @@ categories:
 tags:
   - meta
   - serenity
+  - socialmedia
 external_link: "http://www.aaronsw.com/weblog/hatethenews"
 ---
 

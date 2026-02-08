@@ -3,6 +3,7 @@ title: "Record Club"
 date: 2025-11-05T11:30:05+01:00
 tags:
   - serenity
+  - socialmedia
 ---
 
 [Record Club](https://record.club):

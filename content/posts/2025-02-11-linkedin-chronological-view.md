@@ -4,6 +4,7 @@ date: 2025-02-11T00:53:22+01:00
 tags:
   - privacy
   - serenity
+  - socialmedia
 ---
 
 [How to Replace Linkedin's Algorithmic Timeline](https://preslav.me/2025/01/28/howto-replace-linkedin-algorithmic-timeline/) by Preslav Rachev:

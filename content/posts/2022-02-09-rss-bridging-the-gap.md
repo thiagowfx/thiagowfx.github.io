@@ -3,6 +3,7 @@ title: "RSS: bridging the gap"
 date: 2022-02-09T22:17:52-05:00
 tags:
   - dev
+  - socialmedia
 ---
 
 Not everything is available via RSS. However, there are some decent workarounds in a few situations. For my RSS reader setup, see [Miniflux]({{< ref "2022-01-03-miniflux-rolling-my-own-rss-reader" >}}).
