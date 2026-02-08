@@ -158,7 +158,24 @@ edit *args:
         {{ editor }} "$file"
     fi
 
-alias search := edit
+# Search for blog posts by name. Usage: `just search` or `just search <term>`
+search *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    if command -v fd >/dev/null 2>&1; then
+        finder="fd --extension md . content/posts"
+    else
+        finder="find content/posts -name *.md"
+    fi
+
+    if [ -z "{{ args }}" ]; then
+        $finder
+    else
+        $finder | grep -i "{{ args }}" || echo "No posts found matching '{{ args }}'"
+    fi
+
+alias list := search
 
 # Edit the most recent blog post
 last:
