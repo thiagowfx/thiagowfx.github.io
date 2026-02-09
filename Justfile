@@ -38,8 +38,13 @@ new *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    filename=$(echo "{{ args }}" | tr '[:upper:]' '[:lower:]' | sed -e 's/[:/]/-/g' | tr -s ' ' | tr ' ' '-')
-    filepath="content/posts/`date "+%Y-%m-%d"`-${filename}.md"
+    title="{{ args }}"
+    if [[ -z "${title}" ]]; then
+        echo "error: title is required. Usage: just new \"my cool title\"" >&2
+        exit 1
+    fi
+    filename=$(echo "${title}" | tr '[:upper:]' '[:lower:]' | sed -e 's/[:/]/-/g' | tr -s ' ' | tr ' ' '-')
+    filepath="content/posts/$(date "+%Y-%m-%d")-${filename}.md"
     hugo new --kind blog "${filepath}"
     {{ editor }} "${filepath}"
 
