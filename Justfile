@@ -13,7 +13,7 @@ watch preview="true" *args:
       open "http://localhost:{{ port }}/posts/" &
     fi
 
-    hugo server --port {{ port }} --watch {{ args }}
+    hugo server --port {{ port }} --watch --navigateToChanged {{ args }}
 
 # Pre-compute post relationships (backlinks, related, previously, graph)
 precompute:
