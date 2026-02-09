@@ -55,7 +55,7 @@
 
 <div class="mini-graph" style="border: 2px solid var(--border-color); border-radius: .5rem; padding: 1.5rem 1.5rem 1rem; margin-top: 1.5rem;">
   <h4 style="margin-top: 0; margin-bottom: 0.25rem;"><a href="/graph/" style="text-decoration: none;">Connections</a></h4>
-  <div id="mini-graph-container" style="position: relative; width: 100%; height: 180px; overflow: hidden;">
+  <div id="mini-graph-container" style="position: relative; width: 100%; height: 220px; overflow: hidden;">
     <div id="mini-graph-tooltip" style="position: absolute; pointer-events: none; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: .25rem; padding: 0.3rem 0.5rem; font-size: 0.8rem; max-width: 240px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); display: none; z-index: 10; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></div>
   </div>
 </div>
@@ -109,10 +109,10 @@
   const nodeRadius = d => d.isCurrent ? 8 : 5;
 
   const simulation = d3.forceSimulation(nodes)
-    .force('link', d3.forceLink(edges).id(d => d.id).distance(80))
-    .force('charge', d3.forceManyBody().strength(-150))
+    .force('link', d3.forceLink(edges).id(d => d.id).distance(120))
+    .force('charge', d3.forceManyBody().strength(-300))
     .force('center', d3.forceCenter(width / 2, height / 2))
-    .force('collision', d3.forceCollide().radius(25));
+    .force('collision', d3.forceCollide().radius(50));
 
   const link = g.append('g')
     .selectAll('line')
@@ -178,6 +178,13 @@
   });
 
   simulation.on('tick', () => {
+    // Clamp nodes within the visible area
+    const pad = 60;
+    nodes.forEach(d => {
+      if (!d.fx) d.x = Math.max(pad, Math.min(width - pad, d.x));
+      if (!d.fy) d.y = Math.max(pad, Math.min(height - pad, d.y));
+    });
+
     // Shorten lines so arrowheads stop at the node edge
     link.each(function(d) {
       const dx = d.target.x - d.source.x;
