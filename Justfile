@@ -164,15 +164,17 @@ search *args:
     set -euo pipefail
 
     if command -v fd >/dev/null 2>&1; then
-        finder="fd --extension md . content/posts"
+        finder="fd --extension md -0 --exclude _index.md . content/posts"
     else
-        finder="find content/posts -name *.md"
+        finder="find content/posts -name *.md -not -name _index.md -print0"
     fi
 
+    sort_by_date() { sed 's|.*\(/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)|\1\t&|' | sort | cut -f2-; }
+
     if [ -z "{{ args }}" ]; then
-        $finder
+        $finder | tr '\0' '\n' | sort_by_date
     else
-        $finder | grep -i "{{ args }}" || echo "No posts found matching '{{ args }}'"
+        $finder | tr '\0' '\n' | grep -i "{{ args }}" | sort_by_date || echo "No posts found matching '{{ args }}'"
     fi
 
 alias list := search
