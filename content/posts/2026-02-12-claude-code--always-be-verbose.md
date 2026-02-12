@@ -13,6 +13,12 @@ and a [blog
 post](https://symmetrybreak.ing/blog/claude-code-is-being-dumbed-down/) about
 Claude Code being "dumbed down" with increasingly terse outputs.
 
+Before:
+![Claude Code verbose output](https://symmetrybreak.ing/images/dont-worry-about-claude/before.png)
+
+After:
+![Claude Code terse output](https://symmetrybreak.ing/images/dont-worry-about-claude/after.png)
+
 Simply add `"outputStyle": "verbose"` to your `.claude/settings.json` to restore
 the original behavior:
 
