@@ -1,0 +1,45 @@
+{{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  {{ range where .Pages "Sitemap.Disable" "ne" true }}
+  {{- if .Permalink -}}
+  <url>
+    <loc>{{ .Permalink }}</loc>{{ if not .Lastmod.IsZero }}
+    <lastmod>{{ safeHTML ( .Lastmod.Format "2006-01-02T15:04:05-07:00" ) }}</lastmod>{{ end }}{{ with .Sitemap.ChangeFreq }}
+    <changefreq>{{ . }}</changefreq>{{ end }}
+    {{- if ge .Sitemap.Priority 0.0 }}
+    <priority>{{ .Sitemap.Priority }}</priority>
+    {{- else if eq .Kind "home" }}
+    <priority>1.0</priority>
+    {{- else if eq .Kind "section" }}
+    <priority>0.8</priority>
+    {{- else if eq .Kind "taxonomy" }}
+    <priority>0.4</priority>
+    {{- else if eq .Kind "term" }}
+    <priority>0.3</priority>
+    {{- else if not .Date.IsZero }}
+    {{- $ageDays := div (sub now.Unix .Date.Unix) 86400 }}
+    {{- if lt $ageDays 90 }}
+    <priority>0.8</priority>
+    {{- else if lt $ageDays 365 }}
+    <priority>0.6</priority>
+    {{- else }}
+    <priority>0.4</priority>
+    {{- end }}
+    {{- else }}
+    <priority>0.5</priority>
+    {{- end }}{{ if .IsTranslated }}{{ range .Translations }}
+    <xhtml:link
+                rel="alternate"
+                hreflang="{{ .Language.LanguageCode }}"
+                href="{{ .Permalink }}"
+                />{{ end }}
+    <xhtml:link
+                rel="alternate"
+                hreflang="{{ .Language.LanguageCode }}"
+                href="{{ .Permalink }}"
+                />{{ end }}
+  </url>
+  {{- end -}}
+  {{ end }}
+</urlset>
