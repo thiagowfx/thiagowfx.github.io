@@ -40,5 +40,5 @@ src_install() {
 
 My **conclusion**? Writing ebuilds is nice, very nice (yeah, more complex than writing PKGBUILDs, I know, but at least this complexity is justified).
 
-_Edit_: Thanks Buss for pointing me out a small  error (`RDEPEND`, instead of `HDEPEND`).
+_Edit_: Thanks Buss for pointing me out a small error (`RDEPEND`, instead of `HDEPEND`).
 
