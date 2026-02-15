@@ -3,7 +3,7 @@ title: "Pacman GPGME error: No data"
 date: 2014-04-26T18:08:00+00:00
 tags:
 - dev
- - legacy
+- legacy
 ---
 
 If you ever come across this error when using pacman, just do the following:

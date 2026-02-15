@@ -3,7 +3,7 @@ title: "Social pricing"
 date: 2013-12-29T22:15:05+00:00
 tags:
   - legacy
-  - status
+  - serenity
 ---
 
 Excellent article regarding online prices. If you are a heavy Steam or Amazon
