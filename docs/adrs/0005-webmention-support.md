@@ -72,3 +72,51 @@ Chosen over GitHub Actions/server-side approach because:
 - Moderation may be needed for spam mentions
 - Client-side loading adds JS dependency
 - Requires external service (webmention.io)
+
+## Future Enhancements
+
+### Pingback Endpoint
+
+A legacy pingback endpoint has been added to `baseof.html`:
+
+```html
+<link rel="pingback" href="https://webmention.io/perrotta.dev/xmlrpc" />
+```
+
+This is handled for free by webmention.io and costs nothing to support.
+
+### Brid.gy Integration
+
+[Brid.gy](https://brid.gy/) enables automatic syndication to Mastodon and
+Bluesky. When a post is published, Brid.gy can cross-post it and funnel
+responses (replies, likes, reposts) back as webmentions.
+
+Setup involves adding hidden `u-syndication` links in post templates pointing to
+Brid.gy publish endpoints:
+
+```html
+<a href="https://brid.gy/publish/mastodon" class="u-syndication" hidden></a>
+<a href="https://brid.gy/publish/bluesky" class="u-syndication" hidden></a>
+```
+
+### GitHub Actions Ping
+
+A post-deploy GitHub Actions step can notify Brid.gy for near-instant
+syndication rather than waiting for Brid.gy's polling interval:
+
+```yaml
+- name: Ping Brid.gy
+  run: |
+    curl -s -X POST https://brid.gy/publish/webmention \
+      -d source=$SITE_URL \
+      -d target=https://brid.gy/publish/mastodon
+```
+
+### Custom JS Renderer
+
+Instead of using webmention.js directly, a custom vanilla JS renderer with
+IntersectionObserver for lazy-loading could be considered. This would allow full
+control over the rendering of webmentions (grouping by type, custom avatars,
+etc.) while keeping the bundle size minimal. See
+[gagor.pro's approach](https://gagor.pro/2026/01/my-indieweb-journey-a-guide-to-posse-on-a-hugo-static-site/)
+for an example implementation.
