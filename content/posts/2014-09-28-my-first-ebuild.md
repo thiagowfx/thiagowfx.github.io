@@ -1,9 +1,9 @@
 ---
-title: 'My first ebuild'
+title: "My first ebuild"
 date: 2014-09-28T03:24:00+00:00
 tags:
-  - dev
-  - legacy
+ - dev
+ - legacy
 ---
 
 > Ebuilds are not evil
@@ -47,4 +47,4 @@ src_install() {
 
 My **conclusion**? Writing ebuilds is nice, very nice (yeah, more complex than writing PKGBUILDs, I know, but at least this complexity is justified).
 
-_Edit_: Thanks Buss for pointing me out a small  error (`RDEPEND`, instead of `HDEPEND`).
+_Edit_: Thanks Buss for pointing me out a small error (`RDEPEND`, instead of `HDEPEND`).
