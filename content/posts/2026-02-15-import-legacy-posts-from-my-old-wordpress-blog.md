@@ -55,7 +55,7 @@ To give you an idea of its size:
 1.5M    everydayserendipity.wordpress.2015-03-30.xml
 ```
 
-Then I asked an LLM ([AmpCode](https://ampcode.com)) to extract its posts,
+Then I asked an LLM ([Amp Code](https://ampcode.com)) to extract its posts,
 noting that it is from a WordPress backup, to Hugo-friendly markdown.
 
 I also asked it to add the legacy tag to all such posts, to make it easier for
