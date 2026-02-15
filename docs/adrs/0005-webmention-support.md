@@ -77,7 +77,7 @@ Chosen over GitHub Actions/server-side approach because:
 
 ### Pingback Endpoint
 
-A legacy pingback endpoint has been added to `baseof.html`:
+Once webmention.io is set up, add a legacy pingback endpoint to `baseof.html`:
 
 ```html
 <link rel="pingback" href="https://webmention.io/perrotta.dev/xmlrpc" />
