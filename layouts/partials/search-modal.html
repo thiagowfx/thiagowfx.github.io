@@ -1,0 +1,213 @@
+<div id="search-modal" class="search-modal" role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-modal-backdrop"></div>
+  <div class="search-modal-container">
+    <div class="search-modal-header">
+      <input type="text" id="search-modal-input" placeholder="{{ i18n "searchPlaceholder" }}" autocomplete="off" />
+      <kbd class="search-modal-kbd">ESC</kbd>
+    </div>
+    <div id="search-modal-info" class="search-info"></div>
+    <div id="search-modal-results" class="search-modal-results"></div>
+  </div>
+</div>
+<script type="module">
+  let searchIndex = null;
+  const modal = document.getElementById('search-modal');
+  const modalInput = document.getElementById('search-modal-input');
+  const modalResults = document.getElementById('search-modal-results');
+  const modalInfo = document.getElementById('search-modal-info');
+  const backdrop = modal.querySelector('.search-modal-backdrop');
+
+  const lang = '{{ site.Language.Lang }}' || 'en';
+  const langPath = lang === 'en' ? '' : '/' + lang;
+
+  const debounce = (fn, delay) => {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn(...args), delay);
+    };
+  };
+
+  const escapeHtml = (text) => {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  };
+
+  const matchesTerm = (text, term) => {
+    if (term.includes('*')) {
+      const escaped = term.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
+      return new RegExp(escaped.replace(/\*/g, '.*'), 'i').test(text);
+    }
+    return text.includes(term);
+  };
+
+  const highlightMatch = (text, query) => {
+    if (!text) return '';
+    const escaped = escapeHtml(text);
+    const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 0);
+    return terms.reduce((result, term) => {
+      const pattern = term.includes('*')
+        ? term.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '[^\\s]*')
+        : term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return result.replace(new RegExp(`(${pattern})`, 'gi'), '<mark>$1</mark>');
+    }, escaped);
+  };
+
+  const loadSearchIndex = () => {
+    if (searchIndex !== null) return Promise.resolve();
+    return fetch(langPath + '/search/index.json')
+      .then(response => response.json())
+      .then(data => { searchIndex = data; })
+      .catch(err => {
+        modalInfo.textContent = 'Error loading search index';
+        console.error('Search index load error:', err);
+      });
+  };
+
+  const performSearch = (query) => {
+    if (!searchIndex) return;
+
+    const q = query.toLowerCase().trim();
+    if (q.length === 0) {
+      modalResults.innerHTML = '';
+      modalInfo.textContent = '';
+      return;
+    }
+
+    const terms = q.split(/\s+/).filter(t => t.length > 0);
+    const results = [];
+
+    for (const post of searchIndex) {
+      const title = (post.title ?? '').toLowerCase();
+      const summary = (post.summary ?? '').toLowerCase();
+      const tags = (post.tags ?? []).map(t => t.toLowerCase());
+      const tagsText = tags.join(' ');
+
+      let allMatch = true;
+      let score = 0;
+
+      for (const term of terms) {
+        const inTitle = matchesTerm(title, term);
+        const inSummary = matchesTerm(summary, term);
+        const inTags = matchesTerm(tagsText, term);
+
+        if (!inTitle && !inSummary && !inTags) {
+          allMatch = false;
+          break;
+        }
+
+        if (inTitle) score += 10;
+        if (inTags) score += 5;
+        if (inSummary) score += 1;
+      }
+
+      if (allMatch) {
+        results.push({ post, score });
+      }
+    }
+
+    results.sort((a, b) => b.score - a.score || b.post.date.localeCompare(a.post.date));
+
+    if (results.length === 0) {
+      modalInfo.textContent = '{{ i18n "noResults" }}';
+      modalResults.innerHTML = '';
+      return;
+    }
+
+    modalInfo.textContent = `${results.length} result${results.length === 1 ? '' : 's'}`;
+
+    modalResults.innerHTML = results.slice(0, 20).map(({ post }, i) => {
+      const tags = (post.tags ?? [])
+        .map(t => `<span class="search-tag">#${escapeHtml(t)}</span>`)
+        .join(' ');
+
+      return `
+        <a href="${escapeHtml(post.url)}" class="search-modal-result${i === 0 ? ' active' : ''}" data-index="${i}">
+          <span class="search-modal-result-title">${highlightMatch(post.title, query)}</span>
+          <span class="search-modal-result-meta">
+            <span class="search-result-date">${escapeHtml(post.date)}</span>
+            ${tags ? ` · ${tags}` : ''}
+          </span>
+        </a>
+      `;
+    }).join('');
+  };
+
+  let activeIndex = 0;
+
+  const updateActive = (newIndex) => {
+    const items = modalResults.querySelectorAll('.search-modal-result');
+    if (items.length === 0) return;
+    activeIndex = Math.max(0, Math.min(newIndex, items.length - 1));
+    items.forEach((item, i) => {
+      item.classList.toggle('active', i === activeIndex);
+    });
+    items[activeIndex].scrollIntoView({ block: 'nearest' });
+  };
+
+  const openModal = () => {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    loadSearchIndex().then(() => {
+      modalInput.focus();
+      if (modalInput.value) {
+        performSearch(modalInput.value);
+      }
+    });
+  };
+
+  const closeModal = () => {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    modalInput.value = '';
+    modalResults.innerHTML = '';
+    modalInfo.textContent = '';
+    activeIndex = 0;
+  };
+
+  // Ctrl/Cmd+K to open
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (modal.classList.contains('open')) {
+        closeModal();
+      } else {
+        openModal();
+      }
+    }
+  });
+
+  // ESC to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) {
+      e.preventDefault();
+      closeModal();
+    }
+  });
+
+  // Arrow keys and Enter
+  modalInput.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      updateActive(activeIndex + 1);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      updateActive(activeIndex - 1);
+    } else if (e.key === 'Enter') {
+      const items = modalResults.querySelectorAll('.search-modal-result');
+      if (items[activeIndex]) {
+        items[activeIndex].click();
+      }
+    }
+  });
+
+  // Click backdrop to close
+  backdrop.addEventListener('click', closeModal);
+
+  // Search on input
+  modalInput.addEventListener('input', debounce((e) => {
+    activeIndex = 0;
+    performSearch(e.target.value);
+  }, 150));
+</script>
