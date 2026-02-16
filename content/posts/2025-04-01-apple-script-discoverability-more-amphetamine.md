@@ -26,7 +26,7 @@ to my disposal.
 
 I quickly spotted one called `session is active`:
 
-> Returns boolean - true or false - indicating whether there is an active session
+> Returns boolean — true or false — indicating whether there is an active session
 
 ...that's exactly what I needed!
 

@@ -11,7 +11,7 @@ When using [midnight commander](https://midnight-commander.org/) to edit files
 (with the default `F4` keybinding), it defaults to using
 [`mcedit(1)`](https://man.archlinux.org/man/mcedit.1):
 
-> mcedit - Internal file editor of GNU Midnight Commander
+> mcedit — Internal file editor of GNU Midnight Commander
 
 This is not great for my muscle memory.
 I'd rather use my `$EDITOR`[^1].

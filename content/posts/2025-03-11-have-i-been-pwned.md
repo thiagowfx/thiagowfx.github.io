@@ -40,7 +40,7 @@ Then:
 > All done, you'll be sent an email if this address gets pwned in future, below
 > is your existing exposure
 
-There's a lot of lore in the [PWNED - The Collected Blog
+There's a lot of lore in the [PWNED — The Collected Blog
 Posts](https://www.goodreads.com/book/show/74960566-pwned---the-collected-blog-posts)
 book by Troy Hunt & Rob Conery, which I would recommend.
 

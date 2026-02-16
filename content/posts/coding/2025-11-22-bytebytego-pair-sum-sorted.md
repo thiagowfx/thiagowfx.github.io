@@ -9,7 +9,7 @@ categories:
   - coding
 ---
 
-[ByteByteGo: Pair Sum - Sorted](https://bytebytego.com/exercises/coding-patterns/two-pointers/pair-sum-sorted):
+[ByteByteGo: Pair Sum — Sorted](https://bytebytego.com/exercises/coding-patterns/two-pointers/pair-sum-sorted):
 
 ```python
 from typing import List

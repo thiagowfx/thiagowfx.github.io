@@ -9,7 +9,7 @@ categories:
   - coding
 ---
 
-[ByteByteGo: Pair Sum - Unsorted](https://bytebytego.com/exercises/coding-patterns/hash-maps-and-sets/pair-sum-unsorted):
+[ByteByteGo: Pair Sum — Unsorted](https://bytebytego.com/exercises/coding-patterns/hash-maps-and-sets/pair-sum-unsorted):
 
 ```python
 from typing import List

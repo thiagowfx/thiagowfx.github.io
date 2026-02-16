@@ -108,7 +108,7 @@ have your teammates and close leadership aware of your strengths and overall
 accomplishments. That said, sometimes impact is realized in a bigger fashion
 when accomplishments are done in the shadows.
 
-> It isn't your work - it's the perception of your work that's important.
+> It isn't your work — it's the perception of your work that's important.
 
 We are all humans. This is one of our cognitive biases. Can't disagree with that
 statement.
