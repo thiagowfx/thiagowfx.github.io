@@ -1,0 +1,249 @@
+{{- define "main" }}
+<style>
+  .radio-controls {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .radio-controls button {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: .25rem;
+    padding: 0.25rem 0.75rem;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 0.85rem;
+  }
+  .radio-controls button:hover {
+    border-color: var(--link-color);
+    color: var(--link-color);
+  }
+  .radio-volume {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--color-gray);
+    margin-left: auto;
+  }
+  .radio-volume input[type="range"] {
+    width: 6rem;
+    accent-color: var(--link-color);
+  }
+  .radio-now-playing {
+    display: none;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--link-color);
+    border-radius: .25rem;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    background: color-mix(in srgb, var(--link-color) 8%, var(--bg-color));
+  }
+  .radio-now-playing.visible {
+    display: block;
+  }
+  .radio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+  @media (max-width: 900px) {
+    .radio-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .radio-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .radio-card {
+    border: 1px solid var(--border-color);
+    border-radius: .25rem;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+  .radio-card:hover {
+    border-color: var(--link-color);
+  }
+  .radio-card.playing {
+    border-color: var(--link-color);
+    background: color-mix(in srgb, var(--link-color) 8%, var(--bg-color));
+  }
+  .radio-card-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+  }
+  .radio-card-genre {
+    font-size: 0.75rem;
+    color: var(--color-gray);
+  }
+  .radio-card-dot {
+    display: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--link-color);
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    animation: radio-pulse 1.5s ease-in-out infinite;
+  }
+  .radio-card.playing .radio-card-dot {
+    display: block;
+  }
+  @keyframes radio-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .radio-card-dot {
+      animation: none;
+    }
+  }
+</style>
+
+<h2>{{ .Title }}</h2>
+<p>Internet radio stations for coding. Mirrors my <a href="https://github.com/thiagowfx/pancake/tree/master/radio"><code>radio</code></a> shell script.</p>
+
+<div class="radio-controls">
+  <button id="radio-random" title="Play a random station">Random</button>
+  <button id="radio-burst" title="Play 3 random stations">Burst</button>
+  <button id="radio-stop" title="Stop all stations">Stop All</button>
+  <div class="radio-volume">
+    <span>Vol</span>
+    <input type="range" id="radio-volume" min="0" max="100" value="80" aria-label="Volume">
+  </div>
+</div>
+
+<div class="radio-now-playing" id="radio-now-playing">
+  Now playing: <span id="radio-now-playing-list"></span>
+</div>
+
+<div class="radio-grid" id="radio-grid"></div>
+
+<script>
+(function() {
+  const stations = [
+    // keep-sorted start
+    { id: 'ambient', name: 'Drone Zone', genre: 'drone', url: 'https://ice4.somafm.com/dronezone-64-aac' },
+    { id: 'bossa', name: 'Bossa Beyond', genre: 'bossa nova', url: 'https://ice4.somafm.com/bossa-64-aac' },
+    { id: 'defcon', name: 'DEF CON Radio', genre: 'hacking', url: 'https://ice4.somafm.com/defcon-64-aac' },
+    { id: 'groovesalad', name: 'Groove Salad', genre: 'downtempo', url: 'https://ice4.somafm.com/groovesalad-64-aac' },
+    { id: 'indie', name: 'Indie Pop Rocks', genre: 'pop', url: 'https://ice4.somafm.com/indiepop-64-aac' },
+    { id: 'jazz', name: 'SomaFM Jazz', genre: 'jazz', url: 'https://ice4.somafm.com/live-64-aac' },
+    { id: 'kfai', name: 'KFAI Minneapolis', genre: 'community', url: 'https://kfai.broadcasttool.stream/kfai-1' },
+    { id: 'lofi', name: 'Lo-fi Hip Hop', genre: 'hip hop', url: 'https://live.hunter.fm/lofi_low' },
+    { id: 'rain', name: 'Rain Sounds', genre: 'ambient', url: 'http://maggie.torontocast.com:8108/stream' },
+    { id: 'salsa', name: 'Latina Salsa', genre: 'latin', url: 'https://latinasalsa.ice.infomaniak.ch/latinasalsa.mp3' },
+    { id: 'trance', name: 'HBR1 Trance', genre: 'electronic', url: 'http://ubuntu.hbr1.com:19800/trance.ogg' },
+    // keep-sorted end
+  ];
+
+  const playing = new Map();
+  let volume = 0.8;
+
+  const grid = document.getElementById('radio-grid');
+  const nowPlaying = document.getElementById('radio-now-playing');
+  const nowPlayingList = document.getElementById('radio-now-playing-list');
+  const volumeSlider = document.getElementById('radio-volume');
+
+  stations.forEach((s) => {
+    const card = document.createElement('div');
+    card.className = 'radio-card';
+    card.dataset.id = s.id;
+    card.innerHTML = '<div class="radio-card-dot"></div>' +
+      '<div class="radio-card-name">' + s.name + '</div>' +
+      '<div class="radio-card-genre">' + s.genre + '</div>';
+    card.addEventListener('click', () => toggle(s.id));
+    grid.appendChild(card);
+  });
+
+  function getStation(id) {
+    return stations.find((s) => s.id === id);
+  }
+
+  function play(id) {
+    if (playing.has(id)) return;
+    const s = getStation(id);
+    const audio = new Audio(s.url);
+    audio.volume = volume;
+    audio.play().catch((e) => {
+      console.warn('Failed to play ' + s.name + ':', e.message);
+    });
+    playing.set(id, audio);
+    updateUI();
+  }
+
+  function stop(id) {
+    const audio = playing.get(id);
+    if (!audio) return;
+    audio.pause();
+    audio.src = '';
+    playing.delete(id);
+    updateUI();
+  }
+
+  function toggle(id) {
+    if (playing.has(id)) {
+      stop(id);
+    } else {
+      play(id);
+    }
+  }
+
+  function stopAll() {
+    const ids = Array.from(playing.keys());
+    ids.forEach((id) => stop(id));
+  }
+
+  function playRandom() {
+    stopAll();
+    const idx = Math.floor(Math.random() * stations.length);
+    play(stations[idx].id);
+  }
+
+  function playBurst() {
+    stopAll();
+    const indices = [];
+    while (indices.length < 3 && indices.length < stations.length) {
+      const idx = Math.floor(Math.random() * stations.length);
+      if (indices.indexOf(idx) === -1) indices.push(idx);
+    }
+    indices.forEach((i) => play(stations[i].id));
+  }
+
+  function updateUI() {
+    grid.querySelectorAll('.radio-card').forEach((card) => {
+      card.classList.toggle('playing', playing.has(card.dataset.id));
+    });
+
+    const names = [];
+    playing.forEach((audio, id) => {
+      names.push(getStation(id).name);
+    });
+    if (names.length > 0) {
+      nowPlayingList.textContent = names.join(', ');
+      nowPlaying.classList.add('visible');
+    } else {
+      nowPlaying.classList.remove('visible');
+    }
+  }
+
+  volumeSlider.addEventListener('input', function() {
+    volume = this.value / 100;
+    playing.forEach((audio) => { audio.volume = volume; });
+  });
+
+  document.getElementById('radio-random').addEventListener('click', playRandom);
+  document.getElementById('radio-burst').addEventListener('click', playBurst);
+  document.getElementById('radio-stop').addEventListener('click', stopAll);
+})();
+</script>
+{{- end -}}
