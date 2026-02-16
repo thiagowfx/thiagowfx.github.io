@@ -163,6 +163,10 @@
     <input type="checkbox" id="pomo-stress-free"> Stress-free mode
     <div>Don't update the page title with the countdown</div>
   </label>
+  <label>
+    <input type="checkbox" id="pomo-auto-start"> Auto-start
+    <div>Automatically start the next timer when one finishes</div>
+  </label>
 </details>
 
 <script>
@@ -190,6 +194,7 @@
   var modeButtons = document.querySelectorAll('.pomo-modes button');
   var resetSessionsLink = document.getElementById('pomo-reset-sessions');
   var stressFreeCheckbox = document.getElementById('pomo-stress-free');
+  var autoStartCheckbox = document.getElementById('pomo-auto-start');
 
   loadPrefs();
   loadState();
@@ -236,6 +241,11 @@
     if (stressFree) {
       document.title = originalTitle;
     }
+  });
+
+  autoStartCheckbox.addEventListener('change', function() {
+    autoStart = autoStartCheckbox.checked;
+    savePrefs();
   });
 
   function switchMode(newMode) {
@@ -293,6 +303,10 @@
       switchMode('pomodoro');
     }
     justCompleted = prevMode;
+    if (autoStart) {
+      justCompleted = null;
+      start();
+    }
     render();
   }
 
@@ -418,18 +432,20 @@
   function loadPrefs() {
     try {
       var data = JSON.parse(localStorage.getItem(PREFS_KEY));
-      if (data && typeof data.stressFree === 'boolean') {
-        stressFree = data.stressFree;
+      if (data) {
+        if (typeof data.stressFree === 'boolean') stressFree = data.stressFree;
+        if (typeof data.autoStart === 'boolean') autoStart = data.autoStart;
       }
     } catch (e) {
       // localStorage not available
     }
     stressFreeCheckbox.checked = stressFree;
+    autoStartCheckbox.checked = autoStart;
   }
 
   function savePrefs() {
     try {
-      localStorage.setItem(PREFS_KEY, JSON.stringify({ stressFree: stressFree }));
+      localStorage.setItem(PREFS_KEY, JSON.stringify({ stressFree: stressFree, autoStart: autoStart }));
     } catch (e) {
       // localStorage not available
     }
