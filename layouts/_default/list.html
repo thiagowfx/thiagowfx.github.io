@@ -78,9 +78,30 @@
       </summary>
       <div class="year-content">
         <div class="year-content-inner">
+          {{- $monthGroups := slice }}
+          {{- $currentMonth := "" }}
+          {{- $currentMonthPages := slice }}
+          {{- range $group.Pages }}
+            {{- $month := .Date.Format "January" }}
+            {{- if ne $month $currentMonth }}
+              {{- if $currentMonthPages }}
+                {{- $monthGroups = $monthGroups | append (dict "Month" $currentMonth "Pages" $currentMonthPages) }}
+              {{- end }}
+              {{- $currentMonth = $month }}
+              {{- $currentMonthPages = slice . }}
+            {{- else }}
+              {{- $currentMonthPages = $currentMonthPages | append . }}
+            {{- end }}
+          {{- end }}
+          {{- if $currentMonthPages }}
+            {{- $monthGroups = $monthGroups | append (dict "Month" $currentMonth "Pages" $currentMonthPages) }}
+          {{- end }}
+          {{- range $monthGroups }}
+          <div class="month-group">
+          <strong>{{ .Month }}</strong> <span style="color: var(--color-gray); font-weight: 400;">({{ len .Pages }})</span>
           <ul class="blog-posts">
             {{ $lastDate := "" }}
-            {{ range $group.Pages }}
+            {{ range .Pages }}
             {{ $currentDate := .Date.Format "02 Jan, 2006" }}
             <li class="h-entry">
               <span>
@@ -114,6 +135,8 @@
             {{ $lastDate = $currentDate }}
             {{ end }}
           </ul>
+          </div>
+          {{- end }}
         </div>
       </div>
     </details>
