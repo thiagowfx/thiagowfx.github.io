@@ -10,9 +10,9 @@ Johnson](https://adamj.eu/tech/2026/01/27/zsh-om1-glob-qualifiers/):
 > qualifiers, which are extra syntax you can add to filename globs in Zsh.
 > Specifically, we want to attach the glob qualifiers `om[1]`, which mean:
 >
-> - `o`: sort the matches
-> - `m`: by modification time, most recent first
-> - `[1]`: select only the first match
+> — `o`: sort the matches
+> — `m`: by modification time, most recent first
+> — `[1]`: select only the first match
 >
 > Attaching these qualifiers to appropriate globs allows commands to pick up a
 > generated file without knowing its exact name.

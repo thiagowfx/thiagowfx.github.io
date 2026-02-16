@@ -10,9 +10,9 @@ I've been slowly doing the same. From his post, adapted:
 **Main Benefits**:
 
 - No need to source your shell rc after adding new scripts
-  - Use immediately without reloading your shell
+  — Use immediately without reloading your shell
 - No need to edit your shell rc, just drop executable files in `$HOME/.bin` (already in my `$PATH`)
-  - Faster iteration (edit script, re-run command, repeat)
+  — Faster iteration (edit script, re-run command, repeat)
 - Can be used out-of-the-box with `fd` / `find` / `xargs` and friends
 
 Another recommendation:

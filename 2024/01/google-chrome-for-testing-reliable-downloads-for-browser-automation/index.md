@@ -26,7 +26,7 @@ _"Why?"_, you may rightfully ask.
   pinning**. As a developer you always download the latest version. This makes
   it hard to reason about invariants, especially when new browser versions
   introduce breaking changes, even seemingly small ones.
-  - **Corollary**: The lack of versioned Chrome builds makes it hard to obtain
+  — **Corollary**: The lack of versioned Chrome builds makes it hard to obtain
     a corresponding (matching)
     [Chromedriver](https://chromedriver.chromium.org/downloads) version for
     Chrome. The mismatch (delta) could provoke testing inconsistencies whenever

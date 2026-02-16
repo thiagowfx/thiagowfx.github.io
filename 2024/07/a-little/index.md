@@ -5,7 +5,7 @@
 
 _/foe speaks perfect English_
 
-- - -
+- — -
 
 > **Foe**: Sprechen Sie Deutsch?
 >

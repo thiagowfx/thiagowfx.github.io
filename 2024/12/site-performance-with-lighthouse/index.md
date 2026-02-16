@@ -21,10 +21,10 @@ unexpected either, because I am running a static website.
 
 It offered me a couple of suggestions:
 
-> - Image elements do not have explicit width and height
-> - Serve images in next-gen formats Potential savings of 18 KiB
-> - Serve static assets with an efficient cache policy 2 resources found
-> - Properly size images Potential savings of 23 KiB
+> — Image elements do not have explicit width and height
+> — Serve images in next-gen formats Potential savings of 18 KiB
+> — Serve static assets with an efficient cache policy 2 resources found
+> — Properly size images Potential savings of 23 KiB
 
 I addressed most of the suggestions.
 

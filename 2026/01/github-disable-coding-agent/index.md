@@ -4,7 +4,7 @@ it here: https://github.com/settings/copilot/coding_agent
 
 Set it to "No repositories".
 
-- - -
+- — -
 
 If you don't like the Copilot chat featires in GitHub, you can disable them
 here: https://github.com/settings/copilot/features

@@ -63,7 +63,7 @@ My revised goals:
 Revised distributions / operating systems:
 
 - Debian
-  - RaspberryPi OS
+  — RaspberryPi OS
 - Fedora
 - Alpine Linux
 - Arch Linux (Arch Linux ARM)

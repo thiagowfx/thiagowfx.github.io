@@ -26,11 +26,11 @@ RCA = Root-Cause Analysis = Postmortem
 - AlertManager. Alert routing. Silencing. Snoozing.
 - Maintenance mode. Maintenance windows.
 - Logs collection. Loki. Analog.
-- Logging (`/var/log/`) - logging framework, or even good ol' `print(f)` /
+- Logging (`/var/log/`) — logging framework, or even good ol' `print(f)` /
   `echo`. stdout vs stderr. Log levels. Debugging logs vs error (panic) logs.
   Exceptions, stack traces. ThirdEye / Sentry. Error, warning, info. Logs
   collection and aggregation.
-- Analytics (more product-based e.g. PM, UX are interested in them) - page views
+- Analytics (more product-based e.g. PM, UX are interested in them) — page views
   / hits, number of daily/weekly/monthly active users.
 - Metrics. Buckets. Histograms. Counters. Gauges. Number of responses with a
   given HTTP status code. Latency in ms. Rates e.g. success / total.

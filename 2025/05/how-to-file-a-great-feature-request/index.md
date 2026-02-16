@@ -5,20 +5,20 @@ feature request for a software project I am interested to adopt. What makes it
 great™:
 
 - describe **concisely** and **precisely** **what** you're looking for
-  - being concise is essential: we live in a fast-paced world. If no one looks
+  — being concise is essential: we live in a fast-paced world. If no one looks
     at your FR, then it won't move forward. Period.
-  - being precise (unambiguous) is important to avoid back-and-forth and
+  — being precise (unambiguous) is important to avoid back-and-forth and
     potential bikeshedding
-  - I prefer to write it using my own words. Using an LLM risks making your FR
+  — I prefer to write it using my own words. Using an LLM risks making your FR
     robotic and unappealing for anyone to consider. YMMV.
 
 - describe **why**
-  - what is the _raison d'être_ of the feature? What is the rationale behind it?
+  — what is the _raison d'être_ of the feature? What is the rationale behind it?
     How does it make the project better? How does it improve the developer
     experience?
 
 - (_optional_, but **highly recommended**) suggest **how** and offer to address it
-  - Everyone wants everything, but few people want to put in the effort to see
+  — Everyone wants everything, but few people want to put in the effort to see
     changes take place. Your FR has a much higher chance of becoming reality if
     you volunteer your time, effort and expertise to implement the feature
     yourself, rather than [demanding](https://xkcd.com/2347/) someone (likely an

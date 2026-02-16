@@ -32,9 +32,9 @@ cheating.
 
 > **The benefits** 👍
 >
-> - Move a message automatically from one public channel to another.
-> - Redirect ideas and feedback or organise stray requests into relevant channels.
-> - Increase a message's visibility by copying it to a channel with more members
+> — Move a message automatically from one public channel to another.
+> — Redirect ideas and feedback or organise stray requests into relevant channels.
+> — Increase a message's visibility by copying it to a channel with more members
 
 For example, you can map/assign the ⭐️ (star) emoji to automatically relay
 messages to the `#idea` channel. Or 🐛 (insect) to `#bugs`.

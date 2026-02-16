@@ -14,7 +14,7 @@ I wanted to reproduce it here[^1] for archiving purposes. All credits go to Stev
 
 [^1]: The reproduction was done verbatim, with the exception of hyperlinks.
 
-- - -
+- — -
 
 ## The Linux Setup – Thiago Perrotta, Student
 
@@ -95,7 +95,7 @@ took, on Arch Linux, with KDE 4.14.
 
 _Interview conducted October 5, 2014_
 
-- - -
+- — -
 
 _**The Linux Setup** is a feature where I interview people about their Linux
 setups. The concept is borrowed, if not outright stolen, from this site. If

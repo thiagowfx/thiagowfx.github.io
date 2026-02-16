@@ -54,7 +54,7 @@ Germany 🇩🇪:
 
 - [S-Bahn München Live](https://s-bahn-muenchen-live.de/): only for S-Bahns in
   Munich
-  - ⚠️ [Construction changes](https://www.s-bahn-muenchen.de/fahren/baustellen)
+  — ⚠️ [Construction changes](https://www.s-bahn-muenchen.de/fahren/baustellen)
 - [Deutsche Bahn (DB)](https://reiseauskunft.bahn.de/bin/bhftafel.exe/en?ld=96252&country=DEU&rt=1&newrequest=yes&&country=GBR)
 - [**Bahn App**](https://bahnapp.com/): minimalist, with a superb design, better (easier to use and more reliable) than DB
 
@@ -65,8 +65,8 @@ World 🌎:
 ## In-depth resources
 
 - [The Man in Seat61](https://www.seat61.com/index.html)
-  - [The Man in Seat61: trains from Munich](https://www.seat61.com/international-trains/trains-from-Munich.htm)
-  - Night / sleeper trains: [A guide to travel by Nightjet](https://www.seat61.com/trains-and-routes/nightjet.htm)
+  — [The Man in Seat61: trains from Munich](https://www.seat61.com/international-trains/trains-from-Munich.htm)
+  — Night / sleeper trains: [A guide to travel by Nightjet](https://www.seat61.com/trains-and-routes/nightjet.htm)
 - Shipping with Deutsche Bahn (DB) in Germany: [Gepäckservice für Reisegepäck](https://www.gepaeckservice-bahn.de/buchung.xhtml)
 
 "Where can you go by train in 8h"? [ChronoTrains](https://www.chronotrains.com/) could convince you to ride a train instead of flying:

@@ -6,11 +6,11 @@ Today we'll add a custom bang for [LeetCode](https://leetcode.com/).
 1. Navigate to https://kagi.com/settings/custom_bangs
 2. Click 'Add Bang'
 3. Input:
-    - Bang name: LeetCode
-    - Bang shortcut: leetcode
-    - URL template: https://leetcode.com/search/?q=%s
-    - [x] Shortcut Menu ("Show this custom bang in the More search menu")
-    - [x] Open Base Path ("When using this bang without a query, navigate to the
+    — Bang name: LeetCode
+    — Bang shortcut: leetcode
+    — URL template: https://leetcode.com/search/?q=%s
+    — [x] Shortcut Menu ("Show this custom bang in the More search menu")
+    — [x] Open Base Path ("When using this bang without a query, navigate to the
       base path of the URL instead")
 4. Save
 

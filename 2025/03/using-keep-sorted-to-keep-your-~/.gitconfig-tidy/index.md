@@ -31,8 +31,8 @@ It has just occurred to me[^1] I could use
 
 > Previously:
 >
-> - [keep-sorted]({{< ref "2024-12-26-keep-sorted" >}})
-> - [pre-commit]({{< ref "2024-12-21-pre-commit" >}})
+> — [keep-sorted]({{< ref "2024-12-26-keep-sorted" >}})
+> — [pre-commit]({{< ref "2024-12-21-pre-commit" >}})
 
 But...how?!
 

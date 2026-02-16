@@ -27,6 +27,6 @@ nums = [lower - 1] + nums + [upper + 1]
 
 ...is a workaround to account for the outer ranges within the same loop.
 
-Alternatively, we could handcraft `[lower, nums[0] - 1]` and `[nums[-1] + 1,
+Alternatively, we could handcraft `[lower, nums[0] — 1]` and `[nums[-1] + 1,
 upper]` as needed.
 

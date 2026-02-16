@@ -73,7 +73,7 @@ And I have a third phone number that I use whenever signup forms make it
 mandatory to provide a number and when "0000000000" or "+12131234567" or similar
 do not work.
 
-- - -
+- — -
 
 3) is the most important. There was a point in my life when I would use my main
 phone number for everything. Then I kept getting spam phone calls (and texts). I

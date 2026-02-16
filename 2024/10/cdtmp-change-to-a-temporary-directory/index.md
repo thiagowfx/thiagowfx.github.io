@@ -26,7 +26,7 @@ he describes as:
 > It's a super simple alias that creates a temporary directory and then jumps
 > into it. Here are a few examples of what I use it for:
 >
-> - Clone a random interesting git repo to experiment with
+> — Clone a random interesting git repo to experiment with
 
 I also use it for testing one-off bash, C++, golang or python scripts, for
 example:

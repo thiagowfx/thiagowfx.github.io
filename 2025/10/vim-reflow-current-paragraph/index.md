@@ -50,7 +50,7 @@ Translation:
 - `<silent>`: does not echo the mapping in the vim command line
 - `<Esc>`: switch to normal mode
 - `!`: `!{motion}{filter} Filter {motion} text lines through the external program {filter}.` (via `:h !`).
-  - Not to confound this with `:!`: `:!{cmd} Execute {cmd} with the shell. See also the 'shell' and 'shelltype' option.  For the filter command, see |:range!|.` (via `:h :!`)
+  — Not to confound this with `:!`: `:!{cmd} Execute {cmd} with the shell. See also the 'shell' and 'shelltype' option.  For the filter command, see |:range!|.` (via `:h :!`)
 - `ip`: "inner paragraph" motion
 - `fmt`: the filter command
 - `<Enter>`: execute the command

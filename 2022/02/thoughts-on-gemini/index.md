@@ -3,11 +3,11 @@ From the [homepage](https://gemini.circumlunar.space):
 
 > Gemini is a new internet protocol which:
 >
-> - Is heavier than gopher
-> - Is lighter than the web
-> - Will not replace either
-> - Strives for maximum power to weight ratio
-> - Takes user privacy very seriously
+> — Is heavier than gopher
+> — Is lighter than the web
+> — Will not replace either
+> — Strives for maximum power to weight ratio
+> — Takes user privacy very seriously
 
 That's too abstract though. I prefer the way [Kev Quirk](https://kevq.uk/gemini-isnt-the-solution-to-the-broken-web/) puts it:
 

@@ -96,7 +96,7 @@ Explanation:
 
 - [WebAssembly from the Ground up](https://wasmgroundup.com/) by Mariano Guerra
   & Patrick Dubroy
-  - [Workshop](https://wasmgroundup.com/workshop/)
+  — [Workshop](https://wasmgroundup.com/workshop/)
 - [WebAssembly Core
   Specification](https://www.w3.org/TR/2019/REC-wasm-core-1-20191205/)
 

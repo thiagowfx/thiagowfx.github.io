@@ -32,9 +32,9 @@ copy *.md
 
 - **macOS**: Uses `pbcopy` (built-in)
 - **Linux**: Auto-detects first available tool:
-  - `wl-copy` (Wayland) - prioritized for modern desktops
-  - `xclip` (X11)
-  - `xsel` (X11)
+  — `wl-copy` (Wayland) — prioritized for modern desktops
+  — `xclip` (X11)
+  — `xsel` (X11)
 
 ## Features
 
