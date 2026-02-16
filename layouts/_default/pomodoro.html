@@ -1,0 +1,342 @@
+{{- define "main" }}
+<style>
+  .pomo-modes {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .pomo-modes button {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: .25rem;
+    padding: 0.4rem 1rem;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 0.9rem;
+  }
+  .pomo-modes button:hover {
+    border-color: var(--link-color);
+    color: var(--link-color);
+  }
+  .pomo-modes button.active {
+    border-color: var(--link-color);
+    background: color-mix(in srgb, var(--link-color) 12%, var(--bg-color));
+    color: var(--link-color);
+    font-weight: 600;
+  }
+  .pomo-timer {
+    text-align: center;
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+    font-size: clamp(4rem, 15vw, 8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 1rem 0;
+    color: var(--text-color);
+    user-select: none;
+  }
+  .pomo-controls {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .pomo-controls button {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: .25rem;
+    padding: 0.4rem 1.25rem;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    min-width: 5rem;
+  }
+  .pomo-controls button:hover {
+    border-color: var(--link-color);
+    color: var(--link-color);
+  }
+  .pomo-controls button.primary {
+    border-color: var(--link-color);
+    background: color-mix(in srgb, var(--link-color) 10%, var(--bg-color));
+    color: var(--link-color);
+    font-weight: 600;
+  }
+  .pomo-info {
+    text-align: center;
+    color: var(--color-gray);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+  .pomo-info a {
+    color: var(--color-gray);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .pomo-info a:hover {
+    color: var(--link-color);
+  }
+  .pomo-status {
+    text-align: center;
+    color: var(--color-gray);
+    font-size: 0.85rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pomo-timer {
+      transition: none;
+    }
+  }
+</style>
+
+<div class="article-header">
+  <h2>{{ .Title }}</h2>
+  <button id="fullscreen-btn" class="fullscreen-btn" aria-label="Toggle fullscreen mode" title="Toggle fullscreen mode (f)">
+    <span id="fullscreen-icon">⛶</span>
+  </button>
+</div>
+<p>A <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique">Pomodoro</a> timer for focused work sessions. Work for 25 minutes, then take a 5-minute break. After 4 pomodoros, take a longer 15-minute break. Inspired by <a href="https://pomofocus.io/">pomofocus.io</a>.</p>
+
+<div class="pomo-modes">
+  <button data-mode="pomodoro" class="active">Pomodoro</button>
+  <button data-mode="short">Short Break</button>
+  <button data-mode="long">Long Break</button>
+</div>
+
+<div class="pomo-timer" id="pomo-timer">25:00</div>
+
+<div class="pomo-controls">
+  <button id="pomo-start" class="primary">Start</button>
+  <button id="pomo-reset">Reset</button>
+</div>
+
+<div class="pomo-info">
+  <span id="pomo-session-count">#1 of 4</span> &nbsp;&middot;&nbsp; <a id="pomo-reset-sessions">reset</a>
+</div>
+
+<div class="pomo-status" id="pomo-status">Short break after this pomodoro</div>
+
+<script>
+(function() {
+  var DURATIONS = { pomodoro: 25 * 60, short: 5 * 60, long: 15 * 60 };
+  var TOTAL_POMODOROS = 4;
+  var STORAGE_KEY = 'pomo-state';
+
+  var mode = 'pomodoro';
+  var remaining = DURATIONS[mode];
+  var running = false;
+  var interval = null;
+  var completed = 0;
+  var justCompleted = null;
+  var originalTitle = document.title;
+
+  var timerEl = document.getElementById('pomo-timer');
+  var startBtn = document.getElementById('pomo-start');
+  var resetBtn = document.getElementById('pomo-reset');
+  var sessionCountEl = document.getElementById('pomo-session-count');
+  var statusEl = document.getElementById('pomo-status');
+  var modeButtons = document.querySelectorAll('.pomo-modes button');
+  var resetSessionsLink = document.getElementById('pomo-reset-sessions');
+
+  loadState();
+  render();
+
+  modeButtons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      switchMode(btn.dataset.mode);
+    });
+  });
+
+  startBtn.addEventListener('click', function() {
+    if (running) {
+      pause();
+    } else {
+      start();
+    }
+  });
+
+  resetBtn.addEventListener('click', function() {
+    pause();
+    remaining = DURATIONS[mode];
+    render();
+  });
+
+  resetSessionsLink.addEventListener('click', function() {
+    pause();
+    completed = 0;
+    mode = 'pomodoro';
+    remaining = DURATIONS[mode];
+    clearState();
+    render();
+  });
+
+  function switchMode(newMode) {
+    pause();
+    mode = newMode;
+    remaining = DURATIONS[mode];
+    render();
+  }
+
+  function start() {
+    if (running) return;
+    running = true;
+    justCompleted = null;
+    requestNotificationPermission();
+    interval = setInterval(tick, 1000);
+    render();
+  }
+
+  function pause() {
+    running = false;
+    if (interval) {
+      clearInterval(interval);
+      interval = null;
+    }
+    document.title = originalTitle;
+    render();
+  }
+
+  function tick() {
+    remaining--;
+    if (remaining <= 0) {
+      remaining = 0;
+      pause();
+      onComplete();
+    }
+    render();
+  }
+
+  function onComplete() {
+    var prevMode = mode;
+    playBeep();
+    sendNotification();
+
+    if (mode === 'pomodoro') {
+      completed++;
+      saveState();
+      if (completed % TOTAL_POMODOROS === 0) {
+        switchMode('long');
+      } else {
+        switchMode('short');
+      }
+    } else {
+      switchMode('pomodoro');
+    }
+    justCompleted = prevMode;
+    render();
+  }
+
+  function render() {
+    var minutes = Math.floor(remaining / 60);
+    var seconds = remaining % 60;
+    var display = pad(minutes) + ':' + pad(seconds);
+
+    timerEl.textContent = display;
+
+    if (running) {
+      document.title = display + ' - Pomodoro';
+      startBtn.textContent = 'Pause';
+    } else {
+      if (remaining === DURATIONS[mode]) {
+        document.title = originalTitle;
+      }
+      startBtn.textContent = 'Start';
+    }
+
+    modeButtons.forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.mode === mode);
+    });
+
+    var pomNum = (completed % TOTAL_POMODOROS) + 1;
+    if (mode !== 'pomodoro') {
+      pomNum = completed % TOTAL_POMODOROS || TOTAL_POMODOROS;
+    }
+    sessionCountEl.textContent = '#' + pomNum + ' of ' + TOTAL_POMODOROS;
+
+    if (justCompleted && !running) {
+      if (justCompleted === 'pomodoro') {
+        statusEl.textContent = 'Pomodoro done! Press Start for a break.';
+      } else {
+        statusEl.textContent = 'Break over! Press Start to focus.';
+      }
+    } else if (mode === 'pomodoro') {
+      if ((completed + 1) % TOTAL_POMODOROS === 0) {
+        statusEl.textContent = 'Long break after this pomodoro';
+      } else {
+        statusEl.textContent = 'Short break after this pomodoro';
+      }
+    } else if (mode === 'short') {
+      statusEl.textContent = 'Next: pomodoro #' + ((completed % TOTAL_POMODOROS) + 1);
+    } else {
+      statusEl.textContent = 'Next: pomodoro #1 (new cycle)';
+    }
+  }
+
+  function pad(n) {
+    return n < 10 ? '0' + n : '' + n;
+  }
+
+  function playBeep() {
+    try {
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      [0, 0.2, 0.4].forEach(function(delay) {
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.value = 830;
+        osc.type = 'sine';
+        gain.gain.setValueAtTime(0.3, ctx.currentTime + delay);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + delay + 0.15);
+        osc.start(ctx.currentTime + delay);
+        osc.stop(ctx.currentTime + delay + 0.15);
+      });
+    } catch (e) {
+      // Web Audio API not available
+    }
+  }
+
+  function requestNotificationPermission() {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+  }
+
+  function sendNotification() {
+    if ('Notification' in window && Notification.permission === 'granted') {
+      var msg = mode === 'pomodoro'
+        ? 'Pomodoro complete! Time for a break.'
+        : 'Break is over! Time to focus.';
+      new Notification('Pomodoro Timer', { body: msg });
+    }
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ completed: completed }));
+    } catch (e) {
+      // localStorage not available
+    }
+  }
+
+  function loadState() {
+    try {
+      var data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (data && typeof data.completed === 'number') {
+        completed = data.completed;
+      }
+    } catch (e) {
+      // localStorage not available
+    }
+  }
+
+  function clearState() {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (e) {
+      // localStorage not available
+    }
+  }
+})();
+</script>
+{{- end -}}
