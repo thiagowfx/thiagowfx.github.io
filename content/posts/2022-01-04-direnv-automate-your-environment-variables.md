@@ -80,7 +80,7 @@ Python developers often need to create different virtual environments for differ
 
 Each day[^aoc] I would `cd ~/projects/adventofcode`, and then do `source ~/.venv/bin/activate`. And guess what, that's for the first terminal where I'd run `make`, I'd also spawn a second one with `vim`, thereby needing to activate the virtual environment twice.
 
-And this is assuming the virtual environment already exists. If it didn't - for example, after a vanilla `git clone`, I'd have to do `python -m venv .venv` first.
+And this is assuming the virtual environment already exists. If it didn't — for example, after a vanilla `git clone`, I'd have to do `python -m venv .venv` first.
 
 Quickly all of this became repetitive and annoying. I kinda "cheated" and stopped using the virtualenv for a few days, relying on my Linux distribution package manager instead:
 
@@ -143,7 +143,7 @@ That's it: It's a single line of configuration. Now what does it do? All of the 
 - it will be automatically created;
 - then it will be sourced
 
-Now you may ask yourself: Why go through all this trouble? Why not simply create a shell script to do exactly that for you automatically? That's perfectly fine, it's a matter of taste. But then you'll have to maintain that script. The python ecosystem keeps changing - a few years ago I was using `virtualenvwrapper` to manage virtual environments, these days it doesn't exist anymore, people use either `python -m env` or `pyenv` or `poetry` or...it never ends. [Drew DeVault][drew] wrote a good piece about that.
+Now you may ask yourself: Why go through all this trouble? Why not simply create a shell script to do exactly that for you automatically? That's perfectly fine, it's a matter of taste. But then you'll have to maintain that script. The python ecosystem keeps changing — a few years ago I was using `virtualenvwrapper` to manage virtual environments, these days it doesn't exist anymore, people use either `python -m env` or `pyenv` or `poetry` or...it never ends. [Drew DeVault][drew] wrote a good piece about that.
 
 {{< figure align="center" src="https://imgs.xkcd.com/comics/python_environment.png" link="https://xkcd.com/1987/" alt="The Python environmental protection agency wants to seal it in a cement chamber, with pictorial messages to future civilizations warning them about the danger of using sudo to install random Python packages." attr="XKCD Courtesy of Randall Munroe" >}}
 
@@ -203,7 +203,7 @@ Some use cases that I like:
 : Alongside `.gitignore`, this is a great way to source secrets (e.g. API keys or tokens) and not accidentally check them into your repository.
 
 `fetchurl`
-: `bash | curl` is a cancer[^curlpipesh] that should arguably be stopped due to its inherent security risks. That said, `direnv` provides a safer way to work with it because you can specify a hash to ensure you're downloading the same script - if an attacker or malicious actor modified it, direnv would throw an error.
+: `bash | curl` is a cancer[^curlpipesh] that should arguably be stopped due to its inherent security risks. That said, `direnv` provides a safer way to work with it because you can specify a hash to ensure you're downloading the same script — if an attacker or malicious actor modified it, direnv would throw an error.
 
 `path_add`
 : If your project outputs to e.g. `build/<...>/bin` or similar (typical in `cmake` projects and AFAIK in Rust ones too), you could add that directory to your `PATH` so that you could easily execute your binaries, without having to write the full subdirectory path each time.

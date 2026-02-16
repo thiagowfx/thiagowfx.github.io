@@ -13,7 +13,7 @@ It was on Hacker News recently: https://news.ycombinator.com/item?id=40841980
 Here is a practical use case for it: to filter out unwanted episodes from
 podcast RSS feeds.
 
-I follow [Jovem Nerd - Nerdcasts](https://jovemnerd.com.br/podcasts/nerdcast).
+I follow [Jovem Nerd — Nerdcasts](https://jovemnerd.com.br/podcasts/nerdcast).
 They are a Brazilian podcast.
 
 However, in the recent years, they added a lot of other (unrelated) podcasts
