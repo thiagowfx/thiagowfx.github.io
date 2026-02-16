@@ -1,6 +1,112 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bestof on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Bestof on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 16 Feb 2026 16:52:58 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>★ new blog post via Claude Code</title><link>https://perrotta.dev/2026/02/new-blog-post-via-claude-code/</link><pubDate>Fri, 13 Feb 2026 21:54:26 +0000</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><category>meta</category><category>selfhosted</category><guid>https://perrotta.dev/2026/02/new-blog-post-via-claude-code/</guid><description>&lt;p&gt;It&amp;rsquo;s 2026. Blogging to my static website from a laptop, with vim and markdown, with hugo build and git commit / git push is old-school.&lt;/p&gt;
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 16 Feb 2026 17:18:22 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>★ web radio player</title><link>https://perrotta.dev/2026/02/web-radio-player/</link><pubDate>Mon, 16 Feb 2026 16:53:36 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><category>meta</category><category>serenity</category><guid>https://perrotta.dev/2026/02/web-radio-player/</guid><description>&lt;p&gt;I have a &lt;a href="https://github.com/thiagowfx/pancake/tree/master/radio"&gt;&lt;code&gt;radio&lt;/code&gt;&lt;/a&gt; shell
+script in &lt;a href="https://github.com/thiagowfx/pancake"&gt;pancake&lt;/a&gt; (=miscellaneous unix
+scripts) that streams curated (and free) internet radio stations via &lt;code&gt;mpv&lt;/code&gt;. It
+works great from the &lt;a href="https://perrotta.dev/2025/11/radio/"&gt;terminal&lt;/a&gt;, but I wanted to
+go one step further and make it available from a web browser as well.&lt;/p&gt;
+&lt;p&gt;The script supports:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;playing a specific station,&lt;/li&gt;
+&lt;li&gt;picking a random one,&lt;/li&gt;
+&lt;li&gt;burst mode (multiple simultaneous streams), and&lt;/li&gt;
+&lt;li&gt;listing what&amp;rsquo;s currently running&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All of these map well to a web browser UI.&lt;/p&gt;
+&lt;p&gt;Fast-forward&amp;hellip; (pun intended)&lt;/p&gt;
+&lt;h2 id="gimme-radio"&gt;Gimme radio&lt;/h2&gt;
+&lt;p&gt;I added a &lt;a href="https://perrotta.dev/radio/"&gt;&lt;code&gt;/radio/&lt;/code&gt;&lt;/a&gt; page to this blog. It&amp;rsquo;s a single Hugo
+layout with inline CSS and JS, following the same pattern as the &lt;a href="https://perrotta.dev/graph/"&gt;graph&lt;/a&gt; page&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2026/02/web-radio-player/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;The core is simple (and effective!) — a (hash) &lt;code&gt;Map&lt;/code&gt; of station IDs to &lt;code&gt;Audio&lt;/code&gt;
+objects:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="javascript"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;javascript&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-javascript"&gt;const playing = new Map();
+
+function play(id) {
+ if (playing.has(id)) return;
+ const s = getStation(id);
+ const audio = new Audio(s.url);
+ audio.volume = volume;
+ audio.play().catch((e) =&amp;gt; {
+ console.warn(&amp;#39;Failed to play &amp;#39; &amp;#43; s.name &amp;#43; &amp;#39;:&amp;#39;, e.message);
+ });
+ playing.set(id, audio);
+ updateUI();
+}
+
+function stop(id) {
+ const audio = playing.get(id);
+ if (!audio) return;
+ audio.pause();
+ audio.src = &amp;#39;&amp;#39;;
+ playing.delete(id);
+ updateUI();
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Setting &lt;code&gt;audio.src = ''&lt;/code&gt; after pausing is important — without it, the browser
+keeps the HTTPS connection open to the stream server.&lt;/p&gt;
+&lt;h2 id="burst-mode"&gt;Burst mode&lt;/h2&gt;
+&lt;p&gt;The shell script has a &lt;code&gt;--burst&lt;/code&gt; flag that launches &lt;code&gt;N&lt;/code&gt; random stations
+simultaneously. The browser version does the same (well, it&amp;rsquo;s hard-coded to 3
+stations):&lt;/p&gt;
+&lt;div class="codeblock" data-lang="javascript"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;javascript&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-javascript"&gt;function playBurst() {
+ stopAll();
+ const indices = [];
+ while (indices.length &amp;lt; 3 &amp;amp;&amp;amp; indices.length &amp;lt; stations.length) {
+ const idx = Math.floor(Math.random() * stations.length);
+ if (indices.indexOf(idx) === -1) indices.push(idx);
+ }
+ indices.forEach((i) =&amp;gt; play(stations[i].id));
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Multiple &lt;code&gt;Audio&lt;/code&gt; objects play concurrently with no issues. The volume slider
+applies to all of them.&lt;/p&gt;
+&lt;h2 id="stations"&gt;Stations&lt;/h2&gt;
+&lt;p&gt;Most stations are from &lt;a href="https://somafm.com/"&gt;SomaFM&lt;/a&gt;, a listener-supported
+internet radio service. They have a &lt;a href="https://somafm.com/linktous/"&gt;clear policy&lt;/a&gt;
+for third-party players: display the station name and link back. Each card links
+to its station homepage.&lt;/p&gt;
+&lt;p&gt;I dropped two stations from the original script:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HBR1 Trance and a rain sounds stream from TorontoCast. HBR1 only serves over
+&lt;code&gt;http://&lt;/code&gt;, which browsers block as mixed content on HTTPS sites.&lt;/li&gt;
+&lt;li&gt;TorontoCast&amp;rsquo;s terms explicitly prohibit embedding streams in third-party
+players.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="implementation"&gt;Implementation&lt;/h2&gt;
+&lt;p&gt;The UI is a CSS grid of clickable cards with a controls bar (Random, Burst, Stop
+All, volume). Playing stations get a highlighted border and a pulsing dot
+indicator that respects &lt;code&gt;prefers-reduced-motion&lt;/code&gt;. The whole thing uses the
+blog&amp;rsquo;s existing CSS variables so it works in both light and dark mode,
+integrating awesomely with its catppuccin theme.&lt;/p&gt;
+&lt;p&gt;The page: &lt;a href="https://perrotta.dev/radio/"&gt;&lt;code&gt;/radio/&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;And here&amp;rsquo;s a screenshot (light theme)&lt;sup id="fnref:2"&gt;&lt;a href="https://perrotta.dev/2026/02/web-radio-player/#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://perrotta.dev/2026/02/web-radio-player/radio.png" alt="web radio player"
+ loading="lazy" decoding="async" /&gt;
+&lt;/p&gt;
+&lt;p&gt;Why is this post tagged with &lt;a href="https://perrotta.dev/tags/ai/"&gt;ai&lt;/a&gt;? The radio page
+was vibe-coded.&lt;/p&gt;
+&lt;p&gt;Suggestions to add more web radios to that page will be welcome.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;Is this the future? Various little web apps in this site?&amp;#160;&lt;a href="https://perrotta.dev/2026/02/web-radio-player/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;Taken with &lt;a href="https://playwright.dev/"&gt;playwright&lt;/a&gt; via Claude Code. How
+cool!&amp;#160;&lt;a href="https://perrotta.dev/2026/02/web-radio-player/#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: web radio player"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/meta/"&gt;#meta&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;</description></item><item><title>★ new blog post via Claude Code</title><link>https://perrotta.dev/2026/02/new-blog-post-via-claude-code/</link><pubDate>Fri, 13 Feb 2026 21:54:26 +0000</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><category>meta</category><category>selfhosted</category><guid>https://perrotta.dev/2026/02/new-blog-post-via-claude-code/</guid><description>&lt;p&gt;It&amp;rsquo;s 2026. Blogging to my static website from a laptop, with vim and markdown, with hugo build and git commit / git push is old-school.&lt;/p&gt;
 &lt;p&gt;I can instead create blog posts via the &lt;a href="https://docs.anthropic.com/en/docs/claude-code"&gt;Claude Code&lt;/a&gt; app. It already has access to my git repository. It knows how to clone it, commit to it, test it (when needed) and push it to GitHub.&lt;/p&gt;
 &lt;p&gt;If you can read this, it means this experiment worked flawlessly.&lt;/p&gt;
 &lt;p&gt;And, you see, everything is still my own text, my own words. The LLM is not writing the prose. It&amp;rsquo;s merely orchestrating the act of publishing it.&lt;/p&gt;
@@ -2782,31 +2888,4 @@ The branch name should be prefixed by my github username[2] and a slash.
 &lt;p&gt;Perhaps it is even better, as it would work with all CLI agents – not only
 Claude Code. Well, we keep on experimenting.&lt;/p&gt;
 &lt;p&gt;Reusable custom slash commands will be shared in my &lt;a href="https://github.com/thiagowfx/.dotfiles/tree/master/claude/.claude/commands"&gt;.dotfiles&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: claude code: custom commands"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;</description></item><item><title>★ zizmor</title><link>https://perrotta.dev/2025/10/zizmor/</link><pubDate>Fri, 03 Oct 2025 12:44:21 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>alpine-linux</category><category>bestof</category><category>dev</category><category>fosdem</category><category>security</category><guid>https://perrotta.dev/2025/10/zizmor/</guid><description>&lt;p&gt;I originally heard of &lt;a href="https://docs.zizmor.sh/"&gt;zizmor&lt;/a&gt; at &lt;a href="https://fosdem.org/2025/"&gt;FOSDEM 2025&lt;/a&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;zizmor is a static analysis tool for GitHub Actions. It can find and fix many
-common security issues in typical GitHub Actions CI/CD setups.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;One month later, I adopted it in the most important repos of our company.&lt;/p&gt;
-&lt;p&gt;A few months later, I &lt;a href="https://perrotta.dev/2025/06/alpine-linux-packaging-track-new-software-releases/"&gt;added&lt;/a&gt; it to the
-Alpine Linux repositories, and am happily
-&lt;a href="https://pkgs.alpinelinux.org/packages?name=zizmor"&gt;maintaining&lt;/a&gt; it there.&lt;/p&gt;
-&lt;p&gt;Now I use it &lt;em&gt;everywhere&lt;/em&gt;, via a git &lt;a href="https://pre-commit.com/"&gt;pre-commit&lt;/a&gt; hook:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="yaml"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-yaml"&gt;repos:
- - repo: https://github.com/woodruffw/zizmor-pre-commit
- rev: b933184438555436e38621f46ceb0c417cbed400 # frozen: v1.13.0
- hooks:
- - id: zizmor&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;The project has recently reached a milestone: &lt;a href="https://blog.yossarian.net/2025/09/14/one-year-of-zizmor"&gt;it has turned one year
-old&lt;/a&gt;. Its adoption,
-community and feature set have all significantly increased during that time, in
-a good way.&lt;/p&gt;
-&lt;p&gt;The goal, impact and spirit of the project are all really great. And I&amp;rsquo;m sure
-this is mainly thanks to the initiative and dedication of its author, &lt;a href="https://blog.yossarian.net/"&gt;William
-Woodruff&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: zizmor"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/alpine-linux/"&gt;#alpine-linux&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/fosdem/"&gt;#fosdem&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/security/"&gt;#security&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: claude code: custom commands"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,6 +1,112 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Import legacy posts from my old WordPress blog</title><link>https://perrotta.dev/2026/02/import-legacy-posts-from-my-old-wordpress-blog/</link><pubDate>Sun, 15 Feb 2026 15:25:25 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>serenity</category><guid>https://perrotta.dev/2026/02/import-legacy-posts-from-my-old-wordpress-blog/</guid><description>&lt;p&gt;I used to have a blog during my university years.&lt;/p&gt;
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>★ web radio player</title><link>https://perrotta.dev/2026/02/web-radio-player/</link><pubDate>Mon, 16 Feb 2026 16:53:36 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><category>meta</category><category>serenity</category><guid>https://perrotta.dev/2026/02/web-radio-player/</guid><description>&lt;p&gt;I have a &lt;a href="https://github.com/thiagowfx/pancake/tree/master/radio"&gt;&lt;code&gt;radio&lt;/code&gt;&lt;/a&gt; shell
+script in &lt;a href="https://github.com/thiagowfx/pancake"&gt;pancake&lt;/a&gt; (=miscellaneous unix
+scripts) that streams curated (and free) internet radio stations via &lt;code&gt;mpv&lt;/code&gt;. It
+works great from the &lt;a href="https://perrotta.dev/2025/11/radio/"&gt;terminal&lt;/a&gt;, but I wanted to
+go one step further and make it available from a web browser as well.&lt;/p&gt;
+&lt;p&gt;The script supports:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;playing a specific station,&lt;/li&gt;
+&lt;li&gt;picking a random one,&lt;/li&gt;
+&lt;li&gt;burst mode (multiple simultaneous streams), and&lt;/li&gt;
+&lt;li&gt;listing what&amp;rsquo;s currently running&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All of these map well to a web browser UI.&lt;/p&gt;
+&lt;p&gt;Fast-forward&amp;hellip; (pun intended)&lt;/p&gt;
+&lt;h2 id="gimme-radio"&gt;Gimme radio&lt;/h2&gt;
+&lt;p&gt;I added a &lt;a href="https://perrotta.dev/radio/"&gt;&lt;code&gt;/radio/&lt;/code&gt;&lt;/a&gt; page to this blog. It&amp;rsquo;s a single Hugo
+layout with inline CSS and JS, following the same pattern as the &lt;a href="https://perrotta.dev/graph/"&gt;graph&lt;/a&gt; page&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2026/02/web-radio-player/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;The core is simple (and effective!) — a (hash) &lt;code&gt;Map&lt;/code&gt; of station IDs to &lt;code&gt;Audio&lt;/code&gt;
+objects:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="javascript"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;javascript&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-javascript"&gt;const playing = new Map();
+
+function play(id) {
+ if (playing.has(id)) return;
+ const s = getStation(id);
+ const audio = new Audio(s.url);
+ audio.volume = volume;
+ audio.play().catch((e) =&amp;gt; {
+ console.warn(&amp;#39;Failed to play &amp;#39; &amp;#43; s.name &amp;#43; &amp;#39;:&amp;#39;, e.message);
+ });
+ playing.set(id, audio);
+ updateUI();
+}
+
+function stop(id) {
+ const audio = playing.get(id);
+ if (!audio) return;
+ audio.pause();
+ audio.src = &amp;#39;&amp;#39;;
+ playing.delete(id);
+ updateUI();
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Setting &lt;code&gt;audio.src = ''&lt;/code&gt; after pausing is important — without it, the browser
+keeps the HTTPS connection open to the stream server.&lt;/p&gt;
+&lt;h2 id="burst-mode"&gt;Burst mode&lt;/h2&gt;
+&lt;p&gt;The shell script has a &lt;code&gt;--burst&lt;/code&gt; flag that launches &lt;code&gt;N&lt;/code&gt; random stations
+simultaneously. The browser version does the same (well, it&amp;rsquo;s hard-coded to 3
+stations):&lt;/p&gt;
+&lt;div class="codeblock" data-lang="javascript"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;javascript&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-javascript"&gt;function playBurst() {
+ stopAll();
+ const indices = [];
+ while (indices.length &amp;lt; 3 &amp;amp;&amp;amp; indices.length &amp;lt; stations.length) {
+ const idx = Math.floor(Math.random() * stations.length);
+ if (indices.indexOf(idx) === -1) indices.push(idx);
+ }
+ indices.forEach((i) =&amp;gt; play(stations[i].id));
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Multiple &lt;code&gt;Audio&lt;/code&gt; objects play concurrently with no issues. The volume slider
+applies to all of them.&lt;/p&gt;
+&lt;h2 id="stations"&gt;Stations&lt;/h2&gt;
+&lt;p&gt;Most stations are from &lt;a href="https://somafm.com/"&gt;SomaFM&lt;/a&gt;, a listener-supported
+internet radio service. They have a &lt;a href="https://somafm.com/linktous/"&gt;clear policy&lt;/a&gt;
+for third-party players: display the station name and link back. Each card links
+to its station homepage.&lt;/p&gt;
+&lt;p&gt;I dropped two stations from the original script:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HBR1 Trance and a rain sounds stream from TorontoCast. HBR1 only serves over
+&lt;code&gt;http://&lt;/code&gt;, which browsers block as mixed content on HTTPS sites.&lt;/li&gt;
+&lt;li&gt;TorontoCast&amp;rsquo;s terms explicitly prohibit embedding streams in third-party
+players.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="implementation"&gt;Implementation&lt;/h2&gt;
+&lt;p&gt;The UI is a CSS grid of clickable cards with a controls bar (Random, Burst, Stop
+All, volume). Playing stations get a highlighted border and a pulsing dot
+indicator that respects &lt;code&gt;prefers-reduced-motion&lt;/code&gt;. The whole thing uses the
+blog&amp;rsquo;s existing CSS variables so it works in both light and dark mode,
+integrating awesomely with its catppuccin theme.&lt;/p&gt;
+&lt;p&gt;The page: &lt;a href="https://perrotta.dev/radio/"&gt;&lt;code&gt;/radio/&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;And here&amp;rsquo;s a screenshot (light theme)&lt;sup id="fnref:2"&gt;&lt;a href="https://perrotta.dev/2026/02/web-radio-player/#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://perrotta.dev/2026/02/web-radio-player/radio.png" alt="web radio player"
+ loading="lazy" decoding="async" /&gt;
+&lt;/p&gt;
+&lt;p&gt;Why is this post tagged with &lt;a href="https://perrotta.dev/tags/ai/"&gt;ai&lt;/a&gt;? The radio page
+was vibe-coded.&lt;/p&gt;
+&lt;p&gt;Suggestions to add more web radios to that page will be welcome.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;Is this the future? Various little web apps in this site?&amp;#160;&lt;a href="https://perrotta.dev/2026/02/web-radio-player/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;Taken with &lt;a href="https://playwright.dev/"&gt;playwright&lt;/a&gt; via Claude Code. How
+cool!&amp;#160;&lt;a href="https://perrotta.dev/2026/02/web-radio-player/#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: web radio player"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/meta/"&gt;#meta&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Import legacy posts from my old WordPress blog</title><link>https://perrotta.dev/2026/02/import-legacy-posts-from-my-old-wordpress-blog/</link><pubDate>Sun, 15 Feb 2026 15:25:25 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>serenity</category><guid>https://perrotta.dev/2026/02/import-legacy-posts-from-my-old-wordpress-blog/</guid><description>&lt;p&gt;I used to have a blog during my university years.&lt;/p&gt;
 &lt;p&gt;It was in WordPress, hosted at &lt;a href="https://thiagoperrotta.wordpress.com/"&gt;https://thiagoperrotta.wordpress.com/&lt;/a&gt;, called
 &amp;ldquo;Everyday Serendipity&amp;rdquo;.&lt;/p&gt;
 &lt;p&gt;At first I would write in my mother tongue (Portuguese), then I would switch to
@@ -1703,157 +1809,4 @@ palette!&amp;#160;&lt;a href="https://perrotta.dev/2026/01/ghostty-keybindings/#
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ghostty: keybindings"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/ghostty/"&gt;#ghostty&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/macos/"&gt;#macos&lt;/a&gt;&lt;/p&gt;</description></item><item><title>★ ADRs and LLMs</title><link>https://perrotta.dev/2026/01/adrs-and-llms/</link><pubDate>Sun, 11 Jan 2026 09:07:46 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><guid>https://perrotta.dev/2026/01/adrs-and-llms/</guid><description>&lt;p&gt;The first time I heard about &lt;a href="https://adr.github.io/"&gt;Architectural Decision
-Records&lt;/a&gt; (ADRs) was with &lt;a href="https://www.georgefairbanks.com/"&gt;George
-Fairbanks&lt;/a&gt; (GHF) and &lt;a href="https://www.linkedin.com/in/tituswinters"&gt;Titus
-Winters&lt;/a&gt; in an internal training for
-software engineers at Google Canada.&lt;/p&gt;
-&lt;p&gt;The concept has resonated with me:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;An Architectural Decision (AD) is a justified design choice that addresses a
-functional or non-functional requirement that is architecturally significant.&lt;/p&gt;
-&lt;p&gt;[&amp;hellip;]&lt;/p&gt;
-&lt;p&gt;An Architectural Decision Record (ADR) captures a single AD and its rationale;
-Put it simply, ADR can help you understand the reasons for a chosen
-architectural decision, along with its trade-offs and consequences.&lt;/p&gt;
-&lt;p&gt;The collection of ADRs created and maintained in a project constitute its
-decision log. All these are within the topic of Architectural Knowledge
-Management (AKM), but ADR usage can be extended to design and other decisions
-(&amp;ldquo;any decision record&amp;rdquo;).&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Some people liken these to
-&lt;a href="https://en.wikipedia.org/wiki/Request_for_Comments"&gt;RFCs&lt;/a&gt;, although they are
-not quite the same concept. RFCs tend to be much more formal and go through
-rigorous review/approval before it becomes a standard.&lt;/p&gt;
-&lt;p&gt;ADRs, on the other hand, tend to be lightweight and objective. An archetypical
-ADR captures a single decision about architecture in document form, alongside
-its &lt;strong&gt;rationale&lt;/strong&gt;, context and alternatives considered. &lt;strong&gt;Rationale&lt;/strong&gt; is the
-keyword here.&lt;/p&gt;
-&lt;p&gt;Rephrasing, in simpler terms: ADRs are a collection of rationales about a
-project (software repository, if you will). They are incremental, long-living,
-ever-evolving guidelines / rules of engagement for a given software realm.&lt;/p&gt;
-&lt;p&gt;ADRs (and RFCs as well, for that matter) are typically stored alongside source
-code in a version‑controlled repository (&lt;em&gt;cof&lt;/em&gt; git &lt;em&gt;cof&lt;/em&gt;):&lt;/p&gt;
-&lt;div class="codeblock"&gt;
- &lt;pre&gt;&lt;code class="language-plaintext"&gt;% tree
-.
-└── adrs
- ├── 0001-foo.md
- ├── 0002-bar.md
- └── 0003-baz.md&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;They are usually numbered, though there&amp;rsquo;s no hard rule saying that you have to
-do so with monotonically increasing numbers. You could use calendar versioning
-(&lt;code&gt;2025-11-11-foo.md&lt;/code&gt;), or any other numbering scheme if desired.&lt;/p&gt;
-&lt;p&gt;GHF has an introductory
-&lt;a href="https://www.georgefairbanks.com/blog/comparch-wicsa-2011-panel-discussion-and-haiku-tutorial/"&gt;article&lt;/a&gt;
-about them. At the time (2011!), the coined term was &amp;ldquo;Architecture Haiku&amp;rdquo;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;You can&amp;rsquo;t say anything in one page — or can you? An Architecture Haiku is a
-one-page, quick-to-build, über-terse design description. No project wants
-&amp;ldquo;shelfware&amp;rdquo; documentation, but many must communicate their design to others.
-Brevity is hard — what would you say in one page? With no page limit, experts
-suggest documenting everything but the kitchen sink. The one-page limit forces
-you to convey the essence of your design using compact language and concepts.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Enough introduction, here is my hot take.&lt;/p&gt;
-&lt;p&gt;I would like to argue that codebases that continually evolve with heavy usage of
-LLM coding agents will strongly benefit from ADRs now, and especially in the
-future.&lt;/p&gt;
-&lt;p&gt;The &lt;a href="https://agents.md/"&gt;AGENTS.md&lt;/a&gt; format is a starting point, but it&amp;rsquo;s a far
-cry from disciplined ADR enactment. Bootstrapping your git repository with
-scattered &lt;code&gt;AGENTS.md&lt;/code&gt; / &lt;code&gt;CLAUDE.md&lt;/code&gt; all over the place is a good initial
-practice to tell the agent what to do and/or how to behave, but it does not
-capture &lt;em&gt;decision records&lt;/em&gt; effectively.&lt;/p&gt;
-&lt;p&gt;The workflow I am starting to adopt in important repositories wherein I work
-with teammates resembles this:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-bash"&gt;% tree docs/
-docs/
-├── adrs
-│ ├── 0001-aws-secrets-manager-migration.md
-│ ├── 0002-cluster-infrastructure-architecture.md
-│ ├── 0003-slack-drift-notifications.md
-│ └── README.md&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;A top-level &lt;code&gt;docs/&lt;/code&gt; directory is the entrypoint for all &lt;code&gt;.md&lt;/code&gt; files docs. Inside
-it, we store our ADRs.&lt;/p&gt;
-&lt;p&gt;A &lt;code&gt;README.md&lt;/code&gt; describes how to define an ADR:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-bash"&gt;# Architecture Decision Records
-
-This directory contains Architecture Decision Records (ADRs) for significant
-technical decisions in the Terraform infrastructure.
-
-## ADRs
-
-&amp;lt;!-- markdownlint-disable MD013 --&amp;gt;
-`&amp;gt; echo &amp;#34;| Number | Title | Status | Date |&amp;#34;; echo &amp;#34;|--------|-------|--------|------|&amp;#34;; for f in 0*.md; do num=$(basename &amp;#34;$f&amp;#34; .md | cut -d- -f1); title=$(head -1 &amp;#34;$f&amp;#34; | sed &amp;#39;s/^# ADR-[0-9]*: //&amp;#39;); status=$(awk &amp;#39;/^## Status/{getline;getline;print}&amp;#39; &amp;#34;$f&amp;#34;); date=$(awk &amp;#39;/^## Date/{getline;getline;print}&amp;#39; &amp;#34;$f&amp;#34;); echo &amp;#34;| [$num]($f) | $title | $status | $date |&amp;#34;; done`
-
-&amp;lt;!-- BEGIN mdsh --&amp;gt;
-| Number | Title | Status | Date |
-|--------|-------|--------|------|
-| [0001](0001-aws-secrets-manager-migration.md) | AWS Secrets Manager Migration | Proposed (Not Yet Implemented) | 2025-11-22 |
-| [0002](0002-cluster-infrastructure-architecture.md) | Cluster Infrastructure Architecture | Accepted | 2025-12-01 |
-| [0003](0003-slack-drift-notifications.md) | Slack Drift Notifications | Accepted | 2024-12-01 |
-&amp;lt;!-- END mdsh --&amp;gt;
-&amp;lt;!-- markdownlint-enable MD013 --&amp;gt;
-
-## Adding New ADRs
-
-1. Create a new file: `NNNN-short-title.md` (increment the number)
-2. Use this template:
-
-```markdown
-# ADR-NNNN: Title
-
-## Status
-
-Proposed | Accepted | Deprecated | Superseded
-
-## Date
-
-YYYY-MM-DD
-
-## Context
-
-What is the issue that we&amp;#39;re seeing that is motivating this decision?
-
-## Decision
-
-What is the change that we&amp;#39;re proposing and/or doing?
-Include its rationale.
-Include alternatives considered where applicable.
-
-## Consequences
-
-What becomes easier or more difficult to do because of this change?&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Whenever a new significant direction is adopted in the repository, or whenever
-something (a tool, a dependency, a process) &lt;em&gt;quasi&lt;/em&gt;-disrupting is introduced, it
-probably deserves its own ADR.&lt;/p&gt;
-&lt;p&gt;It used to be tedious to write them by hand, but nowadays your LLM agent can
-draft ADRs for you. Arguably, a plan&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2026/01/adrs-and-llms/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt; file maps naturally to an ADR. All you
-have to do is to add &lt;em&gt;some&lt;/em&gt; structure to them&lt;sup id="fnref:2"&gt;&lt;a href="https://perrotta.dev/2026/01/adrs-and-llms/#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;See also&lt;/strong&gt;: &lt;a href="https://en.wikipedia.org/wiki/Architectural_decision"&gt;https://en.wikipedia.org/wiki/Architectural_decision&lt;/a&gt;&lt;/p&gt;
-&lt;div class="footnotes" role="doc-endnotes"&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id="fn:1"&gt;
-&lt;p&gt;&lt;em&gt;Plan&lt;/em&gt; in the context of &amp;ldquo;planning mode&amp;rdquo; that various agents have these
-days e.g. &lt;a href="https://code.claude.com/docs/en/model-config"&gt;Claude Code&lt;/a&gt;,
-&lt;a href="https://opencode.ai/docs/modes/#plan"&gt;OpenCode&lt;/a&gt;.&amp;#160;&lt;a href="https://perrotta.dev/2026/01/adrs-and-llms/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li id="fn:2"&gt;
-&lt;p&gt;But &lt;a href="https://danielmiessler.com/blog/personal-ai-infrastructure"&gt;don&amp;rsquo;t&lt;/a&gt;
-&lt;a href="https://github.com/steveyegge/beads"&gt;&lt;em&gt;overdo&lt;/em&gt;&lt;/a&gt; it.&amp;#160;&lt;a href="https://perrotta.dev/2026/01/adrs-and-llms/#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ADRs and LLMs"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ghostty: keybindings"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/ghostty/"&gt;#ghostty&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/macos/"&gt;#macos&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

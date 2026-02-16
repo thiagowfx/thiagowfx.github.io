@@ -1,6 +1,112 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ai on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Ai on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2021 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 16 Feb 2026 16:52:58 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>Import legacy posts from my old WordPress blog</title><link>https://perrotta.dev/2026/02/import-legacy-posts-from-my-old-wordpress-blog/</link><pubDate>Sun, 15 Feb 2026 15:25:25 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>serenity</category><guid>https://perrotta.dev/2026/02/import-legacy-posts-from-my-old-wordpress-blog/</guid><description>&lt;p&gt;I used to have a blog during my university years.&lt;/p&gt;
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 16 Feb 2026 17:18:22 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>★ web radio player</title><link>https://perrotta.dev/2026/02/web-radio-player/</link><pubDate>Mon, 16 Feb 2026 16:53:36 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><category>meta</category><category>serenity</category><guid>https://perrotta.dev/2026/02/web-radio-player/</guid><description>&lt;p&gt;I have a &lt;a href="https://github.com/thiagowfx/pancake/tree/master/radio"&gt;&lt;code&gt;radio&lt;/code&gt;&lt;/a&gt; shell
+script in &lt;a href="https://github.com/thiagowfx/pancake"&gt;pancake&lt;/a&gt; (=miscellaneous unix
+scripts) that streams curated (and free) internet radio stations via &lt;code&gt;mpv&lt;/code&gt;. It
+works great from the &lt;a href="https://perrotta.dev/2025/11/radio/"&gt;terminal&lt;/a&gt;, but I wanted to
+go one step further and make it available from a web browser as well.&lt;/p&gt;
+&lt;p&gt;The script supports:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;playing a specific station,&lt;/li&gt;
+&lt;li&gt;picking a random one,&lt;/li&gt;
+&lt;li&gt;burst mode (multiple simultaneous streams), and&lt;/li&gt;
+&lt;li&gt;listing what&amp;rsquo;s currently running&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All of these map well to a web browser UI.&lt;/p&gt;
+&lt;p&gt;Fast-forward&amp;hellip; (pun intended)&lt;/p&gt;
+&lt;h2 id="gimme-radio"&gt;Gimme radio&lt;/h2&gt;
+&lt;p&gt;I added a &lt;a href="https://perrotta.dev/radio/"&gt;&lt;code&gt;/radio/&lt;/code&gt;&lt;/a&gt; page to this blog. It&amp;rsquo;s a single Hugo
+layout with inline CSS and JS, following the same pattern as the &lt;a href="https://perrotta.dev/graph/"&gt;graph&lt;/a&gt; page&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2026/02/web-radio-player/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;The core is simple (and effective!) — a (hash) &lt;code&gt;Map&lt;/code&gt; of station IDs to &lt;code&gt;Audio&lt;/code&gt;
+objects:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="javascript"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;javascript&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-javascript"&gt;const playing = new Map();
+
+function play(id) {
+ if (playing.has(id)) return;
+ const s = getStation(id);
+ const audio = new Audio(s.url);
+ audio.volume = volume;
+ audio.play().catch((e) =&amp;gt; {
+ console.warn(&amp;#39;Failed to play &amp;#39; &amp;#43; s.name &amp;#43; &amp;#39;:&amp;#39;, e.message);
+ });
+ playing.set(id, audio);
+ updateUI();
+}
+
+function stop(id) {
+ const audio = playing.get(id);
+ if (!audio) return;
+ audio.pause();
+ audio.src = &amp;#39;&amp;#39;;
+ playing.delete(id);
+ updateUI();
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Setting &lt;code&gt;audio.src = ''&lt;/code&gt; after pausing is important — without it, the browser
+keeps the HTTPS connection open to the stream server.&lt;/p&gt;
+&lt;h2 id="burst-mode"&gt;Burst mode&lt;/h2&gt;
+&lt;p&gt;The shell script has a &lt;code&gt;--burst&lt;/code&gt; flag that launches &lt;code&gt;N&lt;/code&gt; random stations
+simultaneously. The browser version does the same (well, it&amp;rsquo;s hard-coded to 3
+stations):&lt;/p&gt;
+&lt;div class="codeblock" data-lang="javascript"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;javascript&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-javascript"&gt;function playBurst() {
+ stopAll();
+ const indices = [];
+ while (indices.length &amp;lt; 3 &amp;amp;&amp;amp; indices.length &amp;lt; stations.length) {
+ const idx = Math.floor(Math.random() * stations.length);
+ if (indices.indexOf(idx) === -1) indices.push(idx);
+ }
+ indices.forEach((i) =&amp;gt; play(stations[i].id));
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Multiple &lt;code&gt;Audio&lt;/code&gt; objects play concurrently with no issues. The volume slider
+applies to all of them.&lt;/p&gt;
+&lt;h2 id="stations"&gt;Stations&lt;/h2&gt;
+&lt;p&gt;Most stations are from &lt;a href="https://somafm.com/"&gt;SomaFM&lt;/a&gt;, a listener-supported
+internet radio service. They have a &lt;a href="https://somafm.com/linktous/"&gt;clear policy&lt;/a&gt;
+for third-party players: display the station name and link back. Each card links
+to its station homepage.&lt;/p&gt;
+&lt;p&gt;I dropped two stations from the original script:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HBR1 Trance and a rain sounds stream from TorontoCast. HBR1 only serves over
+&lt;code&gt;http://&lt;/code&gt;, which browsers block as mixed content on HTTPS sites.&lt;/li&gt;
+&lt;li&gt;TorontoCast&amp;rsquo;s terms explicitly prohibit embedding streams in third-party
+players.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="implementation"&gt;Implementation&lt;/h2&gt;
+&lt;p&gt;The UI is a CSS grid of clickable cards with a controls bar (Random, Burst, Stop
+All, volume). Playing stations get a highlighted border and a pulsing dot
+indicator that respects &lt;code&gt;prefers-reduced-motion&lt;/code&gt;. The whole thing uses the
+blog&amp;rsquo;s existing CSS variables so it works in both light and dark mode,
+integrating awesomely with its catppuccin theme.&lt;/p&gt;
+&lt;p&gt;The page: &lt;a href="https://perrotta.dev/radio/"&gt;&lt;code&gt;/radio/&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;And here&amp;rsquo;s a screenshot (light theme)&lt;sup id="fnref:2"&gt;&lt;a href="https://perrotta.dev/2026/02/web-radio-player/#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://perrotta.dev/2026/02/web-radio-player/radio.png" alt="web radio player"
+ loading="lazy" decoding="async" /&gt;
+&lt;/p&gt;
+&lt;p&gt;Why is this post tagged with &lt;a href="https://perrotta.dev/tags/ai/"&gt;ai&lt;/a&gt;? The radio page
+was vibe-coded.&lt;/p&gt;
+&lt;p&gt;Suggestions to add more web radios to that page will be welcome.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;Is this the future? Various little web apps in this site?&amp;#160;&lt;a href="https://perrotta.dev/2026/02/web-radio-player/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;Taken with &lt;a href="https://playwright.dev/"&gt;playwright&lt;/a&gt; via Claude Code. How
+cool!&amp;#160;&lt;a href="https://perrotta.dev/2026/02/web-radio-player/#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: web radio player"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/meta/"&gt;#meta&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Import legacy posts from my old WordPress blog</title><link>https://perrotta.dev/2026/02/import-legacy-posts-from-my-old-wordpress-blog/</link><pubDate>Sun, 15 Feb 2026 15:25:25 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>serenity</category><guid>https://perrotta.dev/2026/02/import-legacy-posts-from-my-old-wordpress-blog/</guid><description>&lt;p&gt;I used to have a blog during my university years.&lt;/p&gt;
 &lt;p&gt;It was in WordPress, hosted at &lt;a href="https://thiagoperrotta.wordpress.com/"&gt;https://thiagoperrotta.wordpress.com/&lt;/a&gt;, called
 &amp;ldquo;Everyday Serendipity&amp;rdquo;.&lt;/p&gt;
 &lt;p&gt;At first I would write in my mother tongue (Portuguese), then I would switch to
@@ -2270,27 +2376,4 @@ handles your content is available here.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;I had the opportunity to speak with Tate once, in a virtual meeting.&lt;/p&gt;
 &lt;p&gt;In my opinion, he is quite competent and gives sound advice.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ChatGPT default settings"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/privacy/"&gt;#privacy&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Cursor</title><link>https://perrotta.dev/2025/05/cursor/</link><pubDate>Thu, 15 May 2025 15:18:53 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>serenity</category><guid>https://perrotta.dev/2025/05/cursor/</guid><description>&lt;p&gt;Meanwhile, in a conversation with a coworker&amp;hellip;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Me&lt;/strong&gt;: My &lt;em&gt;aha!&lt;/em&gt; moment from this week was to use
-&lt;a href="https://cline.bot/"&gt;Cline&lt;/a&gt;&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2025/05/cursor/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt; with this new &amp;ldquo;Use the browser&amp;rdquo; integration.
-It opens an embedded web browser within its pane and starts to use the cursor
-to click around.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Coworker&lt;/strong&gt;: &lt;a href="https://www.cursor.com/"&gt;Cursor&lt;/a&gt;&lt;sup id="fnref:2"&gt;&lt;a href="https://perrotta.dev/2025/05/cursor/#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;, the IDE?&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Me&lt;/strong&gt;: Nooo, I mean, the mouse cursor, the pointer.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;I was waiting for this moment when the overloaded &amp;ldquo;Cursor&amp;rdquo; term would become
-ambiguous. It&amp;rsquo;s just somewhat of a funny coincidence that it appeared in the
-context of one of its main competitors.&lt;/p&gt;
-&lt;div class="footnotes" role="doc-endnotes"&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id="fn:1"&gt;
-&lt;p&gt;Cline: &lt;em&gt;an AI-powered coding assistant that runs in VS Code&lt;/em&gt;&amp;#160;&lt;a href="https://perrotta.dev/2025/05/cursor/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li id="fn:2"&gt;
-&lt;p&gt;Cursor: &lt;em&gt;the AI Code Editor&lt;/em&gt;&amp;#160;&lt;a href="https://perrotta.dev/2025/05/cursor/#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Cursor"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ChatGPT default settings"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/privacy/"&gt;#privacy&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
