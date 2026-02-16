@@ -82,8 +82,27 @@
     color: var(--color-gray);
     font-size: 0.85rem;
   }
+  .pomo-progress {
+    width: 100%;
+    max-width: 20rem;
+    height: 4px;
+    margin: 0 auto 1.5rem;
+    background: var(--border-color);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .pomo-progress-bar {
+    height: 100%;
+    background: var(--link-color);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 1s linear;
+  }
   @media (prefers-reduced-motion: reduce) {
     .pomo-timer {
+      transition: none;
+    }
+    .pomo-progress-bar {
       transition: none;
     }
   }
@@ -104,6 +123,10 @@
 </div>
 
 <div class="pomo-timer" id="pomo-timer">25:00</div>
+
+<div class="pomo-progress">
+  <div class="pomo-progress-bar" id="pomo-progress-bar"></div>
+</div>
 
 <div class="pomo-controls">
   <button id="pomo-start" class="primary">Start</button>
@@ -131,6 +154,7 @@
   var originalTitle = document.title;
 
   var timerEl = document.getElementById('pomo-timer');
+  var progressBar = document.getElementById('pomo-progress-bar');
   var startBtn = document.getElementById('pomo-start');
   var resetBtn = document.getElementById('pomo-reset');
   var sessionCountEl = document.getElementById('pomo-session-count');
@@ -232,6 +256,10 @@
     var display = pad(minutes) + ':' + pad(seconds);
 
     timerEl.textContent = display;
+
+    var elapsed = DURATIONS[mode] - remaining;
+    var pct = DURATIONS[mode] > 0 ? (elapsed / DURATIONS[mode]) * 100 : 0;
+    progressBar.style.width = pct + '%';
 
     if (running) {
       document.title = display + ' - Pomodoro';
