@@ -43,7 +43,9 @@ def replace_dashes(content):
             continue
 
         if not in_frontmatter and not in_code_block:
-            line = line.replace(' - ', ' — ')
+            # Only replace ' - ' used as prose dashes (letter on both sides),
+            # skipping list markers, math expressions, and inline code.
+            line = re.sub(r'(?<=[a-zA-Z]) - (?=[a-zA-Z])', ' — ', line)
 
         result.append(line)
 
