@@ -1,6 +1,6 @@
 
 Although there's never a guarantee, you can attempt to disallow "AI" from
-scraping the posts in your blog, in the same spirit of "DNT - Do Not Track" in
+scraping the posts in your blog, in the same spirit of "DNT — Do Not Track" in
 modern web browsers.
 
 If you have control over your

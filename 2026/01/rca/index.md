@@ -51,6 +51,6 @@ RCA = Root-Cause Analysis = Postmortem
 - Failures: technical (code, infra); observability (gaps, tooling); process
   (SOP).
 - Golden metrics: latency (overloaded, preempting), traffic (e.g. spikes),
-  errors (kubectl logs? / loki), saturation (e.g. disk, memory - OOM, cpu –
+  errors (kubectl logs? / loki), saturation (e.g. disk, memory — OOM, cpu –
   thrasing)
 

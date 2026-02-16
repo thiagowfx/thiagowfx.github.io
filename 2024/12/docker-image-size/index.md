@@ -22,7 +22,7 @@ automatic builds.
 
 I wasn't aware of [`numfmt`](https://man.archlinux.org/man/numfmt.1):
 
-> numfmt - Convert numbers from/to human-readable strings
+> numfmt — Convert numbers from/to human-readable strings
 
 ...instead of displaying plain bytes, it converts numbers to human-readable
 strings (à la `df -h` or `free -h`).

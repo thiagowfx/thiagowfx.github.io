@@ -124,7 +124,7 @@ same behavior in `atuin`.
 > to work with.
 >
 > At the moment, we support managing and syncing of shell aliases and
-> environment variables - with more coming soon.
+> environment variables — with more coming soon.
 
 ...but I don't feel the need to use this.
 

@@ -50,13 +50,13 @@ I got this advice[^1]:
 
 > For jj in a blog repo (especially with colocated Git):
 
-> 1. Use small, focused commits - jj makes this easy; amend frequently with jj
+> 1. Use small, focused commits — jj makes this easy; amend frequently with jj
 >    amend instead of stashing
-> 2. Leverage jj log - understand your repo state before operations
-> 3. Work on branches - jj new -b feature-name for feature work, keeps main
+> 2. Leverage jj log — understand your repo state before operations
+> 3. Work on branches — jj new -b feature-name for feature work, keeps main
 >    clean
-> 4. Keep commits working - jj can track your working changes automatically
-> 5. Use jj sync - pulls and pushes in one command with Git
+> 4. Keep commits working — jj can track your working changes automatically
+> 5. Use jj sync — pulls and pushes in one command with Git
 
 OK.
 

@@ -26,7 +26,7 @@
 > 3. If you blog more frequently than that it can be a really valuable resource
 >    for your future self. I love being able to look back on what I was thinking
 >    and writing about ten years ago. Having a good tagging system helps with
->    this too - I can review my tag of "scaling" or "postgresql" and see a
+>    this too — I can review my tag of "scaling" or "postgresql" and see a
 >    timeline of how my understanding developed.
 >
 > 4. It's a great way to help establish credibility. If someone asks you about X

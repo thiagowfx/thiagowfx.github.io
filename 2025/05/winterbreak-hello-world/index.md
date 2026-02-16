@@ -62,7 +62,7 @@ be turned off. This is not documented upstream – to be honest, most people
 wouldn't be in that situation anyway.
 
 The process failed in the first attempt. I am not quite sure why. It got stuck
-at the `Jailbreaking - please wait...` screen. The docs say:
+at the `Jailbreaking — please wait...` screen. The docs say:
 
 > If you do not see any funky text then make sure Airplane mode is disabled to
 > avoid any automatic update. Turn it back on after you see the text though!
