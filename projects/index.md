@@ -1,7 +1,7 @@
 
 This is the closest I have to a [`/now`](https://sive.rs/now3) page.
 
-## Personal Projects
+## Personal projects
 
 - ★ [.dotfiles](https://github.com/thiagowfx/.dotfiles) - My dotfiles, managed with GNU stow. This repository is the closest I have to an `/uses` page.
 - ★ [pancake](https://github.com/thiagowfx/pancake) - A potpourri of sweet ingredients – miscellaneous utilities
@@ -13,7 +13,7 @@ This is the closest I have to a [`/now`](https://sive.rs/now3) page.
 
 ---
 
-## Open Source Repository Packages
+## Open Source distro packages
 
 - **[Alpine Linux](https://alpinelinux.org/)**: [Packages](https://pkgs.alpinelinux.org/packages?name=&branch=edge&repo=&arch=&origin=&flagged=&maintainer=Thiago+Perrotta)
 - **[Arch Linux](https://archlinux.org/)**: AUR – Arch User Repository ([maintainer](https://aur.archlinux.org/packages?O=0&SeB=M&K=thiagowfx&outdated=&SB=p&SO=d&PP=50&submit=Go), [submitter](https://aur.archlinux.org/packages?O=0&SeB=s&K=thiagowfx&outdated=&SB=p&SO=d&PP=50&submit=Go)) and [PKGBUILDs](https://github.com/thiagowfx/PKGBUILDs)
