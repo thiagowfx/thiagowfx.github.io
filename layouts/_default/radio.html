@@ -28,6 +28,14 @@
     color: var(--color-gray);
     margin-left: auto;
   }
+  .radio-volume button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0;
+    line-height: 1;
+  }
   .radio-volume input[type="range"] {
     width: 6rem;
     accent-color: var(--link-color);
@@ -130,7 +138,7 @@
   <button id="radio-burst" title="Play 3 random stations">Burst</button>
   <button id="radio-stop" title="Stop all stations">Stop All</button>
   <div class="radio-volume">
-    <span>Vol</span>
+    <button id="radio-mute" title="Mute/unmute">&#x1f50a;</button>
     <input type="range" id="radio-volume" min="0" max="100" value="80" aria-label="Volume">
   </div>
 </div>
@@ -252,8 +260,28 @@
     }
   }
 
+  let muted = false;
+  let volumeBeforeMute = volume;
+  const muteBtn = document.getElementById('radio-mute');
+
   volumeSlider.addEventListener('input', function() {
     volume = this.value / 100;
+    muted = volume === 0;
+    muteBtn.innerHTML = muted ? '&#x1f507;' : '&#x1f50a;';
+    playing.forEach((audio) => { audio.volume = volume; });
+  });
+
+  muteBtn.addEventListener('click', () => {
+    if (muted) {
+      volume = volumeBeforeMute || 0.8;
+      volumeSlider.value = volume * 100;
+    } else {
+      volumeBeforeMute = volume;
+      volume = 0;
+      volumeSlider.value = 0;
+    }
+    muted = !muted;
+    muteBtn.innerHTML = muted ? '&#x1f507;' : '&#x1f50a;';
     playing.forEach((audio) => { audio.volume = volume; });
   });
 
