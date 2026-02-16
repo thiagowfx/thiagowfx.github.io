@@ -1,7 +1,7 @@
 
 **Strongly recommended** to all software developers who use macOS: [Maccy](https://maccy.app/).
 
-> Clipboard manager for macOS which does one job - keep your copy history at hand. Period.
+> Clipboard manager for macOS which does one job — keep your copy history at hand. Period.
 >
 > Lightweight. Open source. No fluff.
 

@@ -13,7 +13,7 @@ sources you could find were cplusplus.com and cppreference wiki[^3]. You can
 live with these on-line references, but you will quickly get bored with them.
 Now, back to `cppman`, the boredom killer and time saver.
 
-## cppman - quick reference
+## cppman — quick reference
 
 ### Installing it
 
@@ -42,7 +42,7 @@ them later with `man` (instead of `cppman`). Happy ~~hacking~~ reading![^4]
 
 ## Footnotes
 
-[^1]: cppman - you don't need to read the whole article; if you're in a hurry,
+[^1]: cppman — you don't need to read the whole article; if you're in a hurry,
     just open the project page and forget me!
 
 [^2]: As always, huh? Stack Overflow thread.

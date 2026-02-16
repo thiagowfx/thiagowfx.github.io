@@ -42,7 +42,7 @@ The number of steps is the same, but Ventoy really shines in the following aspec
 1. Upgrading an OS is just a matter of deleting the old one and copying the new one over, exactly like you would do with a simple document file.
 1. Your USB flash drive is formatted in such a way that it's possible to use its unused storage as persistent storage. So for example you could boot into your desktop OS, save your work, then reboot into your system rescue utility[^sysrescue] and pick up the leftover files therein.
 
-Ventoy is **magic**. It allows you to carry a single USB stick with all of your favorite operating systems - and they don't even have to be Linux, most operating systems are supported:
+Ventoy is **magic**. It allows you to carry a single USB stick with all of your favorite operating systems — and they don't even have to be Linux, most operating systems are supported:
 
 > Most type of OS supported (Windows/WinPE/Linux/ChromeOS/Unix/VMware/Xen...)
 
