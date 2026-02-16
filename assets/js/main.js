@@ -130,6 +130,19 @@ document.addEventListener("click", function (event) {
     });
 });
 
+// Reading progress indicator
+const readingProgress = document.getElementById("reading-progress");
+if (readingProgress) {
+  window.addEventListener("scroll", function () {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight =
+      document.documentElement.scrollHeight -
+      document.documentElement.clientHeight;
+    const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    readingProgress.style.width = progress + "%";
+  });
+}
+
 // Fullscreen mode functionality
 const fullscreenBtn = document.getElementById("fullscreen-btn");
 const fullscreenIcon = document.getElementById("fullscreen-icon");
