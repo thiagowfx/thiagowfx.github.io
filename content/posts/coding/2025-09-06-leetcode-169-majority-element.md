@@ -13,7 +13,7 @@ categories:
 
 ## Quickly via sorting
 
-It must appear in the middle (`(n - 1) / 2`):
+It must appear in the middle (`(n — 1) / 2`):
 
 ```python
 class Solution:

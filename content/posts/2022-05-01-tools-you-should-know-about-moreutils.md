@@ -12,7 +12,7 @@ Here are some of my favorites with example usages. Obviously this post isn't a m
 
 ## sponge
 
-> sponge(1) - soak up standard input and write to a file
+> sponge(1) — soak up standard input and write to a file
 
 Here's a typical workflow `sponge(1)` is great at:
 
@@ -43,7 +43,7 @@ It is great to use `sponge` in lieu of `>` (shell output redirection) in shell p
 
 ## vidir
 
-> vidir(1) - edit directories and filenames
+> vidir(1) — edit directories and filenames
 
 `vidir(1)` is great to bulk rename files/directories within a given directory, one level at a time. For example, if I open `vidir` at the top-level directory of this blog repository, it opens up `vim` (although it doesn't need to be `vim`, your `$EDITOR` is honoured) with the following content:
 
@@ -100,7 +100,7 @@ It's possible to leverage vim features such as `.` (repeat command) and `:%s/` (
 
 ## ifne
 
-> ifne(1) - Run command if the standard input is not empty
+> ifne(1) — Run command if the standard input is not empty
 
 `ifne(1)` is effective when used with `find` or `fd` to keep shell pipes "happy". Here's one simple example:
 
@@ -127,7 +127,7 @@ $ this | is | a | ifne complicated | pipe
 
 ## combine
 
-> combine(1) - combine sets of lines from two files using boolean operations
+> combine(1) — combine sets of lines from two files using boolean operations
 
 `combine(1)` is pretty much `comm(1)`, but much more user-friendly. Given two files `file1` and `file2` it makes it easy to query which lines are {unique, common} to {each, both} files, using boolean operations (or, and, not, xor). Here's one example to find the _common lines_ in _both_ files, compare `combine` and `comm`:
 

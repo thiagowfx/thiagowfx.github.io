@@ -25,7 +25,7 @@ productive. Corporate paradise.
 
 Do we live in the same world?
 
-- - -
+- — -
 
 ## Master Foo and the Absent Pull Requests[^1]
 

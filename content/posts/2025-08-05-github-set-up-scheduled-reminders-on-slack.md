@@ -24,7 +24,7 @@ Once that is done, pick your settings. I like:
 - Optionally check off "Review requests assigned to your team" (I leave this
   disabled as it's too noisy)
 - Check off "Enable real-time alerts for pull requests"
-  - Then check off all checkboxes under it except "Your team's pull request
+  — Then check off all checkboxes under it except "Your team's pull request
     review is requested" (no team notifications) and Your pull request has
     failed checks (CI is too noisy).
 

@@ -27,13 +27,13 @@ I found a sweet spot that works in all situations:
 - Enable airplane mode before going to bed (this can be done automatically).
   This step is optional.
 - Create a shortcut within the Shortcuts app:
-  - Name: "Turn Airplane Mode Off"
-  - Action: **Turn** Airplane Mode **Off**
+  — Name: "Turn Airplane Mode Off"
+  — Action: **Turn** Airplane Mode **Off**
 - Create an automation within the Shortcuts app:
-  - Automation: **Run Immediately** (This is important![^1])
-  - Notify When Run: on
-  - When: At 05:00, daily
-  - Do: Trigger the shortcut defined previously
+  — Automation: **Run Immediately** (This is important![^1])
+  — Notify When Run: on
+  — When: At 05:00, daily
+  — Do: Trigger the shortcut defined previously
 
 Why is this effective?
 

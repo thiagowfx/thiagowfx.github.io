@@ -14,8 +14,8 @@ More specifically, enroll into 2FA other than
 - Go to Settings (https://{company}.okta.com/enduser/settings)
 - Under "Security Key or Biometric Authenticator", click "Set up another"
 - From this point, you could add _either_:
-  - a hardware security key (e.g. [YubiCo](https://www.yubico.com/))
-  - a [passkey](http://passkeys.dev/), which will be stored in your password
+  — a hardware security key (e.g. [YubiCo](https://www.yubico.com/))
+  — a [passkey](http://passkeys.dev/), which will be stored in your password
     manager, iCloud Keychain (Apple devices) or web browser profile
 
 A hardware security key needs to be plugged in during authentication, when it

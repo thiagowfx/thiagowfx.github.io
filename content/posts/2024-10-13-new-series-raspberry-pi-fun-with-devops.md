@@ -81,7 +81,7 @@ If Raspberry Pi support is considered experimental, I would avoid the trouble at
 Stopping briefly here for a moment, the following list comes to mind, using [DistroWatch](https://distrowatch.com/) and [Linux Distribution timeline](https://en.m.wikipedia.org/wiki/File:Linux_Distribution_Timeline.svg) as an aid:
 
 - Debian
-  - RaspberryPi OS
+  — RaspberryPi OS
 - Ubuntu
 - Fedora
 - openSUSE

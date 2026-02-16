@@ -63,7 +63,7 @@ do a `C-x m` to send a new e-mail. By doing this, you'll be creating a new
 
     --
 
-    - Thiago
+    — Thiago
 
 Pretty neat, huh? It even took my signature from `$HOME/.signature`, that I use
 for Claws Mail. However, about the 'From' line, I suspect it parsed the contents
@@ -75,23 +75,23 @@ Now, there are so many things to do / discover here. Here is a mini org list to
 remind myself later:
 
     * Sending mails
-    - [ ] attachments
-    - [ ] PGP signing
-    - [ ] PGP encryption
-    - [ ] multiple e-mails
-    - [ ] CCo
-    - [ ] Integration with other emacs features: spell-checking, auto-fill,
+    — [ ] attachments
+    — [ ] PGP signing
+    — [ ] PGP encryption
+    — [ ] multiple e-mails
+    — [ ] CCo
+    — [ ] Integration with other emacs features: spell-checking, auto-fill,
       etc.
-    - [ ] Plain text only?? What if I want to send a org or markdown mail?
+    — [ ] Plain text only?? What if I want to send a org or markdown mail?
       This would be super cool.
     * Managing mails
-    - [ ] Delete one mail
-    - [ ] Delete several e-mails
-    - [ ] Searching for old e-mails (this is probably better with the gmail
+    — [ ] Delete one mail
+    — [ ] Delete several e-mails
+    — [ ] Searching for old e-mails (this is probably better with the gmail
       interface...)
-    - [ ] Change a label
-    - [ ] Mark mails as {un,}read
-    - [ ] Sync mails periodically
-    - [ ] Sync mails manually
+    — [ ] Change a label
+    — [ ] Mark mails as {un,}read
+    — [ ] Sync mails periodically
+    — [ ] Sync mails manually
 
 For starters, this is okay. Until later.

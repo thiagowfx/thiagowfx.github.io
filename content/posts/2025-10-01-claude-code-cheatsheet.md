@@ -12,26 +12,26 @@ A brain dump as of Oct 1st, 2025 of my head, all things [Claude Code](https://ww
 ## Keyboard shortcuts
 
 - `Shift+Tab` to cycle through: "default" -> "⏵⏵ accept edits on" -> "⏸ plan mode on"
-  - "⏵⏵ Accept edits on" is a comfortable mode to be on by default, especially
+  — "⏵⏵ Accept edits on" is a comfortable mode to be on by default, especially
     when paired with git commits as checkpoints.
-  - A well-curated tool whitelist (c.f. `~/.claude/settings.json`) can further
+  — A well-curated tool whitelist (c.f. `~/.claude/settings.json`) can further
     enhance this mode.
-  - "⏵⏵ Accept edits on" is not the same as `--dangerously-skip-permissions`:
+  — "⏵⏵ Accept edits on" is not the same as `--dangerously-skip-permissions`:
 
 > Bypass all permission checks. Recommended only for sandboxes with no internet access.
 
 - `Tab` to toggle "Thinking on" / "Thinking off"
-  - This is a brand new feature in [Claude Code 2.0](https://www.anthropic.com/news/enabling-claude-code-to-work-more-autonomously), just released this week.
+  — This is a brand new feature in [Claude Code 2.0](https://www.anthropic.com/news/enabling-claude-code-to-work-more-autonomously), just released this week.
     Hence I haven't used it so far. Toggling the plan mode is typically enough
     for my needs.
 - `Esc Esc` to clear input / `/rewind` to a previous checkpoint
-  - I prefer to "manually steer / tune" the LLM. Learn from past mistakes!
+  — I prefer to "manually steer / tune" the LLM. Learn from past mistakes!
 - `Ctrl-r` to search previous prompts – similarly to `bash` / `zsh` shell
   history
 - `!` for shell mode e.g. `! ls` or `! git commit -a -m "msg"`. Good for
   one-offs.
-  - Alternatively, simply open a new shell tab / split / window.
-  - Alternatively, suspend Claude with `Ctrl-z`:
+  — Alternatively, simply open a new shell tab / split / window.
+  — Alternatively, suspend Claude with `Ctrl-z`:
 
 ```
 Claude Code has been suspended. Run `fg` to bring Claude Code back.
@@ -41,15 +41,15 @@ Note: ctrl + z now suspends Claude Code, ctrl + _ undoes input.
 
 - `/` for commands – TAB completion is available.
 - `@` for file paths e.g. `@README.md` or `@.env` – TAB completion is supported
-  - Use `@` to provide targeted context in prompts, for example: `Upgrade
+  — Use `@` to provide targeted context in prompts, for example: `Upgrade
     @main.go to incorporate logging. Follow a pattern similar to
     @vendor/main.go. Update @README.md afterwards`
 - `#` to memorize (a.k.a. "add to memory")
-  - I don't use this shortcut much. Instead, prefer editing `CLAUDE.md` directly
+  — I don't use this shortcut much. Instead, prefer editing `CLAUDE.md` directly
     for pristine, per-repo settings. This is comparable to having a local, per
       git repo `.gitignore` versus a `~/.gitignore_global` that affects all
       repositories.
-  - Project memory lives in `CLAUDE.md`, user memory lives in
+  — Project memory lives in `CLAUDE.md`, user memory lives in
     `~/.claude/CLAUDE.md`.
 - `Ctrl-o` for verbose output
 - `Ctrl-t` to show TODOs
@@ -74,13 +74,13 @@ Most of the above reference can be pulled up with:
 A few handy comments not previously mentioned:
 
 - `/cost`: show total cost + duration of the current session
-  - See also: [ccusage]({{< ref "2025-09-04-claude-ccusage" >}})
+  — See also: [ccusage]({{< ref "2025-09-04-claude-ccusage" >}})
 - `/export`: copy the current conversation to the clipboard, or export it to a
   file
 - `/init`: to bootstrap and scaffold / populate `CLAUDE.md`
 - `/mcp` to manage MCP servers
 - `/resume`: resume a (previous) conversation.
-  - Alternatively, launch `claude` with [`--resume`]({{< ref "2025-09-02-claude-resume" >}}) in the desired CWD.
+  — Alternatively, launch `claude` with [`--resume`]({{< ref "2025-09-02-claude-resume" >}}) in the desired CWD.
 
 ## Settings
 

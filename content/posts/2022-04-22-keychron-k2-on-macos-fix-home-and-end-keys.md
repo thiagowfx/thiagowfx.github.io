@@ -42,15 +42,15 @@ Sure, no problem, I was about to do it but then I realized there's an [official 
 
 I found a "Keychron K2" category which made me instantly happy but it turned out not to be useful, as there were only two defined mappings therein:
 
-> - Change Keychron K2 keyboard layout to more closely resemble an Apple keyboard
-> - Remap some Keychrom K2(US) keys to make it less painful to switch from Macbook(RU) keyboard
+> — Change Keychron K2 keyboard layout to more closely resemble an Apple keyboard
+> — Remap some Keychrom K2(US) keys to make it less painful to switch from Macbook(RU) keyboard
 
 None of these mattered to me. Then I searched for `home to cmd` which led me to [this entry](https://ke-complex-modifications.pqrs.org/#HomeEnd), which had exactly the mappings I wanted:
 
 > Home and End
 >
-> - Home to Command Left
-> - End to Command Right
+> — Home to Command Left
+> — End to Command Right
 
 [Its resulting JSON](https://ke-complex-modifications.pqrs.org/json/HomeEnd.json) looks roughly like this (irrelevant bits stripped for the sake of brevity):
 

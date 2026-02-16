@@ -29,41 +29,41 @@ The most important ingredients are **in bold**.
 The coolest™ ingredients are _in italics_.
 
 - base (pick at least one)
-  - **milk** (animal or not; prefer low-fat)
-  - plain yogurt (greek, vanilla also OK)
-  - high-protein yogurt
-  - skyr
-  - speisequark
-  - _semolina pudding_
-  - avoid: water
+  — **milk** (animal or not; prefer low-fat)
+  — plain yogurt (greek, vanilla also OK)
+  — high-protein yogurt
+  — skyr
+  — speisequark
+  — _semolina pudding_
+  — avoid: water
 - grains (pick at least two)
-  - **oats** (steel-cut or rolled -> auf Deutsch: Haferflocken)
-  - **chia seeds** (let them _soak_)
-  - flax seeds
-  - hemp seeds
-  - avoid[^1]: quick oats
-  - avoid: porridge
-  - avoid: cereal (Müsli)
+  — **oats** (steel-cut or rolled -> auf Deutsch: Haferflocken)
+  — **chia seeds** (let them _soak_)
+  — flax seeds
+  — hemp seeds
+  — avoid[^1]: quick oats
+  — avoid: porridge
+  — avoid: cereal (Müsli)
 - sweet(ener) (pick at least one)
-  - **peanut butter**
-  - almond butter
-  - _maple syrup_
-  - _acacia honey_
-  - _raw honey_
-  - wild honey
-  - date syrup
-  - **cinnamon**
-  - vanilla extract
-  - avoid: sugar / brown sugar
-  - avoid: hazelnut butter / Nutella™
+  — **peanut butter**
+  — almond butter
+  — _maple syrup_
+  — _acacia honey_
+  — _raw honey_
+  — wild honey
+  — date syrup
+  — **cinnamon**
+  — vanilla extract
+  — avoid: sugar / brown sugar
+  — avoid: hazelnut butter / Nutella™
 - fruits (pick at least one)
-  - bananas
-  - strawberries
-  - raspberries
-  - blueberries
-  - cherries
-  - figs
-  - avoid: dry figs
+  — bananas
+  — strawberries
+  — raspberries
+  — blueberries
+  — cherries
+  — figs
+  — avoid: dry figs
 
 ### Preparation
 

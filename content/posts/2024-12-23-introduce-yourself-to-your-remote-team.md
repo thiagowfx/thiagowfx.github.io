@@ -24,12 +24,12 @@ external_link: "https://cassidoo.co/post/remote-intros/"
 User guides (go/user-guides) are a great way to introduce yourself to your team
 at work. Cassidy notes:
 
-> - Time zones/availability
-> - Communication preferences (Slack vs Zoom vs email vs phone vs something else)
-> - Things folks might misunderstand about you
-> - Things everyone should know
-> - How you prefer to get feedback
-> - Things that you like to talk about, work-related and non-work-related
+> — Time zones/availability
+> — Communication preferences (Slack vs Zoom vs email vs phone vs something else)
+> — Things folks might misunderstand about you
+> — Things everyone should know
+> — How you prefer to get feedback
+> — Things that you like to talk about, work-related and non-work-related
 
 The list is already quite comprehensive, however I would also add:
 

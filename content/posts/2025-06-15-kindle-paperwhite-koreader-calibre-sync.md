@@ -22,9 +22,9 @@ Instructions:
 **from KOReader**:
 
 - Click Settings > Calibre > Wireless Settings
-  - Check off 'Enable wireless client'
-  - Set inbox folder > `/mnt/us/documents`
-  - Server address > Add the IP address + port[^1] of the calibre server (visible in the calibre UI)
+  — Check off 'Enable wireless client'
+  — Set inbox folder > `/mnt/us/documents`
+  — Server address > Add the IP address + port[^1] of the calibre server (visible in the calibre UI)
 - Click Settings > Calibre > Connect
 
 At this point, the Calibre UI should change, recognizing the KOReader client.

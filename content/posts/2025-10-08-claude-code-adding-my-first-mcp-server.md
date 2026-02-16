@@ -155,7 +155,7 @@ Just describe it in natural language:
 
 Then I tried basic CRUD operations in natural language:
 
-* **Prompt**: "create an issue" - create: followed by further prompts with issue details ✅
+* **Prompt**: "create an issue" — create: followed by further prompts with issue details ✅
 * **Prompt**: "transition the issue to won't do" – update / delete ✅
 * **Prompt**: "find an issue related to foo deployment in cluster bar") –  read ✅
 

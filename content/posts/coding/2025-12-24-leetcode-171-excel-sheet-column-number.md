@@ -26,5 +26,5 @@ class Solution:
         return ans
 ```
 
-`'B' - 'A'` works in C (`char`), but Python requires the explicit `ord()` cast
+`'B' — 'A'` works in C (`char`), but Python requires the explicit `ord()` cast
 as you cannot "subtract" strings.
