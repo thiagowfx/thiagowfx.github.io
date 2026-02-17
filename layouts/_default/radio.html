@@ -232,12 +232,14 @@
     getCard(id).classList.remove('error');
     if (isSoma && idx + 1 < somaServers.length) {
       audio.addEventListener('error', () => {
+        if (audio._stopped) return;
         audio.src = '';
         playing.delete(id);
         play(id, idx + 1);
       }, { once: true });
     } else {
       audio.addEventListener('error', () => {
+        if (audio._stopped) return;
         audio.src = '';
         playing.delete(id);
         getCard(id).classList.add('error');
@@ -254,6 +256,7 @@
   function stop(id) {
     const audio = playing.get(id);
     if (!audio) return;
+    audio._stopped = true;
     audio.pause();
     audio.src = '';
     playing.delete(id);
