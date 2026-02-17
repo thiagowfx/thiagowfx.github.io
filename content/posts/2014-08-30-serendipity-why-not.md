@@ -1,6 +1,6 @@
 ---
 title: "Serendipity...why not?"
-date: 2014-08-30T20:33:00+00:00
+date: 2014-08-30T23:33:00-03:00
 tags:
   - legacy
   - meta

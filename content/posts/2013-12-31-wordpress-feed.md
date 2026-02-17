@@ -1,6 +1,6 @@
 ---
 title: "Wordpress Feed"
-date: 2013-12-31T13:09:38+00:00
+date: 2013-12-31T16:09:38-03:00
 tags:
   - legacy
 ---

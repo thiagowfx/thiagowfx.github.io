@@ -1,6 +1,6 @@
 ---
 title: "adb over Wi-Fi for adbsync"
-date: 2014-07-04T16:33:12+00:00
+date: 2014-07-04T19:33:12-03:00
 tags:
   - dev
   - legacy

@@ -1,6 +1,6 @@
 ---
 title: "Is it actually bad for the Battery of a Laptop to leave it plugged in?"
-date: 2013-12-12T16:07:00+00:00
+date: 2013-12-12T19:07:00-03:00
 tags:
   - legacy
 ---

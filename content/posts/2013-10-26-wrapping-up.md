@@ -1,6 +1,6 @@
 ---
 title: Wrapping up
-date: 2013-10-26
+date: 2013-10-27T02:15:28-03:00
 tags:
   - legacy
   - serenity

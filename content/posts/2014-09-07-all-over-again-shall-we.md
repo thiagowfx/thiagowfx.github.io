@@ -1,6 +1,6 @@
 ---
 title: "All over again, shall we?"
-date: 2014-09-07T21:33:00+00:00
+date: 2014-09-08T00:33:00-03:00
 tags:
   - dev
   - legacy

@@ -1,6 +1,6 @@
 ---
 title: "I'm learning PHP"
-date: 2014-05-18T02:23:53+00:00
+date: 2014-05-18T05:23:53-03:00
 tags:
   - dev
   - legacy

@@ -1,6 +1,6 @@
 ---
 title: "My first ebuild"
-date: 2014-09-28T03:24:00+00:00
+date: 2014-09-28T03:24:00-03:00
 tags:
   - dev
   - legacy

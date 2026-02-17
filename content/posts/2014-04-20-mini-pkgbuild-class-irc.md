@@ -1,6 +1,6 @@
 ---
 title: "PKGBUILD Class @ IRC"
-date: 2014-04-20T22:17:53+00:00
+date: 2014-04-21T01:17:53-03:00
 tags:
   - dev
   - legacy

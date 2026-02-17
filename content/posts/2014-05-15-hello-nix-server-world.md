@@ -1,6 +1,6 @@
 ---
 title: "[status] Hello, *nix server world!"
-date: 2014-05-15T17:25:07+00:00
+date: 2014-05-15T20:25:07-03:00
 tags:
   - dev
   - legacy

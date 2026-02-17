@@ -1,6 +1,6 @@
 ---
 title: "Vim shortcuts everywhere"
-date: 2014-11-13T09:03:07+00:00
+date: 2014-11-13T12:03:07-03:00
 tags:
   - dev
   - legacy

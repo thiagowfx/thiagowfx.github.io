@@ -1,6 +1,6 @@
 ---
 title: "Compiling / Installing pacman on Ubuntu"
-date: 2014-10-09T23:20:52+00:00
+date: 2014-10-09T23:20:52-03:00
 tags:
   - dev
   - legacy

@@ -1,6 +1,6 @@
 ---
 title: "Everything Orgmode (OR: orgmode everywhere)"
-date: 2014-05-21T02:09:00+00:00
+date: 2014-05-21T05:09:00-03:00
 tags:
   - dev
   - legacy

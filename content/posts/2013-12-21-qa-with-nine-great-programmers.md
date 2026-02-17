@@ -1,6 +1,6 @@
 ---
 title: "Q&A With Nine Great Programmers"
-date: 2013-12-21T12:08:53+00:00
+date: 2013-12-21T15:08:53-03:00
 tags:
   - dev
   - legacy

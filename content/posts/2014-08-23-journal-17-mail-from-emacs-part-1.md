@@ -1,6 +1,6 @@
 ---
 title: "Mail from Emacs - Part #1"
-date: 2014-08-23T15:13:37+00:00
+date: 2014-08-23T18:13:37-03:00
 tags:
   - dev
   - legacy

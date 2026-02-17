@@ -1,6 +1,6 @@
 ---
 title: btrfs trouble, trouble, and troubleshooting
-date: 2014-11-05
+date: 2014-11-06T00:01:43-03:00
 tags:
   - dev
   - legacy

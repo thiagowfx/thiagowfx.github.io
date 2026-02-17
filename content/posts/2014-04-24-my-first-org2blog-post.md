@@ -1,6 +1,6 @@
 ---
 title: "My first org2blog post"
-date: 2014-04-24T10:36:00+00:00
+date: 2014-04-24T13:36:00-03:00
 tags:
   - dev
   - legacy

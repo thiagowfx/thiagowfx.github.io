@@ -1,6 +1,6 @@
 ---
 title: "Why I love zsh"
-date: 2013-11-13T22:45:02+00:00
+date: 2013-11-14T01:45:02-03:00
 tags:
   - dev
   - legacy

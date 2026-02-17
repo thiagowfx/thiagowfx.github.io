@@ -1,6 +1,6 @@
 ---
 title: 'emacs: "No Usable Browser Found" error'
-date: 2014-07-28T20:20:00+00:00
+date: 2014-07-28T20:20:00-03:00
 tags:
   - dev
   - legacy

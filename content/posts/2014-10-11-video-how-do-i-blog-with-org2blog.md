@@ -1,6 +1,6 @@
 ---
 title: "How do I blog with org2blog?"
-date: 2014-10-11T11:26:00+00:00
+date: 2014-10-11T14:26:00-03:00
 tags:
   - dev
   - legacy
