@@ -3,9 +3,9 @@ After reading the book [Highest Duty: My Search for What Really
 Matters](https://www.goodreads.com/book/show/6404803-highest-duty) by Chesley
 "Sully" B. Sullenberger III, to which I gave **5 stars**:
 
-> Now a major motion picture from Clint Eastwood, starring Tom Hanks—the
+> Now a major motion picture from Clint Eastwood, starring Tom Hanks — the
 > inspirational autobiography by one of the most captivating American heroes of
-> our time, Capt. 'Sully' Sullenberger—the pilot who miraculously landed a
+> our time, Capt. 'Sully' Sullenberger — the pilot who miraculously landed a
 > crippled US Airways Flight 1549 in New York's Hudson River, saving the lives
 > of all 155 passengers and crew.
 
