@@ -26,7 +26,7 @@ I definitely agree that **"TIL Blogs"** ("today I learned") are very low stakes
 and high value, thus I've been trying to get into the habit of doing so to
 follow suit.
 
-**Describing about your own projects** is also a great way to keep them flowing and
+**Describing your own projects** is also a great way to keep them flowing and
 keep yourself motivated.
 
 That said, I am not a fan of **"link blogs"**, merely because the web has an
