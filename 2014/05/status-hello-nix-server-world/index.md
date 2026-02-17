@@ -1,5 +1,5 @@
 
-So, after declaring [I'm not into any Linux Desktop]({{< ref "2014-05-13-mini-goodbye-linux-desktop" >}} "\[mini\] "Goodbye" Linux Desktop") studies anymore, I now consider myself into the (*nix) Server world.
+So, after declaring [I'm not into any Linux Desktop]({{< ref "2014-05-13-goodbye-linux-desktop" >}} "\"Goodbye\" Linux Desktop") studies anymore, I now consider myself into the (*nix) Server world.
 
 You might remember I started a "server challenge" in this blog months ago. Well, forget about that; it's useless. The typical concern of a future-system-administrator-myself should not be focused in a typical "how to install apache everywhere: arch, debian, centos, opensuse, ubuntu", but instead in a typical "which web server is best for each kind of situation?".
 
