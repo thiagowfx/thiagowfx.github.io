@@ -11,9 +11,9 @@ ping sitemap="https://perrotta.dev/sitemap.xml":
 
 It is invoked with `$ just ping`.
 
-Recently I added it to CI (github actions):
+Recently I added it to CI (GitHub Actions):
 
-```
+```yaml
 steps:
   - name: Build
     run: just build
