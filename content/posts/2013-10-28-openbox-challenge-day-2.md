@@ -6,8 +6,7 @@ tags:
   - legacy
 ---
 
-This is my second day with openbox WM. [Day
-1](/posts/2013-10-27-openbox-challenge-day-1) is the first one.
+[Previously]({{< ref "2013-10-27-openbox-challenge-day-1" >}}).
 
 Today, the first thing I did was to create my openbox config folder. Next, I
 modified the autostart file. Basically all I had to do was to copy some of the
