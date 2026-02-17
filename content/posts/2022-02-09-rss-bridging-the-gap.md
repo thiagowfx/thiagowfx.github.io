@@ -1,6 +1,6 @@
 ---
 title: "RSS: bridging the gap"
-date: 2022-02-09T22:17:52-05:00
+date: 2022-02-09T00:00:00+00:00
 tags:
   - dev
   - socialmedia

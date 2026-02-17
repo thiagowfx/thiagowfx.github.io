@@ -1,6 +1,6 @@
 ---
 title: "From orgmode to asciidoc (OR: ditching emacs)"
-date: 2015-02-20T08:42:16+00:00
+date: 2015-02-20T14:42:16-03:00
 tags:
   - dev
   - legacy

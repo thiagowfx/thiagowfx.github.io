@@ -1,6 +1,6 @@
 ---
 title: "Using proxy servers on Linux"
-date: 2014-12-08T23:48:45+00:00
+date: 2014-12-09T02:48:45-03:00
 tags:
   - dev
   - legacy

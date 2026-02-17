@@ -1,6 +1,6 @@
 ---
 title: "Thoughts on Instagram"
-date: 2015-03-02T02:18:09+00:00
+date: 2015-03-02T05:18:09-03:00
 tags:
   - dev
   - legacy

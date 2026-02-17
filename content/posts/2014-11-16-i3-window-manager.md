@@ -1,6 +1,6 @@
 ---
 title: "i3 window manager"
-date: 2014-11-16T23:35:49+00:00
+date: 2014-11-17T02:35:49-03:00
 tags:
   - bestof
   - dev

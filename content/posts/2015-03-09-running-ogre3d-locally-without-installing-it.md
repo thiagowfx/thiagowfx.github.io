@@ -1,6 +1,6 @@
 ---
 title: "Running Ogre3d locally (without installing it)"
-date: 2015-03-09T00:05:25+00:00
+date: 2015-03-09T03:05:25-03:00
 tags:
   - dev
   - legacy

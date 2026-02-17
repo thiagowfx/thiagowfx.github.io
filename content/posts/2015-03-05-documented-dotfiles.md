@@ -1,6 +1,6 @@
 ---
 title: "Documented dotfiles"
-date: 2015-03-05T01:06:31+00:00
+date: 2015-03-05T04:06:31-03:00
 tags:
   - dev
   - legacy

@@ -1,6 +1,6 @@
 ---
 title: 'Account deletion request'
-date: 2015-03-01T14:15:20+00:00
+date: 2015-03-01T14:15:20-03:00
 tags:
   - legacy
 ---
