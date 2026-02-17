@@ -22,7 +22,7 @@ myself. I recommend you to adopt all or some of these settings.
 ## 1 - Startpage Search Engine
 
 I've recently switched my default search engine from Google to **Startpage**.
-Please don't get me wrong —I  love Google, but I decided Google is tracking way
+Please don't get me wrong — I  love Google, but I decided Google is tracking way
 too much of my search habits. Startpage uses Google as its backend engine, but
 it does that in a way Google can't really link my searches to me. Besides,
 Startpage doesn't store my IP Address.
@@ -42,7 +42,7 @@ I support some ads (like Reddit or Kongregate ones, for example) and I
 understand the web wouldn't function right without them. However, I will not
 tolerate ads I haven't requested getting in the way of my web experience. I
 advise you to enable ads for services and websites that you like. Think
-carefully about it—they may break if they don't get revenue from ads. Adblock
+carefully about it — they may break if they don't get revenue from ads. Adblock
 Edge is open source.
 
 ## 3 - Ghostery
