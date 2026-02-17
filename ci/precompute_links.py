@@ -102,7 +102,11 @@ def parse_post(file_path: Path) -> dict | None:
         return None
 
     # Get filename without extension as ID
-    post_id = file_path.stem
+    # For page bundles (index.md), use parent directory name to avoid ID collisions
+    if file_path.name == "index.md":
+        post_id = file_path.parent.name
+    else:
+        post_id = file_path.stem
 
     # Parse date (normalize to naive datetime for comparison)
     date_str = frontmatter.get("date", "")
