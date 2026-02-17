@@ -2,9 +2,9 @@
 title: "Thoughts on Instagram"
 date: 2015-03-02T02:18:09+00:00
 tags:
- - dev
- - legacy
- - serenity
+  - dev
+  - legacy
+  - serenity
 ---
 
 **Note:** this is a brief article which exposes my opinion about a free web

@@ -2,8 +2,8 @@
 title: "Recording screencasts on Linux"
 date: 2015-03-21T18:03:48+00:00
 tags:
- - dev
- - legacy
+  - dev
+  - legacy
 ---
 
 One-line self-documenting functions, put this into your shell init file:
