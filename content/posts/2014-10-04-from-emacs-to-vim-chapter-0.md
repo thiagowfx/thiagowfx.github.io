@@ -135,6 +135,4 @@ repeated further on), feel free to leave out any comments about your specific
 experiences about vim or emacs. Also, you are encouraged to suggest me
 additional topics about my experience with emacs (and my soon-to-be-born
 experience with vim too), and even choose one of the above topics to I write
-about next. Until the next post! (For now, read this.) **Update**: [next
-post](/posts/2014-10-05-from-emacs-to-vim-chapter-1-vim-plug-ins "From Emacs to
-Vim – Chapter #1 – Vim plug-ins").
+about next. Until the next post! (For now, read this.) **Update**: [next post]({{< ref "2014-10-05-from-emacs-to-vim-chapter-1-vim-plug-ins" >}} "From Emacs to Vim – Chapter #1 – Vim plug-ins").
