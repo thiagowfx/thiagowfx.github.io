@@ -83,6 +83,19 @@
     border-color: var(--link-color);
     background: color-mix(in srgb, var(--link-color) 8%, var(--bg-color));
   }
+  .radio-card.error {
+    border-color: #c44;
+    background: color-mix(in srgb, #c44 8%, var(--bg-color));
+  }
+  .radio-card-error {
+    display: none;
+    font-size: 0.75rem;
+    color: #c44;
+    margin-top: 0.25rem;
+  }
+  .radio-card.error .radio-card-error {
+    display: block;
+  }
   .radio-card-name {
     font-weight: 600;
     font-size: 0.95rem;
@@ -191,7 +204,8 @@
     card.innerHTML = '<div class="radio-card-dot"></div>' +
       '<div class="radio-card-name">' + star + s.name + '</div>' +
       '<div class="radio-card-genre">' + s.genre + '</div>' +
-      '<a class="radio-card-link" href="' + s.homepage + '" target="_blank" rel="noopener">&#x2197; website</a>';
+      '<a class="radio-card-link" href="' + s.homepage + '" target="_blank" rel="noopener">&#x2197; website</a>' +
+      '<div class="radio-card-error">Station unavailable</div>';
     card.addEventListener('click', (e) => {
       if (e.target.closest('.radio-card-link')) return;
       toggle(s.id);
@@ -203,6 +217,10 @@
     return stations.find((s) => s.id === id);
   }
 
+  function getCard(id) {
+    return grid.querySelector('.radio-card[data-id="' + id + '"]');
+  }
+
   function play(id, somaIdx) {
     if (playing.has(id)) return;
     const s = getStation(id);
@@ -211,11 +229,19 @@
     const url = isSoma ? s.url.replace(/ice\d+/, somaServers[idx]) : s.url;
     const audio = new Audio(url);
     audio.volume = volume;
+    getCard(id).classList.remove('error');
     if (isSoma && idx + 1 < somaServers.length) {
       audio.addEventListener('error', () => {
         audio.src = '';
         playing.delete(id);
         play(id, idx + 1);
+      }, { once: true });
+    } else {
+      audio.addEventListener('error', () => {
+        audio.src = '';
+        playing.delete(id);
+        getCard(id).classList.add('error');
+        updateUI();
       }, { once: true });
     }
     audio.play().catch((e) => {
