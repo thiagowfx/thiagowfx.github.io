@@ -1,5 +1,5 @@
 ---
-title: "[mini] \"Goodbye\" Linux Desktop"
+title: "\"Goodbye\" Linux Desktop"
 date: 2014-05-13T14:55:00-03:00
 tags:
   - dev
