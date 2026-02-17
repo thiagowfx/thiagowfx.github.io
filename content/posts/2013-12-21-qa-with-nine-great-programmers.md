@@ -2,8 +2,8 @@
 title: "Q&A With Nine Great Programmers"
 date: 2013-12-21T12:08:53+00:00
 tags:
- - dev
- - legacy
+  - dev
+  - legacy
 ---
 
 Warning: it is long. But, IMHO, a worth read (if you care about this subject). I

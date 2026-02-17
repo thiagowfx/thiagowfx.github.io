@@ -2,8 +2,8 @@
 title: "[status] Hello, *nix server world!"
 date: 2014-05-15T17:25:07+00:00
 tags:
- - dev
- - legacy
+  - dev
+  - legacy
 ---
 
 So, after declaring [I'm not into any Linux Desktop]({{< ref "2014-05-13-mini-goodbye-linux-desktop" >}} "\[mini\] "Goodbye" Linux Desktop") studies anymore, I now consider myself into the (*nix) Server world.

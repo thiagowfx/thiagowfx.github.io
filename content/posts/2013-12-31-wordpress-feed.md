@@ -2,7 +2,7 @@
 title: "Wordpress Feed"
 date: 2013-12-31T13:09:38+00:00
 tags:
- - legacy
+  - legacy
 ---
 
 Yesterday I discovered a little feature from Wordpress. Head to

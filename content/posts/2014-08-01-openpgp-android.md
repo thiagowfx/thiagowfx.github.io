@@ -2,9 +2,9 @@
 title: "Open PGP @ Android"
 date: 2014-08-01T18:35:00+00:00
 tags:
- - dev
- - legacy
- - security
+  - dev
+  - legacy
+  - security
 ---
 
 Recently I've discovered a very good free and open source e-mail application for

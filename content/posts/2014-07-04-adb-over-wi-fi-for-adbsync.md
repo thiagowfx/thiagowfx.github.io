@@ -2,8 +2,8 @@
 title: "adb over Wi-Fi for adbsync"
 date: 2014-07-04T16:33:12+00:00
 tags:
- - dev
- - legacy
+  - dev
+  - legacy
 ---
 
 Serendipity is good. I've just discovered one can use `adb` over Wi-Fi. What

@@ -2,9 +2,9 @@
 title: "How do I blog with org2blog?"
 date: 2014-10-11T11:26:00+00:00
 tags:
- - dev
- - legacy
- - meta
+  - dev
+  - legacy
+  - meta
 ---
 
 **TL;DR**: Video link: [Vimeo](https://vimeo.com/108656001). This is my blogging

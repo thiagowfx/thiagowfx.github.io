@@ -10,7 +10,7 @@ The last weekend I lost more than **8 hours** trying to recover from a serious
 bug that reached the btrfs filesystem in recent days. This bug was relatively
 specific: it would only affect Linux users running a specific kernel version
 (3.17.1, if I recall correctly), a specific version of the btrfs-progs package,
-**and** systems with read-only snapshots—yeah, I've been using the snapshot
+**and** systems with read-only snapshots — yeah, I've been using the snapshot
 feature of the btrfs filesystem extensively.
 
 ## First Symptom
@@ -69,7 +69,7 @@ Although losing several hours, I:
 ---
 
 I'm now using ext4 on my root partition and btrfs on my home partition. This
-means I can hibernate my system now—I missed that for a while.
+means I can hibernate my system now — I missed that for a while.
 
 ## References
 

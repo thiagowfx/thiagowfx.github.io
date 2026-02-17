@@ -2,8 +2,8 @@
 title: "I'm learning PHP"
 date: 2014-05-18T02:23:53+00:00
 tags:
- - dev
- - legacy
+  - dev
+  - legacy
 ---
 
 Hi people, I started to learn PHP, so I've set up a public git repository at

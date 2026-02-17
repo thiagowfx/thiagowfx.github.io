@@ -2,8 +2,8 @@
 title: "All over again, shall we?"
 date: 2014-09-07T21:33:00+00:00
 tags:
- - dev
- - legacy
+  - dev
+  - legacy
 ---
 
 I've just switched from Arch to Ubuntu. OMG, what the hell _with me_? To make

@@ -2,8 +2,8 @@
 title: "Compiling / Installing pacman on Ubuntu"
 date: 2014-10-09T23:20:52+00:00
 tags:
- - dev
- - legacy
+  - dev
+  - legacy
 ---
 
 No, this is not the classic game. Here are logs.

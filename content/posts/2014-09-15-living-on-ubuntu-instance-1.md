@@ -2,7 +2,8 @@
 title: "Living on Ubuntu - Instance #1"
 date: 2014-09-15T20:24:45+00:00
 tags:
- - dev
+  - dev
+  - legacy
 ---
 
 As stated in my last post, I'm now using Ubuntu as my main linux distro. This is temporary and might even hurt a little, however I'm willing to keep going with this goal for a while.

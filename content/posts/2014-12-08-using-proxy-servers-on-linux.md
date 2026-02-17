@@ -2,9 +2,9 @@
 title: "Using proxy servers on Linux"
 date: 2014-12-08T23:48:45+00:00
 tags:
- - dev
- - legacy
- - security
+  - dev
+  - legacy
+  - security
 ---
 
 There are some times when you need to connect your PC to an access point which

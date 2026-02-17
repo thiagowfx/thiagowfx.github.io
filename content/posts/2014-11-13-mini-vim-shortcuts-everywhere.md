@@ -2,9 +2,9 @@
 title: "Vim shortcuts everywhere"
 date: 2014-11-13T09:03:07+00:00
 tags:
- - dev
- - legacy
- - vim
+  - dev
+  - legacy
+  - vim
 ---
 
 Recently I've been switching my mind and workflow from emacs keybindings to vim

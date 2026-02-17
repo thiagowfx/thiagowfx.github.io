@@ -2,8 +2,8 @@
 title: "Everything Orgmode (OR: orgmode everywhere)"
 date: 2014-05-21T02:09:00+00:00
 tags:
- - dev
- - legacy
+  - dev
+  - legacy
 ---
 
 I've just fallen in love with the amazing orgmode. What the _hell_ is this? I
