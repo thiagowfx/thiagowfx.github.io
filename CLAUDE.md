@@ -45,7 +45,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Content Guidelines
 
-- Blog post tags: Use common tags like `bestof`, `coding`, `dev`, `linux`, `meta`, `pt`, `privacy`, `serenity`
+- Blog post tags: Use common tags like `bestof`, `coding`, `dev`, `gaming`, `linux`, `meta`, `pt`, `privacy`, `serenity`
 - Commit messages for new posts: `git commit -m "new post: title"`
 - Posts use frontmatter with title, date, and tags
 - No AI assistance is used for content creation or editing

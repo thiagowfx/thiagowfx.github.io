@@ -2,6 +2,7 @@
 title: "Board games"
 date: 2024-10-25T15:02:46+02:00
 tags:
+  - gaming
   - serenity
 ---
 

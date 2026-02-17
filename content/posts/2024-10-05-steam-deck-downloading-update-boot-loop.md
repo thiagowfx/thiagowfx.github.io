@@ -3,6 +3,7 @@ title: 'Steam Deck "downloading update" boot loop'
 date: 2024-10-05T23:58:48+02:00
 tags:
   - dev
+  - gaming
 ---
 
 Today I tried to use my Steam Deck to no avail.

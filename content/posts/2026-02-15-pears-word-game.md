@@ -2,6 +2,7 @@
 title: "pears: word game"
 date: 2026-02-15T02:28:30+01:00
 tags:
+  - gaming
   - serenity
 ---
 

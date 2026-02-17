@@ -2,6 +2,7 @@
 title: "Steam ratings"
 date: 2025-06-30T00:43:40+02:00
 tags:
+  - gaming
   - serenity
 ---
 

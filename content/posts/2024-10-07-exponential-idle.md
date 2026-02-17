@@ -3,6 +3,7 @@ title: "Exponential Idle"
 date: 2024-10-07T23:26:14+02:00
 tags:
   - dev
+  - gaming
   - serenity
 ---
 

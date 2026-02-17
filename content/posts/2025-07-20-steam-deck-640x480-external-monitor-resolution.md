@@ -3,6 +3,7 @@ title: "Steam Deck: 640x480 external monitor resolution"
 date: 2025-07-20T12:12:05+02:00
 tags:
   - dev
+  - gaming
 ---
 
 **Problem statement**: When connecting the Steam Deck to a TV via a dock + HDMI

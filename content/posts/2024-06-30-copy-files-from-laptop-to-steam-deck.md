@@ -3,6 +3,7 @@ title: "Copy files from laptop to Steam Deck"
 date: 2024-06-30T15:05:37+02:00
 tags:
   - dev
+  - gaming
 ---
 
 Let's say the files you want to copy are in `~/Downloads`.

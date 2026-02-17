@@ -2,6 +2,7 @@
 title: "Pawnbarian"
 date: 2025-01-14T18:50:20-03:00
 tags:
+  - gaming
   - serenity
 ---
 
