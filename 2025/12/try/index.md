@@ -13,7 +13,7 @@ Usage:
 
 ```
 % try +feature
-thiago.perrotta@thiagoperrotta-MacBook-Pro ~/workspace/tries/2025-12-02-feature
+thiago@thiagoperrotta-MacBook-Pro ~/workspace/tries/2025-12-02-feature
 ```
 
 This creates a dated throwaway directory wherein to make experiments. I need not
