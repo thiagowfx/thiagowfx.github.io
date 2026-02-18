@@ -23,7 +23,7 @@ Now, in 2026, with agentic LLMs, it's even more so!
 I can be more useful to the Alpine Linux community by increasing my efficiency
 as a package maintainer.
 
-Yesterday I used [Amp Free](https://ampcode.com) in *smart* mode (Ops 4.6) to
+Yesterday I used [Amp Free](https://ampcode.com) in *smart* mode (Opus 4.6) to
 scaffold the `APKBUILD` for `prek`, using the [AUR
 `PKGBUILD`](https://aur.archlinux.org/packages/prek) as a baseline. Prompt:
 
