@@ -148,7 +148,7 @@ Hint: You probably want `jj squash`. You can configure `aliases.amend = ["squash
 Really? Oh.
 
 ```shell
-thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/d6c2ee34fe38ec5a63644114c4c3b13bb09401f1]
+thiago@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/d6c2ee34fe38ec5a63644114c4c3b13bb09401f1]
 % jj squash
 Working copy  (@) now at: kpumvxpm e60fb5b5 (empty) (no description set)
 Parent commit (@-)      : vvvzruls bba2f04e add hello world
@@ -157,7 +157,7 @@ Parent commit (@-)      : vvvzruls bba2f04e add hello world
 Weird:
 
 ```
-thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
+thiago@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
 % jj
 @  kpumvxpm {redacted email} 2025-12-03 04:03:57 41b2cf2f
 │  (no description set)
@@ -168,13 +168,13 @@ thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d
 ◆  oqwnlpuv {redacted email} 2025-12-02 23:12:39 master a9efb058
 │  bytebytego: Product Array Without Current Elemen
 ~
-thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
+thiago@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
 % jj status
 Working copy changes:
 M content/posts/2025-12-03-jj-hello-world.md
 Working copy  (@) : kpumvxpm 41b2cf2f (no description set)
 Parent commit (@-): vvvzruls bba2f04e add hello world
-thiago.perrotta@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
+thiago@thiagoperrotta-MacBook-Pro ~blog (git)-[jj/keep/bba2f04ecd437d8d27e4c8103cb61fc936cd0d89]
 % git status
 ## HEAD (no branch)
  M content/posts/2025-12-03-jj-hello-world.md

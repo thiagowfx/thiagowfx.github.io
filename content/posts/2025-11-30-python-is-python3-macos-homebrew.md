@@ -10,10 +10,10 @@ tags:
 I face this annoyance all the time:
 
 ```
-thiago.perrotta@thiagoperrotta-MacBook-Pro ~
+thiago@thiagoperrotta-MacBook-Pro ~
 % python
 zsh: command not found: python
-127 thiago.perrotta@thiagoperrotta-MacBook-Pro ~
+127 thiago@thiagoperrotta-MacBook-Pro ~
 % python3
 Python 3.14.0 (main, Oct  7 2025, 09:34:52) [Clang 17.0.0 (clang-1700.0.13.3)] on darwin
 Type "help", "copyright", "credits" or "license" for more information.
