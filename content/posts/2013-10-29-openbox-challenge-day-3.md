@@ -6,6 +6,8 @@ tags:
   - legacy
 ---
 
+[Previously]({{< ref "2013-10-28-openbox-challenge-day-2" >}}).
+
 So, it's the third day, let's go.
 
 ## Setting up my config repo
