@@ -157,7 +157,7 @@ stretched through November. The plot arc:
    review rounds)
 5. Unblock event queue when network events are blocked
    ([#1409](https://github.com/GoogleChromeLabs/chromium-bidi/pull/1409)) --
-   co-authored with [Maksim Sadym](https://github.com/nicolo-ribaudo), this one
+   co-authored with [Maksim](https://github.com/sadym-chromium), this one
    was tricky
 6. Implement `network.continueResponse`
    ([#1443](https://github.com/GoogleChromeLabs/chromium-bidi/pull/1443), 35
