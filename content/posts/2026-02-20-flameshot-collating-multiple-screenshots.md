@@ -1,6 +1,6 @@
 ---
 title: "flameshot: collating multiple screenshots"
-date: 2026-02-20T18:00:00+01:00
+date: 2026-02-20T17:02:19+01:00
 tags:
   - dev
   - macos
