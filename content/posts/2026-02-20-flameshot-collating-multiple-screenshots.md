@@ -13,7 +13,7 @@ been [requested](https://github.com/flameshot-org/flameshot/issues/2763) (which
 duplicates [#1130](https://github.com/flameshot-org/flameshot/issues/1130)), but
 remains unimplemented.
 
-The amazing ImageMagick (`convert`) to the rescue as always:
+The amazing ImageMagick (`convert`) comes to the rescue as always:
 
 ```shell
 # vertical collage
