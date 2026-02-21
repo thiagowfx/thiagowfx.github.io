@@ -7,9 +7,6 @@ tags:
   - dev
   - serenity
 external_link: "https://terriblesoftware.org/2026/02/02/why-am-i-doing-the-thinking-for-you/"
-# FIXME(2026-03): remove this alias after a few weeks
-aliases:
-  - /posts/2026-02-05-reply-to-why-am-i-doing-the-thinking-for-you/
 ---
 
 > I got a Slack message the other week, just "What do you think?" with a link to
