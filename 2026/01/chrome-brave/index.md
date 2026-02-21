@@ -1,5 +1,5 @@
 
-[Earlier]({{< ref "2025-11-30-chrome-->-orion" >}}) I tried to switch from
+[Earlier]({{< ref "2025-11-30-chrome-orion" >}}) I tried to switch from
 Chrome to Orion (from the [Kagi](https://kagi.com/) folks). That did not last.
 
 Even though Orion has various interesting and innovative features, it did
