@@ -1,10 +1,12 @@
 #!/usr/bin/env just --justfile
 # https://github.com/casey/just
+# Justfile for perrotta.dev blog - Hugo-based site with custom build pipeline
 
 editor := env_var_or_default("EDITOR", "vim")
 port := env_var_or_default("PORT", "1313")
 
-# Start a hugo server in watch mode
+[doc('Start a hugo dev server with live reload')]
+[group('server')]
 watch preview="true" *args:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -15,11 +17,13 @@ watch preview="true" *args:
 
     hugo server --port {{ port }} --watch --navigateToChanged {{ args }}
 
-# Pre-compute post relationships (backlinks, related, previously, graph)
+[doc('Precompute post relationships (backlinks, related, previously, graph)')]
+[group('build')]
 precompute:
     python3 ci/precompute_links.py
 
-# Build the blog as in production
+[doc('Build the blog for production')]
+[group('build')]
 build with-openring="false" *args: precompute
     #!/usr/bin/env bash
     set -euo pipefail
@@ -29,11 +33,13 @@ build with-openring="false" *args: precompute
     fi
     hugo --environment production --gc {{ args }}
 
-# Quick build for pre-commit (skips expensive template logic)
+[doc('Quick build for pre-commit (skips expensive template logic)')]
+[group('build')]
 build-quick *args:
     hugo --environment quick {{ args }}
 
-# Create a new blog post. Usage: `just new "my cool title"` or `just new my cool title`
+[doc('Create a new blog post - Usage: `just new "my cool title"`')]
+[group('create')]
 new *args:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -50,7 +56,8 @@ new *args:
 
 alias blog := new
 
-# Create a new coding post. Usage: `just code "leetcode #1"` or `just code leetcode 1` or `just code "ByteByteGo: Triplet Sum"` or `just code AoC 2024 Day 1`.
+[doc('Create a new coding/problem post - Examples: `just code "leetcode #1"` or `just code "ByteByteGo: Triplet Sum"` or `just code "AoC 2024 Day 1"`')]
+[group('create')]
 code *args:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -102,7 +109,8 @@ code *args:
 
 alias coding := code
 
-# Create a new commentary post (link blog). Usage: `just commentary https://example.com "optional title"`
+[doc('Create a new commentary/reply post - Usage: `just commentary https://example.com "optional title"`')]
+[group('create')]
 commentary url *args:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -142,7 +150,8 @@ commentary url *args:
 
 alias comment := commentary
 
-# Search for and edit a blog post. Usage: `just edit` or `just edit <term>`
+[doc('Search for and edit a blog post - Usage: `just edit` or `just edit <term>`')]
+[group('manage')]
 edit *args:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -163,7 +172,8 @@ edit *args:
         {{ editor }} "$file"
     fi
 
-# Search for blog posts by name. Usage: `just search` or `just search <term>`
+[doc('Search for blog posts by name - Usage: `just search` or `just search <term>`')]
+[group('manage')]
 search *args:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -184,7 +194,8 @@ search *args:
 
 alias list := search
 
-# Edit the most recent blog post
+[doc('Edit the most recent blog post')]
+[group('manage')]
 last:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -200,7 +211,8 @@ last:
     fi
     {{ editor }} "$latest"
 
-# Create a git commit without any substance
+[doc('Create a lazy git commit and push')]
+[group('publish')]
 lazy *args:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -212,16 +224,19 @@ lazy *args:
     fi
     git commit -m "$msg" -n && git pushm
 
-# List all available Hugo tags
+[doc('List all available Hugo tags')]
+[group('utils')]
 list-tags:
     @fd -e md . content/posts -x awk '/^tags:/{f=1;next} f && /^  - /{print substr($0,5)} f && /^[^ ]/{f=0}' | sort -u
 
-# Delete hugo build artifacts
+[doc('Delete hugo build artifacts')]
+[group('utils')]
 clean:
     rm -rf public/ resources/
     git clean -x -f -d
 
-# Lint and validate with prek hooks
+[doc('Lint and validate with prek hooks')]
+[group('utils')]
 lint *args:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -232,26 +247,32 @@ lint *args:
         prek run --files {{ args }}
     fi
 
-# Ping search engines about changes in the sitemap
+[doc('Ping search engines about sitemap changes')]
+[group('publish')]
 ping sitemap="https://perrotta.dev/sitemap.xml":
     curl -sS -o /dev/null "https://www.google.com/ping?sitemap={{ sitemap }}"
     curl -sS -o /dev/null "https://www.bing.com/ping?sitemap={{ sitemap }}"
 
-# Update git submodules, prek hooks, JSON schemas, and vendored dependencies
+[doc('Update git submodules, prek hooks, JSON schemas, and vendored dependencies')]
+[group('utils')]
 update: update-git update-prek update-json-schemas update-vendor
 
-# Update git submodules
+[doc('Update git submodules')]
+[group('utils')]
 update-git:
     git submodule update --remote --jobs "$(nproc)"
 
-# Update prek hooks
+[doc('Update prek hooks')]
+[group('utils')]
 update-prek:
     prek auto-update --freeze --jobs "$(nproc)" && prek run --all-files
 
-# Update JSON schemas
+[doc('Update JSON schemas')]
+[group('utils')]
 update-json-schemas:
     prek run -a update-json-schemas --hook-stage manual
 
-# Update vendored dependencies (d3.js)
+[doc('Update vendored dependencies (d3.js)')]
+[group('utils')]
 update-vendor:
     curl -sL "https://d3js.org/d3.v7.min.js" -o static/vendor/d3.v7.min.js
