@@ -49,7 +49,7 @@ new *args:
         echo "error: title is required. Usage: just new \"my cool title\"" >&2
         exit 1
     fi
-    filename=$(echo "${title}" | tr '[:upper:]' '[:lower:]' | sed -e 's/[,:/]/-/g' | tr -s ' ' | tr ' ' '-')
+    filename=$(echo "${title}" | tr '[:upper:]' '[:lower:]' | sed -e 's/[,:/]/-/g' | tr -s ' ' | tr ' ' '-' | tr -s '-')
     filepath="content/posts/$(date "+%Y-%m-%d")-${filename}.md"
     hugo new --kind blog "${filepath}"
     {{ editor }} "${filepath}"
@@ -129,7 +129,7 @@ commentary url *args:
         fi
     fi
 
-    filename=$(echo "$title" | tr '[:upper:]' '[:lower:]' | sed -e 's/[,:/]/-/g' | tr -s ' ' | tr ' ' '-')
+    filename=$(echo "$title" | tr '[:upper:]' '[:lower:]' | sed -e 's/[,:/]/-/g' | tr -s ' ' | tr ' ' '-' | tr -s '-')
     filepath="content/posts/`date "+%Y-%m-%d"`-${filename}.md"
 
     HUGO_TITLE="Reply to: ${title}" HUGO_EXTERNAL_LINK="{{ url }}" hugo new --kind commentary "${filepath}"
@@ -140,7 +140,7 @@ commentary url *args:
     if [ -n "$actual_title" ]; then
         # Remove "Reply to: " prefix for the filename
         filename_title=$(echo "$actual_title" | sed -e 's/^Reply to: //')
-        new_filename=$(echo "$filename_title" | tr '[:upper:]' '[:lower:]' | sed -e 's/[,:/]/-/g' | tr -s ' ' | tr ' ' '-')
+        new_filename=$(echo "$filename_title" | tr '[:upper:]' '[:lower:]' | sed -e 's/[,:/]/-/g' | tr -s ' ' | tr ' ' '-' | tr -s '-')
         new_filepath="content/posts/$(date "+%Y-%m-%d")-${new_filename}.md"
         if [ "${filepath}" != "${new_filepath}" ]; then
             mv "${filepath}" "${new_filepath}"
