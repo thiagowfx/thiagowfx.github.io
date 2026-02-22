@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2013 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 22 Feb 2026 00:19:58 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Justfile groups</title><link>https://perrotta.dev/2026/02/justfile-groups/</link><pubDate>Sat, 21 Feb 2026 22:51:55 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><guid>https://perrotta.dev/2026/02/justfile-groups/</guid><description>&lt;p&gt;&lt;strong&gt;TIL&lt;/strong&gt;: You can add &lt;a href="https://just.systems/man/en/groups.html"&gt;groups&lt;/a&gt; to your
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 22 Feb 2026 14:19:08 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>github workflow: external script</title><link>https://perrotta.dev/2026/02/github-workflow-external-script/</link><pubDate>Sun, 22 Feb 2026 14:10:11 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><category>pre-commit</category><guid>https://perrotta.dev/2026/02/github-workflow-external-script/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: execute a &lt;code&gt;.js&lt;/code&gt; script in a GitHub workflow. The script
+must be stored in a separate file (than the workflow) in the same git
+repository.&lt;/p&gt;
+&lt;p&gt;Why store the file separately?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Inlining a big script is ugly and very non-elegant&lt;/li&gt;
+&lt;li&gt;No syntax highlighting when updating the script → error-prone&lt;/li&gt;
+&lt;li&gt;Risk of messing up with string interpolation or escapign characters →
+error-prone&lt;/li&gt;
+&lt;li&gt;Limited ability to use formatters and linters in inlined scripts&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following approach, taken from a real example, works well:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% tree {repo root}/.github/
+.github/
+├── scripts
+│ └── drift-summary.js
+└── workflows
+ ├── drift-summary.yml
+ [...]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;name: &amp;#39;Drift Summary&amp;#39;
+
+on:
+ schedule:
+ - cron: &amp;#39;0 9 * * MON-FRI&amp;#39;
+ workflow_dispatch:
+
+permissions:
+ issues: write
+
+jobs:
+ summarize:
+ name: &amp;#39;Update drift summary issue&amp;#39;
+ runs-on: ubuntu-latest
+ steps:
+ - name: &amp;#39;Checkout repository&amp;#39;
+ uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+ with:
+ persist-credentials: false
+
+ - name: &amp;#39;Aggregate drift and update summary&amp;#39;
+ uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+ with:
+ script: |
+ const script = require(&amp;#39;./.github/scripts/drift-summary.js&amp;#39;);
+ await script({ github, context });&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Use &lt;a href="https://github.com/actions/github-script"&gt;&lt;code&gt;github-script&lt;/code&gt;&lt;/a&gt; + &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules"&gt;&lt;code&gt;require&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: github workflow: external script"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/pre-commit/"&gt;#pre-commit&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Justfile groups</title><link>https://perrotta.dev/2026/02/justfile-groups/</link><pubDate>Sat, 21 Feb 2026 22:51:55 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><guid>https://perrotta.dev/2026/02/justfile-groups/</guid><description>&lt;p&gt;&lt;strong&gt;TIL&lt;/strong&gt;: You can add &lt;a href="https://just.systems/man/en/groups.html"&gt;groups&lt;/a&gt; to your
 &lt;code&gt;Justfile.&lt;/code&gt;:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Recipes and modules may be annotated with one or more group names:&lt;/p&gt;
@@ -2500,86 +2556,4 @@ class HitCounter:
 # obj.hit(timestamp)
 # param_2 = obj.getHits(timestamp)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: LeetCode #362: Design Hit Counter"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/leetcode/"&gt;#leetcode&lt;/a&gt;&lt;/p&gt;</description></item><item><title>PostgreSQL major version upgrade on Alpine Linux, redux</title><link>https://perrotta.dev/2026/01/postgresql-major-version-upgrade-on-alpine-linux-redux/</link><pubDate>Thu, 15 Jan 2026 22:25:09 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>alpine-linux</category><category>dev</category><guid>https://perrotta.dev/2026/01/postgresql-major-version-upgrade-on-alpine-linux-redux/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/"&gt;Previously&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id="problem-statement"&gt;Problem statement&lt;/h2&gt;
-&lt;p&gt;Given Alpine Linux 3.23 running PostgreSQL 17, upgrade to PostgreSQL 18. For
-this specific example, consider a &lt;a href="https://miniflux.app/"&gt;miniflux&lt;/a&gt; database.&lt;/p&gt;
-&lt;p&gt;The &lt;a href="https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/"&gt;previous&lt;/a&gt; post still applies, with only one exception:&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://www.credativ.de/en/blog/postgresql-en/postgresql-18-enables-datachecksums-by-default"&gt;PostgreSQL 18 enables data‑checksums by default&lt;/a&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Version 18 enables data‑checksums by default. In earlier versions, initdb
-required the &lt;code&gt;--data‑checksums&lt;/code&gt; flag. The new release notes explicitly list
-the change in the incompatibilities section: &amp;ldquo;Change initdb default to enable
-data checksums… Checksums can be disabled with the new &lt;code&gt;--no‑data‑checksums&lt;/code&gt;
-option&amp;rdquo;.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;This is a better sensible default, but it breaks the normal upgrade flow:&lt;/p&gt;
-&lt;div class="codeblock"&gt;
- &lt;pre&gt;&lt;code class="language-plaintext"&gt;~/18/tmp $ pg_upgrade -b /usr/libexec/postgresql17/ -B /usr/libexec/postgresql18/ -d /var/lib/postgresql/17
-/olddata/ -D /var/lib/postgresql/18/data
-Performing Consistency Checks
------------------------------
-Checking cluster versions ok
-
-old cluster does not use data checksums but the new one does
-Failure, exiting&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;The stable upgrade path is to initialize the new cluster database (v18) with
-&lt;code&gt;--no-data-checksums&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="codeblock"&gt;
- &lt;pre&gt;&lt;code class="language-plaintext"&gt;~/18/tmp $ initdb --no-data-checksums -D /var/lib/postgresql/18/data --locale=en_US.UTF-8 --encoding=UTF8
-The files belonging to this database system will be owned by user &amp;#34;postgres&amp;#34;.
-This user must also own the server process.
-
-The database cluster will be initialized with locale &amp;#34;en_US.UTF-8&amp;#34;.
-The default text search configuration will be set to &amp;#34;english&amp;#34;.
-
-Data page checksums are disabled.
-
-fixing permissions on existing directory /var/lib/postgresql/18/data ... ok
-creating subdirectories ... ok
-selecting dynamic shared memory implementation ... posix
-selecting default &amp;#34;max_connections&amp;#34; ... 100
-selecting default &amp;#34;shared_buffers&amp;#34; ... 128MB
-selecting default time zone ... America/Toronto
-creating configuration files ... ok
-running bootstrap script ... ok
-performing post-bootstrap initialization ... ok
-syncing data to disk ... ok
-
-initdb: warning: enabling &amp;#34;trust&amp;#34; authentication for local connections
-initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
-
-Success.&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Then perform the migration as usual. Once the migration is complete, for the
-sake of improving the reliability of the database, enable checksums:&lt;/p&gt;
-&lt;div class="codeblock"&gt;
- &lt;pre&gt;&lt;code class="language-plaintext"&gt;~/18/tmp $ pg_checksums --enable -D /var/lib/postgresql/18/data
-Checksum operation completed
-Files scanned: 1380
-Blocks scanned: 89609
-Files written: 1151
-Blocks written: 89605
-pg_checksums: syncing data directory
-pg_checksums: updating control file
-Checksums enabled in cluster&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: You must run &lt;code&gt;pg_checksums&lt;/code&gt; while the cluster is off-line, otherwise:&lt;/p&gt;
-&lt;div class="codeblock"&gt;
- &lt;pre&gt;&lt;code class="language-plaintext"&gt;~/18/tmp $ pg_checksums --enable -D /var/lib/postgresql/18/data
-pg_checksums: error: cluster must be shut down&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Remember to delete the previous package once the upgrade is fully complete:&lt;/p&gt;
-&lt;div class="codeblock"&gt;
- &lt;pre&gt;&lt;code class="language-plaintext"&gt;/var/lib/postgresql # doas apk del postgresql17
-(1/3) Purging postgresql17-openrc (17.7-r1)
-(2/3) Purging postgresql17 (17.7-r1)
- Executing postgresql17-17.7-r1.pre-deinstall
-(3/3) Purging postgresql17-client (17.7-r1)
-Executing busybox-1.37.0-r31.trigger
-Executing postgresql-common-1.3-r0.trigger
-OK: 1271.3 MiB in 577 packages&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;That&amp;rsquo;s all!&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: PostgreSQL major version upgrade on Alpine Linux, redux"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/alpine-linux/"&gt;#alpine-linux&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: LeetCode #362: Design Hit Counter"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/leetcode/"&gt;#leetcode&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

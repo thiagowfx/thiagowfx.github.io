@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2013 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Google Home usage</title><link>https://perrotta.dev/2026/02/google-home-usage/</link><pubDate>Sun, 22 Feb 2026 14:00:15 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>serenity</category><guid>https://perrotta.dev/2026/02/google-home-usage/</guid><description>&lt;p&gt;I own a smart speaker for many years now. It happens to be a Google Home&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2026/02/google-home-usage/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>github workflow: external script</title><link>https://perrotta.dev/2026/02/github-workflow-external-script/</link><pubDate>Sun, 22 Feb 2026 14:10:11 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><category>pre-commit</category><guid>https://perrotta.dev/2026/02/github-workflow-external-script/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: execute a &lt;code&gt;.js&lt;/code&gt; script in a GitHub workflow. The script
+must be stored in a separate file (than the workflow) in the same git
+repository.&lt;/p&gt;
+&lt;p&gt;Why store the file separately?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Inlining a big script is ugly and very non-elegant&lt;/li&gt;
+&lt;li&gt;No syntax highlighting when updating the script → error-prone&lt;/li&gt;
+&lt;li&gt;Risk of messing up with string interpolation or escapign characters →
+error-prone&lt;/li&gt;
+&lt;li&gt;Limited ability to use formatters and linters in inlined scripts&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following approach, taken from a real example, works well:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% tree {repo root}/.github/
+.github/
+├── scripts
+│ └── drift-summary.js
+└── workflows
+ ├── drift-summary.yml
+ [...]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;name: &amp;#39;Drift Summary&amp;#39;
+
+on:
+ schedule:
+ - cron: &amp;#39;0 9 * * MON-FRI&amp;#39;
+ workflow_dispatch:
+
+permissions:
+ issues: write
+
+jobs:
+ summarize:
+ name: &amp;#39;Update drift summary issue&amp;#39;
+ runs-on: ubuntu-latest
+ steps:
+ - name: &amp;#39;Checkout repository&amp;#39;
+ uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+ with:
+ persist-credentials: false
+
+ - name: &amp;#39;Aggregate drift and update summary&amp;#39;
+ uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+ with:
+ script: |
+ const script = require(&amp;#39;./.github/scripts/drift-summary.js&amp;#39;);
+ await script({ github, context });&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Use &lt;a href="https://github.com/actions/github-script"&gt;&lt;code&gt;github-script&lt;/code&gt;&lt;/a&gt; + &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules"&gt;&lt;code&gt;require&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: github workflow: external script"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/pre-commit/"&gt;#pre-commit&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Google Home usage</title><link>https://perrotta.dev/2026/02/google-home-usage/</link><pubDate>Sun, 22 Feb 2026 14:00:15 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>serenity</category><guid>https://perrotta.dev/2026/02/google-home-usage/</guid><description>&lt;p&gt;I own a smart speaker for many years now. It happens to be a Google Home&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2026/02/google-home-usage/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
 &lt;p&gt;Top three usage patterns:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;hey google, what&amp;rsquo;s the weather?&lt;/li&gt;
@@ -2058,42 +2114,4 @@ The &amp;ldquo;TIL&amp;rdquo; bit of the day is that the array suffix &lt;code&g
 resource name in most terminal emulators, only
 &lt;code&gt;module.atlas_mongo_external.mongodbatlas_alert_configuration.maintenance_no_longer_needed&lt;/code&gt;
 gets selected by default, stopping right before &lt;code&gt;[&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: terraform import arrays"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/terraform/"&gt;#terraform&lt;/a&gt;&lt;/p&gt;</description></item><item><title>TV remote controller</title><link>https://perrotta.dev/2026/01/tv-remote-controller/</link><pubDate>Fri, 23 Jan 2026 15:15:31 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>serenity</category><guid>https://perrotta.dev/2026/01/tv-remote-controller/</guid><description>&lt;p&gt;I have an Android TV whose remote controller stopped working suddenly out of
-nowhere. I replaced its AAA batteries to no avail.&lt;/p&gt;
-&lt;p&gt;What is the alternative? I bought a cheap IR replacement at Amazon but it did
-not work either. Apparently it only works on select TV models, and on Android TV
-&lt;em&gt;boxes&lt;/em&gt;. Why does it work on Android TV boxes but not on Android TVs? Mistery.&lt;/p&gt;
-&lt;p&gt;From here, my options were:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;buy another remote, paying great care to its advertised compatibility&lt;/li&gt;
-&lt;li&gt;try to figure out what is wrong with the original remote&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;I exhausted #2. No more ideas. #1 seems to be the way to go.&lt;/p&gt;
-&lt;p&gt;BUT: at the last minute I figured out it&amp;rsquo;s possible to control the TV with
-my iPhone.&lt;/p&gt;
-&lt;p&gt;The built-in remote app only works on Apple TVs, so it is ruled out.&lt;/p&gt;
-&lt;p&gt;There are a couple of random TV remote apps in the App Store but I did not like
-them. Some of them did not even work at all. They&amp;rsquo;re full of ads, and some of
-them require weekly or yearly subscriptions. No, thank you.&lt;/p&gt;
-&lt;p&gt;The light at the end of the tunnel: Google! Who is the developer of Android?
-Google! Who must have an app to control Android TVs? Google!&lt;/p&gt;
-&lt;p&gt;I am not a fan of installing another Google app on my phone, but this is a
-natural choice, within the Android ecosystem. It is possible to control an
-Android TV that is part of a Google Home setup with at least two apps:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Google Home&lt;/li&gt;
-&lt;li&gt;Google TV&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;I found Google TV to be better for this use case. Google Home is full of
-irrelevant features for this specific flow.&lt;/p&gt;
-&lt;p&gt;What is the new workflow?&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Turn the TV on, manually. It&amp;rsquo;s seemingly not possible to turn it on with the app. This is OK, no big deal.&lt;/li&gt;
-&lt;li&gt;Use the Google TV app to open the remote controller interface.&lt;/li&gt;
-&lt;li&gt;Have fun. In moderation.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;One caveat: it will be quite hard to sell that TV in the future, without a
-working remote&amp;hellip;the Google TV app setup only works because the Android TV is
-connected to my Google Home, and/or because it&amp;rsquo;s logged into my Google account.&lt;/p&gt;
-&lt;p&gt;An (undesired?) side effect is that guests cannot easily control my TV.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: TV remote controller"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: terraform import arrays"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/terraform/"&gt;#terraform&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

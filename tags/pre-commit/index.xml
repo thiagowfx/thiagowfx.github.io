@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pre-Commit on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Pre-Commit on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2013 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 22 Feb 2026 00:17:24 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/pre-commit/index.xml" rel="self" type="application/rss+xml"/><item><title>pre-commit: hazmat n1</title><link>https://perrotta.dev/2026/02/pre-commit-hazmat-n1/</link><pubDate>Fri, 06 Feb 2026 18:28:16 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>pre-commit</category><guid>https://perrotta.dev/2026/02/pre-commit-hazmat-n1/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: some CLI tools accept only a single file as an argument.
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 22 Feb 2026 14:19:08 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/pre-commit/index.xml" rel="self" type="application/rss+xml"/><item><title>github workflow: external script</title><link>https://perrotta.dev/2026/02/github-workflow-external-script/</link><pubDate>Sun, 22 Feb 2026 14:10:11 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><category>pre-commit</category><guid>https://perrotta.dev/2026/02/github-workflow-external-script/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: execute a &lt;code&gt;.js&lt;/code&gt; script in a GitHub workflow. The script
+must be stored in a separate file (than the workflow) in the same git
+repository.&lt;/p&gt;
+&lt;p&gt;Why store the file separately?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Inlining a big script is ugly and very non-elegant&lt;/li&gt;
+&lt;li&gt;No syntax highlighting when updating the script → error-prone&lt;/li&gt;
+&lt;li&gt;Risk of messing up with string interpolation or escapign characters →
+error-prone&lt;/li&gt;
+&lt;li&gt;Limited ability to use formatters and linters in inlined scripts&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following approach, taken from a real example, works well:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% tree {repo root}/.github/
+.github/
+├── scripts
+│ └── drift-summary.js
+└── workflows
+ ├── drift-summary.yml
+ [...]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;name: &amp;#39;Drift Summary&amp;#39;
+
+on:
+ schedule:
+ - cron: &amp;#39;0 9 * * MON-FRI&amp;#39;
+ workflow_dispatch:
+
+permissions:
+ issues: write
+
+jobs:
+ summarize:
+ name: &amp;#39;Update drift summary issue&amp;#39;
+ runs-on: ubuntu-latest
+ steps:
+ - name: &amp;#39;Checkout repository&amp;#39;
+ uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+ with:
+ persist-credentials: false
+
+ - name: &amp;#39;Aggregate drift and update summary&amp;#39;
+ uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+ with:
+ script: |
+ const script = require(&amp;#39;./.github/scripts/drift-summary.js&amp;#39;);
+ await script({ github, context });&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Use &lt;a href="https://github.com/actions/github-script"&gt;&lt;code&gt;github-script&lt;/code&gt;&lt;/a&gt; + &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules"&gt;&lt;code&gt;require&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: github workflow: external script"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/pre-commit/"&gt;#pre-commit&lt;/a&gt;&lt;/p&gt;</description></item><item><title>pre-commit: hazmat n1</title><link>https://perrotta.dev/2026/02/pre-commit-hazmat-n1/</link><pubDate>Fri, 06 Feb 2026 18:28:16 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>pre-commit</category><guid>https://perrotta.dev/2026/02/pre-commit-hazmat-n1/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: some CLI tools accept only a single file as an argument.
 Create a &lt;a href="https://pre-commit.com/"&gt;pre-commit&lt;/a&gt; local hook for them.&lt;/p&gt;
 &lt;p&gt;A common workaround is to wrap it in a bash for-loop (&lt;code&gt;.pre-commit-config.yaml&lt;/code&gt;):&lt;/p&gt;
 &lt;div class="codeblock" data-lang="yaml"&gt;

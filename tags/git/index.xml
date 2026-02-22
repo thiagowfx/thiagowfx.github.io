@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Git on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Git on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2013 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 22 Feb 2026 00:19:58 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>GitHub: approve PRs from CLI</title><link>https://perrotta.dev/2026/02/github-approve-prs-from-cli/</link><pubDate>Wed, 04 Feb 2026 11:10:58 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/02/github-approve-prs-from-cli/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: approve a given github pull request from the CLI.&lt;/p&gt;
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 22 Feb 2026 14:19:08 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>github workflow: external script</title><link>https://perrotta.dev/2026/02/github-workflow-external-script/</link><pubDate>Sun, 22 Feb 2026 14:10:11 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><category>pre-commit</category><guid>https://perrotta.dev/2026/02/github-workflow-external-script/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: execute a &lt;code&gt;.js&lt;/code&gt; script in a GitHub workflow. The script
+must be stored in a separate file (than the workflow) in the same git
+repository.&lt;/p&gt;
+&lt;p&gt;Why store the file separately?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Inlining a big script is ugly and very non-elegant&lt;/li&gt;
+&lt;li&gt;No syntax highlighting when updating the script → error-prone&lt;/li&gt;
+&lt;li&gt;Risk of messing up with string interpolation or escapign characters →
+error-prone&lt;/li&gt;
+&lt;li&gt;Limited ability to use formatters and linters in inlined scripts&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following approach, taken from a real example, works well:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% tree {repo root}/.github/
+.github/
+├── scripts
+│ └── drift-summary.js
+└── workflows
+ ├── drift-summary.yml
+ [...]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="codeblock" data-lang="yaml"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;yaml&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-yaml"&gt;name: &amp;#39;Drift Summary&amp;#39;
+
+on:
+ schedule:
+ - cron: &amp;#39;0 9 * * MON-FRI&amp;#39;
+ workflow_dispatch:
+
+permissions:
+ issues: write
+
+jobs:
+ summarize:
+ name: &amp;#39;Update drift summary issue&amp;#39;
+ runs-on: ubuntu-latest
+ steps:
+ - name: &amp;#39;Checkout repository&amp;#39;
+ uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+ with:
+ persist-credentials: false
+
+ - name: &amp;#39;Aggregate drift and update summary&amp;#39;
+ uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+ with:
+ script: |
+ const script = require(&amp;#39;./.github/scripts/drift-summary.js&amp;#39;);
+ await script({ github, context });&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Use &lt;a href="https://github.com/actions/github-script"&gt;&lt;code&gt;github-script&lt;/code&gt;&lt;/a&gt; + &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules"&gt;&lt;code&gt;require&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: github workflow: external script"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/pre-commit/"&gt;#pre-commit&lt;/a&gt;&lt;/p&gt;</description></item><item><title>GitHub: approve PRs from CLI</title><link>https://perrotta.dev/2026/02/github-approve-prs-from-cli/</link><pubDate>Wed, 04 Feb 2026 11:10:58 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/02/github-approve-prs-from-cli/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: approve a given github pull request from the CLI.&lt;/p&gt;
 &lt;p&gt;Why?&lt;/p&gt;
 &lt;p&gt;Presumably you would do the PR review outside the GitHub web UI (it&amp;rsquo;s slow,
 eh?). How to do this is out of scope of this post.&lt;/p&gt;
@@ -1956,63 +2012,4 @@ Initialized empty Git repository in /private/tmp/thiago.perrotta-2025-01-03-pk0G
 % git default
 fatal: ref refs/remotes/origin/HEAD is not a symbolic ref&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git: update master to main"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;</description></item><item><title>★ git: configure identities for work</title><link>https://perrotta.dev/2025/01/git-configure-identities-for-work/</link><pubDate>Wed, 01 Jan 2025 17:22:05 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>bestof</category><category>dev</category><category>git</category><guid>https://perrotta.dev/2025/01/git-configure-identities-for-work/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: Given two sets of git configurations, one for personal
-projects and one for work, how can you effectively separate them?&lt;/p&gt;
-&lt;h2 id="workflow"&gt;Workflow&lt;/h2&gt;
-&lt;p&gt;I like the following workflow.&lt;/p&gt;
-&lt;p&gt;First, create your usual &lt;code&gt;~/.gitconfig&lt;/code&gt;. It will be used for your personal
-project:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="ini"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;ini&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-ini"&gt;[user]
- name = Thiago Perrotta
- email = {personal-email}
-
-[...]
-
-# Import corp configs if any.
-[include]
- path = .gitconfig_corp&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;This config should live in your personal laptop and in your work laptop.&lt;/p&gt;
-&lt;p&gt;Normally I include it via my &lt;a href="https://github.com/thiagowfx/.dotfiles"&gt;.dotfiles&lt;/a&gt;
-(git repo) i.e. with a simple &lt;code&gt;stow git&lt;/code&gt; away.&lt;/p&gt;
-&lt;p&gt;And we are done with our personal laptop.&lt;/p&gt;
-&lt;p&gt;Now, for the work laptop, create &lt;code&gt;~/.gitconfig_corp&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="ini"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;ini&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-ini"&gt;[includeIf &amp;#34;gitdir:~/Orgname/**&amp;#34;]
- path = .gitconfig_orgname
-
-[includeIf &amp;#34;hasconfig:remote.*.url:git@github.com:orgname/**&amp;#34;]
- path = .gitconfig_orgname
-
-# vim: ft=gitconfig&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;The corp config is conditionally included / used in the following scenarios:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;whenever I am working on a git repository that lives within &lt;code&gt;~/Orgname&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;whenever the git remote of the repository I am working on is a git repository
-under the organization &lt;code&gt;orgname&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;This config is usually included via my corp dotfiles (named &lt;code&gt;.dotfiles_corp&lt;/code&gt; in
-&lt;code&gt;git&lt;/code&gt;), which is a separate git repository. There&amp;rsquo;s no fiddling with git
-submodules: both git repositories are cloned and managed independently.&lt;/p&gt;
-&lt;p&gt;And now, last but not least, is the actual git config for work:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="ini"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;ini&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-ini"&gt;% cat ~/.gitconfig_orgname
-[user]
- name = Thiago Perrotta
- email = {work-email}
-
-# vim: ft=gitconfig&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Inspired by &lt;a href="https://www.benji.dog/articles/git-config/"&gt;benji.dog&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git: configure identities for work"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git: update master to main"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
