@@ -7,7 +7,7 @@ Why store the file separately?
 
 - Inlining a big script is ugly and very non-elegant
 - No syntax highlighting when updating the script → error-prone
-- Risk of messing up with string interpolation or escapign characters →
+- Risk of messing up with string interpolation or escaping characters →
   error-prone
 - Limited ability to use formatters and linters in inlined scripts
 
