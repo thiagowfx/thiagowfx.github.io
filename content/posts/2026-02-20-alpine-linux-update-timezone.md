@@ -38,7 +38,6 @@ ls /usr/share/zoneinfo
 
 We'll go with `Europe/Berlin`. Symlink `/etc/localtime` to it:
 
-
 ```shell
 doas ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 ```
