@@ -6,7 +6,7 @@ editor := env_var_or_default("EDITOR", "vim")
 port := env_var_or_default("PORT", "1313")
 
 [doc('Start a hugo dev server with live reload')]
-[group('server')]
+[group('build')]
 watch preview="true" *args:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -225,7 +225,7 @@ lazy *args:
     git commit -m "$msg" -n && git pushm
 
 [doc('List all available Hugo tags')]
-[group('utils')]
+[group('manage')]
 list-tags:
     @fd -e md . content/posts -x awk '/^tags:/{f=1;next} f && /^  - /{print substr($0,5)} f && /^[^ ]/{f=0}' | sort -u
 
