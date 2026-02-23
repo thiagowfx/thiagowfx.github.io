@@ -79,3 +79,6 @@ The only difference is the last line:
 +       eval "kill -HUP $pids"
 ```
 
+The resulting solution is a shell function, _not_ an alias, but that's perfectly
+acceptable.
+
