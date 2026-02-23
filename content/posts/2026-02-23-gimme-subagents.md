@@ -7,7 +7,8 @@ tags:
   - dev
 ---
 
-**Scenario**: we're test-driving the adoption of a Terrateam feature
+**Scenario**: we're test-driving the adoption of a
+[Terrateam](https://terrateam.io/) feature
 [called](https://docs.terrateam.io/reference/configuration/stacks/)
 [stacks](https://terrateam.io/stacks). The specifics aren't relevant here.
 
