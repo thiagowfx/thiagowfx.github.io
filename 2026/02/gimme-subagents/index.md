@@ -149,8 +149,8 @@ With subagents you have limited ability to do so.
 Last but not least: subagents are not an exclusive feature of Claude Code:
 
 - Pi has a couple of extensions that add subagents capabilities to it.
-[Example](https://github.com/nicobailon/pi-subagents) (untested) - And so does
-[OpenCode](https://opencode.ai/docs/agents/). - I am a bit surprised to find out
-that Codex [does not](https://github.com/openai/codex/issues/2604) support them
+[Example](https://github.com/nicobailon/pi-subagents) (untested)
+- And so does [OpenCode](https://opencode.ai/docs/agents/).
+- I am a bit surprised to find out that Codex [does not](https://github.com/openai/codex/issues/2604) support them
 yet. Or [does it](https://developers.openai.com/codex/multi-agent/)?
 
