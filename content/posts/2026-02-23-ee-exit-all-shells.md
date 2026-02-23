@@ -61,6 +61,8 @@ ee () {
 > The issue is `zsh` doesn't word-split unquoted variables like `bash`/`sh` does.
 > `$pids` is passed as a single string. Fix with `eval`:
 
+The version below works in **both** `bash` and `zsh`:
+
 ```shell
 ee () {
         pid=$$
@@ -76,8 +78,6 @@ ee () {
         eval "kill -HUP $pids"
 }
 ```
-
-The version above works in **both** `bash` and `zsh`:
 
 The only difference is the last line:
 
