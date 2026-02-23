@@ -1,6 +1,86 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dev on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Dev on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2013 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 23 Feb 2026 11:26:06 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Gimme subagents</title><link>https://perrotta.dev/2026/02/gimme-subagents/</link><pubDate>Mon, 23 Feb 2026 10:57:55 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><guid>https://perrotta.dev/2026/02/gimme-subagents/</guid><description>&lt;p&gt;&lt;strong&gt;Scenario&lt;/strong&gt;: we&amp;rsquo;re test-driving the adoption of a
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 23 Feb 2026 12:02:28 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml"/><item><title>ee: exit all shells</title><link>https://perrotta.dev/2026/02/ee-exit-all-shells/</link><pubDate>Mon, 23 Feb 2026 11:52:17 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/02/ee-exit-all-shells/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: I present this to you the same way I presented it to &lt;a href="https://ampcode.com"&gt;Amp
+Code&lt;/a&gt; in the context of my
+&lt;a href="https://github.com/thiagowfx/.dotfiles"&gt;~/.dotfiles&lt;/a&gt;:&lt;/p&gt;
+&lt;div class="codeblock"&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;new shell alias: ee
+
+quit all shells
+
+example:
+
+$ bash
+$ bash
+$ zsh
+
+Now we&amp;#39;re 3 levels deep.
+&amp;#34;ee&amp;#34; should quit them all (effectively closing the underlying terminal emulator tab)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Why do I even have this issue in the first place?&lt;/strong&gt; Utilities like
+&lt;a href="https://github.com/thiagowfx/pancake/tree/master/wt"&gt;wt&lt;/a&gt; (to manage git
+worktrees) and &lt;a href="https://github.com/thiagowfx/pancake/tree/master/try"&gt;try&lt;/a&gt; (to
+manage scratch directories) need to change directories. Alas, it&amp;rsquo;s not possible
+to change the current working directly (&lt;code&gt;$PWD&lt;/code&gt;) with a script. As such, my
+workaround is to open a subshell in the desired directory. As a side effect, I
+end up with nested subshells.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Why &lt;code&gt;ee&lt;/code&gt;?&lt;/strong&gt; I close my shell with &lt;code&gt;C-d&lt;/code&gt; (Ctrl + D).
+In this context I need to press it three times in a row.
+&lt;code&gt;dd&lt;/code&gt; would have been a natural alias but I&amp;rsquo;d rather avoid the name clash with
+the &lt;a href="https://wiki.archlinux.org/title/Dd"&gt;&lt;code&gt;dd&lt;/code&gt;&lt;/a&gt; disk cloning util.
+&lt;code&gt;ee&lt;/code&gt; came next naturally.&lt;/p&gt;
+&lt;p&gt;This version works in &lt;code&gt;bash&lt;/code&gt; but not in &lt;code&gt;zsh&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% which ee
+ee () {
+ pid=$$
+ pids=$pid
+ while ppid=$(ps -o ppid= -p &amp;#34;$pid&amp;#34; | tr -d &amp;#39; &amp;#39;) &amp;amp;&amp;amp; [ &amp;#34;$ppid&amp;#34; -gt 1 ] 2&amp;gt; /dev/null
+ do
+ case &amp;#34;$(ps -o comm= -p &amp;#34;$ppid&amp;#34; 2&amp;gt;/dev/null)&amp;#34; in
+ (*sh) pids=&amp;#34;$pids $ppid&amp;#34;
+ pid=$ppid ;;
+ (*) break ;;
+ esac
+ done
+ kill -HUP $pids
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The issue is &lt;code&gt;zsh&lt;/code&gt; doesn&amp;rsquo;t word-split unquoted variables like &lt;code&gt;bash&lt;/code&gt;/&lt;code&gt;sh&lt;/code&gt; does.
+&lt;code&gt;$pids&lt;/code&gt; is passed as a single string. Fix with &lt;code&gt;eval&lt;/code&gt;:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;ee () {
+ pid=$$
+ pids=$pid
+ while ppid=$(ps -o ppid= -p &amp;#34;$pid&amp;#34; | tr -d &amp;#39; &amp;#39;) &amp;amp;&amp;amp; [ &amp;#34;$ppid&amp;#34; -gt 1 ] 2&amp;gt; /dev/null
+ do
+ case &amp;#34;$(ps -o comm= -p &amp;#34;$ppid&amp;#34; 2&amp;gt;/dev/null)&amp;#34; in
+ (*sh) pids=&amp;#34;$pids $ppid&amp;#34;
+ pid=$ppid ;;
+ (*) break ;;
+ esac
+ done
+ eval &amp;#34;kill -HUP $pids&amp;#34;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The version above works in &lt;strong&gt;both&lt;/strong&gt; &lt;code&gt;bash&lt;/code&gt; and &lt;code&gt;zsh&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;The only difference is the last line:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="diff"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;diff&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-diff"&gt;- kill -HUP $pids
+&amp;#43; eval &amp;#34;kill -HUP $pids&amp;#34;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ee: exit all shells"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;</description></item><item><title>★ Gimme subagents</title><link>https://perrotta.dev/2026/02/gimme-subagents/</link><pubDate>Mon, 23 Feb 2026 10:57:55 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><guid>https://perrotta.dev/2026/02/gimme-subagents/</guid><description>&lt;p&gt;&lt;strong&gt;Scenario&lt;/strong&gt;: we&amp;rsquo;re test-driving the adoption of a
 &lt;a href="https://terrateam.io/"&gt;Terrateam&lt;/a&gt; feature
 &lt;a href="https://docs.terrateam.io/reference/configuration/stacks/"&gt;called&lt;/a&gt;
 &lt;a href="https://terrateam.io/stacks"&gt;stacks&lt;/a&gt;. The specifics aren&amp;rsquo;t relevant here.&lt;/p&gt;
@@ -2569,28 +2649,4 @@ class ValidWordAbbr:
 # obj = ValidWordAbbr(dictionary)
 # param_1 = obj.isUnique(word)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: LeetCode #288: Unique Word Abbreviation"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/leetcode/"&gt;#leetcode&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Random</title><link>https://perrotta.dev/2026/01/random/</link><pubDate>Fri, 16 Jan 2026 23:08:32 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>meta</category><category>serenity</category><guid>https://perrotta.dev/2026/01/random/</guid><description>&lt;p&gt;I love to add little random features to this blog.&lt;/p&gt;
-&lt;p&gt;→ &lt;a href="https://perrotta.dev/random"&gt;https://perrotta.dev/random&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;I am trying to keep the navigation bar lean&amp;hellip;therefore, a link to &lt;code&gt;/random&lt;/code&gt; was
-added under the &amp;ldquo;Explore&amp;rdquo; item.&lt;/p&gt;
-&lt;p&gt;The initial implementation was very simple:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="js"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;js&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-js"&gt;&amp;lt;script&amp;gt;
- const posts = [
- {{- range $index, $page := where .Site.RegularPages &amp;#34;Section&amp;#34; &amp;#34;posts&amp;#34; }}
- {{- if $index }},{{ end }}
- &amp;#34;{{ $page.RelPermalink }}&amp;#34;
- {{- end }}
- ];
- if (posts.length &amp;gt; 0) {
- const randomPost = posts[Math.floor(Math.random() * posts.length)];
- window.location.replace(randomPost);
- }
-&amp;lt;/script&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;&amp;hellip;later on it was updated to exclude &amp;ldquo;coding&amp;rdquo; posts.&lt;/p&gt;
-&lt;p&gt;Randomness is often a great source of serendipity!&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Random"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/meta/"&gt;#meta&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: LeetCode #288: Unique Word Abbreviation"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/leetcode/"&gt;#leetcode&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

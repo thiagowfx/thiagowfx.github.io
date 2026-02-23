@@ -1,6 +1,86 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Git on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Git on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2013 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Sun, 22 Feb 2026 18:44:50 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>github workflow: external script</title><link>https://perrotta.dev/2026/02/github-workflow-external-script/</link><pubDate>Sun, 22 Feb 2026 14:10:11 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><category>pre-commit</category><guid>https://perrotta.dev/2026/02/github-workflow-external-script/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: execute a &lt;code&gt;.js&lt;/code&gt; script in a GitHub workflow. The script
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 23 Feb 2026 12:02:28 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>ee: exit all shells</title><link>https://perrotta.dev/2026/02/ee-exit-all-shells/</link><pubDate>Mon, 23 Feb 2026 11:52:17 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/02/ee-exit-all-shells/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: I present this to you the same way I presented it to &lt;a href="https://ampcode.com"&gt;Amp
+Code&lt;/a&gt; in the context of my
+&lt;a href="https://github.com/thiagowfx/.dotfiles"&gt;~/.dotfiles&lt;/a&gt;:&lt;/p&gt;
+&lt;div class="codeblock"&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;new shell alias: ee
+
+quit all shells
+
+example:
+
+$ bash
+$ bash
+$ zsh
+
+Now we&amp;#39;re 3 levels deep.
+&amp;#34;ee&amp;#34; should quit them all (effectively closing the underlying terminal emulator tab)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Why do I even have this issue in the first place?&lt;/strong&gt; Utilities like
+&lt;a href="https://github.com/thiagowfx/pancake/tree/master/wt"&gt;wt&lt;/a&gt; (to manage git
+worktrees) and &lt;a href="https://github.com/thiagowfx/pancake/tree/master/try"&gt;try&lt;/a&gt; (to
+manage scratch directories) need to change directories. Alas, it&amp;rsquo;s not possible
+to change the current working directly (&lt;code&gt;$PWD&lt;/code&gt;) with a script. As such, my
+workaround is to open a subshell in the desired directory. As a side effect, I
+end up with nested subshells.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Why &lt;code&gt;ee&lt;/code&gt;?&lt;/strong&gt; I close my shell with &lt;code&gt;C-d&lt;/code&gt; (Ctrl + D).
+In this context I need to press it three times in a row.
+&lt;code&gt;dd&lt;/code&gt; would have been a natural alias but I&amp;rsquo;d rather avoid the name clash with
+the &lt;a href="https://wiki.archlinux.org/title/Dd"&gt;&lt;code&gt;dd&lt;/code&gt;&lt;/a&gt; disk cloning util.
+&lt;code&gt;ee&lt;/code&gt; came next naturally.&lt;/p&gt;
+&lt;p&gt;This version works in &lt;code&gt;bash&lt;/code&gt; but not in &lt;code&gt;zsh&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% which ee
+ee () {
+ pid=$$
+ pids=$pid
+ while ppid=$(ps -o ppid= -p &amp;#34;$pid&amp;#34; | tr -d &amp;#39; &amp;#39;) &amp;amp;&amp;amp; [ &amp;#34;$ppid&amp;#34; -gt 1 ] 2&amp;gt; /dev/null
+ do
+ case &amp;#34;$(ps -o comm= -p &amp;#34;$ppid&amp;#34; 2&amp;gt;/dev/null)&amp;#34; in
+ (*sh) pids=&amp;#34;$pids $ppid&amp;#34;
+ pid=$ppid ;;
+ (*) break ;;
+ esac
+ done
+ kill -HUP $pids
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The issue is &lt;code&gt;zsh&lt;/code&gt; doesn&amp;rsquo;t word-split unquoted variables like &lt;code&gt;bash&lt;/code&gt;/&lt;code&gt;sh&lt;/code&gt; does.
+&lt;code&gt;$pids&lt;/code&gt; is passed as a single string. Fix with &lt;code&gt;eval&lt;/code&gt;:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;ee () {
+ pid=$$
+ pids=$pid
+ while ppid=$(ps -o ppid= -p &amp;#34;$pid&amp;#34; | tr -d &amp;#39; &amp;#39;) &amp;amp;&amp;amp; [ &amp;#34;$ppid&amp;#34; -gt 1 ] 2&amp;gt; /dev/null
+ do
+ case &amp;#34;$(ps -o comm= -p &amp;#34;$ppid&amp;#34; 2&amp;gt;/dev/null)&amp;#34; in
+ (*sh) pids=&amp;#34;$pids $ppid&amp;#34;
+ pid=$ppid ;;
+ (*) break ;;
+ esac
+ done
+ eval &amp;#34;kill -HUP $pids&amp;#34;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The version above works in &lt;strong&gt;both&lt;/strong&gt; &lt;code&gt;bash&lt;/code&gt; and &lt;code&gt;zsh&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;The only difference is the last line:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="diff"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;diff&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-diff"&gt;- kill -HUP $pids
+&amp;#43; eval &amp;#34;kill -HUP $pids&amp;#34;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ee: exit all shells"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;</description></item><item><title>github workflow: external script</title><link>https://perrotta.dev/2026/02/github-workflow-external-script/</link><pubDate>Sun, 22 Feb 2026 14:10:11 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><category>pre-commit</category><guid>https://perrotta.dev/2026/02/github-workflow-external-script/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: execute a &lt;code&gt;.js&lt;/code&gt; script in a GitHub workflow. The script
 must be stored in a separate file (than the workflow) in the same git
 repository.&lt;/p&gt;
 &lt;p&gt;Why store the file separately?&lt;/p&gt;
@@ -1972,44 +2052,4 @@ control?&lt;/p&gt;
 &lt;code&gt;.gitkeep&lt;/code&gt; file inside it with &lt;code&gt;touch drafts/.gitkeep&lt;/code&gt;. This way I can
 &lt;a href="https://github.com/thiagowfx/thiagowfx.github.io/tree/master/drafts"&gt;push&lt;/a&gt; the
 &lt;code&gt;drafts/&lt;/code&gt; directory to VCS. And it will remain empty (of markdown files)!&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: .gitkeep"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/meta/"&gt;#meta&lt;/a&gt;&lt;/p&gt;</description></item><item><title>git: update master to main</title><link>https://perrotta.dev/2025/01/git-update-master-to-main/</link><pubDate>Fri, 03 Jan 2025 12:16:44 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2025/01/git-update-master-to-main/</guid><description>&lt;p&gt;In your Forge (most likely Github or Gitlab), update the default branch from
-&lt;code&gt;master&lt;/code&gt; to &lt;code&gt;main&lt;/code&gt;. Normally this has the effect of renaming &lt;code&gt;master&lt;/code&gt; to &lt;code&gt;main&lt;/code&gt;
-automatically.&lt;/p&gt;
-&lt;p&gt;In your clients, run:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-bash"&gt;git branch -m master main
-git fetch origin
-git branch -u origin/main main
-git remote set-head origin -a&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Done!&lt;/p&gt;
-&lt;p&gt;How to refer to the default branch in scripts and aliases?&lt;/p&gt;
-&lt;p&gt;Set the following &lt;code&gt;git&lt;/code&gt; alias:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-bash"&gt;% cat ~/.gitconfig
-[...]
-[alias]
-	default = !git symbolic-ref refs/remotes/origin/HEAD | sed &amp;#39;s@^refs/remotes/origin/@@&amp;#39;
-[...]&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;It outputs &lt;code&gt;master&lt;/code&gt; or &lt;code&gt;main&lt;/code&gt; – there&amp;rsquo;s no &lt;code&gt;origin/&lt;/code&gt; prefix.&lt;/p&gt;
-&lt;p&gt;The &lt;code&gt;default&lt;/code&gt; alias only works if you have a &lt;code&gt;origin&lt;/code&gt; remote set up.
-It will fail if the repository is fully local:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-bash"&gt;% cdtmp
-/tmp/thiago.perrotta-2025-01-03-pk0GPp
-% git init
-Initialized empty Git repository in /private/tmp/thiago.perrotta-2025-01-03-pk0GPp/.git/
-% git default
-fatal: ref refs/remotes/origin/HEAD is not a symbolic ref&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: git: update master to main"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: .gitkeep"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/meta/"&gt;#meta&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,6 +1,86 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2013 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>★ Gimme subagents</title><link>https://perrotta.dev/2026/02/gimme-subagents/</link><pubDate>Mon, 23 Feb 2026 10:57:55 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><guid>https://perrotta.dev/2026/02/gimme-subagents/</guid><description>&lt;p&gt;&lt;strong&gt;Scenario&lt;/strong&gt;: we&amp;rsquo;re test-driving the adoption of a
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>ee: exit all shells</title><link>https://perrotta.dev/2026/02/ee-exit-all-shells/</link><pubDate>Mon, 23 Feb 2026 11:52:17 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/02/ee-exit-all-shells/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: I present this to you the same way I presented it to &lt;a href="https://ampcode.com"&gt;Amp
+Code&lt;/a&gt; in the context of my
+&lt;a href="https://github.com/thiagowfx/.dotfiles"&gt;~/.dotfiles&lt;/a&gt;:&lt;/p&gt;
+&lt;div class="codeblock"&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;new shell alias: ee
+
+quit all shells
+
+example:
+
+$ bash
+$ bash
+$ zsh
+
+Now we&amp;#39;re 3 levels deep.
+&amp;#34;ee&amp;#34; should quit them all (effectively closing the underlying terminal emulator tab)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Why do I even have this issue in the first place?&lt;/strong&gt; Utilities like
+&lt;a href="https://github.com/thiagowfx/pancake/tree/master/wt"&gt;wt&lt;/a&gt; (to manage git
+worktrees) and &lt;a href="https://github.com/thiagowfx/pancake/tree/master/try"&gt;try&lt;/a&gt; (to
+manage scratch directories) need to change directories. Alas, it&amp;rsquo;s not possible
+to change the current working directly (&lt;code&gt;$PWD&lt;/code&gt;) with a script. As such, my
+workaround is to open a subshell in the desired directory. As a side effect, I
+end up with nested subshells.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Why &lt;code&gt;ee&lt;/code&gt;?&lt;/strong&gt; I close my shell with &lt;code&gt;C-d&lt;/code&gt; (Ctrl + D).
+In this context I need to press it three times in a row.
+&lt;code&gt;dd&lt;/code&gt; would have been a natural alias but I&amp;rsquo;d rather avoid the name clash with
+the &lt;a href="https://wiki.archlinux.org/title/Dd"&gt;&lt;code&gt;dd&lt;/code&gt;&lt;/a&gt; disk cloning util.
+&lt;code&gt;ee&lt;/code&gt; came next naturally.&lt;/p&gt;
+&lt;p&gt;This version works in &lt;code&gt;bash&lt;/code&gt; but not in &lt;code&gt;zsh&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% which ee
+ee () {
+ pid=$$
+ pids=$pid
+ while ppid=$(ps -o ppid= -p &amp;#34;$pid&amp;#34; | tr -d &amp;#39; &amp;#39;) &amp;amp;&amp;amp; [ &amp;#34;$ppid&amp;#34; -gt 1 ] 2&amp;gt; /dev/null
+ do
+ case &amp;#34;$(ps -o comm= -p &amp;#34;$ppid&amp;#34; 2&amp;gt;/dev/null)&amp;#34; in
+ (*sh) pids=&amp;#34;$pids $ppid&amp;#34;
+ pid=$ppid ;;
+ (*) break ;;
+ esac
+ done
+ kill -HUP $pids
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The issue is &lt;code&gt;zsh&lt;/code&gt; doesn&amp;rsquo;t word-split unquoted variables like &lt;code&gt;bash&lt;/code&gt;/&lt;code&gt;sh&lt;/code&gt; does.
+&lt;code&gt;$pids&lt;/code&gt; is passed as a single string. Fix with &lt;code&gt;eval&lt;/code&gt;:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;ee () {
+ pid=$$
+ pids=$pid
+ while ppid=$(ps -o ppid= -p &amp;#34;$pid&amp;#34; | tr -d &amp;#39; &amp;#39;) &amp;amp;&amp;amp; [ &amp;#34;$ppid&amp;#34; -gt 1 ] 2&amp;gt; /dev/null
+ do
+ case &amp;#34;$(ps -o comm= -p &amp;#34;$ppid&amp;#34; 2&amp;gt;/dev/null)&amp;#34; in
+ (*sh) pids=&amp;#34;$pids $ppid&amp;#34;
+ pid=$ppid ;;
+ (*) break ;;
+ esac
+ done
+ eval &amp;#34;kill -HUP $pids&amp;#34;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The version above works in &lt;strong&gt;both&lt;/strong&gt; &lt;code&gt;bash&lt;/code&gt; and &lt;code&gt;zsh&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;The only difference is the last line:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="diff"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;diff&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-diff"&gt;- kill -HUP $pids
+&amp;#43; eval &amp;#34;kill -HUP $pids&amp;#34;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: ee: exit all shells"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;</description></item><item><title>★ Gimme subagents</title><link>https://perrotta.dev/2026/02/gimme-subagents/</link><pubDate>Mon, 23 Feb 2026 10:57:55 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><guid>https://perrotta.dev/2026/02/gimme-subagents/</guid><description>&lt;p&gt;&lt;strong&gt;Scenario&lt;/strong&gt;: we&amp;rsquo;re test-driving the adoption of a
 &lt;a href="https://terrateam.io/"&gt;Terrateam&lt;/a&gt; feature
 &lt;a href="https://docs.terrateam.io/reference/configuration/stacks/"&gt;called&lt;/a&gt;
 &lt;a href="https://terrateam.io/stacks"&gt;stacks&lt;/a&gt;. The specifics aren&amp;rsquo;t relevant here.&lt;/p&gt;
@@ -2195,44 +2275,4 @@ beginning, go on:&lt;/p&gt;
 &lt;p&gt;Syncing happens automatically, but it&amp;rsquo;s sensible to manually kick-off the
 initial sync upfront.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Fin&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: atuin: new machine setup"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/fosdem/"&gt;#fosdem&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/selfhosted/"&gt;#selfhosted&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Chrome → Brave</title><link>https://perrotta.dev/2026/01/chrome-brave/</link><pubDate>Sat, 24 Jan 2026 18:08:51 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>privacy</category><guid>https://perrotta.dev/2026/01/chrome-brave/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2025/11/chrome-orion/"&gt;Earlier&lt;/a&gt; I tried to switch from
-Chrome to Orion (from the &lt;a href="https://kagi.com/"&gt;Kagi&lt;/a&gt; folks). That did not last.&lt;/p&gt;
-&lt;p&gt;Even though Orion has various interesting and innovative features, it did
-not prove to be stable for my workflow. There were various times it has totally
-frozen or crashed, making me lose track of my open tabs. This is not acceptable,
-reliability is prime.&lt;/p&gt;
-&lt;p&gt;You can only realize this by fully switching to it. It is not reproducible, it&amp;rsquo;s
-not idempotent; only &amp;ldquo;vibes&amp;rdquo; can make you perceive its instability.&lt;/p&gt;
-&lt;p&gt;I&amp;rsquo;d be willing to retry it in a few years. Not in 2026 though.&lt;/p&gt;
-&lt;p&gt;I am not even keeping it around as a secondary browser: I have simply
-uninstalled it.&lt;/p&gt;
-&lt;p&gt;The situation on mobile is better. Orion for iOS is great. I&amp;rsquo;ve been using it as
-my default iOS browser for ages. Presumably it is stable on iOS because it is
-actually employing Safari / WebKit underpinnings, as every browser in iOS is
-required to do.&lt;/p&gt;
-&lt;p&gt;Now let&amp;rsquo;s go back to the elephant in the room: I did not want to switch back to
-Google Chrome:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-bash"&gt;% brew uninstall google-chrome
-==&amp;gt; Uninstalling Cask google-chrome
-==&amp;gt; Backing App &amp;#39;Google Chrome.app&amp;#39; up to &amp;#39;/opt/homebrew/Caskroom/google-chrome/141.0.7390.55/Google Chrome.app&amp;#39;
-==&amp;gt; Removing App &amp;#39;/Applications/Google Chrome.app&amp;#39;
-==&amp;gt; Purging files for version 141.0.7390.55 of Cask google-chrome&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Upon re-evaluating my options, I decided to give Brave a try. There are many
-things I dislike about Brave in terms of philosophy and politics (for example,
-Web3 and Crypto), so I cannot endorse it in any way.&lt;/p&gt;
-&lt;p&gt;However, I realized there are many things that Brave does right out-of-the-box.
-It has a very decent focus on privacy and adblocking. It strips off Google
-telemetry and sync (e.g. bookmarks, passwords) features. Its performance and
-stability is comparable to Chrome – well, they both use Chromium underneath.&lt;/p&gt;
-&lt;p&gt;I&amp;rsquo;ve been daily driving Brave as my default / main desktop browser for about 2
-months now and I&amp;rsquo;ve been quite happy with it. It hasn&amp;rsquo;t crashed at all, not even
-once. All familiar Chromium features are there. All the Google-proprietary
-nuisance is gone.&lt;/p&gt;
-&lt;p&gt;Again, I&amp;rsquo;d have a hard time to recommend Brave personally. Still, it has been
-working well for me, so far.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Chrome → Brave"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/privacy/"&gt;#privacy&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: atuin: new machine setup"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/fosdem/"&gt;#fosdem&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/selfhosted/"&gt;#selfhosted&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
