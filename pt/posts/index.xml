@@ -252,7 +252,65 @@ problema (e os &lt;em&gt;sets&lt;/em&gt; no python).&lt;/p&gt;
 &lt;p&gt;Ademais, uma das coisas chatas do &lt;code&gt;arj&lt;/code&gt; é que ele só é capaz de extrair arquivos
 que terminam em &lt;code&gt;*.arj&lt;/code&gt;, então fui obrigado a renomear/copiar um arquivo antes
 de tentar utilizá-lo para extrair seu conteúdo.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Matroshka"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Melhorando a renderização de fontes no Windows</title><link>https://perrotta.dev/pt/2014/07/melhorando-a-renderiza%C3%A7%C3%A3o-de-fontes-no-windows/</link><pubDate>Sat, 12 Jul 2014 21:23:58 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>legacy</category><guid>https://perrotta.dev/pt/2014/07/melhorando-a-renderiza%C3%A7%C3%A3o-de-fontes-no-windows/</guid><description>&lt;p&gt;Ah, sempre que eu logo no Windows acabo implicando com alguma coisa. A última da
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Matroshka"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Emacs e golang, uma dupla perfeita</title><link>https://perrotta.dev/pt/2014/07/emacs-e-golang-uma-dupla-perfeita/</link><pubDate>Tue, 22 Jul 2014 22:09:00 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>legacy</category><guid>https://perrotta.dev/pt/2014/07/emacs-e-golang-uma-dupla-perfeita/</guid><description>&lt;p&gt;(Sim, o título é clichê.)&lt;/p&gt;
+&lt;p&gt;Dentre todas as linguagens de programação que tive contato até hoje, sem dúvida
+Go é a que teve a melhor integração com o Emacs. A integração é tão grande que
+eu até dispensei completamente a necessidade de utilizar a
+&lt;a href="https://code.google.com/p/golangide/"&gt;LiteIDE&lt;/a&gt; (aparentemente a IDE mais
+standard para Go).&lt;/p&gt;
+&lt;p&gt;(&lt;a href="http://geekmonkey.org/articles/20-comparison-of-ides-for-google-go"&gt;Esse&lt;/a&gt; site
+lista mais IDEs ainda. Pessoalmente acho uma lista exagerada, mas o leitor pode
+optar pelo que se sentir mais confortável. Adicionalmente, o
+&lt;a href="http://www.reddit.com/r/golang/comments/2739gp/golang_ides/"&gt;reddit&lt;/a&gt; é sempre
+uma boa fonte adicional.)&lt;/p&gt;
+&lt;p&gt;Então, o que você espera ver nesse post? Certamente como integrar o Emacs com o
+Go, certo? A verdade é que já existem duas fontes (em inglês) muito boas sobre o
+assunto:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://tleyden.github.io/blog/2014/05/22/configure-emacs-as-a-go-editor-from-scratch/"&gt;https://tleyden.github.io/blog/2014/05/22/configure-emacs-as-a-go-editor-from-scratch/&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://dominik.honnef.co/posts/2013/03/writing_go_in_emacs/"&gt;http://dominik.honnef.co/posts/2013/03/writing_go_in_emacs/&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Qualquer coisa que eu reproduzisse aqui seria simplesmente uma repetição do que
+já está listado nelas. Então, em vez disso, primeiramente listo a minha
+configuração atual:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="lisp"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;lisp&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-lisp"&gt;(when (locate-library &amp;#34;go-mode&amp;#34;)
+ ;; golang -- you should go get external tools by yourself!
+ (add-hook &amp;#39;before-save-hook #&amp;#39;gofmt-before-save)
+ (when (locate-library &amp;#34;go-autocomplete&amp;#34;)
+ (require &amp;#39;go-autocomplete))
+ (when (locate-library &amp;#34;go-eldoc&amp;#34;)
+ (add-hook &amp;#39;go-mode-hook &amp;#39;go-eldoc-setup))
+ (when (locate-library &amp;#34;go-projectile&amp;#34;)
+ (require &amp;#39;go-projectile))
+ (when (locate-library &amp;#34;golint&amp;#34;)
+ (require &amp;#39;golint))
+ (setq gofmt-command &amp;#34;goimports&amp;#34;)
+ (add-hook &amp;#39;go-mode-hook (lambda () (if (not (string-match &amp;#34;go&amp;#34; compile-command))
+ (set (make-local-variable &amp;#39;compile-command)
+ &amp;#34;go build -v &amp;amp;&amp;amp; go test -v &amp;amp;&amp;amp; go vet&amp;#34;))))
+ (add-hook &amp;#39;go-mode-hook (lambda () (local-set-key (kbd &amp;#34;M-.&amp;#34;) #&amp;#39;godef-jump))))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Depois, dou uma demonstração da introspecção que podemos alcançar com isso,
+através de uma ferramenta que divulguei aqui uns dias atrás…asciinema! Só existe
+uma pequena limitação, eu só posso usar o asciinema com o emacs no modo
+terminal, então ele não fica completamente funcional; mas, mesmo assim, isso já
+é suficiente para que vocês possam perceber o poder e a flexibilidade dessa
+integração.&lt;/p&gt;
+&lt;p&gt;Note, no vídeo, que criei um arquivo em &lt;a href="http://orgmode.org/"&gt;orgmode&lt;/a&gt; (quantas
+vezes nesse blog já indiquei a homepage desse maravilhoso projeto?) e o usei
+como base para gravar o asciicast. Aproveitem!&lt;/p&gt;
+&lt;p&gt;Link: &lt;a href="http://asciinema.org/a/10965"&gt;http://asciinema.org/a/10965&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;OBS.: Note que a gravação do asciinema é ligeiramente mais lenta do que o tempo
+real. É claro que eu escrevi mais rápido do que parece no vídeo.&lt;/p&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Emacs e golang, uma dupla perfeita"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/legacy/"&gt;#legacy&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Melhorando a renderização de fontes no Windows</title><link>https://perrotta.dev/pt/2014/07/melhorando-a-renderiza%C3%A7%C3%A3o-de-fontes-no-windows/</link><pubDate>Sat, 12 Jul 2014 21:23:58 -0300</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>legacy</category><guid>https://perrotta.dev/pt/2014/07/melhorando-a-renderiza%C3%A7%C3%A3o-de-fontes-no-windows/</guid><description>&lt;p&gt;Ah, sempre que eu logo no Windows acabo implicando com alguma coisa. A última da
 vez foi a renderização das fontes. A renderização de fontes no Linux é muito
 boa, chega aos pés (isso se não passar) da do Mac. Especialmente se você
 utilizar o
