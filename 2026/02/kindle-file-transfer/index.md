@@ -70,6 +70,6 @@ Two more observations:
 [^1]: Let's take a moment of silence to appreciate how an older device model is
     in fact _superior_ to a newer one. It's a bit of a stretch, but no wonder
     why some people hold on dearly to their Lenovo Thinkpads or to their Toyota
-    Priuses. There's one exception: newer Kindles uses USB-C, which is arguably
+    Priuses. There's one exception: newer Kindles use USB-C, which is arguably
     better from a standardization perspective.
 
