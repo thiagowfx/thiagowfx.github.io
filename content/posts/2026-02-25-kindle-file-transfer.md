@@ -28,7 +28,7 @@ newer (2024+?) Kindles.
 
 This is by no means obvious but, as already mentioned above, it is simply not
 possible to do it via a traditional copy & paste filesystem operation – it does
-not matter whether you use Finder or the terminal, the kindle filesystem is
+not matter whether you use Finder or the terminal, the Kindle filesystem is
 simply not exposed.
 
 Pete suggests [OpenMTP](https://openmtp.ganeshrvel.com/):
@@ -67,7 +67,7 @@ Two more observations:
   must be a data cable. Not all cables are data cables. For example, my portable
   charger cable is not a data cable. My bicycle light cable is not a data cable.
   If OpenMTP or Calibre do not recognize your Kindle upon connecting it, try
-  using another cable
+  using another cable.
 - even though newer Kindle software versions can read `.epub` and, in fact, even
   the Send to Kindle service supports it nowadays, not all `.epub` files will
   be properly recognized by the Kindle. To ensure books are always readable by
