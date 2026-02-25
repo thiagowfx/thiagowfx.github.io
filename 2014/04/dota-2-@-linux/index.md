@@ -1,0 +1,52 @@
+
+Nesse post: configurando o Linux para ter um bom desempenho no Dota 2 no Steam.
+
+1 - Utilizar as seguintes flags para lançar o jogo:
+
+```
+-console -novid -noborder -high -autoconfig -nomousegrab
+```
+
+Fonte:
+[http://dota2.gamepedia.com/Launch_Options](http://dota2.gamepedia.com/Launch_Options)
+
+Depois de lançá-lo pela primeira vez com o *autoconfig*, vá nas opções de vídeo
+e coloque tudo na menor qualidade possível (menos qualidade ==> mais
+desempenho). Depois, retire a flag de autoconfig.
+
+2 - Recomendo habilitar cl_showfps 1 no console. Esse console é o de dentro do
+jogo, o atalho default para acessá-lo é a contrabarra, mas eu mudei para o
+apóstrofo/aspas simples, porque a contrabarra não estava funcionando aqui. Você
+pode mudar o atalho nas configurações das hotkeys. Consegui um fps entre 30 e 50
+(variando loucamente).
+
+Fonte com outros comandos no console: [http://dota2.gamepedia.com/List_of_Console_Commands](http://dota2.gamepedia.com/List_of_Console_Commands)
+
+3 - Se a sua placa de vídeo for Intel (exemplo: Intel Graphics HD 4000), crie um
+arquivo `~/.drirc`:
+
+Fonte:
+[https://github.com/thiagowfx/dotfiles/blob/master/.drirc](https://github.com/thiagowfx/dotfiles/blob/master/.drirc)
+
+Isso tende a aumentar o desempenho do jogo, eu acho. A experiência me mostrou
+que é uma boa prática ter esse arquivo, mas não tenho certeza do porquê que ele
+funciona.
+
+4 - Utilize os últimos *drivers* / pacotes, se possível. Especialmente o mesa3d
+e as bibliotecas de 32 bits. Se você estiver utilizando o Arch
+(rolling-release), um Ubuntu recente (suporte oficial da Steam) ou o Steam OS,
+provavelmente estará tudo certo (desde que você atualize o sistema
+regularmente).
+
+Vale dizer que eu quase nunca consegui rodar o dota direito nesse notebook, mas
+após seguir todos esses passos eu consigo um bom desempenho. Tudo bem que eu
+estou rodando com tudo no mínimo, mas antes nem assim rodava direito. Alguma
+dessas modificações fez bastante diferença. Qual? Boa pergunta.
+
+Vale dizer que eu estou utilizando um *tiling window manager*, o que significa
+que a flag de **noborder** é especialmente atraente. Isso significa que posso
+mudar de workspace/tag (equivalente a Alt+Tab para *stacking window managers*)
+de forma ridiculamente fácil. Além do mais, eu consigo redimensionar e mover o
+contexto OpenGL do Dota 2 como se eu estivesse brincando. Essa flexibilidade
+vale a pena, e é melhor (a meu ver) do que rodar o game em*fullscreen*.
+
