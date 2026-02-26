@@ -1,6 +1,97 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2013 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Kindle file transfer</title><link>https://perrotta.dev/2026/02/kindle-file-transfer/</link><pubDate>Wed, 25 Feb 2026 01:15:21 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>serenity</category><guid>https://perrotta.dev/2026/02/kindle-file-transfer/</guid><description>&lt;p&gt;&lt;a href="https://petegraham.com/kindle-faff/"&gt;Faff connecting a new Kindle to a Mac with a USB
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>★ cco: claude condom (sandbox)</title><link>https://perrotta.dev/2026/02/cco-claude-condom-sandbox/</link><pubDate>Thu, 26 Feb 2026 13:17:26 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><category>security</category><guid>https://perrotta.dev/2026/02/cco-claude-condom-sandbox/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: &lt;code&gt;claude --dangerously-skip-permissions&lt;/code&gt; (&amp;ldquo;YOLO mode&amp;rdquo;) is
+fast but risky. Introduce a lightweight filesystem-level sandbox. Networking is
+explicitly out of scope at this time.&lt;/p&gt;
+&lt;p&gt;Recently I &lt;a href="https://perrotta.dev/2026/02/new-apkbuild-llm-edition/"&gt;aliased&lt;/a&gt; it to
+&lt;code&gt;claudey&lt;/code&gt; and have been using it daily. It&amp;rsquo;s an effective way to run Claude Code
+without being constantly nagged with permission prompts. But going unprotected
+has many risks and downsides:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Prompt injection&lt;/strong&gt;: web search can trick Claude into accessing files or
+running commands outside the project directory&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;No guardrails&lt;/strong&gt;: SSH keys and credentials are generally accessible&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Decision_fatigue"&gt;&lt;strong&gt;Approval fatigue&lt;/strong&gt;&lt;/a&gt;:
+repeatedly clicking &amp;ldquo;approve&amp;rdquo; leads to paying less attention.&lt;/li&gt;
+&lt;li&gt;Especially dangerous for &lt;strong&gt;background agents&lt;/strong&gt; running unattended.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Effective sandboxing needs both filesystem &lt;em&gt;and&lt;/em&gt; network isolation — without
+network isolation, a compromised agent can exfiltrate sensitive files. But, as
+mentioned in the first paragraph, networking is overruled for now. Baby steps!&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/nikvdp/cco"&gt;cco&lt;/a&gt; (&lt;em&gt;Claude Condom&lt;/em&gt;) is a thin wrapper that
+runs Claude Code in a sandbox. Originally discovered via &lt;a href="https://invertedpassion.com/my-claude-code-workflow/"&gt;Paras
+Chopra&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;How to use it? First you need to install it. The
+&lt;a href="https://github.com/nikvdp/cco?tab=readme-ov-file#installation"&gt;official&lt;/a&gt;
+installation instructions use &lt;code&gt;curl | bash&lt;/code&gt; but I &lt;a href="https://perrotta.dev/2025/10/distributing-my-own-scripts-via-homebrew/"&gt;despise&lt;/a&gt; that.&lt;/p&gt;
+&lt;p&gt;Hence I created my own &lt;code&gt;brew&lt;/code&gt;
+&lt;a href="https://github.com/thiagowfx/homebrew-taps/blob/master/Formula/cco.rb"&gt;formula&lt;/a&gt;
+for it. Now it&amp;rsquo;s just one &lt;code&gt;brew install&lt;/code&gt; command away from usage (and also from
+uninstallation, very important!).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Usage&lt;/strong&gt;: replace &lt;code&gt;claude&lt;/code&gt; with &lt;code&gt;cco&lt;/code&gt; and you&amp;rsquo;re done:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% cco &amp;#34;analyze this codebase&amp;#34;
+% cco --resume&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;It will start Claude within the &amp;ldquo;bypass permissions on&amp;rdquo; mode, albeit within the
+sandbox.&lt;/p&gt;
+&lt;p&gt;It auto-selects the best available sandbox: native OS
+(&lt;a href="https://www.chromium.org/developers/design-documents/sandbox/osx-sandboxing-design/"&gt;Seatbelt&lt;/a&gt;
+on macOS, &lt;a href="https://github.com/containers/bubblewrap"&gt;bubblewrap&lt;/a&gt; on Linux) or
+Docker fallback. The native macOS sandbox has &lt;strong&gt;near-zero&lt;/strong&gt; overhead, which is
+remarkable. This kind of low-friction in developer tooling helps to drive its
+adoption.&lt;/p&gt;
+&lt;p&gt;Docker is slow though, especially on macOS. You should avoid it in this context
+if you can.&lt;/p&gt;
+&lt;p&gt;The host filesystem is &lt;strong&gt;read-only by default&lt;/strong&gt; (globally). Only the project
+directory (git root) is writable. Whitelist additional paths with &lt;code&gt;--add-dir&lt;/code&gt; as
+needed:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% cco --add-dir ~/.cache \
+ --add-dir ~/.aws/cli/cache \
+ --add-dir ~/.terraform.d/plugin-cache&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;I had to whitelist the directories above otherwise &lt;a href="https://perrotta.dev/2024/12/pre-commit/"&gt;&lt;code&gt;pre-commit&lt;/code&gt;&lt;/a&gt; / &lt;code&gt;prek&lt;/code&gt;, the
+&lt;code&gt;aws&lt;/code&gt; CLI and &lt;code&gt;terraform&lt;/code&gt; would fail sporadically.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;--safe&lt;/code&gt; hides &lt;code&gt;$HOME&lt;/code&gt; entirely; only whitelisted paths are visible.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;--deny-path&lt;/code&gt; blocks specific sensitive paths.&lt;/p&gt;
+&lt;p&gt;All Claude Code flags (&lt;code&gt;--resume&lt;/code&gt;, &lt;code&gt;--model&lt;/code&gt;, etc.) pass through transparently.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Why &lt;code&gt;cco&lt;/code&gt;?&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;it&amp;rsquo;s zero-config&lt;/li&gt;
+&lt;li&gt;its startup has pretty much zero overhead&lt;/li&gt;
+&lt;li&gt;it&amp;rsquo;s IDE agnostic&lt;/li&gt;
+&lt;li&gt;it just works™&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Why not &lt;code&gt;cco&lt;/code&gt;?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;It does not handle networking.
+&lt;a href="https://code.claude.com/docs/en/sandboxing"&gt;&lt;code&gt;srt&lt;/code&gt;&lt;/a&gt; is more suitable as an
+additional step.&lt;/p&gt;
+&lt;p&gt;I updated my &lt;code&gt;claudey&lt;/code&gt; alias:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;alias cco=&amp;#34;cco --allow-oauth-refresh --add-dir ~/.cache --add-dir ~/.aws/cli/cache --add-dir ~/.terraform.d/plugin-cache&amp;#34;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;--allow-oauth-refresh&lt;/code&gt; is necessary, or else:&lt;/p&gt;
+&lt;div class="codeblock"&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;⎿ API Error: 401 {&amp;#34;type&amp;#34;:&amp;#34;error&amp;#34;,&amp;#34;error&amp;#34;:{&amp;#34;type&amp;#34;:&amp;#34;authentication_error&amp;#34;,&amp;#34;message&amp;#34;:&amp;#34;OAuth token has expired. Please obtain a new token or refresh your
+ existing token.&amp;#34;},&amp;#34;request_id&amp;#34;:&amp;#34;req_{redacted}&amp;#34;} · Please run /login&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;my login credentials would expire roughly once every day. Re-authenticating
+every day is quite annoying.&lt;/p&gt;
+&lt;p&gt;This is properly &lt;a href="https://github.com/nikvdp/cco/blob/master/SECURITY.md#credential-protection"&gt;documented&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Credential file access&lt;/strong&gt;: The credentials JSON is mounted read-only by default, so Claude cannot update tokens unless &lt;code&gt;--allow-oauth-refresh&lt;/code&gt; is explicitly enabled.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: cco: claude condom (sandbox)"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/security/"&gt;#security&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Kindle file transfer</title><link>https://perrotta.dev/2026/02/kindle-file-transfer/</link><pubDate>Wed, 25 Feb 2026 01:15:21 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>serenity</category><guid>https://perrotta.dev/2026/02/kindle-file-transfer/</guid><description>&lt;p&gt;&lt;a href="https://petegraham.com/kindle-faff/"&gt;Faff connecting a new Kindle to a Mac with a USB
 cable&lt;/a&gt; by Pete Graham:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;TL;DR: new Kindles don&amp;rsquo;t show up as external drives on macOS when connected by
@@ -2269,37 +2360,4 @@ justifies the raison d&amp;rsquo;être™ of the profession.&amp;#160;&lt;a href
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: 500 days of Summer (2009)"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/movies/"&gt;#movies&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Em–dashes</title><link>https://perrotta.dev/2026/01/emdashes/</link><pubDate>Tue, 27 Jan 2026 00:24:45 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>serenity</category><guid>https://perrotta.dev/2026/01/emdashes/</guid><description>&lt;p&gt;I use em dashes extensively (–).&lt;/p&gt;
-&lt;p&gt;And, apparently, &lt;a href="https://folkertstijnman.com/blog/why-em-dashes-are-common-in-llm-outputs/"&gt;so&lt;/a&gt; &lt;a href="https://medium.com/@raj-srivastava/how-llms-turned-the-em-dash-into-a-villain-technical-nuances-b564857adc3b"&gt;do&lt;/a&gt; &lt;a href="https://www.seangoedecke.com/em-dashes/"&gt;LLMs&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;These days I feel that I need to put in some &lt;em&gt;additional&lt;/em&gt; effort to make my sentences sound more natural / human, otherwise some people could erroneously assume that they&amp;rsquo;re LLM-generated.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;C&amp;rsquo;est la vie&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;On macOS, press &lt;code&gt;Option + -&lt;/code&gt; to insert an em-dash (–).&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Errata(2026-02-14)&lt;/strong&gt;: a reader has kindly pointed out the following:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Em dash (—): Option (⌥) + Shift (⇧) + -&lt;/li&gt;
-&lt;li&gt;En dash (–): Option (⌥) + -&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&amp;hellip;which means I&amp;rsquo;ve erroneously mixed them!&lt;/p&gt;
-&lt;p&gt;Alternatively,
-&lt;a href="https://vi.stackexchange.com/questions/2199/what-is-the-easiest-way-to-insert-en-dash-in-vim"&gt;instruct&lt;/a&gt;
-&lt;code&gt;nvim&lt;/code&gt; to insert an em-dash when typing the sequence &lt;code&gt;--&amp;lt;space&amp;gt;&lt;/code&gt; (=two dashes
-followed by a space) in markdown files by changing
-&lt;code&gt;~/.config/nvim/after/ftplugin/markdown.lua&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="lua"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;lua&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-lua"&gt;-- Convert -- followed by space to em-dash
-vim.keymap.set(&amp;#39;i&amp;#39;, &amp;#39;--&amp;lt;Space&amp;gt;&amp;#39;, &amp;#39;—&amp;#39;, { buffer = 0, desc = &amp;#39;Em-dash&amp;#39; })&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Or in &lt;code&gt;vim&lt;/code&gt; (&lt;code&gt;~/.vim/after/ftplugin/markdown.vim&lt;/code&gt;):&lt;/p&gt;
-&lt;div class="codeblock" data-lang="vimscript"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;vimscript&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-vimscript"&gt;inoremap &amp;lt;buffer&amp;gt; -- —&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;Update(2026-02-04)&lt;/strong&gt;: a reader has kindly pointed out that there&amp;rsquo;s a mistake
-in my nomenclature, wherein this post is actually referring to en-dashes instead
-of em-dashes. I am sure he is &lt;em&gt;absolutely right&lt;/em&gt;!&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Em–dashes"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: 500 days of Summer (2009)"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/movies/"&gt;#movies&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

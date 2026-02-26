@@ -1,6 +1,97 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Security on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Security on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2013 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Fri, 20 Feb 2026 18:40:07 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/security/index.xml" rel="self" type="application/rss+xml"/><item><title>Superwhisper</title><link>https://perrotta.dev/2026/02/superwhisper/</link><pubDate>Fri, 20 Feb 2026 18:33:28 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>macos</category><category>meta</category><category>security</category><guid>https://perrotta.dev/2026/02/superwhisper/</guid><description>&lt;p&gt;Hello world.&lt;/p&gt;
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Thu, 26 Feb 2026 14:11:43 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/security/index.xml" rel="self" type="application/rss+xml"/><item><title>★ cco: claude condom (sandbox)</title><link>https://perrotta.dev/2026/02/cco-claude-condom-sandbox/</link><pubDate>Thu, 26 Feb 2026 13:17:26 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><category>security</category><guid>https://perrotta.dev/2026/02/cco-claude-condom-sandbox/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: &lt;code&gt;claude --dangerously-skip-permissions&lt;/code&gt; (&amp;ldquo;YOLO mode&amp;rdquo;) is
+fast but risky. Introduce a lightweight filesystem-level sandbox. Networking is
+explicitly out of scope at this time.&lt;/p&gt;
+&lt;p&gt;Recently I &lt;a href="https://perrotta.dev/2026/02/new-apkbuild-llm-edition/"&gt;aliased&lt;/a&gt; it to
+&lt;code&gt;claudey&lt;/code&gt; and have been using it daily. It&amp;rsquo;s an effective way to run Claude Code
+without being constantly nagged with permission prompts. But going unprotected
+has many risks and downsides:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Prompt injection&lt;/strong&gt;: web search can trick Claude into accessing files or
+running commands outside the project directory&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;No guardrails&lt;/strong&gt;: SSH keys and credentials are generally accessible&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Decision_fatigue"&gt;&lt;strong&gt;Approval fatigue&lt;/strong&gt;&lt;/a&gt;:
+repeatedly clicking &amp;ldquo;approve&amp;rdquo; leads to paying less attention.&lt;/li&gt;
+&lt;li&gt;Especially dangerous for &lt;strong&gt;background agents&lt;/strong&gt; running unattended.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Effective sandboxing needs both filesystem &lt;em&gt;and&lt;/em&gt; network isolation — without
+network isolation, a compromised agent can exfiltrate sensitive files. But, as
+mentioned in the first paragraph, networking is overruled for now. Baby steps!&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/nikvdp/cco"&gt;cco&lt;/a&gt; (&lt;em&gt;Claude Condom&lt;/em&gt;) is a thin wrapper that
+runs Claude Code in a sandbox. Originally discovered via &lt;a href="https://invertedpassion.com/my-claude-code-workflow/"&gt;Paras
+Chopra&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;How to use it? First you need to install it. The
+&lt;a href="https://github.com/nikvdp/cco?tab=readme-ov-file#installation"&gt;official&lt;/a&gt;
+installation instructions use &lt;code&gt;curl | bash&lt;/code&gt; but I &lt;a href="https://perrotta.dev/2025/10/distributing-my-own-scripts-via-homebrew/"&gt;despise&lt;/a&gt; that.&lt;/p&gt;
+&lt;p&gt;Hence I created my own &lt;code&gt;brew&lt;/code&gt;
+&lt;a href="https://github.com/thiagowfx/homebrew-taps/blob/master/Formula/cco.rb"&gt;formula&lt;/a&gt;
+for it. Now it&amp;rsquo;s just one &lt;code&gt;brew install&lt;/code&gt; command away from usage (and also from
+uninstallation, very important!).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Usage&lt;/strong&gt;: replace &lt;code&gt;claude&lt;/code&gt; with &lt;code&gt;cco&lt;/code&gt; and you&amp;rsquo;re done:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% cco &amp;#34;analyze this codebase&amp;#34;
+% cco --resume&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;It will start Claude within the &amp;ldquo;bypass permissions on&amp;rdquo; mode, albeit within the
+sandbox.&lt;/p&gt;
+&lt;p&gt;It auto-selects the best available sandbox: native OS
+(&lt;a href="https://www.chromium.org/developers/design-documents/sandbox/osx-sandboxing-design/"&gt;Seatbelt&lt;/a&gt;
+on macOS, &lt;a href="https://github.com/containers/bubblewrap"&gt;bubblewrap&lt;/a&gt; on Linux) or
+Docker fallback. The native macOS sandbox has &lt;strong&gt;near-zero&lt;/strong&gt; overhead, which is
+remarkable. This kind of low-friction in developer tooling helps to drive its
+adoption.&lt;/p&gt;
+&lt;p&gt;Docker is slow though, especially on macOS. You should avoid it in this context
+if you can.&lt;/p&gt;
+&lt;p&gt;The host filesystem is &lt;strong&gt;read-only by default&lt;/strong&gt; (globally). Only the project
+directory (git root) is writable. Whitelist additional paths with &lt;code&gt;--add-dir&lt;/code&gt; as
+needed:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% cco --add-dir ~/.cache \
+ --add-dir ~/.aws/cli/cache \
+ --add-dir ~/.terraform.d/plugin-cache&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;I had to whitelist the directories above otherwise &lt;a href="https://perrotta.dev/2024/12/pre-commit/"&gt;&lt;code&gt;pre-commit&lt;/code&gt;&lt;/a&gt; / &lt;code&gt;prek&lt;/code&gt;, the
+&lt;code&gt;aws&lt;/code&gt; CLI and &lt;code&gt;terraform&lt;/code&gt; would fail sporadically.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;--safe&lt;/code&gt; hides &lt;code&gt;$HOME&lt;/code&gt; entirely; only whitelisted paths are visible.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;--deny-path&lt;/code&gt; blocks specific sensitive paths.&lt;/p&gt;
+&lt;p&gt;All Claude Code flags (&lt;code&gt;--resume&lt;/code&gt;, &lt;code&gt;--model&lt;/code&gt;, etc.) pass through transparently.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Why &lt;code&gt;cco&lt;/code&gt;?&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;it&amp;rsquo;s zero-config&lt;/li&gt;
+&lt;li&gt;its startup has pretty much zero overhead&lt;/li&gt;
+&lt;li&gt;it&amp;rsquo;s IDE agnostic&lt;/li&gt;
+&lt;li&gt;it just works™&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Why not &lt;code&gt;cco&lt;/code&gt;?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;It does not handle networking.
+&lt;a href="https://code.claude.com/docs/en/sandboxing"&gt;&lt;code&gt;srt&lt;/code&gt;&lt;/a&gt; is more suitable as an
+additional step.&lt;/p&gt;
+&lt;p&gt;I updated my &lt;code&gt;claudey&lt;/code&gt; alias:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;alias cco=&amp;#34;cco --allow-oauth-refresh --add-dir ~/.cache --add-dir ~/.aws/cli/cache --add-dir ~/.terraform.d/plugin-cache&amp;#34;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;--allow-oauth-refresh&lt;/code&gt; is necessary, or else:&lt;/p&gt;
+&lt;div class="codeblock"&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;⎿ API Error: 401 {&amp;#34;type&amp;#34;:&amp;#34;error&amp;#34;,&amp;#34;error&amp;#34;:{&amp;#34;type&amp;#34;:&amp;#34;authentication_error&amp;#34;,&amp;#34;message&amp;#34;:&amp;#34;OAuth token has expired. Please obtain a new token or refresh your
+ existing token.&amp;#34;},&amp;#34;request_id&amp;#34;:&amp;#34;req_{redacted}&amp;#34;} · Please run /login&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;my login credentials would expire roughly once every day. Re-authenticating
+every day is quite annoying.&lt;/p&gt;
+&lt;p&gt;This is properly &lt;a href="https://github.com/nikvdp/cco/blob/master/SECURITY.md#credential-protection"&gt;documented&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Credential file access&lt;/strong&gt;: The credentials JSON is mounted read-only by default, so Claude cannot update tokens unless &lt;code&gt;--allow-oauth-refresh&lt;/code&gt; is explicitly enabled.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: cco: claude condom (sandbox)"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/security/"&gt;#security&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Superwhisper</title><link>https://perrotta.dev/2026/02/superwhisper/</link><pubDate>Fri, 20 Feb 2026 18:33:28 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>macos</category><category>meta</category><category>security</category><guid>https://perrotta.dev/2026/02/superwhisper/</guid><description>&lt;p&gt;Hello world.&lt;/p&gt;
 &lt;p&gt;This blog post is being dictated by &lt;a href="https://superwhisper.com/"&gt;Superwhisper&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;I&amp;rsquo;m not writing any text at all. Every word that is coming out was dictated one
 by one. Frankly I have no idea whether this works effectively or not, but
@@ -1642,90 +1733,4 @@ session required pam_permit.so&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;&lt;a href="https://sixcolors.com/post/2020/11/quick-tip-enable-touch-id-for-sudo/"&gt;https://sixcolors.com/post/2020/11/quick-tip-enable-touch-id-for-sudo/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://apple.stackexchange.com/a/306324"&gt;https://apple.stackexchange.com/a/306324&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: macOS: sudo with touch ID"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/macos/"&gt;#macos&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/security/"&gt;#security&lt;/a&gt;&lt;/p&gt;</description></item><item><title>HTTP: a few acronyms</title><link>https://perrotta.dev/2022/02/http-a-few-acronyms/</link><pubDate>Sun, 27 Feb 2022 21:48:03 -0500</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>security</category><guid>https://perrotta.dev/2022/02/http-a-few-acronyms/</guid><description>&lt;p&gt;I keep forgetting these, so I wrote a small summary for my own reference.&lt;/p&gt;
-&lt;h2 id="hsts"&gt;HSTS&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"&gt;Wikipedia — HSTS&lt;/a&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;HTTP Strict Transport Security (HSTS) is a policy mechanism that helps to
-protect websites against man-in-the-middle attacks such as protocol downgrade
-attacks and cookie hijacking. It allows web servers to declare that web
-browsers (or other complying user agents) should automatically interact with
-it using only HTTPS connections.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;In layman&amp;rsquo;s terms: &lt;em&gt;Force HTTPS on a given domain&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://hstspreload.org/"&gt;HSTS Preload List&lt;/a&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;This form is used to submit domains for inclusion in Chrome&amp;rsquo;s HTTP Strict
-Transport Security (HSTS) preload list. This is a list of sites that are
-hardcoded into Chrome as being HTTPS only.&lt;/p&gt;
-&lt;p&gt;Most major browsers (Chrome, Firefox, Opera, Safari, IE 11 and Edge) also
-have HSTS preload lists based on the Chrome list. (See the HSTS compatibility
-matrix.)&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;If you add your website to that list, major browsers will honor it and only use
-HTTPS for your domain.&lt;/p&gt;
-&lt;p&gt;Some &lt;a href="https://en.wikipedia.org/wiki/Top-level_domain"&gt;TLDs&lt;/a&gt; enforce HTTPS
-through HSTS, some popular ones are &lt;code&gt;.app&lt;/code&gt; and &lt;code&gt;.dev&lt;/code&gt;.
-&lt;a href="https://serverfault.com/q/1067229/180092"&gt;A more comprehensive list is available on ServerFault&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;HSTS&lt;/code&gt; is fire-and-forget, you&amp;rsquo;ll usually only need to worry about it once,
-when configuring a SSL certificate (HTTPS) for your domain or subdomains.&lt;/p&gt;
-&lt;h2 id="csp"&gt;CSP&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Content_Security_Policy"&gt;Wikipedia — CSP&lt;/a&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Content Security Policy (CSP) is a computer security standard introduced to
-prevent cross-site scripting (XSS), clickjacking and other code injection
-attacks resulting from execution of malicious content in the trusted web page
-context.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP"&gt;MDN — CSP&lt;/a&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Content Security Policy (CSP) is an added layer of security that helps to
-detect and mitigate certain types of attacks, including Cross-Site Scripting
-(XSS) and data injection attacks. These attacks are used for everything from
-data theft, to site defacement, to malware distribution.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;CSP can be configured in at least two distinct ways:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Web server: return the &lt;code&gt;Content-Security-Policy&lt;/code&gt; HTTP header:&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class="codeblock"&gt;
- &lt;pre&gt;&lt;code class="language-plaintext"&gt;Content-Security-Policy: default-src &amp;#39;self&amp;#39;; img-src https://*; child-src &amp;#39;none&amp;#39;;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;ol start="2"&gt;
-&lt;li&gt;HTML &lt;code&gt;&amp;lt;meta&amp;gt;&lt;/code&gt; tag:&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class="codeblock" data-lang="html"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;html&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;meta http-equiv=&amp;#34;Content-Security-Policy&amp;#34; content=&amp;#34;default-src &amp;#39;self&amp;#39;; img-src https://*; child-src &amp;#39;none&amp;#39;;&amp;#34;&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;CSP&lt;/code&gt; is something to worry about at the application level. For example,
-&lt;a href="https://github.com/miniflux/v2/issues/748"&gt;miniflux&lt;/a&gt; to fetch resources
-(fonts) from another domain (Google Fonts).&lt;/p&gt;
-&lt;h2 id="cors"&gt;CORS&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing"&gt;Wikipedia — CORS&lt;/a&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Cross-origin resource sharing (CORS) is a mechanism that allows restricted
-resources on a web page to be requested from another domain outside the
-domain from which the first resource was served.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;CORS can be configured via web server: return the &lt;code&gt;Access-Control-Allow-Origin&lt;/code&gt; HTTP header:&lt;/p&gt;
-&lt;div class="codeblock"&gt;
- &lt;pre&gt;&lt;code class="language-plaintext"&gt;Access-Control-Allow-Origin: *
-Access-Control-Allow-Origin: http://example.com:8080&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;CORS&lt;/code&gt; is something to worry about at the application level. For example,
-&lt;a href="https://keep.google.com/"&gt;https://keep.google.com/&lt;/a&gt; ⟷ &lt;a href="https://google.com/"&gt;https://google.com/&lt;/a&gt; cookies.&lt;/p&gt;
-&lt;h2 id="csrf"&gt;CSRF&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery"&gt;Wikipedia — CSRF&lt;/a&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Cross-site request forgery, also known as one-click attack or session riding
-and abbreviated as CSRF (sometimes pronounced sea-surf) or XSRF, is a type of
-malicious exploit of a website where unauthorized commands are submitted from
-a user that the web application trusts.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;code&gt;CSRF&lt;/code&gt; is something to be aware of and to watch out for.
-&lt;a href="https://owasp.org/www-community/attacks/csrf"&gt;OWASP&lt;/a&gt; has some additional
-resources on it.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: HTTP: a few acronyms"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/security/"&gt;#security&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: macOS: sudo with touch ID"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/macos/"&gt;#macos&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/security/"&gt;#security&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
