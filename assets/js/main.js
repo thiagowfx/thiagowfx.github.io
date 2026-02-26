@@ -148,7 +148,7 @@ const fullscreenBtn = document.getElementById("fullscreen-btn");
 const fullscreenIcon = document.getElementById("fullscreen-icon");
 
 if (fullscreenBtn) {
-  // Check for fullscreen parameter in URL or localStorage
+  // Check for fullscreen parameter in URL or localStorage and keep them in sync
   const urlParams = new URLSearchParams(window.location.search);
   const isFullscreenParam = urlParams.has("fullscreen");
   const isFullscreenLocal = localStorage.getItem("fullscreen-mode") === "true";
@@ -156,6 +156,17 @@ if (fullscreenBtn) {
   if (isFullscreenParam || isFullscreenLocal) {
     document.body.classList.add("fullscreen-mode");
     fullscreenIcon.textContent = "✕";
+
+    // Sync URL param → localStorage
+    if (isFullscreenParam && !isFullscreenLocal) {
+      localStorage.setItem("fullscreen-mode", true);
+    }
+    // Sync localStorage → URL param
+    if (isFullscreenLocal && !isFullscreenParam) {
+      const url = new URL(window.location);
+      url.searchParams.set("fullscreen", "true");
+      window.history.replaceState({}, "", url);
+    }
   }
 
   fullscreenBtn.addEventListener("click", function () {
