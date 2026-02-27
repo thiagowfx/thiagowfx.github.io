@@ -22,7 +22,8 @@
   const includeCategories = new Set({{ $includeCategories | jsonify | safeJS }});
   const i18n = {
     postsIndexed: '{{ i18n "postsIndexed" }}',
-    noResults: '{{ i18n "noResults" }}'
+    noResults: '{{ i18n "noResults" }}',
+    loading: '{{ i18n "searchLoading" }}'
   };
 
   const debounce = (fn, delay) => {
@@ -161,6 +162,8 @@
 
   const loadSearchIndex = () => {
     if (searchIndex !== null) return;
+    searchInfo.textContent = i18n.loading;
+    searchInfo.classList.add('loading');
     fetch(langPath + '/search/index.json')
       .then(response => response.json())
       .then(data => {
@@ -177,6 +180,7 @@
         if (excludeCategories.size > 0) {
           searchIndex = searchIndex.filter(post => !(post.categories ?? []).some(c => excludeCategories.has(c)));
         }
+        searchInfo.classList.remove('loading');
         searchInfo.textContent = `${searchIndex.length} ${i18n.postsIndexed}`;
         const q = searchInput.value.trim();
         if (q) {
@@ -184,6 +188,7 @@
         }
       })
       .catch(err => {
+        searchInfo.classList.remove('loading');
         searchInfo.textContent = 'Error loading search index';
         console.error('Search index load error:', err);
       });
