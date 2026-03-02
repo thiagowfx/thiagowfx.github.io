@@ -91,6 +91,8 @@ I updated my `claudey` alias:
 alias cco="cco --allow-oauth-refresh --add-dir ~/.cache --add-dir ~/.aws/cli/cache --add-dir ~/.terraform.d/plugin-cache"
 ```
 
+**Update(2026-03-02)**: `~/.aws/sso/cache` is also needed for the AWS CLI.
+
 `--allow-oauth-refresh` is necessary, or else:
 
 ```
