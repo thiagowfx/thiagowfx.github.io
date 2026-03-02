@@ -1,9 +1,9 @@
 
-So, recently I've been heavily playing with Emacs (24, please) -- at least at
+So, recently I've been heavily playing with Emacs (24, please) – at least at
 the customization level --, tayloring and customizing it to my needs. You can
 find my .emacs startup file
 [on GitHub](https://github.com/thiagowfx/dotfiles/blob/master/.emacs). **Nowadays**
-it is well documented -- it used to be so messy.
+it is well documented – it used to be so messy.
 
 Here is a list of packages you might find useful. Please notice I won't be
 posting any individual links, because you can easily find them with a simple
@@ -30,7 +30,7 @@ random.
 - uniquify: if you ever open two files with the same name which are located on
   different places, this will make easier to identify what file is which.
 
-- eldoc-mode: lisp functions get their signatures on the minibuffer -- for the
+- eldoc-mode: lisp functions get their signatures on the minibuffer – for the
   sake of the documentation.
 
 - winner-mode: undo (and redo too!) window layouts. Super useful after creating
