@@ -16,7 +16,7 @@ um pouco incertos, como entrar na empresa júnior da minha universidade, ser
 monitor de Programação de Cálculo, aprender mais sobre algumas coisas de
 GNU/Linux, ler alguns livros que me interessavam (interessam), idem para séries,
 resumindo: planejar fazer coisas demais duma vez só, num espaço de tempo
-relativamente curto =P. O que nunca -- como você pode perceber -- dá certo, por
+relativamente curto =P. O que nunca – como você pode perceber – dá certo, por
 experiência.
 
 Bom, prioridades sendo agitadas aqui e ali, acabou que eu decidi fazer a prova.
@@ -124,7 +124,7 @@ continuação dele. Incerto. Como foi a decisão de fazer a prova esse ano, pelo
 menos no início do ano. Isso pelo menos para a Maratona desse ano...na do ano
 que vem, se esse blog ainda existir, certamente ainda terá mais posts ^^
 
-(Só não posso terminar de fechar sem dizer que a experiência foi -- *sempre é!*
+(Só não posso terminar de fechar sem dizer que a experiência foi – *sempre é!*
 -- bastante legal e boa!)
 
 *Obrigado por ler.*

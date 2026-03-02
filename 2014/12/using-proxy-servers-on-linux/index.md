@@ -27,12 +27,12 @@ work, unless you store those environment variables in a system wide directory
 (good recommendations include `/etc/profile` and `/etc/profile.d/_`).
 
 However, from my experience, this is limited in the sense that it would be the
-default proxy of your system, which isn't what you probably want -- the common
+default proxy of your system, which isn't what you probably want – the common
 use case is: connect to some AP, switch to its proxy, and after a while
 disconnect from it *and* throw away its proxy.
 
 Simple, isn't it? If you want to automate this task a little more, please refer
-to the [Arch Wiki](https://wiki.archlinux.org/index.php/Proxy) -- from
+to the [Arch Wiki](https://wiki.archlinux.org/index.php/Proxy) – from
 where this post was originally inspired.
 
 Also, I needed to apply this setup in a real world situation and I can confirm

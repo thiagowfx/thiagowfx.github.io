@@ -14,7 +14,7 @@ assunto no futuro.
 Agora, vou voltar a estudar sobre algoritmos e tudo o mais, pois a maratona de
 programação é daqui a alguns dias apenas. Além disso, comecei um curso de
 Machine Learning no Coursera, e estou investindo uma boa parte do meu tempo em
-interação com os outros estudantes do curso -- acredito, por experiência, que
+interação com os outros estudantes do curso – acredito, por experiência, que
 essa é a melhor maneira de tirar o máximo de proveito do coursera: estudar em
 grupo; bem, ao menos participar das discussões dos fóruns.
 
