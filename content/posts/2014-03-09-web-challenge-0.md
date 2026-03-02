@@ -18,7 +18,7 @@ am satisfied with the i3 window manager. It is currently the default for my Arch
 Linux Desktop, and I don't care about the others. Sadly I didn't do a challenge
 about i3, because I was busy while I was trying it. Also, in this epoch I began
 to write here some posts in English. I said this would be a way to practice my
-own English -- and yeah, it really is. It's harder (= takes more time) for me if
+own English – and yeah, it really is. It's harder (= takes more time) for me if
 I'm not writing on my native language. But okay, probably it is a good idea to
 let my gramatical errors lay down here...
 

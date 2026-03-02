@@ -13,7 +13,7 @@ relevant information out there.
 I chose to start this new 'challenges' column with the openbox window manager.
 I'm not sure if I will continue this project, but I'll try to. Also, you'll
 notice I'm writing all of my posts in English, from now on. So, this will be
-both a big review and an opportunity to describe how pleasant -- or painful -- a
+both a big review and an opportunity to describe how pleasant – or painful – a
 life with this WM can be.
 
 For starters, I got a completely blank screen. Hum... I'm likely in the right

@@ -51,7 +51,7 @@ disappears (like you should expect). What if I want to integrate my custom
 obmenu entries with the mmaker (generation)? I searched a little and found out
 that this can be easily achieved by editing the menu.xml file by hand. First,
 create a custom_menu.xml file. Then run mmaker again. Now, add the contents of
-custom_menu.xml to menu.xml -- in the right place! My right place is under the
+custom_menu.xml to menu.xml – in the right place! My right place is under the
 root menu. To update the menu, run `openbox --reconfigure`. This is not a fully
 automated manner, but works and it's simple. Actually it's pretty easy to write
 a script to automate this, but I find it unnecessary. Let's (be) KISS here.
