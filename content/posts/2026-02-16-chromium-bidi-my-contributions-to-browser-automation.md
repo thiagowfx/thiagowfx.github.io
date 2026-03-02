@@ -79,7 +79,7 @@ The first ~100 PRs were heavily focused on developer experience (#devex):
   when I would eventually [fall in love]({{< ref "2024-12-21-pre-commit" >}})
   with it.
 - Added macOS E2E tests, headful [WPT](https://web-platform-tests.org/) (Web
-  Platform Tests -- the shared test suite across browser vendors) runs in GitHub
+  Platform Tests – the shared test suite across browser vendors) runs in GitHub
   Actions, [Chrome for Testing]({{< ref "2024-01-25-chrome-for-testing" >}}) in
   CI ([#427](https://github.com/GoogleChromeLabs/chromium-bidi/pull/427),
   [#466](https://github.com/GoogleChromeLabs/chromium-bidi/pull/466),
@@ -100,7 +100,7 @@ The first ~100 PRs were heavily focused on developer experience (#devex):
   ([#941](https://github.com/GoogleChromeLabs/chromium-bidi/pull/941))
 
 There was also a coordinated effort in January 2023 to remove static state from
-the codebase -- about 10 PRs converting `EventManager`, `SubscriptionManager`,
+the codebase – about 10 PRs converting `EventManager`, `SubscriptionManager`,
 `LogManager`, `ScriptEvaluator`, `BrowsingContextStorage`, and `RealmStorage`
 from static classes to proper instances. This was the kind of refactoring that
 makes everything that comes after easier: better testability, less global
@@ -128,7 +128,7 @@ incrementally over several months.
 **Channel mechanism / `script.MessageEvent`**
 ([#319](https://github.com/GoogleChromeLabs/chromium-bidi/pull/319)): A
 prototype for safe page-to-client communication. This one took ~4 months from
-first draft to merge -- the longest-lived PR I had.
+first draft to merge – the longest-lived PR I had.
 
 **`browsingContext.reload`**
 ([#654](https://github.com/GoogleChromeLabs/chromium-bidi/pull/654)): Including
@@ -171,7 +171,7 @@ My takeaway: networking is _flaky_.
 
 All five BiDi network interception commands, fully implemented. The
 `continueResponse` PR alone went through 35 rounds of review. This was
-painstaking, detail-oriented work -- matching the spec precisely while dealing
+painstaking, detail-oriented work – matching the spec precisely while dealing
 with CDP's quirks underneath.
 
 Again, this was before LLMs (how many times did I already mention that?). It
@@ -202,7 +202,7 @@ testing ([#1521](https://github.com/GoogleChromeLabs/chromium-bidi/pull/1521)).
 
 One PR worth calling out:
 [#1110](https://github.com/GoogleChromeLabs/chromium-bidi/pull/1110)
-(+2586/-2385). This reorganized all E2E tests by domain -- the largest single
+(+2586/-2385). This reorganized all E2E tests by domain – the largest single
 diff I landed. Not fancy but necessary. A well-organized test suite is how you
 keep a project maintainable as it grows.
 

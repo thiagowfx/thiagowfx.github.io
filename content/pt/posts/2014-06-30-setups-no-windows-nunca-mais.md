@@ -16,4 +16,4 @@ Motivado por isso, criei um repositório com o sugestivo nome de [windows-setups
 
 Naturalmente isso se limita, *a priori*, somente aos pacotes na galeria/catálogo do chocolatey. Se o pacote que você quiser não estiver lá, você terá que adicioná-lo sozinho, ou instalá-lo manualmente, o que for preferível. Além do mais, só estão lá os programas cujas licenças admitem que eles sejam redistribuídos (você não vai encontrar o Microsoft Office lá, por exemplo).
 
-**Update (2014-07-07):** esse método provavelmente não instala bloatware -- por exemplo, as diversas barras de ferramentas ou outros plug-ins para seus web browsers. No entanto, a melhor forma de comprovar isso é ou analisando o código-fonte do pacote ou instalando-o.
+**Update (2014-07-07):** esse método provavelmente não instala bloatware – por exemplo, as diversas barras de ferramentas ou outros plug-ins para seus web browsers. No entanto, a melhor forma de comprovar isso é ou analisando o código-fonte do pacote ou instalando-o.

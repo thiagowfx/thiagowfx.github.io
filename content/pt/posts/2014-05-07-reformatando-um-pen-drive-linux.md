@@ -38,7 +38,7 @@ que eu vou listar a seguir através de um programa com interface gráfica
 forma que vai sempre funcionar, e que é confiável (talvez não seja
 necessariamente fácil, mas isso é outra história).
 
-**Etapas -- atenção! Recomendo que leia tudo antes de testar em seu próprio
+**Etapas – atenção! Recomendo que leia tudo antes de testar em seu próprio
 dispositivo. Se você utilizar esses documentos no disco errado, vai perder os
 arquivos desse disco. Apenas atenção!:**
 
