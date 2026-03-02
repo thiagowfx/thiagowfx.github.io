@@ -11,7 +11,7 @@ Desired outcome:
 ──────────────────────────────────────────────────────────
 ❯
 ──────────────────────────────────────────────────────────
-  .dotfiles (git:master*) [Opus 4.6] $0.00 sid:9afc33ee-610d-47cc-8bde-1a52d1b22832
+  .dotfiles (git:master*) [Opus 4.6] [█░░░░] $0.00 sid:9afc33ee-610d-47cc-8bde-1a52d1b22832
 ```
 
 The status bar displays the current:
@@ -19,6 +19,7 @@ The status bar displays the current:
 - git repository we're on
 - git branch
 - model name
+- context window usage (%)
 - session cost (in USD)
 - session ID
 
