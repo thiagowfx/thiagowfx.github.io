@@ -1,8 +1,8 @@
 
 [`fpp`](https://github.com/facebook/PathPicker):
 
-> PathPicker accepts a wide range of input -- output from git commands, grep
-> results, searches -- pretty much anything. After parsing the input, PathPicker
+> PathPicker accepts a wide range of input – output from git commands, grep
+> results, searches – pretty much anything. After parsing the input, PathPicker
 > presents you with a nice UI to select which files you're interested in. After
 > that you can open them in your favorite editor or execute arbitrary commands.
 

@@ -1,6 +1,6 @@
 
 So, recently I've been heavily playing with Emacs (24, please) – at least at
-the customization level --, tayloring and customizing it to my needs. You can
+the customization level –, tayloring and customizing it to my needs. You can
 find my .emacs startup file
 [on GitHub](https://github.com/thiagowfx/dotfiles/blob/master/.emacs). **Nowadays**
 it is well documented – it used to be so messy.
