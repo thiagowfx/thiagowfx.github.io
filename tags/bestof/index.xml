@@ -1,6 +1,233 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bestof on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Bestof on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2013 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 02 Mar 2026 12:02:41 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>★ cco: claude condom (sandbox)</title><link>https://perrotta.dev/2026/02/cco-claude-condom-sandbox/</link><pubDate>Thu, 26 Feb 2026 13:17:26 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><category>security</category><guid>https://perrotta.dev/2026/02/cco-claude-condom-sandbox/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: &lt;code&gt;claude --dangerously-skip-permissions&lt;/code&gt; (&amp;ldquo;YOLO mode&amp;rdquo;) is
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 02 Mar 2026 12:44:02 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/bestof/index.xml" rel="self" type="application/rss+xml"/><item><title>★ claude: add session ID to status bar</title><link>https://perrotta.dev/2026/03/claude-add-session-id-to-status-bar/</link><pubDate>Mon, 02 Mar 2026 11:18:19 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><guid>https://perrotta.dev/2026/03/claude-add-session-id-to-status-bar/</guid><description>&lt;p&gt;Desired outcome:&lt;/p&gt;
+&lt;div class="codeblock"&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;❯ claude
+
+ ▐▛███▜▌ Claude Code v2.1.63
+▝▜█████▛▘ Opus 4.6 · Claude Team
+ ▘▘ ▝▝ ~/.dotfiles
+
+──────────────────────────────────────────────────────────
+❯
+──────────────────────────────────────────────────────────
+ .dotfiles (git:master*) [Opus 4.6] $0.00 sid:9afc33ee-610d-47cc-8bde-1a52d1b22832&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The status bar displays the current:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;git repository we&amp;rsquo;re on&lt;/li&gt;
+&lt;li&gt;git branch&lt;/li&gt;
+&lt;li&gt;model name&lt;/li&gt;
+&lt;li&gt;session cost (in USD)&lt;/li&gt;
+&lt;li&gt;session ID&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I recently added the last two items, and the post title reflects that.&lt;/p&gt;
+&lt;p&gt;The session cost is helpful as a pat on the shoulder to remind you of how
+expensive Anthropic models are. If you want to put a cap on the session,
+&lt;code&gt;--max-budget-usd&lt;/code&gt; could be helpful:&lt;/p&gt;
+&lt;div class="codeblock"&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;--max-budget-usd &amp;lt;amount&amp;gt;		Maximum dollar amount to spend on API calls (only works with --print)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The session ID is, by itself, useless. It is just a boring UUID, auto-generated
+whenever a new session is started.&lt;/p&gt;
+&lt;p&gt;That said, the session ID can become powerful when you start to treat sessions
+as first-class citizens (e.g. like how &lt;a href="https://ampcode.com/"&gt;Amp Code&lt;/a&gt; does to
+threads).&lt;/p&gt;
+&lt;h2 id="use-cases"&gt;Use cases&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Use case #1&lt;/strong&gt;: resume a previous session.&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;claude [-r | --resume] &amp;lt;uuid&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="codeblock"&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;-r, --resume [value]		Resume a conversation by session ID, or open interactive picker with optional search term&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;This is useful whenever you know in advance you&amp;rsquo;ll need to close your terminal
+(e.g. to restart your computer for system upgrades).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Use case #2&lt;/strong&gt;: multiple divergent explorations.&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;claude --fork-session [-r | --resume | -c | --continue] &amp;lt;uuid&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="codeblock"&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;--fork-session				 When resuming, create a new session ID instead of reusing the original (use with --resume or --continue)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Whenever you reach a point of ambiguity when vibe coding, you may want to
+explore multiple paths. &lt;code&gt;--fork-session&lt;/code&gt; creates new sessions from an existing
+context window (session ID), allowing you to preserve your original session
+context.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Use case #3&lt;/strong&gt;: refer to other sessions.&lt;/p&gt;
+&lt;p&gt;Sample prompt:&lt;/p&gt;
+&lt;div class="codeblock"&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;let&amp;#39;s continue work from sid:484b8360-b5ee-4a47-9137-f45c00ff2dc0
+
+this foo path is too slow, make it faster by activating the infinite
+improbability module&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id="the-config"&gt;The config&lt;/h2&gt;
+&lt;p&gt;The resulting diff:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="diff"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;diff&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-diff"&gt;thiago.perrotta ~/.dotfiles git:master
+❯ git --no-pager show 0f94082
+commit 0f9408223c60dcda980c18787d3d0c1519428c30
+Author: Thiago Perrotta &amp;lt;{redacted}&amp;gt;
+Date: Fri Feb 27 16:56:57 2026 &amp;#43;0100
+
+ claude: status bar: add session ID, add cost
+
+diff --git claude/.claude/statusline.sh claude/.claude/statusline.sh
+old mode 100644
+new mode 100755
+index 785b5f3..f43527a
+--- claude/.claude/statusline.sh
+&amp;#43;&amp;#43;&amp;#43; claude/.claude/statusline.sh
+@@ -5,8 &amp;#43;5,10 @@ input=$(cat)
+
+ # Extract information from JSON
+ model_name=$(echo &amp;#34;$input&amp;#34; | jq -r &amp;#39;.model.display_name&amp;#39;)
+&amp;#43;session_id=$(echo &amp;#34;$input&amp;#34; | jq -r &amp;#39;.session_id&amp;#39;)
+ current_dir=$(echo &amp;#34;$input&amp;#34; | jq -r &amp;#39;.workspace.current_dir&amp;#39;)
+ output_style=$(echo &amp;#34;$input&amp;#34; | jq -r &amp;#39;.output_style.name&amp;#39;)
+&amp;#43;cost=$(echo &amp;#34;$input&amp;#34; | jq -r &amp;#39;.cost.total_cost_usd&amp;#39;)
+
+ # Get current working directory basename
+ dir_name=$(basename &amp;#34;$current_dir&amp;#34;)
+@@ -87,5 &amp;#43;89,15 @@ if [[ -n &amp;#34;$context_info&amp;#34; ]]; then
+ status_parts&amp;#43;=(&amp;#34;$context_info&amp;#34;)
+ fi
+
+&amp;#43;# Add cost
+&amp;#43;if [[ -n &amp;#34;$cost&amp;#34; &amp;amp;&amp;amp; &amp;#34;$cost&amp;#34; != &amp;#34;null&amp;#34; ]]; then
+&amp;#43; status_parts&amp;#43;=(&amp;#34;$(printf &amp;#39;$%.2f&amp;#39; &amp;#34;$cost&amp;#34;)&amp;#34;)
+&amp;#43;fi
+&amp;#43;
+&amp;#43;# Add session ID
+&amp;#43;if [[ -n &amp;#34;$session_id&amp;#34; &amp;amp;&amp;amp; &amp;#34;$session_id&amp;#34; != &amp;#34;null&amp;#34; ]]; then
+&amp;#43; status_parts&amp;#43;=(&amp;#34;sid:$session_id&amp;#34;)
+&amp;#43;fi
+&amp;#43;
+ # Join parts with spaces and print
+ printf &amp;#34;%s&amp;#34; &amp;#34;$(IFS=&amp;#39; &amp;#39;; echo &amp;#34;${status_parts[*]}&amp;#34;)&amp;#34;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The full &lt;a href="https://github.com/thiagowfx/.dotfiles/blob/b44959f6d0b916d983d2970528c6aa67288b9f45/claude/.claude/statusline.sh"&gt;status line
+config&lt;/a&gt;.
+I&amp;rsquo;ll inline it here for completeness:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;#!/bin/bash
+
+# Read JSON input from stdin
+input=$(cat)
+
+# Extract information from JSON
+model_name=$(echo &amp;#34;$input&amp;#34; | jq -r &amp;#39;.model.display_name&amp;#39;)
+session_id=$(echo &amp;#34;$input&amp;#34; | jq -r &amp;#39;.session_id&amp;#39;)
+current_dir=$(echo &amp;#34;$input&amp;#34; | jq -r &amp;#39;.workspace.current_dir&amp;#39;)
+output_style=$(echo &amp;#34;$input&amp;#34; | jq -r &amp;#39;.output_style.name&amp;#39;)
+cost=$(echo &amp;#34;$input&amp;#34; | jq -r &amp;#39;.cost.total_cost_usd&amp;#39;)
+
+# Get current working directory basename
+dir_name=$(basename &amp;#34;$current_dir&amp;#34;)
+
+# Get git information if in a git repository
+git_info=&amp;#34;&amp;#34;
+if git rev-parse --git-dir &amp;gt; /dev/null 2&amp;gt;&amp;amp;1; then
+ branch=$(git branch --show-current 2&amp;gt;/dev/null)
+ if [[ -n &amp;#34;$branch&amp;#34; ]]; then
+ # Check for uncommitted changes
+ if ! git diff --quiet 2&amp;gt;/dev/null || ! git diff --cached --quiet 2&amp;gt;/dev/null; then
+ dirty=&amp;#34;*&amp;#34;
+ else
+ dirty=&amp;#34;&amp;#34;
+ fi
+
+ # Check if in a linked worktree (not the main worktree)
+ worktree_info=&amp;#34;&amp;#34;
+ git_dir=$(cd &amp;#34;$(git rev-parse --git-dir 2&amp;gt;/dev/null)&amp;#34; &amp;amp;&amp;amp; pwd)
+ git_common_dir=$(cd &amp;#34;$(git rev-parse --git-common-dir 2&amp;gt;/dev/null)&amp;#34; &amp;amp;&amp;amp; pwd)
+ if [[ &amp;#34;$git_dir&amp;#34; != &amp;#34;$git_common_dir&amp;#34; ]]; then
+ # We&amp;#39;re in a linked worktree - show its name
+ worktree_path=$(git rev-parse --show-toplevel 2&amp;gt;/dev/null)
+ worktree_name=$(basename &amp;#34;$worktree_path&amp;#34;)
+ worktree_info=&amp;#34; ⎇ $worktree_name&amp;#34;
+ fi
+
+ git_info=&amp;#34;(git:$branch$worktree_info$dirty)&amp;#34;
+ fi
+fi
+
+# Calculate context window usage (relative to auto-compact threshold ~80%)
+context_info=&amp;#34;&amp;#34;
+usage=$(echo &amp;#34;$input&amp;#34; | jq &amp;#39;.context_window.current_usage&amp;#39;)
+if [ &amp;#34;$usage&amp;#34; != &amp;#34;null&amp;#34; ]; then
+ # Include output_tokens for accurate context measurement
+ current=$(echo &amp;#34;$usage&amp;#34; | jq &amp;#39;.input_tokens &amp;#43; .output_tokens &amp;#43; .cache_creation_input_tokens &amp;#43; .cache_read_input_tokens&amp;#39;)
+ size=$(echo &amp;#34;$input&amp;#34; | jq &amp;#39;.context_window.context_window_size&amp;#39;)
+
+ # Auto-compact triggers at ~80% of context window
+ compact_threshold=$((size * 80 / 100))
+
+ # Calculate percentage toward auto-compact (capped at 100%)
+ pct=$((current * 100 / compact_threshold))
+ if [ &amp;#34;$pct&amp;#34; -gt 100 ]; then pct=100; fi
+
+ # Create progress bar (5 characters wide)
+ filled=$((pct / 20))
+ empty=$((5 - filled))
+ bar=&amp;#34;&amp;#34;
+ for ((i=0; i&amp;lt;filled; i&amp;#43;&amp;#43;)); do bar&amp;#43;=&amp;#34;█&amp;#34;; done
+ for ((i=0; i&amp;lt;empty; i&amp;#43;&amp;#43;)); do bar&amp;#43;=&amp;#34;░&amp;#34;; done
+
+ context_info=&amp;#34;[${bar}]&amp;#34;
+fi
+
+# Build status line
+status_parts=()
+
+# Add current directory
+status_parts&amp;#43;=(&amp;#34;$dir_name&amp;#34;)
+
+# Add git info if available
+if [[ -n &amp;#34;$git_info&amp;#34; ]]; then
+ status_parts&amp;#43;=(&amp;#34;$git_info&amp;#34;)
+fi
+
+# Add model name
+status_parts&amp;#43;=(&amp;#34;[$model_name]&amp;#34;)
+
+# Add output style if not default
+if [[ &amp;#34;$output_style&amp;#34; != &amp;#34;default&amp;#34; &amp;amp;&amp;amp; &amp;#34;$output_style&amp;#34; != &amp;#34;null&amp;#34; ]]; then
+ status_parts&amp;#43;=(&amp;#34;{$output_style}&amp;#34;)
+fi
+
+# Add context usage if available
+if [[ -n &amp;#34;$context_info&amp;#34; ]]; then
+ status_parts&amp;#43;=(&amp;#34;$context_info&amp;#34;)
+fi
+
+# Add cost
+if [[ -n &amp;#34;$cost&amp;#34; &amp;amp;&amp;amp; &amp;#34;$cost&amp;#34; != &amp;#34;null&amp;#34; ]]; then
+ status_parts&amp;#43;=(&amp;#34;$(printf &amp;#39;$%.2f&amp;#39; &amp;#34;$cost&amp;#34;)&amp;#34;)
+fi
+
+# Add session ID
+if [[ -n &amp;#34;$session_id&amp;#34; &amp;amp;&amp;amp; &amp;#34;$session_id&amp;#34; != &amp;#34;null&amp;#34; ]]; then
+ status_parts&amp;#43;=(&amp;#34;sid:$session_id&amp;#34;)
+fi
+
+# Join parts with spaces and print
+printf &amp;#34;%s&amp;#34; &amp;#34;$(IFS=&amp;#39; &amp;#39;; echo &amp;#34;${status_parts[*]}&amp;#34;)&amp;#34;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: claude: add session ID to status bar"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;</description></item><item><title>★ cco: claude condom (sandbox)</title><link>https://perrotta.dev/2026/02/cco-claude-condom-sandbox/</link><pubDate>Thu, 26 Feb 2026 13:17:26 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><category>security</category><guid>https://perrotta.dev/2026/02/cco-claude-condom-sandbox/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: &lt;code&gt;claude --dangerously-skip-permissions&lt;/code&gt; (&amp;ldquo;YOLO mode&amp;rdquo;) is
 fast but risky. Introduce a lightweight filesystem-level sandbox. Networking is
 explicitly out of scope at this time.&lt;/p&gt;
 &lt;p&gt;Recently I &lt;a href="https://perrotta.dev/2026/02/new-apkbuild-llm-edition/"&gt;aliased&lt;/a&gt; it to
@@ -3226,39 +3453,4 @@ All operations completed successfully!&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;Standard Unix tools (&lt;code&gt;pgrep&lt;/code&gt;, &lt;code&gt;pkill&lt;/code&gt;)&lt;/li&gt;
 &lt;li&gt;1Password app (macOS) if using the &lt;code&gt;--restart-1password&lt;/code&gt; flag&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: New script: SSH mux restart"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/ssh/"&gt;#ssh&lt;/a&gt;&lt;/p&gt;</description></item><item><title>★ The Apple Store</title><link>https://perrotta.dev/2025/10/the-apple-store/</link><pubDate>Sat, 18 Oct 2025 12:49:20 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>bestof</category><category>dev</category><category>serenity</category><guid>https://perrotta.dev/2025/10/the-apple-store/</guid><description>&lt;p&gt;After owning an iPhone 14 Pro for more than two and a half years, its maximum
-battery capacity degraded to &lt;strong&gt;~76%&lt;/strong&gt;. It is not a terrible number, but the
-general recommendation is to take action whenever it goes below &lt;strong&gt;80%&lt;/strong&gt;, which
-happened a couple of months ago.&lt;/p&gt;
-&lt;p&gt;In this state I am forced to carry a portable charger wherever I go if I want
-to keep my peace of mind and eliminate &amp;ldquo;battery anxiety&amp;rdquo;.&lt;/p&gt;
-&lt;p&gt;The natural course of action for many at this point would be to simply buy the
-newest and shiniest iPhone.&lt;/p&gt;
-&lt;p&gt;Yet, I love to fight against &lt;a href="https://en.wikipedia.org/wiki/Planned_obsolescence"&gt;planned
-obsolescence&lt;/a&gt;, and will
-happily do what I can, even if it yields a bit of friction.&lt;/p&gt;
-&lt;p&gt;One of my favorite aspects of being an iPhone user is the ability to get superb
-support from Apple&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2025/10/the-apple-store/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;. In particular, they have a &lt;a href="https://support.apple.com/iphone/repair/battery-replacement"&gt;battery
-replacement&lt;/a&gt;
-program.&lt;/p&gt;
-&lt;p&gt;All you have to do is:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://getsupport.apple.com/?caller=sfaq&amp;amp;SG=SG003&amp;amp;category_id=SC0999&amp;amp;symptom_id=99911"&gt;schedule an appointment&lt;/a&gt; in the Genius Bar,&lt;/li&gt;
-&lt;li&gt;bring your iPhone there,&lt;/li&gt;
-&lt;li&gt;and then retrieve it a couple of hours later&lt;sup id="fnref:2"&gt;&lt;a href="https://perrotta.dev/2025/10/the-apple-store/#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt; (&amp;ldquo;same day service&amp;rdquo;).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Is it cost effective? Hell yes. I paid about 10% of the original purchase
-price, and it&amp;rsquo;s like I just got a brand new iPhone.&lt;/p&gt;
-&lt;div class="footnotes" role="doc-endnotes"&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id="fn:1"&gt;
-&lt;p&gt;But only if I am &lt;del&gt;privileged&lt;/del&gt; lucky enough to live in a city that has
-one.&amp;#160;&lt;a href="https://perrotta.dev/2025/10/the-apple-store/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li id="fn:2"&gt;
-&lt;p&gt;In my case, 3 hours.&amp;#160;&lt;a href="https://perrotta.dev/2025/10/the-apple-store/#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: The Apple Store"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: New script: SSH mux restart"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/ssh/"&gt;#ssh&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
