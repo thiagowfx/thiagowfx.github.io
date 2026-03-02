@@ -43,7 +43,11 @@ def replace_dashes(content):
             continue
 
         if not in_frontmatter and not in_code_block:
-            line = re.sub(r' -- ', ' – ', line)
+            # Replace ' -- ' only outside inline code spans.
+            parts = line.split('`')
+            for i in range(0, len(parts), 2):
+                parts[i] = re.sub(r' --(?=[ ,;.!?)])', ' –', parts[i])
+            line = '`'.join(parts)
 
         result.append(line)
 
