@@ -126,7 +126,7 @@ smartphone... ¬¬
 
 Bom, ficamos no top 5 da nossa sede, dentre 20 times. Falando em 3G... (para bom
 entendedor,) sem comentários! OK, agora eu realmente vou parar por aqui. Não
-falei tudo o que eu queria (ou podia) -- é claro --, mas falei boa parte disso.
+falei tudo o que eu queria (ou podia) – é claro –, mas falei boa parte disso.
 Resolvi não dividir esse post em Parte I e II porque não sei se vou postar uma
 continuação dele. Incerto. Como foi a decisão de fazer a prova esse ano, pelo
 menos no início do ano. Isso pelo menos para a Maratona desse ano...na do ano
