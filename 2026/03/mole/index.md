@@ -5,6 +5,6 @@ https://github.com/tw93/Mole:
 
 This is what I had envisioned [`cache_prune`](https://github.com/thiagowfx/pancake/commit/9c2dfbbd3b77117a1dc4507dae0d9235f528652e) to become.
 
-I deleted by vibe-coded script. `mole` does much more and seems to be
+I deleted my vibe-coded script. `mole` does much more and seems to be
 well-maintained.
 
