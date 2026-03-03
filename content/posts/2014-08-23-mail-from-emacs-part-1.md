@@ -38,7 +38,7 @@ out. No strings attached, not a single reason to do them. This is divided in (at
 least, I hope) two parts. This one is only a 'Hello World' kind of setup. I
 don't know yet how to operate Gnus properly (beyond its basics), so if you only
 want the technical details, go away – nah, just wait for the next post.
-[EmacsWiki](<http://www.emacswiki.org/emacs/GnusGmail>) had all the information
+[EmacsWiki](http://www.emacswiki.org/emacs/GnusGmail) had all the information
 I needed to setup Gnus from Gmail. Seriously, I don't need to duplicate
 everything here, just follow it. Briefly, you just have to create a
 `$HOME/.gnus` file for the configuration of Gnus (the mail client (embedded)
