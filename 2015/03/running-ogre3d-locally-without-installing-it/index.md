@@ -4,7 +4,7 @@ example from the [Ogre3d wiki](http://www.ogre3d.org/tikiwiki/tiki-index.php)
 without installing [ogre](http://www.ogre3d.org/) in the system. For that, I'll
 assume you're using an Unix system. First things first: grab the latest ogre
 version. At the time of this post, it is the 1.9 release, and you can find its
-repository [on Bitbucket](<https://bitbucket.org/sinbad/ogre/downloads>).
+repository [on Bitbucket](https://bitbucket.org/sinbad/ogre/downloads).
 **Note:** you want to download the 1.9 version using the tag download feature
 from Bitbucket; **do not** simply download the master branch. After that,
 extract it, create a build directory inside its directory, cd into it, and do a
