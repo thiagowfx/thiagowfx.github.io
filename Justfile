@@ -52,7 +52,7 @@ new *args:
     filename=$(echo "${title}" | tr '[:upper:]' '[:lower:]' | sed -e 's/[,:/]/-/g' | tr -s ' ' | tr ' ' '-' | tr -s '-')
     filepath="content/posts/$(date "+%Y-%m-%d")-${filename}.md"
     hugo new --kind blog "${filepath}"
-    {{ editor }} "${filepath}"
+    [ -t 0 ] && {{ editor }} "${filepath}" || echo "${filepath}"
 
 alias blog := new
 
@@ -105,7 +105,7 @@ code *args:
         fi
     fi
 
-    {{ editor }} '+/^```/' "${filepath}"
+    [ -t 0 ] && {{ editor }} '+/^```/' "${filepath}" || echo "${filepath}"
 
 alias coding := code
 
@@ -133,7 +133,11 @@ commentary url *args:
     filepath="content/posts/`date "+%Y-%m-%d"`-${filename}.md"
 
     HUGO_TITLE="Reply to: ${title}" HUGO_EXTERNAL_LINK="{{ url }}" hugo new --kind commentary "${filepath}"
-    {{ editor }} "${filepath}"
+    if [ -t 0 ]; then
+        {{ editor }} "${filepath}"
+    else
+        echo "${filepath}"
+    fi
 
     # Rename file based on the actual title from frontmatter (strip "Reply to: " prefix for filename)
     actual_title=$(sed -n 's/^title: "\(.*\)"$/\1/p' "${filepath}" | head -1)
@@ -160,6 +164,11 @@ edit *args:
         finder="fd --extension md . content/posts"
     else
         finder="find content/posts -name *.md"
+    fi
+
+    if ! [ -t 0 ]; then
+        echo "edit requires an interactive terminal" >&2
+        exit 1
     fi
 
     if [ -z "{{ args }}" ]; then
@@ -209,7 +218,7 @@ last:
       echo "No posts found in content/posts/"
       exit 1
     fi
-    {{ editor }} "$latest"
+    [ -t 0 ] && {{ editor }} "$latest" || echo "$latest"
 
 [doc('Create a lazy git commit and push')]
 [group('publish')]
