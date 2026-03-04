@@ -7,7 +7,7 @@ approach than telling them to do those fixes themselves. Win-win.
 
 ```
 CR thiagowfx to knuth: the literary programming technique is great but could you
-try to be more succinct?
+try to be succinct?
 [...]
 <code code code>
 [...]
