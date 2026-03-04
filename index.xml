@@ -1,6 +1,144 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2013 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Mole</title><link>https://perrotta.dev/2026/03/mole/</link><pubDate>Tue, 03 Mar 2026 12:44:22 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>macos</category><guid>https://perrotta.dev/2026/03/mole/</guid><description>&lt;p&gt;&lt;a href="https://github.com/tw93/Mole"&gt;https://github.com/tw93/Mole&lt;/a&gt;:&lt;/p&gt;
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><atom:link href="https://perrotta.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>claude: srt: sandbox runtime</title><link>https://perrotta.dev/2026/03/claude-srt-sandbox-runtime/</link><pubDate>Wed, 04 Mar 2026 12:27:42 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>security</category><guid>https://perrotta.dev/2026/03/claude-srt-sandbox-runtime/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2026/02/cco-claude-condom-sandbox/"&gt;Previously: &lt;code&gt;cco&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;cco&lt;/code&gt; handles filesystem isolation but not networking — &lt;code&gt;srt&lt;/code&gt; adds network
+isolation.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Disclaimer&lt;/strong&gt;: This post was adapted from a slides presentation I recently
+created for an AI hackathon. Its prose resembles a quick-reference manual.&lt;/p&gt;
+&lt;h2 id="srt-sandbox-runtime"&gt;&lt;code&gt;srt&lt;/code&gt;: sandbox-runtime&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/anthropic-experimental/sandbox-runtime"&gt;&lt;code&gt;srt&lt;/code&gt;&lt;/a&gt; is
+Anthropic&amp;rsquo;s open-source sandbox runtime. It is process agnostic and it uses
+OS-native primitives —
+&lt;a href="https://www.chromium.org/developers/design-documents/sandbox/osx-sandboxing-design/"&gt;Seatbelt&lt;/a&gt;
+on macOS, &lt;a href="https://github.com/containers/bubblewrap"&gt;bubblewrap&lt;/a&gt; on Linux — no
+container overhead, just like &lt;code&gt;cco&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Run a command inside the sandbox (&amp;ldquo;hello world&amp;rdquo;):&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% npx @anthropic-ai/sandbox-runtime &amp;lt;command&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Or you might as well install it so that it is easily invokable as &lt;code&gt;srt&lt;/code&gt;&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2026/03/claude-srt-sandbox-runtime/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% npm install -g @anthropic-ai/sandbox-runtime&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;-g&lt;/code&gt; is for global (=not local).&lt;/p&gt;
+&lt;p&gt;Network restrictions in action:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% srt &amp;#34;curl anthropic.com&amp;#34;
+&amp;lt;html&amp;gt;...&amp;lt;/html&amp;gt; # allowed
+
+% srt &amp;#34;curl example.com&amp;#34;
+Connection blocked by network allowlist # blocked&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Filesystem restrictions in action:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% srt &amp;#34;cat README.md&amp;#34;
+# Anthropic Sandb... # current dir allowed
+
+% srt &amp;#34;cat ~/.ssh/id_rsa&amp;#34;
+cat: Operation not permitted # blocked&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The sandbox configuration lives globally in &lt;code&gt;~/.srt-settings.json&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="json"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-json"&gt;{
+ &amp;#34;network&amp;#34;: {
+ &amp;#34;allowedDomains&amp;#34;: [&amp;#34;github.com&amp;#34;, &amp;#34;registry.npmjs.org&amp;#34;],
+ &amp;#34;deniedDomains&amp;#34;: []
+ },
+ &amp;#34;filesystem&amp;#34;: {
+ &amp;#34;denyRead&amp;#34;: [&amp;#34;~/.ssh&amp;#34;, &amp;#34;~/.aws/credentials&amp;#34;],
+ &amp;#34;allowWrite&amp;#34;: [&amp;#34;.&amp;#34;],
+ &amp;#34;denyWrite&amp;#34;: [&amp;#34;.env&amp;#34;, &amp;#34;config/production.json&amp;#34;]
+ }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;It is secure by default — everything is blocked unless explicitly allowed.
+Separate controls for filesystem reads, writes, and network domains.&lt;/p&gt;
+&lt;h2 id="native-sandbox"&gt;native &lt;code&gt;/sandbox&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;Since &lt;a href="https://code.claude.com/docs/en/sandboxing"&gt;v1.0.29&lt;/a&gt;, Claude Code ships
+with native sandboxing — powered by &lt;code&gt;srt&lt;/code&gt; under the hood. Enable it with the
+&lt;code&gt;/sandbox&lt;/code&gt; command. Zero setup on macOS.&lt;/p&gt;
+&lt;p&gt;Two modes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Auto-allow&lt;/strong&gt;: sandboxed commands run without prompts; unsandboxable commands
+fall back to the regular permission flow.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Regular&lt;/strong&gt;: all commands still require approval, but sandbox boundaries are
+enforced. The most &lt;strong&gt;strict&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In the first mode, you will see the following pattern quite often:&lt;/p&gt;
+&lt;div class="codeblock"&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;⏺ Bash(gh api user --jq .login)
+ ⎿ Error: Exit code 71
+ sandbox-exec: sandbox_apply: Operation not permitted
+
+ sandbox-exec: sandbox_apply: Operation not permitted
+
+⏺ Sandbox restriction on gh. Let me retry outside the sandbox.
+
+⏺ Bash(gh api user --jq .login)
+ ⎿ thiagowfx&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Anthropic reports ~84% fewer permission prompts with auto-allow mode.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;~/.claude/settings.json&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="json"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-json"&gt;{
+ &amp;#34;sandbox&amp;#34;: {
+ &amp;#34;enabled&amp;#34;: true,
+ &amp;#34;autoAllowBashIfSandboxed&amp;#34;: true,
+ &amp;#34;allowUnsandboxedCommands&amp;#34;: true,
+ &amp;#34;allowedDomains&amp;#34;: [&amp;#34;registry.npmjs.org&amp;#34;, &amp;#34;api.github.com&amp;#34;],
+ &amp;#34;excludedCommands&amp;#34;: [&amp;#34;docker&amp;#34;],
+ &amp;#34;filesystem&amp;#34;: {
+ &amp;#34;allowWrite&amp;#34;: [&amp;#34;~/.kube&amp;#34;, &amp;#34;/tmp/build&amp;#34;, &amp;#34;~/.cache&amp;#34;]
+ }
+ }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;autoAllowBashIfSandboxed&lt;/code&gt; — sandboxed commands run without prompts&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;excludedCommands&lt;/code&gt; — tools that always run outside the sandbox (e.g. Docker)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;allowUnsandboxedCommands&lt;/code&gt; — escape hatch for commands that fail inside the
+sandbox (still requires approval)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;filesystem.allowWrite&lt;/code&gt; — grant subprocess write access to paths outside the
+working directory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;When to use what?&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;cco&lt;/code&gt;&lt;/strong&gt;: quick filesystem-only sandbox, zero config, IDE agnostic&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;srt&lt;/code&gt;&lt;/strong&gt;: standalone sandbox for any process (not only Claude Code) with
+network isolation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;/sandbox&lt;/code&gt;&lt;/strong&gt;: native Claude Code integration, fewest prompts, recommended
+for daily use&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I&amp;rsquo;ve been daily driving &lt;code&gt;cco&lt;/code&gt; + the native &lt;code&gt;/sandbox&lt;/code&gt;. It encompasses the best
+of all worlds.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;&lt;code&gt;srt&lt;/code&gt; reminds me of the popular subtitles extension format for videos.
+Also, I constantly makee typos by typing &lt;code&gt;str&lt;/code&gt; instead.&amp;#160;&lt;a href="https://perrotta.dev/2026/03/claude-srt-sandbox-runtime/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: claude: srt: sandbox runtime"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/security/"&gt;#security&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Mole</title><link>https://perrotta.dev/2026/03/mole/</link><pubDate>Tue, 03 Mar 2026 12:44:22 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>macos</category><guid>https://perrotta.dev/2026/03/mole/</guid><description>&lt;p&gt;&lt;a href="https://github.com/tw93/Mole"&gt;https://github.com/tw93/Mole&lt;/a&gt;:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;🐹 Deep clean and optimize your Mac.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -2466,51 +2604,4 @@ I find that watching a movie is way more enjoyable after reading its
 corresponding book.&lt;/p&gt;
 &lt;p&gt;Here is &lt;a href="https://www.youtube.com/watch?v=w6EblErBJqw"&gt;an interview&lt;/a&gt; with Captain
 Sully.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Bravery"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/movies/"&gt;#movies&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;</description></item><item><title>GitHub: approve PRs from CLI</title><link>https://perrotta.dev/2026/02/github-approve-prs-from-cli/</link><pubDate>Wed, 04 Feb 2026 11:10:58 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>dev</category><category>git</category><guid>https://perrotta.dev/2026/02/github-approve-prs-from-cli/</guid><description>&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: approve a given github pull request from the CLI.&lt;/p&gt;
-&lt;p&gt;Why?&lt;/p&gt;
-&lt;p&gt;Presumably you would do the PR review outside the GitHub web UI (it&amp;rsquo;s slow,
-eh?). How to do this is out of scope of this post.&lt;/p&gt;
-&lt;p&gt;Let&amp;rsquo;s assume the review is done, and all that is left is to approve the PR.&lt;/p&gt;
-&lt;p&gt;Let&amp;rsquo;s also assume you have a local checkout of the repository, and your CWD is
-set to it.&lt;/p&gt;
-&lt;p&gt;First, check the PR out:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-bash"&gt;thiago.perrotta ~/Corp/terraform git:main
-% gh co
-? Select a pull request [Use arrows to move, type to filter]
-&amp;gt; 509 OPEN Change ai-resources repository visibility to internal [fix/ai-resources-visibility-internal]
-[...]&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Now approve it:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-bash"&gt;thiago.perrotta ~/Corp/terraform git:fix/ai-resources-visibility-internal? #509
-% gh pr review --approve
-✓ Approved pull request corp/terraform#509&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;It&amp;rsquo;s possible to approve the PR without checking it out:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-bash"&gt;% gh pr review -h
-Add a review to a pull request.
-
-Without an argument, the pull request that belongs to the current branch is reviewed.
-
-
-USAGE
- gh pr review [&amp;lt;number&amp;gt; | &amp;lt;url&amp;gt; | &amp;lt;branch&amp;gt;] [flags]&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div class="codeblock" data-lang="shell"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-bash"&gt;% gh pr review 509 --approve&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: GitHub: approve PRs from CLI"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/git/"&gt;#git&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Bravery"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/movies/"&gt;#movies&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/serenity/"&gt;#serenity&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,6 +1,144 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ai on ¬ just serendipity 🍀</title><link>https://perrotta.dev/</link><description>Recent content in Ai on ¬ just serendipity 🍀</description><generator>Hugo</generator><language>en</language><managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor><webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster><copyright>© 2013 - 2026 Thiago Perrotta ·
 [some rights reserved](https://creativecommons.org/licenses/by-nc-sa/4.0/) ·
-a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Mon, 02 Mar 2026 15:47:41 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>★ claude: add session ID to status bar</title><link>https://perrotta.dev/2026/03/claude-add-session-id-to-status-bar/</link><pubDate>Mon, 02 Mar 2026 11:18:19 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><guid>https://perrotta.dev/2026/03/claude-add-session-id-to-status-bar/</guid><description>&lt;p&gt;Desired outcome:&lt;/p&gt;
+a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)</copyright><lastBuildDate>Wed, 04 Mar 2026 12:27:53 +0100</lastBuildDate><atom:link href="https://perrotta.dev/tags/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>claude: srt: sandbox runtime</title><link>https://perrotta.dev/2026/03/claude-srt-sandbox-runtime/</link><pubDate>Wed, 04 Mar 2026 12:27:42 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>dev</category><category>security</category><guid>https://perrotta.dev/2026/03/claude-srt-sandbox-runtime/</guid><description>&lt;p&gt;&lt;a href="https://perrotta.dev/2026/02/cco-claude-condom-sandbox/"&gt;Previously: &lt;code&gt;cco&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;cco&lt;/code&gt; handles filesystem isolation but not networking — &lt;code&gt;srt&lt;/code&gt; adds network
+isolation.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Disclaimer&lt;/strong&gt;: This post was adapted from a slides presentation I recently
+created for an AI hackathon. Its prose resembles a quick-reference manual.&lt;/p&gt;
+&lt;h2 id="srt-sandbox-runtime"&gt;&lt;code&gt;srt&lt;/code&gt;: sandbox-runtime&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/anthropic-experimental/sandbox-runtime"&gt;&lt;code&gt;srt&lt;/code&gt;&lt;/a&gt; is
+Anthropic&amp;rsquo;s open-source sandbox runtime. It is process agnostic and it uses
+OS-native primitives —
+&lt;a href="https://www.chromium.org/developers/design-documents/sandbox/osx-sandboxing-design/"&gt;Seatbelt&lt;/a&gt;
+on macOS, &lt;a href="https://github.com/containers/bubblewrap"&gt;bubblewrap&lt;/a&gt; on Linux — no
+container overhead, just like &lt;code&gt;cco&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Run a command inside the sandbox (&amp;ldquo;hello world&amp;rdquo;):&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% npx @anthropic-ai/sandbox-runtime &amp;lt;command&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Or you might as well install it so that it is easily invokable as &lt;code&gt;srt&lt;/code&gt;&lt;sup id="fnref:1"&gt;&lt;a href="https://perrotta.dev/2026/03/claude-srt-sandbox-runtime/#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% npm install -g @anthropic-ai/sandbox-runtime&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;-g&lt;/code&gt; is for global (=not local).&lt;/p&gt;
+&lt;p&gt;Network restrictions in action:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% srt &amp;#34;curl anthropic.com&amp;#34;
+&amp;lt;html&amp;gt;...&amp;lt;/html&amp;gt; # allowed
+
+% srt &amp;#34;curl example.com&amp;#34;
+Connection blocked by network allowlist # blocked&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Filesystem restrictions in action:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="shell"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;shell&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-bash"&gt;% srt &amp;#34;cat README.md&amp;#34;
+# Anthropic Sandb... # current dir allowed
+
+% srt &amp;#34;cat ~/.ssh/id_rsa&amp;#34;
+cat: Operation not permitted # blocked&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The sandbox configuration lives globally in &lt;code&gt;~/.srt-settings.json&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="json"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-json"&gt;{
+ &amp;#34;network&amp;#34;: {
+ &amp;#34;allowedDomains&amp;#34;: [&amp;#34;github.com&amp;#34;, &amp;#34;registry.npmjs.org&amp;#34;],
+ &amp;#34;deniedDomains&amp;#34;: []
+ },
+ &amp;#34;filesystem&amp;#34;: {
+ &amp;#34;denyRead&amp;#34;: [&amp;#34;~/.ssh&amp;#34;, &amp;#34;~/.aws/credentials&amp;#34;],
+ &amp;#34;allowWrite&amp;#34;: [&amp;#34;.&amp;#34;],
+ &amp;#34;denyWrite&amp;#34;: [&amp;#34;.env&amp;#34;, &amp;#34;config/production.json&amp;#34;]
+ }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;It is secure by default — everything is blocked unless explicitly allowed.
+Separate controls for filesystem reads, writes, and network domains.&lt;/p&gt;
+&lt;h2 id="native-sandbox"&gt;native &lt;code&gt;/sandbox&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;Since &lt;a href="https://code.claude.com/docs/en/sandboxing"&gt;v1.0.29&lt;/a&gt;, Claude Code ships
+with native sandboxing — powered by &lt;code&gt;srt&lt;/code&gt; under the hood. Enable it with the
+&lt;code&gt;/sandbox&lt;/code&gt; command. Zero setup on macOS.&lt;/p&gt;
+&lt;p&gt;Two modes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Auto-allow&lt;/strong&gt;: sandboxed commands run without prompts; unsandboxable commands
+fall back to the regular permission flow.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Regular&lt;/strong&gt;: all commands still require approval, but sandbox boundaries are
+enforced. The most &lt;strong&gt;strict&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In the first mode, you will see the following pattern quite often:&lt;/p&gt;
+&lt;div class="codeblock"&gt;
+ &lt;pre&gt;&lt;code class="language-plaintext"&gt;⏺ Bash(gh api user --jq .login)
+ ⎿ Error: Exit code 71
+ sandbox-exec: sandbox_apply: Operation not permitted
+
+ sandbox-exec: sandbox_apply: Operation not permitted
+
+⏺ Sandbox restriction on gh. Let me retry outside the sandbox.
+
+⏺ Bash(gh api user --jq .login)
+ ⎿ thiagowfx&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Anthropic reports ~84% fewer permission prompts with auto-allow mode.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;~/.claude/settings.json&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="codeblock" data-lang="json"&gt;
+ &lt;div class="codeblock-header"&gt;
+ &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
+ &lt;/div&gt;
+ &lt;pre&gt;&lt;code class="language-json"&gt;{
+ &amp;#34;sandbox&amp;#34;: {
+ &amp;#34;enabled&amp;#34;: true,
+ &amp;#34;autoAllowBashIfSandboxed&amp;#34;: true,
+ &amp;#34;allowUnsandboxedCommands&amp;#34;: true,
+ &amp;#34;allowedDomains&amp;#34;: [&amp;#34;registry.npmjs.org&amp;#34;, &amp;#34;api.github.com&amp;#34;],
+ &amp;#34;excludedCommands&amp;#34;: [&amp;#34;docker&amp;#34;],
+ &amp;#34;filesystem&amp;#34;: {
+ &amp;#34;allowWrite&amp;#34;: [&amp;#34;~/.kube&amp;#34;, &amp;#34;/tmp/build&amp;#34;, &amp;#34;~/.cache&amp;#34;]
+ }
+ }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;autoAllowBashIfSandboxed&lt;/code&gt; — sandboxed commands run without prompts&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;excludedCommands&lt;/code&gt; — tools that always run outside the sandbox (e.g. Docker)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;allowUnsandboxedCommands&lt;/code&gt; — escape hatch for commands that fail inside the
+sandbox (still requires approval)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;filesystem.allowWrite&lt;/code&gt; — grant subprocess write access to paths outside the
+working directory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;When to use what?&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;cco&lt;/code&gt;&lt;/strong&gt;: quick filesystem-only sandbox, zero config, IDE agnostic&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;srt&lt;/code&gt;&lt;/strong&gt;: standalone sandbox for any process (not only Claude Code) with
+network isolation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;/sandbox&lt;/code&gt;&lt;/strong&gt;: native Claude Code integration, fewest prompts, recommended
+for daily use&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I&amp;rsquo;ve been daily driving &lt;code&gt;cco&lt;/code&gt; + the native &lt;code&gt;/sandbox&lt;/code&gt;. It encompasses the best
+of all worlds.&lt;/p&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;&lt;code&gt;srt&lt;/code&gt; reminds me of the popular subtitles extension format for videos.
+Also, I constantly makee typos by typing &lt;code&gt;str&lt;/code&gt; instead.&amp;#160;&lt;a href="https://perrotta.dev/2026/03/claude-srt-sandbox-runtime/#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: claude: srt: sandbox runtime"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/security/"&gt;#security&lt;/a&gt;&lt;/p&gt;</description></item><item><title>★ claude: add session ID to status bar</title><link>https://perrotta.dev/2026/03/claude-add-session-id-to-status-bar/</link><pubDate>Mon, 02 Mar 2026 11:18:19 +0100</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><guid>https://perrotta.dev/2026/03/claude-add-session-id-to-status-bar/</guid><description>&lt;p&gt;Desired outcome:&lt;/p&gt;
 &lt;div class="codeblock"&gt;
  &lt;pre&gt;&lt;code class="language-plaintext"&gt;❯ claude
 
@@ -2874,121 +3012,4 @@ The branch name should be prefixed by my github username[2] and a slash.
 &lt;p&gt;Perhaps it is even better, as it would work with all CLI agents – not only
 Claude Code. Well, we keep on experimenting.&lt;/p&gt;
 &lt;p&gt;Reusable custom slash commands will be shared in my &lt;a href="https://github.com/thiagowfx/.dotfiles/tree/master/claude/.claude/commands"&gt;.dotfiles&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: claude code: custom commands"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;</description></item><item><title>★ Claude Code: cheatsheet</title><link>https://perrotta.dev/2025/10/claude-code-cheatsheet/</link><pubDate>Wed, 01 Oct 2025 20:03:54 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author><category>ai</category><category>bestof</category><category>dev</category><guid>https://perrotta.dev/2025/10/claude-code-cheatsheet/</guid><description>&lt;p&gt;A brain dump as of Oct 1st, 2025 of my head, all things &lt;a href="https://www.claude.com/product/claude-code"&gt;Claude Code&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id="keyboard-shortcuts"&gt;Keyboard shortcuts&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;Shift+Tab&lt;/code&gt; to cycle through: &amp;ldquo;default&amp;rdquo; -&amp;gt; &amp;ldquo;⏵⏵ accept edits on&amp;rdquo; -&amp;gt; &amp;ldquo;⏸ plan mode on&amp;rdquo;
-— &amp;ldquo;⏵⏵ Accept edits on&amp;rdquo; is a comfortable mode to be on by default, especially
-when paired with git commits as checkpoints.
-— A well-curated tool whitelist (c.f. &lt;code&gt;~/.claude/settings.json&lt;/code&gt;) can further
-enhance this mode.
-— &amp;ldquo;⏵⏵ Accept edits on&amp;rdquo; is not the same as &lt;code&gt;--dangerously-skip-permissions&lt;/code&gt;:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Bypass all permission checks. Recommended only for sandboxes with no internet access.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;Tab&lt;/code&gt; to toggle &amp;ldquo;Thinking on&amp;rdquo; / &amp;ldquo;Thinking off&amp;rdquo;
-— This is a brand new feature in &lt;a href="https://www.anthropic.com/news/enabling-claude-code-to-work-more-autonomously"&gt;Claude Code 2.0&lt;/a&gt;, just released this week.
-Hence I haven&amp;rsquo;t used it so far. Toggling the plan mode is typically enough
-for my needs.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Esc Esc&lt;/code&gt; to clear input / &lt;code&gt;/rewind&lt;/code&gt; to a previous checkpoint
-— I prefer to &amp;ldquo;manually steer / tune&amp;rdquo; the LLM. Learn from past mistakes!&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Ctrl-r&lt;/code&gt; to search previous prompts – similarly to &lt;code&gt;bash&lt;/code&gt; / &lt;code&gt;zsh&lt;/code&gt; shell
-history&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;!&lt;/code&gt; for shell mode e.g. &lt;code&gt;! ls&lt;/code&gt; or &lt;code&gt;! git commit -a -m &amp;quot;msg&amp;quot;&lt;/code&gt;. Good for
-one-offs.
-— Alternatively, simply open a new shell tab / split / window.
-— Alternatively, suspend Claude with &lt;code&gt;Ctrl-z&lt;/code&gt;:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="codeblock"&gt;
- &lt;pre&gt;&lt;code class="language-plaintext"&gt;Claude Code has been suspended. Run `fg` to bring Claude Code back.
-Note: ctrl &amp;#43; z now suspends Claude Code, ctrl &amp;#43; _ undoes input.
-[1] &amp;#43; 78756 suspended (signal) claude&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;/&lt;/code&gt; for commands – TAB completion is available.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;@&lt;/code&gt; for file paths e.g. &lt;code&gt;@README.md&lt;/code&gt; or &lt;code&gt;@.env&lt;/code&gt; – TAB completion is supported
-— Use &lt;code&gt;@&lt;/code&gt; to provide targeted context in prompts, for example: &lt;code&gt;Upgrade @main.go to incorporate logging. Follow a pattern similar to @vendor/main.go. Update @README.md afterwards&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#&lt;/code&gt; to memorize (a.k.a. &amp;ldquo;add to memory&amp;rdquo;)
-— I don&amp;rsquo;t use this shortcut much. Instead, prefer editing &lt;code&gt;CLAUDE.md&lt;/code&gt; directly
-for pristine, per-repo settings. This is comparable to having a local, per
-git repo &lt;code&gt;.gitignore&lt;/code&gt; versus a &lt;code&gt;~/.gitignore_global&lt;/code&gt; that affects all
-repositories.
-— Project memory lives in &lt;code&gt;CLAUDE.md&lt;/code&gt;, user memory lives in
-&lt;code&gt;~/.claude/CLAUDE.md&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Ctrl-o&lt;/code&gt; for verbose output&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Ctrl-t&lt;/code&gt; to show TODOs&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Shift+Enter&lt;/code&gt; for newline (&lt;code&gt;\n&lt;/code&gt;); pre-requisite: &lt;code&gt;/terminal-setup&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Emacs / readline keybindings generally work for text navigation: &lt;code&gt;C-a&lt;/code&gt;, &lt;code&gt;C-e&lt;/code&gt;,
-&lt;code&gt;C-b&lt;/code&gt;, &lt;code&gt;C-f&lt;/code&gt;, &lt;code&gt;C-u&lt;/code&gt;, &lt;code&gt;C-p&lt;/code&gt;, &lt;code&gt;C-n&lt;/code&gt;, &lt;code&gt;C-w&lt;/code&gt;. There&amp;rsquo;s also a vim mode that can be
-toggled with &lt;code&gt;/vim&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Gripe&lt;/strong&gt;: &lt;code&gt;Ctrl-l&lt;/code&gt; does not clear the screen. And neither does &lt;code&gt;Esc Esc&lt;/code&gt;.
-Surely someone has already filed a feature request for this? There&amp;rsquo;s a
-&lt;code&gt;/clear&lt;/code&gt; command, but it is meant to clear history and free up context, which
-is totally different.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Ctrl-_&lt;/code&gt; to undo. I prefer &lt;code&gt;C-w&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Gripe&lt;/strong&gt;: It hard-codes mentioning &amp;ldquo;bash&amp;rdquo; in various places, instead of
-&amp;ldquo;shell&amp;rdquo;. &lt;code&gt;bash&lt;/code&gt; is not the only POSIX shell out there. Heck, there&amp;rsquo;s even a
-&lt;code&gt;/bashes&lt;/code&gt; command to list and manage background tasks.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Esc&lt;/code&gt; to interrupt (think of &lt;code&gt;C-g&lt;/code&gt; on Emacs).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Most of the above reference can be pulled up with:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;?&lt;/code&gt; for help&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;A few handy comments not previously mentioned:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;/cost&lt;/code&gt;: show total cost + duration of the current session
-— See also: &lt;a href="https://perrotta.dev/2025/09/claude-ccusage/"&gt;ccusage&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;/export&lt;/code&gt;: copy the current conversation to the clipboard, or export it to a
-file&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;/init&lt;/code&gt;: to bootstrap and scaffold / populate &lt;code&gt;CLAUDE.md&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;/mcp&lt;/code&gt; to manage MCP servers&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;/resume&lt;/code&gt;: resume a (previous) conversation.
-— Alternatively, launch &lt;code&gt;claude&lt;/code&gt; with &lt;a href="https://perrotta.dev/2025/09/claude--resume/"&gt;&lt;code&gt;--resume&lt;/code&gt;&lt;/a&gt; in the desired CWD.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="settings"&gt;Settings&lt;/h2&gt;
-&lt;p&gt;My &lt;code&gt;~/.claude/settings.json&lt;/code&gt; at the time of this post:&lt;/p&gt;
-&lt;div class="codeblock" data-lang="json"&gt;
- &lt;div class="codeblock-header"&gt;
- &lt;span class="codeblock-language"&gt;json&lt;/span&gt;
- &lt;/div&gt;
- &lt;pre&gt;&lt;code class="language-json"&gt;{
- &amp;#34;env&amp;#34;: {
- &amp;#34;CLAUDE_CODE_ENABLE_TELEMETRY&amp;#34;: &amp;#34;0&amp;#34;
- },
- &amp;#34;permissions&amp;#34;: {
- &amp;#34;allow&amp;#34;: [
- &amp;#34;Bash(ansible-doc:*)&amp;#34;,
- &amp;#34;Bash(command -v:*)&amp;#34;,
- &amp;#34;Bash(fd:*)&amp;#34;,
- &amp;#34;Bash(find:*)&amp;#34;,
- &amp;#34;Bash(gh pr diff:*)&amp;#34;,
- &amp;#34;Bash(gh pr list:*)&amp;#34;,
- &amp;#34;Bash(gh pr review-comment list:*)&amp;#34;,
- &amp;#34;Bash(gh pr view:*)&amp;#34;,
- &amp;#34;Bash(grep:*)&amp;#34;,
- &amp;#34;Bash(hadolint:*)&amp;#34;,
- &amp;#34;Bash(helm template:*)&amp;#34;,
- &amp;#34;Bash(ls:*)&amp;#34;,
- &amp;#34;Bash(rg:*)&amp;#34;,
- &amp;#34;Bash(yamllint:*)&amp;#34;
- ]
- },
- &amp;#34;statusLine&amp;#34;: {
- &amp;#34;type&amp;#34;: &amp;#34;command&amp;#34;,
- &amp;#34;command&amp;#34;: &amp;#34;bash ~/.claude/statusline.sh&amp;#34;
- },
- &amp;#34;alwaysThinkingEnabled&amp;#34;: false
-}%&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;ul&gt;
-&lt;li&gt;no telemetry (privacy!)&lt;/li&gt;
-&lt;li&gt;allow a couple of often used tools (utilities), especially read-only ones&lt;/li&gt;
-&lt;li&gt;add a simple status line; originally scaffolded with &lt;code&gt;/statusline&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;do not always think (it&amp;rsquo;s slow &amp;amp; expensive!)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;settings.json&lt;/code&gt; and &lt;code&gt;statusline.sh&lt;/code&gt; are both in my
-&lt;a href="https://github.com/thiagowfx/.dotfiles"&gt;dotfiles&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: Claude Code: cheatsheet"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href="mailto:serendipity@perrotta.dev?subject=Reply to: claude code: custom commands"&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://perrotta.dev/tags/ai/"&gt;#ai&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/bestof/"&gt;#bestof&lt;/a&gt; &lt;a href="https://perrotta.dev/tags/dev/"&gt;#dev&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
