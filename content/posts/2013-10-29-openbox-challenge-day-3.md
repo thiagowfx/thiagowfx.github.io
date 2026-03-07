@@ -67,14 +67,6 @@ can't lose so much time with this either. I want to learn emacs `org2blog` to
 optimize my time, but not now. I think the practice is essential! It helps me
 endorsing more firmly the _know-how_ and the concepts of these activities.
 
-## Screenshot
-
-Bonus: here is a screenshot of my menu:
-
-![Openbox menu screenshot](http://farm3.staticflickr.com/2847/10564931235_b12d28a1f1_o.png)
-
-I encourage you to make any comments about what you think of this challenge.
-
 ## Tomorrow plans
 
 - Icons in the menu? (Fluxbox easily supports that)

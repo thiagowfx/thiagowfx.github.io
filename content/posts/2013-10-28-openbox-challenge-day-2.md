@@ -75,7 +75,4 @@ This looks sufficient for today.
 - Create some custom menu entries (maybe with **obmenu**?)
 - Read the Arch Wiki a little more.
 
-I followed mainly the Arch Wiki and some recommendations on reddit and in the comments of my previous post to create this guide for day 2. Here is a screenshot of today:
-
-![Openbox desktop screenshot day
-2](http://farm6.staticflickr.com/5477/10541670586_d486dc4ea5_o.png)
+I followed mainly the Arch Wiki and some recommendations on reddit and in the comments of my previous post to create this guide for day 2.
