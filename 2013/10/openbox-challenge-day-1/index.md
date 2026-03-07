@@ -35,10 +35,3 @@ work (and figure) out there, but I think I'll like openbox.
 - Customize the wallpaper (because a completely black one sucks)
 - Apply my GTK themes to openbox (or find a new one)
 
-As a bonus, here is a screenshot (got with **scrot**):
-
-![Openbox desktop screenshot](http://farm8.staticflickr.com/7331/10526978976_6949a14162_o.png)
-
-(OK, the background is not _really_ black... compare the "blackness" of Konsole
-to it. But it is dark =p)
-
