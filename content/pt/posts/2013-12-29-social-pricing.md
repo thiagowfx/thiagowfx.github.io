@@ -18,7 +18,7 @@ user, for example, it may be interesting.
 First things first:
 
 - I won't (don't) use **Twitter** anymore (it became popular, so it became a
-  dirty / floodish (this word probably doesn't even exist) / useless place;
+  floodish place;
 
 - I can't use **identi.ca** because it is gone;
 
