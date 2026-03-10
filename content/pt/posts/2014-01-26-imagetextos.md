@@ -22,7 +22,7 @@ políticos – de esquerda ou de direita, não importa – que usam a imagem do 
 para acompanhar seus textos – claro, porque faz *muita* diferença acrescentá-la
 para tornar a sua mensagem mais efetiva).
 
-Isso, pra mim, é coisa de =====. (Tenho certeza de que alguém vai me indicar
+Isso, pra mim, é inútil. (Tenho certeza de que alguém vai me indicar
 esse post **quando** eu resolver compartilhar texto em imagem também, vou ficar
 no aguardo.)
 
