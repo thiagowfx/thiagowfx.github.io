@@ -2,6 +2,7 @@
 title: "Chrome → Brave"
 date: 2026-01-24T18:08:51+01:00
 tags:
+  - degoogling
   - dev
   - privacy
 ---

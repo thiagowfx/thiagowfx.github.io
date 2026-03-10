@@ -2,6 +2,7 @@
 title: "Organic Maps: off-line maps"
 date: 2024-02-21T00:36:57+01:00
 tags:
+  - degoogling
   - privacy
 ---
 

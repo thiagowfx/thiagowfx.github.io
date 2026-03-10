@@ -2,6 +2,7 @@
 title: "Kagi trial expires"
 date: 2025-05-31T16:44:02+02:00
 tags:
+  - degoogling
   - dev
   - privacy
   - serenity

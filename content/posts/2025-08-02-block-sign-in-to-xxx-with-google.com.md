@@ -2,6 +2,7 @@
 title: 'Block "Sign in to XXX with google.com"'
 date: 2025-08-02T21:26:25+02:00
 tags:
+  - degoogling
   - dev
   - privacy
   - security

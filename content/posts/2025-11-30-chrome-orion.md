@@ -2,6 +2,7 @@
 title: "Chrome -> Orion"
 date: 2025-11-30T14:03:19-03:00
 tags:
+  - degoogling
   - dev
 ---
 

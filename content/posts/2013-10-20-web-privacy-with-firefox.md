@@ -2,6 +2,7 @@
 title: Web Privacy with Firefox
 date: 2013-10-20T22:43:53-03:00
 tags:
+  - degoogling
   - dev
   - legacy
   - privacy
