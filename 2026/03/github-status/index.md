@@ -1,7 +1,7 @@
 
 Github has a status page: https://www.githubstatus.com/
 
-"The Missing GitHub Status Page" goes deeper:
+"The Missing GitHub Status Page" goes deeper (via [Kottke](https://kottke.org/26/03/0048523-githubs-uptime-lately-see)):
 https://mrshu.github.io/github-statuses/
 
 > Last 90 days uptime
