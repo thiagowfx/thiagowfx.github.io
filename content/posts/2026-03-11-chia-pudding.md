@@ -27,4 +27,4 @@ Whisk everything.
 
 Let it soak overnight in the fridge.
 
-Top with blueberries, raspberries or cherries.
+Top with blueberries, raspberries or cherries. Or with nuts.
