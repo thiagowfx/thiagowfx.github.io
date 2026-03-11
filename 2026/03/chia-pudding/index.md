@@ -20,3 +20,6 @@ Let it soak overnight in the fridge.
 
 Top with blueberries, raspberries or cherries. Or with nuts.
 
+Inspiration: [feel good
+foodie](https://feelgoodfoodie.net/recipe/3-ingredient-chia-pudding/).
+
