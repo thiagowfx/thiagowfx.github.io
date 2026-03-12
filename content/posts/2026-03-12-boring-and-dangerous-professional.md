@@ -8,7 +8,7 @@ tags:
 external_link: "https://www.kalzumeus.com/2017/09/09/identity-theft-credit-reports/#presenting-like-a-professional"
 ---
 
-[Identity Theft, Credit Reports, and You](https://www.kalzumeus.com/2017/09/09/identity-theft-credit-reports/#presenting-like-a-professional) and ([How to Unsubscribe from Modern Luxury](https://aphyr.com/posts/406-how-to-unsubscribe-from-modern-luxury)):
+[Identity Theft, Credit Reports, and You](https://www.kalzumeus.com/2017/09/09/identity-theft-credit-reports/#presenting-like-a-professional) and [How to Unsubscribe from Modern Luxury](https://aphyr.com/posts/406-how-to-unsubscribe-from-modern-luxury):
 
 > I don't want to bother people like this; I think it's unreasonably rude. I
 > still start with the official support channels and escalate gradually. I like
