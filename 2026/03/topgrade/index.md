@@ -1,0 +1,37 @@
+
+[Topgrade](https://topgrade-rs.github.io/):
+
+> Keeping your system up-to-date usually involves invoking multiple package
+> managers. This results in big, non-portable shell one-liners saved in your
+> shell. To remedy this, Topgrade detects which tools you use and runs the
+> appropriate commands to update them.
+
+They are essentially a full-featured version of my [`sd_world`]({{< ref
+"2025-10-01-new-script-sd-world" >}}) script.
+
+**Usage**: Install it with your [favorite](https://repology.org/project/topgrade/versions) package manager and then run `topgrade`.
+
+Sample run on my system, to give you an idea of how comprehensive it is:
+
+```
+── 02:21:07 - Summary ──────────────────────────────────────────────
+Brew (ARM): FAILED
+Brew Cask (ARM): OK
+App Store: OK
+System update: OK
+Visual Studio Code extensions: OK
+myrepos: OK
+vim: OK
+Neovim: OK
+npm: OK
+yarn: OK
+Containers: FAILED
+helm: OK
+gem: FAILED
+rubygems: FAILED
+GitHub CLI Extensions: OK
+Git Repositories: FAILED
+Claude Code: OK
+uv: OK
+```
+
