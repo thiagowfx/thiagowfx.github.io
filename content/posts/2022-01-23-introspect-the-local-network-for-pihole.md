@@ -81,10 +81,13 @@ $ dig +short analytics.google.com
 
 Other ways: `drill`, `host`, `nslookup`, `systemd-resolve`.
 
-https://d3ward.github.io/toolz/adblock.html seems to be a reasonable website to
-test whether your adblock blocklists are properly working. Alternatively, just
-visit any modern and large news corporation website, it will probably be full
-of ads.
+Websites to test whether your adblock blocklists are properly working:
+
+- https://d3ward.github.io/toolz/adblock.html
+- https://adblock.turtlecute.org/
+
+Alternatively, just visit any modern and large news corporation website, it will
+probably be full of ads.
 
 ## Troubleshooting the pihole
 
