@@ -35,3 +35,5 @@ Claude Code: OK
 uv: OK
 ```
 
+This is not the full output, it's only the summary at the end.
+
