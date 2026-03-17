@@ -119,9 +119,9 @@ Add the content in this order:
 4. yogurt
 5. sweetener (e.g. maple syrup)
 
-**Disclaimer**: This post was written without AI, and without any web searches, it's purely from
-my memory and experience. Consume (pun intended!) this information at your own
-risk.
+**Disclaimer**: This post was written without AI, and without any web searches,
+it's purely from my memory and experience. Consume (pun intended!) this
+information at your own risk.
 
 [^1]: What triggers _"avoid"_ is one of: (i) experience, (ii) moral, or (iii)
     diet.
