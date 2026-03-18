@@ -2,7 +2,7 @@
 [Previously]({{< ref "2026-02-26-cco-claude-condom-sandbox" >}}).
 
 **Problem statement**: passing `--add-dir` flags to
-[cco](https://github.com/nichochar/cco) in a shell alias doesn't scale well as
+[cco](https://github.com/nikvdp/cco) in a shell alias doesn't scale well as
 the number of directories increases.
 
 I had this alias:
