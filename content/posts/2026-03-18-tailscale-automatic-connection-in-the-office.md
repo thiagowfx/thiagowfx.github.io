@@ -1,5 +1,5 @@
 ---
-title: "Tailscale: automatically connection in the office"
+title: "Tailscale: automatic connection in the office"
 date: 2026-03-18T14:00:03+01:00
 tags:
   - dev
