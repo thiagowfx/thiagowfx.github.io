@@ -1,6 +1,8 @@
 ---
 title: "Reply to: Every layer of review makes you 10x slower - apenwarr"
 date: 2026-03-22T13:08:06+01:00
+categories:
+  - commentary
 tags:
   - dev
 external_link: "https://apenwarr.ca/log/20260316"
