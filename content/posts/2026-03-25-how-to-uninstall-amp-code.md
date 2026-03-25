@@ -6,6 +6,8 @@ tags:
   - dev
 ---
 
+[Previously]({{< ref "2026-03-25-goodbye-amp-code" >}}).
+
 The [Amp Code Manual](https://ampcode.com/manual) does not contain
 uninstallation instructions.
 

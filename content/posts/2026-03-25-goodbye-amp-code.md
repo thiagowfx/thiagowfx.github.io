@@ -7,6 +7,8 @@ tags:
   - serenity
 ---
 
+[Previously]({{< ref "2026-01-01-amp-code-queue-unqueue-messages" >}}).
+
 There's always a sense of relief whenever we say goodbye.
 
 It oftentimes [_sparks joy_](https://konmari.com/marie-kondo-rules-of-tidying-sparks-joy/) ✨.
