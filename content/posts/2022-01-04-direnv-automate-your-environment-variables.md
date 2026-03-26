@@ -110,8 +110,7 @@ How does `direnv` address this?
 
 Bash:
 
-```bash
-$ cat ~/.bashrc.d/direnv.bash
+```bash {filename="~/.bashrc.d/direnv.bash"}
 #!/bin/bash
 # https://direnv.net/
 if hash direnv >/dev/null 2>&1; then
@@ -121,8 +120,7 @@ fi
 
 Zsh:
 
-```zsh
-$ cat ~/.zshrc.d/direnv.zsh
+```zsh {filename="~/.zshrc.d/direnv.zsh"}
 #!/bin/zsh
 # https://direnv.net/
 if (( $+commands[direnv] )); then

@@ -18,8 +18,7 @@ The precise term is "custom slash commands":
 
 I created my first custom slash command:
 
-```shell
-% cat ~/.claude/commands/send-pr.md
+```markdown {filename="~/.claude/commands/send-pr.md"}
 You are a world-class software developer who can write concise and descriptive
 pull requests (PRs).
 

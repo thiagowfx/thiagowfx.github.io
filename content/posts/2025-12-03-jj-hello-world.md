@@ -19,8 +19,7 @@ brew install jj
 
 Second, a basic config file. `git` requires one too:
 
-```shell
-% cat ~/.config/jj/config.toml
+```toml {filename="~/.config/jj/config.toml"}
 [user]
 name = "Thiago Perrotta"
 email = "{redacted}"

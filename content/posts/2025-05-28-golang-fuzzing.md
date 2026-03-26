@@ -7,8 +7,7 @@ tags:
 
 Given `go.mod`:
 
-```shell
-% cat go.mod
+``` {filename="go.mod"}
 module testfuzzing
 
 go 1.24.3
@@ -16,8 +15,7 @@ go 1.24.3
 
 Given `fuzz_test.go`:
 
-```shell
-% cat fuzz_test.go
+```go {filename="fuzz_test.go"}
 package testfuzzing
 
 import (

@@ -199,8 +199,7 @@ Leveraging this, I did the following changes:
 
 - (i) `~/.Xresources` sources `~/.Xdefaults`:
 
-```shell
-$ cat ~/.Xresources
+``` {filename="~/.Xresources"}
 ! These settings apply to X11 only.
 ! Use ~/.Xdefaults for settings that apply to both X11 and Wayland (xorg-xwayland).
 #include ".Xdefaults"
@@ -224,8 +223,7 @@ $ cat ~/.Xresources
 
 - (ii) `~/.Xdefaults` holds my customizations that originally lived in `~/.Xresources`:
 
-```shell
-$ cat ~/.Xdefaults
+``` {filename="~/.Xdefaults"}
 ! These settings apply to both X11 and Wayland (xorg-xwayland).
 ! Use ~/.Xresources for X11-only settings.
 

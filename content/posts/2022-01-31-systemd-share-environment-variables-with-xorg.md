@@ -65,8 +65,7 @@ Environment=GDK_SCALE=2 GDK_DPI_SCALE=0.5
 
 Which results in:
 
-```shell
-$ cat ~/.config/systemd/user/redshift-gtk.service.d/override.conf
+```ini {filename="~/.config/systemd/user/redshift-gtk.service.d/override.conf"}
 [Unit]
 Environment=GDK_SCALE=2 GDK_DPI_SCALE=0.5
 ```
@@ -89,8 +88,7 @@ files](https://www.freedesktop.org/software/systemd/man/environment.d.html)
 
 This means we could produce the following file:
 
-```shell
-$ cat ~/.config/environment.d/user.conf
+```ini {filename="~/.config/environment.d/user.conf"}
 # systemd environment.d(5) EnvironmentFile
 # https://www.freedesktop.org/software/systemd/man/environment.d.html
 #
@@ -124,8 +122,7 @@ and the xorg `~/.xinitrc` one.
 
 One elegant way to reduce maintenance burden is, in my opinion, the follownig:
 
-```shell
-$ cat ~/.xinitrc
+```bash {filename="~/.xinitrc"}
 ...
 # Parse user session environment variables.
 # This file is shared with the systemd user instance.

@@ -8,8 +8,7 @@ tags:
 
 The initial attempt:
 
-```shell
-% cat ~/.gitignore
+``` {filename="~/.gitignore"}
 .claude/settings.local.json
 ```
 

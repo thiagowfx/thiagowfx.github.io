@@ -42,8 +42,7 @@ exactly what you would expect. **This is the preferred solution**.
 
 Alternatively (and this was going to be my final solution):
 
-```
-% cat package.json
+```json {filename="package.json"}
 {
   "scripts": {
     "pretest": "npm install",

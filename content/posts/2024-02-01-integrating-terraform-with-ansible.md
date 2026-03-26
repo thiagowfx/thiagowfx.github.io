@@ -19,8 +19,7 @@ First of all, here's an overview of where I stopped last time. There were a
 couple of lightweight modifications since then. I'll explain some of them
 below.
 
-```terraform
-% cat variables.tf
+```terraform {filename="variables.tf"}
 variable "github_username" {
   type    = string
   default = "thiagowfx"
@@ -45,8 +44,7 @@ manage variables when they are all stored in a single place.
 
 The main module file now looks like this:
 
-```terraform
-% cat main.tf
+```terraform {filename="main.tf"}
 terraform {
   required_providers {
     http = {
@@ -140,8 +138,7 @@ straightforward way to see its value. A terraform
 [`output`](https://developer.hashicorp.com/terraform/language/values/outputs)
 is perfect for that:
 
-```terraform
-% cat outputs.tf
+```terraform {filename="outputs.tf"}
 output "ip_address" {
   value = linode_instance.nanode.ip_address
 }

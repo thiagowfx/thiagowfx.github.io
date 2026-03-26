@@ -47,8 +47,7 @@ There's a workaround: use [`includeIf`](https://git-scm.com/docs/git-config#_inc
         path = .gitconfig_corp
 ```
 
-```shell
-% cat ~/.gitconfig_corp
+```ini {filename="~/.gitconfig_corp"}
 [includeIf "gitdir:~/mycompany/**"]
   path = .gitconfig_mycompany
 
@@ -56,8 +55,7 @@ There's a workaround: use [`includeIf`](https://git-scm.com/docs/git-config#_inc
   path = .gitconfig_mycompany
 ```
 
-```shell
-% cat ~/.gitconfig_mycompany
+```ini {filename="~/.gitconfig_mycompany"}
 [commit]
         template = .github/PULL_REQUEST_TEMPLATE.md
 ```

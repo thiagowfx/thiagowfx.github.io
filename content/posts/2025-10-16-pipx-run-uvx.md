@@ -13,8 +13,7 @@ Replaced all occurrences of `pipx run` in my projects with `uvx`.
 
 Perfect for one-off tool executions ("one-shots"). For example:
 
-```shell
-% cat ~/.bin/az_switch
+```bash {filename="~/.bin/az_switch"}
 #!/bin/sh
 # Switch active account in Azure
 exec uvx az-account-switcher "$@"

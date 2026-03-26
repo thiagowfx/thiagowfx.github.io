@@ -45,8 +45,7 @@ Start docker, now and on startup:
 
 Create a `docker-compose.yml` file for the service:
 
-```shell
-% cat docker/docker-compose.yml
+```yaml {filename="docker/docker-compose.yml"}
 services:
   uptime-kuma:
     image: louislam/uptime-kuma:latest

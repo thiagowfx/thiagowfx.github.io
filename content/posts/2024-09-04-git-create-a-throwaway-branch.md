@@ -12,8 +12,7 @@ Let's say you want to submit a quick, perhaps even trivial, one-off pull request
 One step you can do to minimize the number of decisions[^1] to make is to have
 a git alias that creates a branch with an arbitrary name.
 
-```
-% cat ~/.gitconfig
+```ini {filename="~/.gitconfig"}
 # ...
 [alias]
 nbt = !git nb \"thiagowfx/$(shuf -n1 /usr/share/dict/words | tr \"[:upper:]\" \"[:lower:]\")\"
