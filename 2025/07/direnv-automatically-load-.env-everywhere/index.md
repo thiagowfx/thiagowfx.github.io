@@ -21,8 +21,7 @@ Also, perhaps your teammates simply do not want to use direnv.
 
 Here's a more robust approach:
 
-```shell
-% cat ~/.config/direnv/direnv.toml
+```toml {filename="~/.config/direnv/direnv.toml"}
 [global]
 load_dotenv = true
 ```

@@ -52,8 +52,7 @@ submodules: both git repositories are cloned and managed independently.
 
 And now, last but not least, is the actual git config for work:
 
-```ini
-% cat ~/.gitconfig_orgname
+```ini {filename="~/.gitconfig_orgname"}
 [user]
         name = Thiago Perrotta
         email = {work-email}

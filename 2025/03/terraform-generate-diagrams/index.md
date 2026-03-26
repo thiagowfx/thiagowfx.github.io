@@ -15,8 +15,7 @@ terraform graph | dot -Tpng > graph.png
 
 The graph can then be embedded into a markdown file:
 
-```
-% cat README.md
+```markdown {filename="README.md"}
 ![graph](graph.png)
 ```
 

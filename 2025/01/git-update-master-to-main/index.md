@@ -18,8 +18,7 @@ How to refer to the default branch in scripts and aliases?
 
 Set the following `git` alias:
 
-```shell
-% cat ~/.gitconfig
+```ini {filename="~/.gitconfig"}
 [...]
 [alias]
 	default = !git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'

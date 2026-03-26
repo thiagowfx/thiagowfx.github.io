@@ -21,8 +21,7 @@ Tip: If it's annoying to remember to type the full command above, consider addin
 
 This option is very similar to the previous one, but the flags live in the ssh config rather then being specified at the command line:
 
-```shell
-$ cat ~/.ssh/config
+``` {filename="~/.ssh/config"}
 Host *
   RequestTTY yes
   RemoteCommand tmux -u new -A -s main
@@ -50,9 +49,8 @@ Therefore I discourage it, unless you only use it with specific hosts i.e. don't
 
 This method leverages your login shell startup config file (`~/.bash_profile`, `~/.zprofile`, etc) to automatically spawn `tmux`.
 
-```shell
+```bash {filename="~/.profile.d/tmux_auto_ssh.sh."}
 # This file is invoked as part of my ~/.bash_profile.
-$ cat ~/.profile.d/tmux_auto_ssh.sh.
 # Automatically spawn tmux within ssh sessions for interactive terminals.
 # https://stackoverflow.com/a/43819740/1745064
 #

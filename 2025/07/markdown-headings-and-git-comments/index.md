@@ -1,8 +1,7 @@
 
 Our team uses a PR template that resembles the following:
 
-```
-% cat .github/pull_request_template.md
+```markdown {filename=".github/pull_request_template.md"}
 ## Summary
 
 <!-- Provide a clear and concise description of the changes.

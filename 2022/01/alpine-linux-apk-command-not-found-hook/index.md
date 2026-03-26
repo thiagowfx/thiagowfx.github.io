@@ -165,8 +165,7 @@ docker-cli-buildx-0.7.1-r0
 
 I wrote the following scripts, which I source in my respective interactive shells, to achieve this behavior out-of-the-box:
 
-```shell
-$ cat apk-command-not-found.bash
+```bash {filename="apk-command-not-found.bash"}
 #!/bin/bash
 # apk(8) from Alpine Linux command not found hook for bash
 
@@ -185,8 +184,7 @@ command_not_found_handle () {
 }
 ```
 
-```shell
-$ cat apk-command-not-found.zsh
+```zsh {filename="apk-command-not-found.zsh"}
 #!/bin/zsh
 # apk(8) from Alpine Linux command not found hook for zsh
 

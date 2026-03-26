@@ -164,8 +164,7 @@ Monitoring][release-monitoring], part of Fedora Infra. And there's also
 https://changedetection.io/, but it's overkill for this task. I use `urlwatch`
 the following way:
 
-```
-$ cat PKGBUILDs/urlwatch.yml
+```yaml {filename="PKGBUILDs/urlwatch.yml"}
 # urls for urlwatch(1)
 ---
 name: "bkt"

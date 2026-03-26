@@ -15,8 +15,7 @@ preference.
 Given my trained muscle memory, I wanted to continue to use this alias even in
 environments other than Google:
 
-```shell
-% cat ~/.profile.d/functions_corp.sh
+```bash {filename="~/.profile.d/functions_corp.sh"}
 [...]
 prodaccess() {
 	echo "--> VPN"
