@@ -181,7 +181,13 @@
     if (searchIndex !== null) return;
     searchInfo.textContent = i18n.loading;
     searchInfo.classList.add('loading');
-    fetch(langPath + '/search/index.json')
+    const fetchWithTimeout = (url, timeout = 5000) =>
+      fetch(url, { signal: AbortSignal.timeout(timeout) });
+    const fetchIndex = (url, retries = 1) =>
+      fetchWithTimeout(url).catch(err =>
+        retries > 0 ? fetchWithTimeout(url) : Promise.reject(err)
+      );
+    fetchIndex(langPath + '/search/index.json')
       .then(response => response.json())
       .then(data => {
         searchIndex = data;
@@ -362,7 +368,13 @@ and not collecting any personally identifiable information.
     if (searchIndex !== null) return Promise.resolve();
     modalInfo.textContent = 'Carregando índice de busca';
     modalInfo.classList.add('loading');
-    return fetch(langPath + '/search/index.json')
+    const fetchWithTimeout = (url, timeout = 5000) =>
+      fetch(url, { signal: AbortSignal.timeout(timeout) });
+    const fetchIndex = (url, retries = 1) =>
+      fetchWithTimeout(url).catch(err =>
+        retries > 0 ? fetchWithTimeout(url) : Promise.reject(err)
+      );
+    return fetchIndex(langPath + '/search/index.json')
       .then(response => response.json())
       .then(data => {
         searchIndex = data;
