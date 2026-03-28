@@ -2,6 +2,7 @@
 title: "#CPBR7 - Parte 1 - Hackatons (Firefox OS + CERT.br)"
 date: 2014-02-03T23:58:25-03:00
 tags:
+  - bestof
   - dev
   - legacy
   - serenity
