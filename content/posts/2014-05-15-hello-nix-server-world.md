@@ -1,5 +1,5 @@
 ---
-title: "[status] Hello, *nix server world!"
+title: "Hello, *nix server world!"
 date: 2014-05-15T20:25:07-03:00
 tags:
   - dev
