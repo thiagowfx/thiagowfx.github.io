@@ -14,7 +14,7 @@ aceito! :D
 
 Em si, esse é o mesmo tipo de alegria que eu tive quando contribui com o [meu
 primeiro
-PKGBUILD](http://thiagoperrotta.wordpress.com/2014/02/13/metapost-1-meu-primeiro-pkgbuild/)
+PKGBUILD]({{< ref "2014-02-13-meu-primeiro-pkgbuild" >}})
 para o [AUR](http://aur.archlinux.org/). É realmente bastante bom poder
 contribuir com alguma coisa para a comunidade, por menor que ela seja, desde um
 simples post ajudando um *newbie* em um fórum, passando por um simples *commit*
