@@ -1,7 +1,6 @@
 
-Ah, já que eu inventei esse negócio de *status* por aqui, esse eu tenho que
-incluir: meu primeiro *pull request* para um projeto *open source* acabou de ser
-aceito! :D
+Meu primeiro *pull request* para um projeto *open source* acabou de ser aceito!
+:D
 
 [Aqui](https://github.com/robbyrussell/oh-my-zsh/pull/2574) está o commit.
 

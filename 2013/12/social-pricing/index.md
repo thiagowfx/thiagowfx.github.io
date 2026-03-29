@@ -4,10 +4,6 @@ user, for example, it may be interesting.
 
 [http://www.dodgycoder.net/2012/12/pricing-hacks-of-online-retailers.html](http://www.dodgycoder.net/2012/12/pricing-hacks-of-online-retailers.html)
 
----
-
-## About [Status]
-
 First things first:
 
 - I won't (don't) use **Twitter** anymore (it became popular, so it became a
