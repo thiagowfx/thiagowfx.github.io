@@ -3,7 +3,7 @@ Hello people,
 
 In the next days I'm gonna begin a new mini series here in the style of my last
 one, about
-[FreeBSD](http://thiagoperrotta.wordpress.com/2014/07/20/here-be-dragons-freebsd-overview-part-i/).
+[FreeBSD]({{< ref "2014-07-20-here-be-dragons-freebsd-overview-part-i" >}}).
 
 ## Motivation
 
