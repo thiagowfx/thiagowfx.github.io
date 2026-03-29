@@ -8,7 +8,7 @@ Principalmente **didática**, em linguagens que suportam
 da área de TI e não sabe o que é UML, recomendo fortemente aprender algo sobre!)
 
 Meu primeiro post mais resumido; ficando legal vou passar a economizar mais
-palavras e tempo nas próximas vezes. Especialmente no *journal*. O problema de
+palavras e tempo nas próximas vezes. O problema de
 escrever pouco é que sempre fica uma sensação de informação incompleta. Deixa
 isso para as mídias / a imprensa, elas já fazem isso muito bem. Não é meu
 objetivo mostrar apenas um lado da moeda.
