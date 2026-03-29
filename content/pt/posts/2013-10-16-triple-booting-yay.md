@@ -6,9 +6,6 @@ tags:
   - legacy
 ---
 
-Esse post poderia muito bem não estar na série *journal*, mas como ele é mais um
-*story telling*, vamos lá.
-
 Hoje acabei de configurar o meu sistema para *triplobootar* (se o leitor me
 permitir o neologismo).  Arch Linux, Windows 8 (Lenovo OEM) e Linux Mint 15
 Cinnamon. Ah, a beleza do Arch Linux: você não precisa explicitar a versão dele,

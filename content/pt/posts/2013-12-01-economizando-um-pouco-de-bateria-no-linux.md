@@ -18,17 +18,16 @@ dispositivos têm um quê de especial no que diz respeito a bateria. Pelo menos
 o [Jeff](http://www.codinghorror.com/blog/2013/10/why-does-windows-have-terrible-battery-life.html) (do
 Stack Overflow) confirma isso.
 
-Como todo post da série *journal*, não espere um tutorial explícito: aqui eu
-vou apenas descrever algumas coisas que eu fiz/faço para economizar um pouco das
-minhas baterias. Elas são 100% corretas? Não necessariamente (podem até ser que
-gastem mais bateria do que o normal, mas eu espero que não =P). Elas são
-seguras? Depende do quanto você é disposto a se arriscar. Na hora do apelo, "não
-mexa em algo que já está funcionando". No final das contas, podem simplesmente
-fazer parte de um efeito placebo. A intuição humana é algo em que não se pode
-confiar. A única forma de realmente garantir que essas coisas funcionam é
-através de medidas e/ou de uma avaliação específica. Muito bem, agora que você
-já leu esse *disclaimer*, continue a ler se achou que essas firulas são para
-você.
+Não espere um tutorial explícito: aqui eu vou apenas descrever algumas coisas
+que eu fiz/faço para economizar um pouco das minhas baterias. Elas são 100%
+corretas? Não necessariamente (podem até ser que gastem mais bateria do que o
+normal, mas eu espero que não =P). Elas são seguras? Depende do quanto você é
+disposto a se arriscar. Na hora do apelo, "não mexa em algo que já está
+funcionando". No final das contas, podem simplesmente fazer parte de um efeito
+placebo. A intuição humana é algo em que não se pode confiar. A única forma de
+realmente garantir que essas coisas funcionam é através de medidas e/ou de uma
+avaliação específica. Muito bem, agora que você já leu esse *disclaimer*,
+continue a ler se achou que essas firulas são para você.
 
 ## Baterias, então
 
