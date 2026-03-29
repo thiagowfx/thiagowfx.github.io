@@ -36,7 +36,7 @@ coisas que soam como boas práticas, e que possivelmente você também poderá
 querer adotar.
 
 1 - **Deprecated**. Usei o
-[hostsblock](http://thiagoperrotta.wordpress.com/2014/03/02/journal-14-bloqueando-websitesadsmalware-no-linux/)
+[hostsblock]({{< ref "2014-03-02-bloqueando-websites-ads-malware-no-linux" >}})
 durante uma semana (é só para Linux). Ele realmente bloqueia todos os domínios
 que você especificar, mas isso acaba tendo a desvantagem que eu mencionei antes:
 bloquear 100% não é uma solução ótima.
