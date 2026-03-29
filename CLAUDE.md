@@ -37,6 +37,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Markdown:
   - No UTM parameters in links
   - No .md extension in internal Hugo links
+  - Hugo `ref` shortcodes use slug only (e.g. `{{< ref "2024-01-01-post-title" >}}`), not full paths
   - Use keep-sorted directives to maintain sorted lists
   - Avoid personal emails, company references, and old domain names
 - Images: Optimize PNGs with oxipng
