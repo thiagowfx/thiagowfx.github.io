@@ -3,7 +3,7 @@ aliases:
   - /archives
   - /blog
 cascade:
-  - _target:
+  - target:
       kind: page
       term: commentary
     toc: false
