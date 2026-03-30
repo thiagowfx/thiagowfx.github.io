@@ -144,7 +144,7 @@ commentary url *args:
     if [ -n "$actual_title" ]; then
         # Remove "Reply to: " prefix for the filename
         filename_title=$(echo "$actual_title" | sed -e 's/^Reply to: //')
-        new_filename=$(echo "$filename_title" | tr '[:upper:]' '[:lower:]' | sed -e 's/[,:/]/-/g' | tr -s ' ' | tr ' ' '-' | tr -s '-')
+        new_filename=$(echo "$filename_title" | tr '[:upper:]' '[:lower:]' | sed -e 's/[,:/|]/-/g' | tr -s ' ' | tr ' ' '-' | tr -s '-')
         new_filepath="content/posts/$(date "+%Y-%m-%d")-${new_filename}.md"
         if [ "${filepath}" != "${new_filepath}" ]; then
             mv "${filepath}" "${new_filepath}"
