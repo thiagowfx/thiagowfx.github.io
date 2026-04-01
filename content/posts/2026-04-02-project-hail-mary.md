@@ -2,6 +2,7 @@
 title: "Project Hail Mary"
 date: 2026-04-02T00:41:24+02:00
 tags:
+  - bestof
   - movies
   - serenity
 ---
