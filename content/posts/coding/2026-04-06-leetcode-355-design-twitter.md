@@ -96,3 +96,52 @@ class Twitter:
 # obj.follow(followerId,followeeId)
 # obj.unfollow(followerId,followeeId)
 ```
+
+With heap:
+
+```python
+from collections import defaultdict, deque
+from itertools import chain
+import heapq
+
+class Twitter:
+
+    def __init__(self):
+        self.f = defaultdict(set)
+        self.tweets = defaultdict(list)
+        self.ts = 0
+
+    def postTweet(self, userId: int, tweetId: int) -> None:
+        self.tweets[userId].append((-self.ts, tweetId))
+        self.ts += 1
+
+    def getNewsFeed(self, userId: int) -> List[int]:
+        tweets = []
+        heap = []
+
+        for followee in chain(self.f[userId], [userId]):
+            heap.extend(self.tweets[followee])
+
+        heapq.heapify(heap)
+
+        for _ in range(min(10, len(heap))):
+            tweets.append(heapq.heappop(heap)[1])
+
+        return tweets
+
+    def follow(self, followerId: int, followeeId: int) -> None:
+        self.f[followerId].add(followeeId)
+
+
+    def unfollow(self, followerId: int, followeeId: int) -> None:
+        self.f[followerId].discard(followeeId)
+
+
+
+# Your Twitter object will be instantiated and called as such:
+# obj = Twitter()
+# obj.postTweet(userId,tweetId)
+# param_2 = obj.getNewsFeed(userId)
+# obj.follow(followerId,followeeId)
+# obj.unfollow(followerId,followeeId)
+```
