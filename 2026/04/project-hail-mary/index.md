@@ -17,7 +17,7 @@ Excellent adaptation. 🇨🇦
 
 Sorry, I don't know how to write reviews.
 
-I'll leave that to [others](https://victor.kropp.name/blog/2026/project-hail-mary/):
+I'll leave that [to](https://iamvishnu.com/posts/project-hail-mary) [others](https://victor.kropp.name/blog/2026/project-hail-mary/):
 
 > [...] It was the same great experience as with The Martian ten
 > years ago, as I couldn't stop reading it. And plot twists genuinely surprised
