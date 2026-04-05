@@ -30,4 +30,4 @@ enabled it. Win-win!
 
 I asked the LLM to write an [ADR]({{< ref "2026-01-11-adrs-and-llms" >}}) about
 the
-[implementation](https://github.com/thiagowfx/thiagowfx.github.io/blob/228180f6bb4d36cc2fe64a3ad12c4d5fabae4ebd/plans/2026_04_05_EMAIL_OBFUSCATION.md).
+[implementation](https://github.com/thiagowfx/thiagowfx.github.io/blob/master/docs/adrs/0011-email-obfuscation.md).
