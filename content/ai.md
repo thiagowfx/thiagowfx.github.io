@@ -18,5 +18,6 @@ infrastructure of this site.
 
 ## References
 
+- [Not By AI](https://notbyai.fyi)
 - [Jake Worth](https://www.jakeworth.com/ai/)
   - [AI Manifesto](https://www.bydamo.la/p/ai-manifesto)
