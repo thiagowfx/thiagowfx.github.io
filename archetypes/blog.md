@@ -18,5 +18,4 @@ tags:
 {{- end }}
 {{- end }}
 {{- end }}
-draft: true
 ---
