@@ -28,7 +28,9 @@ A few directories I like[^1]:
 - ✪ https://rss.social/
 - ✪ https://static.quest
 - ✪ https://xn--sr8hvo.ws/dashboard (an indieweb webring)
+- https://blogosphere.app/
 - https://ooh.directory/
+- https://www.blogsareback.com/
 - ✗ https://baccyflap.com/noai/?slug=njs#links
 <!-- keep-sorted end -->
 
