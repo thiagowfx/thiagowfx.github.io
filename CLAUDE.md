@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Hugo layouts and theme customizations in `layouts/`
 - Static assets in `static/`
 - Hugo configuration in `config.yml`
-- ADRs and internal notes in `docs/adrs/` with naming pattern `YYYY_MM_DD_DESCRIPTION.md` in SCREAMING_SNAKE_CASE (not served by Hugo)
+- ADRs and internal notes in `docs/adrs/` with naming pattern `NNNN-description.md` (not served by Hugo)
 - This is a Hugo-based blog using a custom fork of the bearblog theme
 
 ## Build Commands
@@ -50,7 +50,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Commit messages for new posts: `git commit -m "new post: title"`
 - Posts use frontmatter with title, date, and tags
 - No AI assistance is used for content creation or editing
-- Internal plans, notes, and summaries: Create in `docs/adrs/` directory with naming pattern `YYYY_MM_DD_DESCRIPTION.md` in SCREAMING_SNAKE_CASE (never in repo root)
+- Internal plans, notes, and summaries: Create in `docs/adrs/` directory with naming pattern `NNNN-description.md` (never in repo root)
 
 ## Blog Post Writing Style
 
