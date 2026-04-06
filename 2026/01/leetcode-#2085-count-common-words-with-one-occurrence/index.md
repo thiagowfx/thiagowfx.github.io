@@ -1,3 +1,9 @@
+---
+title: "LeetCode #2085: Count Common Words With One Occurrence"
+url: https://perrotta.dev/2026/01/leetcode-%232085-count-common-words-with-one-occurrence/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #2085: Count Common Words With One Occurrence](https://leetcode.com/problems/count-common-words-with-one-occurrence):
 

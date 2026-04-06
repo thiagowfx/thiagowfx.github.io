@@ -1,3 +1,9 @@
+---
+title: "cdg: change directory to the git root"
+url: https://perrotta.dev/2024/10/cdg-change-directory-to-the-git-root/
+last_updated: 2025-09-05
+---
+
 
 Shell:
 

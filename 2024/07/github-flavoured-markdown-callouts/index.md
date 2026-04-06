@@ -1,3 +1,9 @@
+---
+title: "Github-flavoured Markdown: Callouts"
+url: https://perrotta.dev/2024/07/github-flavoured-markdown-callouts/
+last_updated: 2025-09-04
+---
+
 
 Since the end of the last year it's possible to add callouts to markdown files
 on GitHub. They are treated specially and rendered in a visually distinct way:

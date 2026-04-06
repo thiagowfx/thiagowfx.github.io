@@ -1,3 +1,9 @@
+---
+title: "Radio"
+url: https://perrotta.dev/2025/11/radio/
+last_updated: 2025-11-22
+---
+
 
 New script: [radio](https://github.com/thiagowfx/pancake/tree/master/radio):
 

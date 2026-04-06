@@ -1,3 +1,9 @@
+---
+title: "Pin all github actions"
+url: https://perrotta.dev/2024/12/pin-all-github-actions/
+last_updated: 2026-01-03
+---
+
 
 [via Connor Edwards](https://cedwards.xyz/github-actions-are-an-impending-security-disaster/):
 

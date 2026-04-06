@@ -1,3 +1,9 @@
+---
+title: "Adding a healthcheck to chartmuseum in AWS Fargate"
+url: https://perrotta.dev/2024/05/adding-a-healthcheck-to-chartmuseum-in-aws-fargate/
+last_updated: 2026-01-18
+---
+
 
 Assume that you have a [Chartmuseum](https://chartmuseum.com/) container running
 in [AWS Fargate](https://aws.amazon.com/fargate/).

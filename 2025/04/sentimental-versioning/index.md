@@ -1,3 +1,9 @@
+---
+title: "Sentimental versioning"
+url: https://perrotta.dev/2025/04/sentimental-versioning/
+last_updated: 2025-09-05
+---
+
 
 [Sentimental Versioning](https://github.com/dominictarr/sentimental-versioning):
 

@@ -1,3 +1,9 @@
+---
+title: "Quick look preview YAML files on macOS"
+url: https://perrotta.dev/2025/02/quick-look-preview-yaml-files-on-macos/
+last_updated: 2026-01-03
+---
+
 
 You may be familiar with [Quick
 Look](https://support.apple.com/en-gb/guide/mac-help/mh14119/mac) on macOS.

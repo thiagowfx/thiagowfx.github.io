@@ -1,3 +1,9 @@
+---
+title: "Openbox Challenge - Day 4"
+url: https://perrotta.dev/2013/10/openbox-challenge-day-4/
+last_updated: 2026-02-18
+---
+
 
 I've been loving doing this. It's really a nice way to maintain an intensive
 practice. But today was a very limited day for me. I had only half an hour to

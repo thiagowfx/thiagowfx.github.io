@@ -1,3 +1,9 @@
+---
+title: "ChromeOS hterm: customize fonts"
+url: https://perrotta.dev/2022/01/chromeos-hterm-customize-fonts/
+last_updated: 2025-12-25
+---
+
 
 [ChromeOS hterm][hterm] ("Secure Shell extension") is one of my favorite chrome extensions.
 It is a bit dull with its out-of-the-box monospace font though.

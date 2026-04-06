@@ -1,3 +1,9 @@
+---
+title: "macOS: remove all empty directories"
+url: https://perrotta.dev/2023/12/macos-remove-all-empty-directories/
+last_updated: 2026-01-03
+---
+
 
 For some odd reason my [Calibre](https://calibre-ebook.com) backup to cloud
 storage had a bunch of empty directories. I've been meaning to remove them, but

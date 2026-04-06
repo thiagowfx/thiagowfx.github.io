@@ -1,3 +1,9 @@
+---
+title: "LeetCode #125: Valid Palindrome"
+url: https://perrotta.dev/2025/09/leetcode-%23125-valid-palindrome/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #125: Valid Palindrome](https://leetcode.com/problems/valid-palindrome/):
 

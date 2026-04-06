@@ -1,3 +1,9 @@
+---
+title: "git: configure identities for work"
+url: https://perrotta.dev/2025/01/git-configure-identities-for-work/
+last_updated: 2026-03-26
+---
+
 
 **Problem statement**: Given two sets of git configurations, one for personal
 projects and one for work, how can you effectively separate them?

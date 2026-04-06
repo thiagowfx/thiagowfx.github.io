@@ -1,3 +1,9 @@
+---
+title: "Coffee"
+url: https://perrotta.dev/2025/02/coffee/
+last_updated: 2025-09-05
+---
+
 
 Coffee is a bitter liquid that turns brain synapses into computer code.
 

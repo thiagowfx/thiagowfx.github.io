@@ -1,3 +1,9 @@
+---
+title: "LeetCode #2166: Design Bitset"
+url: https://perrotta.dev/2026/01/leetcode-%232166-design-bitset/
+last_updated: 2026-01-20
+---
+
 
 [LeetCode #2166: Design Bitset](https://leetcode.com/problems/design-bitset):
 

@@ -1,3 +1,9 @@
+---
+title: "Tailspin"
+url: https://perrotta.dev/2025/05/tailspin/
+last_updated: 2025-06-15
+---
+
 
 [tailspin](https://github.com/bensadeh/tailspin):
 

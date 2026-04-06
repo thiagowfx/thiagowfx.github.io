@@ -1,3 +1,9 @@
+---
+title: "Raycast snippets"
+url: https://perrotta.dev/2025/01/raycast-snippets/
+last_updated: 2026-01-03
+---
+
 
 [Raycast](https://www.raycast.com/):
 

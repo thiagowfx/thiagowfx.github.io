@@ -1,3 +1,9 @@
+---
+title: "Jellyfin Trakt plug-in"
+url: https://perrotta.dev/2024/11/jellyfin-trakt-plug-in/
+last_updated: 2025-09-04
+---
+
 
 [Trakt for Jellyfin Plugin](https://github.com/jellyfin/jellyfin-plugin-trakt):
 

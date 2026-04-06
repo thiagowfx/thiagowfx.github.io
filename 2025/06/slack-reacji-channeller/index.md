@@ -1,3 +1,9 @@
+---
+title: "Slack: reacji channeller"
+url: https://perrotta.dev/2025/06/slack-reacji-channeller/
+last_updated: 2026-02-16
+---
+
 
 Consider an organization that uses [Slack](https://slack.com/).
 

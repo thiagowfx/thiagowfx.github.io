@@ -1,3 +1,9 @@
+---
+title: "LogSeq: slowness on macOS"
+url: https://perrotta.dev/2026/01/logseq-slowness-on-macos/
+last_updated: 2026-01-04
+---
+
 
 Last week LogSeq was super slow on my Mac, it was pretty much unusable. I had to
 manually kill its process multiple times as it kept freezing.

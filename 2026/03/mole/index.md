@@ -1,3 +1,9 @@
+---
+title: "Mole"
+url: https://perrotta.dev/2026/03/mole/
+last_updated: 2026-03-03
+---
+
 
 https://github.com/tw93/Mole:
 

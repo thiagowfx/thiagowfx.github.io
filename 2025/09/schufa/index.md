@@ -1,3 +1,9 @@
+---
+title: "SCHUFA"
+url: https://perrotta.dev/2025/09/schufa/
+last_updated: 2026-02-16
+---
+
 
 [SCHUFA](http://schufa.de/) is a German credit score system.
 

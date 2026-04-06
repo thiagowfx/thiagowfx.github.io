@@ -1,3 +1,9 @@
+---
+title: "adb over Wi-Fi for adbsync"
+url: https://perrotta.dev/2014/07/adb-over-wi-fi-for-adbsync/
+last_updated: 2026-02-17
+---
+
 
 Serendipity is good. I've just discovered one can use `adb` over Wi-Fi. What
 does it mean? We (well, I) don't need anymore Android apps just to transfer

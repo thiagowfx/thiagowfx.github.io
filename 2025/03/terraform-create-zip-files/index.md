@@ -1,3 +1,9 @@
+---
+title: "Terraform: create zip files"
+url: https://perrotta.dev/2025/03/terraform-create-zip-files/
+last_updated: 2026-01-03
+---
+
 
 When creating `.zip` files with terraform, for example, with the purpose of
 uploading them to an [AWS Lambda](https://aws.amazon.com/lambda/), at least two

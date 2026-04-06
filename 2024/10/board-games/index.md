@@ -1,3 +1,9 @@
+---
+title: "Board games"
+url: https://perrotta.dev/2024/10/board-games/
+last_updated: 2026-02-17
+---
+
 
 > **Me**: Would you like to play board games next week?
 >

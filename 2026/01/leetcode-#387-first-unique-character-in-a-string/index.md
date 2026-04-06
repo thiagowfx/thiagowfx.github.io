@@ -1,3 +1,9 @@
+---
+title: "LeetCode #387: First Unique Character in a String"
+url: https://perrotta.dev/2026/01/leetcode-%23387-first-unique-character-in-a-string/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #387: First Unique Character in a String](https://leetcode.com/problems/first-unique-character-in-a-string):
 

@@ -1,3 +1,9 @@
+---
+title: "Project Hail Mary"
+url: https://perrotta.dev/2026/04/project-hail-mary/
+last_updated: 2026-04-05
+---
+
 
 [**Book**](https://www.goodreads.com/book/show/54493401-project-hail-mary): 5/5
 stars. [One of my favorites](https://www.goodreads.com/review/show/4383821769)

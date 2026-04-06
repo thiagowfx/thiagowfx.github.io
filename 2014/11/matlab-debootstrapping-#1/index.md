@@ -1,3 +1,9 @@
+---
+title: "Matlab debootstrapping #1"
+url: https://perrotta.dev/2014/11/matlab-debootstrapping-%231/
+last_updated: 2026-02-18
+---
+
 
 Alternative title: "Matlab, second impressions". I am trying to learn Matlab
 super fast for prototyping purposes. Fast learning isn't my preferred style for

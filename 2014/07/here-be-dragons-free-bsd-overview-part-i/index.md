@@ -1,3 +1,9 @@
+---
+title: "Here be dragons! Free BSD Overview (part I)"
+url: https://perrotta.dev/2014/07/here-be-dragons-free-bsd-overview-part-i/
+last_updated: 2026-02-18
+---
+
 
 ## Overview
 

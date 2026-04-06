@@ -1,3 +1,9 @@
+---
+title: "LeetCode #163: Missing Ranges"
+url: https://perrotta.dev/2025/12/leetcode-%23163-missing-ranges/
+last_updated: 2026-02-16
+---
+
 
 [LeetCode #163: Missing Ranges](https://leetcode.com/problems/missing-ranges):
 

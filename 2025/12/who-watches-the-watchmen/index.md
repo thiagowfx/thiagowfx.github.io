@@ -1,3 +1,9 @@
+---
+title: "Who watches the watchmen?"
+url: https://perrotta.dev/2025/12/who-watches-the-watchmen/
+last_updated: 2026-01-10
+---
+
 
 [Previously]({{< ref "2022-01-30-watch-files-and-react-to-changes-during-development" >}}).
 

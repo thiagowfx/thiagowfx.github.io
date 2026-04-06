@@ -1,3 +1,9 @@
+---
+title: "LaTeX beamer slides with notes"
+url: https://perrotta.dev/2025/01/latex-beamer-slides-with-notes/
+last_updated: 2025-01-06
+---
+
 
 ([via Andrej Bauer](https://gist.github.com/andrejbauer/ac361549ac2186be0cdb) from University of Ljubljana, adapted):
 

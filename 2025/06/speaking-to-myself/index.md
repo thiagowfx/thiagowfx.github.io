@@ -1,3 +1,9 @@
+---
+title: "Speaking to myself"
+url: https://perrotta.dev/2025/06/speaking-to-myself/
+last_updated: 2025-09-05
+---
+
 
 Lately I've been stealing [Simon Willison](https://simonwillison.net/)'s
 playbook of [taking to oneself](https://simonwillison.net/2025/May/19/#:~:text=My%20habit%20of%20creating%20long,new%20generation%20of%20coding%20assistants):

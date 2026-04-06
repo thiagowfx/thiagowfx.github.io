@@ -1,3 +1,9 @@
+---
+title: "Localhost domain"
+url: https://perrotta.dev/2024/07/localhost-domain/
+last_updated: 2025-09-05
+---
+
 
 If you find yourself in a situation wherein http://localhost:1313 has issues,
 you can use a domain that redirects to localhost. For example:

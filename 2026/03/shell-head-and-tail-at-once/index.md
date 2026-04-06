@@ -1,3 +1,9 @@
+---
+title: "shell: head and tail at once"
+url: https://perrotta.dev/2026/03/shell-head-and-tail-at-once/
+last_updated: 2026-03-24
+---
+
 
 **Problem statement**: given a command run with a ton of output, how can you
 take a glance at both (i) its first few lines and (ii) its last few lines?

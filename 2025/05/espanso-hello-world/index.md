@@ -1,3 +1,9 @@
+---
+title: "Espanso: hello world"
+url: https://perrotta.dev/2025/05/espanso-hello-world/
+last_updated: 2026-01-03
+---
+
 
 [Previously]({{< ref "2025-03-24-maccy-pin-items" >}}):
 

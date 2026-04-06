@@ -1,3 +1,9 @@
+---
+title: "Helm: JSON schema generation"
+url: https://perrotta.dev/2024/11/helm-json-schema-generation/
+last_updated: 2026-01-03
+---
+
 
 Helm charts support the inclusion of a `values.schema.json` file to validate
 `values.yaml`. Documentation: https://helm.sh/docs/topics/charts/#schema-files

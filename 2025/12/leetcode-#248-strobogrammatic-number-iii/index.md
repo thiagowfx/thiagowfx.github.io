@@ -1,3 +1,9 @@
+---
+title: "LeetCode #248: Strobogrammatic Number III"
+url: https://perrotta.dev/2025/12/leetcode-%23248-strobogrammatic-number-iii/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #248: Strobogrammatic Number III](https://leetcode.com/problems/strobogrammatic-number-iii):
 

@@ -1,3 +1,9 @@
+---
+title: "Whiteboard mark colors"
+url: https://perrotta.dev/2025/09/whiteboard-mark-colors/
+last_updated: 2025-09-25
+---
+
 
 Life is serene when you have a whiteboard at your disposal.
 

@@ -1,3 +1,9 @@
+---
+title: "ack: match and return only the matched string"
+url: https://perrotta.dev/2024/10/ack-match-and-return-only-the-matched-string/
+last_updated: 2025-09-05
+---
+
 
 **Context**: Helm charts use `.Values.{foo}` in `templates/` for templating from
 `values.yaml`.

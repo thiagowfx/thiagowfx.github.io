@@ -1,3 +1,9 @@
+---
+title: "Ghostty shaders"
+url: https://perrotta.dev/2025/11/ghostty-shaders/
+last_updated: 2026-01-18
+---
+
 
 Ghostty supports [shaders](https://mitchellh.com/writing/ghostty-devlog-005).
 

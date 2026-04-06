@@ -1,3 +1,9 @@
+---
+title: "git aicommit"
+url: https://perrotta.dev/2026/01/git-aicommit/
+last_updated: 2026-01-13
+---
+
 
 **Problem statement**: auto-generate a commit message for `git` from the
 command-line. The solution should be vendor agnostic.

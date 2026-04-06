@@ -1,3 +1,9 @@
+---
+title: "Homebrew: bin.install: mv instead of cp"
+url: https://perrotta.dev/2025/11/homebrew-bin.install-mv-instead-of-cp/
+last_updated: 2025-11-30
+---
+
 
 LLM:
 

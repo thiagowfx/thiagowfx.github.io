@@ -1,3 +1,9 @@
+---
+title: "'New' series: Raspberry Pi fun with DevOps, redux"
+url: https://perrotta.dev/2026/01/new-series-raspberry-pi-fun-with-devops-redux/
+last_updated: 2026-02-22
+---
+
 
 Once upon a time, [a few mistakes
 ago](https://www.youtube.com/watch?v=vNoKguSdy4Y), I wanted to start a blog

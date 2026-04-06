@@ -1,3 +1,9 @@
+---
+title: "comments"
+url: https://perrotta.dev/2026/01/comments/
+last_updated: 2026-01-03
+---
+
 
 ```python
 # this is an explanation that a is the result of the function foo()

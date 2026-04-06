@@ -1,3 +1,9 @@
+---
+title: "Running Ogre3d locally (without installing it)"
+url: https://perrotta.dev/2015/03/running-ogre3d-locally-without-installing-it/
+last_updated: 2026-03-03
+---
+
 
 Simple build systems, huh? Hello there. In this post we will run the "Basic 1"
 example from the [Ogre3d wiki](http://www.ogre3d.org/tikiwiki/tiki-index.php)

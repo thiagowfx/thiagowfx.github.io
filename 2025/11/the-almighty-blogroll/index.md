@@ -1,3 +1,9 @@
+---
+title: "The almighty Blogroll"
+url: https://perrotta.dev/2025/11/the-almighty-blogroll/
+last_updated: 2025-11-25
+---
+
 
 It's about time: I added a [blogroll](/blogroll) to my site.
 

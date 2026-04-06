@@ -1,3 +1,9 @@
+---
+title: "codespell: ignore words"
+url: https://perrotta.dev/2025/01/codespell-ignore-words/
+last_updated: 2026-01-03
+---
+
 
 When using [codespell](https://github.com/codespell-project/codespell) to spell
 check a git repository, sometimes you may run into false positive words.

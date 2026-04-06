@@ -1,3 +1,9 @@
+---
+title: "LeetCode #144: Binary Tree Preorder Traversal"
+url: https://perrotta.dev/2025/11/leetcode-%23144-binary-tree-preorder-traversal/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #144: Binary Tree Preorder Traversal](https://leetcode.com/problems/binary-tree-preorder-traversal):
 

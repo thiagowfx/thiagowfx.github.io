@@ -1,3 +1,9 @@
+---
+title: "Force captive portal to open"
+url: https://perrotta.dev/2024/02/force-captive-portal-to-open/
+last_updated: 2026-01-03
+---
+
 
 Sometimes, when connecting to public Wi-Fi hotposts, especially in airports and
 coffee shops, the captive portal gateway required to get internet access will

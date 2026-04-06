@@ -1,3 +1,9 @@
+---
+title: "Online diff tool"
+url: https://perrotta.dev/2024/12/online-diff-tool/
+last_updated: 2025-09-05
+---
+
 
 Sometimes I have two snippets of text in my clipboard[^1] that I need to diff.
 

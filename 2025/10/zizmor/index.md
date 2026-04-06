@@ -1,3 +1,9 @@
+---
+title: "zizmor"
+url: https://perrotta.dev/2025/10/zizmor/
+last_updated: 2026-02-07
+---
+
 
 I originally heard of [zizmor](https://docs.zizmor.sh/) at [FOSDEM 2025](https://fosdem.org/2025/):
 

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #250: Count Univalue Subtrees"
+url: https://perrotta.dev/2026/01/leetcode-%23250-count-univalue-subtrees/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #250: Count Univalue Subtrees](https://leetcode.com/problems/count-univalue-subtrees):
 

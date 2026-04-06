@@ -1,3 +1,9 @@
+---
+title: "LLM as online judge"
+url: https://perrotta.dev/2025/09/llm-as-online-judge/
+last_updated: 2026-01-03
+---
+
 
 In 2025 it is quite comfortable to use LLMs (GenAI) to grade your code
 submissions (from LeetCode, HackerRank, etc).

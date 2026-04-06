@@ -1,3 +1,9 @@
+---
+title: "Helm: migrate chart dependencies from HTTPS to OCI"
+url: https://perrotta.dev/2025/01/helm-migrate-chart-dependencies-from-https-to-oci/
+last_updated: 2026-01-03
+---
+
 
 I got aware of this due to
 [Bitnami](https://blog.bitnami.com/2024/10/bitnami-helm-charts-moving-to-oci.html)'s

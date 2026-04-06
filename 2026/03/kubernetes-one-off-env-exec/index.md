@@ -1,3 +1,9 @@
+---
+title: "Kubernetes: one-off env exec"
+url: https://perrotta.dev/2026/03/kubernetes-one-off-env-exec/
+last_updated: 2026-03-23
+---
+
 
 **Problem statement**: run an one-off script and/or binary within a kubernetes
 pod. It needs a certain environment variable (`VAULT_TOKEN`) to be set.

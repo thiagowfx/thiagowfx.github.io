@@ -1,3 +1,9 @@
+---
+title: "LeetCode #151: Reverse Words in a String"
+url: https://perrotta.dev/2025/09/leetcode-%23151-reverse-words-in-a-string/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #151: Reverse Words in a String](https://leetcode.com/problems/reverse-words-in-a-string/):
 

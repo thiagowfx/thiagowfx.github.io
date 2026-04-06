@@ -1,3 +1,9 @@
+---
+title: "Mermaid: rich diagrams in markdown"
+url: https://perrotta.dev/2024/10/mermaid-rich-diagrams-in-markdown/
+last_updated: 2025-09-05
+---
+
 
 When writing documentation in markdown e.g. for projects stored in git, adding
 a system architecture or design diagram is a great way to boost its readability,

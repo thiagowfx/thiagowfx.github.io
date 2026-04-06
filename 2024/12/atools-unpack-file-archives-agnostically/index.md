@@ -1,3 +1,9 @@
+---
+title: "atools: unpack file archives agnostically"
+url: https://perrotta.dev/2024/12/atools-unpack-file-archives-agnostically/
+last_updated: 2025-09-05
+---
+
 
 When downloading software from the interwebs, it can come in many popular
 archive formats: `.zip`, `.tar.gz`, `.tar.xz`, `.rar`, `.7z`, etc.

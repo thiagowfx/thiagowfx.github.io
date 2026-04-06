@@ -1,3 +1,9 @@
+---
+title: "Against names"
+url: https://perrotta.dev/2025/04/against-names/
+last_updated: 2025-04-06
+---
+
 
 [Against Names](https://steveklabnik.com/writing/against-names/) by Steve
 Klabnik:

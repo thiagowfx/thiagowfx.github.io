@@ -1,3 +1,9 @@
+---
+title: "Alpine / Arch Linux: .apk-new and .pacnew files"
+url: https://perrotta.dev/2022/01/alpine-/-arch-linux-.apk-new-and-.pacnew-files/
+last_updated: 2026-01-03
+---
+
 
 As packages are upgraded over time, updated configs files under `/etc` may
 arise. Different package managers treat this issue differently.

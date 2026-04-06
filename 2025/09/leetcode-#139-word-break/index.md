@@ -1,3 +1,9 @@
+---
+title: "LeetCode #139: Word Break"
+url: https://perrotta.dev/2025/09/leetcode-%23139-word-break/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #139: Word Break](https://leetcode.com/problems/word-break/):
 

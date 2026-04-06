@@ -1,3 +1,9 @@
+---
+title: "Github PRs: do not submit"
+url: https://perrotta.dev/2025/04/github-prs-do-not-submit/
+last_updated: 2026-02-07
+---
+
 
 Sometimes you want to send a pull request for review to your teammates and want
 to ensure they do not accidentally prematurely merge it.

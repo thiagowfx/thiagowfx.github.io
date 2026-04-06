@@ -1,3 +1,9 @@
+---
+title: "Clipboard as backup"
+url: https://perrotta.dev/2025/10/clipboard-as-backup/
+last_updated: 2025-10-30
+---
+
 
 [Previously]({{< ref "2023-12-02-maccy-macos-clipboard-manager" >}}).
 

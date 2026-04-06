@@ -1,3 +1,9 @@
+---
+title: "Badminton"
+url: https://perrotta.dev/2025/03/badminton/
+last_updated: 2025-03-28
+---
+
 
 One of the coolest sports in the world I've become acquainted with is
 [Badminton](https://en.wikipedia.org/wiki/Badminton). In the beginning it is

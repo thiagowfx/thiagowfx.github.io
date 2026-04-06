@@ -1,3 +1,9 @@
+---
+title: "fpp: facebook path picker"
+url: https://perrotta.dev/2025/05/fpp-facebook-path-picker/
+last_updated: 2026-03-03
+---
+
 
 [`fpp`](https://github.com/facebook/PathPicker):
 

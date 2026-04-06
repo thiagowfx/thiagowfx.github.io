@@ -1,3 +1,9 @@
+---
+title: "Memoization"
+url: https://perrotta.dev/2025/09/memoization/
+last_updated: 2026-01-03
+---
+
 
 How to bootstrap a **top-down** dynamic programming (DP) problem in Python:
 

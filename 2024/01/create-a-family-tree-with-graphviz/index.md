@@ -1,3 +1,9 @@
+---
+title: "Create a family tree with graphviz"
+url: https://perrotta.dev/2024/01/create-a-family-tree-with-graphviz/
+last_updated: 2025-12-25
+---
+
 
 [Graphviz](https://graphviz.org/)...
 

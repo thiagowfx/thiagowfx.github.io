@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1295: Find Numbers with Even Number of Digits"
+url: https://perrotta.dev/2025/12/leetcode-%231295-find-numbers-with-even-number-of-digits/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #1295: Find Numbers with Even Number of Digits](https://leetcode.com/problems/leetcode-#1295:-find-numbers-with-even-number-of-digits):
 

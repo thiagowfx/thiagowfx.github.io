@@ -1,3 +1,9 @@
+---
+title: "brew: upgrade HEAD formulas"
+url: https://perrotta.dev/2025/10/brew-upgrade-head-formulas/
+last_updated: 2025-12-25
+---
+
 
 [Previously]({{< ref "2025-10-17-distributing-my-own-scripts-via-homebrew" >}}).
 

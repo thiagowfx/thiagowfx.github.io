@@ -1,3 +1,9 @@
+---
+title: "array"
+url: https://perrotta.dev/2026/01/array/
+last_updated: 2026-01-03
+---
+
 
 ```python
 from copy import copy, deepcopy

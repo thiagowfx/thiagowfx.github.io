@@ -1,3 +1,9 @@
+---
+title: "Silence unknown callers"
+url: https://perrotta.dev/2025/08/silence-unknown-callers/
+last_updated: 2026-02-16
+---
+
 
 I absolutely **never** get any spam calls. This has been true for _many and
 many_ years now.

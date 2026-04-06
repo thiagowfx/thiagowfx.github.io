@@ -1,3 +1,9 @@
+---
+title: "md-toc: markdown table of contents"
+url: https://perrotta.dev/2025/11/md-toc-markdown-table-of-contents/
+last_updated: 2025-11-05
+---
+
 
 https://github.com/frnmst/md-toc:
 

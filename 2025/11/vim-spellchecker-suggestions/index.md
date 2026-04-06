@@ -1,3 +1,9 @@
+---
+title: "vim: spellchecker suggestions"
+url: https://perrotta.dev/2025/11/vim-spellchecker-suggestions/
+last_updated: 2026-01-03
+---
+
 
 [Previously]({{< ref "2025-07-26-vim-add-word-to-spellchecker" >}}):
 

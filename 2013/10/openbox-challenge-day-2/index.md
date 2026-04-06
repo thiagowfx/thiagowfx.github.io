@@ -1,3 +1,9 @@
+---
+title: "Openbox Challenge - Day 2"
+url: https://perrotta.dev/2013/10/openbox-challenge-day-2/
+last_updated: 2026-03-07
+---
+
 
 [Previously]({{< ref "2013-10-27-openbox-challenge-day-1" >}}).
 

@@ -1,3 +1,9 @@
+---
+title: "Dota 2 @ Linux"
+url: https://perrotta.dev/pt/posts/2014-04-20-dota-2-linux/
+last_updated: 2026-03-11
+---
+
 
 Nesse post: configurando o Linux para ter um bom desempenho no Dota 2 no Steam.
 

@@ -1,3 +1,9 @@
+---
+title: "cco: additionalDirectories"
+url: https://perrotta.dev/2026/03/cco-additionaldirectories/
+last_updated: 2026-03-18
+---
+
 
 [Previously]({{< ref "2026-02-26-cco-claude-condom-sandbox" >}}).
 

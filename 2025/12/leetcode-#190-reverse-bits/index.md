@@ -1,3 +1,9 @@
+---
+title: "LeetCode #190: Reverse Bits"
+url: https://perrotta.dev/2025/12/leetcode-%23190-reverse-bits/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #190: Reverse Bits](https://leetcode.com/problems/reverse-bits):
 

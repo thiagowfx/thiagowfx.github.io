@@ -1,3 +1,9 @@
+---
+title: "Golang fuzzing"
+url: https://perrotta.dev/2025/05/golang-fuzzing/
+last_updated: 2026-03-26
+---
+
 
 Given `go.mod`:
 

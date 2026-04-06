@@ -1,3 +1,9 @@
+---
+title: "LeetCode #66: Plus One"
+url: https://perrotta.dev/2026/01/leetcode-%2366-plus-one/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #66: Plus One](https://leetcode.com/problems/plus-one):
 

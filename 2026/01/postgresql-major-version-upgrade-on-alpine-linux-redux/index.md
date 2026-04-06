@@ -1,3 +1,9 @@
+---
+title: "PostgreSQL major version upgrade on Alpine Linux, redux"
+url: https://perrotta.dev/2026/01/postgresql-major-version-upgrade-on-alpine-linux-redux/
+last_updated: 2026-01-15
+---
+
 
 [Previously]({{< ref "2025-05-24-postgresql-major-version-upgrade-on-alpine-linux" >}}).
 

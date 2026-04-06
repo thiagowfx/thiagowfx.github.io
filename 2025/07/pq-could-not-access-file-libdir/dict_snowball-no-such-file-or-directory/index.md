@@ -1,3 +1,9 @@
+---
+title: "pq: could not access file \"$libdir/dict_snowball\": No such file or directory"
+url: https://perrotta.dev/2025/07/pq-could-not-access-file-libdir/dict_snowball-no-such-file-or-directory/
+last_updated: 2025-12-25
+---
+
 
 My [miniflux](http://miniflux.app/) instance broke yesterday. All feeds had the
 following error:

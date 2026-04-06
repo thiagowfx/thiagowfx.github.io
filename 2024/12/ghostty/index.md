@@ -1,3 +1,9 @@
+---
+title: "Ghostty"
+url: https://perrotta.dev/2024/12/ghostty/
+last_updated: 2026-01-18
+---
+
 
 From the series: yet another terminal emulator in ~~Rust~~ Zig™:
 

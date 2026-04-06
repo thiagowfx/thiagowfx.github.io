@@ -1,3 +1,9 @@
+---
+title: "fd: match full path"
+url: https://perrotta.dev/2024/10/fd-match-full-path/
+last_updated: 2025-11-30
+---
+
 
 When using [`fd(1)`](https://github.com/sharkdp/fd), only the filename is
 matched by default.

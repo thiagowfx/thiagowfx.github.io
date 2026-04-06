@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Find All Permutations"
+url: https://perrotta.dev/2025/11/bytebytego-find-all-permutations/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Find All Permutations](https://bytebytego.com/exercises/coding-patterns/backtracking/find-all-permutations):
 

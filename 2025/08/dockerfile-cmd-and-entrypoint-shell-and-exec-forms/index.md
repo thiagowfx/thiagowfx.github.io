@@ -1,3 +1,9 @@
+---
+title: "Dockerfile: CMD and ENTRYPOINT: shell and exec forms"
+url: https://perrotta.dev/2025/08/dockerfile-cmd-and-entrypoint-shell-and-exec-forms/
+last_updated: 2026-01-18
+---
+
 
 Today I filed a github issue against the
 [`dockerfmt`](https://github.com/reteps/dockerfmt/) project, which I copy

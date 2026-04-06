@@ -1,3 +1,9 @@
+---
+title: "Claude Code tips"
+url: https://perrotta.dev/2026/01/claude-code-tips/
+last_updated: 2026-01-05
+---
+
 
 These are great collections:
 

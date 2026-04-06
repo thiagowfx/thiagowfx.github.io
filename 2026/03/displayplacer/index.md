@@ -1,3 +1,9 @@
+---
+title: "displayplacer"
+url: https://perrotta.dev/2026/03/displayplacer/
+last_updated: 2026-03-13
+---
+
 
 [displayplacer](https://github.com/jakehilborn/displayplacer):
 

@@ -1,3 +1,9 @@
+---
+title: "Enhance adblock lists with uBlock origin dev filter"
+url: https://perrotta.dev/2023/12/enhance-adblock-lists-with-ublock-origin-dev-filter/
+last_updated: 2025-09-05
+---
+
 
 [uBlock-Origin-dev-filter](https://github.com/quenhus/uBlock-Origin-dev-filter):
 

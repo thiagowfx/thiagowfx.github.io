@@ -1,3 +1,9 @@
+---
+title: "i3 window manager"
+url: https://perrotta.dev/2014/11/i3-window-manager/
+last_updated: 2026-03-03
+---
+
 
 I'm a huge fan of the [i3](http://i3wm.org) tiling window manager. It was the
 first 'simple' window manager I tried, and it is still my favorite one. It eases

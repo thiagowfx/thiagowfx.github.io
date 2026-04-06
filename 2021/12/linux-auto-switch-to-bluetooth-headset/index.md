@@ -1,3 +1,9 @@
+---
+title: "Linux: Auto Switch to Bluetooth Headset"
+url: https://perrotta.dev/2021/12/linux-auto-switch-to-bluetooth-headset/
+last_updated: 2025-09-05
+---
+
 
 Whenever I connect/disconnect my bluetooth headphones to my Linux workstation, I need to manually switch to/off them.
 

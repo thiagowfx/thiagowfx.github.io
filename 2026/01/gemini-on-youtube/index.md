@@ -1,3 +1,9 @@
+---
+title: "Gemini on YouTube"
+url: https://perrotta.dev/2026/01/gemini-on-youtube/
+last_updated: 2026-01-15
+---
+
 
 It's now possible to ask questions to / chat with Gen AI about YouTube
 videos, directly on YouTube.

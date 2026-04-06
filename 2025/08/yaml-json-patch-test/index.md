@@ -1,3 +1,9 @@
+---
+title: "YAML: JSON patch: test"
+url: https://perrotta.dev/2025/08/yaml-json-patch-test/
+last_updated: 2025-08-22
+---
+
 
 [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902), JavaScript Object Notation (JSON) Patch:
 

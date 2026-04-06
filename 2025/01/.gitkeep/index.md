@@ -1,3 +1,9 @@
+---
+title: ".gitkeep"
+url: https://perrotta.dev/2025/01/.gitkeep/
+last_updated: 2026-01-03
+---
+
 
 I'm not sure if this is well-known, so here's a short anecdotal blog post:
 

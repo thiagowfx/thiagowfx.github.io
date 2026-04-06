@@ -1,3 +1,9 @@
+---
+title: "Docker: AWS ECR: list recent image tags"
+url: https://perrotta.dev/2025/08/docker-aws-ecr-list-recent-image-tags/
+last_updated: 2026-01-18
+---
+
 
 **Problem statement**: Given a docker repository hosted in
 [ECR](https://aws.amazon.com/ecr/) (AWS), list its **most recent** image tags.

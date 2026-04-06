@@ -1,3 +1,9 @@
+---
+title: "Translating German to English"
+url: https://perrotta.dev/2022/04/translating-german-to-english/
+last_updated: 2025-10-20
+---
+
 
 I've been trying to learn German on my own, without taking formal classes. I should write a post about this sometime.
 

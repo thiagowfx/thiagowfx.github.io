@@ -1,3 +1,9 @@
+---
+title: "ArgoCD: cache: key is missing"
+url: https://perrotta.dev/2025/01/argocd-cache-key-is-missing/
+last_updated: 2026-01-03
+---
+
 
 If you experience the title error message in ArgoCD (e.g. via its web UI and/or
 in pod logs), it's related to

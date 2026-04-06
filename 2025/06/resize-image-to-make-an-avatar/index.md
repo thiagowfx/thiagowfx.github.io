@@ -1,3 +1,9 @@
+---
+title: "Resize image to make an avatar"
+url: https://perrotta.dev/2025/06/resize-image-to-make-an-avatar/
+last_updated: 2025-06-24
+---
+
 
 **Problem statement**: Given a `.png` image suitable to be used as a profile
 picture (an avatar in a forum, for example), convert it to 80x80, ensure its

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #211: Design Add and Search Words Data Structure"
+url: https://perrotta.dev/2026/01/leetcode-%23211-design-add-and-search-words-data-structure/
+last_updated: 2026-01-08
+---
+
 
 [LeetCode #211: Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure):
 

@@ -1,3 +1,9 @@
+---
+title: "HTTP: a few acronyms"
+url: https://perrotta.dev/2022/02/http-a-few-acronyms/
+last_updated: 2026-01-03
+---
+
 
 I keep forgetting these, so I wrote a small summary for my own reference.
 

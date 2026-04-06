@@ -1,3 +1,9 @@
+---
+title: "git commit: automatically add pull request template"
+url: https://perrotta.dev/2025/06/git-commit-automatically-add-pull-request-template/
+last_updated: 2026-03-26
+---
+
 
 GitHub supports [pull request
 templates](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/creating-a-pull-request-template-for-your-repository).

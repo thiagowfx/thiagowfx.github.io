@@ -1,3 +1,9 @@
+---
+title: "npx serve"
+url: https://perrotta.dev/2025/05/npx-serve/
+last_updated: 2025-12-25
+---
+
 
 [Previously]({{< ref "2024-01-17-start-an-http-server-asap" >}}):
 

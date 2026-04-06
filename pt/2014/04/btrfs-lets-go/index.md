@@ -1,3 +1,9 @@
+---
+title: "btrfs, let's go"
+url: https://perrotta.dev/pt/2014/04/btrfs-lets-go/
+last_updated: 2026-03-03
+---
+
 
 Hoje ouvi num *podcast* que o Facebook em breve usará o sistema de arquivos
 *btrfs* em seus servidores. Link upstream em

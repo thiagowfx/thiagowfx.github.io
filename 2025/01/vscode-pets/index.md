@@ -1,3 +1,9 @@
+---
+title: "VSCode pets"
+url: https://perrotta.dev/2025/01/vscode-pets/
+last_updated: 2025-01-20
+---
+
 
 The definition of [this](https://github.com/tonybaloney/vscode-pets) VSCode
 extension lies somewhere within the 3D spectrum of amusing, delightful and

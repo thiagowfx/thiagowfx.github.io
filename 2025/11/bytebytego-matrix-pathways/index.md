@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Matrix Pathways"
+url: https://perrotta.dev/2025/11/bytebytego-matrix-pathways/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Matrix Pathways](https://bytebytego.com/exercises/coding-patterns/dynamic-programming/matrix-pathways):
 

@@ -1,3 +1,9 @@
+---
+title: "sort"
+url: https://perrotta.dev/2026/01/sort/
+last_updated: 2026-01-04
+---
+
 
 ```python
 a = [2, 3, 1]

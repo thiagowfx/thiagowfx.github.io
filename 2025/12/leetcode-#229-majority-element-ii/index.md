@@ -1,3 +1,9 @@
+---
+title: "LeetCode #229: Majority Element II"
+url: https://perrotta.dev/2025/12/leetcode-%23229-majority-element-ii/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #229: Majority Element II](https://leetcode.com/problems/majority-element-ii):
 

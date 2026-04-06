@@ -1,3 +1,9 @@
+---
+title: "Offloading iOS apps"
+url: https://perrotta.dev/2025/12/offloading-ios-apps/
+last_updated: 2025-12-06
+---
+
 
 Going on vacation?
 

@@ -1,3 +1,9 @@
+---
+title: "Recording screencasts on Linux"
+url: https://perrotta.dev/2015/03/recording-screencasts-on-linux/
+last_updated: 2026-02-17
+---
+
 
 One-line self-documenting functions, put this into your shell init file:
 

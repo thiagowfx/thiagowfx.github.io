@@ -1,3 +1,9 @@
+---
+title: "Reply to: Shell tricks that actually make life easier (and save your sanity) | larvitz blog"
+url: https://perrotta.dev/2026/03/reply-to-shell-tricks-that-actually-make-life-easier-and-save-your-sanity-larvitz-blog/
+last_updated: 2026-03-29
+---
+
 
 > There is a distinct, visceral kind of pain in watching an otherwise brilliant
 > engineer hold down the Backspace key for six continuous seconds to fix a typo

@@ -1,3 +1,9 @@
+---
+title: "M-x review-this-blog"
+url: https://perrotta.dev/2014/11/m-x-review-this-blog/
+last_updated: 2026-02-18
+---
+
 
 Dear reader, this place reached more than a year of existence, and this is a
 milestone I never dreamed of. I always thought that I would only blog for a few

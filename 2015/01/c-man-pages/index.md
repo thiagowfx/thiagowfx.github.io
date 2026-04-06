@@ -1,3 +1,9 @@
+---
+title: "C++ man pages"
+url: https://perrotta.dev/2015/01/c-man-pages/
+last_updated: 2026-02-17
+---
+
 
 Today I stumbled upon across a project called `cppman`[^1], which I believe has
 a very suggestive name indeed. Manual pages for the C programming language are

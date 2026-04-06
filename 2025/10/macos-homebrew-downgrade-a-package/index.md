@@ -1,3 +1,9 @@
+---
+title: "macOS homebrew: downgrade a package"
+url: https://perrotta.dev/2025/10/macos-homebrew-downgrade-a-package/
+last_updated: 2026-01-03
+---
+
 
 Yesterday we could no longer ssh to deploy servers (via a ruby-based wrapper we
 use).

@@ -1,3 +1,9 @@
+---
+title: "ArgoCD: vertical-pod-autoscaler sync loop"
+url: https://perrotta.dev/2025/02/argocd-vertical-pod-autoscaler-sync-loop/
+last_updated: 2026-01-03
+---
+
 
 We've had a long time issue wherein our
 [vertical-pod-autoscaler](https://artifacthub.io/packages/helm/cowboysysop/vertical-pod-autoscaler)

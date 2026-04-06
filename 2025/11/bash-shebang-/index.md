@@ -1,3 +1,9 @@
+---
+title: "bash shebang #!"
+url: https://perrotta.dev/2025/11/bash-shebang-/
+last_updated: 2026-02-18
+---
+
 
 When writing portable shell scripts, should we prefer `#!/bin/bash` or
 `#!/usr/bin/env bash`?

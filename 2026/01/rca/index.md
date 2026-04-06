@@ -1,3 +1,9 @@
+---
+title: "rca"
+url: https://perrotta.dev/2026/01/rca/
+last_updated: 2026-02-16
+---
+
 
 RCA = Root-Cause Analysis = Postmortem
 

@@ -1,3 +1,9 @@
+---
+title: "Games: index of"
+url: https://perrotta.dev/2015/02/games-index-of/
+last_updated: 2026-02-17
+---
+
 
 I am a huge fan of games in general, although nowadays I'm more of a casual
 player. Today I realized I never wrote a blog post about them.

@@ -1,3 +1,9 @@
+---
+title: "Doas: bridging the sudo gap"
+url: https://perrotta.dev/2022/02/doas-bridging-the-sudo-gap/
+last_updated: 2025-09-05
+---
+
 
 [`doas`][doas] is a lightweight and safer replacement for `sudo`. In most occasions you invoke it exactly like `sudo`:
 

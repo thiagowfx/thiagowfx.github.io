@@ -1,3 +1,9 @@
+---
+title: "Reply to: Mistakes engineers make in large established codebases"
+url: https://perrotta.dev/2025/01/reply-to-mistakes-engineers-make-in-large-established-codebases/
+last_updated: 2026-02-08
+---
+
 
 [Sean Goedecke](https://www.seangoedecke.com/large-established-codebases/):
 

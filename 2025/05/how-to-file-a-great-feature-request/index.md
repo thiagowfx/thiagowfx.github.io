@@ -1,3 +1,9 @@
+---
+title: "How to file a great feature request"
+url: https://perrotta.dev/2025/05/how-to-file-a-great-feature-request/
+last_updated: 2026-02-16
+---
+
 
 Obviously I'm biased to say this but I have just
 [filed](https://github.com/gruntwork-io/pre-commit/issues/130) a high-quality

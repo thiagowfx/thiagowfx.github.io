@@ -1,3 +1,9 @@
+---
+title: "Emoji appropriation"
+url: https://perrotta.dev/2024/07/emoji-appropriation/
+last_updated: 2025-09-05
+---
+
 
 Sometimes, when you chat with people, you notice that they tend to use a certain
 (sub)set of emojis frequently. The emoji choice is part of their personality.

@@ -1,3 +1,9 @@
+---
+title: "Oncall workflow with iOS shortcuts"
+url: https://perrotta.dev/2025/10/oncall-workflow-with-ios-shortcuts/
+last_updated: 2026-02-16
+---
+
 
 _The title is foreshadowing._
 

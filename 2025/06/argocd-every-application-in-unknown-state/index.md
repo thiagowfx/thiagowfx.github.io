@@ -1,3 +1,9 @@
+---
+title: "ArgoCD: every application in unknown state"
+url: https://perrotta.dev/2025/06/argocd-every-application-in-unknown-state/
+last_updated: 2026-01-03
+---
+
 
 **Symptom**: Every single application in the Kubernetes cluster that is managed
 by Argo is in `Unknown` sync status. A disaster! 😱

@@ -1,3 +1,9 @@
+---
+title: "ChatGPT default settings"
+url: https://perrotta.dev/2025/05/chatgpt-default-settings/
+last_updated: 2026-01-03
+---
+
 
 [ChatGPT's Privacy Trap: Default Settings You Can't Ignore](https://onlinesafety.substack.com/p/chatgpt-critical-privacy-settings) by Tate Jarrow:
 

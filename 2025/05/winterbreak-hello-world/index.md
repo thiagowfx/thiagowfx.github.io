@@ -1,3 +1,9 @@
+---
+title: "WinterBreak: hello world"
+url: https://perrotta.dev/2025/05/winterbreak-hello-world/
+last_updated: 2026-02-16
+---
+
 
 I decided to
 [jailbreak](https://en.wikipedia.org/wiki/Privilege_escalation#Jailbreaking) my

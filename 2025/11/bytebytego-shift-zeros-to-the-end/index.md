@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Shift Zeros to the End"
+url: https://perrotta.dev/2025/11/bytebytego-shift-zeros-to-the-end/
+last_updated: 2026-01-03
+---
+
 
 [Same as LeetCode #283]({{< ref "2025-09-12-leetcode-283-move-zeroes" >}}).
 

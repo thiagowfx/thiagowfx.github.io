@@ -1,3 +1,9 @@
+---
+title: "bisect"
+url: https://perrotta.dev/2025/11/bisect/
+last_updated: 2026-01-05
+---
+
 
 Thank you Heitor for letting me know about this module!
 

@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Valid Parenthesis Expression"
+url: https://perrotta.dev/2025/11/bytebytego-valid-parenthesis-expression/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Valid Parenthesis Expression](https://bytebytego.com/exercises/coding-patterns/stacks/valid-parenthesis-expression):
 

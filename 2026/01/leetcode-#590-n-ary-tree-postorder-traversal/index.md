@@ -1,3 +1,9 @@
+---
+title: "LeetCode #590: N-ary Tree Postorder Traversal"
+url: https://perrotta.dev/2026/01/leetcode-%23590-n-ary-tree-postorder-traversal/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #590: N-ary Tree Postorder Traversal](https://leetcode.com/problems/n-ary-tree-postorder-traversal):
 

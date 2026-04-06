@@ -1,3 +1,9 @@
+---
+title: "js"
+url: https://perrotta.dev/2026/01/js/
+last_updated: 2026-01-04
+---
+
 
 ```python
 assert ... == ...

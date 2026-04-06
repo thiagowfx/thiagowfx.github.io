@@ -1,3 +1,9 @@
+---
+title: "LeetCode #45: Jump Game II"
+url: https://perrotta.dev/2025/09/leetcode-%2345-jump-game-ii/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #45: Jump Game II](https://leetcode.com/problems/jump-game-ii/):
 

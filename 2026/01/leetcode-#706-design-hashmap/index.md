@@ -1,3 +1,9 @@
+---
+title: "LeetCode #706: Design HashMap"
+url: https://perrotta.dev/2026/01/leetcode-%23706-design-hashmap/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #706: Design HashMap](https://leetcode.com/problems/design-hashmap):
 

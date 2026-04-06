@@ -1,3 +1,9 @@
+---
+title: "ack with context"
+url: https://perrotta.dev/2025/05/ack-with-context/
+last_updated: 2025-09-05
+---
+
 
 I often use [`ack(1)`](https://beyondgrep.com/) to `grep` for text patterns in git
 repositories[^1].

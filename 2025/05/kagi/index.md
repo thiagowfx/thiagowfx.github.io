@@ -1,3 +1,9 @@
+---
+title: "Kagi"
+url: https://perrotta.dev/2025/05/kagi/
+last_updated: 2026-03-10
+---
+
 
 **TL;DR**: [Kagi](https://kagi.com/) is a web search engine.
 

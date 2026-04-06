@@ -1,3 +1,9 @@
+---
+title: "YOLO: debug only after push"
+url: https://perrotta.dev/2025/03/yolo-debug-only-after-push/
+last_updated: 2026-01-03
+---
+
 
 Whenever writing new posts in this blog I rarely preview them in advance,
 especially when they are short and simple[^1].

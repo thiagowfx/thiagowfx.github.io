@@ -1,3 +1,9 @@
+---
+title: "nix-shell in a nutshell"
+url: https://perrotta.dev/2022/02/nix-shell-in-a-nutshell/
+last_updated: 2025-09-05
+---
+
 
 As soon as we finish installing [`Nix`](https://nixos.org/download.html) on
 Darwin, we're greeted with a call to action:

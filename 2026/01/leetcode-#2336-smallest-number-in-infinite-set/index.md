@@ -1,3 +1,9 @@
+---
+title: "LeetCode #2336: Smallest Number in Infinite Set"
+url: https://perrotta.dev/2026/01/leetcode-%232336-smallest-number-in-infinite-set/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #2336: Smallest Number in Infinite Set](https://leetcode.com/problems/smallest-number-in-infinite-set):
 

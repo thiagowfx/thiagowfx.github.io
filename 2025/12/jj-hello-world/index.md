@@ -1,3 +1,9 @@
+---
+title: "jj: hello world"
+url: https://perrotta.dev/2025/12/jj-hello-world/
+last_updated: 2026-03-26
+---
+
 
 I am reasonably confident to end up (_fully_) adopting
 [`jj`](https://github.com/jj-vcs/jj) in 2026. Baby steps though.

@@ -1,3 +1,9 @@
+---
+title: "Which book should I read next?"
+url: https://perrotta.dev/2025/05/which-book-should-i-read-next/
+last_updated: 2025-05-24
+---
+
 
 Find your [Next Read](https://nextread.info/):
 

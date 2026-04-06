@@ -1,3 +1,9 @@
+---
+title: "LeetCode #256: Paint House"
+url: https://perrotta.dev/2025/12/leetcode-%23256-paint-house/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #256: Paint House](https://leetcode.com/problems/paint-house):
 

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #429: N-ary Tree Level Order Traversal"
+url: https://perrotta.dev/2026/01/leetcode-%23429-n-ary-tree-level-order-traversal/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #429: N-ary Tree Level Order Traversal](https://leetcode.com/problems/n-ary-tree-level-order-traversal):
 

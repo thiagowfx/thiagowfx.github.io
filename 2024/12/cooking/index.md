@@ -1,3 +1,9 @@
+---
+title: "Cooking"
+url: https://perrotta.dev/2024/12/cooking/
+last_updated: 2024-12-30
+---
+
 
 This [essay](https://rwblickhan.org/essays/rbog-cooking/) by Russel Blickhan is
 a very high-quality resource for the kitchen.

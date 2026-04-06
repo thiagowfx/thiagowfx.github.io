@@ -1,3 +1,9 @@
+---
+title: "Website fonts: just use the system font stack"
+url: https://perrotta.dev/2022/02/website-fonts-just-use-the-system-font-stack/
+last_updated: 2025-09-05
+---
+
 
 When I created this blog, I pondered a lot about which typography to use. I
 kept experimenting with several fonts available in [Google

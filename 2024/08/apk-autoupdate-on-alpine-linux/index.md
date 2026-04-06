@@ -1,3 +1,9 @@
+---
+title: "apk autoupdate on alpine linux"
+url: https://perrotta.dev/2024/08/apk-autoupdate-on-alpine-linux/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Upon running `doas apk upgrade` on Alpine Linux, select
 packages with binaries backed by system services should be automatically

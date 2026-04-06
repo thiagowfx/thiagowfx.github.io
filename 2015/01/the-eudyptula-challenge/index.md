@@ -1,3 +1,9 @@
+---
+title: "The Eudyptula Challenge"
+url: https://perrotta.dev/2015/01/the-eudyptula-challenge/
+last_updated: 2026-02-17
+---
+
 
 **Update: I stopped at task 06 on February. Little seems to have stopped responding e-mails. Which is sad, because I was liking those tasks =/**
 

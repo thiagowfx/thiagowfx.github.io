@@ -1,3 +1,9 @@
+---
+title: "GitHub stale bot considered harmful"
+url: https://perrotta.dev/2025/09/github-stale-bot-considered-harmful/
+last_updated: 2025-09-16
+---
+
 
 [Drew DeVault](https://drewdevault.com/2021/10/26/stalebot.html):
 

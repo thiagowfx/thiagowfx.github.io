@@ -1,3 +1,9 @@
+---
+title: "Micromarriages"
+url: https://perrotta.dev/2025/03/micromarriages/
+last_updated: 2025-03-17
+---
+
 
 [Russel Blickhan](https://rwblickhan.org/newsletters/micromarriages/):
 

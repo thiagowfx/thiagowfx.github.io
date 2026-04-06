@@ -1,3 +1,9 @@
+---
+title: "Q\u0026A With Nine Great Programmers"
+url: https://perrotta.dev/2013/12/qa-with-nine-great-programmers/
+last_updated: 2026-02-17
+---
+
 
 Warning: it is long. But, IMHO, a worth read (if you care about this subject). I
 personally feel so great that I know at least half of them. This probably means

@@ -1,3 +1,9 @@
+---
+title: "Responsible adult with a digital calendar"
+url: https://perrotta.dev/2025/09/responsible-adult-with-a-digital-calendar/
+last_updated: 2025-09-26
+---
+
 
 [I'm a responsible adult with a digital calendar](https://onefoottsunami.com/2025/09/19/in-my-inbox-september-2025-edition/), says Paul Kafasis:
 

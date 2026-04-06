@@ -1,3 +1,9 @@
+---
+title: "Fiction"
+url: https://perrotta.dev/2025/01/fiction/
+last_updated: 2025-01-02
+---
+
 
 **Immersion**.
 

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #195: Tenth line"
+url: https://perrotta.dev/2025/12/leetcode-%23195-tenth-line/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #195: Tenth line](https://leetcode.com/problems/tenth-line):
 

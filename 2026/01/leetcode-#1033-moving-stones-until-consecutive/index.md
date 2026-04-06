@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1033: Moving Stones Until Consecutive"
+url: https://perrotta.dev/2026/01/leetcode-%231033-moving-stones-until-consecutive/
+last_updated: 2026-01-07
+---
+
 
 [LeetCode #1033: Moving Stones Until Consecutive](https://leetcode.com/problems/moving-stones-until-consecutive):
 

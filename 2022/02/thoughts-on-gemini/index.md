@@ -1,3 +1,9 @@
+---
+title: "Thoughts on Gemini"
+url: https://perrotta.dev/2022/02/thoughts-on-gemini/
+last_updated: 2026-02-16
+---
+
 
 From the [homepage](https://gemini.circumlunar.space):
 

@@ -1,3 +1,9 @@
+---
+title: "Asciinema"
+url: https://perrotta.dev/pt/2014/06/asciinema/
+last_updated: 2026-02-15
+---
+
 
 Descobri uma ferramenta bastante útil para gravar sessões de terminal:
 asciinema. E, é claro, ela é open-source: cliente e website. Feita em python, e

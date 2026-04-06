@@ -1,3 +1,9 @@
+---
+title: "Reply to: the Threads algorithm loves rage bait"
+url: https://perrotta.dev/2026/02/reply-to-the-threads-algorithm-loves-rage-bait/
+last_updated: 2026-02-08
+---
+
 
 This is an exemplary situation illustrating why running a personal blog is
 simply much nicer than jumping the social media bandwagon.

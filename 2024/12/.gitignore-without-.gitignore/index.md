@@ -1,3 +1,9 @@
+---
+title: ".gitignore without .gitignore"
+url: https://perrotta.dev/2024/12/.gitignore-without-.gitignore/
+last_updated: 2026-01-03
+---
+
 
 `.gitignore` is the canonical way to exclude files from your git repository.
 

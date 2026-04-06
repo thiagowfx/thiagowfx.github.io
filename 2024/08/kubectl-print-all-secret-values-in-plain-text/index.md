@@ -1,3 +1,9 @@
+---
+title: "kubectl: print all secret values in plain text"
+url: https://perrotta.dev/2024/08/kubectl-print-all-secret-values-in-plain-text/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Given a [kubernetes
 secret](https://kubernetes.io/docs/concepts/configuration/secret/) with more

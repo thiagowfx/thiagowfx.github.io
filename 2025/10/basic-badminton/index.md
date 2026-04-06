@@ -1,3 +1,9 @@
+---
+title: "Basic Badminton"
+url: https://perrotta.dev/2025/10/basic-badminton/
+last_updated: 2025-10-30
+---
+
 
 [Previously]({{< ref "2025-03-28-badminton" >}}).
 

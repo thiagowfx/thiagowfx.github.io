@@ -1,3 +1,9 @@
+---
+title: "kubectl: get secret with jsonpath and add a newline"
+url: https://perrotta.dev/2024/07/kubectl-get-secret-with-jsonpath-and-add-a-newline/
+last_updated: 2026-01-03
+---
+
 
 When retrieving opaque secrets with `kubectl`, one will often invoke this
 typical command:

@@ -1,3 +1,9 @@
+---
+title: "YAML multiline strings"
+url: https://perrotta.dev/2024/09/yaml-multiline-strings/
+last_updated: 2025-09-05
+---
+
 
 I keep forgetting what the correct syntax is.
 

@@ -1,3 +1,9 @@
+---
+title: "Career Leverage as a Developer"
+url: https://perrotta.dev/2025/09/career-leverage-as-a-developer/
+last_updated: 2025-09-07
+---
+
 
 Dan Moore, [Career Leverage as a Developer](https://www.mooreds.com/wordpress/archives/3712):
 

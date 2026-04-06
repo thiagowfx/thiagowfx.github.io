@@ -1,3 +1,9 @@
+---
+title: "Chrome: hide bookmarks bar"
+url: https://perrotta.dev/2025/11/chrome-hide-bookmarks-bar/
+last_updated: 2025-11-02
+---
+
 
 It is a good practice to [hide the bookmarks
 bar](https://www.jakeworth.com/tils/hide-bookmarks-bar-in-chrome/) in Chrome in

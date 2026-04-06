@@ -1,3 +1,9 @@
+---
+title: "From Emacs to Vim - Chapter #1 - Vim plug-ins"
+url: https://perrotta.dev/2014/10/from-emacs-to-vim-chapter-%231-vim-plug-ins/
+last_updated: 2026-02-18
+---
+
 
 This is the continuation of the first post. As you get the feeling and overview
 of **vim**, the first thing you'll probably miss as a

@@ -1,3 +1,9 @@
+---
+title: "pull request"
+url: https://perrotta.dev/pt/2014/03/pull-request/
+last_updated: 2026-03-29
+---
+
 
 Meu primeiro *pull request* para um projeto *open source* acabou de ser aceito!
 :D

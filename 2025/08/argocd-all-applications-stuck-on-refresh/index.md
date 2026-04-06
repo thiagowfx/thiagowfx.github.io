@@ -1,3 +1,9 @@
+---
+title: "ArgoCD: all applications stuck on refresh"
+url: https://perrotta.dev/2025/08/argocd-all-applications-stuck-on-refresh/
+last_updated: 2026-01-03
+---
+
 
 The problem is very likely the Application Controller.
 

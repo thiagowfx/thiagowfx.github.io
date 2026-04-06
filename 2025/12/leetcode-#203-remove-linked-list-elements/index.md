@@ -1,3 +1,9 @@
+---
+title: "LeetCode #203: Remove Linked List Elements"
+url: https://perrotta.dev/2025/12/leetcode-%23203-remove-linked-list-elements/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #203: Remove Linked List Elements](https://leetcode.com/problems/leetcode-#203:-remove-linked-list-elements):
 

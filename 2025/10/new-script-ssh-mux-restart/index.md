@@ -1,3 +1,9 @@
+---
+title: "New script: SSH mux restart"
+url: https://perrotta.dev/2025/10/new-script-ssh-mux-restart/
+last_updated: 2026-01-18
+---
+
 
 [Previously]({{< ref "2025-10-21-github-the-organization-has-enabled-or-enforced-saml-sso" >}}),
 [previously]({{< ref "2025-05-07-1password-ssh-agent-error" >}}).

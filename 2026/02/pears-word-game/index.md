@@ -1,3 +1,9 @@
+---
+title: "pears: word game"
+url: https://perrotta.dev/2026/02/pears-word-game/
+last_updated: 2026-02-17
+---
+
 
 Besides [Wordle](https://www.nytimes.com/games/wordle/index.html) by the NYT and
 [Jumblie]({{< ref "2024-02-01-jumblie" >}}) by Cassidy Williams, now we have

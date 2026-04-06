@@ -1,3 +1,9 @@
+---
+title: "neovim: inline git hunk control"
+url: https://perrotta.dev/2026/01/neovim-inline-git-hunk-control/
+last_updated: 2026-02-22
+---
+
 
 What is a
 [hunk](https://stackoverflow.com/questions/37620729/in-the-context-of-git-and-diff-what-is-a-hunk)?

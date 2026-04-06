@@ -1,3 +1,9 @@
+---
+title: "Toggle light / dark mode"
+url: https://perrotta.dev/2025/12/toggle-light-/-dark-mode/
+last_updated: 2025-12-21
+---
+
 
 After dabbling about this for a while, I decided to add a non-intrusive icon to
 the footer of this site, wherein you can manually toggle between the light and

@@ -1,3 +1,9 @@
+---
+title: "Oneshot prompting"
+url: https://perrotta.dev/2026/01/oneshot-prompting/
+last_updated: 2026-02-22
+---
+
 
 I just wrote [this post]({{< ref "2026-01-03-neovim-inline-git-hunk-control"
 >}}) about `neovim` and `git` hunks.

@@ -1,3 +1,9 @@
+---
+title: "Amphetamine: Keep awake"
+url: https://perrotta.dev/2025/03/amphetamine-keep-awake/
+last_updated: 2025-09-05
+---
+
 
 [Amphetamine](https://apps.apple.com/us/app/amphetamine/id937984704?mt=12):
 

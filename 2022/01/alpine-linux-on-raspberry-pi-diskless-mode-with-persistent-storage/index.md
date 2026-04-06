@@ -1,3 +1,9 @@
+---
+title: "Alpine Linux on Raspberry Pi: Diskless Mode with persistent storage"
+url: https://perrotta.dev/2022/01/alpine-linux-on-raspberry-pi-diskless-mode-with-persistent-storage/
+last_updated: 2026-02-07
+---
+
 
 Use case: Given an Alpine Linux **diskless**[^1] installation meant for
 a Raspberry Pi setup, we would like to add a persistent storage component to it

@@ -1,3 +1,9 @@
+---
+title: "Google Gemini: read CLAUDE.md or AGENTS.md"
+url: https://perrotta.dev/2025/11/google-gemini-read-claude.md-or-agents.md/
+last_updated: 2025-11-17
+---
+
 
 **Problem statement**: Make Google's [Gemini](https://gemini.google.com/) read
 [`CLAUDE.md`](https://www.anthropic.com/engineering/claude-code-best-practices)

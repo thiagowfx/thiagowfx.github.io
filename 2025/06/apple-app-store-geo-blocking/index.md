@@ -1,3 +1,9 @@
+---
+title: "Apple App Store Geo-blocking"
+url: https://perrotta.dev/2025/06/apple-app-store-geo-blocking/
+last_updated: 2026-01-03
+---
+
 
 Apple Accounts are tied to a specific country. You can have one and only one
 country associated with an account at any given time.

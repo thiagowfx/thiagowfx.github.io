@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Longest Chain of Consecutive Numbers"
+url: https://perrotta.dev/2025/11/bytebytego-longest-chain-of-consecutive-numbers/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Longest Chain of Consecutive Numbers](https://bytebytego.com/exercises/coding-patterns/hash-maps-and-sets/longest-chain-of-consecutive-numbers):
 

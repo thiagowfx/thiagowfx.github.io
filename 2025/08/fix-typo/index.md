@@ -1,3 +1,9 @@
+---
+title: "\"Fix typo\""
+url: https://perrotta.dev/2025/08/fix-typo/
+last_updated: 2026-01-03
+---
+
 
 You, too, can make the ~~word~~ world a better place,
 [one](https://github.com/codespell-project/codespell/pull/3758)

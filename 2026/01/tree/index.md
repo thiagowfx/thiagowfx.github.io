@@ -1,3 +1,9 @@
+---
+title: "tree"
+url: https://perrotta.dev/2026/01/tree/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Implement a glorified `Node` class, representing a binary
 tree.

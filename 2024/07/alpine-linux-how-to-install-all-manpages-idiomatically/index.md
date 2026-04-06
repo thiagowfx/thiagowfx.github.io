@@ -1,3 +1,9 @@
+---
+title: "Alpine Linux: How to install all manpages (idiomatically)"
+url: https://perrotta.dev/2024/07/alpine-linux-how-to-install-all-manpages-idiomatically/
+last_updated: 2026-01-03
+---
+
 
 This post is a reply to
 https://tilde.town/~kzimmermann/articles/installing_alpine_manpages.html.

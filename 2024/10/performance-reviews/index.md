@@ -1,3 +1,9 @@
+---
+title: "Performance reviews"
+url: https://perrotta.dev/2024/10/performance-reviews/
+last_updated: 2025-12-31
+---
+
 
 During performance reviews[^1], it's handy to obtain an overview of your
 accomplishments that are stored as artifacts in source control systems.

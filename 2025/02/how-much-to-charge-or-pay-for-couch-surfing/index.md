@@ -1,3 +1,9 @@
+---
+title: "How much to charge or pay for couch surfing?"
+url: https://perrotta.dev/2025/02/how-much-to-charge-or-pay-for-couch-surfing/
+last_updated: 2025-09-05
+---
+
 
 First of all, you should _arguably_ not charge:
 

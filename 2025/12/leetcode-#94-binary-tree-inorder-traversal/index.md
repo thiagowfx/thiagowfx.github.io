@@ -1,3 +1,9 @@
+---
+title: "LeetCode #94: Binary Tree Inorder Traversal"
+url: https://perrotta.dev/2025/12/leetcode-%2394-binary-tree-inorder-traversal/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #94: Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal):
 

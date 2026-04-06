@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1480: Running Sum of 1d Array"
+url: https://perrotta.dev/2025/12/leetcode-%231480-running-sum-of-1d-array/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #1480: Running Sum of 1d Array](https://leetcode.com/problems/leetcode-#1480:-running-sum-of-1d-array):
 

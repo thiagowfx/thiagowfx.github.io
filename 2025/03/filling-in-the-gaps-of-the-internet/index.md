@@ -1,3 +1,9 @@
+---
+title: "Filling in the gaps of the internet"
+url: https://perrotta.dev/2025/03/filling-in-the-gaps-of-the-internet/
+last_updated: 2025-03-14
+---
+
 
 [Filling in the gaps of the internet](https://evanhahn.com/filling-in-the-gaps-of-the-internet/) by Evan Hahn:
 

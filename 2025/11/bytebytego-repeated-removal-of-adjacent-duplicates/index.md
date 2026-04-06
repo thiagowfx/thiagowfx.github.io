@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Repeated Removal of Adjacent Duplicates"
+url: https://perrotta.dev/2025/11/bytebytego-repeated-removal-of-adjacent-duplicates/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Repeated Removal of Adjacent Duplicates](https://bytebytego.com/exercises/coding-patterns/stacks/repeated-removal-of-adjacent-duplicates):
 

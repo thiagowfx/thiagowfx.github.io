@@ -1,3 +1,9 @@
+---
+title: "git: prune stale branches"
+url: https://perrotta.dev/2025/11/git-prune-stale-branches/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Delete all local git branches whose counterpart remote
 branches have already been merged upstream.

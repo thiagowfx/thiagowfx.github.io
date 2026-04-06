@@ -1,3 +1,9 @@
+---
+title: "Direnv: Automate your Environment Variables"
+url: https://perrotta.dev/2022/01/direnv-automate-your-environment-variables/
+last_updated: 2026-03-26
+---
+
 
 [Direnv][direnv] is a tool to automate your shell to automatically load and unload environment variables on-the-fly, on a per-project (per-directory) basis.
 

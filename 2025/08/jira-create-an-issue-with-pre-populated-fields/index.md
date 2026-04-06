@@ -1,3 +1,9 @@
+---
+title: "JIRA: create an issue with pre-populated fields"
+url: https://perrotta.dev/2025/08/jira-create-an-issue-with-pre-populated-fields/
+last_updated: 2025-09-05
+---
+
 
 It is somewhat tedious to create issues[^1] in JIRA. It is a bloated and complex web
 app, slow to load, with a myriad of fields to fill in.

@@ -1,3 +1,9 @@
+---
+title: "midnight commander: colorscheme"
+url: https://perrotta.dev/2025/08/midnight-commander-colorscheme/
+last_updated: 2025-09-05
+---
+
 
 GNU [Midnight commander](https://midnight-commander.org/):
 

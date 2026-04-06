@@ -1,3 +1,9 @@
+---
+title: "Miniflux: global blocklist"
+url: https://perrotta.dev/2024/12/miniflux-global-blocklist/
+last_updated: 2025-12-25
+---
+
 
 One of the best features of [miniflux](https://miniflux.app/) rolled out [this year](https://github.com/miniflux/v2/blob/main/ChangeLog)[^1]
 was the ability to globally block feed items that match certain patterns.

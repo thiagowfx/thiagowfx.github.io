@@ -1,3 +1,9 @@
+---
+title: "PKGBUILD Class @ IRC"
+url: https://perrotta.dev/2014/04/pkgbuild-class-@-irc/
+last_updated: 2026-02-18
+---
+
 
 This was probably the first time I enjoyed reading an IRC log. Thanks,
 _CalimeroTeknik_!

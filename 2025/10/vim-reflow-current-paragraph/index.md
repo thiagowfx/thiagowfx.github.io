@@ -1,3 +1,9 @@
+---
+title: "vim: reflow current paragraph"
+url: https://perrotta.dev/2025/10/vim-reflow-current-paragraph/
+last_updated: 2026-02-18
+---
+
 
 **Problem statement**: Given a paragraph (`lorem_ipsum.txt`):
 

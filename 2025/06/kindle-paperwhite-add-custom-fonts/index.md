@@ -1,3 +1,9 @@
+---
+title: "Kindle Paperwhite: add custom fonts"
+url: https://perrotta.dev/2025/06/kindle-paperwhite-add-custom-fonts/
+last_updated: 2025-12-25
+---
+
 
 First step, download the font you're interested in. In this example, I used
 [Literata](https://fonts.google.com/specimen/Literata)[^1].

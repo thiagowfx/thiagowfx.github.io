@@ -1,3 +1,9 @@
+---
+title: "Linux: Remount device with different options"
+url: https://perrotta.dev/2022/01/linux-remount-device-with-different-options/
+last_updated: 2025-09-05
+---
+
 
 A few recipes for remounting linux devices / disks. It mostly boils down to running `mount -o remount` as root.
 

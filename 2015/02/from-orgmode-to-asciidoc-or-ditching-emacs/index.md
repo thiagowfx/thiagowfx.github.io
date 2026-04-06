@@ -1,3 +1,9 @@
+---
+title: "From orgmode to asciidoc (OR: ditching emacs)"
+url: https://perrotta.dev/2015/02/from-orgmode-to-asciidoc-or-ditching-emacs/
+last_updated: 2026-02-17
+---
+
 
 Hello people, I'm back. The portal will open in 3…2…1..**.** OK, here are some
 _updates_. After taming the beast for two long years, I'm now slowly ditching

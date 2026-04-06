@@ -1,3 +1,9 @@
+---
+title: "HTTPS Everywhere: So long and thanks for all the fish"
+url: https://perrotta.dev/2022/03/https-everywhere-so-long-and-thanks-for-all-the-fish/
+last_updated: 2026-01-01
+---
+
 
 EFF's[^1] [HTTPS Everywhere](https://chrome.google.com/webstore/detail/https-everywhere/gcbommkclmclpchllfjekcdonpmejbdp) is a browser extension available for all major browsers that automatically upgrades HTTP to HTTPS on supported websites.
 

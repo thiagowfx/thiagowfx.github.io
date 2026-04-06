@@ -1,3 +1,9 @@
+---
+title: "DuckDuckGo email protection"
+url: https://perrotta.dev/2025/02/duckduckgo-email-protection/
+last_updated: 2026-01-03
+---
+
 
 One of my best discoveries this year: [DuckDuckGo email
 protection](https://duckduckgo.com/duckduckgo-help-pages/email-protection/):

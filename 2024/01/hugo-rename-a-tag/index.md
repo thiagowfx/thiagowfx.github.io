@@ -1,3 +1,9 @@
+---
+title: "Hugo: rename a tag"
+url: https://perrotta.dev/2024/01/hugo-rename-a-tag/
+last_updated: 2025-09-05
+---
+
 
 This blog is rendered by the means of a static site generator (SSG) called
 [Hugo](https://gohugo.io/). Each blog post has a set of one or more tags

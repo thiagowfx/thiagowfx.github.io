@@ -1,3 +1,9 @@
+---
+title: "GitHub: vacation mode"
+url: https://perrotta.dev/2025/04/github-vacation-mode/
+last_updated: 2025-04-13
+---
+
 
 [Since 2019](https://github.blog/changelog/2019-01-08-set-your-status/) GitHub
 allows setting a status on your profile page:

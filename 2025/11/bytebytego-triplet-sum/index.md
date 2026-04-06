@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Triplet Sum"
+url: https://perrotta.dev/2025/11/bytebytego-triplet-sum/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Triplet Sum](https://bytebytego.com/exercises/coding-patterns/two-pointers/triplet-sum):
 

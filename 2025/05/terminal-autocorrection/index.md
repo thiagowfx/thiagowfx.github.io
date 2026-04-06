@@ -1,3 +1,9 @@
+---
+title: "Terminal autocorrection"
+url: https://perrotta.dev/2025/05/terminal-autocorrection/
+last_updated: 2025-05-02
+---
+
 
 Appreciate this:
 

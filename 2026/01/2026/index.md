@@ -1,3 +1,9 @@
+---
+title: "2026"
+url: https://perrotta.dev/2026/01/2026/
+last_updated: 2026-01-12
+---
+
 
 Tech. Geopolitics. 2026 is terrifying. 2026 is exciting. Both can be
 simultaneously true. You can both like and dislike the current state of affairs

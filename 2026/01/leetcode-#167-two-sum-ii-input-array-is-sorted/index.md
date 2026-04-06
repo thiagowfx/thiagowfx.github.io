@@ -1,3 +1,9 @@
+---
+title: "LeetCode #167: Two Sum II - Input Array Is Sorted"
+url: https://perrotta.dev/2026/01/leetcode-%23167-two-sum-ii-input-array-is-sorted/
+last_updated: 2026-02-22
+---
+
 
 [LeetCode #167: Two Sum II — Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii---input-array-is-sorted):
 

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #3396: Minimum Number of Operations to Make Elements in Array Distinct"
+url: https://perrotta.dev/2025/12/leetcode-%233396-minimum-number-of-operations-to-make-elements-in-array-distinct/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode 3396. Minimum Number of Operations to Make Elements in Array Distinct](https://leetcode.com/problems/minimum-number-of-operations-to-make-elements-in-array-distinct):
 

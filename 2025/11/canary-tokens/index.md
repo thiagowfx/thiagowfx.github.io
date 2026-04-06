@@ -1,3 +1,9 @@
+---
+title: "Canary tokens"
+url: https://perrotta.dev/2025/11/canary-tokens/
+last_updated: 2026-01-03
+---
+
 
 [Canary Tokens](https://canarytokens.org/),
 [introduction](https://docs.canarytokens.org/guide/):

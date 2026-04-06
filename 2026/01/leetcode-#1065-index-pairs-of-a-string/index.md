@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1065: Index Pairs of a String"
+url: https://perrotta.dev/2026/01/leetcode-%231065-index-pairs-of-a-string/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #1065: Index Pairs of a String](https://leetcode.com/problems/index-pairs-of-a-string):
 

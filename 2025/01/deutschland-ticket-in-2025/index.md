@@ -1,3 +1,9 @@
+---
+title: "Deutschland Ticket in 2025"
+url: https://perrotta.dev/2025/01/deutschland-ticket-in-2025/
+last_updated: 2026-01-04
+---
+
 
 This post is written as a reference for friends who would visit me in Germany 🇩🇪.
 

@@ -1,3 +1,9 @@
+---
+title: "Diffoscope: exclude directory metadata"
+url: https://perrotta.dev/2025/06/diffoscope-exclude-directory-metadata/
+last_updated: 2025-06-16
+---
+
 
 [Previously]({{< ref "2024-08-24-diffoscope-recursive-diffs" >}}),
 [previously]({{< ref "2024-08-24-diffoscope-recursive-diffs" >}}).

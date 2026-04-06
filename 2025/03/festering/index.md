@@ -1,3 +1,9 @@
+---
+title: "Festering"
+url: https://perrotta.dev/2025/03/festering/
+last_updated: 2025-03-25
+---
+
 
 [Festering](https://joshuawold.com/lingering-emails/) by Joshua Wold (via [Chris
 Coyier](https://email-is-good.com/2025/03/24/festering/)):

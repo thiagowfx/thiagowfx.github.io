@@ -1,3 +1,9 @@
+---
+title: "Living on Ubuntu - Instance #1"
+url: https://perrotta.dev/2014/09/living-on-ubuntu-instance-%231/
+last_updated: 2026-02-17
+---
+
 
 As stated in my last post, I'm now using Ubuntu as my main linux distro. This is temporary and might even hurt a little, however I'm willing to keep going with this goal for a while.
 

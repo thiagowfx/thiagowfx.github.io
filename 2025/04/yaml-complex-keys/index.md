@@ -1,3 +1,9 @@
+---
+title: "YAML: complex keys"
+url: https://perrotta.dev/2025/04/yaml-complex-keys/
+last_updated: 2025-04-29
+---
+
 
 **Today I learned**: YAML complex keys ([stack
 overflow](https://stackoverflow.com/questions/33987316/what-is-a-complex-mapping-key-in-yaml)).

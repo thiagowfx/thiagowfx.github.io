@@ -1,3 +1,9 @@
+---
+title: "Slack: public chats first"
+url: https://perrotta.dev/2025/06/slack-public-chats-first/
+last_updated: 2026-02-16
+---
+
 
 [Why Public Slack Chats are Better than Direct Messages](https://www.mooreds.com/wordpress/archives/3706) by Dan Moore:
 

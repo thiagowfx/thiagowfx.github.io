@@ -1,3 +1,9 @@
+---
+title: "Reply to: Introduce yourself to your remote team"
+url: https://perrotta.dev/2024/12/reply-to-introduce-yourself-to-your-remote-team/
+last_updated: 2026-02-16
+---
+
 
 ([via](https://cassidoo.co/post/remote-intros/)) Cassidy Williams:
 

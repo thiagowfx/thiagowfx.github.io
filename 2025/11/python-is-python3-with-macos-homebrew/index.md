@@ -1,3 +1,9 @@
+---
+title: "python-is-python3 with macOS homebrew"
+url: https://perrotta.dev/2025/11/python-is-python3-with-macos-homebrew/
+last_updated: 2026-02-18
+---
+
 
 I face this annoyance all the time:
 

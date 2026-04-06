@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Remove the Kth Last Node From a Linked List"
+url: https://perrotta.dev/2025/12/bytebytego-remove-the-kth-last-node-from-a-linked-list/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Remove the Kth Last Node From a Linked List](https://bytebytego.com/exercises/coding-patterns/linked-lists/remove-the-kth-last-node-from-a-linked-list):
 

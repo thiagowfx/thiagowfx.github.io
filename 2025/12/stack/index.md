@@ -1,3 +1,9 @@
+---
+title: "stack"
+url: https://perrotta.dev/2025/12/stack/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Implement a glorified `Stack` class.
 

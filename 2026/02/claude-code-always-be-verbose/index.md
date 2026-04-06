@@ -1,3 +1,9 @@
+---
+title: "Claude Code: always be 'verbose'"
+url: https://perrotta.dev/2026/02/claude-code-always-be-verbose/
+last_updated: 2026-02-22
+---
+
 
 **Problem statement**: Claude Code responses have been getting shorter lately.
 

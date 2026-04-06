@@ -1,3 +1,9 @@
+---
+title: "2^11 (aka 2048)"
+url: https://perrotta.dev/pt/2014/03/211-aka-2048/
+last_updated: 2026-03-03
+---
+
 
 Ah, eis o *hit* dos últimos dias, um jogo simples, com um nome simples, com uma
 jogabilidade simples, e também com uma maneira bastante simples de agradar os

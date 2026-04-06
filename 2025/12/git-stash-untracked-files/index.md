@@ -1,3 +1,9 @@
+---
+title: "git: stash untracked files"
+url: https://perrotta.dev/2025/12/git-stash-untracked-files/
+last_updated: 2026-01-03
+---
+
 
 As I write this very post, this is what my git repository status looks like:
 

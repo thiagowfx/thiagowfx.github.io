@@ -1,3 +1,9 @@
+---
+title: "Kubernetes: pod memory usage"
+url: https://perrotta.dev/2025/09/kubernetes-pod-memory-usage/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Given a pod in Kubernetes, check its memory (RAM) usage.
 

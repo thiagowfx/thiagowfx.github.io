@@ -1,3 +1,9 @@
+---
+title: "LeetCode #326: Power of Three"
+url: https://perrotta.dev/2025/12/leetcode-%23326-power-of-three/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #326: Power of Three](https://leetcode.com/problems/power-of-three):
 

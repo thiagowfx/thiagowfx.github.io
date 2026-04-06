@@ -1,3 +1,9 @@
+---
+title: "Erratic: human-friendly google3 piper snapshots"
+url: https://perrotta.dev/2024/10/erratic-human-friendly-google3-piper-snapshots/
+last_updated: 2026-01-01
+---
+
 
 In the google3 codebase, when working with Piper directly (i.e. not
 Fig[-on-CitC]), I often liked to use this tool called `erratic` (abbrev: `er`),

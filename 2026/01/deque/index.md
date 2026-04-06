@@ -1,3 +1,9 @@
+---
+title: "deque"
+url: https://perrotta.dev/2026/01/deque/
+last_updated: 2026-01-11
+---
+
 
 ```python
 from collections import deque

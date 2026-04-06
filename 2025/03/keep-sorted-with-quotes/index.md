@@ -1,3 +1,9 @@
+---
+title: "keep-sorted, with quotes"
+url: https://perrotta.dev/2025/03/keep-sorted-with-quotes/
+last_updated: 2026-01-03
+---
+
 
 [keep-sorted]({{< ref "2024-12-26-keep-sorted" >}}) has been previously covered.
 

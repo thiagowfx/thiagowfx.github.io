@@ -1,3 +1,9 @@
+---
+title: "TV remote controller"
+url: https://perrotta.dev/2026/01/tv-remote-controller/
+last_updated: 2026-01-23
+---
+
 
 I have an Android TV whose remote controller stopped working suddenly out of
 nowhere. I replaced its AAA batteries to no avail.

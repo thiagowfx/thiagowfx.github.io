@@ -1,3 +1,9 @@
+---
+title: "check-json-schema: pre-commit hook"
+url: https://perrotta.dev/2025/07/check-json-schema-pre-commit-hook/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: given an `entry.json` file, validate it against a given
 `schema.json` file (for example, found via the [schema

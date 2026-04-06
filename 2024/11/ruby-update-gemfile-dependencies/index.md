@@ -1,3 +1,9 @@
+---
+title: "Ruby: update Gemfile dependencies"
+url: https://perrotta.dev/2024/11/ruby-update-gemfile-dependencies/
+last_updated: 2024-12-20
+---
+
 
 Oneshot:
 

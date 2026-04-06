@@ -1,3 +1,9 @@
+---
+title: "Como receber spam do POP3 do gmail"
+url: https://perrotta.dev/pt/2013/08/como-receber-spam-do-pop3-do-gmail/
+last_updated: 2026-03-11
+---
+
 
 O leitor não precisa se assustar com o título do post, é isso mesmo que você
 leu.

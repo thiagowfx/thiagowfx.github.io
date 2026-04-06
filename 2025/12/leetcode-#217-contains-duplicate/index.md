@@ -1,3 +1,9 @@
+---
+title: "LeetCode #217: Contains Duplicate"
+url: https://perrotta.dev/2025/12/leetcode-%23217-contains-duplicate/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #217: Contains Duplicate](https://leetcode.com/problems/contains-duplicate):
 

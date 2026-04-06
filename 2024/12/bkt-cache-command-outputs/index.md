@@ -1,3 +1,9 @@
+---
+title: "bkt: cache command outputs"
+url: https://perrotta.dev/2024/12/bkt-cache-command-outputs/
+last_updated: 2025-09-05
+---
+
 
 My esteemed friend [Michael Diamond](https://github.com/dimo414) wrote [`bkt`](https://www.bkt.rs/)[^1]:
 

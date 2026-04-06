@@ -1,3 +1,9 @@
+---
+title: "IMEI"
+url: https://perrotta.dev/2025/10/imei/
+last_updated: 2025-10-12
+---
+
 
 To display the [IMEI](https://en.wikipedia.org/wiki/International_Mobile_Equipment_Identity) of your iphone, open the Phone / Dialer app and type in
 `*#06#`.

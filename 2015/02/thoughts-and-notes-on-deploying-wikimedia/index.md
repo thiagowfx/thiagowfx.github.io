@@ -1,3 +1,9 @@
+---
+title: "Thoughts and notes on deploying Wikimedia"
+url: https://perrotta.dev/2015/02/thoughts-and-notes-on-deploying-wikimedia/
+last_updated: 2026-02-18
+---
+
 
 Wikimedia is the most full-featured wiki software out there and powers
 Wikipedia. Let me talk about what you may not know yet.

@@ -1,3 +1,9 @@
+---
+title: "Compress a .pdf in macOS with Preview.app"
+url: https://perrotta.dev/2024/11/compress-a-.pdf-in-macos-with-preview.app/
+last_updated: 2026-01-03
+---
+
 
 All hail to [Apple
 Documentation](https://support.apple.com/en-ca/guide/preview/prvw1509/mac).

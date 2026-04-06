@@ -1,3 +1,9 @@
+---
+title: "Shell text substitution"
+url: https://perrotta.dev/2024/04/shell-text-substitution/
+last_updated: 2025-09-05
+---
+
 
 I learned a neat shell trick this week. In both `bash` and `zsh` you can use the
 circumflex / caret (`^`) symbol to find & replace a word from the previous

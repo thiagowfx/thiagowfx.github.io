@@ -1,3 +1,9 @@
+---
+title: "LeetCode #379: Design Phone Directory"
+url: https://perrotta.dev/2026/02/leetcode-%23379-design-phone-directory/
+last_updated: 2026-02-23
+---
+
 
 [LeetCode #379: Design Phone Directory](https://leetcode.com/problems/design-phone-directory):
 

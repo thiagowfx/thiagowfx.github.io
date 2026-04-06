@@ -1,3 +1,9 @@
+---
+title: "LeetCode #383: Ransom Note"
+url: https://perrotta.dev/2025/12/leetcode-%23383-ransom-note/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #383: Ransom Note](https://leetcode.com/problems/leetcode-#383:-ransom-note):
 

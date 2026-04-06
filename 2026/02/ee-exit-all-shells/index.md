@@ -1,3 +1,9 @@
+---
+title: "ee: exit all shells"
+url: https://perrotta.dev/2026/02/ee-exit-all-shells/
+last_updated: 2026-02-23
+---
+
 
 **Problem statement**: I present this to you the same way I presented it to [Amp
 Code](https://ampcode.com) in the context of my

@@ -1,3 +1,9 @@
+---
+title: "Terraform: AWS deployment to random availability zones"
+url: https://perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/
+last_updated: 2026-01-03
+---
+
 
 A common scenario: there's a new deployment you would like to roll out to AWS.
 Let's say you pick "us-east-1" as your cloud region. There are multiple

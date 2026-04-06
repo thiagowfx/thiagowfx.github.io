@@ -1,3 +1,9 @@
+---
+title: "LeetCode #28: Find the Index of the First Occurrence in a String"
+url: https://perrotta.dev/2025/09/leetcode-%2328-find-the-index-of-the-first-occurrence-in-a-string/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #28: Find the Index of the First Occurrence in a String](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/):
 

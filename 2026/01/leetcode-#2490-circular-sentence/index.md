@@ -1,3 +1,9 @@
+---
+title: "LeetCode #2490: Circular Sentence"
+url: https://perrotta.dev/2026/01/leetcode-%232490-circular-sentence/
+last_updated: 2026-01-10
+---
+
 
 [LeetCode #2490: Circular Sentence](https://leetcode.com/problems/circular-sentence):
 

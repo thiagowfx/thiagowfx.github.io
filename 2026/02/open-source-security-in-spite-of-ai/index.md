@@ -1,3 +1,9 @@
+---
+title: "Open Source security in spite of AI"
+url: https://perrotta.dev/2026/02/open-source-security-in-spite-of-ai/
+last_updated: 2026-02-16
+---
+
 
 [Open Source security in spite of
 AI](https://daniel.haxx.se/blog/2026/02/03/open-source-security-in-spite-of-ai/)

@@ -1,3 +1,9 @@
+---
+title: "direnv: automatically load .env everywhere"
+url: https://perrotta.dev/2025/07/direnv-automatically-load-.env-everywhere/
+last_updated: 2026-03-26
+---
+
 
 [Previously]({{< ref "2024-08-01-direnv-nested" >}}),
 [previously]({{< ref "2025-03-26-1password-cli-direnv-integration" >}}).

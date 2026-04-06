@@ -1,3 +1,9 @@
+---
+title: "Openbox Challenge - Day 6 - Now with XFCE / goodbye"
+url: https://perrotta.dev/2013/11/openbox-challenge-day-6-now-with-xfce-/-goodbye/
+last_updated: 2026-02-18
+---
+
 
 [Previously]({{< ref "2013-10-31-openbox-challenge-day-5" >}}).
 

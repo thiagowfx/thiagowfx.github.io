@@ -1,3 +1,9 @@
+---
+title: "LeetCode #97: Interleaving String"
+url: https://perrotta.dev/2025/12/leetcode-%2397-interleaving-string/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #97: Interleaving String](https://leetcode.com/problems/leetcode-#97:-interleaving-string):
 

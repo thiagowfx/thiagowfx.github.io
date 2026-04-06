@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1756: Design Most Recently Used Queue"
+url: https://perrotta.dev/2026/01/leetcode-%231756-design-most-recently-used-queue/
+last_updated: 2026-01-09
+---
+
 
 [LeetCode #1756: Design Most Recently Used Queue](https://leetcode.com/problems/design-most-recently-used-queue):
 

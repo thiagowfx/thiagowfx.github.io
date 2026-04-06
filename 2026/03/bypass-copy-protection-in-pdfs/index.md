@@ -1,3 +1,9 @@
+---
+title: "Bypass copy protection in PDFs"
+url: https://perrotta.dev/2026/03/bypass-copy-protection-in-pdfs/
+last_updated: 2026-03-12
+---
+
 
 [Previously]({{< ref "2025-10-29-grep-in-pdfs" >}}).
 

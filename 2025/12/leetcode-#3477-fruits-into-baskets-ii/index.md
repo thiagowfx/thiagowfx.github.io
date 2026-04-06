@@ -1,3 +1,9 @@
+---
+title: "LeetCode #3477: Fruits Into Baskets II"
+url: https://perrotta.dev/2025/12/leetcode-%233477-fruits-into-baskets-ii/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #3477: Fruits Into Baskets II](https://leetcode.com/problems/fruits-into-baskets-ii):
 

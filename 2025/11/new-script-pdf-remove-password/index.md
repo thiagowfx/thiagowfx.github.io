@@ -1,3 +1,9 @@
+---
+title: "new script: PDF remove password"
+url: https://perrotta.dev/2025/11/new-script-pdf-remove-password/
+last_updated: 2025-12-25
+---
+
 
 [Previously]({{< ref "2025-11-04-new-script-copy" >}}).
 

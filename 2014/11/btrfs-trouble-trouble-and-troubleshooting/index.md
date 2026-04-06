@@ -1,3 +1,9 @@
+---
+title: "btrfs trouble, trouble, and troubleshooting"
+url: https://perrotta.dev/2014/11/btrfs-trouble-trouble-and-troubleshooting/
+last_updated: 2026-02-17
+---
+
 
 The last weekend I lost more than **8 hours** trying to recover from a serious
 bug that reached the btrfs filesystem in recent days. This bug was relatively

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #286: Walls and Gates"
+url: https://perrotta.dev/2026/01/leetcode-%23286-walls-and-gates/
+last_updated: 2026-01-09
+---
+
 
 [LeetCode #286: Walls and Gates](https://leetcode.com/problems/walls-and-gates):
 

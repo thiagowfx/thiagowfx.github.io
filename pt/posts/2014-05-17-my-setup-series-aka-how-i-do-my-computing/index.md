@@ -1,3 +1,9 @@
+---
+title: "'My setup' series (aka 'How I do my computing')"
+url: https://perrotta.dev/pt/posts/2014-05-17-my-setup-series-aka-how-i-do-my-computing/
+last_updated: 2026-03-11
+---
+
 
 Alguém precisa me explicar a relação entre 'ser desenvolvedor web front-end' e
 'ter paixão por produtos da Apple', sério[^1]. Recentemente encontrei 3

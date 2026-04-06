@@ -1,3 +1,9 @@
+---
+title: "GitHub: the organization has enabled or enforced SAML sso"
+url: https://perrotta.dev/2025/10/github-the-organization-has-enabled-or-enforced-saml-sso/
+last_updated: 2026-01-18
+---
+
 
 Error message when doing `git push`:
 

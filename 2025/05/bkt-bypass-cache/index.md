@@ -1,3 +1,9 @@
+---
+title: "bkt: bypass cache"
+url: https://perrotta.dev/2025/05/bkt-bypass-cache/
+last_updated: 2025-05-05
+---
+
 
 [Previously]({{< ref "2024-12-29-bkt-cache-command-outputs" >}}).
 

@@ -1,3 +1,9 @@
+---
+title: "ghostty: keybindings"
+url: https://perrotta.dev/2026/01/ghostty-keybindings/
+last_updated: 2026-01-18
+---
+
 
 **TIL**: A few keybindings from [Ghostty](https://ghostty.org/). Assuming macOS.
 This list contains the keyboard shortcuts I tend to use weekly (or daily). No

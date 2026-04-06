@@ -1,3 +1,9 @@
+---
+title: "Meu primeiro PKGBUILD"
+url: https://perrotta.dev/pt/posts/2014-02-13-meu-primeiro-pkgbuild/
+last_updated: 2026-03-29
+---
+
 
 Título mais legal: Meu primeiro PKGBUILD (*eeeeeeeeeeeee*). Mas não coloque
 firulas como esse *eeeeee* em um título de post do Wordpress, obrigado.

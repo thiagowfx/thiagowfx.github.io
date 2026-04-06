@@ -1,3 +1,9 @@
+---
+title: "LeetCode #136: Single Number"
+url: https://perrotta.dev/2026/01/leetcode-%23136-single-number/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #136: Single Number](https://leetcode.com/problems/single-number):
 

@@ -1,3 +1,9 @@
+---
+title: "Instalando o Gentoo a partir do Arch"
+url: https://perrotta.dev/pt/2014/05/instalando-o-gentoo-a-partir-do-arch/
+last_updated: 2026-01-01
+---
+
 
 **TL;DR**: pequena TODO list sobre como instalar o Gentoo. Você vai passar 90% do seu tempo olhando para **texto** dando scroll na tela (processo demorado…).
 

@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Combinations of a Sum"
+url: https://perrotta.dev/2025/11/bytebytego-combinations-of-a-sum/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Combinations of a Sum](https://bytebytego.com/exercises/coding-patterns/backtracking/combinations-of-a-sum):
 

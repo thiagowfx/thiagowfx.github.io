@@ -1,3 +1,9 @@
+---
+title: "Grep in PDFs"
+url: https://perrotta.dev/2025/10/grep-in-pdfs/
+last_updated: 2025-10-29
+---
+
 
 **Problem statement**: `grep`[^1] for a given string in a multitude of
 multi-page PDF files:

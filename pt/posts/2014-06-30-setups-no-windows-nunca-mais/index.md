@@ -1,3 +1,9 @@
+---
+title: "Setups no Windows, nunca mais"
+url: https://perrotta.dev/pt/posts/2014-06-30-setups-no-windows-nunca-mais/
+last_updated: 2026-03-03
+---
+
 
 Uma vez que você se acostuma com **package managers** no Linux, é bastante inconveniente voltar à vibe de ficar instalando programa por programa no Windows, clicando em 'next' o tempo todo.
 

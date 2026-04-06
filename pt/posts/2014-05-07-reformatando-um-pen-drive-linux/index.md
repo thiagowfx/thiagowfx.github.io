@@ -1,3 +1,9 @@
+---
+title: "(Re)formatando um pen-drive (@ Linux)"
+url: https://perrotta.dev/pt/posts/2014-05-07-reformatando-um-pen-drive-linux/
+last_updated: 2026-03-03
+---
+
 
 **Motivação:** toda vez que insiro um pen-drive em um computador com Windows da
 faculdade, pego um vírus. **SEMPRE**. Incrível. Naturalmente, a opção mais óbvia

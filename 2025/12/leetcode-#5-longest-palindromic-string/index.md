@@ -1,3 +1,9 @@
+---
+title: "LeetCode #5: Longest Palindromic String"
+url: https://perrotta.dev/2025/12/leetcode-%235-longest-palindromic-string/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #5: Longest Palindromic String](https://leetcode.com/problems/longest-palindromic-string):
 

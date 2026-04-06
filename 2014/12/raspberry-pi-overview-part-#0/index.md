@@ -1,3 +1,9 @@
+---
+title: "Raspberry Pi Overview - Part #0"
+url: https://perrotta.dev/2014/12/raspberry-pi-overview-part-%230/
+last_updated: 2026-03-29
+---
+
 
 Hello people,
 

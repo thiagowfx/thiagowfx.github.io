@@ -1,3 +1,9 @@
+---
+title: "Check if docker image exists in registry"
+url: https://perrotta.dev/2024/10/check-if-docker-image-exists-in-registry/
+last_updated: 2026-01-18
+---
+
 
 Given a docker registry, image and tag, run the following command:
 

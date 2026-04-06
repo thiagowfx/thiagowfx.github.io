@@ -1,3 +1,9 @@
+---
+title: "Uma palavra sobre o dia das mães"
+url: https://perrotta.dev/pt/posts/2013-05-12-uma-palavra-sobre-o-dia-das-maes/
+last_updated: 2026-03-03
+---
+
 
 Quero dedicar esse post à minha mãe. Afinal de contas hoje é o dia das mães.
 

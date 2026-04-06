@@ -1,3 +1,9 @@
+---
+title: "Computers are fast"
+url: https://perrotta.dev/2022/03/computers-are-fast/
+last_updated: 2025-09-05
+---
+
 
 [Computers are fast](https://computers-are-fast.github.io).
 

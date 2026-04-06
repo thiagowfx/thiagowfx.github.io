@@ -1,3 +1,9 @@
+---
+title: "yaml: wrong new line character: expected \\n"
+url: https://perrotta.dev/2025/03/yaml-wrong-new-line-character-expected-%5Cn/
+last_updated: 2025-06-15
+---
+
 
 Example upstream issue: https://github.com/sbaudoin/sonar-yaml/issues/24
 

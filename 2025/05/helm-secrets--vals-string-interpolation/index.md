@@ -1,3 +1,9 @@
+---
+title: "helm-secrets + vals: string interpolation"
+url: https://perrotta.dev/2025/05/helm-secrets--vals-string-interpolation/
+last_updated: 2026-01-03
+---
+
 
 [helm-secrets](https://github.com/jkroepke/helm-secrets) is:
 

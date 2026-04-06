@@ -1,3 +1,9 @@
+---
+title: "Finding linters"
+url: https://perrotta.dev/2024/12/finding-linters/
+last_updated: 2026-01-03
+---
+
 
 A no-brainer and effective way to increase code quality in an organization is by
 the means of incorporating linters into your CI/CD pipeline.

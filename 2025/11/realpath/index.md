@@ -1,3 +1,9 @@
+---
+title: "realpath"
+url: https://perrotta.dev/2025/11/realpath/
+last_updated: 2026-02-16
+---
+
 
 Given `/Users/thiago.perrotta/Corp/gitops/apps/overlays/hoth`.
 

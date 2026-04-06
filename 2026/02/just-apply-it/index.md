@@ -1,3 +1,9 @@
+---
+title: "just apply it"
+url: https://perrotta.dev/2026/02/just-apply-it/
+last_updated: 2026-02-05
+---
+
 
 > **Thiago**: now that your PR is merged, you can _just apply_ it
 >

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1244: Design A Leaderboard"
+url: https://perrotta.dev/2026/01/leetcode-%231244-design-a-leaderboard/
+last_updated: 2026-01-10
+---
+
 
 [LeetCode #1244: Design A Leaderboard](https://leetcode.com/problems/design-a-leaderboard):
 

@@ -1,3 +1,9 @@
+---
+title: "Server Challenge - Instance #1: Installation of Distros"
+url: https://perrotta.dev/2014/04/server-challenge-instance-%231-installation-of-distros/
+last_updated: 2026-02-19
+---
+
 
 [Previously]({{< ref "2014-03-29-server-challenge-instance-0" >}}).
 

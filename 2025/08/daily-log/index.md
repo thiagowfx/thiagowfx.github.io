@@ -1,3 +1,9 @@
+---
+title: "Daily log"
+url: https://perrotta.dev/2025/08/daily-log/
+last_updated: 2026-02-08
+---
+
 
 It's easy to get distracted when using computers connected to the internet.
 Like, errhmm, when you are doing your job.

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #27: Remove Element"
+url: https://perrotta.dev/2025/09/leetcode-%2327-remove-element/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #27: Remove Element](https://leetcode.com/problems/remove-element/):
 

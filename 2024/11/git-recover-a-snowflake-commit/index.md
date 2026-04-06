@@ -1,3 +1,9 @@
+---
+title: "git: recover a snowflake commit"
+url: https://perrotta.dev/2024/11/git-recover-a-snowflake-commit/
+last_updated: 2026-01-03
+---
+
 
 When working with `git`, sometimes we make
 [PEBKAC](https://en.wikipedia.org/wiki/User_error) mistakes and end up losing a

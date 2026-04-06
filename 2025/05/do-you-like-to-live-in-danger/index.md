@@ -1,3 +1,9 @@
+---
+title: "Do you like to live in danger?"
+url: https://perrotta.dev/2025/05/do-you-like-to-live-in-danger/
+last_updated: 2026-01-03
+---
+
 
 ```
 % claude --dangerously-skip-permissions "fix the zizmor issue: pre-commit run --all-files zizmor"

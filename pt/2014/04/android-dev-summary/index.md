@@ -1,3 +1,9 @@
+---
+title: "Android dev: summary"
+url: https://perrotta.dev/pt/2014/04/android-dev-summary/
+last_updated: 2026-03-11
+---
+
 
 Esse é um *draft* perdido com algumas anotações sobre Android. Foi criado
 enquanto eu estava fazendo um curso no Coursera. Na época, acabei escrevendo

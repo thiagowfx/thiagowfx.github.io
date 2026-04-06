@@ -1,3 +1,9 @@
+---
+title: "Screenshot a web page from within chrome devtools"
+url: https://perrotta.dev/2022/02/screenshot-a-web-page-from-within-chrome-devtools/
+last_updated: 2025-09-04
+---
+
 
 Suppose you want to take a screenshot from a web page, maybe to add to a [pull
 request](https://github.com/miniflux/v2/pull/1341) of a project you're working

@@ -1,3 +1,9 @@
+---
+title: "Cursor"
+url: https://perrotta.dev/2025/05/cursor/
+last_updated: 2026-01-03
+---
+
 
 Meanwhile, in a conversation with a coworker...
 

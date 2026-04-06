@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Find the Insertion Index"
+url: https://perrotta.dev/2025/11/bytebytego-find-the-insertion-index/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Find the Insertion Index](https://bytebytego.com/exercises/coding-patterns/binary-search/find-the-insertion-index):
 

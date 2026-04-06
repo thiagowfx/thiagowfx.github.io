@@ -1,3 +1,9 @@
+---
+title: "Claude Code: block dangerous commands"
+url: https://perrotta.dev/2025/12/claude-code-block-dangerous-commands/
+last_updated: 2026-01-03
+---
+
 
 The outcome:
 

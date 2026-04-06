@@ -1,3 +1,9 @@
+---
+title: "Imagetextos"
+url: https://perrotta.dev/pt/posts/2014-01-26-imagetextos/
+last_updated: 2026-03-11
+---
+
 
 Pensamento aleatório: a verdade é que, desde o *boom* das redes sociais (você
 pode ler isso como: 'Twitter' e 'Facebook'), o número de compartilhamentos de

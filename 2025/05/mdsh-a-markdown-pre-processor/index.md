@@ -1,3 +1,9 @@
+---
+title: "mdsh: a markdown pre-processor"
+url: https://perrotta.dev/2025/05/mdsh-a-markdown-pre-processor/
+last_updated: 2025-05-23
+---
+
 
 [mdsh](https://github.com/zimbatm/mdsh), a markdown shell pre-processor;
 

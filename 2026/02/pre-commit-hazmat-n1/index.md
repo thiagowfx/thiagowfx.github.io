@@ -1,3 +1,9 @@
+---
+title: "pre-commit: hazmat n1"
+url: https://perrotta.dev/2026/02/pre-commit-hazmat-n1/
+last_updated: 2026-02-22
+---
+
 
 **Problem statement**: some CLI tools accept only a single file as an argument.
 Create a [pre-commit](https://pre-commit.com/) local hook for them.

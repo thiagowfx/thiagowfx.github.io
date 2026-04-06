@@ -1,3 +1,9 @@
+---
+title: "Ollama: Hello World"
+url: https://perrotta.dev/2024/12/ollama-hello-world/
+last_updated: 2026-01-03
+---
+
 
 [`ollama`](https://ollama.com/):
 

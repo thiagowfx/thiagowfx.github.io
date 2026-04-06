@@ -1,3 +1,9 @@
+---
+title: "Hello?!"
+url: https://perrotta.dev/2025/09/hello/
+last_updated: 2025-09-07
+---
+
 
 Whenever the LLM gets stuck:
 

@@ -1,3 +1,9 @@
+---
+title: "MongoDB: find idle connections"
+url: https://perrotta.dev/2024/05/mongodb-find-idle-connections/
+last_updated: 2025-10-08
+---
+
 
 **Problem statement**: Find idle connections on Atlas MongoDB.
 

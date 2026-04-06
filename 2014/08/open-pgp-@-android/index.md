@@ -1,3 +1,9 @@
+---
+title: "Open PGP @ Android"
+url: https://perrotta.dev/2014/08/open-pgp-@-android/
+last_updated: 2026-02-17
+---
+
 
 Recently I've discovered a very good free and open source e-mail application for
 Android: K-9 mail; it is available both on Google Play and F-Droid.

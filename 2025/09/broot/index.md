@@ -1,3 +1,9 @@
+---
+title: "Broot"
+url: https://perrotta.dev/2025/09/broot/
+last_updated: 2025-12-25
+---
+
 
 [broot](https://github.com/Canop/broot):
 

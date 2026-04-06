@@ -1,3 +1,9 @@
+---
+title: "Anki workflow"
+url: https://perrotta.dev/2024/12/anki-workflow/
+last_updated: 2025-03-03
+---
+
 
 I've been using [Anki](https://apps.ankiweb.net/) since 2-3 years ago to keep up
 with German vocabulary and grammar. I had originally started with Duolingo.

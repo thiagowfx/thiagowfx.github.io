@@ -1,3 +1,9 @@
+---
+title: "LeetCode #231: Power of Two"
+url: https://perrotta.dev/2025/12/leetcode-%23231-power-of-two/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #231: Power of Two](https://leetcode.com/problems/power-of-two):
 

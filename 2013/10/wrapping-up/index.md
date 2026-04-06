@@ -1,3 +1,9 @@
+---
+title: "Wrapping up"
+url: https://perrotta.dev/2013/10/wrapping-up/
+last_updated: 2026-02-17
+---
+
 
 I've decided to maintain WordPress as my primary blogging platform. I couldn't
 find anything better both free and of high quality. As you can see in my last

@@ -1,3 +1,9 @@
+---
+title: "Finicky"
+url: https://perrotta.dev/2025/12/finicky/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: I have one web browser for work, and another web browser
 for personal use. These are two distinct web browsers, not two distinct profiles

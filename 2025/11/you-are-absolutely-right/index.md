@@ -1,3 +1,9 @@
+---
+title: "You are absolutely right!"
+url: https://perrotta.dev/2025/11/you-are-absolutely-right/
+last_updated: 2025-11-30
+---
+
 
 The title is [Claude Code](https://www.claude.com/product/claude-code)'s
 favorite compliment to me.

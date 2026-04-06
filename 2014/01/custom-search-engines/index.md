@@ -1,3 +1,9 @@
+---
+title: "Custom Search Engines"
+url: https://perrotta.dev/2014/01/custom-search-engines/
+last_updated: 2026-02-17
+---
+
 
 * http://www.yubnub.org/
 * https://duckduckgo.com/

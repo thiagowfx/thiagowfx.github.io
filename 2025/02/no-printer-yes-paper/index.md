@@ -1,3 +1,9 @@
+---
+title: "No printer, yes paper"
+url: https://perrotta.dev/2025/02/no-printer-yes-paper/
+last_updated: 2025-02-18
+---
+
 
 I was looking forward to drafting a long document in LaTeX via
 [LyX](https://www.lyx.org/).

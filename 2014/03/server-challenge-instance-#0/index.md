@@ -1,3 +1,9 @@
+---
+title: "Server Challenge - Instance #0"
+url: https://perrotta.dev/2014/03/server-challenge-instance-%230/
+last_updated: 2026-02-19
+---
+
 
 I'm starting a new challenge about servers (after the openbox challenge froze
 last October). Servers are more interesting than window managers, so here's the

@@ -1,3 +1,9 @@
+---
+title: "claude code: custom commands"
+url: https://perrotta.dev/2025/10/claude-code-custom-commands/
+last_updated: 2026-03-26
+---
+
 
 [Claude Code](https://www.claude.com/product/claude-code) supports [custom commands](https://docs.claude.com/en/docs/claude-code/slash-commands#custom-slash-commands).
 

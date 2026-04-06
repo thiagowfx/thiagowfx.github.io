@@ -1,3 +1,9 @@
+---
+title: "Github Status"
+url: https://perrotta.dev/2026/03/github-status/
+last_updated: 2026-03-11
+---
+
 
 Github has a status page: https://www.githubstatus.com/
 

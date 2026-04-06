@@ -1,3 +1,9 @@
+---
+title: "Remove the executable bit from all files with a given extension"
+url: https://perrotta.dev/2024/11/remove-the-executable-bit-from-all-files-with-a-given-extension/
+last_updated: 2024-12-20
+---
+
 
 To illustrate, consider TypeScript files (`*.ts`).
 

@@ -1,3 +1,9 @@
+---
+title: "Site performance with Lighthouse"
+url: https://perrotta.dev/2024/12/site-performance-with-lighthouse/
+last_updated: 2026-02-16
+---
+
 
 Lighthouse can be used to assess overall site performance. There is a myriad of
 ways to run it:

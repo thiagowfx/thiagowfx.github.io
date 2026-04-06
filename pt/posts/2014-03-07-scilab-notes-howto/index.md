@@ -1,3 +1,9 @@
+---
+title: "Scilab Notes (HOWTO)"
+url: https://perrotta.dev/pt/posts/2014-03-07-scilab-notes-howto/
+last_updated: 2026-03-11
+---
+
 
 Resumo sobre como utilizar o Scilab. Objetivo: matrizes, equações lineares e,
 mais geralmente, álgebra linear (computacional, ou não). A motivação para essas

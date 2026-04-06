@@ -1,3 +1,9 @@
+---
+title: "homebrew: command-not-found"
+url: https://perrotta.dev/2025/09/homebrew-command-not-found/
+last_updated: 2026-01-03
+---
+
 
 As of [Sep 22nd, 2025](https://github.com/Homebrew/homebrew-command-not-found),
 homebrew _natively_ supports a "command-not-found" hook.

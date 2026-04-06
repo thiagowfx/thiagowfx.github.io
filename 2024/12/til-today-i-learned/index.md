@@ -1,3 +1,9 @@
+---
+title: "TIL: Today I Learned"
+url: https://perrotta.dev/2024/12/til-today-i-learned/
+last_updated: 2024-12-30
+---
+
 
 I am a big fan of "TIL" (Today I Learned) blogs.
 So much that my own blog is kinda becoming one.

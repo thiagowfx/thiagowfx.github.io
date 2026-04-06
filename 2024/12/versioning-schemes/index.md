@@ -1,3 +1,9 @@
+---
+title: "Versioning schemes"
+url: https://perrotta.dev/2024/12/versioning-schemes/
+last_updated: 2024-12-27
+---
+
 
 Today I learned: https://0ver.org/
 

@@ -1,3 +1,9 @@
+---
+title: "Flock"
+url: https://perrotta.dev/2025/11/flock/
+last_updated: 2025-11-20
+---
+
 
 Use [`flock`](https://man.archlinux.org/man/flock.1) to manage file/directory
 locks from shell scripts.

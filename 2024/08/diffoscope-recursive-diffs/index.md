@@ -1,3 +1,9 @@
+---
+title: "Diffoscope: recursive diffs"
+url: https://perrotta.dev/2024/08/diffoscope-recursive-diffs/
+last_updated: 2025-09-05
+---
+
 
 There are many ways to `diff` two individual files:
 

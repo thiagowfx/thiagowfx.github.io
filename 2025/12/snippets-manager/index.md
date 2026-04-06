@@ -1,3 +1,9 @@
+---
+title: "Snippets manager"
+url: https://perrotta.dev/2025/12/snippets-manager/
+last_updated: 2026-01-03
+---
+
 
 Humans are terrible at remembering complex command lines.
 

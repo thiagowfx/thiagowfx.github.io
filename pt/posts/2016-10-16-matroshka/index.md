@@ -1,3 +1,9 @@
+---
+title: "Matroshka"
+url: https://perrotta.dev/pt/posts/2016-10-16-matroshka/
+last_updated: 2026-01-01
+---
+
 
 Recentemente participei de uma
 [CTF](https://ctf.tecland.com.br/Pwn2Win/game/scoreboard/) promovida pelo

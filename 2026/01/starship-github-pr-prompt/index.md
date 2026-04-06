@@ -1,3 +1,9 @@
+---
+title: "starship: github PR prompt"
+url: https://perrotta.dev/2026/01/starship-github-pr-prompt/
+last_updated: 2026-02-06
+---
+
 
 [Previously]({{< ref "2025-12-27-starship" >}}).
 

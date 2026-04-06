@@ -1,3 +1,9 @@
+---
+title: "LeetCode #3417: Zigzag Grid Traversal With Skip"
+url: https://perrotta.dev/2026/01/leetcode-%233417-zigzag-grid-traversal-with-skip/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #3417: Zigzag Grid Traversal With Skip](https://leetcode.com/problems/zigzag-grid-traversal-with-skip):
 

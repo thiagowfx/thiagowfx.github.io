@@ -1,3 +1,9 @@
+---
+title: "Miniflux themes"
+url: https://perrotta.dev/2026/01/miniflux-themes/
+last_updated: 2026-01-30
+---
+
 
 I've been using [miniflux](https://miniflux.app/) [for ages]({{< ref
 "2022-01-03-miniflux-rolling-my-own-rss-reader" >}}).

@@ -1,3 +1,9 @@
+---
+title: "/security-review"
+url: https://perrotta.dev/2025/08/security-review/
+last_updated: 2026-01-01
+---
+
 
 Anthropic, [Automated Security Reviews in Claude Code](https://support.anthropic.com/en/articles/11932705-automated-security-reviews-in-claude-code):
 

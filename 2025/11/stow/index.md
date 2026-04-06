@@ -1,3 +1,9 @@
+---
+title: "Stow"
+url: https://perrotta.dev/2025/11/stow/
+last_updated: 2025-12-25
+---
+
 
 For a long time I wanted to write a blog post about `stow`.
 

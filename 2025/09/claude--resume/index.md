@@ -1,3 +1,9 @@
+---
+title: "claude --resume"
+url: https://perrotta.dev/2025/09/claude--resume/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: when working with [`Claude
 Code`](https://www.anthropic.com/claude-code), how to resume a session after

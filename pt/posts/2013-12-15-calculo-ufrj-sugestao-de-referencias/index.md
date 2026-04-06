@@ -1,3 +1,9 @@
+---
+title: "Cálculo @ UFRJ: Sugestão de Referências"
+url: https://perrotta.dev/pt/posts/2013-12-15-calculo-ufrj-sugestao-de-referencias/
+last_updated: 2026-02-18
+---
+
 
 **Update (10/06/2014): OBS.:** Esse post foi ligeiramente editado desde a sua
 criação, a fim de se tornar uma referência mais objetiva (e menos subjetiva).

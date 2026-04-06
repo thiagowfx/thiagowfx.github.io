@@ -1,3 +1,9 @@
+---
+title: "Terraform: perform a global update"
+url: https://perrotta.dev/2024/07/terraform-perform-a-global-update/
+last_updated: 2025-09-05
+---
+
 
 Given a `terraform/modules` directory tree, we would like to globally update the
 minimum required terraform version in all modules.

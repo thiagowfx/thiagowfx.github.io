@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Largest Square in a Matrix"
+url: https://perrotta.dev/2025/11/bytebytego-largest-square-in-a-matrix/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Largest Square in a Matrix](https://bytebytego.com/exercises/coding-patterns/dynamic-programming/largest-square-in-a-matrix):
 

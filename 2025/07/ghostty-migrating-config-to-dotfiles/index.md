@@ -1,3 +1,9 @@
+---
+title: "Ghostty: migrating config to dotfiles"
+url: https://perrotta.dev/2025/07/ghostty-migrating-config-to-dotfiles/
+last_updated: 2026-01-18
+---
+
 
 [This year]({{< ref "2024-12-28-ghostty" >}}) I migrated my terminal
 application from [iTerm2](https://iterm2.com/) to

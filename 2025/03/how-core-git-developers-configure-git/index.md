@@ -1,3 +1,9 @@
+---
+title: "How core git developers configure git"
+url: https://perrotta.dev/2025/03/how-core-git-developers-configure-git/
+last_updated: 2026-01-03
+---
+
 
 [How Core Git Developers Configure
 Git](https://blog.gitbutler.com/how-git-core-devs-configure-git/) by Git Butler:

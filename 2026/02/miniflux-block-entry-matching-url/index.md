@@ -1,3 +1,9 @@
+---
+title: "miniflux: block entry matching URL"
+url: https://perrotta.dev/2026/02/miniflux-block-entry-matching-url/
+last_updated: 2026-02-13
+---
+
 
 **Problem statement**: you follow a blog author you like via RSS on
 [miniflux](https://miniflux.app/), but you're not interested in a subset of

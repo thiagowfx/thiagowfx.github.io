@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Verify Sudoku Board"
+url: https://perrotta.dev/2025/11/bytebytego-verify-sudoku-board/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Verify Sudoku Board](https://bytebytego.com/exercises/coding-patterns/hash-maps-and-sets/verify-sudoku-board):
 

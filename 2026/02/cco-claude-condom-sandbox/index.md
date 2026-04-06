@@ -1,3 +1,9 @@
+---
+title: "cco: claude condom (sandbox)"
+url: https://perrotta.dev/2026/02/cco-claude-condom-sandbox/
+last_updated: 2026-03-02
+---
+
 
 **Problem statement**: `claude --dangerously-skip-permissions` ("YOLO mode") is
 fast but risky. Introduce a lightweight filesystem-level sandbox. Networking is

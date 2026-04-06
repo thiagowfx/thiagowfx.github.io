@@ -1,3 +1,9 @@
+---
+title: "PostgreSQL major version upgrade on Alpine Linux"
+url: https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/
+last_updated: 2026-01-03
+---
+
 
 ## Problem statement
 

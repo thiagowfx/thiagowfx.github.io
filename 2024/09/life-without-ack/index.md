@@ -1,3 +1,9 @@
+---
+title: "Life without ack"
+url: https://perrotta.dev/2024/09/life-without-ack/
+last_updated: 2026-01-03
+---
+
 
 Every macOS upgrade comes with disappointment and sorrow in the form of some
 tool, dependency / library or system-wide configuration breaking[^1].

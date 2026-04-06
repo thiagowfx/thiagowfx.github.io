@@ -1,3 +1,9 @@
+---
+title: "New script: sd-world: perform a full system upgrade"
+url: https://perrotta.dev/2025/10/new-script-sd-world-perform-a-full-system-upgrade/
+last_updated: 2025-10-04
+---
+
 
 [Previously]({{< ref "2024-01-28-sd-world" >}}).
 

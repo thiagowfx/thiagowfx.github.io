@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1220: Count Vowels Permutation"
+url: https://perrotta.dev/2025/12/leetcode-%231220-count-vowels-permutation/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #1220: Count Vowels Permutation](https://leetcode.com/problems/count-vowels-permutation):
 

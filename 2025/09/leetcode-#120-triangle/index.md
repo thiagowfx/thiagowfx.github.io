@@ -1,3 +1,9 @@
+---
+title: "LeetCode #120: Triangle"
+url: https://perrotta.dev/2025/09/leetcode-%23120-triangle/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #120: Triangle](https://leetcode.com/problems/triangle/):
 

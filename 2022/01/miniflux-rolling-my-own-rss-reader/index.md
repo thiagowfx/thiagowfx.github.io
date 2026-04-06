@@ -1,3 +1,9 @@
+---
+title: "Miniflux: Rolling my own RSS Reader"
+url: https://perrotta.dev/2022/01/miniflux-rolling-my-own-rss-reader/
+last_updated: 2026-02-07
+---
+
 
 This article describes my experience transitioning to, setting up and using the
 [Miniflux](https://miniflux.app/) RSS reader for the first time.

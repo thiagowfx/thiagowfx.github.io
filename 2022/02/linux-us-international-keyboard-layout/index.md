@@ -1,3 +1,9 @@
+---
+title: "Linux: US International keyboard layout"
+url: https://perrotta.dev/2022/02/linux-us-international-keyboard-layout/
+last_updated: 2025-09-05
+---
+
 
 I use QWERTY keyboards with a US layout. Sometimes I need to type accents or
 cedillas, and I keep forgetting how to do so, this post summarizes how to do it.

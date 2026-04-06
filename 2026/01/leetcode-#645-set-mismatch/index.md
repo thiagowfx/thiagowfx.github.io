@@ -1,3 +1,9 @@
+---
+title: "LeetCode #645: Set Mismatch"
+url: https://perrotta.dev/2026/01/leetcode-%23645-set-mismatch/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #645: Set Mismatch](https://leetcode.com/problems/set-mismatch):
 

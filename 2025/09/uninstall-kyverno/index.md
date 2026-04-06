@@ -1,3 +1,9 @@
+---
+title: "Uninstall Kyverno"
+url: https://perrotta.dev/2025/09/uninstall-kyverno/
+last_updated: 2026-01-03
+---
+
 
 It's always a bit frustrating to do it.
 

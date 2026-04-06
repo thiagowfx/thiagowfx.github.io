@@ -1,3 +1,9 @@
+---
+title: "AIs galore"
+url: https://perrotta.dev/2022/12/ais-galore/
+last_updated: 2026-02-16
+---
+
 
 2022 was an amazing year for AIs.
 

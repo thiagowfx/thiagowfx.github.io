@@ -1,3 +1,9 @@
+---
+title: "Terraforming a Linode: hello world"
+url: https://perrotta.dev/2024/01/terraforming-a-linode-hello-world/
+last_updated: 2026-01-03
+---
+
 
 I host my own [Miniflux](https://miniflux.app/) instance, which happens to be
 my favorite RSS reader. Currently it is hosted on Linode (Akamai Cloud)

@@ -1,3 +1,9 @@
+---
+title: "Melhorando a renderização de fontes no Windows"
+url: https://perrotta.dev/pt/posts/2014-07-12-melhorando-a-renderizacao-de-fontes-no-windows/
+last_updated: 2026-02-23
+---
+
 
 Ah, sempre que eu logo no Windows acabo implicando com alguma coisa. A última da
 vez foi a renderização das fontes. A renderização de fontes no Linux é muito

@@ -1,3 +1,9 @@
+---
+title: "Okta: enroll into 2FA"
+url: https://perrotta.dev/2025/07/okta-enroll-into-2fa/
+last_updated: 2026-02-16
+---
+
 
 More specifically, enroll into 2FA other than
 [OTP](https://en.wikipedia.org/wiki/One-time_password).

@@ -1,3 +1,9 @@
+---
+title: "SSH plus tmux automatically"
+url: https://perrotta.dev/2022/02/ssh-plus-tmux-automatically/
+last_updated: 2026-03-26
+---
+
 
 One of the most classic sysadmin/DevOps tasks is to use secure shell to connect to remote machines.
 

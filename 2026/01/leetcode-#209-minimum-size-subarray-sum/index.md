@@ -1,3 +1,9 @@
+---
+title: "LeetCode #209: Minimum Size Subarray Sum"
+url: https://perrotta.dev/2026/01/leetcode-%23209-minimum-size-subarray-sum/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #209: Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum):
 

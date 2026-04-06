@@ -1,3 +1,9 @@
+---
+title: "Conventional commits"
+url: https://perrotta.dev/2024/10/conventional-commits/
+last_updated: 2025-09-05
+---
+
 
 Conventional commits: https://www.conventionalcommits.org/:
 

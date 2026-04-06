@@ -1,3 +1,9 @@
+---
+title: "Reader's block"
+url: https://perrotta.dev/2025/07/readers-block/
+last_updated: 2025-07-23
+---
+
 
 You have probably heard of _writer's block_:
 

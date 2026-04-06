@@ -1,3 +1,9 @@
+---
+title: "Direnv nested"
+url: https://perrotta.dev/2024/08/direnv-nested/
+last_updated: 2025-09-05
+---
+
 
 I covered [`direnv`]({{< ref "2022-01-04-direnv-automate-your-environment-variables" >}}) before.
 

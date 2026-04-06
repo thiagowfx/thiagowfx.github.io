@@ -1,3 +1,9 @@
+---
+title: "macOS: keyboard repeat"
+url: https://perrotta.dev/2025/12/macos-keyboard-repeat/
+last_updated: 2026-01-03
+---
+
 
 Run:
 

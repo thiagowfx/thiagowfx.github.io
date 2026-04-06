@@ -1,3 +1,9 @@
+---
+title: "Overnight Oats"
+url: https://perrotta.dev/2025/04/overnight-oats/
+last_updated: 2026-03-17
+---
+
 
 This post premieres the [`#recipes`](/categories/recipes) category in this blog.
 

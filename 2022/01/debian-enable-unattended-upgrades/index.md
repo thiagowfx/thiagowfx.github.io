@@ -1,3 +1,9 @@
+---
+title: "Debian: Enable unattended upgrades"
+url: https://perrotta.dev/2022/01/debian-enable-unattended-upgrades/
+last_updated: 2026-01-03
+---
+
 
 Here's how we can enable automatic (unattended) package upgrades in Debian.
 

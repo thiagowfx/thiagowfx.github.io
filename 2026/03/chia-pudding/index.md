@@ -1,3 +1,9 @@
+---
+title: "Chia pudding"
+url: https://perrotta.dev/2026/03/chia-pudding/
+last_updated: 2026-03-11
+---
+
 
 [Previously]({{< ref "2025-04-20-overnight-oats" >}}).
 

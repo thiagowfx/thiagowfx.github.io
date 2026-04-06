@@ -1,3 +1,9 @@
+---
+title: "HashiCorp Vault from helm values"
+url: https://perrotta.dev/2025/04/hashicorp-vault-from-helm-values/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Populate HashiCorp Vault with select keys from `helm get
 values` for a given chart release.

@@ -1,3 +1,9 @@
+---
+title: "Reply to: Brazilian affection/cuddling vocabulary"
+url: https://perrotta.dev/2026/03/reply-to-brazilian-affection/cuddling-vocabulary/
+last_updated: 2026-03-02
+---
+
 
 I love this kind of post! It's relatively uncommon to find this genre nowadays.
 

@@ -1,3 +1,9 @@
+---
+title: "npm error code EBADF"
+url: https://perrotta.dev/2026/02/npm-error-code-ebadf/
+last_updated: 2026-02-06
+---
+
 
 Symptom:
 

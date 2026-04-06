@@ -1,3 +1,9 @@
+---
+title: "git: merge two repositories"
+url: https://perrotta.dev/2025/10/git-merge-two-repositories/
+last_updated: 2026-02-16
+---
+
 
 Daniel Roy Greenfeld, [TIL: Merging two git projects](https://daniel.feldroy.com/posts/til-2025-09-merging-two-git-projects):
 

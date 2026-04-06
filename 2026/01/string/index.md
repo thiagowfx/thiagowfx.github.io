@@ -1,3 +1,9 @@
+---
+title: "string"
+url: https://perrotta.dev/2026/01/string/
+last_updated: 2026-01-03
+---
+
 
 ```python
 if __name__ == "__main__":

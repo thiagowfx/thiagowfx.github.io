@@ -1,3 +1,9 @@
+---
+title: "SmartTube"
+url: https://perrotta.dev/2025/01/smarttube/
+last_updated: 2025-12-25
+---
+
 
 https://github.com/yuliskov/SmartTube:
 

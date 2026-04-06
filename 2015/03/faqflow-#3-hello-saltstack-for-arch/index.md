@@ -1,3 +1,9 @@
+---
+title: "[FAQFlow #3]: Hello, SaltStack (for Arch?)"
+url: https://perrotta.dev/2015/03/faqflow-%233-hello-saltstack-for-arch/
+last_updated: 2026-02-19
+---
+
 
 Salt is what you want when you have to manage several servers. It looks like a
 good option for open-source servers (Unix systems), so I'm giving it a try. A

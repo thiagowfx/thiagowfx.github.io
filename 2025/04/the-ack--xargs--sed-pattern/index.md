@@ -1,3 +1,9 @@
+---
+title: "The ack + xargs + sed pattern"
+url: https://perrotta.dev/2025/04/the-ack--xargs--sed-pattern/
+last_updated: 2026-02-16
+---
+
 
 I employ this pattern almost every day:
 

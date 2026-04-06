@@ -1,3 +1,9 @@
+---
+title: "Pihole: Add custom DNS mappings"
+url: https://perrotta.dev/2022/01/pihole-add-custom-dns-mappings/
+last_updated: 2026-02-07
+---
+
 
 This post covers how to add DNS entries / mappings to a local network managed
 with [pihole][pihole].

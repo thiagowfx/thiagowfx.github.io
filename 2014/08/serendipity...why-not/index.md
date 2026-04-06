@@ -1,3 +1,9 @@
+---
+title: "Serendipity...why not?"
+url: https://perrotta.dev/2014/08/serendipity...why-not/
+last_updated: 2026-02-17
+---
+
 
 Today I'm switching the main language of this (we)blog from Portuguese to
 English. To make this change consistent, I've also changed its title, from "O

@@ -1,3 +1,9 @@
+---
+title: "Google Translate → Kagi Translate, DeepL"
+url: https://perrotta.dev/2026/03/google-translate-kagi-translate-deepl/
+last_updated: 2026-03-10
+---
+
 
 [Previously]({{< ref "2024-12-31-independence" >}}),
 [previously]({{< ref "2022-04-03-translating-german-to-english" >}}).

@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Maximum Subarray Sum"
+url: https://perrotta.dev/2025/11/bytebytego-maximum-subarray-sum/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Maximum Subarray Sum](https://bytebytego.com/exercises/coding-patterns/dynamic-programming/maximum-subarray-sum):
 

@@ -1,3 +1,9 @@
+---
+title: ".apk-new"
+url: https://perrotta.dev/2025/12/.apk-new/
+last_updated: 2026-01-03
+---
+
 
 After running an Alpine Linux server for a couple of months (or years), you'll
 inevitably find a couple of `.apk-new` files scattered in your filesystem within

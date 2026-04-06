@@ -1,3 +1,9 @@
+---
+title: "LeetCode #54: Spiral Matrix"
+url: https://perrotta.dev/2026/01/leetcode-%2354-spiral-matrix/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #54: Spiral Matrix](https://leetcode.com/problems/spiral-matrix):
 

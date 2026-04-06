@@ -1,3 +1,9 @@
+---
+title: "LeetCode #300: Longest Increasing Subsequence"
+url: https://perrotta.dev/2025/09/leetcode-%23300-longest-increasing-subsequence/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #300: Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/):
 

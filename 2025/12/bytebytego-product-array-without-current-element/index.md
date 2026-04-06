@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Product Array Without Current Element"
+url: https://perrotta.dev/2025/12/bytebytego-product-array-without-current-element/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Product Array Without Current Element](https://bytebytego.com/exercises/coding-patterns/bytebytego:-product-array-without-current-element):
 

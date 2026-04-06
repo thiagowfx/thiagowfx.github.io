@@ -1,3 +1,9 @@
+---
+title: "Github actions workflow"
+url: https://perrotta.dev/2024/05/github-actions-workflow/
+last_updated: 2025-12-31
+---
+
 
 This post exemplifies an efficient workflow to shorten the edit-refresh loop
 when dealing with github actions.

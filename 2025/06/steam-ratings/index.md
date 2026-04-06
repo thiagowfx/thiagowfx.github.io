@@ -1,3 +1,9 @@
+---
+title: "Steam ratings"
+url: https://perrotta.dev/2025/06/steam-ratings/
+last_updated: 2026-02-17
+---
+
 
 The [Steam Summer Sale](https://store.steampowered.com/) is going on, as usual.
 

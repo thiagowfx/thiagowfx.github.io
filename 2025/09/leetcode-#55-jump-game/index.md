@@ -1,3 +1,9 @@
+---
+title: "LeetCode #55: Jump Game"
+url: https://perrotta.dev/2025/09/leetcode-%2355-jump-game/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #55: Jump Game](https://leetcode.com/problems/jump-game/):
 

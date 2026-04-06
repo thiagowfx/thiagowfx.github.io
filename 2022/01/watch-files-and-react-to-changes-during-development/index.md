@@ -1,3 +1,9 @@
+---
+title: "Watch files and react to changes during development"
+url: https://perrotta.dev/2022/01/watch-files-and-react-to-changes-during-development/
+last_updated: 2026-01-01
+---
+
 
 This post describes some tooling usages to watch for file changes and run or reload a command whenever they happen.
 

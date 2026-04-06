@@ -1,3 +1,9 @@
+---
+title: "Gimme subagents"
+url: https://perrotta.dev/2026/02/gimme-subagents/
+last_updated: 2026-02-23
+---
+
 
 **Scenario**: we're test-driving the adoption of a
 [Terrateam](https://terrateam.io/) feature

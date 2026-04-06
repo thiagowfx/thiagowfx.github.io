@@ -1,3 +1,9 @@
+---
+title: "LeetCode #219: Contains Duplicate II"
+url: https://perrotta.dev/2026/01/leetcode-%23219-contains-duplicate-ii/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #219: Contains Duplicate II](https://leetcode.com/problems/contains-duplicate-ii):
 

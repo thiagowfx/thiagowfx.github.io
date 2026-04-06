@@ -1,3 +1,9 @@
+---
+title: "Hello, my little ol' Arch Server"
+url: https://perrotta.dev/pt/2014/06/hello-my-little-ol-arch-server/
+last_updated: 2026-03-07
+---
+
 
 Durante os últimos dias venho brincando um pouco com configurações de
 servidores. Não é a parte mais prazerosa de se administrar ou programar um

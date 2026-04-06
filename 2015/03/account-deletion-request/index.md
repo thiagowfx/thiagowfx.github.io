@@ -1,3 +1,9 @@
+---
+title: "Account deletion request"
+url: https://perrotta.dev/2015/03/account-deletion-request/
+last_updated: 2026-02-17
+---
+
 
 There is a fact that is not usually much publicized about accounts in the web:
 in general, if a given web service doesn't have a **delete** button, you can

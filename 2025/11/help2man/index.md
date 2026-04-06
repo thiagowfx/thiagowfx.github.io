@@ -1,3 +1,9 @@
+---
+title: "help2man"
+url: https://perrotta.dev/2025/11/help2man/
+last_updated: 2025-11-25
+---
+
 
 Thanks to [`help2man`](https://www.gnu.org/software/help2man/):
 

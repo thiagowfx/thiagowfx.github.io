@@ -1,3 +1,9 @@
+---
+title: "New script: pritunl login via CLI"
+url: https://perrotta.dev/2025/09/new-script-pritunl-login-via-cli/
+last_updated: 2025-09-28
+---
+
 
 [Previously]({{< ref "2024-05-07-pritunl-log-in-via-cli" >}}).
 

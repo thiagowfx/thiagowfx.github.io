@@ -1,3 +1,9 @@
+---
+title: "Openbox Challenge - Day 1"
+url: https://perrotta.dev/2013/10/openbox-challenge-day-1/
+last_updated: 2026-03-07
+---
+
 
 **Note:** I am sorry but the openbox repository I created for this challenge
 doesn't exist anymore. But you can still read the challenge, there is some

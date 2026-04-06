@@ -1,3 +1,9 @@
+---
+title: "Anything else you may have missed?"
+url: https://perrotta.dev/2026/01/anything-else-you-may-have-missed/
+last_updated: 2026-01-04
+---
+
 
 
 [Previously]({{< ref "2025-09-07-hello" >}}).

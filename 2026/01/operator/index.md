@@ -1,3 +1,9 @@
+---
+title: "operator"
+url: https://perrotta.dev/2026/01/operator/
+last_updated: 2026-01-03
+---
+
 
 ```python
 import operator

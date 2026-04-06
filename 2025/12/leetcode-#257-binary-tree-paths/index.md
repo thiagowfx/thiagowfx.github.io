@@ -1,3 +1,9 @@
+---
+title: "LeetCode #257: Binary Tree Paths"
+url: https://perrotta.dev/2025/12/leetcode-%23257-binary-tree-paths/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #257: Binary Tree Paths](https://leetcode.com/problems/binary-tree-paths):
 

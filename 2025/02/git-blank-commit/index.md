@@ -1,3 +1,9 @@
+---
+title: "git: blank commit"
+url: https://perrotta.dev/2025/02/git-blank-commit/
+last_updated: 2026-01-03
+---
+
 
 ## How can we create an empty commit in `git`?
 

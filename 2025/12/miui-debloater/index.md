@@ -1,3 +1,9 @@
+---
+title: "MIUI debloater"
+url: https://perrotta.dev/2025/12/miui-debloater/
+last_updated: 2025-12-21
+---
+
 
 [Previously]({{< ref "2025-11-29-coreldraw-disable-ads-on-windows" >}}).
 

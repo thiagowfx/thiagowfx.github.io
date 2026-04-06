@@ -1,3 +1,9 @@
+---
+title: "Logseq: linking and backlinking"
+url: https://perrotta.dev/2025/01/logseq-linking-and-backlinking/
+last_updated: 2026-01-03
+---
+
 
 This is the first post about LogSeq / PKM. Run before it's [too
 late](https://en.wikipedia.org/wiki/The_Paradox_of_Choice)!

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #2965: Find Missing and Repeated Values"
+url: https://perrotta.dev/2026/01/leetcode-%232965-find-missing-and-repeated-values/
+last_updated: 2026-01-08
+---
+
 
 [LeetCode #2965: Find Missing and Repeated Values](https://leetcode.com/problems/find-missing-and-repeated-values):
 

@@ -1,3 +1,9 @@
+---
+title: "Serendipity vs Gatekeeping"
+url: https://perrotta.dev/2025/04/serendipity-vs-gatekeeping/
+last_updated: 2025-09-05
+---
+
 
 Serendipity, via
 [DuckDuckGo](https://duckduckgo.com/?q=serendipity+definition&ia=web&iax=definition) dictionary:

@@ -1,3 +1,9 @@
+---
+title: "Testando uma ISO no Linux sem o VirtualBox"
+url: https://perrotta.dev/pt/posts/2014-01-07-testando-uma-iso-no-linux-sem-o-virtualbox/
+last_updated: 2026-01-01
+---
+
 
 Não imagino que seja incomum o seguinte cenário:
 

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #169: Majority Element"
+url: https://perrotta.dev/2025/09/leetcode-%23169-majority-element/
+last_updated: 2026-02-16
+---
+
 
 [LeetCode #169: Majority Element](https://leetcode.com/problems/majority-element/):
 

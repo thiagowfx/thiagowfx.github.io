@@ -1,3 +1,9 @@
+---
+title: "Redshift - Ajustar a temperatura de cor do monitor dia/noite"
+url: https://perrotta.dev/pt/2014/01/redshift-ajustar-a-temperatura-de-cor-do-monitor-dia/noite/
+last_updated: 2026-03-07
+---
+
 
 Descobri muito por acaso [esse](http://jonls.dk/redshift/) programa. Ele ajusta
 a cor do monitor de acordo com a sua posição no globo (aka latitude:longitude) e

@@ -1,3 +1,9 @@
+---
+title: "macOS terminal app gripes"
+url: https://perrotta.dev/2022/03/macos-terminal-app-gripes/
+last_updated: 2026-01-03
+---
+
 
 `Terminal.app` is a pretty decent terminal emulator for macOS, with sensible
 defaults. That said, I have my own gripes about it, but the list is

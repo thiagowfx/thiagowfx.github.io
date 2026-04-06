@@ -1,3 +1,9 @@
+---
+title: "GitHub: disable coding agent"
+url: https://perrotta.dev/2026/01/github-disable-coding-agent/
+last_updated: 2026-02-16
+---
+
 
 If you don't like the new "Agents" tab in GitHub (repo view), you can disable
 it here: https://github.com/settings/copilot/coding_agent

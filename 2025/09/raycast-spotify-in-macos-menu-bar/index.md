@@ -1,3 +1,9 @@
+---
+title: "RayCast: spotify in macOS menu bar"
+url: https://perrotta.dev/2025/09/raycast-spotify-in-macos-menu-bar/
+last_updated: 2026-01-03
+---
+
 
 **TIL**: [RayCast](https://www.raycast.com/) supports embedding a menu bar
 player for Spotify in macOS.

@@ -1,3 +1,9 @@
+---
+title: "Os servidores de DNS da Net/Virtua foram hackeados"
+url: https://perrotta.dev/pt/2014/04/os-servidores-de-dns-da-net/virtua-foram-hackeados/
+last_updated: 2026-02-19
+---
+
 
 Se você é usuário da NET, tome MUITO CUIDADO se, ao digitar um link no seu
 navegador predileto, você se deparar com uma página falsa do Flash Player. **NÃO

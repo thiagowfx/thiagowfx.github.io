@@ -1,3 +1,9 @@
+---
+title: ".gitignore .claude/settings.local.json"
+url: https://perrotta.dev/2025/06/.gitignore-.claude/settings.local.json/
+last_updated: 2026-03-26
+---
+
 
 The initial attempt:
 

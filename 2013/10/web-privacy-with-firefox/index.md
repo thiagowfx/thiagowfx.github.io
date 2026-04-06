@@ -1,3 +1,9 @@
+---
+title: "Web Privacy with Firefox"
+url: https://perrotta.dev/2013/10/web-privacy-with-firefox/
+last_updated: 2026-03-10
+---
+
 
 In this post I'll show you a taste of what you can achieve with the Firefox Web
 Browser regarding privacy issues.

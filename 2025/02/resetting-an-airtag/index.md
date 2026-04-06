@@ -1,3 +1,9 @@
+---
+title: "Resetting an AirTag"
+url: https://perrotta.dev/2025/02/resetting-an-airtag/
+last_updated: 2025-02-17
+---
+
 
 **Problem statement**: somehow I messed up my AirTag. It wasn't being updated
 any longer. "Last seen NN days ago".

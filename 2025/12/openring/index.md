@@ -1,3 +1,9 @@
+---
+title: "Openring"
+url: https://perrotta.dev/2025/12/openring/
+last_updated: 2025-12-26
+---
+
 
 I just added [Openring](https://git.sr.ht/~sircmpwn/openring) to my
 [blogroll](/blogroll/) page:

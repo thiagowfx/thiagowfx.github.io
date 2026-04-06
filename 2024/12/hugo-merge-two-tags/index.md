@@ -1,3 +1,9 @@
+---
+title: "hugo: merge two tags"
+url: https://perrotta.dev/2024/12/hugo-merge-two-tags/
+last_updated: 2025-09-05
+---
+
 
 So far I've been using the `dev` and `devops` tags pretty much interchangeably
 (and inconsistently) in this blog. There's no real difference: Dev and Ops work

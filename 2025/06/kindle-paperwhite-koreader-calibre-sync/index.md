@@ -1,3 +1,9 @@
+---
+title: "Kindle Paperwhite: KOReader: calibre sync"
+url: https://perrotta.dev/2025/06/kindle-paperwhite-koreader-calibre-sync/
+last_updated: 2026-02-16
+---
+
 
 One of the best reasons to [jailbreak]({{< ref
 "2025-05-17-winterbreak-hello-world" >}}) a Kindle is to leverage wireless

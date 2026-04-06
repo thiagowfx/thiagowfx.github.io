@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1533: Find the Index of the Large Integer"
+url: https://perrotta.dev/2026/01/leetcode-%231533-find-the-index-of-the-large-integer/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #1533: Find the Index of the Large Integer](https://leetcode.com/problems/find-the-index-of-the-large-integer):
 

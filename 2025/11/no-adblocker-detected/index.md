@@ -1,3 +1,9 @@
+---
+title: "No adblocker detected"
+url: https://perrotta.dev/2025/11/no-adblocker-detected/
+last_updated: 2025-12-25
+---
+
 
 https://maurycyz.com/misc/ads/:
 

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1188: Design Bounded Blocking Queue"
+url: https://perrotta.dev/2026/01/leetcode-%231188-design-bounded-blocking-queue/
+last_updated: 2026-01-09
+---
+
 
 [LeetCode #1188: Design Bounded Blocking Queue](https://leetcode.com/problems/design-bounded-blocking-queue):
 

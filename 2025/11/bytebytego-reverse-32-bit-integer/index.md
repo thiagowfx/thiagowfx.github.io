@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Reverse 32-Bit Integer"
+url: https://perrotta.dev/2025/11/bytebytego-reverse-32-bit-integer/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Reverse 32-Bit Integer](https://bytebytego.com/exercises/coding-patterns/math-and-geometry/reverse-32-bit-integer):
 

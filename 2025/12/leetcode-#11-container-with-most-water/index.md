@@ -1,3 +1,9 @@
+---
+title: "LeetCode #11: Container With Most Water"
+url: https://perrotta.dev/2025/12/leetcode-%2311-container-with-most-water/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #11: Container With Most Water](https://leetcode.com/problems/container-with-most-water):
 

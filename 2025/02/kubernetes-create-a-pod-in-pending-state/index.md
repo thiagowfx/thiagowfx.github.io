@@ -1,3 +1,9 @@
+---
+title: "Kubernetes: create a pod in pending state"
+url: https://perrotta.dev/2025/02/kubernetes-create-a-pod-in-pending-state/
+last_updated: 2026-01-03
+---
+
 
 We are making a non-trivial change to our cluster monitoring architecture, and I
 needed to verify the new rollout is properly working in our infratesting

@@ -1,3 +1,9 @@
+---
+title: "Kubernetes: list all ImagePullBackOff container images"
+url: https://perrotta.dev/2025/08/kubernetes-list-all-imagepullbackoff-container-images/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement** Upgrade the
 [`kube-prometheus-stack`](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack)

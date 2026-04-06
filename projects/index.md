@@ -1,3 +1,9 @@
+---
+title: "Projects"
+url: https://perrotta.dev/projects/
+last_updated: 2026-02-16
+---
+
 
 This is the closest I have to a [`/now`](https://sive.rs/now3) page.
 

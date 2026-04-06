@@ -1,3 +1,9 @@
+---
+title: "Unbuffer"
+url: https://perrotta.dev/2024/12/unbuffer/
+last_updated: 2025-09-05
+---
+
 
 The `unbuffer` binary comes from the [expect](https://www.nist.gov/services-resources/software/expect) package.
 I didn't realize until now that it is hosted in NIST.gov!

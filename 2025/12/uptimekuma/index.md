@@ -1,3 +1,9 @@
+---
+title: "UptimeKuma"
+url: https://perrotta.dev/2025/12/uptimekuma/
+last_updated: 2026-03-26
+---
+
 
 This site is now monitored via self-hosted [uptime infrastructure](https://uptime.perrotta.dev/status/serendipity).
 

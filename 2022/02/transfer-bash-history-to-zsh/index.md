@@ -1,3 +1,9 @@
+---
+title: "Transfer bash history to zsh"
+url: https://perrotta.dev/2022/02/transfer-bash-history-to-zsh/
+last_updated: 2025-09-05
+---
+
 
 After years of using `bash` as my default interactive shell at $DAYJOB,
 I decided to switch to `zsh`. I didn't want to start from scratch and lose all

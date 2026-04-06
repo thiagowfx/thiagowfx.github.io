@@ -1,3 +1,9 @@
+---
+title: "macOS app shortcuts"
+url: https://perrotta.dev/2024/12/macos-app-shortcuts/
+last_updated: 2026-01-03
+---
+
 
 Let's say you want to assign a keyboard shortcut within a given app to invoke a
 menu item.

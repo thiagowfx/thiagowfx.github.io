@@ -1,3 +1,9 @@
+---
+title: "Comma scripts"
+url: https://perrotta.dev/2025/10/comma-scripts/
+last_updated: 2026-02-16
+---
+
 
 Ricardo Ander-Egg
 [suggests](https://ricardoanderegg.com/posts/executable-bin-scripts-instead-of-shell-aliases/)

@@ -1,3 +1,9 @@
+---
+title: "Ufw: Firewall"
+url: https://perrotta.dev/2021/12/ufw-firewall/
+last_updated: 2026-01-01
+---
+
 
 > Ufw stands for Uncomplicated Firewall, and is a program for managing a netfilter firewall. It provides a command line interface and aims to be uncomplicated and easy to use.
 

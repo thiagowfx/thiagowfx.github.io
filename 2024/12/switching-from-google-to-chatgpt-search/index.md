@@ -1,3 +1,9 @@
+---
+title: "Switching from Google to ChatGPT search"
+url: https://perrotta.dev/2024/12/switching-from-google-to-chatgpt-search/
+last_updated: 2026-03-10
+---
+
 
 Following the footsteps of [Daniel
 Miessler](https://www.linkedin.com/posts/danielmiessler_ive-not-used-google-to-search-since-searchgpt-activity-7258159059944538113-dxZG),

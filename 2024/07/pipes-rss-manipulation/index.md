@@ -1,3 +1,9 @@
+---
+title: "Pipes: RSS Manipulation"
+url: https://perrotta.dev/2024/07/pipes-rss-manipulation/
+last_updated: 2026-02-16
+---
+
 
 [Yahoo! Pipes](https://en.wikipedia.org/wiki/Yahoo!_Pipes) is not around
 anymore, however there is a modern replacement for it: https://www.pipes.digital/.

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #2485: Find the Pivot Integer"
+url: https://perrotta.dev/2026/01/leetcode-%232485-find-the-pivot-integer/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #2485: Find the Pivot Integer](https://leetcode.com/problems/find-the-pivot-integer):
 

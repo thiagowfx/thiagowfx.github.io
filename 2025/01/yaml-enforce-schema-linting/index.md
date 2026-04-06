@@ -1,3 +1,9 @@
+---
+title: "YAML: enforce schema linting"
+url: https://perrotta.dev/2025/01/yaml-enforce-schema-linting/
+last_updated: 2026-01-03
+---
+
 
 [YAML](https://yaml.org/) files can have a schema associated to them.
 

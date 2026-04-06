@@ -1,3 +1,9 @@
+---
+title: "Self-documented Makefiles"
+url: https://perrotta.dev/2024/08/self-documented-makefiles/
+last_updated: 2025-09-05
+---
+
 
 `Makefile`s are often great `bash` script replacements. Instead of creating a
 `bash` script with multiple functions with various dependencies (from a

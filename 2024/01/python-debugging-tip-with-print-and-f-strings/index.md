@@ -1,3 +1,9 @@
+---
+title: "Python: debugging tip with print and f-strings"
+url: https://perrotta.dev/2024/01/python-debugging-tip-with-print-and-f-strings/
+last_updated: 2025-09-05
+---
+
 
 It's 2024, [the year of the linux desktop](https://yotld.com/), and the best™
 way to debug computer programs is still the good ol' `print` statement.

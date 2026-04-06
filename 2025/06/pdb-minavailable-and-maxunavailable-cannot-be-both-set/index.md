@@ -1,3 +1,9 @@
+---
+title: "PDB: minAvailable and maxUnavailable cannot be both set"
+url: https://perrotta.dev/2025/06/pdb-minavailable-and-maxunavailable-cannot-be-both-set/
+last_updated: 2026-01-03
+---
+
 
 In Kubernetes it's not possible to have a [`PodDisruptionBudget`
 (PDB)](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) with

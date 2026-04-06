@@ -1,3 +1,9 @@
+---
+title: "Have I Been Pwned?"
+url: https://perrotta.dev/2025/03/have-i-been-pwned/
+last_updated: 2026-02-16
+---
+
 
 [Have I Been Pwned?](https://haveibeenpwned.com/) by the great [Troy Hunt](https://www.troyhunt.com/):
 

@@ -1,3 +1,9 @@
+---
+title: "Kagi: Small Web"
+url: https://perrotta.dev/2025/05/kagi-small-web/
+last_updated: 2025-05-10
+---
+
 
 [Kagi](https://help.kagi.com/kagi/company/) is a paid search engine.
 

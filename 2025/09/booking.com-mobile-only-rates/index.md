@@ -1,3 +1,9 @@
+---
+title: "Booking.com mobile-only rates"
+url: https://perrotta.dev/2025/09/booking.com-mobile-only-rates/
+last_updated: 2025-09-11
+---
+
 
 When looking for accommodation deals on [Booking.com](https://booking.com)[^1], you
 may or may not notice that there are some [mobile-only

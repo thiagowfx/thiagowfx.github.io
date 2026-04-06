@@ -1,3 +1,9 @@
+---
+title: "[FAQFlow #2]: Android Upgrading/Rooting Notes"
+url: https://perrotta.dev/2015/03/faqflow-%232-android-upgrading/rooting-notes/
+last_updated: 2026-02-19
+---
+
 
 I successfully upgraded my Android phone from Jelly Bean (4.1.2) to Kit Kat
 (4.4.2). Here are notes about my upgrade process.

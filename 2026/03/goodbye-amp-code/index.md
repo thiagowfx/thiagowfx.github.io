@@ -1,3 +1,9 @@
+---
+title: "Goodbye, Amp Code"
+url: https://perrotta.dev/2026/03/goodbye-amp-code/
+last_updated: 2026-03-25
+---
+
 
 [Previously]({{< ref "2026-01-01-amp-code-queue-unqueue-messages" >}}).
 

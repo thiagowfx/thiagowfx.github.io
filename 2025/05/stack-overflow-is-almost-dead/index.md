@@ -1,3 +1,9 @@
+---
+title: "Stack Overflow is almost dead"
+url: https://perrotta.dev/2025/05/stack-overflow-is-almost-dead/
+last_updated: 2025-09-05
+---
+
 
 [Previously]({{< ref "2025-01-09-why-self-answer-questions-in-your-own-blog-instead-of-stack-overflow" >}}).
 

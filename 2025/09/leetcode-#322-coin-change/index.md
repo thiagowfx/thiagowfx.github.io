@@ -1,3 +1,9 @@
+---
+title: "LeetCode #322: Coin Change"
+url: https://perrotta.dev/2025/09/leetcode-%23322-coin-change/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #322: Coin Change](https://leetcode.com/problems/coin-change/):
 

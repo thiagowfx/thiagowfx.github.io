@@ -1,3 +1,9 @@
+---
+title: "tests with assertions"
+url: https://perrotta.dev/2025/09/tests-with-assertions/
+last_updated: 2026-01-03
+---
+
 
 ```python
 # returns something we want to inspect

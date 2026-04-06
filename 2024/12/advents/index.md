@@ -1,3 +1,9 @@
+---
+title: "Advents"
+url: https://perrotta.dev/2024/12/advents/
+last_updated: 2026-01-03
+---
+
 
 Too many advents:
 

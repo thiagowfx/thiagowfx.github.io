@@ -1,3 +1,9 @@
+---
+title: "JSON pointers: escaping"
+url: https://perrotta.dev/2025/09/json-pointers-escaping/
+last_updated: 2025-09-04
+---
+
 
 [RFC 6901: JSON Pointers](https://www.rfc-editor.org/rfc/rfc6901):
 

@@ -1,3 +1,9 @@
+---
+title: "Alpine Linux: package is gone?!"
+url: https://perrotta.dev/2025/06/alpine-linux-package-is-gone/
+last_updated: 2026-01-03
+---
+
 
 Upon upgrading one of our Dockerfiles from Alpine Linux 3.21 to 3.22, we noticed
 that the `ruby-json` package no longer exists:

@@ -1,3 +1,9 @@
+---
+title: "Getting started with Ogre3d"
+url: https://perrotta.dev/2015/03/getting-started-with-ogre3d/
+last_updated: 2026-02-18
+---
+
 
 I struggled a little to get started with Ogre3d graphics, so here are a few
 notes. In this post we will be able to run some basic examples from the

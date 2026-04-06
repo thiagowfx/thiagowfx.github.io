@@ -1,3 +1,9 @@
+---
+title: "Emacs e golang, uma dupla perfeita"
+url: https://perrotta.dev/pt/posts/2014-07-22-emacs-e-golang-uma-dupla-perfeita/
+last_updated: 2026-02-24
+---
+
 
 (Sim, o título é clichê.)
 

@@ -1,3 +1,9 @@
+---
+title: "Kindle: KOReader dictionaries"
+url: https://perrotta.dev/2025/12/kindle-koreader-dictionaries/
+last_updated: 2025-12-23
+---
+
 
 [Previously]({{< ref "2025-06-15-kindle-paperwhite-koreader-calibre-sync" >}}).
 

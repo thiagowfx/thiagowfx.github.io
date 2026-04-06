@@ -1,3 +1,9 @@
+---
+title: "LeetCode #67: Add Binary"
+url: https://perrotta.dev/2026/01/leetcode-%2367-add-binary/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #67: Add Binary](https://leetcode.com/problems/add-binary):
 

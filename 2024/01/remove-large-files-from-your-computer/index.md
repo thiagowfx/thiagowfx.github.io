@@ -1,3 +1,9 @@
+---
+title: "Remove large files from your computer"
+url: https://perrotta.dev/2024/01/remove-large-files-from-your-computer/
+last_updated: 2025-09-05
+---
+
 
 Whenever disk space gets almost full, I like to use the following software to
 clean up (unnecessary) big files from my computers:

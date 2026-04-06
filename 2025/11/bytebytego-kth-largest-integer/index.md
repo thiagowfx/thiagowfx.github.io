@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Kth Largest Integer"
+url: https://perrotta.dev/2025/11/bytebytego-kth-largest-integer/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Kth Largest Integer](https://bytebytego.com/exercises/coding-patterns/sort-and-search/kth-largest-integer):
 

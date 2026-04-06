@@ -1,3 +1,9 @@
+---
+title: "Como rodar JNLP no Linux"
+url: https://perrotta.dev/pt/2013/09/como-rodar-jnlp-no-linux/
+last_updated: 2026-03-02
+---
+
 
 Da série "quem ainda precisa de Java nesses tempos sombrios"?
 

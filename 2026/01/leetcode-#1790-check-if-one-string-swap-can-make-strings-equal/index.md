@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1790: Check if One String Swap Can Make Strings Equal"
+url: https://perrotta.dev/2026/01/leetcode-%231790-check-if-one-string-swap-can-make-strings-equal/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #1790: Check if One String Swap Can Make Strings Equal](https://leetcode.com/problems/check-if-one-string-swap-can-make-strings-equal):
 

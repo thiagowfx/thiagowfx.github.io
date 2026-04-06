@@ -1,3 +1,9 @@
+---
+title: "'Livrando-se' da notificação de voicemail no Android"
+url: https://perrotta.dev/pt/2014/03/livrando-se-da-notifica%C3%A7%C3%A3o-de-voicemail-no-android/
+last_updated: 2026-03-03
+---
+
 
 Em geral não tenho nada a reclamar do Android, mas uma das piores decisões de
 design que já vi foi com a função de voicemail.

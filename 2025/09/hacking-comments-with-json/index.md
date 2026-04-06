@@ -1,3 +1,9 @@
+---
+title: "Hacking comments with JSON"
+url: https://perrotta.dev/2025/09/hacking-comments-with-json/
+last_updated: 2025-10-03
+---
+
 
 [Hacking Comments Into JSON](https://blog.marco.ninja/notes/technology/json/hacking-comments-into-json/) by Marko Kamner:
 

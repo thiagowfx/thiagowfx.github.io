@@ -1,3 +1,9 @@
+---
+title: "pre-commit: add hugo build"
+url: https://perrotta.dev/2025/05/pre-commit-add-hugo-build/
+last_updated: 2026-01-03
+---
+
 
 Sometimes I make changes to this blog that yield build errors with its static
 site generator ([hugo](https://gohugo.io/)).

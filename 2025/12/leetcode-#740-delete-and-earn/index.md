@@ -1,3 +1,9 @@
+---
+title: "LeetCode #740: Delete and Earn"
+url: https://perrotta.dev/2025/12/leetcode-%23740-delete-and-earn/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #740: Delete and Earn](https://leetcode.com/problems/delete-and-earn):
 

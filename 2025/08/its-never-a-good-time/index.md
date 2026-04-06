@@ -1,3 +1,9 @@
+---
+title: "'It's never a good time'"
+url: https://perrotta.dev/2025/08/its-never-a-good-time/
+last_updated: 2026-02-08
+---
+
 
 When is the best time...
 

@@ -1,3 +1,9 @@
+---
+title: "Tools you should know about: moreutils"
+url: https://perrotta.dev/2022/05/tools-you-should-know-about-moreutils/
+last_updated: 2026-02-16
+---
+
 
 [`moreutils`](https://joeyh.name/code/moreutils/) has previously been covered [elsewhere](https://news.ycombinator.com/item?id=31043655), multiple times. It's a collection of small unix tools that follow the [unix philosophy](https://en.wikipedia.org/wiki/Unix_philosophy)[^1] very strongly.
 

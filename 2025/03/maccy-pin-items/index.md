@@ -1,3 +1,9 @@
+---
+title: "maccy: pin items"
+url: https://perrotta.dev/2025/03/maccy-pin-items/
+last_updated: 2026-01-18
+---
+
 
 [Previously]({{< ref "2023-12-02-maccy-macos-clipboard-manager" >}}).
 

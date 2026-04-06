@@ -1,3 +1,9 @@
+---
+title: "New domain"
+url: https://perrotta.dev/2024/02/new-domain/
+last_updated: 2025-12-25
+---
+
 
 I got a new domain! This blog is now available on https://www.perrotta.dev/.
 There's also a redirect to it from https://blog.perrotta.dev/.

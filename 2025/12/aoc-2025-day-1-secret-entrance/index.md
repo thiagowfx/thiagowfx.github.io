@@ -1,3 +1,9 @@
+---
+title: "AoC 2025 Day 1: Secret Entrance"
+url: https://perrotta.dev/2025/12/aoc-2025-day-1-secret-entrance/
+last_updated: 2026-01-03
+---
+
 
 A new year, a new advent of code. My _Pythonista_ self is always happy.
 

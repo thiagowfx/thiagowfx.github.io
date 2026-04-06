@@ -1,3 +1,9 @@
+---
+title: "Trash"
+url: https://perrotta.dev/2025/09/trash/
+last_updated: 2025-09-01
+---
+
 
 When using file managers, we're used to moving files to the Trash instead of
 deleting them immediately from our systems[^1]. This is an universal pattern across

@@ -1,3 +1,9 @@
+---
+title: "Corpspeak Bingo"
+url: https://perrotta.dev/2025/01/corpspeak-bingo/
+last_updated: 2025-01-02
+---
+
 
 - This issue is of the utmost importance to us.
 

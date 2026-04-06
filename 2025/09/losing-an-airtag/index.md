@@ -1,3 +1,9 @@
+---
+title: "Losing an AirTag"
+url: https://perrotta.dev/2025/09/losing-an-airtag/
+last_updated: 2025-09-21
+---
+
 
 A friend lost his [AirTag](https://www.apple.com/airtag/) today.
 

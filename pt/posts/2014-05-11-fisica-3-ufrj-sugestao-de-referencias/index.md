@@ -1,3 +1,9 @@
+---
+title: "Física 3 @ UFRJ: Sugestão de referências"
+url: https://perrotta.dev/pt/posts/2014-05-11-fisica-3-ufrj-sugestao-de-referencias/
+last_updated: 2026-02-18
+---
+
 
 **OBS.: Pequeno update em 10/06/2014.**
 

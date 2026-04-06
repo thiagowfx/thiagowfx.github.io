@@ -1,3 +1,9 @@
+---
+title: "ADRs and LLMs"
+url: https://perrotta.dev/2026/01/adrs-and-llms/
+last_updated: 2026-02-06
+---
+
 
 The first time I heard about [Architectural Decision
 Records](https://adr.github.io/) (ADRs) was with [George

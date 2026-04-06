@@ -1,3 +1,9 @@
+---
+title: "Privacy / Reset The Net Paradise"
+url: https://perrotta.dev/2014/06/privacy-/-reset-the-net-paradise/
+last_updated: 2026-02-19
+---
+
 
 **Update (2014-07-15)**: See [prism-break.org](http://prism-break.org/) for
 additional resources.

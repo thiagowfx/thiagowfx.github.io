@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: 0/1 Knapsack"
+url: https://perrotta.dev/2025/11/bytebytego-0/1-knapsack/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: 0/1 Knapsack](https://bytebytego.com/exercises/coding-patterns/dynamic-programming/01-knapsack):
 

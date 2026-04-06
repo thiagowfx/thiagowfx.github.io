@@ -1,3 +1,9 @@
+---
+title: "The fundamental right to paste"
+url: https://perrotta.dev/2024/01/the-fundamental-right-to-paste/
+last_updated: 2025-09-05
+---
+
 
 Some websites attempt to prevent users from pasting text (i.e. `Ctrl+V` /
 `Cmd+V`) in web browsers.

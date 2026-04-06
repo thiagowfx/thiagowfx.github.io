@@ -1,3 +1,9 @@
+---
+title: "Triple booting, yay!"
+url: https://perrotta.dev/pt/posts/2013-10-16-triple-booting-yay/
+last_updated: 2026-03-29
+---
+
 
 Hoje acabei de configurar o meu sistema para *triplobootar* (se o leitor me
 permitir o neologismo).  Arch Linux, Windows 8 (Lenovo OEM) e Linux Mint 15

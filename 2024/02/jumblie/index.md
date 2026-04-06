@@ -1,3 +1,9 @@
+---
+title: "Jumblie"
+url: https://perrotta.dev/2024/02/jumblie/
+last_updated: 2025-09-05
+---
+
 
 [Wordle](https://www.nytimes.com/games/wordle/index.html) made a splash during
 the pandemic. By now people became quite accustomed to it, and maybe even bored

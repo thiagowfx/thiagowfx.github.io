@@ -1,3 +1,9 @@
+---
+title: "Linux swap shenanigans"
+url: https://perrotta.dev/2022/02/linux-swap-shenanigans/
+last_updated: 2026-02-07
+---
+
 
 In this post we will cover a few linux swap recipes.
 

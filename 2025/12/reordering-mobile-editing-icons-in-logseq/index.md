@@ -1,3 +1,9 @@
+---
+title: "Reordering mobile editing icons in logseq"
+url: https://perrotta.dev/2025/12/reordering-mobile-editing-icons-in-logseq/
+last_updated: 2026-01-03
+---
+
 
 [Reordering mobile editing icons in
 logseq](https://bate.dev/posts/logseq-mobile/) by Colin Bate:

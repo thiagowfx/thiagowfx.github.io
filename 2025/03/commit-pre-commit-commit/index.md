@@ -1,3 +1,9 @@
+---
+title: "commit, pre-commit, commit"
+url: https://perrotta.dev/2025/03/commit-pre-commit-commit/
+last_updated: 2026-01-03
+---
+
 
 [Premature optimization is the root of all
 evil](https://en.wikipedia.org/wiki/Program_optimization) but I run into this

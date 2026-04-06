@@ -1,3 +1,9 @@
+---
+title: "My First APKBUILD"
+url: https://perrotta.dev/2022/01/my-first-apkbuild/
+last_updated: 2026-02-16
+---
+
 
 In the same spirit of my first PKGBUILD and [`Ebuild`]({{< ref "2014-09-28-my-first-ebuild" >}}), herein I will describe my first `APKBUILD`.
 

@@ -1,3 +1,9 @@
+---
+title: "JIRA Service Management search is terrible"
+url: https://perrotta.dev/2025/06/jira-service-management-search-is-terrible/
+last_updated: 2025-06-10
+---
+
 
 [JIRA Service
 Management](https://www.atlassian.com/software/jira/service-management) is a

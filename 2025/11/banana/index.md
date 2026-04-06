@@ -1,3 +1,9 @@
+---
+title: "Banana"
+url: https://perrotta.dev/2025/11/banana/
+last_updated: 2025-11-09
+---
+
 
 You write a long document.
 

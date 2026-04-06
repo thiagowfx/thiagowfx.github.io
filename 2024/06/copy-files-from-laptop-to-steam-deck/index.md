@@ -1,3 +1,9 @@
+---
+title: "Copy files from laptop to Steam Deck"
+url: https://perrotta.dev/2024/06/copy-files-from-laptop-to-steam-deck/
+last_updated: 2026-02-17
+---
+
 
 Let's say the files you want to copy are in `~/Downloads`.
 

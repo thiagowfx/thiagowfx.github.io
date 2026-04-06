@@ -1,3 +1,9 @@
+---
+title: "Instagram: get rid of all posts"
+url: https://perrotta.dev/2025/02/instagram-get-rid-of-all-posts/
+last_updated: 2026-02-08
+---
+
 
 Following the footsteps of enacting 2025 as a year of [Tech Independence]({{< ref
 "2024-12-31-independence" >}}), I got rid of _all_ my Instagram posts[^1].

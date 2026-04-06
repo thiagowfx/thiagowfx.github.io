@@ -1,3 +1,9 @@
+---
+title: "Alpine Linux 3.21"
+url: https://perrotta.dev/2024/12/alpine-linux-3.21/
+last_updated: 2026-01-03
+---
+
 
 [Alpine Linux 3.21.0](https://alpinelinux.org/posts/Alpine-3.21.0-released.html)
 got released last Thursday.

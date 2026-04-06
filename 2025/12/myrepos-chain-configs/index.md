@@ -1,3 +1,9 @@
+---
+title: "myrepos: chain configs"
+url: https://perrotta.dev/2025/12/myrepos-chain-configs/
+last_updated: 2026-01-03
+---
+
 
 [myrepos](https://myrepos.branchable.com/):
 

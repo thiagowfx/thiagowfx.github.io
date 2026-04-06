@@ -1,3 +1,9 @@
+---
+title: "cicd"
+url: https://perrotta.dev/2026/01/cicd/
+last_updated: 2026-01-14
+---
+
 
 **CI/CD**: continuous integration / continuous delivery.
 

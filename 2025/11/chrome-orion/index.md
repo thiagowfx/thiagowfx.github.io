@@ -1,3 +1,9 @@
+---
+title: "Chrome -\u003e Orion"
+url: https://perrotta.dev/2025/11/chrome-orion/
+last_updated: 2026-03-10
+---
+
 
 It takes effort to overcome friction.
 

@@ -1,3 +1,9 @@
+---
+title: "set and dict are not ordered"
+url: https://perrotta.dev/2025/11/set-and-dict-are-not-ordered/
+last_updated: 2026-01-03
+---
+
 
 Sets and dictionaries are not ordered.
 

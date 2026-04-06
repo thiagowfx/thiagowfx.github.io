@@ -1,3 +1,9 @@
+---
+title: "VSCode: auto restart extensions"
+url: https://perrotta.dev/2024/11/vscode-auto-restart-extensions/
+last_updated: 2025-09-05
+---
+
 
 Whenever I open VSCode, there are some extension updates. Every time, I need to
 manually click "Extensions" in the left-side navigation bar and then "Restart"

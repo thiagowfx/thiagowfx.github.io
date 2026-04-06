@@ -1,3 +1,9 @@
+---
+title: "The Apple Store"
+url: https://perrotta.dev/2025/10/the-apple-store/
+last_updated: 2025-10-18
+---
+
 
 After owning an iPhone 14 Pro for more than two and a half years, its maximum
 battery capacity degraded to **~76%**. It is not a terrible number, but the

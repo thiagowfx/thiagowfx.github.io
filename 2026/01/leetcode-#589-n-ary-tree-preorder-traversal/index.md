@@ -1,3 +1,9 @@
+---
+title: "LeetCode #589: N-ary Tree Preorder Traversal"
+url: https://perrotta.dev/2026/01/leetcode-%23589-n-ary-tree-preorder-traversal/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #589: N-ary Tree Preorder Traversal](https://leetcode.com/problems/n-ary-tree-preorder-traversal):
 

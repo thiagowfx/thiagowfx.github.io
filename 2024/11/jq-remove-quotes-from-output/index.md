@@ -1,3 +1,9 @@
+---
+title: "jq: remove quotes from output"
+url: https://perrotta.dev/2024/11/jq-remove-quotes-from-output/
+last_updated: 2024-12-20
+---
+
 
 Given:
 

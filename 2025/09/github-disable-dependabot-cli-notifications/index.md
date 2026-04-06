@@ -1,3 +1,9 @@
+---
+title: "GitHub: disable dependabot CLI notifications"
+url: https://perrotta.dev/2025/09/github-disable-dependabot-cli-notifications/
+last_updated: 2026-01-03
+---
+
 
 Good morning!
 

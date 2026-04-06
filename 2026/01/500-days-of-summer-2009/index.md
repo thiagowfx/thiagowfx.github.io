@@ -1,3 +1,9 @@
+---
+title: "500 days of Summer (2009)"
+url: https://perrotta.dev/2026/01/500-days-of-summer-2009/
+last_updated: 2026-01-27
+---
+
 
 Recently I had to opportunity to watch [this classic](https://www.imdb.com/title/tt1022603/) during a flight.
 

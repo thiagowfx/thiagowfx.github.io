@@ -1,3 +1,9 @@
+---
+title: "LeetCode #265: Paint House II"
+url: https://perrotta.dev/2025/12/leetcode-%23265-paint-house-ii/
+last_updated: 2026-01-03
+---
+
 
 [Previously]({{< ref "2025-12-29-leetcode-256-paint-house" >}}). Just replace
 `3` with `k`.

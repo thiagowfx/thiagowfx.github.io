@@ -1,3 +1,9 @@
+---
+title: "git: prefer switch over checkout"
+url: https://perrotta.dev/2025/03/git-prefer-switch-over-checkout/
+last_updated: 2026-01-03
+---
+
 
 [Preliminaries](https://stackoverflow.com/questions/57265785/whats-the-difference-between-git-switch-and-git-checkout-branch#57266005):
 

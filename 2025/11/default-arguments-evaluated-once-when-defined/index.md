@@ -1,3 +1,9 @@
+---
+title: "default arguments evaluated once when defined"
+url: https://perrotta.dev/2025/11/default-arguments-evaluated-once-when-defined/
+last_updated: 2026-01-03
+---
+
 
 Default arguments in Python are evaluated only _once_, when they aredefined, not
 when they are called. This is not very intuitive.

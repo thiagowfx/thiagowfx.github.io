@@ -1,3 +1,9 @@
+---
+title: "New theme: BearBlog"
+url: https://perrotta.dev/2024/12/new-theme-bearblog/
+last_updated: 2024-12-21
+---
+
 
 Inspired by [Bear Blog](https://bearblog.dev/), via [Derek
 Sivers](https://sive.rs/now2), I updated my Hugo theme to resemble its looks and

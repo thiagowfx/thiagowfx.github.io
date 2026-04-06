@@ -1,3 +1,9 @@
+---
+title: "Microsoft Visio...ou: funcionalidade, cadê você?"
+url: https://perrotta.dev/pt/posts/2013-10-10-microsoft-visio-ou-funcionalidade-cade-voce/
+last_updated: 2026-03-29
+---
+
 
 Recentemente tive que trabalhar com um pouquinho de
 [UML](http://en.wikipedia.org/wiki/UML). A verdade é que UML parece meio *old

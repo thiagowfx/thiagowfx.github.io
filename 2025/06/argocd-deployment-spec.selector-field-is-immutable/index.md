@@ -1,3 +1,9 @@
+---
+title: "ArgoCD: deployment spec.selector: field is immutable"
+url: https://perrotta.dev/2025/06/argocd-deployment-spec.selector-field-is-immutable/
+last_updated: 2026-01-03
+---
+
 
 When using [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) to manage an app,
 the Deployment manifest needs to undergo significant changes, updating its

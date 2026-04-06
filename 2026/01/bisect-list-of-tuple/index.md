@@ -1,3 +1,9 @@
+---
+title: "bisect: list of tuple"
+url: https://perrotta.dev/2026/01/bisect-list-of-tuple/
+last_updated: 2026-01-14
+---
+
 
 ```python
 a = [(1, 3), (1, 4), (2, 5), (3, 6), (3, 7), (5, 8)]

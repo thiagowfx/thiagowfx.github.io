@@ -1,3 +1,9 @@
+---
+title: "LeetCode #198: House Robber"
+url: https://perrotta.dev/2025/09/leetcode-%23198-house-robber/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #198: House Robber](https://leetcode.com/problems/house-robber/):
 

@@ -1,3 +1,9 @@
+---
+title: "chain map"
+url: https://perrotta.dev/2026/01/chain-map/
+last_updated: 2026-01-10
+---
+
 
 ```python
 from collections import ChainMap

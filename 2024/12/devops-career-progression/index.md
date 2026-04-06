@@ -1,3 +1,9 @@
+---
+title: "DevOps career progression"
+url: https://perrotta.dev/2024/12/devops-career-progression/
+last_updated: 2025-01-13
+---
+
 
 A small collection of DevOps / SRE career resources.
 

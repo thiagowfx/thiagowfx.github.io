@@ -1,3 +1,9 @@
+---
+title: "objective_c"
+url: https://perrotta.dev/2026/01/objective_c/
+last_updated: 2026-01-04
+---
+
 
 ```python
 def mysum(a, b):

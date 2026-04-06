@@ -1,3 +1,9 @@
+---
+title: "LeetCode #63: Unique Paths II"
+url: https://perrotta.dev/2025/09/leetcode-%2363-unique-paths-ii/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #63: Unique Paths II](https://leetcode.com/problems/unique-paths-ii/):
 

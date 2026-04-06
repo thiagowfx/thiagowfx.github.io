@@ -1,3 +1,9 @@
+---
+title: "Shell memoization: lazy-load LLM API keys"
+url: https://perrotta.dev/2025/11/shell-memoization-lazy-load-llm-api-keys/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Given LLM keys shell environment variables:
 

@@ -1,3 +1,9 @@
+---
+title: "Exponential Idle"
+url: https://perrotta.dev/2024/10/exponential-idle/
+last_updated: 2026-02-17
+---
+
 
 [Exponential Idle](https://conicgames.github.io/exponentialidle/):
 

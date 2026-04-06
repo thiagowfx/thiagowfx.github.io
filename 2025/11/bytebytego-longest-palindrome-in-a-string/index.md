@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Longest Palindrome in a String"
+url: https://perrotta.dev/2025/11/bytebytego-longest-palindrome-in-a-string/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Longest Palindrome in a String](https://bytebytego.com/exercises/coding-patterns/dynamic-programming/longest-palindrome-in-a-string):
 

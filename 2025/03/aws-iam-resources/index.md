@@ -1,3 +1,9 @@
+---
+title: "AWS IAM resources"
+url: https://perrotta.dev/2025/03/aws-iam-resources/
+last_updated: 2026-01-03
+---
+
 
 When working on Amazon Web Services (AWS), at some point you'll need to fiddle
 with [IAM](https://en.wikipedia.org/wiki/Identity_and_access_management)

@@ -1,3 +1,9 @@
+---
+title: "Topgrade"
+url: https://perrotta.dev/2026/03/topgrade/
+last_updated: 2026-03-12
+---
+
 
 [Topgrade](https://topgrade-rs.github.io/):
 

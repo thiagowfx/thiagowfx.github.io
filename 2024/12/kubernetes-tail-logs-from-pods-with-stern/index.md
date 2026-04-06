@@ -1,3 +1,9 @@
+---
+title: "Kubernetes: tail logs from pods with stern"
+url: https://perrotta.dev/2024/12/kubernetes-tail-logs-from-pods-with-stern/
+last_updated: 2026-01-03
+---
+
 
 You can always use `kubectl logs -n {namespace} {pod} [-c {container}] -f` to
 inspect logs from a specific pod[^1].

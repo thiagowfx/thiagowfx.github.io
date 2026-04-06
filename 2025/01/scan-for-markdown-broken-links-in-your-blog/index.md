@@ -1,3 +1,9 @@
+---
+title: "Scan for markdown broken links in your blog"
+url: https://perrotta.dev/2025/01/scan-for-markdown-broken-links-in-your-blog/
+last_updated: 2025-01-19
+---
+
 
 [Link rot](https://en.wikipedia.org/wiki/Link_rot) is a real problem in the web,
 even though [Cool URIs don't (supposedly)

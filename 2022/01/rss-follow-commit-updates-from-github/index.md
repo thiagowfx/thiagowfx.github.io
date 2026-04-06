@@ -1,3 +1,9 @@
+---
+title: "RSS: Follow commit updates from Github"
+url: https://perrotta.dev/2022/01/rss-follow-commit-updates-from-github/
+last_updated: 2025-12-25
+---
+
 
 It is possible to track/follow commits of `git` repositories on
 [GitHub](https://github.com/) via RSS:

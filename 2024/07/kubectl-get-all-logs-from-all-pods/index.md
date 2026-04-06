@@ -1,3 +1,9 @@
+---
+title: "kubectl: get all logs from all pods"
+url: https://perrotta.dev/2024/07/kubectl-get-all-logs-from-all-pods/
+last_updated: 2026-01-03
+---
+
 
 Frequently:
 

@@ -1,3 +1,9 @@
+---
+title: "Reply to: Growth at BigTech"
+url: https://perrotta.dev/2025/03/reply-to-growth-at-bigtech/
+last_updated: 2026-02-16
+---
+
 
 Original article: [Growth at
 BigTech](https://bhardwajrish.blogspot.com/2025/03/growth-at-bigtech.html).

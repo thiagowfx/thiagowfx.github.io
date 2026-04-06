@@ -1,3 +1,9 @@
+---
+title: "Airline Wi-Fi messaging services"
+url: https://perrotta.dev/2026/01/airline-wi-fi-messaging-services/
+last_updated: 2026-01-20
+---
+
 
 Many airlines offer free Wi-Fi connectivity to their fellow passengers, up to a
 certain amount of time — for example, 30 minutes.

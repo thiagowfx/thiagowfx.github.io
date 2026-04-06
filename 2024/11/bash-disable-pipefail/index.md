@@ -1,3 +1,9 @@
+---
+title: "bash: disable pipefail"
+url: https://perrotta.dev/2024/11/bash-disable-pipefail/
+last_updated: 2025-05-23
+---
+
 
 We often do `set -euo pipefail` in shell scripts[^1].
 It's an overall good habit in defensive programming.

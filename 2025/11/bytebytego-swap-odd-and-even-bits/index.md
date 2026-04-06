@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Swap Odd and Even Bits"
+url: https://perrotta.dev/2025/11/bytebytego-swap-odd-and-even-bits/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Swap Odd and Even Bits](https://bytebytego.com/exercises/coding-patterns/bit-manipulation/swap-odd-and-even-bits):
 

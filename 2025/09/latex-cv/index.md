@@ -1,3 +1,9 @@
+---
+title: "LaTeX CV"
+url: https://perrotta.dev/2025/09/latex-cv/
+last_updated: 2025-09-17
+---
+
 
 For ages I've been using a resumé crafted in Google Docs. I was never a big fan
 of it, but it got the job done[^1].

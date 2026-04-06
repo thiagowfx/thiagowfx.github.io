@@ -1,3 +1,9 @@
+---
+title: "Organic Maps: off-line maps"
+url: https://perrotta.dev/2024/02/organic-maps-off-line-maps/
+last_updated: 2026-03-10
+---
+
 
 https://organicmaps.app/:
 

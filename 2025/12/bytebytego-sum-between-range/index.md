@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Sum Between Range"
+url: https://perrotta.dev/2025/12/bytebytego-sum-between-range/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Sum Between Range](https://bytebytego.com/exercises/coding-patterns/prefix-sums/sum-between-range):
 

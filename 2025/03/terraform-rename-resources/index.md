@@ -1,3 +1,9 @@
+---
+title: "Terraform: rename resources"
+url: https://perrotta.dev/2025/03/terraform-rename-resources/
+last_updated: 2026-01-03
+---
+
 
 Sometimes I need to make a simple refactoring rename change to a terraform
 resource that has already been applied. For example:

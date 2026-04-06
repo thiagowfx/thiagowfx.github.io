@@ -1,3 +1,9 @@
+---
+title: "miniflux: cull old posts"
+url: https://perrotta.dev/2026/04/miniflux-cull-old-posts/
+last_updated: 2026-04-02
+---
+
 
 Until a few months ago, I had the following in my `/etc/miniflux.conf`:
 

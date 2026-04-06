@@ -1,3 +1,9 @@
+---
+title: "git ll"
+url: https://perrotta.dev/2025/08/git-ll/
+last_updated: 2026-01-03
+---
+
 
 In my `~/.gitconfig` there's an alias for `git log`, inspired by [Thorsten
 Ball](https://registerspill.thorstenball.com/p/how-i-use-git)[^1]:

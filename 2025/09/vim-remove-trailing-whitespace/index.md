@@ -1,3 +1,9 @@
+---
+title: "vim: remove trailing whitespace"
+url: https://perrotta.dev/2025/09/vim-remove-trailing-whitespace/
+last_updated: 2026-01-03
+---
+
 
 A simple addition to remove all trailing whitespace from the current buffer by
 pressing `,t`[^1]

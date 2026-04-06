@@ -1,3 +1,9 @@
+---
+title: "Slack: AI plug-in"
+url: https://perrotta.dev/2024/09/slack-ai-plug-in/
+last_updated: 2026-01-03
+---
+
 
 > **Coworker**: Do you have an AI plug-in for Slack?
 >

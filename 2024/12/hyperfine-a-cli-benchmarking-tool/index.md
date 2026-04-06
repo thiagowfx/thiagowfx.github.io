@@ -1,3 +1,9 @@
+---
+title: "Hyperfine: a CLI benchmarking tool"
+url: https://perrotta.dev/2024/12/hyperfine-a-cli-benchmarking-tool/
+last_updated: 2024-12-26
+---
+
 
 This week I accidentally stumbled upon [`hyperfine`](https://github.com/sharkdp/hyperfine).
 

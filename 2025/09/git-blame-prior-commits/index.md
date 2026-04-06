@@ -1,3 +1,9 @@
+---
+title: "git blame: prior commits"
+url: https://perrotta.dev/2025/09/git-blame-prior-commits/
+last_updated: 2026-01-03
+---
+
 
 Let's say you want to inspect the history of a given file tracked in a git
 repository. Straightforward with [`git-blame(1)`](https://man.archlinux.org/man/extra/git/git-blame.1.en):

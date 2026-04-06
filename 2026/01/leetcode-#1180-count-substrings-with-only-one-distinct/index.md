@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1180: Count Substrings with Only One Distinct"
+url: https://perrotta.dev/2026/01/leetcode-%231180-count-substrings-with-only-one-distinct/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #1180: Count Substrings with Only One Distinct](https://leetcode.com/problems/count-substrings-with-only-one-distinct):
 

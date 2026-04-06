@@ -1,3 +1,9 @@
+---
+title: "Using keep-sorted to keep your ~/.gitconfig tidy"
+url: https://perrotta.dev/2025/03/using-keep-sorted-to-keep-your-~/.gitconfig-tidy/
+last_updated: 2026-02-16
+---
+
 
 I tend to sort my
 [`~/.gitconfig`](https://github.com/thiagowfx/.dotfiles/blob/master/git/.gitconfig)

@@ -1,3 +1,9 @@
+---
+title: "nginx → caddy"
+url: https://perrotta.dev/2025/12/nginx-caddy/
+last_updated: 2026-02-07
+---
+
 
 **Problem statement**: Replace `nginx` with `caddy` for `miniflux` on my Alpine
 Linux VPS host.

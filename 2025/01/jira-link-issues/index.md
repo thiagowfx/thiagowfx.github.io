@@ -1,3 +1,9 @@
+---
+title: "JIRA: link issues"
+url: https://perrotta.dev/2025/01/jira-link-issues/
+last_updated: 2025-01-21
+---
+
 
 Definitely not intuitive:
 

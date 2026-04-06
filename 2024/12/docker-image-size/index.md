@@ -1,3 +1,9 @@
+---
+title: "Docker image size"
+url: https://perrotta.dev/2024/12/docker-image-size/
+last_updated: 2026-02-16
+---
+
 
 When trying to optimize docker images in terms of size, the workflow is as
 follows:

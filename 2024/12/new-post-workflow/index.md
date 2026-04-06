@@ -1,3 +1,9 @@
+---
+title: "New post workflow"
+url: https://perrotta.dev/2024/12/new-post-workflow/
+last_updated: 2026-03-11
+---
+
 
 ```shell
 % just new "post title"

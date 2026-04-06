@@ -1,3 +1,9 @@
+---
+title: "Stimulation Clicker"
+url: https://perrotta.dev/2025/01/stimulation-clicker/
+last_updated: 2025-01-07
+---
+
 
 [Stimulation Clicker](https://neal.fun/stimulation-clicker/) by Neal Agarwal
 (via [HN](https://news.ycombinator.com/item?id=42611536)).

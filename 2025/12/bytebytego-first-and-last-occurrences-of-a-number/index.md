@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: First and Last Occurrences of a Number"
+url: https://perrotta.dev/2025/12/bytebytego-first-and-last-occurrences-of-a-number/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: First and Last Occurrences of a Number](https://bytebytego.com/exercises/coding-patterns/binary-search/first-and-last-occurrences-of-a-number):
 

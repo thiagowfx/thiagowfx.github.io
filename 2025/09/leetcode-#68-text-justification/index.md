@@ -1,3 +1,9 @@
+---
+title: "LeetCode #68: Text Justification"
+url: https://perrotta.dev/2025/09/leetcode-%2368-text-justification/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #68: Text Justification](https://leetcode.com/problems/text-justification/):
 

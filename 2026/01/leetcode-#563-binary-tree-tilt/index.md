@@ -1,3 +1,9 @@
+---
+title: "LeetCode #563: Binary Tree Tilt"
+url: https://perrotta.dev/2026/01/leetcode-%23563-binary-tree-tilt/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #563: Binary Tree Tilt](https://leetcode.com/problems/binary-tree-tilt):
 

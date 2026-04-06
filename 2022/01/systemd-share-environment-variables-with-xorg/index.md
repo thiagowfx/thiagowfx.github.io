@@ -1,3 +1,9 @@
+---
+title: "systemd: share environment variables with xorg"
+url: https://perrotta.dev/2022/01/systemd-share-environment-variables-with-xorg/
+last_updated: 2026-03-26
+---
+
 
 In this post we will learn how to share environment variables (e.g.
 `$GDK_SCALE`) between a system user session and X11/Xorg.

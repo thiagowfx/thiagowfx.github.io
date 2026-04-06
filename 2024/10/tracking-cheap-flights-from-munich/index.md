@@ -1,3 +1,9 @@
+---
+title: "Tracking cheap flights from Munich"
+url: https://perrotta.dev/2024/10/tracking-cheap-flights-from-munich/
+last_updated: 2025-09-05
+---
+
 
 ## Overview
 

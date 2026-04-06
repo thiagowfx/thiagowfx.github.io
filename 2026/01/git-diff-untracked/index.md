@@ -1,3 +1,9 @@
+---
+title: "git: diff untracked"
+url: https://perrotta.dev/2026/01/git-diff-untracked/
+last_updated: 2026-01-18
+---
+
 
 [Previously]({{< ref "2025-12-22-git-stash-untracked" >}}).
 

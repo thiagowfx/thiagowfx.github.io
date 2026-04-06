@@ -1,3 +1,9 @@
+---
+title: "flameshot: collating multiple screenshots"
+url: https://perrotta.dev/2026/02/flameshot-collating-multiple-screenshots/
+last_updated: 2026-02-20
+---
+
 
 [Previously]({{< ref "2025-12-27-flameshot" >}}).
 

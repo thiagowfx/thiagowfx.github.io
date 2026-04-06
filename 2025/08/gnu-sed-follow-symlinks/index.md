@@ -1,3 +1,9 @@
+---
+title: "GNU sed: follow symlinks"
+url: https://perrotta.dev/2025/08/gnu-sed-follow-symlinks/
+last_updated: 2025-09-05
+---
+
 
 [Previously]({{< ref "2025-08-08-fd-with-xargs-filenames-with-spaces" >}}).
 

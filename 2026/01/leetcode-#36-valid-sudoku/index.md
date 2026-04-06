@@ -1,3 +1,9 @@
+---
+title: "LeetCode #36: Valid Sudoku"
+url: https://perrotta.dev/2026/01/leetcode-%2336-valid-sudoku/
+last_updated: 2026-01-07
+---
+
 
 [LeetCode #36: Valid Sudoku](https://leetcode.com/problems/valid-sudoku):
 

@@ -1,3 +1,9 @@
+---
+title: "The Smalltalk Question"
+url: https://perrotta.dev/2025/04/the-smalltalk-question/
+last_updated: 2025-04-20
+---
+
 
 [The Smalltalk Question](http://www.aaronsw.com/weblog/smalltalkq) by Aaron
 Swartz, via

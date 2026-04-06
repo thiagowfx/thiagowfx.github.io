@@ -1,3 +1,9 @@
+---
+title: "LeetCode #652: Find Duplicate Subtrees"
+url: https://perrotta.dev/2026/01/leetcode-%23652-find-duplicate-subtrees/
+last_updated: 2026-01-07
+---
+
 
 [LeetCode #652: Find Duplicate Subtrees](https://leetcode.com/problems/find-duplicate-subtrees):
 

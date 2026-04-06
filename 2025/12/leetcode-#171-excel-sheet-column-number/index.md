@@ -1,3 +1,9 @@
+---
+title: "LeetCode #171: Excel Sheet Column Number"
+url: https://perrotta.dev/2025/12/leetcode-%23171-excel-sheet-column-number/
+last_updated: 2026-02-16
+---
+
 
 [LeetCode #171: Excel Sheet Column Number](https://leetcode.com/problems/excel-sheet-column-number):
 

@@ -1,3 +1,9 @@
+---
+title: "Kagi trial expires"
+url: https://perrotta.dev/2025/05/kagi-trial-expires/
+last_updated: 2026-03-10
+---
+
 
 My Kagi trial is going to expire within 2 days.
 

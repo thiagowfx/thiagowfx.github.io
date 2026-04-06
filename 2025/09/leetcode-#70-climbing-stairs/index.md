@@ -1,3 +1,9 @@
+---
+title: "LeetCode #70: Climbing Stairs"
+url: https://perrotta.dev/2025/09/leetcode-%2370-climbing-stairs/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #70: Climbing Stairs](https://leetcode.com/problems/climbing-stairs/):
 

@@ -1,3 +1,9 @@
+---
+title: "git: --no-pager"
+url: https://perrotta.dev/2025/08/git--no-pager/
+last_updated: 2026-01-03
+---
+
 
 Let's say you use color highlighting to visually inspect diffs with `git`, such
 as [`delta`](https://github.com/dandavison/delta) or

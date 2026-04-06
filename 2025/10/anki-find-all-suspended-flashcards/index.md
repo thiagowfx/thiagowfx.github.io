@@ -1,3 +1,9 @@
+---
+title: "Anki: find all suspended flashcards"
+url: https://perrotta.dev/2025/10/anki-find-all-suspended-flashcards/
+last_updated: 2025-10-08
+---
+
 
 The following queries are useful to find flashcards (notes or cards) in
 [Anki](https://apps.ankiweb.net/) that you're struggling with.

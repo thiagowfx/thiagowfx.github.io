@@ -1,3 +1,9 @@
+---
+title: "macOS: sudo with touch ID: survive upgrades"
+url: https://perrotta.dev/2023/12/macos-sudo-with-touch-id-survive-upgrades/
+last_updated: 2026-01-03
+---
+
 
 Recent macbooks have a fingerprint reader, which is typically used to unlock the computer and log in.
 

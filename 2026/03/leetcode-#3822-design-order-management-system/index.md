@@ -1,3 +1,9 @@
+---
+title: "LeetCode #3822: Design Order Management System"
+url: https://perrotta.dev/2026/03/leetcode-%233822-design-order-management-system/
+last_updated: 2026-03-01
+---
+
 
 [LeetCode #3822: Design Order Management System](https://leetcode.com/problems/design-order-management-system):
 

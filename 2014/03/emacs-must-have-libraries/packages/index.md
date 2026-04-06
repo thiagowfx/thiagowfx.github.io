@@ -1,3 +1,9 @@
+---
+title: "Emacs *must have* libraries/packages"
+url: https://perrotta.dev/2014/03/emacs-must-have-libraries/packages/
+last_updated: 2026-03-03
+---
+
 
 So, recently I've been heavily playing with Emacs (24, please) – at least at
 the customization level –, tayloring and customizing it to my needs. You can

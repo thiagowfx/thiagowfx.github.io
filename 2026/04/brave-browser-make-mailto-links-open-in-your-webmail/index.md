@@ -1,3 +1,9 @@
+---
+title: "Brave browser: make mailto: links open in your webmail"
+url: https://perrotta.dev/2026/04/brave-browser-make-mailto-links-open-in-your-webmail/
+last_updated: 2026-04-05
+---
+
 
 Stack Overflow: [How to make mailto: links to go to
 Gmail?](https://stackoverflow.com/questions/71549037/how-to-make-mailto-links-to-go-to-gmail)

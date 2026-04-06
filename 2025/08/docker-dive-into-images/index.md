@@ -1,3 +1,9 @@
+---
+title: "docker: dive into images"
+url: https://perrotta.dev/2025/08/docker-dive-into-images/
+last_updated: 2026-01-18
+---
+
 
 Recently bitnami has [pulled the
 plug](https://github.com/bitnami/charts/issues/35164) off their public docker

@@ -1,3 +1,9 @@
+---
+title: "Recovery típico via USB"
+url: https://perrotta.dev/pt/2014/04/recovery-t%C3%ADpico-via-usb/
+last_updated: 2026-02-18
+---
+
 
 1. Meu computador não boota! E agora? Possíveis sintomas: tela preta congelada,
    tela de splash congelada, systemd travado, upstart travado, corrupção (fsck

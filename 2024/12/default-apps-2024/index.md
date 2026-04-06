@@ -1,3 +1,9 @@
+---
+title: "Default apps 2024"
+url: https://perrotta.dev/2024/12/default-apps-2024/
+last_updated: 2026-01-04
+---
+
 
 The list of my default apps for this year.
 

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #102: Binary Tree Level Order Traversal"
+url: https://perrotta.dev/2026/01/leetcode-%23102-binary-tree-level-order-traversal/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #102: Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal):
 

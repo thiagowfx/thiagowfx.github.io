@@ -1,3 +1,9 @@
+---
+title: "Aaaaaargh, Facebook"
+url: https://perrotta.dev/2013/11/aaaaaargh-facebook/
+last_updated: 2026-02-19
+---
+
 
 _Facebook. Facebook. Facebook. Facebook. Facebook. Facebook. Facebook.
 Facebook._ No, I'm not trying to index my blog. This represents the buffer

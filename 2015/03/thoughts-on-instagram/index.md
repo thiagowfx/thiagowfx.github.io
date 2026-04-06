@@ -1,3 +1,9 @@
+---
+title: "Thoughts on Instagram"
+url: https://perrotta.dev/2015/03/thoughts-on-instagram/
+last_updated: 2026-03-03
+---
+
 
 **Note:** this is a brief article which exposes my opinion about a free web
 service.

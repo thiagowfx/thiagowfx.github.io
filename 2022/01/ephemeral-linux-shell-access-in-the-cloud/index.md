@@ -1,3 +1,9 @@
+---
+title: "Ephemeral Linux Shell Access in the Cloud"
+url: https://perrotta.dev/2022/01/ephemeral-linux-shell-access-in-the-cloud/
+last_updated: 2026-02-16
+---
+
 
 If you ever find yourself in a hurry to get access to a Linux shell but don't
 easily have one at hand (e.g. a workstation or a raspberry pi or a VPS), it's

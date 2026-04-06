@@ -1,3 +1,9 @@
+---
+title: "sed wizardry"
+url: https://perrotta.dev/2026/03/sed-wizardry/
+last_updated: 2026-03-16
+---
+
 
 Surely this is some GNU `sed` wizardry for the sake of replacing a hallucinated
 link in a GitHub pull request:

@@ -1,3 +1,9 @@
+---
+title: "Pare de receber telemarketing: Não Me Perturbe"
+url: https://perrotta.dev/pt/posts/2025-01-13-pare-de-receber-telemarketing-n%C3%A3o-me-perturbe/
+last_updated: 2025-01-13
+---
+
 
 [Não Me Perturbe](https://naomeperturbe.com.br/):
 

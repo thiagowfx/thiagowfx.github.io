@@ -1,3 +1,9 @@
+---
+title: "LeetCode #202: Happy Number"
+url: https://perrotta.dev/2025/09/leetcode-%23202-happy-number/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #202: Happy Number](https://leetcode.com/problems/happy-number/):
 

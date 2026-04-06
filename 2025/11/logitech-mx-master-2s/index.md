@@ -1,3 +1,9 @@
+---
+title: "Logitech MX Master 2S"
+url: https://perrotta.dev/2025/11/logitech-mx-master-2s/
+last_updated: 2025-11-22
+---
+
 
 To set up [Bluetooth
 pairing](https://www.logitech.com/en-us/setup/mxsetup/mouse-setup/bluetooth.html):

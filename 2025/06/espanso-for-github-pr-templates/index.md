@@ -1,3 +1,9 @@
+---
+title: "Espanso for Github PR templates"
+url: https://perrotta.dev/2025/06/espanso-for-github-pr-templates/
+last_updated: 2025-06-16
+---
+
 
 It is super tedious to fill in [github PR templates]({{< ref
 "2025-05-04-github-pull-request-template" >}}) manually.

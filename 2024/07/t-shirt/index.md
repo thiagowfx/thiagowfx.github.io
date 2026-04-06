@@ -1,3 +1,9 @@
+---
+title: "t-shirt"
+url: https://perrotta.dev/2024/07/t-shirt/
+last_updated: 2024-07-15
+---
+
 
 When attending tech conferences, wear T-shirts from previous conferences, or
 from prior editions of the same conference. It is a good icebreaker when people

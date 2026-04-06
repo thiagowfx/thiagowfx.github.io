@@ -1,3 +1,9 @@
+---
+title: "enum"
+url: https://perrotta.dev/2026/01/enum/
+last_updated: 2026-01-04
+---
+
 
 **Problem statement**:
 

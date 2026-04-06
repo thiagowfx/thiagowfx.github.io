@@ -1,3 +1,9 @@
+---
+title: "helm: list recent chart upgrades"
+url: https://perrotta.dev/2024/09/helm-list-recent-chart-upgrades/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Given a kubernetes cluster with many helm charts in
 different namespaces, how to use `helm` to query the list of the last recently

@@ -1,3 +1,9 @@
+---
+title: "git: create a throwaway branch"
+url: https://perrotta.dev/2024/09/git-create-a-throwaway-branch/
+last_updated: 2026-03-26
+---
+
 
 Let's say you want to submit a quick, perhaps even trivial, one-off pull request
 (PR).

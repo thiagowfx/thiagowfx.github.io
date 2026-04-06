@@ -1,3 +1,9 @@
+---
+title: "New series: Raspberry Pi fun with DevOps"
+url: https://perrotta.dev/2024/10/new-series-raspberry-pi-fun-with-devops/
+last_updated: 2026-02-16
+---
+
 
 ## Intro
 

@@ -1,3 +1,9 @@
+---
+title: "Pritunl log in via CLI"
+url: https://perrotta.dev/2024/05/pritunl-log-in-via-cli/
+last_updated: 2026-01-01
+---
+
 
 [Pritunl](https://pritunl.com/) is an Enterprise Distributed OpenVPN server.
 

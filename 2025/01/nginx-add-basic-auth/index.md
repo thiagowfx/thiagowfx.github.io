@@ -1,3 +1,9 @@
+---
+title: "nginx: add basic auth"
+url: https://perrotta.dev/2025/01/nginx-add-basic-auth/
+last_updated: 2026-01-01
+---
+
 
 **Problem statement**: You want to expose a HTTPS service from your cloud VPS to
 the public Internet. You do not wish to use a VPN (e.g.

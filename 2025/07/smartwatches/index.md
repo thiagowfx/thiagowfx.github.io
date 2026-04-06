@@ -1,3 +1,9 @@
+---
+title: "Smartwatches"
+url: https://perrotta.dev/2025/07/smartwatches/
+last_updated: 2025-09-20
+---
+
 
 Kev Quirk, [I Don't See the Point of
 Smartwatches](https://kevquirk.com/blog/i-don-t-see-the-point-of-smartwatches):

@@ -1,3 +1,9 @@
+---
+title: "GitHub: approve PRs from CLI"
+url: https://perrotta.dev/2026/02/github-approve-prs-from-cli/
+last_updated: 2026-02-04
+---
+
 
 **Problem statement**: approve a given github pull request from the CLI.
 

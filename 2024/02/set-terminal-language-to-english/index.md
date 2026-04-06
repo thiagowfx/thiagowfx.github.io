@@ -1,3 +1,9 @@
+---
+title: "Set terminal language to English"
+url: https://perrotta.dev/2024/02/set-terminal-language-to-english/
+last_updated: 2025-09-05
+---
+
 
 I changed my macOS system language to German, with the intent of [getting more
 exposure to it]({{< ref "2022-04-03-translating-german-to-english" >}}).

@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Find All Subsets"
+url: https://perrotta.dev/2025/11/bytebytego-find-all-subsets/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Find All Subsets](https://bytebytego.com/exercises/coding-patterns/backtracking/find-all-subsets):
 

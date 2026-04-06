@@ -1,3 +1,9 @@
+---
+title: "git delta"
+url: https://perrotta.dev/2025/06/git-delta/
+last_updated: 2026-01-03
+---
+
 
 I've been using the venerable
 [`diff-highlight`](https://github.com/git/git/tree/master/contrib/diff-highlight)

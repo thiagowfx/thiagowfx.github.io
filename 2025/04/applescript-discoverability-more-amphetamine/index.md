@@ -1,3 +1,9 @@
+---
+title: "AppleScript discoverability: more Amphetamine"
+url: https://perrotta.dev/2025/04/applescript-discoverability-more-amphetamine/
+last_updated: 2026-02-16
+---
+
 
 Previously: [Amphetamine: Keep awake]({{< ref "2025-03-28-amphetamine-keep-awake" >}}).
 

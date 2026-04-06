@@ -1,3 +1,9 @@
+---
+title: "LeetCode #58: Length of Last Word"
+url: https://perrotta.dev/2025/09/leetcode-%2358-length-of-last-word/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #58: Length of Last Word](https://leetcode.com/problems/length-of-last-word/):
 

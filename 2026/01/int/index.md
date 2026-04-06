@@ -1,3 +1,9 @@
+---
+title: "int"
+url: https://perrotta.dev/2026/01/int/
+last_updated: 2026-01-08
+---
+
 
 Integers, bits and bytes:
 

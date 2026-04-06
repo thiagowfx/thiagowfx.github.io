@@ -1,3 +1,9 @@
+---
+title: "CT sem luz: vamos indexar isso!"
+url: https://perrotta.dev/pt/posts/2014-03-22-ct-sem-luz-vamos-indexar-isso/
+last_updated: 2026-02-23
+---
+
 
 "Inspirado" pelas quedas de luz nessa semana no Centro de Tecnologia da UFRJ , resolvi criar [uma página](http://thiagowfx.github.io/ct-sem-luz/)para indexar (a partir de hoje) sempre que novas quedas de luz ocorrerem.
 

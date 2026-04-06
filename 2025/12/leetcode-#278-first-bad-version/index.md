@@ -1,3 +1,9 @@
+---
+title: "LeetCode #278: First Bad Version"
+url: https://perrotta.dev/2025/12/leetcode-%23278-first-bad-version/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #278: First Bad Version](https://leetcode.com/problems/first-bad-version):
 

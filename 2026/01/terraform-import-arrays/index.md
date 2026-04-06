@@ -1,3 +1,9 @@
+---
+title: "terraform import arrays"
+url: https://perrotta.dev/2026/01/terraform-import-arrays/
+last_updated: 2026-01-24
+---
+
 
 Given an existing resource
 `module.atlas_mongo_external.mongodbatlas_alert_configuration.maintenance_no_longer_needed[0]`

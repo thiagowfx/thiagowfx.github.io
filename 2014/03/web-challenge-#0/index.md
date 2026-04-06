@@ -1,3 +1,9 @@
+---
+title: "Web Challenge #0"
+url: https://perrotta.dev/2014/03/web-challenge-%230/
+last_updated: 2026-03-03
+---
+
 
 **Warning:** the gap between this idea and the writing of this post is really
 really short, so sit back and wait for chaos.

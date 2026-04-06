@@ -1,3 +1,9 @@
+---
+title: "emacs: \"No Usable Browser Found\" error"
+url: https://perrotta.dev/2014/07/emacs-no-usable-browser-found-error/
+last_updated: 2026-02-17
+---
+
 
 Recently I've moved from Chromium to Google Chrome on Linux. But the problem is
 that emacs does not recognize it out-of-the-box. To fix this problem, you can

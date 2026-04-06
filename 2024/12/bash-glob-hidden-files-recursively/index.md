@@ -1,3 +1,9 @@
+---
+title: "bash: glob hidden files recursively"
+url: https://perrotta.dev/2024/12/bash-glob-hidden-files-recursively/
+last_updated: 2025-09-05
+---
+
 
 Assume you make a huge change to your git repository, that spawns several file
 formats – cpp, java, javascript, python, etc.

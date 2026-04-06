@@ -1,3 +1,9 @@
+---
+title: "Chrome DevTools: toggle prefers-color-scheme"
+url: https://perrotta.dev/2025/11/chrome-devtools-toggle-prefers-color-scheme/
+last_updated: 2025-11-27
+---
+
 
 **Problem statement**: My blog automatically selects a light or dark color theme
 depending on the user's browser or system preferences. Assume it currently

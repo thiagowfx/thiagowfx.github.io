@@ -1,3 +1,9 @@
+---
+title: "Slack: Github bot: post notifications"
+url: https://perrotta.dev/2025/05/slack-github-bot-post-notifications/
+last_updated: 2025-08-05
+---
+
 
 Assume your organization has the [Github
 bot](https://github.com/integrations/slack)

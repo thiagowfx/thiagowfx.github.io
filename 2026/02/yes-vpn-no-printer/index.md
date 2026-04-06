@@ -1,3 +1,9 @@
+---
+title: "Yes VPN, no printer"
+url: https://perrotta.dev/2026/02/yes-vpn-no-printer/
+last_updated: 2026-02-17
+---
+
 
 [Previously]({{< ref "2025-02-18-no-printer-yes-paper" >}}).
 

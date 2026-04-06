@@ -1,3 +1,9 @@
+---
+title: "Séries com finais ruins"
+url: https://perrotta.dev/pt/posts/2014-04-10-series-com-finais-ruins/
+last_updated: 2026-03-07
+---
+
 
 Certo, a palavra *trivia* distingue bem computação/programação de outros
 tópicos.

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #692: Top K Frequent Words"
+url: https://perrotta.dev/2026/01/leetcode-%23692-top-k-frequent-words/
+last_updated: 2026-01-11
+---
+
 
 [LeetCode #692: Top K Frequent Words](https://leetcode.com/problems/top-k-frequent-words):
 

@@ -1,3 +1,9 @@
+---
+title: "Keep sorted"
+url: https://perrotta.dev/2024/12/keep-sorted/
+last_updated: 2026-01-03
+---
+
 
 [keep-sorted](https://github.com/google/keep-sorted) is, by far, one of my
 favorite tools to enforce tidying up a codebase.

@@ -1,3 +1,9 @@
+---
+title: "Notify search engines of new posts"
+url: https://perrotta.dev/2025/02/notify-search-engines-of-new-posts/
+last_updated: 2026-02-17
+---
+
 
 I have the following rule in the [`Justfile`](https://just.systems/man/en/) of
 this blog:

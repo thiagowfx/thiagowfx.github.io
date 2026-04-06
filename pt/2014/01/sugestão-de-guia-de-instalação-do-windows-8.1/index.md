@@ -1,3 +1,9 @@
+---
+title: "Sugestão de guia de instalação do Windows 8[.1]"
+url: https://perrotta.dev/pt/2014/01/sugest%C3%A3o-de-guia-de-instala%C3%A7%C3%A3o-do-windows-8.1/
+last_updated: 2026-02-24
+---
+
 
 ## Overview
 

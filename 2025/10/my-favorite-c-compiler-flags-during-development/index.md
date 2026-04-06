@@ -1,3 +1,9 @@
+---
+title: "My favorite C compiler flags during development"
+url: https://perrotta.dev/2025/10/my-favorite-c-compiler-flags-during-development/
+last_updated: 2025-10-12
+---
+
 
 Chris Wellons, [My favorite C compiler flags during development](https://nullprogram.com/blog/2023/04/29/):
 

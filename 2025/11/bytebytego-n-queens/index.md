@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: N Queens"
+url: https://perrotta.dev/2025/11/bytebytego-n-queens/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: N Queens](https://bytebytego.com/exercises/coding-patterns/backtracking/n-queens):
 

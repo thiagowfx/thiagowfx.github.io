@@ -1,3 +1,9 @@
+---
+title: "Tmux: a gentle introduction"
+url: https://perrotta.dev/2014/12/tmux-a-gentle-introduction/
+last_updated: 2026-02-18
+---
+
 
 There are plenty of tutorials and insights about tmux on the web. This post
 isn't another tutorial. Instead, I'm listing four purposes of why you should use

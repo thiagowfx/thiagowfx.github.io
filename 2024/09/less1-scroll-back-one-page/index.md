@@ -1,3 +1,9 @@
+---
+title: "less(1): scroll back one page"
+url: https://perrotta.dev/2024/09/less1-scroll-back-one-page/
+last_updated: 2025-09-05
+---
+
 
 `less(1)`: you use `SPC` to scroll forward. How to scroll back?
 

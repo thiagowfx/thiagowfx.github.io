@@ -1,3 +1,9 @@
+---
+title: "midnight commander: Fn keys"
+url: https://perrotta.dev/2025/08/midnight-commander-fn-keys/
+last_updated: 2025-08-28
+---
+
 
 [Previously]({{< ref "2025-08-26-midnight-commander-use-default-editor" >}}).
 

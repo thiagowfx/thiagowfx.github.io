@@ -1,3 +1,9 @@
+---
+title: "git diff interactively"
+url: https://perrotta.dev/2025/11/git-diff-interactively/
+last_updated: 2026-01-03
+---
+
 
 It's possible to do `git patch -p` to review diff hunks interactively, one by
 one.

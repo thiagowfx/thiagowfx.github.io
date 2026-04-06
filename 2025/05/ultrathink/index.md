@@ -1,3 +1,9 @@
+---
+title: "Ultrathink"
+url: https://perrotta.dev/2025/05/ultrathink/
+last_updated: 2025-05-19
+---
+
 
 Simon Willison,
 [Ultrathink](https://simonwillison.net/2025/Apr/19/claude-code-best-practices/)

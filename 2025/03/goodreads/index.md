@@ -1,3 +1,9 @@
+---
+title: "Goodreads"
+url: https://perrotta.dev/2025/03/goodreads/
+last_updated: 2025-05-24
+---
+
 
 One of the most joyful aspects of using the internet is to ~~stalk~~ keep track
 of what my friends are reading online.

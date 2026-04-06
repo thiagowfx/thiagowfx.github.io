@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1346: Check If N and Its Double Exist"
+url: https://perrotta.dev/2025/12/leetcode-%231346-check-if-n-and-its-double-exist/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #1346: Check If N and Its Double Exist](https://leetcode.com/problems/leetcode-#1346:-check-if-n-and-its-double-exist):
 

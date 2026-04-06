@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Pair Sum - Sorted"
+url: https://perrotta.dev/2025/11/bytebytego-pair-sum-sorted/
+last_updated: 2026-02-16
+---
+
 
 [ByteByteGo: Pair Sum — Sorted](https://bytebytego.com/exercises/coding-patterns/two-pointers/pair-sum-sorted):
 

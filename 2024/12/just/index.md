@@ -1,3 +1,9 @@
+---
+title: "Just"
+url: https://perrotta.dev/2024/12/just/
+last_updated: 2026-01-03
+---
+
 
 [Just](https://github.com/casey/just) is a command runner, a modern replacement
 for GNU Make.

@@ -1,3 +1,9 @@
+---
+title: "Making a slides presentation in 2026"
+url: https://perrotta.dev/2026/02/making-a-slides-presentation-in-2026/
+last_updated: 2026-02-07
+---
+
 
 **Problem statement**: make a _slides_ presentation for a certain business or
 academic use case.

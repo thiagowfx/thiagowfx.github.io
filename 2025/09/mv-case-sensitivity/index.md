@@ -1,3 +1,9 @@
+---
+title: "mv: case sensitivity"
+url: https://perrotta.dev/2025/09/mv-case-sensitivity/
+last_updated: 2026-01-03
+---
+
 
 From the series: why you should always use a case sensitive file system (like
 most of Linux).

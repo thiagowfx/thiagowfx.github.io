@@ -1,3 +1,9 @@
+---
+title: "Integrando QT Creator com cmake"
+url: https://perrotta.dev/pt/posts/2014-04-12-integrando-qt-creator-com-cmake/
+last_updated: 2026-02-25
+---
+
 
 **TL;DR**: movendo o estilo de desenvolvimento de Emacs + programa na linha de
 comando para QT Creator + programa com interface gráfica (em...QT, é claro!).

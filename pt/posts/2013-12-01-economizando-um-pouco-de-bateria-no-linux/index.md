@@ -1,3 +1,9 @@
+---
+title: "Economizando um pouco de bateria no Linux"
+url: https://perrotta.dev/pt/posts/2013-12-01-economizando-um-pouco-de-bateria-no-linux/
+last_updated: 2026-03-29
+---
+
 
 Bateria = paranoia. Não parece correto, do ponto de vista de um usuário [e] no
 que diz respeito a design, que ele fique se preocupando excessivamente com a

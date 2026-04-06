@@ -1,3 +1,9 @@
+---
+title: "WebAssembly: hello world"
+url: https://perrotta.dev/2025/05/webassembly-hello-world/
+last_updated: 2026-02-16
+---
+
 
 Today I am attending a WebAssembly workshop.
 

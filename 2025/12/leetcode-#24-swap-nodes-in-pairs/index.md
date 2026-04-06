@@ -1,3 +1,9 @@
+---
+title: "LeetCode #24: Swap Nodes in Pairs"
+url: https://perrotta.dev/2025/12/leetcode-%2324-swap-nodes-in-pairs/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #24: Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs):
 

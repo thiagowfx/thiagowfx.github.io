@@ -1,3 +1,9 @@
+---
+title: "bad interpreter: perl: no such file or directory"
+url: https://perrotta.dev/2025/06/bad-interpreter-perl-no-such-file-or-directory/
+last_updated: 2025-06-08
+---
+
 
 The full error message is:
 

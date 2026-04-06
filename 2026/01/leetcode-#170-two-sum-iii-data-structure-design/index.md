@@ -1,3 +1,9 @@
+---
+title: "LeetCode #170: Two Sum III - Data structure design"
+url: https://perrotta.dev/2026/01/leetcode-%23170-two-sum-iii-data-structure-design/
+last_updated: 2026-02-22
+---
+
 
 [LeetCode #170: Two Sum III — Data structure design](https://leetcode.com/problems/two-sum-iii---data-structure-design):
 

@@ -1,3 +1,9 @@
+---
+title: "Alpine Linux: remove broken packages"
+url: https://perrotta.dev/2025/07/alpine-linux-remove-broken-packages/
+last_updated: 2026-02-07
+---
+
 
 In a sunny Sunday morning:
 

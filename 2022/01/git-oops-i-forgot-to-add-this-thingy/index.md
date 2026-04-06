@@ -1,3 +1,9 @@
+---
+title: "Git: Oops I forgot to add this thingy"
+url: https://perrotta.dev/2022/01/git-oops-i-forgot-to-add-this-thingy/
+last_updated: 2026-01-03
+---
+
 
 Here's a situation that happens often during development:
 

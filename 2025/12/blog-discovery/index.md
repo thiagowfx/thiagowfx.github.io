@@ -1,3 +1,9 @@
+---
+title: "Blog discovery"
+url: https://perrotta.dev/2025/12/blog-discovery/
+last_updated: 2026-02-15
+---
+
 
 [Previously]({{< ref "2025-05-17-blog-directories" >}}).
 

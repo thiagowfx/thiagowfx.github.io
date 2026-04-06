@@ -1,3 +1,9 @@
+---
+title: "git reset --hard including submodules"
+url: https://perrotta.dev/2024/12/git-reset--hard-including-submodules/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Whenever I open [Rancher
 Desktop](https://rancherdesktop.io/) it insists on modifying my shell rc files.

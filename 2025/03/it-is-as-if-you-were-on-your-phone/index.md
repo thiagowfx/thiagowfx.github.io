@@ -1,3 +1,9 @@
+---
+title: "It is as if you were on your phone"
+url: https://perrotta.dev/2025/03/it-is-as-if-you-were-on-your-phone/
+last_updated: 2025-03-21
+---
+
 
 [It is as if you were on your phone](https://pippinbarr.com/it-is-as-if-you-were-on-your-phone/info/):
 

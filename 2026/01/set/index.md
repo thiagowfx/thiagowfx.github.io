@@ -1,3 +1,9 @@
+---
+title: "set"
+url: https://perrotta.dev/2026/01/set/
+last_updated: 2026-01-09
+---
+
 
 ```python
 if __name__ == "__main__":

@@ -1,3 +1,9 @@
+---
+title: "claude: ccusage"
+url: https://perrotta.dev/2025/09/claude-ccusage/
+last_updated: 2026-01-03
+---
+
 
 [`ccusage`](https://github.com/ryoppippi/ccusage) via [Simon
 Willison](https://simonwillison.net/2025/Jul/14/ccusage/):

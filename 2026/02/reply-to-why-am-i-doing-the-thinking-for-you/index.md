@@ -1,3 +1,9 @@
+---
+title: "Reply to: Why Am I Doing the Thinking for You?"
+url: https://perrotta.dev/2026/02/reply-to-why-am-i-doing-the-thinking-for-you/
+last_updated: 2026-02-22
+---
+
 
 > I got a Slack message the other week, just "What do you think?" with a link to
 > a Notion document.

@@ -1,3 +1,9 @@
+---
+title: "zsh: glob qualifiers: most recent"
+url: https://perrotta.dev/2026/02/zsh-glob-qualifiers-most-recent/
+last_updated: 2026-02-16
+---
+
 
 TIL via [Adam
 Johnson](https://adamj.eu/tech/2026/01/27/zsh-om1-glob-qualifiers/):

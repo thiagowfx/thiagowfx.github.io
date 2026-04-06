@@ -1,3 +1,9 @@
+---
+title: "Using proxy servers on Linux"
+url: https://perrotta.dev/2014/12/using-proxy-servers-on-linux/
+last_updated: 2026-03-03
+---
+
 
 There are some times when you need to connect your PC to an access point which
 requires you to route your connections through a web proxy. No panic! It is

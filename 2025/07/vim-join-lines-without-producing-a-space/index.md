@@ -1,3 +1,9 @@
+---
+title: "vim: join lines without producing a space"
+url: https://perrotta.dev/2025/07/vim-join-lines-without-producing-a-space/
+last_updated: 2026-01-03
+---
+
 
 Here's a common issue I have when blogging, when inserting a markdown link with
 `vim`. The edit progression is as follows, wherein `|` represents the cursor:

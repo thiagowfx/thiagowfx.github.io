@@ -1,3 +1,9 @@
+---
+title: "Mail from Emacs - Part #1"
+url: https://perrotta.dev/2014/08/mail-from-emacs-part-%231/
+last_updated: 2026-03-03
+---
+
 
 **Whisper** : Yeah, this is probably the most crazy thing I've ever done (with
 emacs, sure).

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #718: Maximum Length of Repeated Subarray"
+url: https://perrotta.dev/2025/12/leetcode-%23718-maximum-length-of-repeated-subarray/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #718: Maximum Length of Repeated Subarray](https://leetcode.com/problems/maximum-length-of-repeated-subarray):
 

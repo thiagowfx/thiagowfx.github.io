@@ -1,3 +1,9 @@
+---
+title: "FOSDEM Calendar"
+url: https://perrotta.dev/2025/01/fosdem-calendar/
+last_updated: 2025-01-15
+---
+
 
 [FOSDEM](https://fosdem.org/):
 

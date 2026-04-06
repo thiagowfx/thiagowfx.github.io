@@ -1,3 +1,9 @@
+---
+title: "LeetCode #64: Minimum Path Sum"
+url: https://perrotta.dev/2025/09/leetcode-%2364-minimum-path-sum/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #64: Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/):
 

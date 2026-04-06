@@ -1,3 +1,9 @@
+---
+title: "Picking a monospaced code font"
+url: https://perrotta.dev/2024/12/picking-a-monospaced-code-font/
+last_updated: 2025-09-05
+---
+
 
 Surely you can afford to be picky[^1] with your code fonts these days.
 

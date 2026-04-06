@@ -1,3 +1,9 @@
+---
+title: "Stylometry"
+url: https://perrotta.dev/2024/12/stylometry/
+last_updated: 2024-12-22
+---
+
 
 Jeff Kaufman's ["Good Reasons for
 Alts"](https://www.jefftk.com/p/good-reasons-for-alts) is a very insightful

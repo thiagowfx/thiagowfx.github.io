@@ -1,3 +1,9 @@
+---
+title: "Emacs, I just love you"
+url: https://perrotta.dev/pt/2014/04/emacs-i-just-love-you/
+last_updated: 2026-03-11
+---
+
 
 Hoje, dois anos depois de ouvir falar desse aparentemente simples, comum e
 mundano editor de texto, agora ele faz parte do meu ambiente de forma

@@ -1,3 +1,9 @@
+---
+title: "No analytics"
+url: https://perrotta.dev/2024/08/no-analytics/
+last_updated: 2026-02-08
+---
+
 
 There are many analytics and tracking offerings for blogs. I don't want any of
 them.

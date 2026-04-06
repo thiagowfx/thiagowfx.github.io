@@ -1,3 +1,9 @@
+---
+title: "Block \"Sign in to XXX with google.com\""
+url: https://perrotta.dev/2025/08/block-sign-in-to-xxx-with-google.com/
+last_updated: 2026-03-10
+---
+
 
 Jeff Johnson, [Sign in with Google in Chrome](https://underpassapp.com/news/2025/7/5.html):
 

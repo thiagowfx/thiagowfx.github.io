@@ -1,3 +1,9 @@
+---
+title: "LeetCode #146: LRU Cache"
+url: https://perrotta.dev/2026/03/leetcode-%23146-lru-cache/
+last_updated: 2026-03-01
+---
+
 
 [LeetCode #146: LRU Cache](https://leetcode.com/problems/lru-cache):
 

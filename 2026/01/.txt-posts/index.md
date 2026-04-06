@@ -1,3 +1,9 @@
+---
+title: ".txt posts"
+url: https://perrotta.dev/2026/01/.txt-posts/
+last_updated: 2026-02-16
+---
+
 
 [Terence Eden](https://shkspr.mobi/blog/2025/12/a-small-collection-of-text-only-websites/):
 

@@ -1,3 +1,9 @@
+---
+title: "Everything Orgmode (OR: orgmode everywhere)"
+url: https://perrotta.dev/2014/05/everything-orgmode-or-orgmode-everywhere/
+last_updated: 2026-02-17
+---
+
 
 I've just fallen in love with the amazing orgmode. What the _hell_ is this? I
 talked about it before: it is a super add-on (**mode**) for Emacs, where you can

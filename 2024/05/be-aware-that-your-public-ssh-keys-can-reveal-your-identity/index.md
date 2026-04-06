@@ -1,3 +1,9 @@
+---
+title: "Be aware that your public SSH keys can reveal your identity"
+url: https://perrotta.dev/2024/05/be-aware-that-your-public-ssh-keys-can-reveal-your-identity/
+last_updated: 2026-01-18
+---
+
 
 If you have a GitHub account configured with SSH, your public keys are available
 at `https://github.com/$USERNAME.keys`.

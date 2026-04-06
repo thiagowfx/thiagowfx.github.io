@@ -1,3 +1,9 @@
+---
+title: "Paolo the plumber"
+url: https://perrotta.dev/2025/06/paolo-the-plumber/
+last_updated: 2025-06-12
+---
+
 
 [Paolo the plumber](https://endler.dev/2025/paolo/) by Matthias Endler.
 

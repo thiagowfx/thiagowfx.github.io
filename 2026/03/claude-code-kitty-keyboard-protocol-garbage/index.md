@@ -1,3 +1,9 @@
+---
+title: "claude code: kitty keyboard protocol garbage"
+url: https://perrotta.dev/2026/03/claude-code-kitty-keyboard-protocol-garbage/
+last_updated: 2026-03-25
+---
+
 
 Upon quitting [Claude Code](https://claude.ai/claude-code), pressing `C-c`
 in the terminal produces garbage like this instead of the expected `^C`:

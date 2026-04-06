@@ -1,3 +1,9 @@
+---
+title: "LeetCode #412: FizzBuzz"
+url: https://perrotta.dev/2025/12/leetcode-%23412-fizzbuzz/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #412: FizzBuzz](https://leetcode.com/problems/leetcode-#412:-fizzbuzz):
 

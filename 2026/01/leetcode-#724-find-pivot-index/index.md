@@ -1,3 +1,9 @@
+---
+title: "LeetCode #724: Find Pivot Index"
+url: https://perrotta.dev/2026/01/leetcode-%23724-find-pivot-index/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #724: Find Pivot Index](https://leetcode.com/problems/find-pivot-index):
 

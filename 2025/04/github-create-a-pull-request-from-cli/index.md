@@ -1,3 +1,9 @@
+---
+title: "GitHub: create a pull request from CLI"
+url: https://perrotta.dev/2025/04/github-create-a-pull-request-from-cli/
+last_updated: 2025-10-31
+---
+
 
 Using the [`gh`](https://cli.github.com/) tool (the official GitHub CLI tool):
 

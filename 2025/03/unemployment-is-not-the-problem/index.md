@@ -1,3 +1,9 @@
+---
+title: "Unemployment is not the problem"
+url: https://perrotta.dev/2025/03/unemployment-is-not-the-problem/
+last_updated: 2025-03-28
+---
+
 
 [Unemployment is not the problem](https://whynothugo.nl/journal/2025/03/27/unemployment-is-not-the-problem/) by Hugo Barrera:
 

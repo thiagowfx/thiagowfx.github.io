@@ -1,3 +1,9 @@
+---
+title: "ghostty: find popular themes"
+url: https://perrotta.dev/2025/01/ghostty-find-popular-themes/
+last_updated: 2026-01-18
+---
+
 
 [Ghostty 1.0](https://ghostty.org/) was barely released and it's already quite
 popular.

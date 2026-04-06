@@ -1,3 +1,9 @@
+---
+title: "Linux no SSD: minhas configurações"
+url: https://perrotta.dev/pt/posts/2013-11-10-linux-no-ssd-minhas-configuracoes/
+last_updated: 2026-03-29
+---
+
 
 Uns dias atrás eu decidi instalar o Linux no meu SSD. Não fiz isso antes porque
 achei que o *caching* do Windows que vem por default poderia me ser útil algum

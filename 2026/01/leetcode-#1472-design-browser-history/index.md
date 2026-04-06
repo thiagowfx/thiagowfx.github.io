@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1472: Design Browser History"
+url: https://perrotta.dev/2026/01/leetcode-%231472-design-browser-history/
+last_updated: 2026-01-09
+---
+
 
 [LeetCode #1472: Design Browser History](https://leetcode.com/problems/design-browser-history):
 

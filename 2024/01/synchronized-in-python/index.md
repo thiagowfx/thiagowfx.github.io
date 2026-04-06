@@ -1,3 +1,9 @@
+---
+title: "Synchronized in Python"
+url: https://perrotta.dev/2024/01/synchronized-in-python/
+last_updated: 2026-01-01
+---
+
 
 > [In Java, you can make a variable thread safe by just adding the `synchronized`
 keyword. Is there anything that can achieve the same results in

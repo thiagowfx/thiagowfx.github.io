@@ -1,3 +1,9 @@
+---
+title: "queue"
+url: https://perrotta.dev/2026/01/queue/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Implement a glorified `Queue` class.
 

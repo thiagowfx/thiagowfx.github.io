@@ -1,3 +1,9 @@
+---
+title: "New script: AWS China MFA login"
+url: https://perrotta.dev/2025/10/new-script-aws-china-mfa-login/
+last_updated: 2026-01-03
+---
+
 
 [Previously]({{< ref "2024-12-17-skopeo-operate-container-images-and-registries" >}}).
 

@@ -1,3 +1,9 @@
+---
+title: "Logseq: aliases"
+url: https://perrotta.dev/2025/03/logseq-aliases/
+last_updated: 2026-01-03
+---
+
 
 In [Logseq](https://logseq.com/), I have an entry called "Trips".
 

@@ -1,3 +1,9 @@
+---
+title: "Cloudflare: Email Workers"
+url: https://perrotta.dev/2025/01/cloudflare-email-workers/
+last_updated: 2025-12-25
+---
+
 
 My journey into the
 [serverless](https://en.wikipedia.org/wiki/Serverless_computing) world hereby

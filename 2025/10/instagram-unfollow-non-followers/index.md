@@ -1,3 +1,9 @@
+---
+title: "Instagram: unfollow non-followers"
+url: https://perrotta.dev/2025/10/instagram-unfollow-non-followers/
+last_updated: 2026-02-08
+---
+
 
 Sometimes connections simply fade away. Life happens. Privacy prevails. Then why
 don't people remove them both ways (follower + following)? If you don't want to

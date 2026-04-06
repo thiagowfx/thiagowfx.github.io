@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Linked List Loop"
+url: https://perrotta.dev/2025/12/bytebytego-linked-list-loop/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Linked List Loop](https://bytebytego.com/exercises/coding-patterns/fast-and-slow-pointers/detect-linked-list-loops):
 

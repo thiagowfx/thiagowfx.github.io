@@ -1,3 +1,9 @@
+---
+title: "Google Home usage"
+url: https://perrotta.dev/2026/02/google-home-usage/
+last_updated: 2026-02-22
+---
+
 
 I own a smart speaker for many years now. It happens to be a Google Home[^1].
 

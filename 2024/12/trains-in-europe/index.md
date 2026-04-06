@@ -1,3 +1,9 @@
+---
+title: "Trains in Europe"
+url: https://perrotta.dev/2024/12/trains-in-europe/
+last_updated: 2026-02-16
+---
+
 
 A (small) index on how to travel by train in Europe.
 

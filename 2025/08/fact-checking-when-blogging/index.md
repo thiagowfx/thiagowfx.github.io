@@ -1,3 +1,9 @@
+---
+title: "Fact-checking when blogging"
+url: https://perrotta.dev/2025/08/fact-checking-when-blogging/
+last_updated: 2025-08-28
+---
+
 
 An observation of lately: whenever I blog about software or technologies I'm
 unfamiliar with ("learning in the open"), I tend to be more diligent than usual

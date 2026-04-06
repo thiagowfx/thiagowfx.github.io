@@ -1,3 +1,9 @@
+---
+title: "itsycal: system tray calendar on macOS"
+url: https://perrotta.dev/2025/01/itsycal-system-tray-calendar-on-macos/
+last_updated: 2026-01-03
+---
+
 
 Title says it all.
 

@@ -1,3 +1,9 @@
+---
+title: "Gmail: send email from plus address"
+url: https://perrotta.dev/2025/10/gmail-send-email-from-plus-address/
+last_updated: 2025-10-12
+---
+
 
 It is well-known that, given `larry@gmail.com`, you can use the Gmail "plus
 addressing" (+) feature with `larry+{alias}@gmail.com` to receive emails in the

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #2666: Allow One Function"
+url: https://perrotta.dev/2026/01/leetcode-%232666-allow-one-function/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #2666: Allow One Function](https://leetcode.com/problems/allow-one-function):
 

@@ -1,3 +1,9 @@
+---
+title: "Friction"
+url: https://perrotta.dev/2025/03/friction/
+last_updated: 2025-03-18
+---
+
 
 [Cassidy Williams](https://cassidoo.co/post/introduce-friction/) – Introduce
 Friction:

@@ -1,3 +1,9 @@
+---
+title: "binary search, bias to the left"
+url: https://perrotta.dev/2025/12/binary-search-bias-to-the-left/
+last_updated: 2026-01-03
+---
+
 
 Prefer:
 

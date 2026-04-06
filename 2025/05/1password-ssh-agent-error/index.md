@@ -1,3 +1,9 @@
+---
+title: "1Password SSH agent error"
+url: https://perrotta.dev/2025/05/1password-ssh-agent-error/
+last_updated: 2026-01-18
+---
+
 
 A day in the life:
 

@@ -1,3 +1,9 @@
+---
+title: "Random"
+url: https://perrotta.dev/2026/01/random/
+last_updated: 2026-01-16
+---
+
 
 I love to add little random features to this blog.
 

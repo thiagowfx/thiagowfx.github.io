@@ -1,3 +1,9 @@
+---
+title: "LeetCode #104: Maximum Depth of Binary Tree"
+url: https://perrotta.dev/2026/01/leetcode-%23104-maximum-depth-of-binary-tree/
+last_updated: 2026-01-05
+---
+
 
 [LeetCode #104: Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree):
 

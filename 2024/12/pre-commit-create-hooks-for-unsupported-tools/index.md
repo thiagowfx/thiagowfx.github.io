@@ -1,3 +1,9 @@
+---
+title: "pre-commit: create hooks for unsupported tools"
+url: https://perrotta.dev/2024/12/pre-commit-create-hooks-for-unsupported-tools/
+last_updated: 2026-01-03
+---
+
 
 When using [pre-commit.com](https://pre-commit.com/), in an ideal world, every
 formatter / linter / code analyzer would have a `.pre-commit-config.yaml` file

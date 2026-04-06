@@ -1,3 +1,9 @@
+---
+title: "Upcoming calendar meeting in macOS menu bar with Raycast"
+url: https://perrotta.dev/2025/02/upcoming-calendar-meeting-in-macos-menu-bar-with-raycast/
+last_updated: 2026-01-03
+---
+
 
 Previously: [itsycal]({{< ref "2025-01-22-itsycal-system-tray-calendar-on-macos" >}}).
 

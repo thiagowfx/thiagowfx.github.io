@@ -1,3 +1,9 @@
+---
+title: "maple syrup whey"
+url: https://perrotta.dev/2026/03/maple-syrup-whey/
+last_updated: 2026-03-02
+---
+
 
 **Timing**: within 2h after working out, to support muscle recovery & repair.
 

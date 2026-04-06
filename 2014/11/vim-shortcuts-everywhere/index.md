@@ -1,3 +1,9 @@
+---
+title: "Vim shortcuts everywhere"
+url: https://perrotta.dev/2014/11/vim-shortcuts-everywhere/
+last_updated: 2026-02-18
+---
+
 
 Recently I've been switching my mind and workflow from emacs keybindings to vim
 ones, so there is nothing better than being able to use those shortcut keys on

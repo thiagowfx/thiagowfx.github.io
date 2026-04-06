@@ -1,3 +1,9 @@
+---
+title: "git reset --keep"
+url: https://perrotta.dev/2024/12/git-reset--keep/
+last_updated: 2026-01-03
+---
+
 
 In all these years of `git`, I've only heard about it now: via [Adam
 Johnson](https://adamj.eu/tech/2024/09/02/git-avoid-reset-hard-use-keep/):

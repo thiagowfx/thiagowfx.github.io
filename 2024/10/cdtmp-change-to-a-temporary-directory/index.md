@@ -1,3 +1,9 @@
+---
+title: "cdtmp: change to a temporary directory"
+url: https://perrotta.dev/2024/10/cdtmp-change-to-a-temporary-directory/
+last_updated: 2026-02-16
+---
+
 
 Sometimes I need to do random experimentation in a throwaway directory.
 

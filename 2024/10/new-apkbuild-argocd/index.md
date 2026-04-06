@@ -1,3 +1,9 @@
+---
+title: "New APKBUILD: argocd"
+url: https://perrotta.dev/2024/10/new-apkbuild-argocd/
+last_updated: 2026-01-03
+---
+
 
 [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) is a widely used GitOps
 software for Kubernetes Continuous Delivery (see

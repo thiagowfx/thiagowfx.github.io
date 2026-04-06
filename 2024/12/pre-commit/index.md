@@ -1,3 +1,9 @@
+---
+title: "Pre-commit"
+url: https://perrotta.dev/2024/12/pre-commit/
+last_updated: 2026-01-03
+---
+
 
 [pre-commit](https://pre-commit.com/) is a CI framework for `git`.
 For those who are used to google3 tooling: it's akin to the configuration part of `TAP Presubmit`.

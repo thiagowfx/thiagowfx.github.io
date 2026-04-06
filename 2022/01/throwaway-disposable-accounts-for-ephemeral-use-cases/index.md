@@ -1,3 +1,9 @@
+---
+title: "Throwaway (disposable) accounts for ephemeral use cases"
+url: https://perrotta.dev/2022/01/throwaway-disposable-accounts-for-ephemeral-use-cases/
+last_updated: 2026-01-01
+---
+
 
 A brief list of disposable / throwaway account resources:
 

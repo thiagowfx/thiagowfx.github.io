@@ -1,3 +1,9 @@
+---
+title: ".hushlogin"
+url: https://perrotta.dev/2025/10/.hushlogin/
+last_updated: 2025-10-02
+---
+
 
 When you create this file on macOS:
 

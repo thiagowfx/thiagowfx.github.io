@@ -1,3 +1,9 @@
+---
+title: "Open the most recent blog post"
+url: https://perrotta.dev/2025/11/open-the-most-recent-blog-post/
+last_updated: 2025-12-25
+---
+
 
 Added a new [just](https://just.systems/)
 [recipe](https://just.systems/man/en/the-default-recipe.html) to open the latest

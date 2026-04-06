@@ -1,3 +1,9 @@
+---
+title: "Movendo (quase) todas as músicas para a nuvem"
+url: https://perrotta.dev/pt/posts/2013-10-05-movendo-quase-todas-as-musicas-para-a-nuvem/
+last_updated: 2026-03-28
+---
+
 
 A partir de hoje vou começar uma série de posts intitulada "journal", cujo
 objetivo é sugerido pelo próprio nome: seria como uma espécie de diário ou

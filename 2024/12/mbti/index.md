@@ -1,3 +1,9 @@
+---
+title: "MBTI"
+url: https://perrotta.dev/2024/12/mbti/
+last_updated: 2024-12-22
+---
+
 
 https://dynomight.net/mbti/ has the "fastest mbti test".
 

@@ -1,3 +1,9 @@
+---
+title: "AWS S3: search by suffix"
+url: https://perrotta.dev/2024/09/aws-s3-search-by-suffix/
+last_updated: 2026-01-03
+---
+
 
 Given an AWS S3 bucket, how to recursively list all objects within it that match
 a given suffix?

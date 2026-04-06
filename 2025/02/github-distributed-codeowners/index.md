@@ -1,3 +1,9 @@
+---
+title: "GitHub Distributed CODEOWNERS"
+url: https://perrotta.dev/2025/02/github-distributed-codeowners/
+last_updated: 2026-01-03
+---
+
 
 We recently adopted Andrew Ring's "Distributed CODEOWNERS"
 ([github](https://github.com/andrewring/github-distributed-owners)) in some

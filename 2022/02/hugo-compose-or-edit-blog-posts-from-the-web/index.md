@@ -1,3 +1,9 @@
+---
+title: "Hugo: compose or edit blog posts from the web"
+url: https://perrotta.dev/2022/02/hugo-compose-or-edit-blog-posts-from-the-web/
+last_updated: 2025-09-05
+---
+
 
 This blog is managed and generated with [Hugo](https://gohugo.io), which is
 a [SSG](https://jamstack.org/generators/) (static site generator), which

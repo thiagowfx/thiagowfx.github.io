@@ -1,3 +1,9 @@
+---
+title: "Habilitando hibernação no Arch"
+url: https://perrotta.dev/pt/posts/2013-12-22-habilitando-hibernacao-no-arch/
+last_updated: 2026-02-24
+---
+
 
 Incrível como eu não tinha feito isso até hoje...se você *não* usa btrfs e quer agilizar um pouco a sua vida,
 

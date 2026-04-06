@@ -1,3 +1,9 @@
+---
+title: "Money"
+url: https://perrotta.dev/2025/11/money/
+last_updated: 2025-11-10
+---
+
 
 In English-speaking North America (Canada, USA) we refer to currency in the
 following ways:

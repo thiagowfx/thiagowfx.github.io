@@ -1,3 +1,9 @@
+---
+title: "web radio player"
+url: https://perrotta.dev/2026/02/web-radio-player/
+last_updated: 2026-02-16
+---
+
 
 I have a [`radio`](https://github.com/thiagowfx/pancake/tree/master/radio) shell
 script in [pancake](https://github.com/thiagowfx/pancake) (=miscellaneous unix

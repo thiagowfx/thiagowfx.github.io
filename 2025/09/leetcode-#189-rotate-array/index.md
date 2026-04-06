@@ -1,3 +1,9 @@
+---
+title: "LeetCode #189: Rotate Array"
+url: https://perrotta.dev/2025/09/leetcode-%23189-rotate-array/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #189: Rotate Array](https://leetcode.com/problems/rotate-array/):
 

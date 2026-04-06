@@ -1,3 +1,9 @@
+---
+title: "Import legacy posts from my old WordPress blog"
+url: https://perrotta.dev/2026/02/import-legacy-posts-from-my-old-wordpress-blog/
+last_updated: 2026-02-15
+---
+
 
 I used to have a blog during my university years.
 

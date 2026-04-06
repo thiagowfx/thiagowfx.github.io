@@ -1,3 +1,9 @@
+---
+title: "Terraform: generate diagrams"
+url: https://perrotta.dev/2025/03/terraform-generate-diagrams/
+last_updated: 2026-03-26
+---
+
 
 There are a few options to visualize a `terraform` module in the form of a graph
 or diagram.

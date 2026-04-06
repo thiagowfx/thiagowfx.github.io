@@ -1,3 +1,9 @@
+---
+title: "LeetCode #3595: Once Twice"
+url: https://perrotta.dev/2026/01/leetcode-%233595-once-twice/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #3595: Once Twice](https://leetcode.com/problems/once-twice):
 

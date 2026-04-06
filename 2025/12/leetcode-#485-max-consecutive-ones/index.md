@@ -1,3 +1,9 @@
+---
+title: "LeetCode #485: Max Consecutive Ones"
+url: https://perrotta.dev/2025/12/leetcode-%23485-max-consecutive-ones/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #485: Max Consecutive Ones](https://leetcode.com/problems/leetcode-#485:-max-consecutive-ones):
 

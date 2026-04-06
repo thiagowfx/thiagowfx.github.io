@@ -1,3 +1,9 @@
+---
+title: "git: update master to main"
+url: https://perrotta.dev/2025/01/git-update-master-to-main/
+last_updated: 2026-03-26
+---
+
 
 In your Forge (most likely Github or Gitlab), update the default branch from
 `master` to `main`. Normally this has the effect of renaming `master` to `main`

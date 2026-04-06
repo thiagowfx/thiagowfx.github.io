@@ -1,3 +1,9 @@
+---
+title: "atuin: new machine setup"
+url: https://perrotta.dev/2026/01/atuin-new-machine-setup/
+last_updated: 2026-02-07
+---
+
 
 [Previously]({{< ref "2025-11-30-atuin" >}}).
 

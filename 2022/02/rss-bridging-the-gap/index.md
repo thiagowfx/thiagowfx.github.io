@@ -1,3 +1,9 @@
+---
+title: "RSS: bridging the gap"
+url: https://perrotta.dev/2022/02/rss-bridging-the-gap/
+last_updated: 2026-02-17
+---
+
 
 Not everything is available via RSS. However, there are some decent workarounds in a few situations. For my RSS reader setup, see [Miniflux]({{< ref "2022-01-03-miniflux-rolling-my-own-rss-reader" >}}).
 

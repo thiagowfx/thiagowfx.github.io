@@ -1,3 +1,9 @@
+---
+title: "kubectl: list all node pods"
+url: https://perrotta.dev/2024/10/kubectl-list-all-node-pods/
+last_updated: 2026-01-03
+---
+
 
 Recipe to list all pods that belong to a given node:
 

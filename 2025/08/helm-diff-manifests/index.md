@@ -1,3 +1,9 @@
+---
+title: "helm: diff manifests"
+url: https://perrotta.dev/2025/08/helm-diff-manifests/
+last_updated: 2026-01-03
+---
+
 
 Lately I've been employing (with great success) the following pattern in order
 to test whether changes to helm charts are harmless (and expected):

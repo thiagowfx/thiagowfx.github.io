@@ -1,3 +1,9 @@
+---
+title: "How to uninstall Amp Code"
+url: https://perrotta.dev/2026/03/how-to-uninstall-amp-code/
+last_updated: 2026-03-25
+---
+
 
 [Previously]({{< ref "2026-03-25-goodbye-amp-code" >}}).
 

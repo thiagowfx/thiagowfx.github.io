@@ -1,3 +1,9 @@
+---
+title: "Semantic versioning constraints"
+url: https://perrotta.dev/2024/12/semantic-versioning-constraints/
+last_updated: 2025-09-05
+---
+
 
 When working with semantic versioning a.k.a. [semver](https://semver.org/), it's
 often useful to use range constraints[^1] to express the versions you're

@@ -1,3 +1,9 @@
+---
+title: "Why I love zsh"
+url: https://perrotta.dev/2013/11/why-i-love-zsh/
+last_updated: 2026-02-17
+---
+
 
 **This**. " 'What's wrong with Bash?', nothing, except it is not ZSH." --
 extracted from http://mikegrouchy.com/blog/2012/01/zsh-is-your-friend.html See

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #9: Palindrome Number"
+url: https://perrotta.dev/2025/12/leetcode-%239-palindrome-number/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #9: Palindrome Number](https://leetcode.com/problems/palindrome-number):
 

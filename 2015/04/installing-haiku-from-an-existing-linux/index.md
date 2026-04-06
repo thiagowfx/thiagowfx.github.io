@@ -1,3 +1,9 @@
+---
+title: "Installing Haiku from an existing linux"
+url: https://perrotta.dev/2015/04/installing-haiku-from-an-existing-linux/
+last_updated: 2026-02-17
+---
+
 
 ## What&#8217;s Haiku in the first place?
 

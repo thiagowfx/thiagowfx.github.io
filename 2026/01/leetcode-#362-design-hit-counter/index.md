@@ -1,3 +1,9 @@
+---
+title: "LeetCode #362: Design Hit Counter"
+url: https://perrotta.dev/2026/01/leetcode-%23362-design-hit-counter/
+last_updated: 2026-01-15
+---
+
 
 [LeetCode #362: Design Hit Counter](https://leetcode.com/problems/design-hit-counter):
 

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #2138: Divide a String Into Groups of Size k"
+url: https://perrotta.dev/2026/01/leetcode-%232138-divide-a-string-into-groups-of-size-k/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #2138: Divide a String Into Groups of Size k](https://leetcode.com/problems/divide-a-string-into-groups-of-size-k):
 

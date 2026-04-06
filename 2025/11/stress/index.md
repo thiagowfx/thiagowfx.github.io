@@ -1,3 +1,9 @@
+---
+title: "Stress"
+url: https://perrotta.dev/2025/11/stress/
+last_updated: 2025-12-25
+---
+
 
 Lately I've been running a lot of `terraform apply` in **PROD**.
 

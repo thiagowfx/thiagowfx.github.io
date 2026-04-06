@@ -1,3 +1,9 @@
+---
+title: "(YouTube) Flash Player Issues @ Firefox @ Linux"
+url: https://perrotta.dev/pt/posts/2013-09-19-youtube-flash-player-issues-firefox-linux/
+last_updated: 2026-03-11
+---
+
 
 O Flash morreu no Linux faz muito tempo (mentira, ainda não). Paramos na
 versão 11.2.{alguma coisa = revisões de segurança = "security fixes"}. Esperem

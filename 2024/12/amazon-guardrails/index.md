@@ -1,3 +1,9 @@
+---
+title: "Amazon guardrails"
+url: https://perrotta.dev/2024/12/amazon-guardrails/
+last_updated: 2024-12-29
+---
+
 
 Whenever buying stuff from Amazon it's always handy to double-check whether it's a good idea, and whether it's a good time to do so.
 

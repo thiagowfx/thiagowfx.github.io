@@ -1,3 +1,9 @@
+---
+title: "Helm: enforce the directory name matches the chart name"
+url: https://perrotta.dev/2024/11/helm-enforce-the-directory-name-matches-the-chart-name/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Given a helm chart called `foo`, enforce that its `Chart.yaml` file lives in a directory called `foo`[^1].
 

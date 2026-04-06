@@ -1,3 +1,9 @@
+---
+title: "\"Goodbye\" Linux Desktop"
+url: https://perrotta.dev/2014/05/goodbye-linux-desktop/
+last_updated: 2026-02-18
+---
+
 
 OK. It's time to move on. Life changes. Fast. Very rapidly.
 

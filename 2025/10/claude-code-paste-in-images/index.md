@@ -1,3 +1,9 @@
+---
+title: "Claude Code: paste in images"
+url: https://perrotta.dev/2025/10/claude-code-paste-in-images/
+last_updated: 2026-01-03
+---
+
 
 [Claude Code](https://www.claude.com/product/claude-code) supports images as
 input.

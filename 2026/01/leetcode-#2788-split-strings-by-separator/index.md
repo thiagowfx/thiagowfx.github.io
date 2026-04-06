@@ -1,3 +1,9 @@
+---
+title: "LeetCode #2788: Split Strings by Separator"
+url: https://perrotta.dev/2026/01/leetcode-%232788-split-strings-by-separator/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #2788: Split Strings by Separator](https://leetcode.com/problems/split-strings-by-separator):
 

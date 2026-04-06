@@ -1,3 +1,9 @@
+---
+title: "GitHub labels vs merge when ready"
+url: https://perrotta.dev/2025/11/github-labels-vs-merge-when-ready/
+last_updated: 2025-11-27
+---
+
 
 GitHub allows marking PRs to be [merged when
 ready](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/merging-a-pull-request-with-a-merge-queue).

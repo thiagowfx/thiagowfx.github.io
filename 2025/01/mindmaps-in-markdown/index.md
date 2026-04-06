@@ -1,3 +1,9 @@
+---
+title: "Mindmaps in markdown"
+url: https://perrotta.dev/2025/01/mindmaps-in-markdown/
+last_updated: 2025-01-06
+---
+
 
 [Markmap](https://markmap.js.org/):
 

@@ -1,3 +1,9 @@
+---
+title: "Reply to: 100 days to offload"
+url: https://perrotta.dev/2025/01/reply-to-100-days-to-offload/
+last_updated: 2026-01-04
+---
+
 
 [Post
 streaks](https://simonwillison.net/2025/Jan/2/ending-a-year-long-posting-streak/)

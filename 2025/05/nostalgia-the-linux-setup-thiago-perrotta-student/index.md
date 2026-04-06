@@ -1,3 +1,9 @@
+---
+title: "Nostalgia: The Linux Setup - Thiago Perrotta, Student"
+url: https://perrotta.dev/2025/05/nostalgia-the-linux-setup-thiago-perrotta-student/
+last_updated: 2026-02-16
+---
+
 
 Back in the (g)old(en) days...in October 2014 I gave an interview to the blog
 "Linux Rig" by [Steven Ovadia](https://steven.ovadia.org/).

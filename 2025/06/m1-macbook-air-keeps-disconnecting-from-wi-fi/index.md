@@ -1,3 +1,9 @@
+---
+title: "M1 Macbook Air keeps disconnecting from Wi-Fi"
+url: https://perrotta.dev/2025/06/m1-macbook-air-keeps-disconnecting-from-wi-fi/
+last_updated: 2026-01-03
+---
+
 
 [M1 Macbook air keeps disconnecting from
 wifi](https://www.reddit.com/r/mac/comments/vv5day/m1_macbook_air_keeps_disconnecting_from_wifi/):

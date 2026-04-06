@@ -1,3 +1,9 @@
+---
+title: "LeetCode #112: Path Sum"
+url: https://perrotta.dev/2025/12/leetcode-%23112-path-sum/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #112: Path Sum](https://leetcode.com/problems/path-sum):
 

@@ -1,3 +1,9 @@
+---
+title: "Cookiecutter"
+url: https://perrotta.dev/2024/12/cookiecutter/
+last_updated: 2024-12-30
+---
+
 
 Recently I found out about [`cookiecutter`](https://github.com/cookiecutter/cookiecutter).
 

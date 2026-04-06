@@ -1,3 +1,9 @@
+---
+title: "git: push --force with style"
+url: https://perrotta.dev/2024/12/git-push--force-with-style/
+last_updated: 2026-01-03
+---
+
 
 TIL:
 

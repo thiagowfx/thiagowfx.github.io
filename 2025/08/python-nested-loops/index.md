@@ -1,3 +1,9 @@
+---
+title: "Python: nested loops"
+url: https://perrotta.dev/2025/08/python-nested-loops/
+last_updated: 2026-01-03
+---
+
 
 Given a list `v = [1, 2, 3, 4]`, use a double nested[^1] loop to iterate over
 every pair of its elements, in order.

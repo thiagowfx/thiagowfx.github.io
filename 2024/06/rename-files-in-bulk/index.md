@@ -1,3 +1,9 @@
+---
+title: "Rename files in bulk"
+url: https://perrotta.dev/2024/06/rename-files-in-bulk/
+last_updated: 2025-09-05
+---
+
 
 Whenever the files are in the same directory, `vidir` from [moreutils]({{< ref
 "2022-05-01-tools-you-should-know-about-moreutils" >}}) is the best

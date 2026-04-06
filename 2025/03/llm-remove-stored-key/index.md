@@ -1,3 +1,9 @@
+---
+title: "llm: remove stored key"
+url: https://perrotta.dev/2025/03/llm-remove-stored-key/
+last_updated: 2026-01-03
+---
+
 
 I was just trying [Simon Willison](https://simonwillison.net/)'s excellent CLI
 [llm](https://llm.datasette.io/en/stable/index.html) tool:

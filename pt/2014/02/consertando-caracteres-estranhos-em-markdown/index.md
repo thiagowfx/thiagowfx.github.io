@@ -1,3 +1,9 @@
+---
+title: "Consertando caracteres estranhos em Markdown"
+url: https://perrotta.dev/pt/2014/02/consertando-caracteres-estranhos-em-markdown/
+last_updated: 2026-02-16
+---
+
 
 Ao converter um documento para Markdown com a sua _engine_ preferida, se você se
 deparar com caracteres estranhos, do tipo:

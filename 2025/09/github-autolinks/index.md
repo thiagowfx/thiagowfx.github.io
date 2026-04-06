@@ -1,3 +1,9 @@
+---
+title: "GitHub autolinks"
+url: https://perrotta.dev/2025/09/github-autolinks/
+last_updated: 2025-09-18
+---
+
 
 [Manage repository settings -> Configuring autolinks to reference external resources](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/configuring-autolinks-to-reference-external-resources):
 

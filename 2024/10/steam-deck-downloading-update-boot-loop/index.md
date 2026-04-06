@@ -1,3 +1,9 @@
+---
+title: "Steam Deck \"downloading update\" boot loop"
+url: https://perrotta.dev/2024/10/steam-deck-downloading-update-boot-loop/
+last_updated: 2026-02-17
+---
+
 
 Today I tried to use my Steam Deck to no avail.
 

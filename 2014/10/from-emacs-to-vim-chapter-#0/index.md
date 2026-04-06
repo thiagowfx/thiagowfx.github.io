@@ -1,3 +1,9 @@
+---
+title: "From Emacs to Vim - Chapter #0"
+url: https://perrotta.dev/2014/10/from-emacs-to-vim-chapter-%230/
+last_updated: 2026-02-17
+---
+
 
 Hi there. This will probably become a new mini series. I begin by quoting
 Vanessa Da Mata:

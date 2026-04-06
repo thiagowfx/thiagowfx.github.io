@@ -1,3 +1,9 @@
+---
+title: "LeetCode #200: Number of Islands"
+url: https://perrotta.dev/2026/01/leetcode-%23200-number-of-islands/
+last_updated: 2026-01-10
+---
+
 
 [LeetCode #200: Number of Islands](https://leetcode.com/problems/number-of-islands):
 

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #247: Strobogrammatic Number II"
+url: https://perrotta.dev/2025/12/leetcode-%23247-strobogrammatic-number-ii/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #247: Strobogrammatic Number II](https://leetcode.com/problems/strobogrammatic-number-ii):
 

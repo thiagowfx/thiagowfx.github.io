@@ -1,3 +1,9 @@
+---
+title: "Emoter"
+url: https://perrotta.dev/2025/08/emoter/
+last_updated: 2025-08-22
+---
+
 
 Adam Aaronson, [Emoter](https://aaronson.org/emoter/):
 

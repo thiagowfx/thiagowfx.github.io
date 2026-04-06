@@ -1,3 +1,9 @@
+---
+title: "Optimize images"
+url: https://perrotta.dev/2024/12/optimize-images/
+last_updated: 2026-01-03
+---
+
 
 I like to use [oxipng](https://github.com/shssoichiro/oxipng) to optimize PNG (and other) images.
 

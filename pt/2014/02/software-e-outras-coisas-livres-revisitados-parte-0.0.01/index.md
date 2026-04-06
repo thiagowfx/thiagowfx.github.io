@@ -1,3 +1,9 @@
+---
+title: "Software e outras coisas livres, revisitados - Parte 0.0.01"
+url: https://perrotta.dev/pt/2014/02/software-e-outras-coisas-livres-revisitados-parte-0.0.01/
+last_updated: 2026-03-07
+---
+
 
 *Provavelmente* não é novidade de que eu sou entusiasta de software livre (na
 verdade, pode ser open source também). Também, provavelmente, não é novidade de

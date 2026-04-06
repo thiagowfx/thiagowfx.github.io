@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1299: Replace Elements with Greatest Element on Right Side"
+url: https://perrotta.dev/2025/12/leetcode-%231299-replace-elements-with-greatest-element-on-right-side/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #1299: Replace Elements with Greatest Element on Right Side](https://leetcode.com/problems/leetcode-#1299:-replace-elements-with-greatest-element-on-right-side):
 

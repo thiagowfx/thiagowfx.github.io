@@ -1,3 +1,9 @@
+---
+title: "Oh Shit, Git!?!"
+url: https://perrotta.dev/2025/06/oh-shit-git/
+last_updated: 2026-01-03
+---
+
 
 https://ohshitgit.com/ by Katie Sylor-Miller:
 

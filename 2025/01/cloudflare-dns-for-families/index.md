@@ -1,3 +1,9 @@
+---
+title: "Cloudflare DNS for families"
+url: https://perrotta.dev/2025/01/cloudflare-dns-for-families/
+last_updated: 2026-01-03
+---
+
 
 [Cloudflare](https://developers.cloudflare.com/1.1.1.1/ip-addresses/) has one of
 the coolest DNS IP addresses on the planet: `1.1.1.1` (primary) and `1.0.0.1`

@@ -1,3 +1,9 @@
+---
+title: "Kagi: Add LeetCode !bang"
+url: https://perrotta.dev/2025/12/kagi-add-leetcode-bang/
+last_updated: 2026-02-16
+---
+
 
 [Kagi](https://kagi.com/), a paid search engine, allows adding [custom](https://duckduckgo.com/bangs) [bangs](https://help.kagi.com/kagi/features/bangs.html).
 

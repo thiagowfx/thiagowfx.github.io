@@ -1,3 +1,9 @@
+---
+title: "yazi"
+url: https://perrotta.dev/2025/08/yazi/
+last_updated: 2025-08-27
+---
+
 
 [yazi](https://github.com/sxyazi/yazi):
 

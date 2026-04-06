@@ -1,3 +1,9 @@
+---
+title: "LeetCode #993: Cousins in Binary Tree"
+url: https://perrotta.dev/2026/01/leetcode-%23993-cousins-in-binary-tree/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #993: Cousins in Binary Tree](https://leetcode.com/problems/cousins-in-binary-tree):
 

@@ -1,3 +1,9 @@
+---
+title: "renew my Arch, please"
+url: https://perrotta.dev/pt/posts/2014-02-05-renew-my-arch-please/
+last_updated: 2026-03-17
+---
+
 
 Reinstalei o Arch. Apesar de tê-lo deletado apenas durante um dia, valeu a pena,
 porque pude reorganizar algumas coisas. Instalei 4 distros nesse meio tempo:

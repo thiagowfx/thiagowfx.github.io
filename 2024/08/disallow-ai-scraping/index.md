@@ -1,3 +1,9 @@
+---
+title: "Disallow AI scraping"
+url: https://perrotta.dev/2024/08/disallow-ai-scraping/
+last_updated: 2026-02-16
+---
+
 
 Although there's never a guarantee, you can attempt to disallow "AI" from
 scraping the posts in your blog, in the same spirit of "DNT — Do Not Track" in

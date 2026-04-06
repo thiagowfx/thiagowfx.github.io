@@ -1,3 +1,9 @@
+---
+title: "Linux is free if your time is worthless"
+url: https://perrotta.dev/2025/01/linux-is-free-if-your-time-is-worthless/
+last_updated: 2025-01-06
+---
+
 
 ([via Andrew Montalenti](https://amontalenti.com/2025/01/05/linux-is-free)):
 

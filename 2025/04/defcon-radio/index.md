@@ -1,3 +1,9 @@
+---
+title: "DEFCON radio"
+url: https://perrotta.dev/2025/04/defcon-radio/
+last_updated: 2025-04-01
+---
+
 
 Back in my Windows days, in my first desktop computer, I would happily launch
 [BSPlayer](https://bsplayer.com/) and listen to radio stations.

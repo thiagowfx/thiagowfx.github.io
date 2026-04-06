@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1506: Find Root of N-Ary Tree"
+url: https://perrotta.dev/2026/01/leetcode-%231506-find-root-of-n-ary-tree/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #1506: Find Root of N-Ary Tree](https://leetcode.com/problems/find-root-of-n-ary-tree):
 

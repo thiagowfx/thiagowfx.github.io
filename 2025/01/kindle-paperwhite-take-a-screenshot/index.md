@@ -1,3 +1,9 @@
+---
+title: "Kindle Paperwhite: take a screenshot"
+url: https://perrotta.dev/2025/01/kindle-paperwhite-take-a-screenshot/
+last_updated: 2025-01-19
+---
+
 
 Today I _incidentally_ learned it's possible to take a screenshot from your Kindle
 Paperwhite.

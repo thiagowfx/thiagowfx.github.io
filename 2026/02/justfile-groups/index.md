@@ -1,3 +1,9 @@
+---
+title: "Justfile groups"
+url: https://perrotta.dev/2026/02/justfile-groups/
+last_updated: 2026-02-21
+---
+
 
 **TIL**: You can add [groups](https://just.systems/man/en/groups.html) to your
 `Justfile.`:

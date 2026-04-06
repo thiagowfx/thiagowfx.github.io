@@ -1,3 +1,9 @@
+---
+title: "Python: all hail to cache memoization"
+url: https://perrotta.dev/2024/01/python-all-hail-to-cache-memoization/
+last_updated: 2025-11-26
+---
+
 
 In a typical dynamic programming (DP) problem, you'll usually instantiate a
 variable to hold previously computed data (cache).

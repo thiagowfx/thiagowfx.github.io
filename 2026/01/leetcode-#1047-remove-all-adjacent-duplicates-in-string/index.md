@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1047: Remove All Adjacent Duplicates In String"
+url: https://perrotta.dev/2026/01/leetcode-%231047-remove-all-adjacent-duplicates-in-string/
+last_updated: 2026-01-18
+---
+
 
 [LeetCode #1047: Remove All Adjacent Duplicates In String](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string):
 

@@ -1,3 +1,9 @@
+---
+title: "Reply to: smash that subscribe button"
+url: https://perrotta.dev/2025/01/reply-to-smash-that-subscribe-button/
+last_updated: 2026-02-08
+---
+
 
 [Wil Wheaton](https://wilwheaton.net/2025/01/smash-that-subscribe-button/):
 

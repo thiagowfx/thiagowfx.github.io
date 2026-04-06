@@ -1,3 +1,9 @@
+---
+title: "LeetCode #3662: Filter Characters by Frequency"
+url: https://perrotta.dev/2026/01/leetcode-%233662-filter-characters-by-frequency/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #3662: Filter Characters by Frequency](https://leetcode.com/problems/filter-characters-by-frequency):
 

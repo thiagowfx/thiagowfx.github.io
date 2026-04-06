@@ -1,3 +1,9 @@
+---
+title: "Kill the Newsletter"
+url: https://perrotta.dev/2025/02/kill-the-newsletter/
+last_updated: 2025-12-25
+---
+
 
 I don't like to sign up for newsletters. They are too noisy, pollute my inbox,
 and have a lot of tracking built-in.

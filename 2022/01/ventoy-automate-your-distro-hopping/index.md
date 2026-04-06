@@ -1,3 +1,9 @@
+---
+title: "Ventoy: Automate your Distro hopping"
+url: https://perrotta.dev/2022/01/ventoy-automate-your-distro-hopping/
+last_updated: 2026-02-16
+---
+
 
 Alternative title:
 

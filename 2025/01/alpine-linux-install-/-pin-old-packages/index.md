@@ -1,3 +1,9 @@
+---
+title: "Alpine Linux: install / pin old packages"
+url: https://perrotta.dev/2025/01/alpine-linux-install-/-pin-old-packages/
+last_updated: 2026-01-03
+---
+
 
 Let's say you want to install an older version of `jq` in Alpine Linux.
 

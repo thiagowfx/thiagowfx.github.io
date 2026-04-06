@@ -1,3 +1,9 @@
+---
+title: "merge sort"
+url: https://perrotta.dev/2026/01/merge-sort/
+last_updated: 2026-01-14
+---
+
 
 ```python
 def merge_sort(a):

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #641: Design Circular Deque"
+url: https://perrotta.dev/2026/01/leetcode-%23641-design-circular-deque/
+last_updated: 2026-01-09
+---
+
 
 [LeetCode #641: Design Circular Deque](https://leetcode.com/problems/design-circular-deque):
 

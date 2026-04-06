@@ -1,3 +1,9 @@
+---
+title: "kubernetes: list pending pods in daemonset"
+url: https://perrotta.dev/2025/05/kubernetes-list-pending-pods-in-daemonset/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Given a DaemonSet with a couple of pods stuck in
 "Pending" state during their rollout, find out which nodes did not yet complete

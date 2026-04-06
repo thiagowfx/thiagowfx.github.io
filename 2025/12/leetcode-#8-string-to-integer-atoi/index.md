@@ -1,3 +1,9 @@
+---
+title: "LeetCode #8: String to Integer (atoi)"
+url: https://perrotta.dev/2025/12/leetcode-%238-string-to-integer-atoi/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #8: String to Integer (atoi)](https://leetcode.com/problems/string-to-integer-atoi):
 

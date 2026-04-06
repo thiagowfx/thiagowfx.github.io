@@ -1,3 +1,9 @@
+---
+title: "LeetCode #7: Reverse Integer"
+url: https://perrotta.dev/2025/08/leetcode-%237-reverse-integer/
+last_updated: 2026-02-16
+---
+
 
 [LeetCode #7: Reverse Integer](https://leetcode.com/problems/reverse-integer/):
 

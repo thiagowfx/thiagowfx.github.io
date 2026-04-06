@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: K-Sum Subarrays"
+url: https://perrotta.dev/2025/12/bytebytego-k-sum-subarrays/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: K-Sum Subarrays](https://bytebytego.com/exercises/coding-patterns/prefix-sums/k-sum-subarrays):
 

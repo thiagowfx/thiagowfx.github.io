@@ -1,3 +1,9 @@
+---
+title: "LeetCode #359: Logger Rate Limiter"
+url: https://perrotta.dev/2026/01/leetcode-%23359-logger-rate-limiter/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #359: Logger Rate Limiter](https://leetcode.com/problems/logger-rate-limiter):
 

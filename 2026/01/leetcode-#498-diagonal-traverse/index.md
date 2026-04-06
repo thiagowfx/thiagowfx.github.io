@@ -1,3 +1,9 @@
+---
+title: "LeetCode #498: Diagonal Traverse"
+url: https://perrotta.dev/2026/01/leetcode-%23498-diagonal-traverse/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #498: Diagonal Traverse](https://leetcode.com/problems/diagonal-traverse):
 

@@ -1,3 +1,9 @@
+---
+title: "Quick and dirty random password generator"
+url: https://perrotta.dev/2025/01/quick-and-dirty-random-password-generator/
+last_updated: 2026-01-01
+---
+
 
 On Linux / macOS, use `/dev/urandom`, with a `tr` pass-through filter:
 

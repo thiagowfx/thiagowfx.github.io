@@ -1,3 +1,9 @@
+---
+title: "ghostty: quick terminal"
+url: https://perrotta.dev/2025/11/ghostty-quick-terminal/
+last_updated: 2026-01-18
+---
+
 
 [Ghostty](https://ghostty.org/) has a
 [Quake](https://en.wikipedia.org/wiki/Quake_(video_game))-like[^1] mode to pop

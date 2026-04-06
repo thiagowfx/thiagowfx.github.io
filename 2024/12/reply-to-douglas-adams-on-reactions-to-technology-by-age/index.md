@@ -1,3 +1,9 @@
+---
+title: "Reply to: Douglas Adams on reactions to technology by age"
+url: https://perrotta.dev/2024/12/reply-to-douglas-adams-on-reactions-to-technology-by-age/
+last_updated: 2026-02-08
+---
+
 
 [via John
 Gruber](https://daringfireball.net/linked/2024/06/01/douglas-adams-reactions-to-technology):

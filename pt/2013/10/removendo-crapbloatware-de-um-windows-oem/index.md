@@ -1,3 +1,9 @@
+---
+title: "Removendo {crap,bloat}ware de um Windows OEM"
+url: https://perrotta.dev/pt/2013/10/removendo-crapbloatware-de-um-windows-oem/
+last_updated: 2026-03-02
+---
+
 
 Como todo post do meu blog (eu adoro esse hábito, se o leitor ainda não se
 acostumou), primeiro falo do propósito ou da inspiração por trás dele e depois

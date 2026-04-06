@@ -1,3 +1,9 @@
+---
+title: "Reply to: Here's how to live: Be independent"
+url: https://perrotta.dev/2024/12/reply-to-heres-how-to-live-be-independent/
+last_updated: 2026-01-04
+---
+
 
 [Here's how to live: Be independent](https://sive.rs/htl01) by Derek Sivers.
 

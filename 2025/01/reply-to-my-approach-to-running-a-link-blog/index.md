@@ -1,3 +1,9 @@
+---
+title: "Reply to: My approach to running a link blog"
+url: https://perrotta.dev/2025/01/reply-to-my-approach-to-running-a-link-blog/
+last_updated: 2026-03-02
+---
+
 
 Simon Willison's ["My approach to running a link blog"](https://simonwillison.net/2024/Dec/22/link-blog/):
 

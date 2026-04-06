@@ -1,3 +1,9 @@
+---
+title: "(Google) Chrome for Testing: reliable downloads for browser automation"
+url: https://perrotta.dev/2024/01/google-chrome-for-testing-reliable-downloads-for-browser-automation/
+last_updated: 2026-02-16
+---
+
 
 Let's discuss the _raison d'etre_ of [Google Chrome for
 Testing](https://developer.chrome.com/blog/chrome-for-testing), a project I was

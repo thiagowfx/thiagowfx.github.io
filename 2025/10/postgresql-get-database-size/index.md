@@ -1,3 +1,9 @@
+---
+title: "PostgreSQL: get database size"
+url: https://perrotta.dev/2025/10/postgresql-get-database-size/
+last_updated: 2025-10-27
+---
+
 
 **Problem statement**: Given a PostgreSQL DB, obtain its total size, preferably
 in a human-readable format (pretty-printed).

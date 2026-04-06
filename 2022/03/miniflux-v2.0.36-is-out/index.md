@@ -1,3 +1,9 @@
+---
+title: "Miniflux v2.0.36 is out"
+url: https://perrotta.dev/2022/03/miniflux-v2.0.36-is-out/
+last_updated: 2025-12-25
+---
+
 
 Miniflux [2.0.36](https://miniflux.app/releases/2.0.36.html) has been released this week. This is a dear release to me because I was responsible for many of its changes:
 

@@ -1,3 +1,9 @@
+---
+title: "SAML Chrome Panel"
+url: https://perrotta.dev/2025/03/saml-chrome-panel/
+last_updated: 2026-01-03
+---
+
 
 [SAML Chrome Panel](https://chromewebstore.google.com/detail/saml-chrome-panel/paijfdbeoenhembfhkhllainmocckace):
 

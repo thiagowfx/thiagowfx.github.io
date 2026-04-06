@@ -1,3 +1,9 @@
+---
+title: "Superwhisper"
+url: https://perrotta.dev/2026/02/superwhisper/
+last_updated: 2026-02-20
+---
+
 
 Hello world.
 

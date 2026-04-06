@@ -1,3 +1,9 @@
+---
+title: "Update DNS NS servers from Porkbun to Cloudflare"
+url: https://perrotta.dev/2024/12/update-dns-ns-servers-from-porkbun-to-cloudflare/
+last_updated: 2026-01-03
+---
+
 
 [Porkbun](porkbun.com) is my registrar of choice. It is quite decent but alas it
 [does

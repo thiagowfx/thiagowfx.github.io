@@ -1,3 +1,9 @@
+---
+title: "Rename files in bulk (cont)"
+url: https://perrotta.dev/2024/11/rename-files-in-bulk-cont/
+last_updated: 2026-01-03
+---
+
 
 Deeper into the [rabbit hole]({{< ref "2024-06-19-rename-files-in-bulk" >}}):
 

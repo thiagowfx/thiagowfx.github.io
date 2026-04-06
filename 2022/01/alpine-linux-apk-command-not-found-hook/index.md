@@ -1,3 +1,9 @@
+---
+title: "Alpine Linux: apk command not found hook"
+url: https://perrotta.dev/2022/01/alpine-linux-apk-command-not-found-hook/
+last_updated: 2026-03-26
+---
+
 
 In this post we will learn how to define a command-not-found hook to the `apk(8)` package manager in Alpine Linux.
 

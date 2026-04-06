@@ -1,3 +1,9 @@
+---
+title: "friendly_ping: track your stale GitHub pull requests"
+url: https://perrotta.dev/2025/12/friendly_ping-track-your-stale-github-pull-requests/
+last_updated: 2025-12-04
+---
+
 
 I released a new tool:
 [**friendly_ping**](https://github.com/thiagowfx/pancake/tree/master/friendly_ping),

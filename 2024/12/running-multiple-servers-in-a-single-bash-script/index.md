@@ -1,3 +1,9 @@
+---
+title: "Running multiple servers in a single bash script"
+url: https://perrotta.dev/2024/12/running-multiple-servers-in-a-single-bash-script/
+last_updated: 2025-09-05
+---
+
 
 Inspired by [Simon
 Willison](https://github.com/simonw/til/blob/main/bash/multiple-servers.md)'s

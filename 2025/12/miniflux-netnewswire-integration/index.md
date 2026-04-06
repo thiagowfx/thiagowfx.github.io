@@ -1,3 +1,9 @@
+---
+title: "Miniflux: NetNewsWire integration"
+url: https://perrotta.dev/2025/12/miniflux-netnewswire-integration/
+last_updated: 2025-12-25
+---
+
 
 [NetNewsWire](https://netnewswire.com/) is a great RSS **client** reader for
 macOS and iOS.

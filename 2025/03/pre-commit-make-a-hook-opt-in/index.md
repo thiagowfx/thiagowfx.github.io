@@ -1,3 +1,9 @@
+---
+title: "pre-commit: make a hook opt-in"
+url: https://perrotta.dev/2025/03/pre-commit-make-a-hook-opt-in/
+last_updated: 2026-01-03
+---
+
 
 Recently we added the following hook to our [pre-commit](https://pre-commit.com)
 setup:

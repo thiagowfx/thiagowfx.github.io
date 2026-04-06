@@ -1,3 +1,9 @@
+---
+title: "Hello World from Hugo"
+url: https://perrotta.dev/2021/12/hello-world-from-hugo/
+last_updated: 2025-09-04
+---
+
 
 Hello World from [Hugo][hugo]!
 

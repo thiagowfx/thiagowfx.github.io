@@ -1,3 +1,9 @@
+---
+title: "Linux goodness in your Chromebook"
+url: https://perrotta.dev/2016/09/linux-goodness-in-your-chromebook/
+last_updated: 2026-02-15
+---
+
 
 [Chromebooks](https://www.google.com.br/chromebook/) are excellent for testing
 and playing with Linux userland[1] stuff. And, even better, (almost) every

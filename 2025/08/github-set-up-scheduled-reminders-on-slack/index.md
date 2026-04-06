@@ -1,3 +1,9 @@
+---
+title: "GitHub: set up scheduled reminders on Slack"
+url: https://perrotta.dev/2025/08/github-set-up-scheduled-reminders-on-slack/
+last_updated: 2026-02-16
+---
+
 
 If your organization uses GitHub and Slack, it's neat to have daily
 notifications be delivered to you, to remind you of pending pull request

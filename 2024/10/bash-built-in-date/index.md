@@ -1,3 +1,9 @@
+---
+title: "bash built-in date"
+url: https://perrotta.dev/2024/10/bash-built-in-date/
+last_updated: 2025-09-05
+---
+
 
 To format dates [GNU
 date](https://www.gnu.org/software/coreutils/manual/html_node/Examples-of-date.html)

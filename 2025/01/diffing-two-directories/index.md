@@ -1,3 +1,9 @@
+---
+title: "Diffing two directories"
+url: https://perrotta.dev/2025/01/diffing-two-directories/
+last_updated: 2025-01-13
+---
+
 
 **Problem statement**: Given an 'alpha' directory setup with a bunch of
 configuration files (e.g. for CI/CD) that works for one cluster, and given

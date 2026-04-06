@@ -1,3 +1,9 @@
+---
+title: "Hugo: create and edit a post"
+url: https://perrotta.dev/2025/09/hugo-create-and-edit-a-post/
+last_updated: 2025-09-15
+---
+
 
 It's interesting to glimpse into how my blogging workflow has been evolving over
 time.

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #747: Largest Number At Least Twice of Others"
+url: https://perrotta.dev/2026/01/leetcode-%23747-largest-number-at-least-twice-of-others/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #747: Largest Number At Least Twice of Others](https://leetcode.com/problems/largest-number-at-least-twice-of-others):
 

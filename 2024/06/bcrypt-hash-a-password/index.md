@@ -1,3 +1,9 @@
+---
+title: "Bcrypt-hash a password"
+url: https://perrotta.dev/2024/06/bcrypt-hash-a-password/
+last_updated: 2026-01-01
+---
+
 
 Given the password `correct horse battery staple`, we would like to bcrypt-hash
 it.

@@ -1,3 +1,9 @@
+---
+title: "Your app should have been a website"
+url: https://perrotta.dev/2025/01/your-app-should-have-been-a-website/
+last_updated: 2025-01-07
+---
+
 
 P. Martin Ortiz ([via Eric Schwarz](https://schwarztech.net/snippets/your-app-should-have-been-a-website)):
 

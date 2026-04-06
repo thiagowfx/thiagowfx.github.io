@@ -1,3 +1,9 @@
+---
+title: "Pipe to Claude"
+url: https://perrotta.dev/2025/04/pipe-to-claude/
+last_updated: 2026-01-03
+---
+
 
 One of the most effective ways to resolve random software development problems
 in 2025:

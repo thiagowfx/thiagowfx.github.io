@@ -1,3 +1,9 @@
+---
+title: "LeetCode #17: Letter Combinations of a Phone Number"
+url: https://perrotta.dev/2025/12/leetcode-%2317-letter-combinations-of-a-phone-number/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #17: Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number):
 

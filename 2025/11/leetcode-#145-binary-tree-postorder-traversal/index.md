@@ -1,3 +1,9 @@
+---
+title: "LeetCode #145: Binary Tree Postorder Traversal"
+url: https://perrotta.dev/2025/11/leetcode-%23145-binary-tree-postorder-traversal/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #145: Binary Tree Postorder
 Traversal](https://leetcode.com/problems/binary-tree-postorder-traversal):

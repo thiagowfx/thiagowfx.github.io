@@ -1,3 +1,9 @@
+---
+title: "Zoom"
+url: https://perrotta.dev/2024/07/zoom/
+last_updated: 2025-09-05
+---
+
 
 When presenting your screen over video calls, always remember to zoom in.
 

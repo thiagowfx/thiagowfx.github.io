@@ -1,3 +1,9 @@
+---
+title: "LeetCode #243: Shortest Word Distance"
+url: https://perrotta.dev/2025/12/leetcode-%23243-shortest-word-distance/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #243: Shortest Word Distance](https://leetcode.com/problems/shortest-word-distance):
 

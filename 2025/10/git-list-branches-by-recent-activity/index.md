@@ -1,3 +1,9 @@
+---
+title: "git: list branches by recent activity"
+url: https://perrotta.dev/2025/10/git-list-branches-by-recent-activity/
+last_updated: 2026-01-03
+---
+
 
 Tweak `~/.gitconfig`:
 

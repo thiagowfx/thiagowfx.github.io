@@ -1,3 +1,9 @@
+---
+title: "Desk"
+url: https://perrotta.dev/2025/11/desk/
+last_updated: 2025-11-04
+---
+
 
 Let me peek at your desk at work and/or at home and I'll be able to instantly
 tell, up to a certain (high) degree of confidence, how organized and/or

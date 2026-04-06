@@ -1,3 +1,9 @@
+---
+title: "Maccy macOS clipboard manager"
+url: https://perrotta.dev/2023/12/maccy-macos-clipboard-manager/
+last_updated: 2026-02-16
+---
+
 
 **Strongly recommended** to all software developers who use macOS: [Maccy](https://maccy.app/).
 

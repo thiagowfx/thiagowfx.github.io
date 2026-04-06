@@ -1,3 +1,9 @@
+---
+title: "FindBoost.cmake"
+url: https://perrotta.dev/2021/12/findboost.cmake/
+last_updated: 2025-06-15
+---
+
 
 When I was in university I made heavy use of [cmake](https://cmake.org/) with
 C++ projects.

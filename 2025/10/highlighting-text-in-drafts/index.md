@@ -1,3 +1,9 @@
+---
+title: "Highlighting text in drafts"
+url: https://perrotta.dev/2025/10/highlighting-text-in-drafts/
+last_updated: 2025-10-31
+---
+
 
 When editing complex documents that warrant multiple revisions (iterations) and
 peer reviews, it is often helpful to make prominent distinctions within

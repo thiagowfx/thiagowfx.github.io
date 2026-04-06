@@ -1,3 +1,9 @@
+---
+title: "Olá, desenvolvimento web"
+url: https://perrotta.dev/pt/2014/06/ol%C3%A1-desenvolvimento-web/
+last_updated: 2026-03-03
+---
+
 
 Durante a última semana fiquei pesquisando bastante sobre o assunto. Posso dizer
 que gostei bastante do tema, e que ele é bastante vasto. A sensação de

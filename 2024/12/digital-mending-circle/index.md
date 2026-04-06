@@ -1,3 +1,9 @@
+---
+title: "Digital mending circle"
+url: https://perrotta.dev/2024/12/digital-mending-circle/
+last_updated: 2024-12-22
+---
+
 
 > TIL what a digital mending circle is.
 

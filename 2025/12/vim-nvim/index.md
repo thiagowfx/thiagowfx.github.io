@@ -1,3 +1,9 @@
+---
+title: "vim → nvim"
+url: https://perrotta.dev/2025/12/vim-nvim/
+last_updated: 2026-01-03
+---
+
 
 I am piloting a transition from `vim` to `nvim`.
 

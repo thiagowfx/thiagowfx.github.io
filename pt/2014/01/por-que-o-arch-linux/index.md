@@ -1,3 +1,9 @@
+---
+title: "Por que o Arch Linux?"
+url: https://perrotta.dev/pt/2014/01/por-que-o-arch-linux/
+last_updated: 2026-02-15
+---
+
 
 Se alguém me perguntar quais são as vantagens e/ou por que eu gosto tanto do
 Arch Linux, que fiquem aqui essas duas referências:

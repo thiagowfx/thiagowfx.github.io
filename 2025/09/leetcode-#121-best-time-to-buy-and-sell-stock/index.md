@@ -1,3 +1,9 @@
+---
+title: "LeetCode #121: Best Time To Buy And Sell Stock"
+url: https://perrotta.dev/2025/09/leetcode-%23121-best-time-to-buy-and-sell-stock/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #121: Best Time To Buy And Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/):
 

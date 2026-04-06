@@ -1,3 +1,9 @@
+---
+title: "AI usage"
+url: https://perrotta.dev/2024/12/ai-usage/
+last_updated: 2026-01-04
+---
+
 
 ([via Derek Sivers](https://sive.rs/ai)):
 

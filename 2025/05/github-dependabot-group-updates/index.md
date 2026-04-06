@@ -1,3 +1,9 @@
+---
+title: "Github: dependabot: group updates"
+url: https://perrotta.dev/2025/05/github-dependabot-group-updates/
+last_updated: 2026-01-03
+---
+
 
 [dependabot](https://docs.github.com/en/code-security/getting-started/dependabot-quickstart-guide)
 supports

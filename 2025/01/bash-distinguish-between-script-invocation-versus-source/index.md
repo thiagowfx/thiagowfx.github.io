@@ -1,3 +1,9 @@
+---
+title: "bash: distinguish between script invocation versus source"
+url: https://perrotta.dev/2025/01/bash-distinguish-between-script-invocation-versus-source/
+last_updated: 2025-09-05
+---
+
 
 **Problem statement**: Given a `main.sh`[^1] bash script that does a bunch of
 variable `export`s:

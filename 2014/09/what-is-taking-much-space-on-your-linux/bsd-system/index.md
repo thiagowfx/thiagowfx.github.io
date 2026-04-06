@@ -1,3 +1,9 @@
+---
+title: "What is taking much space on your Linux/BSD system?"
+url: https://perrotta.dev/2014/09/what-is-taking-much-space-on-your-linux/bsd-system/
+last_updated: 2026-03-03
+---
+
 
 This program is so nice that I had to create a blog post just to tell people
 about it: [ncdu](http://dev.yorhel.nl/ncdu). It is the most awesome and

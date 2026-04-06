@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Pair Sum - Unsorted"
+url: https://perrotta.dev/2025/11/bytebytego-pair-sum-unsorted/
+last_updated: 2026-02-22
+---
+
 
 [ByteByteGo: Pair Sum — Unsorted](https://bytebytego.com/exercises/coding-patterns/hash-maps-and-sets/pair-sum-unsorted):
 

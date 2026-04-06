@@ -1,3 +1,9 @@
+---
+title: "Claude Code: cheatsheet"
+url: https://perrotta.dev/2025/10/claude-code-cheatsheet/
+last_updated: 2026-02-16
+---
+
 
 A brain dump as of Oct 1st, 2025 of my head, all things [Claude Code](https://www.claude.com/product/claude-code).
 

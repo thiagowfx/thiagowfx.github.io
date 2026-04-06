@@ -1,3 +1,9 @@
+---
+title: "#CPBR7 - Parte 1 - Hackatons (Firefox OS + CERT.br)"
+url: https://perrotta.dev/pt/posts/2014-02-03-cpbr7-parte-1-hackatons-firefox-os-cert-br/
+last_updated: 2026-03-28
+---
+
 
 Ah, é claro que eu ia escrever algo sobre a Campus Party aqui! A princípio
 pensei em escrever um único post gigante. Só haveria dois probleminhas em

@@ -1,3 +1,9 @@
+---
+title: "Helm: list all installed charts in the cluster"
+url: https://perrotta.dev/2024/08/helm-list-all-installed-charts-in-the-cluster/
+last_updated: 2026-01-03
+---
+
 
 In theory this ought to be really easy:
 

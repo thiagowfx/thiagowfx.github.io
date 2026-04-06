@@ -1,3 +1,9 @@
+---
+title: "Expressing intervals"
+url: https://perrotta.dev/2025/09/expressing-intervals/
+last_updated: 2026-01-03
+---
+
 
 What does `[1, 4]` mean?
 

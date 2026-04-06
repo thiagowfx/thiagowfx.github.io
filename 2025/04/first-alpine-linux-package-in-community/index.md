@@ -1,3 +1,9 @@
+---
+title: "First Alpine Linux package in Community"
+url: https://perrotta.dev/2025/04/first-alpine-linux-package-in-community/
+last_updated: 2026-01-03
+---
+
 
 How wholesome: someone sent a MR (Merge Request)
 [!82047](https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/82047) in

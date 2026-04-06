@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Spiral Traversal"
+url: https://perrotta.dev/2025/11/bytebytego-spiral-traversal/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Spiral Traversal](https://bytebytego.com/exercises/coding-patterns/math-and-geometry/spiral-traversal):
 

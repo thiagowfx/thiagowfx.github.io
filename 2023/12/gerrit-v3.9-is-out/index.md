@@ -1,3 +1,9 @@
+---
+title: "Gerrit v3.9 is out"
+url: https://perrotta.dev/2023/12/gerrit-v3.9-is-out/
+last_updated: 2025-09-05
+---
+
 
 Gerrit [3.9](https://www.gerritcodereview.com/3.9.html) has been released recently. This is a dear release to me because I was responsible for some of its changes[^1]:
 

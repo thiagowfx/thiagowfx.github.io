@@ -1,3 +1,9 @@
+---
+title: "What is a valid email address?"
+url: https://perrotta.dev/2025/08/what-is-a-valid-email-address/
+last_updated: 2025-08-26
+---
+
 
 [Email is Easy](https://e-mail.wtf/),
 [via](https://email-is-good.com/2025/08/25/what-is-a-valid-email-address/) Chris

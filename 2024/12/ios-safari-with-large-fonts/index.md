@@ -1,3 +1,9 @@
+---
+title: "iOS safari with large fonts"
+url: https://perrotta.dev/2024/12/ios-safari-with-large-fonts/
+last_updated: 2024-12-28
+---
+
 
 Ever since I switched my blog theme from [Hugo
 PaperMod](https://github.com/adityatelange/hugo-PaperMod) to my own based on

@@ -1,3 +1,9 @@
+---
+title: "go/keep-sorted"
+url: https://perrotta.dev/2025/09/go/keep-sorted/
+last_updated: 2026-01-03
+---
+
 
 [Previously]({{< ref "2024-12-26-keep-sorted" >}}),
 [previously]({{< ref "2025-03-06-using-keep-sorted-to-keep-your-gitconfig-tidy" >}}),

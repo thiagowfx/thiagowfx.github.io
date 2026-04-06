@@ -1,3 +1,9 @@
+---
+title: "fx"
+url: https://perrotta.dev/2025/11/fx/
+last_updated: 2025-11-24
+---
+
 
 [fx](https://fx.wtf/) is the new [`jq`](https://jqlang.org/)
 ([via](https://andre.arko.net/2025/06/13/fx.wtf/)):

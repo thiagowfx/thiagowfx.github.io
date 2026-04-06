@@ -1,3 +1,9 @@
+---
+title: "LeetCode #746: Min Cost Climbing Stairs"
+url: https://perrotta.dev/2025/12/leetcode-%23746-min-cost-climbing-stairs/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #746: Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs):
 

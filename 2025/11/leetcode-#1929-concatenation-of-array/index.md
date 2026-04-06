@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1929: Concatenation of Array"
+url: https://perrotta.dev/2025/11/leetcode-%231929-concatenation-of-array/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #1929: Concatenation of Array](https://leetcode.com/problems/concatenation-of-array):
 

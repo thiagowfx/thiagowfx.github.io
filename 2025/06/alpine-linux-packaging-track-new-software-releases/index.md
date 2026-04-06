@@ -1,3 +1,9 @@
+---
+title: "Alpine Linux packaging: track new software releases"
+url: https://perrotta.dev/2025/06/alpine-linux-packaging-track-new-software-releases/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: You maintain packages for a Linux distribution, for
 example, [Alpine Linux](https://www.alpinelinux.org/). Find a way to keep track

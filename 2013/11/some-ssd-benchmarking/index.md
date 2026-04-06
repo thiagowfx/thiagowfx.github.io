@@ -1,3 +1,9 @@
+---
+title: "(Some) SSD benchmarking"
+url: https://perrotta.dev/2013/11/some-ssd-benchmarking/
+last_updated: 2026-02-18
+---
+
 
 Last week I moved my Arch installation to my SSD, at the cost of losing the
 native Windows caching (actually, losing Windows at all). Here is a summary of

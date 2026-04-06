@@ -1,3 +1,9 @@
+---
+title: "Github Actions: multiple docker images"
+url: https://perrotta.dev/2024/11/github-actions-multiple-docker-images/
+last_updated: 2026-01-18
+---
+
 
 **Problem statement**: Given a monorepo on Github with multiple docker images in
 it, write a github workflow to build and push all of them.

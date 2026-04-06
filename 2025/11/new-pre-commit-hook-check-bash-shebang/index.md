@@ -1,3 +1,9 @@
+---
+title: "new pre-commit hook: check-bash-shebang"
+url: https://perrotta.dev/2025/11/new-pre-commit-hook-check-bash-shebang/
+last_updated: 2026-01-03
+---
+
 
 [Previously]({{< ref "2025-11-16-bash-shebang" >}}).
 

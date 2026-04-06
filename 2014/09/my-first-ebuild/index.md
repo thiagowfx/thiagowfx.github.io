@@ -1,3 +1,9 @@
+---
+title: "My first ebuild"
+url: https://perrotta.dev/2014/09/my-first-ebuild/
+last_updated: 2026-02-17
+---
+
 
 > Ebuilds are not evil
 >

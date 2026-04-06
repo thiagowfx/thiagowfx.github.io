@@ -1,3 +1,9 @@
+---
+title: "Data Subject Request"
+url: https://perrotta.dev/2026/03/data-subject-request/
+last_updated: 2026-03-12
+---
+
 
 Basic template to request **interview feedback**:
 

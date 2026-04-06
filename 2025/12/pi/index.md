@@ -1,3 +1,9 @@
+---
+title: "Pi"
+url: https://perrotta.dev/2025/12/pi/
+last_updated: 2026-02-16
+---
+
 
 Mario Zechner's pi ([via Peter Steinberger](https://steipete.me/posts/2025/signature-flicker)):
 

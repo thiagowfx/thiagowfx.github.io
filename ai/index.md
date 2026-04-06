@@ -1,3 +1,9 @@
+---
+title: "AI"
+url: https://perrotta.dev/ai/
+last_updated: 2026-04-05
+---
+
 
 This page summarizes the usage of LLMs ("Gen AI") in this blog.
 

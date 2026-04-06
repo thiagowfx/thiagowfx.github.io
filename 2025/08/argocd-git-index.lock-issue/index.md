@@ -1,3 +1,9 @@
+---
+title: "ArgoCD: git index.lock issue"
+url: https://perrotta.dev/2025/08/argocd-git-index.lock-issue/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Every ArgoCD application is stuck in _Unknown_ state,
 with the following error:

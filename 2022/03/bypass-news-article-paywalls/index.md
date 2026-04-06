@@ -1,3 +1,9 @@
+---
+title: "Bypass news article paywalls"
+url: https://perrotta.dev/2022/03/bypass-news-article-paywalls/
+last_updated: 2025-09-05
+---
+
 
 I try to avoid websites with paywalls. If I really like the website and it
 deserves my attention, I will throw in a monthly subscription for it.

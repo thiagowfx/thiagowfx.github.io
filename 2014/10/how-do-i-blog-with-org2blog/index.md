@@ -1,3 +1,9 @@
+---
+title: "How do I blog with org2blog?"
+url: https://perrotta.dev/2014/10/how-do-i-blog-with-org2blog/
+last_updated: 2026-02-17
+---
+
 
 **TL;DR**: Video link: [Vimeo](https://vimeo.com/108656001). This is my blogging
 workflow with **Wordpress**, **Emacs** and **org2blog**. Example markup:

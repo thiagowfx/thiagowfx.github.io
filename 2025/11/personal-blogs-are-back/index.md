@@ -1,3 +1,9 @@
+---
+title: "Personal blogs are back"
+url: https://perrotta.dev/2025/11/personal-blogs-are-back/
+last_updated: 2026-02-16
+---
+
 
 [Disassociated](https://disassociated.com/personal-blogs-back-niche-blogs-next/) ([via](https://news.ycombinator.com/item?id=46009894)):
 

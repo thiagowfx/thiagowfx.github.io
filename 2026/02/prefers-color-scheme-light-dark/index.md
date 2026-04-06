@@ -1,3 +1,9 @@
+---
+title: "prefers-color-scheme → light-dark"
+url: https://perrotta.dev/2026/02/prefers-color-scheme-light-dark/
+last_updated: 2026-02-05
+---
+
 
 [TIL](https://victor.kropp.name/blog/2026/site-update/) via Victor Kropp:
 

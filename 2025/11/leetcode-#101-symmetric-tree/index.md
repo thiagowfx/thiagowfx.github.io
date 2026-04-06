@@ -1,3 +1,9 @@
+---
+title: "LeetCode #101: Symmetric Tree"
+url: https://perrotta.dev/2025/11/leetcode-%23101-symmetric-tree/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #101: Symmetric Tree](https://leetcode.com/problems/symmetric-tree):
 

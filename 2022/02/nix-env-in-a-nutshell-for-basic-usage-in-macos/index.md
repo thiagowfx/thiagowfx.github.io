@@ -1,3 +1,9 @@
+---
+title: "nix-env in a nutshell for basic usage in macOS"
+url: https://perrotta.dev/2022/02/nix-env-in-a-nutshell-for-basic-usage-in-macos/
+last_updated: 2026-01-18
+---
+
 
 I am currently evaluating [Nix](https://nixos.org/download.html) as a
 replacement for [Homebrew](https://brew.sh) CLI apps in macOS[^1].

@@ -1,3 +1,9 @@
+---
+title: "Alpine Linux: the maintainer workflow"
+url: https://perrotta.dev/2025/04/alpine-linux-the-maintainer-workflow/
+last_updated: 2026-01-03
+---
+
 
 I maintain [a couple of
 packages](https://pkgs.alpinelinux.org/packages?name=&branch=edge&repo=&arch=x86_64&origin=&flagged=&maintainer=Thiago+Perrotta)

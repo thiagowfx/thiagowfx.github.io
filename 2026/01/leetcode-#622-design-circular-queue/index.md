@@ -1,3 +1,9 @@
+---
+title: "LeetCode #622: Design Circular Queue"
+url: https://perrotta.dev/2026/01/leetcode-%23622-design-circular-queue/
+last_updated: 2026-01-09
+---
+
 
 [LeetCode #622: Design Circular Queue](https://leetcode.com/problems/design-circular-queue):
 

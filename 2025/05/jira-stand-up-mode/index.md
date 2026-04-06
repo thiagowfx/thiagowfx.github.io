@@ -1,3 +1,9 @@
+---
+title: "JIRA: stand-up mode"
+url: https://perrotta.dev/2025/05/jira-stand-up-mode/
+last_updated: 2025-05-02
+---
+
 
 [Jira Standup Mode](https://www.jakeworth.com/tils/jira-standup-mode/) via Jake
 Worth:

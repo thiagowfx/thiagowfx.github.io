@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1254: Number of Closed Islands"
+url: https://perrotta.dev/2026/01/leetcode-%231254-number-of-closed-islands/
+last_updated: 2026-01-10
+---
+
 
 [LeetCode #1254: Number of Closed Islands](https://leetcode.com/problems/number-of-closed-islands):
 

@@ -1,3 +1,9 @@
+---
+title: "Reply to: I Hate the News"
+url: https://perrotta.dev/2024/12/reply-to-i-hate-the-news/
+last_updated: 2026-02-08
+---
+
 
 Link to the [original article](http://www.aaronsw.com/weblog/hatethenews) from
 2006 from the late Aaron Swartz:

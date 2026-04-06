@@ -1,3 +1,9 @@
+---
+title: "Tracking packages automatically in a single place"
+url: https://perrotta.dev/2022/04/tracking-packages-automatically-in-a-single-place/
+last_updated: 2025-09-05
+---
+
 
 I was looking for a way to **track packages and parcels** (mail) for the most popular post and courier services e.g. DHL, UPS, Fedex, Canada Post, USPS, Correios, etc.
 

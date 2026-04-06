@@ -1,3 +1,9 @@
+---
+title: "claude: compact context"
+url: https://perrotta.dev/2025/09/claude-compact-context/
+last_updated: 2026-01-03
+---
+
 
 These days, Claude Code warns you when you're running [out of
 context](https://claudelog.com/faqs/what-is-claude-code-auto-compact/):

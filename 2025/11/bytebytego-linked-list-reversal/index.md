@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Linked List Reversal"
+url: https://perrotta.dev/2025/11/bytebytego-linked-list-reversal/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Linked List Reversal](https://bytebytego.com/exercises/coding-patterns/linked-lists/linked-list-reversal):
 

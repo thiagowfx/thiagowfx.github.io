@@ -1,3 +1,9 @@
+---
+title: "Arch Linux on macbook installation notes"
+url: https://perrotta.dev/2017/02/arch-linux-on-macbook-installation-notes/
+last_updated: 2026-02-15
+---
+
 
 Imported from [thiagowfx](https://gist.github.com/thiagowfx/)@'s gist.
 

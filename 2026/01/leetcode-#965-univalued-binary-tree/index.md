@@ -1,3 +1,9 @@
+---
+title: "LeetCode #965: Univalued Binary Tree"
+url: https://perrotta.dev/2026/01/leetcode-%23965-univalued-binary-tree/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #965: Univalued Binary Tree](https://leetcode.com/problems/univalued-binary-tree):
 

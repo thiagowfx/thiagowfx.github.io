@@ -1,3 +1,9 @@
+---
+title: "MCP: model context protocol considered harmful"
+url: https://perrotta.dev/2025/10/mcp-model-context-protocol-considered-harmful/
+last_updated: 2026-01-03
+---
+
 
 [Previously]({{< ref "2025-10-08-claude-code-adding-my-first-mcp-server" >}}).
 

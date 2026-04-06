@@ -1,3 +1,9 @@
+---
+title: "LeetCode #922: Sort Array By Parity II"
+url: https://perrotta.dev/2025/12/leetcode-%23922-sort-array-by-parity-ii/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #922: Sort Array By Parity II](https://leetcode.com/problems/leetcode-#922:-sort-array-by-parity-ii):
 

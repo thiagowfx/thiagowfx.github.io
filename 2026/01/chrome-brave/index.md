@@ -1,3 +1,9 @@
+---
+title: "Chrome → Brave"
+url: https://perrotta.dev/2026/01/chrome-brave/
+last_updated: 2026-03-10
+---
+
 
 [Earlier]({{< ref "2025-11-30-chrome-orion" >}}) I tried to switch from
 Chrome to Orion (from the [Kagi](https://kagi.com/) folks). That did not last.

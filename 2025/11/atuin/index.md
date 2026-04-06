@@ -1,3 +1,9 @@
+---
+title: "Atuin"
+url: https://perrotta.dev/2025/11/atuin/
+last_updated: 2026-02-16
+---
+
 
 My current workflow to manage shell history is simple, I have this config in
 my `~/.zshrc.d/`

@@ -1,3 +1,9 @@
+---
+title: "Apple-Ginger hot drink"
+url: https://perrotta.dev/2025/05/apple-ginger-hot-drink/
+last_updated: 2026-01-01
+---
+
 
 ## Apfel-Ingwer Heißgetränk (Apple-Ginger Hot Drink)
 

@@ -1,3 +1,9 @@
+---
+title: "Ghostty 1.3.0 release"
+url: https://perrotta.dev/2026/03/ghostty-1.3.0-release/
+last_updated: 2026-03-11
+---
+
 
 [Ghostty 1.3.0](https://ghostty.org/docs/install/release-notes/1-3-0):
 

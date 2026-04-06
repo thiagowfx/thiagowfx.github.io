@@ -1,3 +1,9 @@
+---
+title: "pancake workflow (OR: how to solve problems only once)"
+url: https://perrotta.dev/2026/04/pancake-workflow-or-how-to-solve-problems-only-once/
+last_updated: 2026-04-06
+---
+
 
 [Previously]({{< ref "2025-09-25-pancake-potpourri-scripts" >}}).
 

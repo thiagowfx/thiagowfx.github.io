@@ -1,3 +1,9 @@
+---
+title: "Send emails straight to spam"
+url: https://perrotta.dev/2022/03/send-emails-straight-to-spam/
+last_updated: 2024-12-25
+---
+
 
 Just tested [straight to spam](https://straight2spam.xyz) today:
 

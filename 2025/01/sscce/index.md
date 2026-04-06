@@ -1,3 +1,9 @@
+---
+title: "SSCCE"
+url: https://perrotta.dev/2025/01/sscce/
+last_updated: 2026-01-04
+---
+
 
 **Short, Self Contained, Correct (Compilable), Example** ("sscce"):
 

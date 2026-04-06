@@ -1,3 +1,9 @@
+---
+title: "Why do you need to know my last name?"
+url: https://perrotta.dev/2024/01/why-do-you-need-to-know-my-last-name/
+last_updated: 2025-09-05
+---
+
 
 Some (annoying) websites and/or mobile apps will refuse to let you proceed past
 their registration / login screen unless you provide a last name. Isn't my

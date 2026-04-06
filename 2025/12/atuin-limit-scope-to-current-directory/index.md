@@ -1,3 +1,9 @@
+---
+title: "atuin: limit scope to current directory"
+url: https://perrotta.dev/2025/12/atuin-limit-scope-to-current-directory/
+last_updated: 2026-02-07
+---
+
 
 [Previously]({{< ref "2025-12-01-atuin-delete-history-entries" >}}),
 [previously]({{< ref "2025-11-30-atuin" >}}).

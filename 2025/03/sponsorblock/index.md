@@ -1,3 +1,9 @@
+---
+title: "SponsorBlock"
+url: https://perrotta.dev/2025/03/sponsorblock/
+last_updated: 2025-03-02
+---
+
 
 [SponsorBlock](https://sponsor.ajay.app/):
 

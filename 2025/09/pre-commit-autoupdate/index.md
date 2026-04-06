@@ -1,3 +1,9 @@
+---
+title: "pre-commit: autoupdate"
+url: https://perrotta.dev/2025/09/pre-commit-autoupdate/
+last_updated: 2026-01-03
+---
+
 
 When using [`pre-commit`](https://pre-commit.com/), you can take advantage of
 its built-in `pre-commit autoupdate` command to keep your hook dependencies

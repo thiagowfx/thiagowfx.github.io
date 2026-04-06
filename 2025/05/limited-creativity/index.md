@@ -1,3 +1,9 @@
+---
+title: "Limited creativity"
+url: https://perrotta.dev/2025/05/limited-creativity/
+last_updated: 2025-05-31
+---
+
 
 I feel I got to a point where my own environment is limiting my creativity. And
 this is something I would like to change. Allow me to explain.

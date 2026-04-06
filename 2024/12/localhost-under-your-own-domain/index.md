@@ -1,3 +1,9 @@
+---
+title: "localhost under your own domain"
+url: https://perrotta.dev/2024/12/localhost-under-your-own-domain/
+last_updated: 2025-12-25
+---
+
 
 To interact with `localhost`, you can use `127.0.0.1`.
 

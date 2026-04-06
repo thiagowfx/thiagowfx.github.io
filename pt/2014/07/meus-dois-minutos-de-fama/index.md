@@ -1,3 +1,9 @@
+---
+title: "Meus dois minutos de fama"
+url: https://perrotta.dev/pt/2014/07/meus-dois-minutos-de-fama/
+last_updated: 2026-03-29
+---
+
 
 E, depois de um ano escrevendo aleatoriedades nesse espaço, com um pouco de
 serendipidade finalmente meu blog apareceu em algum lugar, mais precisamente no

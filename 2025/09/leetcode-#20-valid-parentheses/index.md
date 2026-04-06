@@ -1,3 +1,9 @@
+---
+title: "LeetCode #20: Valid Parentheses"
+url: https://perrotta.dev/2025/09/leetcode-%2320-valid-parentheses/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #20: Valid
 Parentheses](https://leetcode.com/problems/valid-parentheses/):

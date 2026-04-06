@@ -1,3 +1,9 @@
+---
+title: "git: reset default branch"
+url: https://perrotta.dev/2025/10/git-reset-default-branch/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Given an existing repository whose default branch is
 `master`, make it become "fresh" (=fully reset it), as if it had just been

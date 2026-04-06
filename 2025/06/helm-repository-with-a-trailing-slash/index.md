@@ -1,3 +1,9 @@
+---
+title: "Helm repository with a trailing slash"
+url: https://perrotta.dev/2025/06/helm-repository-with-a-trailing-slash/
+last_updated: 2026-01-03
+---
+
 
 [A repository URL with a trailing slash, and the same URL without a trailing
 slash, are treated as different

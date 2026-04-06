@@ -1,3 +1,9 @@
+---
+title: "Random word"
+url: https://perrotta.dev/2025/10/random-word/
+last_updated: 2025-10-13
+---
+
 
 **Problem statement**: get a random word via shell scripting. Assume a typical
 Unix / POSIX environment is available.

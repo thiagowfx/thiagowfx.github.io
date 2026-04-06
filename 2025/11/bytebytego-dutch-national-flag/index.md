@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Dutch National Flag"
+url: https://perrotta.dev/2025/11/bytebytego-dutch-national-flag/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Dutch National Flag](https://bytebytego.com/exercises/coding-patterns/sort-and-search/dutch-national-flag):
 

@@ -1,3 +1,9 @@
+---
+title: "heap"
+url: https://perrotta.dev/2026/01/heap/
+last_updated: 2026-01-11
+---
+
 
 ```python
 import heapq

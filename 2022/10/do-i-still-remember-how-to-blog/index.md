@@ -1,3 +1,9 @@
+---
+title: "Do I still remember how to blog?"
+url: https://perrotta.dev/2022/10/do-i-still-remember-how-to-blog/
+last_updated: 2025-09-05
+---
+
 
 I haven't written a blog post for a couple of months now, which is a good indicator I should probably document my workflow before I forget how to do it...
 

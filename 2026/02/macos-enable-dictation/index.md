@@ -1,3 +1,9 @@
+---
+title: "macOS: enable dictation"
+url: https://perrotta.dev/2026/02/macos-enable-dictation/
+last_updated: 2026-02-06
+---
+
 
 [Dictate messages and documents on Mac](https://support.apple.com/guide/mac-help/use-dictation-mh40584/mac):
 

@@ -1,3 +1,9 @@
+---
+title: "Em–dashes"
+url: https://perrotta.dev/2026/01/emdashes/
+last_updated: 2026-02-14
+---
+
 
 I use em dashes extensively (–).
 

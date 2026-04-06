@@ -1,3 +1,9 @@
+---
+title: "Obfuscate your email"
+url: https://perrotta.dev/2026/04/obfuscate-your-email/
+last_updated: 2026-04-05
+---
+
 
 [Evie Fae](https://ev-fae.quest/obfuscate-your-email/):
 

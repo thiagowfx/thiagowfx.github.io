@@ -1,3 +1,9 @@
+---
+title: "icdiff: side-by-side diff"
+url: https://perrotta.dev/2024/07/icdiff-side-by-side-diff/
+last_updated: 2025-09-05
+---
+
 
 [`icdiff`](https://www.jefftk.com/icdiff) is a simple diffing tool written in
 python by [Jeff Kaufman](https://www.jefftk.com/) that comes with two sensible

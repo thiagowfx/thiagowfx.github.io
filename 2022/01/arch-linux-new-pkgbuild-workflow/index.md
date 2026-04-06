@@ -1,3 +1,9 @@
+---
+title: "Arch Linux: New PKGBUILD Workflow"
+url: https://perrotta.dev/2022/01/arch-linux-new-pkgbuild-workflow/
+last_updated: 2026-03-26
+---
+
 
 This document describes my workflow to manage `PKGBUILDs` for the [AUR][aur] (Arch User Repository) in [Arch Linux][arch-linux].
 

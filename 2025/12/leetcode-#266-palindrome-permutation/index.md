@@ -1,3 +1,9 @@
+---
+title: "LeetCode #266: Palindrome Permutation"
+url: https://perrotta.dev/2025/12/leetcode-%23266-palindrome-permutation/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #266: Palindrome Permutation](https://leetcode.com/problems/palindrome-permutation):
 

@@ -1,3 +1,9 @@
+---
+title: "Bicycle: replacing an inner tube"
+url: https://perrotta.dev/2025/07/bicycle-replacing-an-inner-tube/
+last_updated: 2025-07-26
+---
+
 
 Flat tires happen sooner or later[^1]; in my case, every few months.
 

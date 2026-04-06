@@ -1,3 +1,9 @@
+---
+title: "LeetCode #303: Range Sum Query – Immutable"
+url: https://perrotta.dev/2025/12/leetcode-%23303-range-sum-query-immutable/
+last_updated: 2025-12-24
+---
+
 
 [LeetCode #303: Range Sum Query – Immutable](https://leetcode.com/problems/range-sum-query-immutable):
 

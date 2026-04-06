@@ -1,3 +1,9 @@
+---
+title: "new script: uwatch"
+url: https://perrotta.dev/2026/01/new-script-uwatch/
+last_updated: 2026-01-11
+---
+
 
 **Problem statement**: `watch -- git diff` / `watch -- git status` should emit
 colors. Yet it doesn't.

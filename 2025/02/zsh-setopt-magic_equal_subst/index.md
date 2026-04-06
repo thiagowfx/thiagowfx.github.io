@@ -1,3 +1,9 @@
+---
+title: "zsh: setopt magic_equal_subst"
+url: https://perrotta.dev/2025/02/zsh-setopt-magic_equal_subst/
+last_updated: 2025-06-15
+---
+
 
 **Problem statement**: Write the following command line in `zsh`:
 

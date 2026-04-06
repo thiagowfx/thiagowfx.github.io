@@ -1,3 +1,9 @@
+---
+title: "LeetCode #876: Middle of the Linked List"
+url: https://perrotta.dev/2025/12/leetcode-%23876-middle-of-the-linked-list/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #876: Middle of the Linked List](https://leetcode.com/problems/leetcode-#876:-middle-of-the-linked-list):
 

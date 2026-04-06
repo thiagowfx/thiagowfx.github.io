@@ -1,3 +1,9 @@
+---
+title: "WebDriver BiDi: from spec to implementation"
+url: https://perrotta.dev/2026/02/webdriver-bidi-from-spec-to-implementation/
+last_updated: 2026-03-03
+---
+
 
 [Previously]({{< ref "2024-01-25-chrome-for-testing" >}}).
 

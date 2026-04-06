@@ -1,3 +1,9 @@
+---
+title: "WHOIS"
+url: https://perrotta.dev/2024/02/whois/
+last_updated: 2025-12-25
+---
+
 
 I got myself a brand new domain! As I play with it, expect documentation to
 be added.

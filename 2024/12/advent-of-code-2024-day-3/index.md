@@ -1,3 +1,9 @@
+---
+title: "Advent of Code 2024: Day 3"
+url: https://perrotta.dev/2024/12/advent-of-code-2024-day-3/
+last_updated: 2026-01-03
+---
+
 
 Link to [Day #3](https://adventofcode.com/2024/day/3) puzzle.
 

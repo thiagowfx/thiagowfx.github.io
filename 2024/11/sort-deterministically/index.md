@@ -1,3 +1,9 @@
+---
+title: "sort deterministically"
+url: https://perrotta.dev/2024/11/sort-deterministically/
+last_updated: 2026-01-03
+---
+
 
 We had the following code in a CI pipeline:
 

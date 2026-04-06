@@ -1,3 +1,9 @@
+---
+title: "Alpine Linux: update timezone"
+url: https://perrotta.dev/2026/02/alpine-linux-update-timezone/
+last_updated: 2026-02-22
+---
+
 
 Once upon a time, my alpine linux VPS was located in Toronto (Canada). For a
 while now it's been in Frankfurt (Germany).

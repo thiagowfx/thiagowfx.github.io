@@ -1,3 +1,9 @@
+---
+title: "Compiling / Installing pacman on Ubuntu"
+url: https://perrotta.dev/2014/10/compiling-/-installing-pacman-on-ubuntu/
+last_updated: 2026-02-17
+---
+
 
 No, this is not the classic game. Here are logs.
 

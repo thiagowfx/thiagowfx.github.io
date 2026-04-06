@@ -1,3 +1,9 @@
+---
+title: "kubectl: force delete pods"
+url: https://perrotta.dev/2024/10/kubectl-force-delete-pods/
+last_updated: 2026-01-03
+---
+
 
 Our installation of `traefik` via `helm` got stuck today in such a way that its
 pods did not terminate, even with successive `kubectl delete`.

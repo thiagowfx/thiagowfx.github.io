@@ -1,3 +1,9 @@
+---
+title: "LeetCode #904: Fruit Into Baskets"
+url: https://perrotta.dev/2025/12/leetcode-%23904-fruit-into-baskets/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #904: Fruit Into Baskets](https://leetcode.com/problems/fruit-into-baskets):
 

@@ -1,3 +1,9 @@
+---
+title: "pre-commit: no-commit-to-branch hook"
+url: https://perrotta.dev/2025/03/pre-commit-no-commit-to-branch-hook/
+last_updated: 2025-03-21
+---
+
 
 **Problem statement**: prevent developers from committing directly to master (or
 main) in git.

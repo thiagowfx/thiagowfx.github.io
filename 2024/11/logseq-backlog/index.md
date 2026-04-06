@@ -1,3 +1,9 @@
+---
+title: "logseq: backlog"
+url: https://perrotta.dev/2024/11/logseq-backlog/
+last_updated: 2026-01-03
+---
+
 
 Assume you use `TODO` and `DOING` for workflow tracking in
 [Logseq](https://logseq.com/).

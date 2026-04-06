@@ -1,3 +1,9 @@
+---
+title: "pyenv"
+url: https://perrotta.dev/2024/03/pyenv/
+last_updated: 2025-09-05
+---
+
 
 When working on Python projects, [`pyenv`](https://github.com/pyenv/pyenv) is a
 great python environment / version manager, especially on macOS wherein you

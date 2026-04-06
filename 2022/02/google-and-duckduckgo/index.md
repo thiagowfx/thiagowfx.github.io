@@ -1,3 +1,9 @@
+---
+title: "Google and DuckDuckGo"
+url: https://perrotta.dev/2022/02/google-and-duckduckgo/
+last_updated: 2026-03-10
+---
+
 
 My search engine of choice is [Google][google], nonetheless I still enjoy [DuckDuckGo][duckduckgo] occasionally.
 

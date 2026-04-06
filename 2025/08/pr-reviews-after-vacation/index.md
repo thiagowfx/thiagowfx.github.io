@@ -1,3 +1,9 @@
+---
+title: "PR reviews after vacation"
+url: https://perrotta.dev/2025/08/pr-reviews-after-vacation/
+last_updated: 2026-02-16
+---
+
 
 You send in a couple of pull requests for your teammates to review.
 

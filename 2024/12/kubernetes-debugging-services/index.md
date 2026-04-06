@@ -1,3 +1,9 @@
+---
+title: "Kubernetes: debugging services"
+url: https://perrotta.dev/2024/12/kubernetes-debugging-services/
+last_updated: 2026-01-03
+---
+
 
 I am deploying a new helm chart to our staging environments, and needed a way to
 ensure its dependencies in `values.yaml` are properly configured.

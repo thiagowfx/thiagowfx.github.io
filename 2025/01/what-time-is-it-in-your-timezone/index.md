@@ -1,3 +1,9 @@
+---
+title: "What time is it in your timezone?"
+url: https://perrotta.dev/2025/01/what-time-is-it-in-your-timezone/
+last_updated: 2025-08-13
+---
+
 
 Following the principles of [timezones]({{< ref "2024-07-01-timezones" >}}):
 

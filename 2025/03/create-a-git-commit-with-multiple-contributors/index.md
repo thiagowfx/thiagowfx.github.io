@@ -1,3 +1,9 @@
+---
+title: "Create a git commit with multiple contributors"
+url: https://perrotta.dev/2025/03/create-a-git-commit-with-multiple-contributors/
+last_updated: 2026-01-03
+---
+
 
 - **Step 1**: Create a commit / pull request as usual.
 - **Step 2**: Collaborate 🪄. Different people push to the same remote branch.

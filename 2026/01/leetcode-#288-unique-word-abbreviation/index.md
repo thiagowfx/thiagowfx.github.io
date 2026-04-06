@@ -1,3 +1,9 @@
+---
+title: "LeetCode #288: Unique Word Abbreviation"
+url: https://perrotta.dev/2026/01/leetcode-%23288-unique-word-abbreviation/
+last_updated: 2026-01-17
+---
+
 
 [LeetCode #288: Unique Word Abbreviation](https://leetcode.com/problems/unique-word-abbreviation):
 

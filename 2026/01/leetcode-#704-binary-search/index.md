@@ -1,3 +1,9 @@
+---
+title: "LeetCode #704: Binary Search"
+url: https://perrotta.dev/2026/01/leetcode-%23704-binary-search/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #704: Binary Search](https://leetcode.com/problems/binary-search):
 

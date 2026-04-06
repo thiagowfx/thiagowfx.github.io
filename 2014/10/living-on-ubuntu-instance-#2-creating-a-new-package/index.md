@@ -1,3 +1,9 @@
+---
+title: "Living on Ubuntu - Instance #2 - Creating a new package"
+url: https://perrotta.dev/2014/10/living-on-ubuntu-instance-%232-creating-a-new-package/
+last_updated: 2026-02-18
+---
+
 
 These are **notes** from a few weeks ago when I created a sample package for
 Ubuntu. This article is written both as a guide and a timeline. There is no

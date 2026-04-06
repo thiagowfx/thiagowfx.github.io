@@ -1,3 +1,9 @@
+---
+title: "Explain a crontab expression"
+url: https://perrotta.dev/2024/07/explain-a-crontab-expression/
+last_updated: 2025-09-05
+---
+
 
 Given, for example, `0 0 * * *`, how do you figure out when it will run?
 

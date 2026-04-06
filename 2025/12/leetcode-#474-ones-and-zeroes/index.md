@@ -1,3 +1,9 @@
+---
+title: "LeetCode #474: Ones and Zeroes"
+url: https://perrotta.dev/2025/12/leetcode-%23474-ones-and-zeroes/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #474: Ones and Zeroes](https://leetcode.com/problems/ones-and-zeroes):
 

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #671: Second Minimum Node In a Binary Tree"
+url: https://perrotta.dev/2026/01/leetcode-%23671-second-minimum-node-in-a-binary-tree/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #671: Second Minimum Node In a Binary Tree](https://leetcode.com/problems/second-minimum-node-in-a-binary-tree):
 

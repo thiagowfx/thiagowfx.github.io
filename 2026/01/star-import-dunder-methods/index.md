@@ -1,3 +1,9 @@
+---
+title: "star import dunder methods"
+url: https://perrotta.dev/2026/01/star-import-dunder-methods/
+last_updated: 2026-01-03
+---
+
 
 Given:
 

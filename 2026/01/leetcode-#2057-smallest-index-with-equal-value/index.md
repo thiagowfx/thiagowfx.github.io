@@ -1,3 +1,9 @@
+---
+title: "LeetCode #2057: Smallest Index With Equal Value"
+url: https://perrotta.dev/2026/01/leetcode-%232057-smallest-index-with-equal-value/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #2057: Smallest Index With Equal Value](https://leetcode.com/problems/smallest-index-with-equal-value):
 

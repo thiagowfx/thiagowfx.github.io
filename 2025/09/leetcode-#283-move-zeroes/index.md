@@ -1,3 +1,9 @@
+---
+title: "LeetCode #283: Move Zeroes"
+url: https://perrotta.dev/2025/09/leetcode-%23283-move-zeroes/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #283: Move Zeroes](https://leetcode.com/problems/move-zeroes/):
 

@@ -1,3 +1,9 @@
+---
+title: "MLC Chat: off-line LLMs in your iPhone"
+url: https://perrotta.dev/2025/02/mlc-chat-off-line-llms-in-your-iphone/
+last_updated: 2026-01-03
+---
+
 
 [MLC Chat](https://apps.apple.com/us/app/mlc-chat/id6448482937):
 

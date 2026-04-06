@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Linked List Midpoint"
+url: https://perrotta.dev/2025/12/bytebytego-linked-list-midpoint/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Linked List Midpoint](https://bytebytego.com/exercises/coding-patterns/fast-and-slow-pointers/linked-list-midpoint):
 

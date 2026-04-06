@@ -1,3 +1,9 @@
+---
+title: "Emissor NFE Sebrae v4.01 para emissão de notas fiscais"
+url: https://perrotta.dev/pt/posts/2025-01-08-emissor-nfe-sebrae-v401/
+last_updated: 2026-01-04
+---
+
 
 _To my English-speaking readers: this post contains Brazilian bureaucracy and
 it's in Portuguese, you may want to skip it._

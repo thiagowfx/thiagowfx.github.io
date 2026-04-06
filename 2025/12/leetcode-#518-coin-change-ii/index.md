@@ -1,3 +1,9 @@
+---
+title: "LeetCode #518: Coin Change II"
+url: https://perrotta.dev/2025/12/leetcode-%23518-coin-change-ii/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #518: Coin Change II](https://leetcode.com/problems/coin-change-ii):
 

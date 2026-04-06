@@ -1,3 +1,9 @@
+---
+title: "iOS lockdown mode"
+url: https://perrotta.dev/2025/01/ios-lockdown-mode/
+last_updated: 2026-01-03
+---
+
 
 [dedoimedo](https://www.dedoimedo.com/computers/iphone-lockdown-mode.html) makes
 me realize that the iOS lockdown mode is actually quite usable, even for us

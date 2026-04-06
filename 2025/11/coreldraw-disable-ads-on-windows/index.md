@@ -1,3 +1,9 @@
+---
+title: "CorelDRAW: disable ads on Windows"
+url: https://perrotta.dev/2025/11/coreldraw-disable-ads-on-windows/
+last_updated: 2025-11-29
+---
+
 
 From 'Technical Support' tales of the trenches.
 

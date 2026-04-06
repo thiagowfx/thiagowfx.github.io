@@ -1,3 +1,9 @@
+---
+title: "2014 - Small review of a really nice year"
+url: https://perrotta.dev/2014/12/2014-small-review-of-a-really-nice-year/
+last_updated: 2026-02-19
+---
+
 
 **Disclaimer**: I haven't reviewed this post. It was written in one shot. I hope
 it is understandable.

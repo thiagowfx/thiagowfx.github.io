@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1021: Remove Outermost Parentheses"
+url: https://perrotta.dev/2025/12/leetcode-%231021-remove-outermost-parentheses/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #1021: Remove Outermost Parentheses](https://leetcode.com/problems/remove-outermost-parentheses):
 

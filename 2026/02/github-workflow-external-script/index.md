@@ -1,3 +1,9 @@
+---
+title: "github workflow: external script"
+url: https://perrotta.dev/2026/02/github-workflow-external-script/
+last_updated: 2026-02-22
+---
+
 
 **Problem statement**: execute a `.js` script in a GitHub workflow. The script
 must be stored in a separate file (than the workflow) in the same git

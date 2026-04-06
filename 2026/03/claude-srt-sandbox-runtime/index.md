@@ -1,3 +1,9 @@
+---
+title: "claude: srt: sandbox runtime"
+url: https://perrotta.dev/2026/03/claude-srt-sandbox-runtime/
+last_updated: 2026-03-04
+---
+
 
 [Previously: `cco`]({{< ref "2026-02-26-cco-claude-condom-sandbox" >}}).
 

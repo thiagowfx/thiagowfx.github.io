@@ -1,3 +1,9 @@
+---
+title: "LeetCode #91: Decode Ways"
+url: https://perrotta.dev/2025/12/leetcode-%2391-decode-ways/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #91: Decode Ways](https://leetcode.com/problems/decode-ways):
 

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1: Two Sum"
+url: https://perrotta.dev/2025/09/leetcode-%231-two-sum/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #1: Two Sum](https://leetcode.com/problems/two-sum/description/):
 

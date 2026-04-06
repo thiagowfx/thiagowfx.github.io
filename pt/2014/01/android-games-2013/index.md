@@ -1,3 +1,9 @@
+---
+title: "Android Games (2013)"
+url: https://perrotta.dev/pt/2014/01/android-games-2013/
+last_updated: 2026-03-28
+---
+
 
 Pequeno index de jogos de Android que gostei no ano passado. Não está na ordem
 de preferência. E infelizmente não me lembrei de todos.

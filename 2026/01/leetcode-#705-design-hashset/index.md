@@ -1,3 +1,9 @@
+---
+title: "LeetCode #705: Design HashSet"
+url: https://perrotta.dev/2026/01/leetcode-%23705-design-hashset/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #705: Design HashSet](https://leetcode.com/problems/design-hashset):
 

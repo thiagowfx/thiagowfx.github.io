@@ -1,3 +1,9 @@
+---
+title: "Xterm: Enable ANSI OSC-52"
+url: https://perrotta.dev/2021/12/xterm-enable-ansi-osc-52/
+last_updated: 2025-09-05
+---
+
 
 Every modern terminal emulator supports [ANSI OSC-52](https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h3-Operating-System-Commands) out-of-the-box. `xterm` is not one of those[^1].
 

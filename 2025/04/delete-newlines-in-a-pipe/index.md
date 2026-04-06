@@ -1,3 +1,9 @@
+---
+title: "Delete newlines in a pipe"
+url: https://perrotta.dev/2025/04/delete-newlines-in-a-pipe/
+last_updated: 2025-06-15
+---
+
 
 **Problem statement**: Given `{cmd}` that emits lots of blank lines, delete all
 blank lines in a pipe.

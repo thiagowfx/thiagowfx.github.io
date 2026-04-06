@@ -1,3 +1,9 @@
+---
+title: "LeetCode #346: Moving Average from Data Stream"
+url: https://perrotta.dev/2025/12/leetcode-%23346-moving-average-from-data-stream/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #346: Moving Average from Data Stream](https://leetcode.com/problems/moving-average-from-data-stream):
 

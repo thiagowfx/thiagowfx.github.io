@@ -1,3 +1,9 @@
+---
+title: "Erro de sincronização no Chromium"
+url: https://perrotta.dev/pt/posts/2014-03-29-status-erro-de-sincronizacao-no-chromium/
+last_updated: 2026-03-02
+---
+
 
 Faz uns dias que noto que a sincronização dos meus favoritos no Chromium não
 estava sendo realizada corretamente. Com um pouco de investigação, descobri que

@@ -1,3 +1,9 @@
+---
+title: "Format dialogues in markdown"
+url: https://perrotta.dev/2024/07/format-dialogues-in-markdown/
+last_updated: 2024-07-16
+---
+
 
 I wanted to add a new kind of post to this blog, wherein I transcribe
 conversations (a dialogue).

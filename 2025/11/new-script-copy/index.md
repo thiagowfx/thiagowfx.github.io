@@ -1,3 +1,9 @@
+---
+title: "new script: copy"
+url: https://perrotta.dev/2025/11/new-script-copy/
+last_updated: 2026-02-16
+---
+
 
 [Previously]({{< ref "2025-10-30-new-script-ssh-mux-restart" >}}).
 

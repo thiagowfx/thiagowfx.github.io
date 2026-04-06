@@ -1,3 +1,9 @@
+---
+title: "sorting algorithms"
+url: https://perrotta.dev/2026/01/sorting-algorithms/
+last_updated: 2026-01-14
+---
+
 
 ```python
 def swap(a, x, y):

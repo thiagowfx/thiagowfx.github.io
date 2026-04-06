@@ -1,3 +1,9 @@
+---
+title: "Date your whiteboard notes"
+url: https://perrotta.dev/2025/02/date-your-whiteboard-notes/
+last_updated: 2025-02-11
+---
+
 
 If you work in an office, chances are there is at least one whiteboard available
 for you.

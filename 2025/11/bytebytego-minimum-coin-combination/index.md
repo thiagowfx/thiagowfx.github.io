@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Minimum Coin Combination"
+url: https://perrotta.dev/2025/11/bytebytego-minimum-coin-combination/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Minimum Coin Combination](https://bytebytego.com/exercises/coding-patterns/dynamic-programming/minimum-coin-combination):
 

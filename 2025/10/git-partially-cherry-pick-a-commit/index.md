@@ -1,3 +1,9 @@
+---
+title: "git: partially cherry-pick a commit"
+url: https://perrotta.dev/2025/10/git-partially-cherry-pick-a-commit/
+last_updated: 2026-01-03
+---
+
 
 **OR**: "cherry-pick a cherry-pick".
 

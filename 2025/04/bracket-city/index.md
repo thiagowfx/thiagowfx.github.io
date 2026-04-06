@@ -1,3 +1,9 @@
+---
+title: "Bracket City"
+url: https://perrotta.dev/2025/04/bracket-city/
+last_updated: 2026-02-16
+---
+
 
 [Bracket City](https://www.theatlantic.com/games/bracket-city/) by The Atlantic
 via [Hacker News](https://news.ycombinator.com/item?id=43622719):

@@ -1,3 +1,9 @@
+---
+title: "New APKBUILD: LLM edition"
+url: https://perrotta.dev/2026/02/new-apkbuild-llm-edition/
+last_updated: 2026-02-18
+---
+
 
 **Problem statement**: package [`prek`](http://prek.j178.dev/) for [Alpine
 Linux](https://alpinelinux.org/).

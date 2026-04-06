@@ -1,3 +1,9 @@
+---
+title: "Reply to: CoPilot having a normal one"
+url: https://perrotta.dev/2024/12/reply-to-copilot-having-a-normal-one/
+last_updated: 2026-02-08
+---
+
 
 ([via David Krider](https://davidkrider.com/copilot-having-a-normal-one/)):
 

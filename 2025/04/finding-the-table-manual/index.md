@@ -1,3 +1,9 @@
+---
+title: "Finding the table manual"
+url: https://perrotta.dev/2025/04/finding-the-table-manual/
+last_updated: 2025-09-05
+---
+
 
 **Problem statement**: I bought an used table, it's not from IKEA, now I need to
 find its PDF manual to figure out how to properly assemble it. The previous

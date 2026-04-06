@@ -1,3 +1,9 @@
+---
+title: "sliding window"
+url: https://perrotta.dev/2026/03/sliding-window/
+last_updated: 2026-03-13
+---
+
 
 Sliding window template:
 

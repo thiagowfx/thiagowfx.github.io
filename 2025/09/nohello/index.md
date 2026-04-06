@@ -1,3 +1,9 @@
+---
+title: "nohello"
+url: https://perrotta.dev/2025/09/nohello/
+last_updated: 2025-09-16
+---
+
 
 I highly value when people combine greeting + request right away when messaging
 folks. Less interruption – more efficiency! You can be friendly even with an

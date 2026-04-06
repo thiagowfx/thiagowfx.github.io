@@ -1,3 +1,9 @@
+---
+title: "Start an HTTP server ASAP"
+url: https://perrotta.dev/2024/01/start-an-http-server-asap/
+last_updated: 2025-12-25
+---
+
 
 Sometimes I need to start a local HTTP server for a quick one-off task, often
 just to serve static content. It is not important which one it is, so long as I

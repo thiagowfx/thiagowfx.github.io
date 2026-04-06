@@ -1,3 +1,9 @@
+---
+title: "LeetCode #2215: Find the Difference of Two Arrays"
+url: https://perrotta.dev/2026/01/leetcode-%232215-find-the-difference-of-two-arrays/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #2215: Find the Difference of Two Arrays](https://leetcode.com/problems/find-the-difference-of-two-arrays):
 

@@ -1,3 +1,9 @@
+---
+title: "dict"
+url: https://perrotta.dev/2026/01/dict/
+last_updated: 2026-01-05
+---
+
 
 ```python
 if __name__ == "__main__":

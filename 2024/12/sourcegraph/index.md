@@ -1,3 +1,9 @@
+---
+title: "Sourcegraph"
+url: https://perrotta.dev/2024/12/sourcegraph/
+last_updated: 2024-12-31
+---
+
 
 [Sourcegraph](https://sourcegraph.com/) is a global search engine.
 Think code.google.com back in the days, but more developer-friendly.

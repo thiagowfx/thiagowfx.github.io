@@ -1,3 +1,9 @@
+---
+title: "LinkedIn: chronological view"
+url: https://perrotta.dev/2025/02/linkedin-chronological-view/
+last_updated: 2026-02-08
+---
+
 
 [How to Replace Linkedin's Algorithmic Timeline](https://preslav.me/2025/01/28/howto-replace-linkedin-algorithmic-timeline/) by Preslav Rachev:
 

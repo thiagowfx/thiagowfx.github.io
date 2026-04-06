@@ -1,3 +1,9 @@
+---
+title: "LeetCode #93: Restore IP Addresses"
+url: https://perrotta.dev/2025/12/leetcode-%2393-restore-ip-addresses/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #93: Restore IP Addresses](https://leetcode.com/problems/restore-ip-addresses):
 

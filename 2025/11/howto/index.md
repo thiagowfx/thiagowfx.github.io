@@ -1,3 +1,9 @@
+---
+title: "howto"
+url: https://perrotta.dev/2025/11/howto/
+last_updated: 2025-11-24
+---
+
 
 https://github.com/nalgeon/howto ([via](https://antonz.org/howto/)):
 

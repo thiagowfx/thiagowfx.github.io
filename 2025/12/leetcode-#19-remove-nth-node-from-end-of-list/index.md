@@ -1,3 +1,9 @@
+---
+title: "LeetCode #19: Remove Nth Node From End of List"
+url: https://perrotta.dev/2025/12/leetcode-%2319-remove-nth-node-from-end-of-list/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #19: Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list):
 

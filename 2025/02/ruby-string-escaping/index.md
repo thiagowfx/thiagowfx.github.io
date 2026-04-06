@@ -1,3 +1,9 @@
+---
+title: "Ruby: string escaping"
+url: https://perrotta.dev/2025/02/ruby-string-escaping/
+last_updated: 2025-02-17
+---
+
 
 I needed to translate the following shell command (`bash`):
 

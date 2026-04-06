@@ -1,3 +1,9 @@
+---
+title: "LeetCode #501: Find Mode in Binary Search Tree"
+url: https://perrotta.dev/2025/12/leetcode-%23501-find-mode-in-binary-search-tree/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #501: Find Mode in Binary Search Tree](https://leetcode.com/problems/find-mode-in-binary-search-tree):
 

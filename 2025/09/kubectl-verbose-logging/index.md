@@ -1,3 +1,9 @@
+---
+title: "kubectl: verbose logging"
+url: https://perrotta.dev/2025/09/kubectl-verbose-logging/
+last_updated: 2026-01-03
+---
+
 
 When running `kubectl` commands, to get a glimpse of what is happening under the
 hood, pass `-v={N}` to it.

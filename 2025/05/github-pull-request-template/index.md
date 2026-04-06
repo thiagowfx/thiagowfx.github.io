@@ -1,3 +1,9 @@
+---
+title: "Github: pull request template"
+url: https://perrotta.dev/2025/05/github-pull-request-template/
+last_updated: 2025-05-04
+---
+
 
 To create a pull request template for a github repository, create a
 `.github/pull_request_template.md` file.

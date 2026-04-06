@@ -1,3 +1,9 @@
+---
+title: "Markdown headings and git comments"
+url: https://perrotta.dev/2025/07/markdown-headings-and-git-comments/
+last_updated: 2026-03-26
+---
+
 
 Our team uses a PR template that resembles the following:
 

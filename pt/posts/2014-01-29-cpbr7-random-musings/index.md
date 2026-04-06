@@ -1,3 +1,9 @@
+---
+title: "#CPBR7 random musings"
+url: https://perrotta.dev/pt/posts/2014-01-29-cpbr7-random-musings/
+last_updated: 2026-03-11
+---
+
 
 Just one (more) useless post: fatos e/ou pensamentos e/ou qualquer outros floods
 aleatórios. Post único, se eu gostar de escrevê-lo, provavelmente apenas virei

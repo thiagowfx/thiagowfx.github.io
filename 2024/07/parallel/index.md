@@ -1,3 +1,9 @@
+---
+title: "Parallel"
+url: https://perrotta.dev/2024/07/parallel/
+last_updated: 2025-09-05
+---
+
 
 Apparently there are two Unix-y ways to run commands in parallel:
 

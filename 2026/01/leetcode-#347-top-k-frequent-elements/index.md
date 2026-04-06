@@ -1,3 +1,9 @@
+---
+title: "LeetCode #347: Top K Frequent Elements"
+url: https://perrotta.dev/2026/01/leetcode-%23347-top-k-frequent-elements/
+last_updated: 2026-01-11
+---
+
 
 [LeetCode #347: Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements):
 

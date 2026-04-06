@@ -1,3 +1,9 @@
+---
+title: "Github Actions: ubuntu-latest tools"
+url: https://perrotta.dev/2025/04/github-actions-ubuntu-latest-tools/
+last_updated: 2025-06-15
+---
+
 
 Which tools are installed in the Github Actions environment for `ubuntu-latest`?
 

@@ -1,3 +1,9 @@
+---
+title: "Crawling / indexing is wild"
+url: https://perrotta.dev/2025/02/crawling-/-indexing-is-wild/
+last_updated: 2025-09-05
+---
+
 
 One little anecdote.
 

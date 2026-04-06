@@ -1,3 +1,9 @@
+---
+title: "ghostty: splits"
+url: https://perrotta.dev/2026/01/ghostty-splits/
+last_updated: 2026-02-22
+---
+
 
 [Previously]({{< ref "2025-07-21-ghostty-migrating-config-to-dotfiles" >}}).
 

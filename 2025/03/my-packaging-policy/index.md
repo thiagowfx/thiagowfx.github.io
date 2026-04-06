@@ -1,3 +1,9 @@
+---
+title: "My packaging policy"
+url: https://perrotta.dev/2025/03/my-packaging-policy/
+last_updated: 2025-03-20
+---
+
 
 [My packaging policy](https://whynothugo.nl/journal/2022/08/13/my-packaging-policy/) by Hugo Osvaldo Barrera:
 

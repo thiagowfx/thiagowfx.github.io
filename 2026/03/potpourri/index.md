@@ -1,3 +1,9 @@
+---
+title: "Potpourri"
+url: https://perrotta.dev/2026/03/potpourri/
+last_updated: 2026-03-27
+---
+
 
 For Sprint planning I like to name my catch-all / umbrella Epics as "potpourri".
 

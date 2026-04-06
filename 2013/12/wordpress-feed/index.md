@@ -1,3 +1,9 @@
+---
+title: "Wordpress Feed"
+url: https://perrotta.dev/2013/12/wordpress-feed/
+last_updated: 2026-02-17
+---
+
 
 Yesterday I discovered a little feature from Wordpress. Head to
 http://wordpress.com/following/edit, so you can use Wordpress as a feed reader.

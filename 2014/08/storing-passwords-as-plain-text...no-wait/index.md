@@ -1,3 +1,9 @@
+---
+title: "Storing passwords as plain text...no, wait"
+url: https://perrotta.dev/2014/08/storing-passwords-as-plain-text...no-wait/
+last_updated: 2026-02-18
+---
+
 
 ## Background
 

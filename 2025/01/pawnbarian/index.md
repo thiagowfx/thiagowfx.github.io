@@ -1,3 +1,9 @@
+---
+title: "Pawnbarian"
+url: https://perrotta.dev/2025/01/pawnbarian/
+last_updated: 2026-02-17
+---
+
 
 [Pawnbarian](https://store.steampowered.com/app/1142080/Pawnbarian/) on Steam:
 

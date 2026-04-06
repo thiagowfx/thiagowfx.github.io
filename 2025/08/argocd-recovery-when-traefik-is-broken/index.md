@@ -1,3 +1,9 @@
+---
+title: "ArgoCD: recovery when traefik is broken"
+url: https://perrotta.dev/2025/08/argocd-recovery-when-traefik-is-broken/
+last_updated: 2026-01-03
+---
+
 
 It's Friday. The best day to push to prod™.
 An internal scheduled upgrade for `traefik` goes awry.

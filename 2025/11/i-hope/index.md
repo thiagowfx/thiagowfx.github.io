@@ -1,3 +1,9 @@
+---
+title: "I hope"
+url: https://perrotta.dev/2025/11/i-hope/
+last_updated: 2025-11-23
+---
+
 
 [Paul Nijjar](http://pnijjar.freeshell.org/2025/i-hope/):
 

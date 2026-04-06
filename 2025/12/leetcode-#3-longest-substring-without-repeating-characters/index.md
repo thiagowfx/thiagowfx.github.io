@@ -1,3 +1,9 @@
+---
+title: "LeetCode #3: Longest Substring Without Repeating Characters"
+url: https://perrotta.dev/2025/12/leetcode-%233-longest-substring-without-repeating-characters/
+last_updated: 2026-01-09
+---
+
 
 [LeetCode #3: Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters):
 

@@ -1,3 +1,9 @@
+---
+title: "Backlinks"
+url: https://perrotta.dev/2025/10/backlinks/
+last_updated: 2025-10-19
+---
+
 
 I famously do not run any kind of analytics in this blog, neither server-side or
 client-side.

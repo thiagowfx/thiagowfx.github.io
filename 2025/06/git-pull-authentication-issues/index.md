@@ -1,3 +1,9 @@
+---
+title: "git pull: authentication issues"
+url: https://perrotta.dev/2025/06/git-pull-authentication-issues/
+last_updated: 2026-01-18
+---
+
 
 `git pull` authentication issues is _really_ a disguise for `ssh` auth issues.
 

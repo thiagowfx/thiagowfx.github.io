@@ -1,3 +1,9 @@
+---
+title: "LeetCode #931: Minimum Falling Path Sum"
+url: https://perrotta.dev/2025/12/leetcode-%23931-minimum-falling-path-sum/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #931: Minimum Falling Path Sum](https://leetcode.com/problems/minimum-falling-path-sum):
 

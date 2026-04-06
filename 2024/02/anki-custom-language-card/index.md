@@ -1,3 +1,9 @@
+---
+title: "Anki: custom language card"
+url: https://perrotta.dev/2024/02/anki-custom-language-card/
+last_updated: 2025-12-25
+---
+
 
 The more time you spent playing with [Anki](https://apps.ankiweb.net/), the
 more opinionated you become.

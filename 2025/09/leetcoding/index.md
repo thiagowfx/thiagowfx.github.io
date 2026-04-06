@@ -1,3 +1,9 @@
+---
+title: "LeetCoding"
+url: https://perrotta.dev/2025/09/leetcoding/
+last_updated: 2026-01-03
+---
+
 
 If you haven't noticed, I have a new [coding]({{< ref "/categories/coding" >}})
 section on this site.

@@ -1,3 +1,9 @@
+---
+title: "Replace text in PDFs"
+url: https://perrotta.dev/2025/06/replace-text-in-pdfs/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Given an existing PDF file, replace text in it.
 

@@ -1,3 +1,9 @@
+---
+title: "Ah, orgulho"
+url: https://perrotta.dev/pt/posts/2013-11-21-ah-orgulho/
+last_updated: 2026-03-03
+---
+
 
 Às vezes é difícil inquietar-se. Em relação a distros de Linux, nunca me
 inquietei até ter encontrado uma que realmente me agradasse: Arch Linux. Agora

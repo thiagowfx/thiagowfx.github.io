@@ -1,3 +1,9 @@
+---
+title: "LeetCode #193: Valid Phone Numbers"
+url: https://perrotta.dev/2025/12/leetcode-%23193-valid-phone-numbers/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #193: Valid Phone Numbers](https://leetcode.com/problems/valid-phone-numbers):
 

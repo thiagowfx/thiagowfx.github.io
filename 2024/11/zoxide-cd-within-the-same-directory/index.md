@@ -1,3 +1,9 @@
+---
+title: "zoxide: cd within the same directory"
+url: https://perrotta.dev/2024/11/zoxide-cd-within-the-same-directory/
+last_updated: 2025-09-20
+---
+
 
 I am a big fan of [`zoxide`](https://github.com/ajeetdsouza/zoxide):
 

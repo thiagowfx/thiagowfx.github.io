@@ -1,3 +1,9 @@
+---
+title: "Ontem: Maratona de Programação"
+url: https://perrotta.dev/pt/posts/2013-09-15-ontem-maratona-de-programacao/
+last_updated: 2026-03-03
+---
+
 
 Ontem (14/09/2013) foi a fase subregional brasileira da [Maratona de
 Programação](http://maratona.ime.usp.br/). É uma data bastante esperada, muito

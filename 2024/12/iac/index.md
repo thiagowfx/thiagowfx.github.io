@@ -1,3 +1,9 @@
+---
+title: "IaC"
+url: https://perrotta.dev/2024/12/iac/
+last_updated: 2024-12-03
+---
+
 
 > **Me**: So where is the `Dockerfile` source for that image? I can't seem to
 > find it in our git repos.

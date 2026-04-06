@@ -1,3 +1,9 @@
+---
+title: "Blocking Claude"
+url: https://perrotta.dev/2026/03/blocking-claude/
+last_updated: 2026-03-02
+---
+
 
 [Previously]({{< ref "2024-08-01-disallow-ai-scraping" >}}).
 

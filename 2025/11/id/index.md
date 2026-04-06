@@ -1,3 +1,9 @@
+---
+title: "id"
+url: https://perrotta.dev/2025/11/id/
+last_updated: 2026-01-03
+---
+
 
 Identity function:
 

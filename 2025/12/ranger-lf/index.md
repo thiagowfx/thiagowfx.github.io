@@ -1,3 +1,9 @@
+---
+title: "ranger → lf"
+url: https://perrotta.dev/2025/12/ranger-lf/
+last_updated: 2025-12-25
+---
+
 
 **Problem statement**: replace `ranger` with `lf`.
 

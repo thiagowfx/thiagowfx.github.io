@@ -1,3 +1,9 @@
+---
+title: "j,k for navigation"
+url: https://perrotta.dev/2025/12/jk-for-navigation/
+last_updated: 2026-01-03
+---
+
 
 I just added vim-style keybindings to this site.
 

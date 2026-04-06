@@ -1,3 +1,9 @@
+---
+title: "(Usando) meu primeiro custom kernel"
+url: https://perrotta.dev/pt/posts/2014-01-25-usando-meu-primeiro-custom-kernel/
+last_updated: 2026-03-11
+---
+
 
 Faz 2 dias que venho testando o Kernel
 [Linux-ck](https://wiki.archlinux.org/index.php/Linux-ck), cuja diferença em

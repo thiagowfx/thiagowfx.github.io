@@ -1,3 +1,9 @@
+---
+title: "Logseq template for working out"
+url: https://perrotta.dev/2025/06/logseq-template-for-working-out/
+last_updated: 2026-01-03
+---
+
 
 Lately I've been tracking my gym sessions in [Logseq](https://logseq.com/).
 

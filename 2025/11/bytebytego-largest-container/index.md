@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Largest Container"
+url: https://perrotta.dev/2025/11/bytebytego-largest-container/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Largest Container](https://bytebytego.com/exercises/coding-patterns/two-pointers/largest-container):
 

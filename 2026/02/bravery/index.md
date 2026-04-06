@@ -1,3 +1,9 @@
+---
+title: "Bravery"
+url: https://perrotta.dev/2026/02/bravery/
+last_updated: 2026-02-17
+---
+
 
 After reading the book [Highest Duty: My Search for What Really
 Matters](https://www.goodreads.com/book/show/6404803-highest-duty) by Chesley

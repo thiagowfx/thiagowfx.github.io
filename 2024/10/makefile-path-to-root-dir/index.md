@@ -1,3 +1,9 @@
+---
+title: "Makefile: path to root dir"
+url: https://perrotta.dev/2024/10/makefile-path-to-root-dir/
+last_updated: 2025-09-05
+---
+
 
 **Problem statement**: Given a `Makefile` within `~/git/scaffolding/Makefile`,
 and a command that needs to run from the `scaffolding/` directory, create an

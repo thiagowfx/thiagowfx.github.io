@@ -1,3 +1,9 @@
+---
+title: "The get your shit together day"
+url: https://perrotta.dev/2025/09/the-get-your-shit-together-day/
+last_updated: 2025-09-27
+---
+
 
 Alex Kotliarskyi[^1], [The Get Your Shit Together
 Day](https://frantic.im/get-your-shit-together-day/):

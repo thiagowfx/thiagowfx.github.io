@@ -1,3 +1,9 @@
+---
+title: "Claude Code: /insights"
+url: https://perrotta.dev/2026/02/claude-code-/insights/
+last_updated: 2026-02-08
+---
+
 
 [TIL](https://aiengineerguide.com/blog/claude-code-insights-command/) via Ashik
 Nesin:

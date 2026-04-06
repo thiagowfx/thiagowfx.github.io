@@ -1,3 +1,9 @@
+---
+title: "My last *nix setup"
+url: https://perrotta.dev/2014/10/my-last-nix-setup/
+last_updated: 2026-02-18
+---
+
 
 I've just completed my objective with this blog. Should I start a new one? After
 looping through a BSD distro and dozens of Linux distributions, I've finally

@@ -1,3 +1,9 @@
+---
+title: "Tailscale: automatic connection in the office"
+url: https://perrotta.dev/2026/03/tailscale-automatic-connection-in-the-office/
+last_updated: 2026-03-18
+---
+
 
 **TIL**: [Tailscale](https://tailscale.com/) (a zero-trust VPN) supports
 automatically connecting to it on select Wi-Fi networks.

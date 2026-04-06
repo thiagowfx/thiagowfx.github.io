@@ -1,3 +1,9 @@
+---
+title: "Trying to be keyboard centric"
+url: https://perrotta.dev/2013/11/trying-to-be-keyboard-centric/
+last_updated: 2026-02-18
+---
+
 
 _Ideally_ one who wants to be _super_ keyboard centric should try a window
 manager like awesome, i3 or xmonad, but I don't want to do this now. Here is a

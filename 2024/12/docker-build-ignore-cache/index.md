@@ -1,3 +1,9 @@
+---
+title: "Docker build: ignore cache"
+url: https://perrotta.dev/2024/12/docker-build-ignore-cache/
+last_updated: 2026-01-18
+---
+
 
 To build a docker image completely from scratch, without reusing cache layers on
 your system:

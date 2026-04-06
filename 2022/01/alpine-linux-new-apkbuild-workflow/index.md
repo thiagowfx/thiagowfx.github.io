@@ -1,3 +1,9 @@
+---
+title: "Alpine Linux: New APKBUILD Workflow"
+url: https://perrotta.dev/2022/01/alpine-linux-new-apkbuild-workflow/
+last_updated: 2026-01-03
+---
+
 
 This document describes my workflow to manage `APKBUILDs` for the
 [aports][aports] repository in [Alpine Linux][alpine-linux].

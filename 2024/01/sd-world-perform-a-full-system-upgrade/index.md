@@ -1,3 +1,9 @@
+---
+title: "sd-world: perform a full system upgrade"
+url: https://perrotta.dev/2024/01/sd-world-perform-a-full-system-upgrade/
+last_updated: 2025-12-31
+---
+
 
 Whenever I want to upgrade any one of my systems, I run `sd-world`.
 

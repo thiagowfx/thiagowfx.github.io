@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Zero Striping"
+url: https://perrotta.dev/2025/11/bytebytego-zero-striping/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Zero Striping](https://bytebytego.com/exercises/coding-patterns/hash-maps-and-sets/zero-striping):
 

@@ -1,3 +1,9 @@
+---
+title: "XSLT in RSS feed"
+url: https://perrotta.dev/2025/08/xslt-in-rss-feed/
+last_updated: 2025-12-25
+---
+
 
 [There's](https://www.jwz.org/blog/2025/08/xslt/)
 [some](https://simonwillison.net/2025/Aug/19/xslt/#atom-everything)

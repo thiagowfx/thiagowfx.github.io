@@ -1,3 +1,9 @@
+---
+title: "LeetCode #49: Group Anagrams"
+url: https://perrotta.dev/2026/01/leetcode-%2349-group-anagrams/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #49: Group Anagrams](https://leetcode.com/problems/group-anagrams):
 

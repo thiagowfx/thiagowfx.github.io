@@ -1,3 +1,9 @@
+---
+title: "Skim"
+url: https://perrotta.dev/2026/02/skim/
+last_updated: 2026-02-08
+---
+
 
 [Skim.app](https://skim-app.sourceforge.io/):
 

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #69: Sqrt(x)"
+url: https://perrotta.dev/2025/11/leetcode-%2369-sqrtx/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #69: Sqrt(x)](https://leetcode.com/problems/sqrtx/):
 

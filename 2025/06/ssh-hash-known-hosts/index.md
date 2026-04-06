@@ -1,3 +1,9 @@
+---
+title: "SSH: hash known hosts"
+url: https://perrotta.dev/2025/06/ssh-hash-known-hosts/
+last_updated: 2026-01-18
+---
+
 
 A security / privacy tip: hash ssh hosts, especially in machines you have
 access to that are in the cloud.

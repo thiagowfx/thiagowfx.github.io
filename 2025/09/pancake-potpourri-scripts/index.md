@@ -1,3 +1,9 @@
+---
+title: "pancake: potpourri scripts"
+url: https://perrotta.dev/2025/09/pancake-potpourri-scripts/
+last_updated: 2025-09-25
+---
+
 
 I've been meaning to create a git repository to host a collection of
 miscellaneous scripts / binaries that are too big to fit in shell aliases /

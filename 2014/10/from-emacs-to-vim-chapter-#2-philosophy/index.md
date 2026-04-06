@@ -1,3 +1,9 @@
+---
+title: "From Emacs to Vim – Chapter #2 – Philosophy"
+url: https://perrotta.dev/2014/10/from-emacs-to-vim-chapter-%232-philosophy/
+last_updated: 2026-02-18
+---
+
 
 Previous post. Oh man, up to this point I am slightly disoriented about emacs shortcuts. It has been probably one month since I am using vim almost exclusively. I just use emacs to blog here and to use orgmode. Yes, I still know so many of Emacs shortcuts and keybindings that I can even recite them to you while I am dream. However, I am not practicing them so much as before, so they will probably fade away some time.
 

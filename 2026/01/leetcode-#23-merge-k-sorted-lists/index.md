@@ -1,3 +1,9 @@
+---
+title: "LeetCode #23: Merge k Sorted Lists"
+url: https://perrotta.dev/2026/01/leetcode-%2323-merge-k-sorted-lists/
+last_updated: 2026-01-15
+---
+
 
 [LeetCode #23: Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists):
 

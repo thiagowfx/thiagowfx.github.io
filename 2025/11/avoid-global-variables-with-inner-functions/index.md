@@ -1,3 +1,9 @@
+---
+title: "avoid global variables with inner functions"
+url: https://perrotta.dev/2025/11/avoid-global-variables-with-inner-functions/
+last_updated: 2026-01-03
+---
+
 
 Instead of polluting the global space:
 

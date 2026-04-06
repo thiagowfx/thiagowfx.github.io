@@ -1,3 +1,9 @@
+---
+title: "LeetCode #983: Minimum Cost For Tickets"
+url: https://perrotta.dev/2025/12/leetcode-%23983-minimum-cost-for-tickets/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #983: Minimum Cost For Tickets](https://leetcode.com/problems/minimum-cost-for-tickets):
 

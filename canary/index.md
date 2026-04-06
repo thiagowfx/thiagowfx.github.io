@@ -1,3 +1,9 @@
+---
+title: "Warrant Canary"
+url: https://perrotta.dev/canary/
+last_updated: 2025-12-26
+---
+
 
 As of November 24, 2025, I, Thiago Perrotta, have not received any National Security Letters, FISA court orders, or any other classified request for user information.
 

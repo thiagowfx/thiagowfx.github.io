@@ -1,3 +1,9 @@
+---
+title: "LeetCode #694: Number of Distinct Islands"
+url: https://perrotta.dev/2026/01/leetcode-%23694-number-of-distinct-islands/
+last_updated: 2026-01-10
+---
+
 
 [LeetCode #694: Number of Distinct Islands](https://leetcode.com/problems/number-of-distinct-islands):
 

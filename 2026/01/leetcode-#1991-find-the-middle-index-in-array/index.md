@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1991: Find the Middle Index in Array"
+url: https://perrotta.dev/2026/01/leetcode-%231991-find-the-middle-index-in-array/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #1991: Find the Middle Index in Array](https://leetcode.com/problems/find-the-middle-index-in-array):
 

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1351: Count Negative Numbers in a Sorted Matrix"
+url: https://perrotta.dev/2025/12/leetcode-%231351-count-negative-numbers-in-a-sorted-matrix/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #1351: Count Negative Numbers in a Sorted Matrix](https://leetcode.com/problems/count-negative-numbers-in-a-sorted-matrix):
 

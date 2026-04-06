@@ -1,3 +1,9 @@
+---
+title: "claude: add session ID to status bar"
+url: https://perrotta.dev/2026/03/claude-add-session-id-to-status-bar/
+last_updated: 2026-03-02
+---
+
 
 Desired outcome:
 

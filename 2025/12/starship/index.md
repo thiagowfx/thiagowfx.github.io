@@ -1,3 +1,9 @@
+---
+title: "Starship"
+url: https://perrotta.dev/2025/12/starship/
+last_updated: 2025-12-27
+---
+
 
 After years using the default prompt from
 [`grml-zsh-config`](https://grml.org/zsh/) (with minor modifications), I adopted

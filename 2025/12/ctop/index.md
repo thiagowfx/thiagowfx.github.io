@@ -1,3 +1,9 @@
+---
+title: "ctop"
+url: https://perrotta.dev/2025/12/ctop/
+last_updated: 2025-12-26
+---
+
 
 Too many tops:
 

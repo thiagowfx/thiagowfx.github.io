@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1137: N-th Tribonacci Number"
+url: https://perrotta.dev/2025/12/leetcode-%231137-n-th-tribonacci-number/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #1137: N-th Tribonacci Number](https://leetcode.com/problems/n-th-tribonacci-number):
 

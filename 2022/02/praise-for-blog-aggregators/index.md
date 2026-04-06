@@ -1,3 +1,9 @@
+---
+title: "Praise for blog aggregators"
+url: https://perrotta.dev/2022/02/praise-for-blog-aggregators/
+last_updated: 2025-12-25
+---
+
 
 As much as I love my [Miniflux](https://miniflux.app/) setup, I've also come to
 appreciate some indie blog aggregators. They are especially handy when I feel

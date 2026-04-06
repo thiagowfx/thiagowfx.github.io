@@ -1,3 +1,9 @@
+---
+title: "Kindle file transfer"
+url: https://perrotta.dev/2026/02/kindle-file-transfer/
+last_updated: 2026-02-25
+---
+
 
 [Faff connecting a new Kindle to a Mac with a USB
 cable](https://petegraham.com/kindle-faff/) by Pete Graham:

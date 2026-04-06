@@ -1,3 +1,9 @@
+---
+title: "mr update"
+url: https://perrotta.dev/2026/03/mr-update/
+last_updated: 2026-03-26
+---
+
 
 Every day at the office, I start my day with `mr update`:
 

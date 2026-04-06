@@ -1,3 +1,9 @@
+---
+title: "LeetCode #293: Flip Game"
+url: https://perrotta.dev/2025/12/leetcode-%23293-flip-game/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #293: Flip Game](https://leetcode.com/problems/flip-game):
 

@@ -1,3 +1,9 @@
+---
+title: "Reply to: The agentic passive voice | irrational exuberance"
+url: https://perrotta.dev/2026/03/reply-to-the-agentic-passive-voice-irrational-exuberance/
+last_updated: 2026-03-30
+---
+
 
 Will Larson:
 

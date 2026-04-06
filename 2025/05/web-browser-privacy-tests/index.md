@@ -1,3 +1,9 @@
+---
+title: "Web browser privacy tests"
+url: https://perrotta.dev/2025/05/web-browser-privacy-tests/
+last_updated: 2026-01-03
+---
+
 
 [Privacy Tests](https://privacytests.org/):
 

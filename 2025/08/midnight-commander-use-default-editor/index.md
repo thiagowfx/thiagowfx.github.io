@@ -1,3 +1,9 @@
+---
+title: "midnight commander: use default editor"
+url: https://perrotta.dev/2025/08/midnight-commander-use-default-editor/
+last_updated: 2026-02-16
+---
+
 
 [Previously]({{< ref "2025-08-26-git-ignore-changes-to-tracked-files" >}}).
 

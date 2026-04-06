@@ -1,3 +1,9 @@
+---
+title: "Large prints"
+url: https://perrotta.dev/2022/04/large-prints/
+last_updated: 2025-09-05
+---
+
 
 It occurred to me the **Large Prints** section of our local public library is a decent way to sample popular books.
 

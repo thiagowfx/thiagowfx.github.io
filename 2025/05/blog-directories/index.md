@@ -1,3 +1,9 @@
+---
+title: "Blog directories"
+url: https://perrotta.dev/2025/05/blog-directories/
+last_updated: 2026-04-05
+---
+
 
 Without social media algorithms, how can you discover new blogs to follow?
 

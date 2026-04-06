@@ -1,3 +1,9 @@
+---
+title: "Folderify: Generate macOS folder icons natively"
+url: https://perrotta.dev/2024/12/folderify-generate-macos-folder-icons-natively/
+last_updated: 2026-01-03
+---
+
 
 [via Mike Rockwell](https://initialcharge.net/2024/06/folderify/):
 

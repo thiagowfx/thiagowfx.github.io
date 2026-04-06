@@ -1,3 +1,9 @@
+---
+title: "About Blogging, Here and Everywhere"
+url: https://perrotta.dev/2014/03/about-blogging-here-and-everywhere/
+last_updated: 2026-02-18
+---
+
 
 Hello World! I've started this blog with these two words — and I seem to use
 them whenever starting anything (they appeared in my first Facebook post too,

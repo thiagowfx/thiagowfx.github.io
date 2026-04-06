@@ -1,3 +1,9 @@
+---
+title: "Advent of Code"
+url: https://perrotta.dev/2022/01/advent-of-code/
+last_updated: 2026-01-03
+---
+
 
 Last year I found out about [Advent of Code][aoc].
 

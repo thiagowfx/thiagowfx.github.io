@@ -1,3 +1,9 @@
+---
+title: "LeetCode #314: Binary Tree Vertical Order Traversal"
+url: https://perrotta.dev/2026/01/leetcode-%23314-binary-tree-vertical-order-traversal/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #314: Binary Tree Vertical Order Traversal](https://leetcode.com/problems/binary-tree-vertical-order-traversal):
 

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #80: Duplicate From Sorted Array II"
+url: https://perrotta.dev/2025/09/leetcode-%2380-duplicate-from-sorted-array-ii/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #80: Duplicate From Sorted Array II](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/):
 

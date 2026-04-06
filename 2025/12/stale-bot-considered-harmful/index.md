@@ -1,3 +1,9 @@
+---
+title: "Stale bot considered harmful"
+url: https://perrotta.dev/2025/12/stale-bot-considered-harmful/
+last_updated: 2025-12-04
+---
+
 
 [This](https://github.com/helm/chart-testing/pull/755)
 [will](https://drewdevault.com/2021/10/26/stalebot.html)

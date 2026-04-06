@@ -1,3 +1,9 @@
+---
+title: "git: shell prompt: worktrees"
+url: https://perrotta.dev/2026/01/git-shell-prompt-worktrees/
+last_updated: 2026-02-22
+---
+
 
 My shell prompt displays the git branch my repository has
 currently checked out:

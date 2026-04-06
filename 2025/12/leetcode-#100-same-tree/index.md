@@ -1,3 +1,9 @@
+---
+title: "LeetCode #100: Same Tree"
+url: https://perrotta.dev/2025/12/leetcode-%23100-same-tree/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #100: Same Tree](https://leetcode.com/problems/same-tree):
 

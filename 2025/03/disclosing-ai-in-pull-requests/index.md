@@ -1,3 +1,9 @@
+---
+title: "Disclosing AI in pull requests"
+url: https://perrotta.dev/2025/03/disclosing-ai-in-pull-requests/
+last_updated: 2026-01-03
+---
+
 
 As we start to draft more PRs with the help of AI, I am thinking to adopt a
 subtle approach to signal that all (or most) of a given PR was created with the

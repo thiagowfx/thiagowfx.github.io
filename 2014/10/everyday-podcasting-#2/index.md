@@ -1,3 +1,9 @@
+---
+title: "Everyday Podcasting - #2"
+url: https://perrotta.dev/2014/10/everyday-podcasting-%232/
+last_updated: 2026-02-18
+---
+
 
 Continuation of [this post]({{< ref "2014-09-06-everyday-podcasting-1" >}}). Nothing fancy, really. Just to say that [Bad
 Voltage](https://www.badvoltage.org/) is the most awesome podcast in the planet.

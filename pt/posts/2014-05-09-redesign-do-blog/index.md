@@ -1,3 +1,9 @@
+---
+title: "Redesign do blog"
+url: https://perrotta.dev/pt/posts/2014-05-09-redesign-do-blog/
+last_updated: 2026-03-07
+---
+
 
 Acabei de remover várias features inúteis / bloated para esse blog. Por
 exemplo, removi todas as categorias: agora só existem tags. Além do mais,

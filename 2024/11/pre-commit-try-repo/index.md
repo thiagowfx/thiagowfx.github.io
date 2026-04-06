@@ -1,3 +1,9 @@
+---
+title: "pre-commit: try-repo"
+url: https://perrotta.dev/2024/11/pre-commit-try-repo/
+last_updated: 2025-09-05
+---
+
 
 A productivity booster whenever trying out new
 [pre-commit.com](https://pre-commit.com/) hooks from the wild:

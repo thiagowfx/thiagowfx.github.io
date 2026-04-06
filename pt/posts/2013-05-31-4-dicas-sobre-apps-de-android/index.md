@@ -1,3 +1,9 @@
+---
+title: "4 dicas sobre apps de Android"
+url: https://perrotta.dev/pt/posts/2013-05-31-4-dicas-sobre-apps-de-android/
+last_updated: 2026-03-07
+---
+
 
 Após usar o Android Jelly Bean durante mais de um mês e adquirir uma
 maturidade razoável com o sistema, compartilho aqui algumas experiências sobre

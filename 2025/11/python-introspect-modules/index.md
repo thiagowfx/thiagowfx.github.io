@@ -1,3 +1,9 @@
+---
+title: "python: introspect modules"
+url: https://perrotta.dev/2025/11/python-introspect-modules/
+last_updated: 2026-01-03
+---
+
 
 When working in limited environments, we can find out which functions / methods
 are available in a given module with `dir`:

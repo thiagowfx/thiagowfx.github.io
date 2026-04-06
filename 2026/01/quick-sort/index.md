@@ -1,3 +1,9 @@
+---
+title: "quick sort"
+url: https://perrotta.dev/2026/01/quick-sort/
+last_updated: 2026-01-14
+---
+
 
 First element is the pivot:
 

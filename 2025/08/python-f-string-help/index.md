@@ -1,3 +1,9 @@
+---
+title: "Python: f-string help"
+url: https://perrotta.dev/2025/08/python-f-string-help/
+last_updated: 2025-08-22
+---
+
 
 [Python f-strings](https://fstring.help/).
 

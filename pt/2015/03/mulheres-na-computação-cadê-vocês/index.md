@@ -1,3 +1,9 @@
+---
+title: "Mulheres na computação, cadê vocês?"
+url: https://perrotta.dev/pt/2015/03/mulheres-na-computa%C3%A7%C3%A3o-cad%C3%AA-voc%C3%AAs/
+last_updated: 2026-03-29
+---
+
 
 08 de março. Você sabe que dia é hoje. Muitos dizem que é um dia especial. Já
 eu, pessoalmente, em geral sou indiferente para qualquer comemoração do tipo,

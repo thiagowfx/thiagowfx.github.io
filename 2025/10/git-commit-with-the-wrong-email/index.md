@@ -1,3 +1,9 @@
+---
+title: "git: commit with the wrong email"
+url: https://perrotta.dev/2025/10/git-commit-with-the-wrong-email/
+last_updated: 2026-01-03
+---
+
 
 You are sending a PR upstream.
 

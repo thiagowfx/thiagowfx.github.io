@@ -1,3 +1,9 @@
+---
+title: "Python: interactive completion"
+url: https://perrotta.dev/2022/02/python-interactive-completion/
+last_updated: 2025-09-05
+---
+
 
 Sometimes I fire up a `python` interpreter in my terminal for quick
 prototyping, but often forget what the standard library method signatures are.

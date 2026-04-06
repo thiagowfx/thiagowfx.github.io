@@ -1,3 +1,9 @@
+---
+title: "Alpine Linux: clear /tmp upon reboot"
+url: https://perrotta.dev/2026/02/alpine-linux-clear-/tmp-upon-reboot/
+last_updated: 2026-02-07
+---
+
 
 [Clear /tmp at reboot on Alpine Linux](https://chromic.org/blog/alpinelinux-clear-tmp-on-reboot/) via Chimo:
 

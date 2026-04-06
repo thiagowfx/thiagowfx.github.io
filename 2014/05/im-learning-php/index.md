@@ -1,3 +1,9 @@
+---
+title: "I'm learning PHP"
+url: https://perrotta.dev/2014/05/im-learning-php/
+last_updated: 2026-02-17
+---
+
 
 Hi people, I started to learn PHP, so I've set up a public git repository at
 Bitbucket to store and share some of my code (everything under the MIT license).

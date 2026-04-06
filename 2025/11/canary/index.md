@@ -1,3 +1,9 @@
+---
+title: "Canary"
+url: https://perrotta.dev/2025/11/canary/
+last_updated: 2025-12-25
+---
+
 
 Inspired by [Joost van der
 Schee](https://www.usecue.com/blog/warrant-canary-added/):

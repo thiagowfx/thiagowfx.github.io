@@ -1,3 +1,9 @@
+---
+title: "Hello, *nix server world!"
+url: https://perrotta.dev/2014/05/hello-nix-server-world/
+last_updated: 2026-03-29
+---
+
 
 So, after declaring [I'm not into any Linux Desktop]({{< ref "2014-05-13-goodbye-linux-desktop" >}} "\"Goodbye\" Linux Desktop") studies anymore, I now consider myself into the (*nix) Server world.
 

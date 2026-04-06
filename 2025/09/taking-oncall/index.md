@@ -1,3 +1,9 @@
+---
+title: "Taking oncall"
+url: https://perrotta.dev/2025/09/taking-oncall/
+last_updated: 2025-09-21
+---
+
 
 When performing routine planned maintenance, one often needs to "take oncall".
 

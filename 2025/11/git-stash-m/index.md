@@ -1,3 +1,9 @@
+---
+title: "git stash -m"
+url: https://perrotta.dev/2025/11/git-stash-m/
+last_updated: 2026-02-22
+---
+
 
 When running `git stash`, it's possible to pass a "stash message" to it with
 `-m`, just like how you give a "commit message" to `git commit`.

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #22: Generate Parentheses"
+url: https://perrotta.dev/2025/12/leetcode-%2322-generate-parentheses/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #22: Generate Parentheses](https://leetcode.com/problems/generate-parentheses):
 

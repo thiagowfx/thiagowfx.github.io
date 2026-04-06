@@ -1,3 +1,9 @@
+---
+title: "Just: make Justfile self-contained"
+url: https://perrotta.dev/2024/12/just-make-justfile-self-contained/
+last_updated: 2024-12-23
+---
+
 
 A commit is worth a thousand words, following up on my previous [just]({{< ref
 "2024-12-13-just" >}}) post:

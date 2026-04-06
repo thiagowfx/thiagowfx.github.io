@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Invert Binary Tree"
+url: https://perrotta.dev/2025/11/bytebytego-invert-binary-tree/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Invert Binary Tree](https://bytebytego.com/exercises/coding-patterns/trees/invert-binary-tree):
 

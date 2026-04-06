@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Josephus"
+url: https://perrotta.dev/2025/11/bytebytego-josephus/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Josephus](https://bytebytego.com/exercises/coding-patterns/math-and-geometry/the-josephus-problem):
 

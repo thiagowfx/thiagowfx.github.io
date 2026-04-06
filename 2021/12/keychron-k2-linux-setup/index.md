@@ -1,3 +1,9 @@
+---
+title: "Keychron K2: Linux Setup"
+url: https://perrotta.dev/2021/12/keychron-k2-linux-setup/
+last_updated: 2026-02-07
+---
+
 
 I recently purchased a [Keychron K2](https://www.keychron.com/products/keychron-k2-wireless-mechanical-keyboard) mechanical keyboard. It is a 75% keyboard that has bluetooth. This article describes some quality-of-life improvements to use it with a Linux system.
 

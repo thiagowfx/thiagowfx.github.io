@@ -1,3 +1,9 @@
+---
+title: "LeetCode #118: Pascal's Triangle"
+url: https://perrotta.dev/2025/12/leetcode-%23118-pascals-triangle/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #118: Pascal's Triangle](https://leetcode.com/problems/pascal's-triangle):
 

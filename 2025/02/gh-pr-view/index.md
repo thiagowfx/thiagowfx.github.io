@@ -1,3 +1,9 @@
+---
+title: "gh pr view"
+url: https://perrotta.dev/2025/02/gh-pr-view/
+last_updated: 2025-06-15
+---
+
 
 When working on a local git branch that has a github PR associated to it, at
 some point you'll want to open its pull request page.

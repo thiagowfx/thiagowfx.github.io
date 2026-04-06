@@ -1,3 +1,9 @@
+---
+title: "LeetCode #350: Intersection of Two Arrays II"
+url: https://perrotta.dev/2026/01/leetcode-%23350-intersection-of-two-arrays-ii/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #350: Intersection of Two Arrays II](https://leetcode.com/problems/intersection-of-two-arrays-ii):
 

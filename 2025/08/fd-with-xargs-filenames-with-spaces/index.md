@@ -1,3 +1,9 @@
+---
+title: "fd with xargs: filenames with spaces"
+url: https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/
+last_updated: 2025-08-08
+---
+
 
 **Problem statement**: find all `base/mongo` occurrences in `kustomization.yaml`
 files in the codebase.

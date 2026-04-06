@@ -1,3 +1,9 @@
+---
+title: "All over again, shall we?"
+url: https://perrotta.dev/2014/09/all-over-again-shall-we/
+last_updated: 2026-02-17
+---
+
 
 I've just switched from Arch to Ubuntu. OMG, what the hell _with me_? To make
 matters interesting, I'm using Unity (not other (non-)fancy DE/WM) **in**an

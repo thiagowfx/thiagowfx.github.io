@@ -1,3 +1,9 @@
+---
+title: "Atuin: delete history entries"
+url: https://perrotta.dev/2025/12/atuin-delete-history-entries/
+last_updated: 2026-02-07
+---
+
 
 Deleting, scrubbing, redacting old shell history entries is now easier
 than ever, thanks to [atuin](https://github.com/atuinsh/atuin).

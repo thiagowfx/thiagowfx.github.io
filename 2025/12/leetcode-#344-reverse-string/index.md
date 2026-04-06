@@ -1,3 +1,9 @@
+---
+title: "LeetCode #344: Reverse String"
+url: https://perrotta.dev/2025/12/leetcode-%23344-reverse-string/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #344: Reverse String](https://leetcode.com/problems/reverse-string):
 

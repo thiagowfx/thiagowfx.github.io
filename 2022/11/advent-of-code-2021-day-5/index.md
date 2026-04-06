@@ -1,3 +1,9 @@
+---
+title: "Advent of Code 2021: Day 5"
+url: https://perrotta.dev/2022/11/advent-of-code-2021-day-5/
+last_updated: 2026-01-03
+---
+
 
 Refer to the [previous post]({{< ref "2022-01-28-advent-of-code" >}}) about AoC,
 and to the [git repository](https://github.com/thiagowfx/adventofcode) with my

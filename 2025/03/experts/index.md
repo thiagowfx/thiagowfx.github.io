@@ -1,3 +1,9 @@
+---
+title: "Experts"
+url: https://perrotta.dev/2025/03/experts/
+last_updated: 2025-09-05
+---
+
 
 Suddenly it feels like everyone is an expert on "AI".
 

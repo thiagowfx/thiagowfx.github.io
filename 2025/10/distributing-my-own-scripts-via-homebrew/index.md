@@ -1,3 +1,9 @@
+---
+title: "Distributing my own scripts via homebrew"
+url: https://perrotta.dev/2025/10/distributing-my-own-scripts-via-homebrew/
+last_updated: 2025-10-17
+---
+
 
 Thanks [Justin
 Searls](https://justin.searls.co/posts/how-to-distribute-your-own-scripts-via-homebrew/)

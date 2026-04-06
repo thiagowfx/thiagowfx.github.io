@@ -1,3 +1,9 @@
+---
+title: "LeetCode #274: H-Index"
+url: https://perrotta.dev/2025/12/leetcode-%23274-h-index/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #274: H-Index](https://leetcode.com/problems/h-index):
 

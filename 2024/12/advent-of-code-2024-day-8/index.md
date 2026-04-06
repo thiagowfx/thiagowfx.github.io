@@ -1,3 +1,9 @@
+---
+title: "Advent of Code 2024: Day 8"
+url: https://perrotta.dev/2024/12/advent-of-code-2024-day-8/
+last_updated: 2026-01-03
+---
+
 
 Refer to the [previous post]({{< ref "2022-01-28-advent-of-code" >}}) about AoC,
 and to the [git repository](https://github.com/thiagowfx/adventofcode) with my

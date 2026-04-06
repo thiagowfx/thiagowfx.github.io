@@ -1,3 +1,9 @@
+---
+title: "global, nonlocal"
+url: https://perrotta.dev/2025/11/global-nonlocal/
+last_updated: 2026-01-03
+---
+
 
 This is wrong:
 

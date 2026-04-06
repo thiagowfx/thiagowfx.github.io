@@ -1,3 +1,9 @@
+---
+title: "Novos paradigmas @ Redes sociais \u0026 News"
+url: https://perrotta.dev/pt/posts/2014-05-30-novos-paradigmas-redes-sociais-news/
+last_updated: 2026-03-29
+---
+
 
 Produtividade já foi uma questão que discuti bastante por aqui. Por exemplo,
 [esse](http://thiagoperrotta.wordpress.com/2013/06/23/privacidade-nas-redes-sociais-parte-i/)

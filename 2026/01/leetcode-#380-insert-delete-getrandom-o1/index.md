@@ -1,3 +1,9 @@
+---
+title: "LeetCode #380: Insert Delete GetRandom O(1)"
+url: https://perrotta.dev/2026/01/leetcode-%23380-insert-delete-getrandom-o1/
+last_updated: 2026-01-18
+---
+
 
 [LeetCode #380: Insert Delete GetRandom O(1)](https://leetcode.com/problems/insert-delete-getrandom-o(1)):
 

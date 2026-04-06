@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1155: Number of Dice Rolls With Target Sum"
+url: https://perrotta.dev/2025/12/leetcode-%231155-number-of-dice-rolls-with-target-sum/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #1155: Number of Dice Rolls With Target Sum](https://leetcode.com/problems/number-of-dice-rolls-with-target-sum):
 

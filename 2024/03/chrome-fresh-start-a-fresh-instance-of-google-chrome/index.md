@@ -1,3 +1,9 @@
+---
+title: "chrome-fresh: start a fresh instance of Google Chrome"
+url: https://perrotta.dev/2024/03/chrome-fresh-start-a-fresh-instance-of-google-chrome/
+last_updated: 2025-09-05
+---
+
 
 I used to have the following handy script to launch a new (fresh!) instance of
 Google Chrome when working on [Chrome for Testing]({{< ref

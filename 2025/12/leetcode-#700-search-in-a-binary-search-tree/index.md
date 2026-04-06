@@ -1,3 +1,9 @@
+---
+title: "LeetCode #700: Search in a Binary Search Tree"
+url: https://perrotta.dev/2025/12/leetcode-%23700-search-in-a-binary-search-tree/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #700: Search in a Binary Search Tree](https://leetcode.com/problems/search-in-a-binary-search-tree):
 

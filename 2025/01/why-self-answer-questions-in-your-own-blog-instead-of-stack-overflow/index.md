@@ -1,3 +1,9 @@
+---
+title: "Why self-answer questions in your own blog instead of Stack Overflow?"
+url: https://perrotta.dev/2025/01/why-self-answer-questions-in-your-own-blog-instead-of-stack-overflow/
+last_updated: 2025-12-25
+---
+
 
 I am a fan of the [Stack Exchange](https://stackexchange.com/) network, which
 includes [Stack Overflow](https://stackoverflow.com/).

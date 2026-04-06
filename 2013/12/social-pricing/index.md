@@ -1,3 +1,9 @@
+---
+title: "Social Pricing"
+url: https://perrotta.dev/2013/12/social-pricing/
+last_updated: 2026-03-29
+---
+
 
 Excellent article regarding online prices. If you are a heavy Steam or Amazon
 user, for example, it may be interesting.

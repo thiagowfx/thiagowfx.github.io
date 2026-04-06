@@ -1,3 +1,9 @@
+---
+title: "vim: add word to spellchecker"
+url: https://perrotta.dev/2025/07/vim-add-word-to-spellchecker/
+last_updated: 2026-01-03
+---
+
 
 When you have the spellchecker from `vim` turned on (`:set spell`), it
 highlights words that are not in the dictionary.

@@ -1,3 +1,9 @@
+---
+title: "Novo blog – ICPC Journal"
+url: https://perrotta.dev/pt/posts/2014-02-22-novo-blog-icpc-journal/
+last_updated: 2026-03-07
+---
+
 
 Estou começando um novo blog em
 [http://thiagowfx.github.io/icpc-journal/](http://thiagowfx.github.io/icpc-journal/).

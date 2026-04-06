@@ -1,3 +1,9 @@
+---
+title: "new blog post via Claude Code"
+url: https://perrotta.dev/2026/02/new-blog-post-via-claude-code/
+last_updated: 2026-02-13
+---
+
 
 It's 2026. Blogging to my static website from a laptop, with vim and markdown, with hugo build and git commit / git push is old-school.
 

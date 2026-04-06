@@ -1,3 +1,9 @@
+---
+title: "Slice of bread"
+url: https://perrotta.dev/2025/09/slice-of-bread/
+last_updated: 2025-09-12
+---
+
 
 CBC: [Want a slice of the $500M bread price-fixing settlement? The claims
 process is now

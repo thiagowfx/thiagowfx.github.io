@@ -1,3 +1,9 @@
+---
+title: "LKW mit ABS"
+url: https://perrotta.dev/2024/11/lkw-mit-abs/
+last_updated: 2024-12-27
+---
+
 
 Today I learned: what is a LKW mit ABS?
 

@@ -1,3 +1,9 @@
+---
+title: "git: developer certificate of origin (DCO) sign-off"
+url: https://perrotta.dev/2025/07/git-developer-certificate-of-origin-dco-sign-off/
+last_updated: 2026-01-03
+---
+
 
 The [Developer Certificate of Origin](https://developercertificate.org/) (DCO
 for short) is often required when sending out PRs upstream.

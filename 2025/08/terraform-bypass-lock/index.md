@@ -1,3 +1,9 @@
+---
+title: "terraform: bypass lock"
+url: https://perrotta.dev/2025/08/terraform-bypass-lock/
+last_updated: 2026-01-03
+---
+
 
 Terraform supports [state
 locking](https://developer.hashicorp.com/terraform/language/state/locking):

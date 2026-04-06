@@ -1,3 +1,9 @@
+---
+title: "Alpine Linux: apk logs with etckeeper"
+url: https://perrotta.dev/2022/01/alpine-linux-apk-logs-with-etckeeper/
+last_updated: 2026-01-03
+---
+
 
 `apk(8)` is the Alpine Linux package manager. Surprisingly, it lacks native
 logs. In this post we will learn how to work around this limitation.

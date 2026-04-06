@@ -1,3 +1,9 @@
+---
+title: "OpenGL Development"
+url: https://perrotta.dev/pt/posts/2013-12-09-opengl-development/
+last_updated: 2026-03-09
+---
+
 
 Nesse post vou resumir um pouquinho sobre o que venho aprendendo em OpenGL. Com
 ênfase em **resumir**. Não dá para explicar todos os conceitos aqui; essa é uma

@@ -1,3 +1,9 @@
+---
+title: "JSON schema negation"
+url: https://perrotta.dev/2024/08/json-schema-negation/
+last_updated: 2025-09-05
+---
+
 
 [JSON Schema](https://json-schema.org/) is a powerful validation tool to enforce
 a given structure and/or data type in JSON and YAML files.

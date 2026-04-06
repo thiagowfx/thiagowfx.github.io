@@ -1,3 +1,9 @@
+---
+title: "Everyday Podcasting - #1"
+url: https://perrotta.dev/2014/09/everyday-podcasting-%231/
+last_updated: 2026-02-18
+---
+
 
 I'm a huge fan of podcasts. In this post I'll be talking a little about how I
 got to know them.

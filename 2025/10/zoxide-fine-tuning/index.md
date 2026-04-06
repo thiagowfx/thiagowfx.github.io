@@ -1,3 +1,9 @@
+---
+title: "zoxide: fine-tuning"
+url: https://perrotta.dev/2025/10/zoxide-fine-tuning/
+last_updated: 2025-10-10
+---
+
 
 [zoxide](https://github.com/ajeetdsouza/zoxide):
 

@@ -1,3 +1,9 @@
+---
+title: "LeetCode #14: Longest Common Prefix"
+url: https://perrotta.dev/2025/09/leetcode-%2314-longest-common-prefix/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #14: Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/):
 

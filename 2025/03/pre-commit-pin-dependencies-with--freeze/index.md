@@ -1,3 +1,9 @@
+---
+title: "pre-commit: pin dependencies with --freeze"
+url: https://perrotta.dev/2025/03/pre-commit-pin-dependencies-with--freeze/
+last_updated: 2026-01-03
+---
+
 
 **Today I learned**: [`pre-commit
 autoupdate`](https://pre-commit.com/#updating-hooks-automatically) has a

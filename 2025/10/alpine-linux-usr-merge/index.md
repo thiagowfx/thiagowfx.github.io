@@ -1,3 +1,9 @@
+---
+title: "Alpine Linux: usr-merge"
+url: https://perrotta.dev/2025/10/alpine-linux-usr-merge/
+last_updated: 2026-01-03
+---
+
 
 [Alpine Linux](https://alpinelinux.org/posts/2025-10-01-usr-merge.html):
 

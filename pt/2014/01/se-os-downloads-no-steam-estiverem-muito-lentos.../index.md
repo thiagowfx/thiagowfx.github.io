@@ -1,3 +1,9 @@
+---
+title: "Se os downloads no Steam estiverem muito lentos..."
+url: https://perrotta.dev/pt/2014/01/se-os-downloads-no-steam-estiverem-muito-lentos.../
+last_updated: 2026-03-03
+---
+
 
 Faz pelo menos mais de 2 semanas que eu estou baixando o Left 4 Dead 2 a meros
 10 KB/s, com eventuais picos de 60 KB/s no Steam. Isso me lembra da minha

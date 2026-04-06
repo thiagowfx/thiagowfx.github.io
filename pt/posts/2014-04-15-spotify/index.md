@@ -1,3 +1,9 @@
+---
+title: "Spotify"
+url: https://perrotta.dev/pt/posts/2014-04-15-spotify/
+last_updated: 2026-03-28
+---
+
 
 Raramente recomendo algum serviço / algo comercial, mas faço questão de
 recomendar o [Spotify](http://www.spotify.com/). Estou usando-o há mais de uma

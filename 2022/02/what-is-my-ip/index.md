@@ -1,3 +1,9 @@
+---
+title: "What is my IP?"
+url: https://perrotta.dev/2022/02/what-is-my-ip/
+last_updated: 2025-09-05
+---
+
 
 This post contains a small handful of distinct services to query your machine
 external IP address.

@@ -1,3 +1,9 @@
+---
+title: "Reply to: How Jane Street does code review"
+url: https://perrotta.dev/2026/03/reply-to-how-jane-street-does-code-review/
+last_updated: 2026-03-04
+---
+
 
 Interesting tech talk.
 

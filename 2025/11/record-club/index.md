@@ -1,3 +1,9 @@
+---
+title: "Record Club"
+url: https://perrotta.dev/2025/11/record-club/
+last_updated: 2026-02-08
+---
+
 
 [Record Club](https://record.club):
 

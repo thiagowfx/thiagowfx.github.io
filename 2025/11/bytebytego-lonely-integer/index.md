@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Lonely Integer"
+url: https://perrotta.dev/2025/11/bytebytego-lonely-integer/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Lonely Integer](https://bytebytego.com/exercises/coding-patterns/bit-manipulation/lonely-integer):
 

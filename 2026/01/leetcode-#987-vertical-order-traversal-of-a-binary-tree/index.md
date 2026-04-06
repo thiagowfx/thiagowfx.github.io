@@ -1,3 +1,9 @@
+---
+title: "LeetCode #987: Vertical Order Traversal of a Binary Tree"
+url: https://perrotta.dev/2026/01/leetcode-%23987-vertical-order-traversal-of-a-binary-tree/
+last_updated: 2026-01-05
+---
+
 
 [LeetCode #987: Vertical Order Traversal of a Binary Tree](https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree):
 

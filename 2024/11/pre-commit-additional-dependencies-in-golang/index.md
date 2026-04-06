@@ -1,3 +1,9 @@
+---
+title: "pre-commit: additional dependencies in golang"
+url: https://perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/
+last_updated: 2026-01-03
+---
+
 
 When working with [pre-commit.com](https://pre-commit.com/) and specifying
 `language: golang` for a given hook, you may want to install dependencies as

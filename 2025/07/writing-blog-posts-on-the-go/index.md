@@ -1,3 +1,9 @@
+---
+title: "Writing blog posts on the go"
+url: https://perrotta.dev/2025/07/writing-blog-posts-on-the-go/
+last_updated: 2025-07-29
+---
+
 
 By design, and to introduce intentional friction, I am only allowed to blog with
 a laptop. A new post necessarily involves a git commit of a new markdown file.

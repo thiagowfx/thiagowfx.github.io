@@ -1,3 +1,9 @@
+---
+title: "LeetCode #790: Domino and Tromino Tiling"
+url: https://perrotta.dev/2025/12/leetcode-%23790-domino-and-tromino-tiling/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #790: Domino and Tromino Tiling](https://leetcode.com/problems/domino-and-tromino-tiling):
 

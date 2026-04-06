@@ -1,3 +1,9 @@
+---
+title: "Diceware passphrases"
+url: https://perrotta.dev/2024/09/diceware-passphrases/
+last_updated: 2026-01-01
+---
+
 
 I wanted to create a new secure passphrase for my WLAN (Wi-Fi).
 

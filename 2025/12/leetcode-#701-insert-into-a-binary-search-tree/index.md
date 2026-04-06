@@ -1,3 +1,9 @@
+---
+title: "LeetCode #701: Insert into a Binary Search Tree"
+url: https://perrotta.dev/2025/12/leetcode-%23701-insert-into-a-binary-search-tree/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #701: Insert into a Binary Search Tree](https://leetcode.com/problems/insert-into-a-binary-search-tree):
 

@@ -1,3 +1,9 @@
+---
+title: "Try"
+url: https://perrotta.dev/2025/12/try/
+last_updated: 2026-02-18
+---
+
 
 Inspired by [`tobi/try`](https://github.com/tobi/try)
 ([via](https://world.hey.com/dhh/six-billion-reasons-to-cheer-for-shopify-55720846)),

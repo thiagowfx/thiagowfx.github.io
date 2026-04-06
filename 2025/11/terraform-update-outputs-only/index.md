@@ -1,3 +1,9 @@
+---
+title: "terraform: update outputs only"
+url: https://perrotta.dev/2025/11/terraform-update-outputs-only/
+last_updated: 2026-01-03
+---
+
 
 **Problem statement**: Given a Terraform project full of pending changes
 (`terraform plan`), update its

@@ -1,3 +1,9 @@
+---
+title: "Integrating terraform with ansible"
+url: https://perrotta.dev/2024/02/integrating-terraform-with-ansible/
+last_updated: 2026-03-26
+---
+
 
 This post is a follow-up of [Terraforming a Linode: hello world]({{< ref "2024-01-23-terraforming-a-linode-hello-world" >}}).
 

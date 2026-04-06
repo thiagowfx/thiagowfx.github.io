@@ -1,3 +1,9 @@
+---
+title: "XY problem (xyproblem)"
+url: https://perrotta.dev/2024/06/xy-problem-xyproblem/
+last_updated: 2025-09-17
+---
+
 
 When asking questions or filing bugs / feature requests in the internet, I often
 refer to these two invaluable resources:

@@ -1,3 +1,9 @@
+---
+title: "watch with --color"
+url: https://perrotta.dev/2025/05/watch-with--color/
+last_updated: 2025-06-15
+---
+
 
 When using `watch(1)` to monitor program output, colors will not be emitted by
 default.

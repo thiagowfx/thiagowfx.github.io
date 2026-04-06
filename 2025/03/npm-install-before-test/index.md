@@ -1,3 +1,9 @@
+---
+title: "npm: install before test"
+url: https://perrotta.dev/2025/03/npm-install-before-test/
+last_updated: 2026-03-26
+---
+
 
 **Problem statement**: `npm test` does not automatically run `npm install`.
 

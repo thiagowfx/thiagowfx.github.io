@@ -1,3 +1,9 @@
+---
+title: "Claude Code: notify when needed"
+url: https://perrotta.dev/2025/12/claude-code-notify-when-needed/
+last_updated: 2026-01-03
+---
+
 
 This is one little productivity boost to make you a 10x Engineer! None of the
 popular AI blogs talk about this!!1!

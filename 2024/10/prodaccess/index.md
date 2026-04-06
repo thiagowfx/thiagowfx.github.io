@@ -1,3 +1,9 @@
+---
+title: "prodaccess"
+url: https://perrotta.dev/2024/10/prodaccess/
+last_updated: 2026-03-26
+---
+
 
 At Google we had a `prodaccess` command used to log in and authenticate in all
 sorts of internal corp systems[^1] for 20 hours. It became a daily ritual to run

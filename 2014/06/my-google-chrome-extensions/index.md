@@ -1,3 +1,9 @@
+---
+title: "My Google Chrome Extensions"
+url: https://perrotta.dev/2014/06/my-google-chrome-extensions/
+last_updated: 2026-02-18
+---
+
 
 A snapshot of the Chrome extensions I currently use (not regularly updated).
 

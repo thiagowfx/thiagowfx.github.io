@@ -1,3 +1,9 @@
+---
+title: "LeetCode #3467: Transform Array by Parity"
+url: https://perrotta.dev/2026/01/leetcode-%233467-transform-array-by-parity/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #3467: Transform Array by Parity](https://leetcode.com/problems/transform-array-by-parity):
 

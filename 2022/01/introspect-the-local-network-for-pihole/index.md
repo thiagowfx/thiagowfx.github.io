@@ -1,3 +1,9 @@
+---
+title: "Introspect the local network for Pihole"
+url: https://perrotta.dev/2022/01/introspect-the-local-network-for-pihole/
+last_updated: 2026-03-12
+---
+
 
 Recently I needed to figure out what the IP address of my [pihole][pihole]
 instance was in my [Raspberry Pi][raspberry-pi] in my local network.

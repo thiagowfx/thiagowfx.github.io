@@ -1,3 +1,9 @@
+---
+title: ".terraform-version"
+url: https://perrotta.dev/2025/10/.terraform-version/
+last_updated: 2025-10-24
+---
+
 
 `.terraform-version` at the root of a git repository is recognized by various
 tools:

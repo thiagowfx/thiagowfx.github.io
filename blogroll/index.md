@@ -1,3 +1,9 @@
+---
+title: "Blogroll"
+url: https://perrotta.dev/blogroll/
+last_updated: 2026-02-07
+---
+
 
 As of **2025-11-25** I subscribe to **600+** feeds.
 

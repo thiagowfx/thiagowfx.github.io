@@ -1,3 +1,9 @@
+---
+title: "LeetCode #6: Zigzag Conversion"
+url: https://perrotta.dev/2025/09/leetcode-%236-zigzag-conversion/
+last_updated: 2026-01-03
+---
+
 
 [LeetCode #6: Zigzag Conversion](https://leetcode.com/problems/zigzag-conversion/):
 

@@ -1,3 +1,9 @@
+---
+title: "ByteByteGo: Happy Number"
+url: https://perrotta.dev/2025/12/bytebytego-happy-number/
+last_updated: 2026-01-03
+---
+
 
 [ByteByteGo: Happy Number](https://bytebytego.com/exercises/coding-patterns/fast-and-slow-pointers/happy-number):
 

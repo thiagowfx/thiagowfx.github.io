@@ -1,3 +1,9 @@
+---
+title: "Convert JSON to YAML"
+url: https://perrotta.dev/2024/10/convert-json-to-yaml/
+last_updated: 2025-09-05
+---
+
 
 Given a YAML file that is effectively JSON, convert it to YAML format.
 

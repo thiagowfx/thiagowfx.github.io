@@ -1,3 +1,9 @@
+---
+title: "LeetCode #1636: Sort Array by Increasing Frequency"
+url: https://perrotta.dev/2026/01/leetcode-%231636-sort-array-by-increasing-frequency/
+last_updated: 2026-01-06
+---
+
 
 [LeetCode #1636: Sort Array by Increasing Frequency](https://leetcode.com/problems/sort-array-by-increasing-frequency):
 
