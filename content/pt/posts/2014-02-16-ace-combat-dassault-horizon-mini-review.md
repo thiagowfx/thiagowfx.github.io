@@ -2,6 +2,7 @@
 title: "Ace Combat (D)assault Horizon -- Mini Review"
 date: 2014-02-16T19:53:20-03:00
 tags:
+  - bestof
   - legacy
   - gaming
   - serenity
