@@ -1,23 +1,30 @@
-# This is a llms.txt file. See https://llmstxt.org/ for more information.
+{{/* See https://llmstxt.org/ for more information. */}}
+# {{ .Site.Title }}
 
-description: {{ .Site.Params.description }}
-author:
-  name: {{ .Site.Params.author.name }}
-  email: {{ .Site.Params.author.email }}
-license: {{ .Site.Copyright | plainify }}
-language: {{ .Site.LanguageCode }}
+> {{ .Site.Params.description }}
 
-# Main navigation
-nav:
-  {{- range .Site.Menus.main }}
-  - name: {{ .Name }}
-    url: {{ .URL | absURL }}
-  {{- end }}
+Author: {{ .Site.Params.author.name }}
+Contact: {{ .Site.Params.author.email }}
+Language: {{ .Site.LanguageCode }}
+License: {{ .Site.Copyright | plainify | replaceRE "\\s+" " " }}
 
-# Feeds
-sitemap: {{ "sitemap.xml" | absURL }}
-rss: {{ "index.xml" | absURL }}
+## Navigation
+{{ range .Site.Menus.main }}
+{{- if .Params.dropdown }}
+{{- range .Children }}
+- [{{ .Name }}]({{ .URL | absURL }})
+{{- end }}
+{{- else }}
+- [{{ .Name }}]({{ .URL | absURL }})
+{{- end }}
+{{- end }}
 
-# Contact
-contact:
-  email: {{ .Site.Params.author.email }}
+## Recent Posts
+{{ range first 20 (where .Site.RegularPages "Section" "posts") }}
+- [{{ .Title }}]({{ .Permalink }}){{ with .Description }}: {{ . }}{{ end }}
+{{- end }}
+
+## Feeds
+
+- [Sitemap]({{ "sitemap.xml" | absURL }})
+- [RSS]({{ "index.xml" | absURL }})
