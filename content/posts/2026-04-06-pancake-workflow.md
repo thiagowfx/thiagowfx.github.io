@@ -5,6 +5,7 @@ tags:
   - ai
   - bestof
   - dev
+  - git
 ---
 
 [Previously]({{< ref "2025-09-25-pancake-potpourri-scripts" >}}).
