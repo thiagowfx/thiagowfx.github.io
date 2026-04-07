@@ -61,3 +61,5 @@ No idea why this has happened. First time. Life goes on.
 
 [^1]: The idea was mine. The decision was mine. The LLM suggested the command on
     how to do so. I can still self-troubleshoot, _mmmkay_?
+
+[Previously]({{< ref "2025-10-08-anki-find-all-suspended-cards" >}}).
