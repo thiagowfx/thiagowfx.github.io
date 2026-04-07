@@ -69,3 +69,5 @@ What does `gc` do? As per the [docs](https://pre-commit.com/#pre-commit-gc):
 
 This is on macOS. If I were on Linux, I'd prefer [systemd
 timers](https://wiki.archlinux.org/title/Systemd/Timers) instead.
+
+[Previously]({{< ref "2024-12-21-pre-commit" >}}).
