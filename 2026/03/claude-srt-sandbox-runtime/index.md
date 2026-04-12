@@ -1,7 +1,7 @@
 ---
 title: "claude: srt: sandbox runtime"
 url: https://perrotta.dev/2026/03/claude-srt-sandbox-runtime/
-last_updated: 2026-03-04
+last_updated: 2026-04-12
 ---
 
 
@@ -142,4 +142,6 @@ Anthropic reports ~84% fewer permission prompts with auto-allow mode.
 
 I've been daily driving `cco` + the native `/sandbox`. It encompasses the best
 of all worlds.
+
+See also: https://github.com/webcoyote/sandvault
 
