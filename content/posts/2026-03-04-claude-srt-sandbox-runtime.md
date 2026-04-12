@@ -144,3 +144,5 @@ Anthropic reports ~84% fewer permission prompts with auto-allow mode.
 
 I've been daily driving `cco` + the native `/sandbox`. It encompasses the best
 of all worlds.
+
+See also: https://github.com/webcoyote/sandvault
