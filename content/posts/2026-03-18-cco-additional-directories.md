@@ -4,6 +4,7 @@ date: 2026-03-18T17:31:13+01:00
 tags:
   - ai
   - dev
+  - security
 ---
 
 [Previously]({{< ref "2026-02-26-cco-claude-condom-sandbox" >}}).
