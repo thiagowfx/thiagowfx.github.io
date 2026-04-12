@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Reply to: Hostile volume](https://perrotta.dev/2026/04/reply-to-hostile-volume/) (2026-04-12)
 - [Reply to: 1d-chess](https://perrotta.dev/2026/04/reply-to-1d-chess/) (2026-04-12)
 - [anki: auto-sync](https://perrotta.dev/2026/04/anki-auto-sync/) (2026-04-12)
 - [claude: /simplify](https://perrotta.dev/2026/04/claude-/simplify/) (2026-04-12)
@@ -1219,7 +1220,7 @@
 - [Dev](https://perrotta.dev/tags/dev/) (1085 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
-- [Gaming](https://perrotta.dev/tags/gaming/) (12 posts)
+- [Gaming](https://perrotta.dev/tags/gaming/) (13 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (8 posts)
 - [Git](https://perrotta.dev/tags/git/) (55 posts)
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (37 posts)
@@ -1234,7 +1235,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (52 posts)
 - [Security](https://perrotta.dev/tags/security/) (58 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (11 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (235 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (236 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (11 posts)

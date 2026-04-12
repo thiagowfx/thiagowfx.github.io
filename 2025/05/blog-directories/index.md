@@ -25,6 +25,7 @@ A few directories I like[^1]:
 - ✪ https://512kb.club/ (Kev)
 - ✪ https://blogosphere.app/
 - ✪ https://blogroll.org/ (Manu)
+- ✪ https://bubbles.town/
 - ✪ https://clew.se/
 - ✪ https://darktheme.club/
 - ✪ https://diff.blog/
