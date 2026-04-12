@@ -4,6 +4,7 @@ date: 2026-04-08T00:14:11+02:00
 tags:
   - ai
   - dev
+  - pkm
   - serenity
 ---
 

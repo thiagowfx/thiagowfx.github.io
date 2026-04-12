@@ -4,6 +4,7 @@ date: 2025-01-11T00:28:48-03:00
 tags:
   - dev
   - macos
+  - pkm
 ---
 
 There's a longstanding bug in [Anki](https://apps.ankiweb.net/) on macOS: it's

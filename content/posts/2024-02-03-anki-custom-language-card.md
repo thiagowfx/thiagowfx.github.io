@@ -4,6 +4,7 @@ date: 2024-02-03T13:02:21-03:00
 tags:
   - bestof
   - dev
+  - pkm
 ---
 
 The more time you spent playing with [Anki](https://apps.ankiweb.net/), the

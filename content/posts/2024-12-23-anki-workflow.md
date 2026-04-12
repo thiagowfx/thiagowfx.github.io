@@ -4,6 +4,7 @@ date: 2024-12-23T00:12:52-03:00
 tags:
   - bestof
   - dev
+  - pkm
 ---
 
 I've been using [Anki](https://apps.ankiweb.net/) since 2-3 years ago to keep up

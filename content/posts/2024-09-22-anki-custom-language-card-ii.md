@@ -4,6 +4,7 @@ date: 2024-09-22T13:02:39+02:00
 tags:
   - bestof
   - dev
+  - pkm
 ---
 
 This post builds upon the previous [Anki: custom language card]({{< ref

@@ -3,6 +3,7 @@ title: "Anki: find all notes with an empty field"
 date: 2024-01-29T00:06:49-03:00
 tags:
   - dev
+  - pkm
 ---
 
 Gabriel Wyner recommends, in its [Fluent
