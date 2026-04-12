@@ -11,3 +11,5 @@ How so?
 
 Beware of stalemate.
 
+Via [Hacker News](https://news.ycombinator.com/item?id=47719740).
+
