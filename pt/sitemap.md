@@ -80,6 +80,7 @@
 - [Ontem: Maratona de Programação](https://perrotta.dev/pt/2013/09/ontem-maratona-de-programa%C3%A7%C3%A3o/) (2013-09-15)
 - [Como rodar JNLP no Linux](https://perrotta.dev/pt/2013/09/como-rodar-jnlp-no-linux/) (2013-09-02)
 - [Como receber spam do POP3 do gmail](https://perrotta.dev/pt/2013/08/como-receber-spam-do-pop3-do-gmail/) (2013-08-25)
+- [Links são o terror](https://perrotta.dev/pt/2013/07/links-s%C3%A3o-o-terror/) (2013-07-25)
 - [4 dicas sobre apps de Android](https://perrotta.dev/pt/2013/05/4-dicas-sobre-apps-de-android/) (2013-05-31)
 - [Uma palavra sobre o dia das mães](https://perrotta.dev/pt/2013/05/uma-palavra-sobre-o-dia-das-m%C3%A3es/) (2013-05-12)
 
@@ -87,10 +88,10 @@
 
 
 - [Bestof](https://perrotta.dev/pt/tags/bestof/) (2 posts)
-- [Dev](https://perrotta.dev/pt/tags/dev/) (56 posts)
+- [Dev](https://perrotta.dev/pt/tags/dev/) (57 posts)
 - [Gaming](https://perrotta.dev/pt/tags/gaming/) (3 posts)
 - [Leetcode](https://perrotta.dev/pt/tags/leetcode/) (1 posts)
-- [Legacy](https://perrotta.dev/pt/tags/legacy/) (64 posts)
+- [Legacy](https://perrotta.dev/pt/tags/legacy/) (65 posts)
 - [Meta](https://perrotta.dev/pt/tags/meta/) (1 posts)
 - [Privacy](https://perrotta.dev/pt/tags/privacy/) (2 posts)
 - [Security](https://perrotta.dev/pt/tags/security/) (1 posts)
