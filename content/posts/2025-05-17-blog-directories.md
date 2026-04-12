@@ -25,6 +25,7 @@ A few directories I like[^1]:
 <!-- keep-sorted start prefix_order=["- ✪","- https","- ✗"] -->
 - ✪ https://250kb.club/ / https://256kb.club/
 - ✪ https://512kb.club/ (Kev)
+- ✪ https://blogosphere.app/
 - ✪ https://blogroll.org/ (Manu)
 - ✪ https://clew.se/
 - ✪ https://darktheme.club/
@@ -36,7 +37,6 @@ A few directories I like[^1]:
 - ✪ https://rss.social/
 - ✪ https://static.quest
 - ✪ https://xn--sr8hvo.ws/dashboard (an indieweb webring)
-- https://blogosphere.app/
 - https://ooh.directory/
 - https://www.blogsareback.com/
 - ✗ https://baccyflap.com/noai/?slug=njs#links
