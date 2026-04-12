@@ -1,7 +1,7 @@
 ---
 title: "cco: additionalDirectories"
 url: https://perrotta.dev/2026/03/cco-additionaldirectories/
-last_updated: 2026-03-18
+last_updated: 2026-04-12
 ---
 
 
