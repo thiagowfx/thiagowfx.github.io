@@ -43,6 +43,7 @@
 - [Sugestão de app de gravação de som](https://perrotta.dev/pt/2014/04/sugest%C3%A3o-de-app-de-grava%C3%A7%C3%A3o-de-som/) (2014-04-06)
 - [Erro de sincronização no Chromium](https://perrotta.dev/pt/2014/03/erro-de-sincroniza%C3%A7%C3%A3o-no-chromium/) (2014-03-29)
 - [CT sem luz: vamos indexar isso!](https://perrotta.dev/pt/2014/03/ct-sem-luz-vamos-indexar-isso/) (2014-03-22)
+- [(Removendo) Bloatware @ Android](https://perrotta.dev/pt/2014/03/removendo-bloatware-@-android/) (2014-03-22)
 - [2^11 (aka 2048)](https://perrotta.dev/pt/2014/03/211-aka-2048/) (2014-03-18)
 - [pull request](https://perrotta.dev/pt/2014/03/pull-request/) (2014-03-16)
 - [Scilab Notes (HOWTO)](https://perrotta.dev/pt/2014/03/scilab-notes-howto/) (2014-03-07)
@@ -90,12 +91,12 @@
 
 
 - [Bestof](https://perrotta.dev/pt/tags/bestof/) (3 posts)
-- [Dev](https://perrotta.dev/pt/tags/dev/) (59 posts)
+- [Dev](https://perrotta.dev/pt/tags/dev/) (60 posts)
 - [Gaming](https://perrotta.dev/pt/tags/gaming/) (3 posts)
 - [Leetcode](https://perrotta.dev/pt/tags/leetcode/) (1 posts)
-- [Legacy](https://perrotta.dev/pt/tags/legacy/) (67 posts)
+- [Legacy](https://perrotta.dev/pt/tags/legacy/) (68 posts)
 - [Meta](https://perrotta.dev/pt/tags/meta/) (2 posts)
-- [Privacy](https://perrotta.dev/pt/tags/privacy/) (2 posts)
+- [Privacy](https://perrotta.dev/pt/tags/privacy/) (3 posts)
 - [Review](https://perrotta.dev/pt/tags/review/) (1 posts)
 - [Security](https://perrotta.dev/pt/tags/security/) (1 posts)
 - [Selfhosted](https://perrotta.dev/pt/tags/selfhosted/) (1 posts)
