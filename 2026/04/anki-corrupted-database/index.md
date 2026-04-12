@@ -1,7 +1,7 @@
 ---
 title: "Anki: corrupted database"
 url: https://perrotta.dev/2026/04/anki-corrupted-database/
-last_updated: 2026-04-08
+last_updated: 2026-04-12
 ---
 
 

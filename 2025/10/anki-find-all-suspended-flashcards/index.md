@@ -1,7 +1,7 @@
 ---
 title: "Anki: find all suspended flashcards"
 url: https://perrotta.dev/2025/10/anki-find-all-suspended-flashcards/
-last_updated: 2025-10-08
+last_updated: 2026-04-12
 ---
 
 

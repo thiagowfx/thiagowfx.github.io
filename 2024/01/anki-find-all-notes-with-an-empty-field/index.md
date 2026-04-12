@@ -1,7 +1,7 @@
 ---
 title: "Anki: find all notes with an empty field"
 url: https://perrotta.dev/2024/01/anki-find-all-notes-with-an-empty-field/
-last_updated: 2025-09-05
+last_updated: 2026-04-12
 ---
 
 

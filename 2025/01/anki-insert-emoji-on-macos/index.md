@@ -1,7 +1,7 @@
 ---
 title: "Anki: insert emoji on macOS"
 url: https://perrotta.dev/2025/01/anki-insert-emoji-on-macos/
-last_updated: 2026-01-03
+last_updated: 2026-04-12
 ---
 
 

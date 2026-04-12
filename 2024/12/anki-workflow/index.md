@@ -1,7 +1,7 @@
 ---
 title: "Anki workflow"
 url: https://perrotta.dev/2024/12/anki-workflow/
-last_updated: 2025-03-03
+last_updated: 2026-04-12
 ---
 
 

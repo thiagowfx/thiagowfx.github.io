@@ -1,7 +1,7 @@
 ---
 title: "Anki: custom language card"
 url: https://perrotta.dev/2024/02/anki-custom-language-card/
-last_updated: 2025-12-25
+last_updated: 2026-04-12
 ---
 
 
