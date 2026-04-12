@@ -10,3 +10,5 @@ external_link: "https://hostilevolume.com/"
 ---
 
 I got stuck at level 17/30 playing from mobile.
+
+Via [Kottke](https://kottke.org/26/04/0048712-hostile-volume-is-a-simpl).
