@@ -1,74 +1,75 @@
 {{- $currentLang := .Site.Language.Lang }}
-{{- $currentLangName := cond (eq $currentLang "pt") "PT" "EN" }}
-{{- $currentLangFlag := cond (eq $currentLang "pt") "🇧🇷" "🇬🇧" }}
 {{- $currentPath := .RelPermalink }}
 
-{{- /* Build paths for both languages */ -}}
-{{- $enPath := "/" }}
-{{- $ptPath := "/" }}
+{{- /* Language definitions: code, flag, name, prefix */ -}}
+{{- $languages := slice
+  (dict "code" "en" "flag" "🇬🇧" "name" "English" "prefix" "")
+  (dict "code" "pt" "flag" "🇧🇷" "name" "Português" "prefix" "/pt")
+  (dict "code" "it" "flag" "🇮🇹" "name" "Italiano" "prefix" "/it")
+}}
 
-{{- /* Calculate PT path */ -}}
-{{- if eq $currentPath "/" }}
-  {{- $ptPath = "/pt/" }}
-{{- else if strings.HasPrefix $currentPath "/pt/" }}
-  {{- $ptPath = $currentPath }}
-{{- else }}
-  {{- $ptPath = printf "/pt%s" $currentPath }}
+{{- /* Determine the current language flag */ -}}
+{{- $currentLangFlag := "🇬🇧" }}
+{{- range $languages }}
+  {{- if eq .code $currentLang }}
+    {{- $currentLangFlag = .flag }}
+  {{- end }}
 {{- end }}
 
-{{- /* Calculate EN path */ -}}
-{{- if eq $currentPath "/pt/" }}
-  {{- $enPath = "/" }}
-{{- else if strings.HasPrefix $currentPath "/pt/" }}
-  {{- $enPath = strings.TrimPrefix "/pt" $currentPath }}
-{{- else }}
-  {{- $enPath = $currentPath }}
+{{- /* Strip the current language prefix to get the base path */ -}}
+{{- $basePath := $currentPath }}
+{{- range $languages }}
+  {{- if and (ne .prefix "") (strings.HasPrefix $currentPath (printf "%s/" .prefix)) }}
+    {{- $basePath = strings.TrimPrefix .prefix $currentPath }}
+  {{- end }}
 {{- end }}
 
-{{- /* Check if translated pages exist */ -}}
-{{- $enExists := false }}
-{{- $ptExists := false }}
+{{- /* Build paths and check existence for each language */ -}}
+{{- $availableLangs := slice }}
+{{- range $lang := $languages }}
+  {{- $path := printf "%s%s" $lang.prefix $basePath }}
+  {{- if eq $basePath "/" }}
+    {{- if eq $lang.prefix "" }}
+      {{- $path = "/" }}
+    {{- else }}
+      {{- $path = printf "%s/" $lang.prefix }}
+    {{- end }}
+  {{- end }}
 
-{{- if eq $enPath "/" }}
-  {{- $enExists = true }}
-{{- else if eq $enPath "/pt/" }}
-  {{- $enExists = false }}
-{{- else }}
-  {{- range hugo.Sites }}
-    {{- if eq .Language.Lang "en" }}
-      {{- range .Pages }}
-        {{- if eq .RelPermalink $enPath }}
-          {{- $enExists = true }}
+  {{- $exists := false }}
+  {{- /* Root path always exists for the default language */ -}}
+  {{- if and (eq $path "/") (eq $lang.code "en") }}
+    {{- $exists = true }}
+  {{- else if eq $path (printf "%s/" $lang.prefix) }}
+    {{- /* Language root without a specific page — skip */ -}}
+  {{- else }}
+    {{- range hugo.Sites }}
+      {{- if eq .Language.Lang $lang.code }}
+        {{- range .Pages }}
+          {{- if eq .RelPermalink $path }}
+            {{- $exists = true }}
+          {{- end }}
         {{- end }}
       {{- end }}
     {{- end }}
   {{- end }}
-{{- end }}
 
-{{- if eq $ptPath "/pt/" }}
-  {{- $ptExists = false }}
-{{- else }}
-  {{- range hugo.Sites }}
-    {{- if eq .Language.Lang "pt" }}
-      {{- range .Pages }}
-        {{- if eq .RelPermalink $ptPath }}
-          {{- $ptExists = true }}
-        {{- end }}
-      {{- end }}
-    {{- end }}
+  {{- if $exists }}
+    {{- $availableLangs = $availableLangs | append (dict "code" $lang.code "flag" $lang.flag "name" $lang.name "path" $path) }}
   {{- end }}
 {{- end }}
 
-{{- /* Only show language switcher if both languages exist */ -}}
-{{- if and $enExists $ptExists }}
+{{- /* Only show language switcher if more than one language exists */ -}}
+{{- if gt (len $availableLangs) 1 }}
 <div class="lang-dropdown">
   <button id="lang-toggle" class="lang-toggle-button" aria-label="Switch language" title="Switch language">
     <span class="lang-toggle-text">{{ $currentLangFlag }}</span>
     <span class="lang-dropdown-arrow">▼</span>
   </button>
   <div class="lang-dropdown-menu">
-    <a href="{{ $enPath }}" class="lang-dropdown-item{{ if eq $currentLang "en" }} lang-active{{ end }}" title="English">🇬🇧 English</a>
-    <a href="{{ $ptPath }}" class="lang-dropdown-item{{ if eq $currentLang "pt" }} lang-active{{ end }}" title="Português">🇧🇷 Português</a>
+    {{- range $availableLangs }}
+    <a href="{{ .path }}" class="lang-dropdown-item{{ if eq .code $currentLang }} lang-active{{ end }}" title="{{ .name }}">{{ .flag }} {{ .name }}</a>
+    {{- end }}
   </div>
 </div>
 {{- end }}
