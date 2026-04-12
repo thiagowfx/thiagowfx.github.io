@@ -65,6 +65,7 @@
 - [Testando uma ISO no Linux sem o VirtualBox](https://perrotta.dev/pt/2014/01/testando-uma-iso-no-linux-sem-o-virtualbox/) (2014-01-07)
 - [Android Games (2013)](https://perrotta.dev/pt/2014/01/android-games-2013/) (2014-01-02)
 - [Por que o Arch Linux?](https://perrotta.dev/pt/2014/01/por-que-o-arch-linux/) (2014-01-02)
+- [Retrospectiva 2013 (blablabla)](https://perrotta.dev/pt/2013/12/retrospectiva-2013-blablabla/) (2013-12-29)
 - [[F]OSS @ Android](https://perrotta.dev/pt/2013/12/foss-@-android/) (2013-12-27)
 - [Habilitando hibernação no Arch](https://perrotta.dev/pt/2013/12/habilitando-hiberna%C3%A7%C3%A3o-no-arch/) (2013-12-22)
 - [Cálculo @ UFRJ: Sugestão de Referências](https://perrotta.dev/pt/2013/12/c%C3%A1lculo-@-ufrj-sugest%C3%A3o-de-refer%C3%AAncias/) (2013-12-15)
@@ -88,13 +89,14 @@
 ## Tags
 
 
-- [Bestof](https://perrotta.dev/pt/tags/bestof/) (2 posts)
-- [Dev](https://perrotta.dev/pt/tags/dev/) (58 posts)
+- [Bestof](https://perrotta.dev/pt/tags/bestof/) (3 posts)
+- [Dev](https://perrotta.dev/pt/tags/dev/) (59 posts)
 - [Gaming](https://perrotta.dev/pt/tags/gaming/) (3 posts)
 - [Leetcode](https://perrotta.dev/pt/tags/leetcode/) (1 posts)
-- [Legacy](https://perrotta.dev/pt/tags/legacy/) (66 posts)
-- [Meta](https://perrotta.dev/pt/tags/meta/) (1 posts)
+- [Legacy](https://perrotta.dev/pt/tags/legacy/) (67 posts)
+- [Meta](https://perrotta.dev/pt/tags/meta/) (2 posts)
 - [Privacy](https://perrotta.dev/pt/tags/privacy/) (2 posts)
+- [Review](https://perrotta.dev/pt/tags/review/) (1 posts)
 - [Security](https://perrotta.dev/pt/tags/security/) (1 posts)
 - [Selfhosted](https://perrotta.dev/pt/tags/selfhosted/) (1 posts)
 - [Serenity](https://perrotta.dev/pt/tags/serenity/) (15 posts)
