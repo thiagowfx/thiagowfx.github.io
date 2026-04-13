@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Anki: API access](https://perrotta.dev/2026/04/anki-api-access/) (2026-04-13)
 - [Reply to: Hostile volume](https://perrotta.dev/2026/04/reply-to-hostile-volume/) (2026-04-12)
 - [Reply to: 1d-chess](https://perrotta.dev/2026/04/reply-to-1d-chess/) (2026-04-12)
 - [anki: auto-sync](https://perrotta.dev/2026/04/anki-auto-sync/) (2026-04-12)
@@ -1211,13 +1212,13 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (72 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (73 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (169 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1089 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1090 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (13 posts)
@@ -1229,7 +1230,7 @@
 - [Macos](https://perrotta.dev/tags/macos/) (45 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (58 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
-- [Pkm](https://perrotta.dev/tags/pkm/) (19 posts)
+- [Pkm](https://perrotta.dev/tags/pkm/) (20 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (30 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (53 posts)
