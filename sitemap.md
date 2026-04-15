@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Reply to: The Aging Programmer — Kate Gregory (2024) — YouTube](https://perrotta.dev/2026/04/reply-to-the-aging-programmer-kate-gregory-2024-youtube/) (2026-04-15)
 - [Filing upstream bugs in 2026](https://perrotta.dev/2026/04/filing-upstream-bugs-in-2026/) (2026-04-13)
 - [Anki: API access](https://perrotta.dev/2026/04/anki-api-access/) (2026-04-13)
 - [Reply to: Hostile volume](https://perrotta.dev/2026/04/reply-to-hostile-volume/) (2026-04-12)
@@ -1216,10 +1217,11 @@
 - [Ai](https://perrotta.dev/tags/ai/) (74 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
-- [Bestof](https://perrotta.dev/tags/bestof/) (170 posts)
+- [Bestof](https://perrotta.dev/tags/bestof/) (171 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
+- [C++](https://perrotta.dev/tags/c++/) (1 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1091 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1092 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (13 posts)
@@ -1238,7 +1240,7 @@
 - [Review](https://perrotta.dev/tags/review/) (1 posts)
 - [Security](https://perrotta.dev/tags/security/) (58 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (11 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (237 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (238 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (11 posts)
