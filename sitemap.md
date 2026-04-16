@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [anki: flashcard generation with claude code](https://perrotta.dev/2026/04/anki-flashcard-generation-with-claude-code/) (2026-04-15)
 - [Reply to: The Aging Programmer — Kate Gregory (2024) — YouTube](https://perrotta.dev/2026/04/reply-to-the-aging-programmer-kate-gregory-2024-youtube/) (2026-04-15)
 - [Filing upstream bugs in 2026](https://perrotta.dev/2026/04/filing-upstream-bugs-in-2026/) (2026-04-13)
 - [Anki: API access](https://perrotta.dev/2026/04/anki-api-access/) (2026-04-13)
@@ -1214,14 +1215,14 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (74 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (75 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
-- [Bestof](https://perrotta.dev/tags/bestof/) (171 posts)
+- [Bestof](https://perrotta.dev/tags/bestof/) (172 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [C++](https://perrotta.dev/tags/c++/) (1 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1092 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1093 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (13 posts)
@@ -1233,7 +1234,7 @@
 - [Macos](https://perrotta.dev/tags/macos/) (45 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (58 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
-- [Pkm](https://perrotta.dev/tags/pkm/) (20 posts)
+- [Pkm](https://perrotta.dev/tags/pkm/) (21 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (30 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (53 posts)
