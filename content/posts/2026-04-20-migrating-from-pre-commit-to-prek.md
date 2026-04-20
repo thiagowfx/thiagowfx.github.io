@@ -33,10 +33,11 @@ Then swap the command. Nothing else changes:
 Or skip the swap entirely: `prek install -f` drops in a shim that replaces the
 `pre-commit` binary, so existing scripts and git hooks keep working unchanged.
 
-The CI workflow on this blog now uses
-[`j178/prek-action`](https://github.com/j178/prek-action) instead of
-`pre-commit/action`, and the monthly autoupdate job runs `prek auto-update
---freeze` — the [`--freeze`]({{< ref "2025-03-20-pre-commit-pin-dependencies-with-freeze" >}})
+The CI workflow on this blog ([`prek.yml`](https://github.com/thiagowfx/thiagowfx.github.io/blob/master/.github/workflows/prek.yml))
+now uses [`j178/prek-action`](https://github.com/j178/prek-action) instead of
+`pre-commit/action`, and the monthly autoupdate job
+([`prek-autoupdate.yml`](https://github.com/thiagowfx/thiagowfx.github.io/blob/master/.github/workflows/prek-autoupdate.yml))
+runs `prek auto-update --freeze` — the [`--freeze`]({{< ref "2025-03-20-pre-commit-pin-dependencies-with-freeze" >}})
 flag works the same.
 
 The [benchmark](https://prek.j178.dev/benchmark/) is what sold me. On cold
