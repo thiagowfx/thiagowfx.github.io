@@ -30,6 +30,9 @@ Then swap the command. Nothing else changes:
 +prek run --all-files
 ```
 
+Or skip the swap entirely: `prek install -f` drops in a shim that replaces the
+`pre-commit` binary, so existing scripts and git hooks keep working unchanged.
+
 The CI workflow on this blog now uses
 [`j178/prek-action`](https://github.com/j178/prek-action) instead of
 `pre-commit/action`, and the monthly autoupdate job runs `prek auto-update
