@@ -44,5 +44,16 @@ The [benchmark](https://prek.j178.dev/benchmark/) is what sold me. On cold
 caches, `prek` is around 10x faster at resolving and installing hooks; on warm
 runs, the difference is smaller but still noticeable.
 
+Two other niceties `pre-commit` does not have:
+
+- **Split configs across multiple files**. `prek` supports
+  [multi-file configs](https://prek.j178.dev/config/#multiple-configs), so
+  hooks can live next to the subproject they belong to in a monorepo instead
+  of piling up in a single top-level YAML.
+- **Run against a commit or a range**. `prek run --from-ref A --to-ref B`
+  restricts the run to files changed between two refs — handy for checking a
+  PR locally without touching unrelated files. A plain `prek run HEAD~3..HEAD`
+  also works.
+
 The `.pre-commit-config.yaml` file stays put, and `pre-commit.ci` still reads
 it. No lock-in.
