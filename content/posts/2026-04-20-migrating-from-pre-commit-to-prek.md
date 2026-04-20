@@ -17,7 +17,7 @@ ecosystem, much faster.
 
 Install:
 
-```
+```shell
 % brew install prek
 # or
 % cargo install prek
