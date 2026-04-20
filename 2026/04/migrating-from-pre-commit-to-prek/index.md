@@ -46,7 +46,7 @@ runs, the difference is smaller but still noticeable.
 Two other niceties `pre-commit` does not have:
 
 - **Split configs across multiple files**. `prek` supports
-  [multi-file configs](https://prek.j178.dev/config/#multiple-configs), so
+  [multi-file configs](https://prek.j178.dev/workspace/), so
   hooks can live next to the subproject they belong to in a monorepo instead
   of piling up in a single top-level YAML.
 - **Run against a commit or a range**. `prek run --from-ref A --to-ref B`
