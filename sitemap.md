@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [migrating from pre-commit to prek](https://perrotta.dev/2026/04/migrating-from-pre-commit-to-prek/) (2026-04-20)
 - [claude, claudey, claudeyy](https://perrotta.dev/2026/04/claude-claudey-claudeyy/) (2026-04-18)
 - [anki: flashcard generation with claude code](https://perrotta.dev/2026/04/anki-flashcard-generation-with-claude-code/) (2026-04-15)
 - [Reply to: The Aging Programmer — Kate Gregory (2024) — YouTube](https://perrotta.dev/2026/04/reply-to-the-aging-programmer-kate-gregory-2024-youtube/) (2026-04-15)
@@ -1223,7 +1224,7 @@
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [C++](https://perrotta.dev/tags/c++/) (1 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1094 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1095 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (13 posts)
@@ -1237,7 +1238,7 @@
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (21 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
-- [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (30 posts)
+- [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (31 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (53 posts)
 - [Review](https://perrotta.dev/tags/review/) (1 posts)
 - [Security](https://perrotta.dev/tags/security/) (58 posts)
