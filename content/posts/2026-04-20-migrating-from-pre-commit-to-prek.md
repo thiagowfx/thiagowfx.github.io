@@ -51,9 +51,13 @@ Two other niceties `pre-commit` does not have:
   hooks can live next to the subproject they belong to in a monorepo instead
   of piling up in a single top-level YAML.
 - **Run against a commit or a range**. `prek run --from-ref A --to-ref B`
-  restricts the run to files changed between two refs — handy for checking a
-  PR locally without touching unrelated files. A plain `prek run HEAD~3..HEAD`
-  also works.
+  restricts the run to files changed between two refs — much faster than
+  `prek run -a` because only the touched files are inspected. Example: lint
+  everything on the current branch since it diverged from `master`:
+
+  ```shell
+  % prek run --from-ref "$(git merge-base master HEAD)" --to-ref HEAD
+  ```
 
 The `.pre-commit-config.yaml` file stays put, and `pre-commit.ci` still reads
 it. No lock-in.
