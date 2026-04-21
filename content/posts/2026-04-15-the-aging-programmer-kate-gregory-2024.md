@@ -5,7 +5,6 @@ categories:
   - commentary
 tags:
   - bestof
-  - c++
   - dev
   - serenity
 external_link: "https://www.youtube.com/watch?v=hs8EGgoJpdQ"
