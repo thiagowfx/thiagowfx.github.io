@@ -1,7 +1,7 @@
 ---
 title: "Reply to: The Aging Programmer — Kate Gregory (2024) — YouTube"
 url: https://perrotta.dev/2026/04/reply-to-the-aging-programmer-kate-gregory-2024-youtube/
-last_updated: 2026-04-15
+last_updated: 2026-04-21
 ---
 
 

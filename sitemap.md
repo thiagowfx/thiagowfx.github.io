@@ -1222,7 +1222,6 @@
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (172 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
-- [C++](https://perrotta.dev/tags/c++/) (1 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
 - [Dev](https://perrotta.dev/tags/dev/) (1095 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
