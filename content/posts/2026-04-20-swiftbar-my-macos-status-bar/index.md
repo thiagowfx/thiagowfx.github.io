@@ -20,7 +20,7 @@ right:
 
 - **On-call tribunal · in 7m**: next calendar event of the day, with a countdown
 - 🟢 **VPN /**: VPN status — green when connected
-- 🔒 **TP [6h] /**: time left on my temporary production privileges
+- 🔒 **TP [6h] /**: time left on my [Teleport](https://goteleport.com/) session
 - ☁️ **AWS [2h]**: time left on my AWS credentials
 - 👤 **Decisive Battle · 目黒将士**: currently playing track
 
