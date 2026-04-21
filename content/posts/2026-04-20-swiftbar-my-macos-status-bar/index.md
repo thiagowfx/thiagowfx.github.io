@@ -18,11 +18,11 @@ My current setup:
 From left to right, skipping the default macOS Control Center icons on the
 right:
 
-- **On-call tribunal · in 7m**: next calendar event of the day, with a countdown
-- 🟢 **VPN /**: VPN status — green when connected
-- 🔒 **TP [6h] /**: time left on my [Teleport](https://goteleport.com/) session
-- ☁️ **AWS [2h]**: time left on my AWS credentials
-- 👤 **Decisive Battle · 目黒将士**: currently playing track
+- **On-call tribunal · in 7m**: next calendar event of the day, with a countdown — via a [Raycast](https://www.raycast.com/) extension
+- 🟢 **VPN /**: VPN status — green when connected (SwiftBar)
+- 🔒 **TP [6h] /**: time left on my [Teleport](https://goteleport.com/) session (SwiftBar)
+- ☁️ **AWS [2h]**: time left on my AWS credentials (SwiftBar)
+- 👤 **Decisive Battle · 目黒将士**: currently playing track — via a Raycast extension
 
-Each item is its own script, refreshed on its own cadence. The shorter the
-refresh interval, the more system resources it takes, so tune accordingly.
+Each SwiftBar item is its own script, refreshed on its own cadence. The shorter
+the refresh interval, the more system resources it takes, so tune accordingly.
