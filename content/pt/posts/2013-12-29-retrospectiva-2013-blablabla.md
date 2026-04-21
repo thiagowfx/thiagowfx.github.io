@@ -6,7 +6,6 @@ tags:
   - dev
   - legacy
   - meta
-  - review
 ---
 
 Esse post é bem mais específico do que o título pode deixar a entender. Já
