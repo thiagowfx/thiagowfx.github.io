@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [swiftbar](https://perrotta.dev/2026/04/swiftbar/) (2026-04-20)
 - [migrating from pre-commit to prek](https://perrotta.dev/2026/04/migrating-from-pre-commit-to-prek/) (2026-04-20)
 - [claude, claudey, claudeyy](https://perrotta.dev/2026/04/claude-claudey-claudeyy/) (2026-04-18)
 - [anki: flashcard generation with claude code](https://perrotta.dev/2026/04/anki-flashcard-generation-with-claude-code/) (2026-04-15)
@@ -1220,10 +1221,10 @@
 - [Ai](https://perrotta.dev/tags/ai/) (76 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
-- [Bestof](https://perrotta.dev/tags/bestof/) (172 posts)
+- [Bestof](https://perrotta.dev/tags/bestof/) (173 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1095 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1096 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (13 posts)
@@ -1232,7 +1233,7 @@
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (37 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (148 posts)
-- [Macos](https://perrotta.dev/tags/macos/) (45 posts)
+- [Macos](https://perrotta.dev/tags/macos/) (46 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (58 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (21 posts)
