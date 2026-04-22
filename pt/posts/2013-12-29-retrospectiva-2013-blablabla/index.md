@@ -1,7 +1,7 @@
 ---
 title: "Retrospectiva 2013 (blablabla)"
 url: https://perrotta.dev/pt/posts/2013-12-29-retrospectiva-2013-blablabla/
-last_updated: 2026-04-12
+last_updated: 2026-04-22
 ---
 
 

@@ -97,7 +97,6 @@
 - [Legacy](https://perrotta.dev/pt/tags/legacy/) (68 posts)
 - [Meta](https://perrotta.dev/pt/tags/meta/) (2 posts)
 - [Privacy](https://perrotta.dev/pt/tags/privacy/) (3 posts)
-- [Review](https://perrotta.dev/pt/tags/review/) (1 posts)
 - [Security](https://perrotta.dev/pt/tags/security/) (1 posts)
 - [Selfhosted](https://perrotta.dev/pt/tags/selfhosted/) (1 posts)
 - [Serenity](https://perrotta.dev/pt/tags/serenity/) (15 posts)

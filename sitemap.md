@@ -1239,7 +1239,6 @@
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (31 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (53 posts)
-- [Review](https://perrotta.dev/tags/review/) (1 posts)
 - [Security](https://perrotta.dev/tags/security/) (58 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (11 posts)
 - [Serenity](https://perrotta.dev/tags/serenity/) (238 posts)
