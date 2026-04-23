@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [external-secrets: bust the ClusterSecretStore cache](https://perrotta.dev/2026/04/external-secrets-bust-the-clustersecretstore-cache/) (2026-04-24)
 - [claude: recap](https://perrotta.dev/2026/04/claude-recap/) (2026-04-24)
 - [swiftbar](https://perrotta.dev/2026/04/swiftbar/) (2026-04-20)
 - [migrating from pre-commit to prek](https://perrotta.dev/2026/04/migrating-from-pre-commit-to-prek/) (2026-04-20)
@@ -1225,13 +1226,13 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (173 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1097 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1098 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (13 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (8 posts)
 - [Git](https://perrotta.dev/tags/git/) (55 posts)
-- [Kubernetes](https://perrotta.dev/tags/kubernetes/) (37 posts)
+- [Kubernetes](https://perrotta.dev/tags/kubernetes/) (38 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (148 posts)
 - [Macos](https://perrotta.dev/tags/macos/) (46 posts)
