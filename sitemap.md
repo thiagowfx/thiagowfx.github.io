@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [claude: recap](https://perrotta.dev/2026/04/claude-recap/) (2026-04-24)
 - [swiftbar](https://perrotta.dev/2026/04/swiftbar/) (2026-04-20)
 - [migrating from pre-commit to prek](https://perrotta.dev/2026/04/migrating-from-pre-commit-to-prek/) (2026-04-20)
 - [claude, claudey, claudeyy](https://perrotta.dev/2026/04/claude-claudey-claudeyy/) (2026-04-18)
@@ -1218,13 +1219,13 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (76 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (77 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (173 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1096 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1097 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (13 posts)
