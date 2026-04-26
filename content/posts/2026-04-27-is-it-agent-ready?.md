@@ -41,3 +41,6 @@ Nonetheless, I am still doing my best to flag AI training as disallowed.
 [^1]: Achieving 100% scoring is not an end goal here. These metrics are
     arbitrary, by Cloudflare. I use them merely as an inspiration / starting
     point to decide what's worth to explore and/or adopt.
+
+Via
+[disassociated](https://disassociated.com/website-ninety-two-percent-not-ready-ai-agents/).
