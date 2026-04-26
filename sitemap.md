@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Wake me up in one hour](https://perrotta.dev/2026/04/wake-me-up-in-one-hour/) (2026-04-26)
 - [external-secrets: bust the ClusterSecretStore cache](https://perrotta.dev/2026/04/external-secrets-bust-the-clustersecretstore-cache/) (2026-04-24)
 - [claude: recap](https://perrotta.dev/2026/04/claude-recap/) (2026-04-24)
 - [swiftbar](https://perrotta.dev/2026/04/swiftbar/) (2026-04-20)
@@ -1244,7 +1245,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (53 posts)
 - [Security](https://perrotta.dev/tags/security/) (58 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (11 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (238 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (239 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (11 posts)
