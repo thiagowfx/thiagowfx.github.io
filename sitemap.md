@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Is it agent ready?](https://perrotta.dev/2026/04/is-it-agent-ready/) (2026-04-27)
 - [Wake me up in one hour](https://perrotta.dev/2026/04/wake-me-up-in-one-hour/) (2026-04-26)
 - [external-secrets: bust the ClusterSecretStore cache](https://perrotta.dev/2026/04/external-secrets-bust-the-clustersecretstore-cache/) (2026-04-24)
 - [claude: recap](https://perrotta.dev/2026/04/claude-recap/) (2026-04-24)
@@ -1221,13 +1222,13 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (77 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (78 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (173 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1098 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1099 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (13 posts)
