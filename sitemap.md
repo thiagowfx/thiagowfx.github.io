@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [GitHub: review only files owned by you](https://perrotta.dev/2026/04/github-review-only-files-owned-by-you/) (2026-04-28)
 - [Justfile with checks](https://perrotta.dev/2026/04/justfile-with-checks/) (2026-04-27)
 - [Is it agent ready?](https://perrotta.dev/2026/04/is-it-agent-ready/) (2026-04-27)
 - [Wake me up in one hour](https://perrotta.dev/2026/04/wake-me-up-in-one-hour/) (2026-04-26)
@@ -1226,15 +1227,15 @@
 - [Ai](https://perrotta.dev/tags/ai/) (78 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
-- [Bestof](https://perrotta.dev/tags/bestof/) (174 posts)
+- [Bestof](https://perrotta.dev/tags/bestof/) (175 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1100 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1101 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (13 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (8 posts)
-- [Git](https://perrotta.dev/tags/git/) (55 posts)
+- [Git](https://perrotta.dev/tags/git/) (56 posts)
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (38 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (148 posts)
