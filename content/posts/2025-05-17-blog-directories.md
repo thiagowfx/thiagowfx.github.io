@@ -39,6 +39,7 @@ A few directories I like[^1]:
 - ✪ https://static.quest
 - ✪ https://xn--sr8hvo.ws/dashboard (an indieweb webring)
 - https://ooh.directory/
+- https://scour.ing/
 - https://www.blogsareback.com/
 - ✗ https://baccyflap.com/noai/?slug=njs#links
 <!-- keep-sorted end -->
