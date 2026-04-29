@@ -22,7 +22,7 @@
 
 
 - [Large context windows](https://perrotta.dev/2026/04/large-context-windows/) (2026-04-29)
-- [Reply to: Print gallery of an artist by daniel linssen](https://perrotta.dev/2026/04/reply-to-print-gallery-of-an-artist-by-daniel-linssen/) (2026-04-29)
+- [Reply to: Print gallery of an artist by Daniel Linssen](https://perrotta.dev/2026/04/reply-to-print-gallery-of-an-artist-by-daniel-linssen/) (2026-04-29)
 - [Gen AI and Slack](https://perrotta.dev/2026/04/gen-ai-and-slack/) (2026-04-28)
 - [GitHub: review only files owned by you](https://perrotta.dev/2026/04/github-review-only-files-owned-by-you/) (2026-04-28)
 - [Justfile with checks](https://perrotta.dev/2026/04/justfile-with-checks/) (2026-04-27)
