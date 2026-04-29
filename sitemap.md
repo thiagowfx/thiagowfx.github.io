@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Large context windows](https://perrotta.dev/2026/04/large-context-windows/) (2026-04-29)
 - [Reply to: Print gallery of an artist by daniel linssen](https://perrotta.dev/2026/04/reply-to-print-gallery-of-an-artist-by-daniel-linssen/) (2026-04-29)
 - [Gen AI and Slack](https://perrotta.dev/2026/04/gen-ai-and-slack/) (2026-04-28)
 - [GitHub: review only files owned by you](https://perrotta.dev/2026/04/github-review-only-files-owned-by-you/) (2026-04-28)
@@ -1226,13 +1227,13 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (79 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (80 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (176 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1102 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1103 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
