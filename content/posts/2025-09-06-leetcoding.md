@@ -20,6 +20,10 @@ I have also moved my [advent of code](https://adventofcode.com/) posts there.
 Problem sets:
 
 * [**LeetCode**](https://leetcode.com/)
+  * [LeetCode Explore](https://leetcode.com/explore/)
+  * [LeetCode Card Track](https://leetcode.com/explore/featured/card/the-leetcode-beginners-guide/679/sql-syntax/4358/)
+  * [LeetCode Study Plan](https://leetcode.com/studyplan/)
+  * [LeetCode Design Data Structures](https://leetcode.com/search/?q=Design)
   * [Arrays](https://leetcode.com/problem-list/array/)
   * [Top 150](https://leetcode.com/studyplan/top-interview-150/)
 * [**ByteByteGo**](https://bytebytego.com/)
