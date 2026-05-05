@@ -7,6 +7,8 @@ tags:
   - pkm
 ---
 
+[Previously]({{< ref "2024-12-23-anki-workflow" >}}).
+
 Install [AnkiConnect](https://ankiweb.net/shared/info/2055492159):
 
 > AnkiConnect enables external applications such as Yomichan to communicate with

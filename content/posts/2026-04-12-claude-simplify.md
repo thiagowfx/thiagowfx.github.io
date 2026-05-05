@@ -6,6 +6,8 @@ tags:
   - dev
 ---
 
+[Previously]({{< ref "2025-11-23-claude-new-slash-commands" >}}).
+
 My all-time favorite bundled skill _for code reviewing_ in Claude Code:
 `/simplify`.
 
