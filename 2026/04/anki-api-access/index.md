@@ -1,9 +1,11 @@
 ---
 title: "Anki: API access"
 url: https://perrotta.dev/2026/04/anki-api-access/
-last_updated: 2026-04-13
+last_updated: 2026-05-05
 ---
 
+
+[Previously]({{< ref "2024-12-23-anki-workflow" >}}).
 
 Install [AnkiConnect](https://ankiweb.net/shared/info/2055492159):
 

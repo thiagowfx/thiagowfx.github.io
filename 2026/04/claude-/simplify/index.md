@@ -1,9 +1,11 @@
 ---
 title: "claude: /simplify"
 url: https://perrotta.dev/2026/04/claude-/simplify/
-last_updated: 2026-04-12
+last_updated: 2026-05-05
 ---
 
+
+[Previously]({{< ref "2025-11-23-claude-new-slash-commands" >}}).
 
 My all-time favorite bundled skill _for code reviewing_ in Claude Code:
 `/simplify`.
