@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [ArgoCD: sync stuck in terminating](https://perrotta.dev/2026/05/argocd-sync-stuck-in-terminating/) (2026-05-05)
 - [claude: /powerup](https://perrotta.dev/2026/05/claude-/powerup/) (2026-05-04)
 - [Large context windows](https://perrotta.dev/2026/04/large-context-windows/) (2026-04-29)
 - [Reply to: Print gallery of an artist by Daniel Linssen](https://perrotta.dev/2026/04/reply-to-print-gallery-of-an-artist-by-daniel-linssen/) (2026-04-29)
@@ -1234,13 +1235,13 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (176 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1104 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1105 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (8 posts)
 - [Git](https://perrotta.dev/tags/git/) (56 posts)
-- [Kubernetes](https://perrotta.dev/tags/kubernetes/) (38 posts)
+- [Kubernetes](https://perrotta.dev/tags/kubernetes/) (39 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (148 posts)
 - [Macos](https://perrotta.dev/tags/macos/) (46 posts)
