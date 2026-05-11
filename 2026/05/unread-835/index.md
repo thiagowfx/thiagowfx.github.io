@@ -1,0 +1,45 @@
+---
+title: "Unread (835)"
+url: https://perrotta.dev/2026/05/unread-835/
+last_updated: 2026-05-11
+---
+
+
+I am amazing at practicing Inbox Zero[^1], as well as "RSS Zero": I tend to read
+_all_ RSS posts I am subscribed to, from 700+ feeds.
+
+This works well _mostly_ thanks to [miniflux global blocklists]({{< ref "2024-12-28-miniflux-global-blocklist" >}}),
+which allow me to intentionally exclude topics I'm not interested in[^2].
+It's a very basic form of filtering yet it's quite effective.
+
+That said, sometimes life gets busy and the unread posts counter explodes. As of
+today, I have almost 1,000 unread posts.
+
+I do not feel comfortable with the idea of "RSS bankruptcy", which boils down to
+marking all posts as read.
+
+At the same time, catching up with everything after the counter exceeds a
+certain threshold transforms the RSS consumption activity from a pleasant
+leisure activity into a burdensome (and long) journey to reach zero again.
+
+Still, I refuse to use Gen AI to summarize the state of affairs of the unread
+posts — this would completely degrade the reading experience and nullify the joy
+of using RSS in the first place.
+
+[Currents](https://www.currentreader.app/) proposes an interesting middle-ground
+to address the situation:
+
+> Every RSS reader treats your feeds as a to-do list. Current doesn't.
+>
+> There are no unread counts. No badge of phantom obligation. Just a river.
+
+> Reading should feel like floating, not drowning.
+
+I've been meaning to incorporate it into my reading workflow.
+However, I do not want to switch to Currents; I am quite happy with Miniflux.
+
+[^1]: Realistically it's more like [Inbox
+    Ten](https://boz.com/articles/inbox-ten).
+
+[^2]: e.g. Gemini, crypto, NixOS.
+
