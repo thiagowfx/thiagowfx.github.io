@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Progressive escalation](https://perrotta.dev/2026/05/progressive-escalation/) (2026-05-11)
 - [Unread (835)](https://perrotta.dev/2026/05/unread-835/) (2026-05-11)
 - [ArgoCD: sync stuck in terminating](https://perrotta.dev/2026/05/argocd-sync-stuck-in-terminating/) (2026-05-05)
 - [claude: /powerup](https://perrotta.dev/2026/05/claude-/powerup/) (2026-05-04)
@@ -1236,7 +1237,7 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (176 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1106 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1107 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
@@ -1254,7 +1255,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (53 posts)
 - [Security](https://perrotta.dev/tags/security/) (58 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (11 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (243 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (244 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (11 posts)
