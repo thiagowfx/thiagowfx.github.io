@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [ArgoCD: stale Vault secret after population](https://perrotta.dev/2026/05/argocd-stale-vault-secret-after-population/) (2026-05-13)
 - [Progressive escalation](https://perrotta.dev/2026/05/progressive-escalation/) (2026-05-11)
 - [Unread (835)](https://perrotta.dev/2026/05/unread-835/) (2026-05-11)
 - [ArgoCD: sync stuck in terminating](https://perrotta.dev/2026/05/argocd-sync-stuck-in-terminating/) (2026-05-05)
@@ -1237,13 +1238,13 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (176 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1107 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1108 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (8 posts)
 - [Git](https://perrotta.dev/tags/git/) (56 posts)
-- [Kubernetes](https://perrotta.dev/tags/kubernetes/) (39 posts)
+- [Kubernetes](https://perrotta.dev/tags/kubernetes/) (40 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (148 posts)
 - [Macos](https://perrotta.dev/tags/macos/) (46 posts)
