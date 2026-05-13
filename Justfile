@@ -203,6 +203,39 @@ search *args:
 
 alias list := search
 
+[doc('Reset a post date to now and rename the file - Usage: `just touch content/posts/YYYY-MM-DD-slug.md`')]
+[group('manage')]
+touch file:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    if [ ! -f "{{ file }}" ]; then
+        echo "error: file not found: {{ file }}" >&2
+        exit 1
+    fi
+
+    now_date=$(date "+%Y-%m-%d")
+    now_ts=$(date "+%Y-%m-%dT%H:%M:%S%z" | sed -E 's/([+-][0-9]{2})([0-9]{2})$/\1:\2/')
+
+    if grep -qE '^date:' "{{ file }}"; then
+        sed -i.bak -E "s|^date:.*|date: ${now_ts}|" "{{ file }}" && rm "{{ file }}.bak"
+    else
+        echo "error: no date field found in frontmatter" >&2
+        exit 1
+    fi
+
+    dir=$(dirname "{{ file }}")
+    base=$(basename "{{ file }}")
+    new_base=$(echo "${base}" | sed -E "s/^[0-9]{4}-[0-9]{2}-[0-9]{2}-/${now_date}-/")
+    new_path="${dir}/${new_base}"
+
+    if [ "{{ file }}" != "${new_path}" ]; then
+        mv "{{ file }}" "${new_path}"
+        echo "Renamed to: ${new_path}"
+    else
+        echo "Updated date in: {{ file }}"
+    fi
+
 [doc('Edit the most recent blog post')]
 [group('manage')]
 last:
