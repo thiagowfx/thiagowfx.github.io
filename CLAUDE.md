@@ -17,6 +17,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Start dev server without browser: `just watch false`
 - Build for production: `just build`
 - Create new post: `just new "post title"` (auto-generates filename with current date)
+- Reset a post's date to now: `just touch <path>` (updates frontmatter `date:` and renames the file's date prefix)
 - Clean build artifacts: `just clean`
 - Update dependencies: `just update` (updates git submodules and prek hooks)
 - Ping search engines: `just ping` (notifies Google and Bing of sitemap changes)
