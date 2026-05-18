@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [atuin: delete account](https://perrotta.dev/2026/05/atuin-delete-account/) (2026-05-18)
 - [Small PRs](https://perrotta.dev/2026/05/small-prs/) (2026-05-18)
 - [ArgoCD: stale Vault secret after population](https://perrotta.dev/2026/05/argocd-stale-vault-secret-after-population/) (2026-05-13)
 - [Progressive escalation](https://perrotta.dev/2026/05/progressive-escalation/) (2026-05-11)
@@ -1239,7 +1240,7 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (177 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1109 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1110 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
@@ -1251,12 +1252,12 @@
 - [Macos](https://perrotta.dev/tags/macos/) (46 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (58 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
-- [Pkm](https://perrotta.dev/tags/pkm/) (21 posts)
+- [Pkm](https://perrotta.dev/tags/pkm/) (22 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (31 posts)
-- [Privacy](https://perrotta.dev/tags/privacy/) (53 posts)
-- [Security](https://perrotta.dev/tags/security/) (58 posts)
-- [Selfhosted](https://perrotta.dev/tags/selfhosted/) (11 posts)
+- [Privacy](https://perrotta.dev/tags/privacy/) (54 posts)
+- [Security](https://perrotta.dev/tags/security/) (59 posts)
+- [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
 - [Serenity](https://perrotta.dev/tags/serenity/) (245 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
