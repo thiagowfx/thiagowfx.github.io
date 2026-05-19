@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- ['What Color Is This' app](https://perrotta.dev/2026/05/what-color-is-this-app/) (2026-05-19)
 - [atuin: delete account](https://perrotta.dev/2026/05/atuin-delete-account/) (2026-05-18)
 - [Small PRs](https://perrotta.dev/2026/05/small-prs/) (2026-05-18)
 - [ArgoCD: stale Vault secret after population](https://perrotta.dev/2026/05/argocd-stale-vault-secret-after-population/) (2026-05-13)
@@ -1240,7 +1241,7 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (177 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1110 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1111 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
@@ -1258,7 +1259,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (54 posts)
 - [Security](https://perrotta.dev/tags/security/) (59 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (245 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (246 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (11 posts)
