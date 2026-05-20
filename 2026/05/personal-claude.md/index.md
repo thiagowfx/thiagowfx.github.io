@@ -96,3 +96,14 @@ Personal preferences that apply across every project. Project-specific facts liv
   reshuffles unless I ask.
 ```
 
+## Colophon
+
+How did I do this?
+
+```shell
+% cd ~/.claude && claude
+% help me craft my (global) CLAUDE.md, based on past interactions
+```
+
+That's it! No fancy prompt. Direct and succinct.
+
