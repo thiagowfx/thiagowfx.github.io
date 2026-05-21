@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Homebrew conflicts](https://perrotta.dev/2026/05/homebrew-conflicts/) (2026-05-21)
 - [Personal CLAUDE.md](https://perrotta.dev/2026/05/personal-claude.md/) (2026-05-20)
 - [Slack: active chats only](https://perrotta.dev/2026/05/slack-active-chats-only/) (2026-05-20)
 - ['What Color Is This' app](https://perrotta.dev/2026/05/what-color-is-this-app/) (2026-05-19)
@@ -1237,13 +1238,13 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (82 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (83 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (178 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1113 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1114 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
@@ -1252,7 +1253,7 @@
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (40 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (148 posts)
-- [Macos](https://perrotta.dev/tags/macos/) (46 posts)
+- [Macos](https://perrotta.dev/tags/macos/) (47 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (59 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (23 posts)
