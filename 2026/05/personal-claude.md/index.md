@@ -1,7 +1,7 @@
 ---
 title: "Personal CLAUDE.md"
 url: https://perrotta.dev/2026/05/personal-claude.md/
-last_updated: 2026-05-20
+last_updated: 2026-05-21
 ---
 
 

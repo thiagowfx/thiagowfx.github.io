@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [prove_it: verification hooks for Claude Code](https://perrotta.dev/2026/05/prove_it-verification-hooks-for-claude-code/) (2026-05-21)
 - [wt: exec shell vs shell integration](https://perrotta.dev/2026/05/wt-exec-shell-vs-shell-integration/) (2026-05-21)
 - [llm: Anthropic Claude plugin](https://perrotta.dev/2026/05/llm-anthropic-claude-plugin/) (2026-05-21)
 - [Homebrew conflicts](https://perrotta.dev/2026/05/homebrew-conflicts/) (2026-05-21)
@@ -1240,13 +1241,13 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (84 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (85 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (178 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1116 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1117 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
