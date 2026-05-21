@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [wt: exec shell vs shell integration](https://perrotta.dev/2026/05/wt-exec-shell-vs-shell-integration/) (2026-05-21)
 - [llm: Anthropic Claude plugin](https://perrotta.dev/2026/05/llm-anthropic-claude-plugin/) (2026-05-21)
 - [Homebrew conflicts](https://perrotta.dev/2026/05/homebrew-conflicts/) (2026-05-21)
 - [Personal CLAUDE.md](https://perrotta.dev/2026/05/personal-claude.md/) (2026-05-20)
@@ -1245,12 +1246,12 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (178 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1115 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1116 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (8 posts)
-- [Git](https://perrotta.dev/tags/git/) (57 posts)
+- [Git](https://perrotta.dev/tags/git/) (58 posts)
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (40 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (148 posts)
