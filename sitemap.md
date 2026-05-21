@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [llm: Anthropic Claude plugin](https://perrotta.dev/2026/05/llm-anthropic-claude-plugin/) (2026-05-21)
 - [Homebrew conflicts](https://perrotta.dev/2026/05/homebrew-conflicts/) (2026-05-21)
 - [Personal CLAUDE.md](https://perrotta.dev/2026/05/personal-claude.md/) (2026-05-20)
 - [Slack: active chats only](https://perrotta.dev/2026/05/slack-active-chats-only/) (2026-05-20)
@@ -1238,13 +1239,13 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (83 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (84 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (178 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1114 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1115 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
