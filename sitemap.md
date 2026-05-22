@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [ArgoCD: persistent PDB selector diff](https://perrotta.dev/2026/05/argocd-persistent-pdb-selector-diff/) (2026-05-22)
 - [prove_it: verification hooks for Claude Code](https://perrotta.dev/2026/05/prove_it-verification-hooks-for-claude-code/) (2026-05-21)
 - [wt: exec shell vs shell integration](https://perrotta.dev/2026/05/wt-exec-shell-vs-shell-integration/) (2026-05-21)
 - [llm: Anthropic Claude plugin](https://perrotta.dev/2026/05/llm-anthropic-claude-plugin/) (2026-05-21)
@@ -1247,13 +1248,13 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (178 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1117 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1118 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (8 posts)
 - [Git](https://perrotta.dev/tags/git/) (58 posts)
-- [Kubernetes](https://perrotta.dev/tags/kubernetes/) (40 posts)
+- [Kubernetes](https://perrotta.dev/tags/kubernetes/) (41 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (148 posts)
 - [Macos](https://perrotta.dev/tags/macos/) (47 posts)
