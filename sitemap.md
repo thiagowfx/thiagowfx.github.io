@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Brave Browser: access mobile tabs](https://perrotta.dev/2026/05/brave-browser-access-mobile-tabs/) (2026-05-24)
 - [ArgoCD: persistent PDB selector diff](https://perrotta.dev/2026/05/argocd-persistent-pdb-selector-diff/) (2026-05-22)
 - [prove_it: verification hooks for Claude Code](https://perrotta.dev/2026/05/prove_it-verification-hooks-for-claude-code/) (2026-05-21)
 - [wt: exec shell vs shell integration](https://perrotta.dev/2026/05/wt-exec-shell-vs-shell-integration/) (2026-05-21)
@@ -1248,7 +1249,7 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (178 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1118 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1119 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
