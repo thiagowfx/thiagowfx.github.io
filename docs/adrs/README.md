@@ -19,6 +19,7 @@ technical decisions in the blog infrastructure.
 | [0008](0008-bearblog-discover-cross-posting.md) | Bear Blog Discover Cross-posting | Proposed | 2026-02-07 |
 | [0009](0009-inline-static-assets.md) | Inline Static Assets for Cache Efficiency | Proposed | 2026-02-07 |
 | [0010](0010-markdown-content-negotiation.md) | Markdown Content Negotiation for LLMs | Proposed | 2026-02-16 |
+| [0013](0013-no-query-strings.md) | No Query Strings | Proposed | 2026-05-24 |
 
 <!-- markdownlint-enable MD013 -->
 
