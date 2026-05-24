@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Reply to: the commodification of travel](https://perrotta.dev/2026/05/reply-to-the-commodification-of-travel/) (2026-05-24)
 - [Brave Browser: access mobile tabs](https://perrotta.dev/2026/05/brave-browser-access-mobile-tabs/) (2026-05-24)
 - [ArgoCD: persistent PDB selector diff](https://perrotta.dev/2026/05/argocd-persistent-pdb-selector-diff/) (2026-05-22)
 - [prove_it: verification hooks for Claude Code](https://perrotta.dev/2026/05/prove_it-verification-hooks-for-claude-code/) (2026-05-21)
@@ -1267,7 +1268,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (54 posts)
 - [Security](https://perrotta.dev/tags/security/) (59 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (248 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (249 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (11 posts)
