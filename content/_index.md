@@ -19,4 +19,4 @@ I believe in the power of the {Indie, Small} Web for sharing valuable, distracti
 content.
 Hopefully this will inspire you to leave your own mark there too.
 
-Want to chat? Drop me an email anytime.
+Want to chat? {{< email_link >}}Drop me an email{{< /email_link >}} anytime.
