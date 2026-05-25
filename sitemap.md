@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [No slop grenade](https://perrotta.dev/2026/05/no-slop-grenade/) (2026-05-25)
 - [fast-resume: search coding agent sessions](https://perrotta.dev/2026/05/fast-resume-search-coding-agent-sessions/) (2026-05-25)
 - [Grill me](https://perrotta.dev/2026/05/grill-me/) (2026-05-25)
 - [Worktrunk](https://perrotta.dev/2026/05/worktrunk/) (2026-05-25)
@@ -1247,13 +1248,13 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (88 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (89 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (180 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1125 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1126 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
@@ -1271,7 +1272,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (55 posts)
 - [Security](https://perrotta.dev/tags/security/) (61 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (251 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (252 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (11 posts)
