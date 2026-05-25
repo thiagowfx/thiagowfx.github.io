@@ -1,0 +1,20 @@
+---
+title: "RSS club"
+url: https://perrotta.dev/2026/05/rss-club/
+last_updated: 2026-05-26
+---
+
+
+In the spirit of [RSS Club](https://daverupert.com/rss-club/) by Dave
+Rupert:
+
+> Congratulations on joining a secret society! RSS Club is a collection of blogs
+> (personal and otherwise) committed to providing RSS-only content. It's like a
+> newsletter delivered to your feed reader to celebrate the medium of RSS and
+> breakaway from social media.
+
+I achieved this by setting a `rss_only: true` property in the frontmatter of
+this markdown document + performing some Hugo templating magic.
+
+Is this a good avenue to rant "non-publicly"? :P
+
