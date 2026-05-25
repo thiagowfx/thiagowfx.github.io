@@ -1,7 +1,7 @@
 ---
 title: "Movendo (quase) todas as músicas para a nuvem"
 url: https://perrotta.dev/pt/posts/2013-10-05-movendo-quase-todas-as-musicas-para-a-nuvem/
-last_updated: 2026-03-28
+last_updated: 2026-05-25
 ---
 
 
@@ -56,7 +56,7 @@ Então eu fui olhar alguns sites que estavam nos meus favoritos. Posso citar:
 
 (O leitor não precisa achar que eu só tenho sites de músicas nos meus favoritos.
 Na verdade, isso é uma longa história, pelo menos para mim. Essa questão da
-[organização de links](http://thiagoperrotta.wordpress.com/2013/07/25/links-sao-o-terror/),
+[organização de links]({{< ref "2013-07-25-links-sao-o-terror" >}}),
 sabe? Eu gosto de guardar tudo de interessante que eu encontro. E eu encontro
 muita coisa interessante (OK, pelo menos para mim, gosto é relativo). Então eu
 tenho uma quantidade enorme de sites nos meus favoritos. Gerenciar (na verdade,
