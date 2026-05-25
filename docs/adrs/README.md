@@ -20,6 +20,7 @@ technical decisions in the blog infrastructure.
 | [0009](0009-inline-static-assets.md) | Inline Static Assets for Cache Efficiency | Proposed | 2026-02-07 |
 | [0010](0010-markdown-content-negotiation.md) | Markdown Content Negotiation for LLMs | Proposed | 2026-02-16 |
 | [0013](0013-no-query-strings.md) | No Query Strings | Proposed | 2026-05-24 |
+| [0014](0014-rss-club.md) | RSS Club (RSS-only posts) | Accepted | 2026-05-25 |
 
 <!-- markdownlint-enable MD013 -->
 

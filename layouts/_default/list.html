@@ -2,13 +2,14 @@
 <div class="h-feed">
 <div class="content">
   {{- $pages := where .Pages "Site.Language.Lang" .Site.Language.Lang }}
+  {{- $pages = where $pages "Params.rss_only" "!=" true }}
   {{- $excludeCategories := slice "coding" "recipes" }}
 
   <h2 id="posts" class="p-name" style="display: flex; align-items: center; gap: 0;">
     {{- if .Data.Singular }}
       {{- if eq .Section "tags" }} {{ i18n "postsTaggedWith" }} #{{ .Name }}
       {{- else if eq .Section "categories" }} {{ i18n "postsCategorizedAs" }} %{{ .Name }}
-      {{- end }} ({{ len .Pages }})
+      {{- end }} ({{ len $pages }})
     {{- else }} {{ i18n "allPosts" }} ({{ len $pages }}) {{- end }}
     {{- with .OutputFormats.Get "RSS" }}<a href='{{ .Permalink }}' class="rss-link" title="RSS feed" aria-label="RSS feed">{{- partial "rss-icon.html" $ -}}</a>{{- end }}
   </h2>

@@ -13,7 +13,7 @@
 
 ## Blog Posts
 
-{{ range where .Site.RegularPages "Section" "posts" }}
+{{ range where (where .Site.RegularPages "Section" "posts") "Params.rss_only" "!=" true }}
 - [{{ .Title }}]({{ .Permalink }}) ({{ .Date.Format "2006-01-02" }}){{ with .Description }}: {{ . }}{{ end }}
 {{- end }}
 
