@@ -8,6 +8,8 @@ tags:
 external_link: "https://herman.bearblog.dev/the-commodification-of-travel/"
 ---
 
+Herman Martinus:
+
 > I've noticed that travel has become, of late, an act of collecting places.
 > I've literally heard people referring to visiting a place as doing that place,
 > as in "Have you done Japan?", assuming that one can do an entire country, and
