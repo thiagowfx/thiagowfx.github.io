@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Grill me](https://perrotta.dev/2026/05/grill-me/) (2026-05-25)
 - [Worktrunk](https://perrotta.dev/2026/05/worktrunk/) (2026-05-25)
 - [Reply to: the commodification of travel](https://perrotta.dev/2026/05/reply-to-the-commodification-of-travel/) (2026-05-24)
 - [Brave Browser: access mobile tabs](https://perrotta.dev/2026/05/brave-browser-access-mobile-tabs/) (2026-05-24)
@@ -1245,13 +1246,13 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (86 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (87 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (179 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1123 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1124 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
