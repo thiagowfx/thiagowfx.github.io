@@ -62,6 +62,7 @@
 - [Imagetextos](https://perrotta.dev/pt/2014/01/imagetextos/) (2014-01-26)
 - [(Usando) meu primeiro custom kernel](https://perrotta.dev/pt/2014/01/usando-meu-primeiro-custom-kernel/) (2014-01-25)
 - [Sugestão de guia de instalação do Windows 8[.1]](https://perrotta.dev/pt/2014/01/sugest%C3%A3o-de-guia-de-instala%C3%A7%C3%A3o-do-windows-8.1/) (2014-01-22)
+- [Cansei de guardar tantos arquivos do SIGA](https://perrotta.dev/pt/2014/01/cansei-de-guardar-tantos-arquivos-do-siga/) (2014-01-11)
 - [Se os downloads no Steam estiverem muito lentos...](https://perrotta.dev/pt/2014/01/se-os-downloads-no-steam-estiverem-muito-lentos.../) (2014-01-10)
 - [Redshift - Ajustar a temperatura de cor do monitor dia/noite](https://perrotta.dev/pt/2014/01/redshift-ajustar-a-temperatura-de-cor-do-monitor-dia/noite/) (2014-01-09)
 - [Testando uma ISO no Linux sem o VirtualBox](https://perrotta.dev/pt/2014/01/testando-uma-iso-no-linux-sem-o-virtualbox/) (2014-01-07)
@@ -92,10 +93,11 @@
 
 
 - [Bestof](https://perrotta.dev/pt/tags/bestof/) (3 posts)
-- [Dev](https://perrotta.dev/pt/tags/dev/) (61 posts)
+- [Dev](https://perrotta.dev/pt/tags/dev/) (62 posts)
 - [Gaming](https://perrotta.dev/pt/tags/gaming/) (3 posts)
+- [Git](https://perrotta.dev/pt/tags/git/) (1 posts)
 - [Leetcode](https://perrotta.dev/pt/tags/leetcode/) (1 posts)
-- [Legacy](https://perrotta.dev/pt/tags/legacy/) (69 posts)
+- [Legacy](https://perrotta.dev/pt/tags/legacy/) (70 posts)
 - [Meta](https://perrotta.dev/pt/tags/meta/) (2 posts)
 - [Privacy](https://perrotta.dev/pt/tags/privacy/) (3 posts)
 - [Security](https://perrotta.dev/pt/tags/security/) (1 posts)
