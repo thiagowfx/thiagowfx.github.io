@@ -1,9 +1,11 @@
 ---
 title: "Reply to: the commodification of travel"
 url: https://perrotta.dev/2026/05/reply-to-the-commodification-of-travel/
-last_updated: 2026-05-24
+last_updated: 2026-05-25
 ---
 
+
+Herman Martinus:
 
 > I've noticed that travel has become, of late, an act of collecting places.
 > I've literally heard people referring to visiting a place as doing that place,
