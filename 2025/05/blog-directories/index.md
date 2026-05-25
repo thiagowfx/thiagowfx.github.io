@@ -1,7 +1,7 @@
 ---
 title: "Blog directories"
 url: https://perrotta.dev/2025/05/blog-directories/
-last_updated: 2026-04-30
+last_updated: 2026-05-25
 ---
 
 
@@ -30,6 +30,7 @@ A few directories I like[^1]:
 - ✪ https://darktheme.club/
 - ✪ https://diff.blog/
 - ✪ https://feedle.world/
+- ✪ https://indieblog.page/
 - ✪ https://kagi.com/smallweb
 - ✪ https://marginalia-search.com/
 - ✪ https://powrss.com/
