@@ -19,7 +19,7 @@ melhor e não dormir tão tarde para poder ir à faculdade direito...
 Então, vamos lá: participei de duas competições. A primeira foi relacionada à
 comunidade da Mozilla Brasil (da qual, tenho que dizer, gostei pra caramba! Foi
 ela, inclusive, que me motivou a escrever [esse outro
-post](http://thiagoperrotta.wordpress.com/2014/02/01/software-e-outras-coisas-livres-revisitados-parte-0-0-01/).
+post]({{< ref "2014-02-01-software-e-outras-coisas-livres-revisitados-parte-0-0-01" >}}).
 A outra foi do CERT.br. Bom, tenho uma informação ruim e outra boa. Vamos
 começar pela ruim...
 
