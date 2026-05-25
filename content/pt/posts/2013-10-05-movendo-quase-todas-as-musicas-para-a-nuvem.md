@@ -58,7 +58,7 @@ Então eu fui olhar alguns sites que estavam nos meus favoritos. Posso citar:
 
 (O leitor não precisa achar que eu só tenho sites de músicas nos meus favoritos.
 Na verdade, isso é uma longa história, pelo menos para mim. Essa questão da
-[organização de links](http://thiagoperrotta.wordpress.com/2013/07/25/links-sao-o-terror/),
+[organização de links]({{< ref "2013-07-25-links-sao-o-terror" >}}),
 sabe? Eu gosto de guardar tudo de interessante que eu encontro. E eu encontro
 muita coisa interessante (OK, pelo menos para mim, gosto é relativo). Então eu
 tenho uma quantidade enorme de sites nos meus favoritos. Gerenciar (na verdade,
