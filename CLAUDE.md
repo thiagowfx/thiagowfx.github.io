@@ -50,6 +50,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Blog post tags: Use common tags like `bestof`, `coding`, `dev`, `gaming`, `linux`, `meta`, `pt`, `privacy`, `serenity`
 - Commit messages for new posts: `git commit -m "new post: title"`
 - Posts use frontmatter with title, date, and tags
+- When creating posts, run `date --iso-8601=seconds` to get the current local datetime (with timezone offset) for the frontmatter `date:` field
 - No AI assistance is used for content creation or editing
 - Internal plans, notes, and summaries: Create in `docs/adrs/` directory with naming pattern `NNNN-description.md` (never in repo root)
 
