@@ -1,6 +1,6 @@
 ---
 title: "Idleness, redux"
-date: 2026-05-26T00:00:00+00:00
+date: 2026-05-26T22:22:00+02:00
 tags:
   - ai
   - dev
