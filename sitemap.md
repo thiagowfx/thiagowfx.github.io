@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Idleness, redux](https://perrotta.dev/2026/05/idleness-redux/) (2026-05-26)
 - [Claude Enterprise: plan usage](https://perrotta.dev/2026/05/claude-enterprise-plan-usage/) (2026-05-26)
 - [atuin: global search](https://perrotta.dev/2026/05/atuin-global-search/) (2026-05-26)
 - [No slop grenade](https://perrotta.dev/2026/05/no-slop-grenade/) (2026-05-25)
@@ -1250,13 +1251,13 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (90 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (91 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (180 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1130 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1131 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
@@ -1268,13 +1269,13 @@
 - [Macos](https://perrotta.dev/tags/macos/) (47 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (59 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
-- [Pkm](https://perrotta.dev/tags/pkm/) (26 posts)
+- [Pkm](https://perrotta.dev/tags/pkm/) (27 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (32 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (55 posts)
 - [Security](https://perrotta.dev/tags/security/) (61 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (254 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (255 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (11 posts)
