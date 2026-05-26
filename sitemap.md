@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [atuin: global search](https://perrotta.dev/2026/05/atuin-global-search/) (2026-05-26)
 - [No slop grenade](https://perrotta.dev/2026/05/no-slop-grenade/) (2026-05-25)
 - [fast-resume: search coding agent sessions](https://perrotta.dev/2026/05/fast-resume-search-coding-agent-sessions/) (2026-05-25)
 - [Grill me](https://perrotta.dev/2026/05/grill-me/) (2026-05-25)
@@ -1254,7 +1255,7 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (180 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1128 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1129 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
@@ -1266,7 +1267,7 @@
 - [Macos](https://perrotta.dev/tags/macos/) (47 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (59 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
-- [Pkm](https://perrotta.dev/tags/pkm/) (25 posts)
+- [Pkm](https://perrotta.dev/tags/pkm/) (26 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (32 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (55 posts)
