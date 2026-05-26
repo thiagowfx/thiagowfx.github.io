@@ -8,7 +8,8 @@ tags:
   - pkm
 ---
 
-`fast-resume` (`fr`), via [Stanislas](https://stanislas.blog/2026/01/tui-index-search-coding-agent-sessions/):
+[`fast-resume`](https://github.com/angristan/fast-resume) (`fr`), via
+[Stanislas](https://stanislas.blog/2026/01/tui-index-search-coding-agent-sessions/):
 
 > I use many coding agents these days: Claude Code, Codex, OpenCode, Copilot,
 > and more. Sometimes I remember that I, or the agent, mentioned something
