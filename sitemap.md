@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Claude Enterprise: plan usage](https://perrotta.dev/2026/05/claude-enterprise-plan-usage/) (2026-05-26)
 - [atuin: global search](https://perrotta.dev/2026/05/atuin-global-search/) (2026-05-26)
 - [No slop grenade](https://perrotta.dev/2026/05/no-slop-grenade/) (2026-05-25)
 - [fast-resume: search coding agent sessions](https://perrotta.dev/2026/05/fast-resume-search-coding-agent-sessions/) (2026-05-25)
@@ -1249,13 +1250,13 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (89 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (90 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (180 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1129 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1130 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
