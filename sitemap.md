@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [GitHub: disable copilot](https://perrotta.dev/2026/05/github-disable-copilot/) (2026-05-27)
 - [Gmail: disable AI inbox](https://perrotta.dev/2026/05/gmail-disable-ai-inbox/) (2026-05-27)
 - [You can run that yourself](https://perrotta.dev/2026/05/you-can-run-that-yourself/) (2026-05-27)
 - [Idleness, redux](https://perrotta.dev/2026/05/idleness-redux/) (2026-05-26)
@@ -1253,13 +1254,13 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (93 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (94 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (180 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1133 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1134 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
