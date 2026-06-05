@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [brew trust](https://perrotta.dev/2026/06/brew-trust/) (2026-06-05)
 - [Codexbar](https://perrotta.dev/2026/05/codexbar/) (2026-05-31)
 - [GitHub: disable copilot](https://perrotta.dev/2026/05/github-disable-copilot/) (2026-05-27)
 - [Gmail: disable AI inbox](https://perrotta.dev/2026/05/gmail-disable-ai-inbox/) (2026-05-27)
@@ -1261,7 +1262,7 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (180 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1135 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1136 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
@@ -1270,7 +1271,7 @@
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (41 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (154 posts)
-- [Macos](https://perrotta.dev/tags/macos/) (47 posts)
+- [Macos](https://perrotta.dev/tags/macos/) (48 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (59 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (27 posts)
