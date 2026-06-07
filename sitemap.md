@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [terraform police](https://perrotta.dev/2026/06/terraform-police/) (2026-06-08)
 - [brew trust](https://perrotta.dev/2026/06/brew-trust/) (2026-06-05)
 - [Codexbar](https://perrotta.dev/2026/05/codexbar/) (2026-05-31)
 - [GitHub: disable copilot](https://perrotta.dev/2026/05/github-disable-copilot/) (2026-05-27)
@@ -1262,7 +1263,7 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (180 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1136 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1137 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
@@ -1280,8 +1281,8 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (55 posts)
 - [Security](https://perrotta.dev/tags/security/) (61 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (257 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (258 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
-- [Terraform](https://perrotta.dev/tags/terraform/) (11 posts)
+- [Terraform](https://perrotta.dev/tags/terraform/) (12 posts)
 - [Vim](https://perrotta.dev/tags/vim/) (13 posts)
