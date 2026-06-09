@@ -44,6 +44,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Images: Optimize PNGs with oxipng
 - Follow Hugo's Markdown and frontmatter conventions
 - Justfiles: Use format-justfile for consistent formatting
+- Prefer "we" instead of "you"
 
 ## Content Guidelines
 
