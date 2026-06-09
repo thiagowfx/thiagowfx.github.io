@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [kubectl: atomic upsert](https://perrotta.dev/2026/06/kubectl-atomic-upsert/) (2026-06-09)
 - [terraform police](https://perrotta.dev/2026/06/terraform-police/) (2026-06-08)
 - [brew trust](https://perrotta.dev/2026/06/brew-trust/) (2026-06-05)
 - [Codexbar](https://perrotta.dev/2026/05/codexbar/) (2026-05-31)
@@ -1263,13 +1264,13 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (180 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1137 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1138 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (8 posts)
 - [Git](https://perrotta.dev/tags/git/) (60 posts)
-- [Kubernetes](https://perrotta.dev/tags/kubernetes/) (41 posts)
+- [Kubernetes](https://perrotta.dev/tags/kubernetes/) (42 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (154 posts)
 - [Macos](https://perrotta.dev/tags/macos/) (48 posts)
