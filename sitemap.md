@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Don't ask to ask](https://perrotta.dev/2026/06/dont-ask-to-ask/) (2026-06-10)
 - [kubectl: atomic upsert](https://perrotta.dev/2026/06/kubectl-atomic-upsert/) (2026-06-09)
 - [terraform police](https://perrotta.dev/2026/06/terraform-police/) (2026-06-08)
 - [brew trust](https://perrotta.dev/2026/06/brew-trust/) (2026-06-05)
@@ -1282,7 +1283,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (55 posts)
 - [Security](https://perrotta.dev/tags/security/) (61 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (258 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (259 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (12 posts)
