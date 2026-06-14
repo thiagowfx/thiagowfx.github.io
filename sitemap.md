@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Stop Energy](https://perrotta.dev/2026/06/stop-energy/) (2026-06-14)
 - [Don't ask to ask](https://perrotta.dev/2026/06/dont-ask-to-ask/) (2026-06-10)
 - [kubectl: atomic upsert](https://perrotta.dev/2026/06/kubectl-atomic-upsert/) (2026-06-09)
 - [terraform police](https://perrotta.dev/2026/06/terraform-police/) (2026-06-08)
@@ -1265,7 +1266,7 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (180 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1138 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1139 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
@@ -1283,7 +1284,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (55 posts)
 - [Security](https://perrotta.dev/tags/security/) (61 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (259 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (260 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (12 posts)
