@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [git: switch-to-default with wt](https://perrotta.dev/2026/06/git-switch-to-default-with-wt/) (2026-06-14)
 - [Stop Energy](https://perrotta.dev/2026/06/stop-energy/) (2026-06-14)
 - [Don't ask to ask](https://perrotta.dev/2026/06/dont-ask-to-ask/) (2026-06-10)
 - [kubectl: atomic upsert](https://perrotta.dev/2026/06/kubectl-atomic-upsert/) (2026-06-09)
@@ -1266,12 +1267,12 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (180 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1139 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1140 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (8 posts)
-- [Git](https://perrotta.dev/tags/git/) (60 posts)
+- [Git](https://perrotta.dev/tags/git/) (61 posts)
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (42 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (154 posts)
