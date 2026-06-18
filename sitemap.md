@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [pre-commit: authentication in internal github repos](https://perrotta.dev/2026/06/pre-commit-authentication-in-internal-github-repos/) (2026-06-18)
 - [git: switch-to-default with wt](https://perrotta.dev/2026/06/git-switch-to-default-with-wt/) (2026-06-14)
 - [Stop Energy](https://perrotta.dev/2026/06/stop-energy/) (2026-06-14)
 - [Don't ask to ask](https://perrotta.dev/2026/06/dont-ask-to-ask/) (2026-06-10)
@@ -1267,12 +1268,12 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (180 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1140 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1141 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (8 posts)
-- [Git](https://perrotta.dev/tags/git/) (61 posts)
+- [Git](https://perrotta.dev/tags/git/) (62 posts)
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (42 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (154 posts)
@@ -1281,7 +1282,7 @@
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (27 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
-- [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (32 posts)
+- [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (33 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (55 posts)
 - [Security](https://perrotta.dev/tags/security/) (61 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
