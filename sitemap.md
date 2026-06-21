@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [C++ vs Python](https://perrotta.dev/2026/06/c-vs-python/) (2026-06-22)
 - [pre-commit: authentication in internal github repos](https://perrotta.dev/2026/06/pre-commit-authentication-in-internal-github-repos/) (2026-06-18)
 - [git: switch-to-default with wt](https://perrotta.dev/2026/06/git-switch-to-default-with-wt/) (2026-06-14)
 - [Stop Energy](https://perrotta.dev/2026/06/stop-energy/) (2026-06-14)
@@ -1268,7 +1269,7 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (180 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1141 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1142 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
