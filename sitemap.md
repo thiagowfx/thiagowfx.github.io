@@ -22,6 +22,7 @@
 
 
 - [C++ vs Python](https://perrotta.dev/2026/06/c-vs-python/) (2026-06-22)
+- [keychron k2: bluetooth always-on](https://perrotta.dev/2026/06/keychron-k2-bluetooth-always-on/) (2026-06-20)
 - [pre-commit: authentication in internal github repos](https://perrotta.dev/2026/06/pre-commit-authentication-in-internal-github-repos/) (2026-06-18)
 - [git: switch-to-default with wt](https://perrotta.dev/2026/06/git-switch-to-default-with-wt/) (2026-06-14)
 - [Stop Energy](https://perrotta.dev/2026/06/stop-energy/) (2026-06-14)
@@ -1279,7 +1280,7 @@
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (42 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (154 posts)
-- [Macos](https://perrotta.dev/tags/macos/) (48 posts)
+- [Macos](https://perrotta.dev/tags/macos/) (49 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (60 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (27 posts)
