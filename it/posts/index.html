@@ -904,6 +904,36 @@
     75% { content: "..."; }
   }
 
+  .search-filters {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .search-filters select {
+    border: 1px solid var(--border-color);
+    border-radius: .25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    background: var(--bg-color);
+  }
+
+  .search-filters select:focus {
+    outline: none;
+    border-color: var(--link-color);
+  }
+
+  .search-year-range {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+    color: var(--color-gray);
+  }
+
   .search-results {
     margin-top: 1rem;
   }
@@ -1431,12 +1461,31 @@
   <input type="text" id="search-input" placeholder="Search posts... (use * as wildcard)" autocomplete="off" >
   <div id="search-info" class="search-info"></div>
 </div>
+<div class="search-filters">
+  <select id="search-tag-filter" aria-label="Filter by tag">
+    <option value="">All tags</option>
+  </select>
+  <span class="search-year-range">
+    <select id="search-year-from" aria-label="From year"><option value="">Any year</option></select>
+    –
+    <select id="search-year-to" aria-label="To year"><option value="">Any year</option></select>
+  </span>
+  <select id="search-sort" aria-label="Sort by">
+    <option value="relevance">Relevance</option>
+    <option value="newest">Newest first</option>
+    <option value="oldest">Oldest first</option>
+  </select>
+</div>
 <div id="search-results" class="search-results"></div>
 <script type="module">
   let searchIndex = null;
   const searchInput = document.getElementById('search-input');
   const searchResults = document.getElementById('search-results');
   const searchInfo = document.getElementById('search-info');
+  const tagFilter = document.getElementById('search-tag-filter');
+  const yearFromFilter = document.getElementById('search-year-from');
+  const yearToFilter = document.getElementById('search-year-to');
+  const sortFilter = document.getElementById('search-sort');
   const contentSelector = '#posts-content';
   const contentEl = contentSelector ? document.querySelector(contentSelector) : null;
   const excludeTags = new Set([]);
@@ -1489,11 +1538,18 @@
 
   const updateURL = (query) => {
     const url = new URL(window.location);
-    if (query) {
-      url.searchParams.set('q', query);
-    } else {
-      url.searchParams.delete('q');
-    }
+    const syncParam = (key, value) => {
+      if (value) {
+        url.searchParams.set(key, value);
+      } else {
+        url.searchParams.delete(key);
+      }
+    };
+    syncParam('q', query);
+    syncParam('tag', tagFilter.value);
+    syncParam('from', yearFromFilter.value);
+    syncParam('to', yearToFilter.value);
+    syncParam('sort', sortFilter.value === 'relevance' ? '' : sortFilter.value);
     history.replaceState(null, '', url);
   };
 
@@ -1532,7 +1588,13 @@
     if (!searchIndex) return;
 
     const q = query.toLowerCase().trim();
-    if (q.length === 0) {
+    const selectedTag = tagFilter.value;
+    const yearFrom = yearFromFilter.value;
+    const yearTo = yearToFilter.value;
+    const sortMode = sortFilter.value;
+    const filtersActive = Boolean(selectedTag || yearFrom || yearTo || sortMode !== 'relevance');
+
+    if (q.length === 0 && !filtersActive) {
       searchResults.innerHTML = '';
       searchInfo.textContent = `${searchIndex.length} ${i18n.postsIndexed}`;
       if (contentEl) contentEl.style.display = '';
@@ -1546,6 +1608,11 @@
     const results = [];
 
     for (const post of searchIndex) {
+      if (selectedTag && !(post.tags ?? []).includes(selectedTag)) continue;
+      const year = (post.date ?? '').slice(0, 4);
+      if (yearFrom && year < yearFrom) continue;
+      if (yearTo && year > yearTo) continue;
+
       const title = (post.title ?? '').toLowerCase();
       const summary = (post.summary ?? '').toLowerCase();
       const tags = (post.tags ?? []).map(t => t.toLowerCase());
@@ -1574,7 +1641,12 @@
       }
     }
 
-    results.sort((a, b) => b.score - a.score || b.post.date.localeCompare(a.post.date));
+    const sorters = {
+      relevance: (a, b) => b.score - a.score || b.post.date.localeCompare(a.post.date),
+      newest: (a, b) => b.post.date.localeCompare(a.post.date),
+      oldest: (a, b) => a.post.date.localeCompare(b.post.date),
+    };
+    results.sort(sorters[sortMode] ?? sorters.relevance);
 
     updateURL(query);
     renderResults(results, query);
@@ -1582,6 +1654,37 @@
 
   const lang = 'it' || 'en';
   const langPath = lang === 'en' ? '' : '/' + lang;
+
+  
+  const params = new URLSearchParams(window.location.search);
+  const desiredFilters = {
+    tag: params.get('tag') ?? '',
+    from: params.get('from') ?? '',
+    to: params.get('to') ?? '',
+    sort: params.get('sort') ?? '',
+  };
+  if (desiredFilters.sort) sortFilter.value = desiredFilters.sort;
+
+  const populateFilterOptions = () => {
+    const addOption = (select, value, label) => {
+      const opt = document.createElement('option');
+      opt.value = value;
+      opt.textContent = label ?? value;
+      select.appendChild(opt);
+    };
+
+    const tags = [...new Set(searchIndex.flatMap(post => post.tags ?? []))].sort();
+    tags.forEach(t => addOption(tagFilter, t));
+
+    const years = [...new Set(searchIndex.map(post => (post.date ?? '').slice(0, 4)).filter(Boolean))]
+      .sort().reverse();
+    years.forEach(y => { addOption(yearFromFilter, y); addOption(yearToFilter, y); });
+
+    
+    if (tags.includes(desiredFilters.tag)) tagFilter.value = desiredFilters.tag;
+    if (years.includes(desiredFilters.from)) yearFromFilter.value = desiredFilters.from;
+    if (years.includes(desiredFilters.to)) yearToFilter.value = desiredFilters.to;
+  };
 
   const loadSearchIndex = () => {
     if (searchIndex !== null) return;
@@ -1609,11 +1712,13 @@
         if (excludeCategories.size > 0) {
           searchIndex = searchIndex.filter(post => !(post.categories ?? []).some(c => excludeCategories.has(c)));
         }
+        populateFilterOptions();
         searchInfo.classList.remove('loading');
         searchInfo.textContent = `${searchIndex.length} ${i18n.postsIndexed}`;
         const q = searchInput.value.trim();
-        if (q) {
-          performSearch(q);
+        const filtersActive = tagFilter.value || yearFromFilter.value || yearToFilter.value || sortFilter.value !== 'relevance';
+        if (q || filtersActive) {
+          performSearch(searchInput.value);
         }
       })
       .catch(err => {
@@ -1624,15 +1729,18 @@
   };
 
   
-  const q = new URLSearchParams(window.location.search).get('q');
-  if (q) {
-    searchInput.value = q;
+  const q = params.get('q');
+  if (q) searchInput.value = q;
+  if (q || desiredFilters.tag || desiredFilters.from || desiredFilters.to || desiredFilters.sort) {
     loadSearchIndex();
   } else {
     searchInput.addEventListener('focus', loadSearchIndex, { once: true });
   }
 
   searchInput.addEventListener('input', debounce(e => performSearch(e.target.value), 150));
+  [tagFilter, yearFromFilter, yearToFilter, sortFilter].forEach(el =>
+    el.addEventListener('change', () => performSearch(searchInput.value))
+  );
 </script>
 
 
