@@ -955,6 +955,43 @@
     color: var(--color-gray);
   }
 
+  .search-tag-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .search-tag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: var(--text-color);
+    background: var(--bg-color);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .search-tag-chip[hidden] {
+    display: none;
+  }
+
+  .search-tag-chip:hover {
+    border-color: var(--link-color);
+    color: var(--link-color);
+  }
+
+  .search-tag-chip[aria-pressed="true"] {
+    border-color: var(--link-color);
+    background: var(--link-color);
+    color: var(--bg-color);
+  }
+
   .search-results {
     margin-top: 1rem;
   }
@@ -1479,9 +1516,6 @@
   <div id="search-info" class="search-info"></div>
 </div>
 <div class="search-filters">
-  <select id="search-tag-filter" aria-label="Filter by tag">
-    <option value="">All tags</option>
-  </select>
   <span class="search-year-range">
     <select id="search-year-from" aria-label="From year"><option value="">Any year</option></select>
     –
@@ -1493,16 +1527,18 @@
     <option value="oldest">Oldest first</option>
   </select>
 </div>
+<div id="search-tag-chips" class="search-tag-chips" role="group" aria-label="Filter by tag"></div>
 <div id="search-results" class="search-results"></div>
 <script type="module">
   let searchIndex = null;
   const searchInput = document.getElementById('search-input');
   const searchResults = document.getElementById('search-results');
   const searchInfo = document.getElementById('search-info');
-  const tagFilter = document.getElementById('search-tag-filter');
+  const tagChips = document.getElementById('search-tag-chips');
   const yearFromFilter = document.getElementById('search-year-from');
   const yearToFilter = document.getElementById('search-year-to');
   const sortFilter = document.getElementById('search-sort');
+  const selectedTags = new Set();
   const contentSelector = '';
   const contentEl = contentSelector ? document.querySelector(contentSelector) : null;
   const excludeTags = new Set([]);
@@ -1563,7 +1599,7 @@
       }
     };
     syncParam('q', query);
-    syncParam('tag', tagFilter.value);
+    syncParam('tag', [...selectedTags].join(','));
     syncParam('from', yearFromFilter.value);
     syncParam('to', yearToFilter.value);
     syncParam('sort', sortFilter.value === 'relevance' ? '' : sortFilter.value);
@@ -1605,11 +1641,10 @@
     if (!searchIndex) return;
 
     const q = query.toLowerCase().trim();
-    const selectedTag = tagFilter.value;
     const yearFrom = yearFromFilter.value;
     const yearTo = yearToFilter.value;
     const sortMode = sortFilter.value;
-    const filtersActive = Boolean(selectedTag || yearFrom || yearTo || sortMode !== 'relevance');
+    const filtersActive = Boolean(selectedTags.size || yearFrom || yearTo || sortMode !== 'relevance');
 
     if (q.length === 0 && !filtersActive) {
       searchResults.innerHTML = '';
@@ -1623,9 +1658,11 @@
 
     const terms = q.split(/\s+/).filter(t => t.length > 0);
     const results = [];
+    
+    
+    const availableTags = new Set();
 
     for (const post of searchIndex) {
-      if (selectedTag && !(post.tags ?? []).includes(selectedTag)) continue;
       const year = (post.date ?? '').slice(0, 4);
       if (yearFrom && year < yearFrom) continue;
       if (yearTo && year > yearTo) continue;
@@ -1653,9 +1690,11 @@
         if (inSummary) score += 1;
       }
 
-      if (allMatch) {
-        results.push({ post, score });
-      }
+      if (!allMatch) continue;
+
+      (post.tags ?? []).forEach(t => availableTags.add(t));
+      if (selectedTags.size && !(post.tags ?? []).some(t => selectedTags.has(t))) continue;
+      results.push({ post, score });
     }
 
     const sorters = {
@@ -1665,6 +1704,7 @@
     };
     results.sort(sorters[sortMode] ?? sorters.relevance);
 
+    updateChipVisibility(availableTags);
     updateURL(query);
     renderResults(results, query);
   };
@@ -1675,7 +1715,7 @@
   
   const params = new URLSearchParams(window.location.search);
   const desiredFilters = {
-    tag: params.get('tag') ?? '',
+    tags: (params.get('tag') ?? '').split(',').filter(Boolean),
     from: params.get('from') ?? '',
     to: params.get('to') ?? '',
     sort: params.get('sort') ?? '',
@@ -1690,17 +1730,48 @@
       select.appendChild(opt);
     };
 
-    const tags = [...new Set(searchIndex.flatMap(post => post.tags ?? []))].sort();
-    tags.forEach(t => addOption(tagFilter, t));
+    
+    const tagCounts = new Map();
+    searchIndex.forEach(post => (post.tags ?? []).forEach(t => tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1)));
+    const tags = [...tagCounts.keys()].sort((a, b) => tagCounts.get(b) - tagCounts.get(a) || a.localeCompare(b));
+
+    tags.forEach(t => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'search-tag-chip';
+      chip.dataset.tag = t;
+      chip.setAttribute('aria-pressed', 'false');
+      chip.textContent = `#${t}`;
+      chip.addEventListener('click', () => {
+        const active = chip.getAttribute('aria-pressed') === 'true';
+        chip.setAttribute('aria-pressed', String(!active));
+        if (active) selectedTags.delete(t); else selectedTags.add(t);
+        performSearch(searchInput.value);
+      });
+      tagChips.appendChild(chip);
+    });
 
     const years = [...new Set(searchIndex.map(post => (post.date ?? '').slice(0, 4)).filter(Boolean))]
       .sort().reverse();
     years.forEach(y => { addOption(yearFromFilter, y); addOption(yearToFilter, y); });
 
     
-    if (tags.includes(desiredFilters.tag)) tagFilter.value = desiredFilters.tag;
+    desiredFilters.tags.forEach(t => {
+      const chip = tagChips.querySelector(`[data-tag="${CSS.escape(t)}"]`);
+      if (chip) { chip.setAttribute('aria-pressed', 'true'); selectedTags.add(t); }
+    });
     if (years.includes(desiredFilters.from)) yearFromFilter.value = desiredFilters.from;
     if (years.includes(desiredFilters.to)) yearToFilter.value = desiredFilters.to;
+  };
+
+  
+  
+  const updateChipVisibility = (availableTags) => {
+    tagChips.querySelectorAll('.search-tag-chip').forEach(chip => {
+      const t = chip.dataset.tag;
+      const visible = !availableTags || availableTags.has(t) || selectedTags.has(t);
+      chip.hidden = !visible;
+    });
   };
 
   const loadSearchIndex = () => {
@@ -1733,7 +1804,7 @@
         searchInfo.classList.remove('loading');
         searchInfo.textContent = `${searchIndex.length} ${i18n.postsIndexed}`;
         const q = searchInput.value.trim();
-        const filtersActive = tagFilter.value || yearFromFilter.value || yearToFilter.value || sortFilter.value !== 'relevance';
+        const filtersActive = selectedTags.size || yearFromFilter.value || yearToFilter.value || sortFilter.value !== 'relevance';
         if (q || filtersActive) {
           performSearch(searchInput.value);
         }
@@ -1748,14 +1819,14 @@
   
   const q = params.get('q');
   if (q) searchInput.value = q;
-  if (q || desiredFilters.tag || desiredFilters.from || desiredFilters.to || desiredFilters.sort) {
+  if (q || desiredFilters.tags.length || desiredFilters.from || desiredFilters.to || desiredFilters.sort) {
     loadSearchIndex();
   } else {
     searchInput.addEventListener('focus', loadSearchIndex, { once: true });
   }
 
   searchInput.addEventListener('input', debounce(e => performSearch(e.target.value), 150));
-  [tagFilter, yearFromFilter, yearToFilter, sortFilter].forEach(el =>
+  [yearFromFilter, yearToFilter, sortFilter].forEach(el =>
     el.addEventListener('change', () => performSearch(searchInput.value))
   );
 </script>
