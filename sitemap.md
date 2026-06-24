@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [espanso: reload config after editing](https://perrotta.dev/2026/06/espanso-reload-config-after-editing/) (2026-06-24)
 - [C++ vs Python](https://perrotta.dev/2026/06/c-vs-python/) (2026-06-22)
 - [keychron k2: bluetooth always-on](https://perrotta.dev/2026/06/keychron-k2-bluetooth-always-on/) (2026-06-20)
 - [pre-commit: authentication in internal github repos](https://perrotta.dev/2026/06/pre-commit-authentication-in-internal-github-repos/) (2026-06-18)
@@ -1271,7 +1272,7 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (180 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1143 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1144 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
@@ -1280,7 +1281,7 @@
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (42 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (154 posts)
-- [Macos](https://perrotta.dev/tags/macos/) (49 posts)
+- [Macos](https://perrotta.dev/tags/macos/) (50 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (60 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (27 posts)
