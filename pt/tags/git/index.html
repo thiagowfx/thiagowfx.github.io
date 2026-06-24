@@ -1502,19 +1502,6 @@
   <input type="text" id="search-input" placeholder="Pesquise posts... (use * como curinga)" autocomplete="off" >
   <div id="search-info" class="search-info"></div>
 </div>
-<div class="search-filters">
-  <span class="search-year-range">
-    <select id="search-year-from" aria-label="Do ano"><option value="">Qualquer ano</option></select>
-    –
-    <select id="search-year-to" aria-label="Até o ano"><option value="">Qualquer ano</option></select>
-  </span>
-  <select id="search-sort" aria-label="Ordenar por">
-    <option value="relevance">Relevância</option>
-    <option value="newest">Mais recentes</option>
-    <option value="oldest">Mais antigos</option>
-  </select>
-</div>
-<div id="search-tag-chips" class="search-tag-chips" role="group" aria-label="Filtrar por tag"></div>
 <div id="search-results" class="search-results"></div>
 <script type="module">
   let searchIndex = null;
@@ -1527,6 +1514,12 @@
   const sortFilter = document.getElementById('search-sort');
   const selectedTags = new Set();
   const globalTagCounts = new Map();
+  
+  
+  const hasFilters = Boolean(tagChips && yearFromFilter && yearToFilter && sortFilter);
+  const yearFromVal = () => hasFilters ? yearFromFilter.value : '';
+  const yearToVal = () => hasFilters ? yearToFilter.value : '';
+  const sortVal = () => hasFilters ? sortFilter.value : 'relevance';
   const contentSelector = '#posts-content';
   const contentEl = contentSelector ? document.querySelector(contentSelector) : null;
   const excludeTags = new Set([]);
@@ -1587,10 +1580,12 @@
       }
     };
     syncParam('q', query);
-    syncParam('tag', [...selectedTags].join(','));
-    syncParam('from', yearFromFilter.value);
-    syncParam('to', yearToFilter.value);
-    syncParam('sort', sortFilter.value === 'relevance' ? '' : sortFilter.value);
+    if (hasFilters) {
+      syncParam('tag', [...selectedTags].join(','));
+      syncParam('from', yearFromVal());
+      syncParam('to', yearToVal());
+      syncParam('sort', sortVal() === 'relevance' ? '' : sortVal());
+    }
     history.replaceState(null, '', url);
   };
 
@@ -1629,9 +1624,9 @@
     if (!searchIndex) return;
 
     const q = query.toLowerCase().trim();
-    const yearFrom = yearFromFilter.value;
-    const yearTo = yearToFilter.value;
-    const sortMode = sortFilter.value;
+    const yearFrom = yearFromVal();
+    const yearTo = yearToVal();
+    const sortMode = sortVal();
     const filtersActive = Boolean(selectedTags.size || yearFrom || yearTo || sortMode !== 'relevance');
 
     if (q.length === 0 && !filtersActive) {
@@ -1709,9 +1704,10 @@
     to: params.get('to') ?? '',
     sort: params.get('sort') ?? '',
   };
-  if (desiredFilters.sort) sortFilter.value = desiredFilters.sort;
+  if (hasFilters && desiredFilters.sort) sortFilter.value = desiredFilters.sort;
 
   const populateFilterOptions = () => {
+    if (!hasFilters) return;
     const addOption = (select, value, label) => {
       const opt = document.createElement('option');
       opt.value = value;
@@ -1760,6 +1756,7 @@
   
   
   const updateChips = (counts) => {
+    if (!hasFilters) return;
     tagChips.querySelectorAll('.search-tag-chip').forEach(chip => {
       const t = chip.dataset.tag;
       const n = counts ? (counts.get(t) ?? 0) : globalTagCounts.get(t);
@@ -1798,7 +1795,7 @@
         searchInfo.classList.remove('loading');
         searchInfo.textContent = `${searchIndex.length} ${i18n.postsIndexed}`;
         const q = searchInput.value.trim();
-        const filtersActive = selectedTags.size || yearFromFilter.value || yearToFilter.value || sortFilter.value !== 'relevance';
+        const filtersActive = selectedTags.size || yearFromVal() || yearToVal() || sortVal() !== 'relevance';
         if (q || filtersActive) {
           performSearch(searchInput.value);
         }
@@ -1813,16 +1810,19 @@
   
   const q = params.get('q');
   if (q) searchInput.value = q;
-  if (q || desiredFilters.tags.length || desiredFilters.from || desiredFilters.to || desiredFilters.sort) {
+  const urlFiltersActive = hasFilters && (desiredFilters.tags.length || desiredFilters.from || desiredFilters.to || desiredFilters.sort);
+  if (q || urlFiltersActive) {
     loadSearchIndex();
   } else {
     searchInput.addEventListener('focus', loadSearchIndex, { once: true });
   }
 
   searchInput.addEventListener('input', debounce(e => performSearch(e.target.value), 150));
-  [yearFromFilter, yearToFilter, sortFilter].forEach(el =>
-    el.addEventListener('change', () => performSearch(searchInput.value))
-  );
+  if (hasFilters) {
+    [yearFromFilter, yearToFilter, sortFilter].forEach(el =>
+      el.addEventListener('change', () => performSearch(searchInput.value))
+    );
+  }
 </script>
 
 
