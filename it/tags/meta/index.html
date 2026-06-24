@@ -1645,6 +1645,7 @@
     const results = [];
     
     
+    
     const tagMatchCounts = new Map();
 
     for (const post of searchIndex) {
@@ -1677,8 +1678,10 @@
 
       if (!allMatch) continue;
 
-      (post.tags ?? []).forEach(t => tagMatchCounts.set(t, (tagMatchCounts.get(t) ?? 0) + 1));
-      if (selectedTags.size && !(post.tags ?? []).some(t => selectedTags.has(t))) continue;
+      
+      const postTags = post.tags ?? [];
+      if (![...selectedTags].every(t => postTags.includes(t))) continue;
+      postTags.forEach(t => tagMatchCounts.set(t, (tagMatchCounts.get(t) ?? 0) + 1));
       results.push({ post, score });
     }
 
