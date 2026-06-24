@@ -32,6 +32,7 @@
   const yearToFilter = document.getElementById('search-year-to');
   const sortFilter = document.getElementById('search-sort');
   const selectedTags = new Set();
+  const globalTagCounts = new Map();
   const contentSelector = '{{ $contentSelector }}';
   const contentEl = contentSelector ? document.querySelector(contentSelector) : null;
   const excludeTags = new Set({{ $excludeTags | jsonify | safeJS }});
@@ -143,6 +144,7 @@
       searchResults.innerHTML = '';
       searchInfo.textContent = `${searchIndex.length} ${i18n.postsIndexed}`;
       if (contentEl) contentEl.style.display = '';
+      updateChips(null);
       updateURL('');
       return;
     }
@@ -151,9 +153,9 @@
 
     const terms = q.split(/\s+/).filter(t => t.length > 0);
     const results = [];
-    // Tags present in posts matching the query + year (ignoring the tag filter,
-    // since tags combine with OR). Used to hide chips with no relevant posts.
-    const availableTags = new Set();
+    // Tag -> count of posts matching the query + year (ignoring the tag filter,
+    // since tags combine with OR). Drives chip counts and hides empty chips.
+    const tagMatchCounts = new Map();
 
     for (const post of searchIndex) {
       const year = (post.date ?? '').slice(0, 4);
@@ -185,7 +187,7 @@
 
       if (!allMatch) continue;
 
-      (post.tags ?? []).forEach(t => availableTags.add(t));
+      (post.tags ?? []).forEach(t => tagMatchCounts.set(t, (tagMatchCounts.get(t) ?? 0) + 1));
       if (selectedTags.size && !(post.tags ?? []).some(t => selectedTags.has(t))) continue;
       results.push({ post, score });
     }
@@ -197,7 +199,7 @@
     };
     results.sort(sorters[sortMode] ?? sorters.relevance);
 
-    updateChipVisibility(availableTags);
+    updateChips(tagMatchCounts);
     updateURL(query);
     renderResults(results, query);
   };
@@ -224,9 +226,8 @@
     };
 
     // Tag chips: count posts per tag, sort by frequency then name, render toggle buttons.
-    const tagCounts = new Map();
-    searchIndex.forEach(post => (post.tags ?? []).forEach(t => tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1)));
-    const tags = [...tagCounts.keys()].sort((a, b) => tagCounts.get(b) - tagCounts.get(a) || a.localeCompare(b));
+    searchIndex.forEach(post => (post.tags ?? []).forEach(t => globalTagCounts.set(t, (globalTagCounts.get(t) ?? 0) + 1)));
+    const tags = [...globalTagCounts.keys()].sort((a, b) => globalTagCounts.get(b) - globalTagCounts.get(a) || a.localeCompare(b));
 
     tags.forEach(t => {
       const chip = document.createElement('button');
@@ -234,7 +235,11 @@
       chip.className = 'search-tag-chip';
       chip.dataset.tag = t;
       chip.setAttribute('aria-pressed', 'false');
-      chip.textContent = `#${t}`;
+      chip.append(`#${t} `);
+      const count = document.createElement('span');
+      count.className = 'search-tag-chip-count';
+      count.textContent = globalTagCounts.get(t);
+      chip.appendChild(count);
       chip.addEventListener('click', () => {
         const active = chip.getAttribute('aria-pressed') === 'true';
         chip.setAttribute('aria-pressed', String(!active));
@@ -257,13 +262,15 @@
     if (years.includes(desiredFilters.to)) yearToFilter.value = desiredFilters.to;
   };
 
-  // Hide tag chips with no posts in the current query/year result set. A
-  // null set (e.g. empty search) shows all chips; selected tags always show.
-  const updateChipVisibility = (availableTags) => {
+  // Update each chip's live count and visibility from a tag -> count map of the
+  // current query/year result set. A null map (empty search) shows all chips
+  // with their global counts; selected tags always stay visible.
+  const updateChips = (counts) => {
     tagChips.querySelectorAll('.search-tag-chip').forEach(chip => {
       const t = chip.dataset.tag;
-      const visible = !availableTags || availableTags.has(t) || selectedTags.has(t);
-      chip.hidden = !visible;
+      const n = counts ? (counts.get(t) ?? 0) : globalTagCounts.get(t);
+      chip.querySelector('.search-tag-chip-count').textContent = n;
+      chip.hidden = counts ? !(n > 0 || selectedTags.has(t)) : false;
     });
   };
 
