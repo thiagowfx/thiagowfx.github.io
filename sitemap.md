@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [caveman: talk like caveman, save tokens](https://perrotta.dev/2026/06/caveman-talk-like-caveman-save-tokens/) (2026-06-25)
 - [espanso: reload config after editing](https://perrotta.dev/2026/06/espanso-reload-config-after-editing/) (2026-06-24)
 - [C++ vs Python](https://perrotta.dev/2026/06/c-vs-python/) (2026-06-22)
 - [keychron k2: bluetooth always-on](https://perrotta.dev/2026/06/keychron-k2-bluetooth-always-on/) (2026-06-20)
@@ -1266,13 +1267,13 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (96 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (97 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
-- [Bestof](https://perrotta.dev/tags/bestof/) (180 posts)
+- [Bestof](https://perrotta.dev/tags/bestof/) (181 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1144 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1145 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
