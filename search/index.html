@@ -992,6 +992,11 @@
     color: var(--bg-color);
   }
 
+  .search-tag-chip-count {
+    font-size: 0.72rem;
+    opacity: 0.7;
+  }
+
   .search-results {
     margin-top: 1rem;
   }
@@ -1539,6 +1544,7 @@
   const yearToFilter = document.getElementById('search-year-to');
   const sortFilter = document.getElementById('search-sort');
   const selectedTags = new Set();
+  const globalTagCounts = new Map();
   const contentSelector = '';
   const contentEl = contentSelector ? document.querySelector(contentSelector) : null;
   const excludeTags = new Set([]);
@@ -1650,6 +1656,7 @@
       searchResults.innerHTML = '';
       searchInfo.textContent = `${searchIndex.length} ${i18n.postsIndexed}`;
       if (contentEl) contentEl.style.display = '';
+      updateChips(null);
       updateURL('');
       return;
     }
@@ -1660,7 +1667,7 @@
     const results = [];
     
     
-    const availableTags = new Set();
+    const tagMatchCounts = new Map();
 
     for (const post of searchIndex) {
       const year = (post.date ?? '').slice(0, 4);
@@ -1692,7 +1699,7 @@
 
       if (!allMatch) continue;
 
-      (post.tags ?? []).forEach(t => availableTags.add(t));
+      (post.tags ?? []).forEach(t => tagMatchCounts.set(t, (tagMatchCounts.get(t) ?? 0) + 1));
       if (selectedTags.size && !(post.tags ?? []).some(t => selectedTags.has(t))) continue;
       results.push({ post, score });
     }
@@ -1704,7 +1711,7 @@
     };
     results.sort(sorters[sortMode] ?? sorters.relevance);
 
-    updateChipVisibility(availableTags);
+    updateChips(tagMatchCounts);
     updateURL(query);
     renderResults(results, query);
   };
@@ -1731,9 +1738,8 @@
     };
 
     
-    const tagCounts = new Map();
-    searchIndex.forEach(post => (post.tags ?? []).forEach(t => tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1)));
-    const tags = [...tagCounts.keys()].sort((a, b) => tagCounts.get(b) - tagCounts.get(a) || a.localeCompare(b));
+    searchIndex.forEach(post => (post.tags ?? []).forEach(t => globalTagCounts.set(t, (globalTagCounts.get(t) ?? 0) + 1)));
+    const tags = [...globalTagCounts.keys()].sort((a, b) => globalTagCounts.get(b) - globalTagCounts.get(a) || a.localeCompare(b));
 
     tags.forEach(t => {
       const chip = document.createElement('button');
@@ -1741,7 +1747,11 @@
       chip.className = 'search-tag-chip';
       chip.dataset.tag = t;
       chip.setAttribute('aria-pressed', 'false');
-      chip.textContent = `#${t}`;
+      chip.append(`#${t} `);
+      const count = document.createElement('span');
+      count.className = 'search-tag-chip-count';
+      count.textContent = globalTagCounts.get(t);
+      chip.appendChild(count);
       chip.addEventListener('click', () => {
         const active = chip.getAttribute('aria-pressed') === 'true';
         chip.setAttribute('aria-pressed', String(!active));
@@ -1766,11 +1776,13 @@
 
   
   
-  const updateChipVisibility = (availableTags) => {
+  
+  const updateChips = (counts) => {
     tagChips.querySelectorAll('.search-tag-chip').forEach(chip => {
       const t = chip.dataset.tag;
-      const visible = !availableTags || availableTags.has(t) || selectedTags.has(t);
-      chip.hidden = !visible;
+      const n = counts ? (counts.get(t) ?? 0) : globalTagCounts.get(t);
+      chip.querySelector('.search-tag-chip-count').textContent = n;
+      chip.hidden = counts ? !(n > 0 || selectedTags.has(t)) : false;
     });
   };
 
