@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Gerrymandle: daily gerrymandering puzzle](https://perrotta.dev/2026/06/gerrymandle-daily-gerrymandering-puzzle/) (2026-06-26)
 - [claude code: ship your skills as a plugin marketplace](https://perrotta.dev/2026/06/claude-code-ship-your-skills-as-a-plugin-marketplace/) (2026-06-25)
 - [caveman: talk like caveman, save tokens](https://perrotta.dev/2026/06/caveman-talk-like-caveman-save-tokens/) (2026-06-25)
 - [espanso: reload config after editing](https://perrotta.dev/2026/06/espanso-reload-config-after-editing/) (2026-06-24)
@@ -1278,7 +1279,7 @@
 - [Dev](https://perrotta.dev/tags/dev/) (1146 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
-- [Gaming](https://perrotta.dev/tags/gaming/) (14 posts)
+- [Gaming](https://perrotta.dev/tags/gaming/) (15 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (8 posts)
 - [Git](https://perrotta.dev/tags/git/) (62 posts)
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (42 posts)
@@ -1293,7 +1294,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (55 posts)
 - [Security](https://perrotta.dev/tags/security/) (61 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (260 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (261 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (12 posts)
