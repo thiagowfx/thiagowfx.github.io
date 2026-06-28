@@ -1,7 +1,7 @@
 ---
 title: "claude code: ship your skills as a plugin marketplace"
 url: https://perrotta.dev/2026/06/claude-code-ship-your-skills-as-a-plugin-marketplace/
-last_updated: 2026-06-25
+last_updated: 2026-06-28
 ---
 
 
@@ -66,6 +66,12 @@ Install from any machine:
 ```
 
 `/plugin marketplace update thiagowfx` pulls future changes.
+
+Outside Claude:
+
+```shell
+claude plugins update thiagowfx@thiagowfx
+```
 
 The whole thing — manifests, nine seeded skills, README, license — was
 scaffolded by Claude Code itself, which felt appropriately recursive: one of the
