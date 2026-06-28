@@ -70,6 +70,12 @@ Install from any machine:
 
 `/plugin marketplace update thiagowfx` pulls future changes.
 
+Outside Claude:
+
+```shell
+claude plugins update thiagowfx@thiagowfx
+```
+
 The whole thing — manifests, nine seeded skills, README, license — was
 scaffolded by Claude Code itself, which felt appropriately recursive: one of the
 skills I was packaging interviews me about a plan before any code gets written,
