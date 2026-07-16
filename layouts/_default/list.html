@@ -4,6 +4,12 @@
   {{- $pages := where .Pages "Site.Language.Lang" .Site.Language.Lang }}
   {{- $pages = where $pages "Params.rss_only" "!=" true }}
   {{- $excludeCategories := slice "coding" "recipes" }}
+  {{- /* On the all-posts list, drop coding/recipes so the header count matches
+         the rendered list and the search index (which excludes them too). */}}
+  {{- if and (not .Data.Singular) (eq .Section "posts") }}
+    {{- $pages = where $pages "Kind" "page" }}
+    {{- $pages = where $pages "Params.categories" "intersect" $excludeCategories | symdiff $pages }}
+  {{- end }}
 
   <h2 id="posts" class="p-name" style="display: flex; align-items: center; gap: 0;">
     {{- if .Data.Singular }}
