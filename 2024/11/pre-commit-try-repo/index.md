@@ -1,7 +1,7 @@
 ---
 title: "pre-commit: try-repo"
 url: https://perrotta.dev/2024/11/pre-commit-try-repo/
-last_updated: 2025-09-05
+last_updated: 2026-07-16
 ---
 
 
@@ -12,7 +12,7 @@ A productivity booster whenever trying out new
 
 **Example**:
 
-```console
+```shell
 % pre-commit try-repo https://github.com/mrtazz/checkmake
 [INFO] Initializing environment for https://github.com/mrtazz/checkmake.
 ===============================================================================
