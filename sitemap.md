@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [safari: (permanently) allow pop-ups for a domain](https://perrotta.dev/2026/07/safari-permanently-allow-pop-ups-for-a-domain/) (2026-07-16)
 - [claude code: replace a hand-rolled loop with /goal](https://perrotta.dev/2026/07/claude-code-replace-a-hand-rolled-loop-with-/goal/) (2026-07-16)
 - [when Gen AI cites docs that don't exist](https://perrotta.dev/2026/07/when-gen-ai-cites-docs-that-dont-exist/) (2026-07-16)
 - [cmux](https://perrotta.dev/2026/07/cmux/) (2026-07-07)
@@ -1288,13 +1289,13 @@
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (43 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (154 posts)
-- [Macos](https://perrotta.dev/tags/macos/) (50 posts)
+- [Macos](https://perrotta.dev/tags/macos/) (51 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (60 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (27 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (33 posts)
-- [Privacy](https://perrotta.dev/tags/privacy/) (55 posts)
+- [Privacy](https://perrotta.dev/tags/privacy/) (56 posts)
 - [Security](https://perrotta.dev/tags/security/) (61 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
 - [Serenity](https://perrotta.dev/tags/serenity/) (261 posts)
