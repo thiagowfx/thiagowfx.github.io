@@ -21,8 +21,8 @@
 ## Blog Posts
 
 
-- [when Gen AI cites docs that don't exist](https://perrotta.dev/2026/07/when-gen-ai-cites-docs-that-dont-exist/) (2026-07-16)
 - [claude code: replace a hand-rolled loop with /goal](https://perrotta.dev/2026/07/claude-code-replace-a-hand-rolled-loop-with-/goal/) (2026-07-16)
+- [when Gen AI cites docs that don't exist](https://perrotta.dev/2026/07/when-gen-ai-cites-docs-that-dont-exist/) (2026-07-16)
 - [cmux](https://perrotta.dev/2026/07/cmux/) (2026-07-07)
 - [Gerrymandle: daily gerrymandering puzzle](https://perrotta.dev/2026/06/gerrymandle-daily-gerrymandering-puzzle/) (2026-06-26)
 - [claude code: ship your skills as a plugin marketplace](https://perrotta.dev/2026/06/claude-code-ship-your-skills-as-a-plugin-marketplace/) (2026-06-25)

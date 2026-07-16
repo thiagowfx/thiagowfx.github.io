@@ -21,7 +21,8 @@ In fact,
 [most](https://newsletter.pragmaticengineer.com/p/what-is-loop-engineering)
 harnesses ship `/goal` natively these days.
 
-We shall refactor!
+We shall
+[refactor](https://github.com/thiagowfx/skills/commit/322d4523f10c8ab1fa3cf8eeb95d776c6debf17c)!
 
 `/goal` sets a completion condition. After each turn a fast model checks whether
 it holds; if not, Claude starts another turn on its own. It auto-clears once the
