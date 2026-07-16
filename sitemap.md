@@ -22,6 +22,7 @@
 
 
 - [when Gen AI cites docs that don't exist](https://perrotta.dev/2026/07/when-gen-ai-cites-docs-that-dont-exist/) (2026-07-16)
+- [claude code: replace a hand-rolled loop with /goal](https://perrotta.dev/2026/07/claude-code-replace-a-hand-rolled-loop-with-/goal/) (2026-07-16)
 - [cmux](https://perrotta.dev/2026/07/cmux/) (2026-07-07)
 - [Gerrymandle: daily gerrymandering puzzle](https://perrotta.dev/2026/06/gerrymandle-daily-gerrymandering-puzzle/) (2026-06-26)
 - [claude code: ship your skills as a plugin marketplace](https://perrotta.dev/2026/06/claude-code-ship-your-skills-as-a-plugin-marketplace/) (2026-06-25)
@@ -1271,14 +1272,14 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (100 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (101 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (183 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (1 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (2 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1148 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1149 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (15 posts)
