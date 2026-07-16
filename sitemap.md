@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [when Gen AI cites docs that don't exist](https://perrotta.dev/2026/07/when-gen-ai-cites-docs-that-dont-exist/) (2026-07-16)
 - [cmux](https://perrotta.dev/2026/07/cmux/) (2026-07-07)
 - [Gerrymandle: daily gerrymandering puzzle](https://perrotta.dev/2026/06/gerrymandle-daily-gerrymandering-puzzle/) (2026-06-26)
 - [claude code: ship your skills as a plugin marketplace](https://perrotta.dev/2026/06/claude-code-ship-your-skills-as-a-plugin-marketplace/) (2026-06-25)
@@ -1270,20 +1271,20 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (99 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (100 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (183 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (1 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1147 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1148 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (15 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (9 posts)
 - [Git](https://perrotta.dev/tags/git/) (62 posts)
-- [Kubernetes](https://perrotta.dev/tags/kubernetes/) (42 posts)
+- [Kubernetes](https://perrotta.dev/tags/kubernetes/) (43 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (154 posts)
 - [Macos](https://perrotta.dev/tags/macos/) (50 posts)
