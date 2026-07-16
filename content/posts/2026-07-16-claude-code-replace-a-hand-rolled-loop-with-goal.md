@@ -1,6 +1,6 @@
 ---
 title: "claude code: replace a hand-rolled loop with /goal"
-date: 2026-07-16T12:33:25+02:00
+date: 2026-07-16T13:44:25+02:00
 tags:
   - ai
   - coding
@@ -23,7 +23,8 @@ In fact,
 [most](https://newsletter.pragmaticengineer.com/p/what-is-loop-engineering)
 harnesses ship `/goal` natively these days.
 
-We shall refactor!
+We shall
+[refactor](https://github.com/thiagowfx/skills/commit/322d4523f10c8ab1fa3cf8eeb95d776c6debf17c)!
 
 `/goal` sets a completion condition. After each turn a fast model checks whether
 it holds; if not, Claude starts another turn on its own. It auto-clears once the
