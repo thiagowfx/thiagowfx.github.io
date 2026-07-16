@@ -20,7 +20,8 @@ Detailed style guide derived from analysis of existing posts. See `CLAUDE.md` fo
 - Direct and casual first person, as if talking to a peer developer ("I couldn't resist creating a pre-commit hook for this", "Oh well.", "Can't do.")
 - Understated confidence. Present solutions matter-of-factly, without overselling.
 - Personal but not overly so. Mention motivation briefly and move on.
-- No hedging. Don't say "you might want to consider" — say "Here's how." or "Use X."
+- No hedging. Don't say "one might want to consider" — say "Here's how." or "Use X."
+- **Avoid "you"**: Prefer "we", or "one", or conjugate the verb in the past. Never address the reader as "you".
 - Never say "In this post, I will..." or "Have you ever wondered..." or "Let me walk you through..."
 
 ## Technical Content
