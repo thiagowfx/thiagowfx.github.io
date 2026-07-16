@@ -155,7 +155,7 @@ if (fullscreenBtn) {
 
   if (isFullscreenParam || isFullscreenLocal) {
     document.body.classList.add("fullscreen-mode");
-    fullscreenIcon.textContent = "✕";
+    fullscreenIcon.textContent = "⇲";
 
     // Sync URL param → localStorage
     if (isFullscreenParam && !isFullscreenLocal) {
@@ -172,7 +172,7 @@ if (fullscreenBtn) {
   fullscreenBtn.addEventListener("click", function () {
     document.body.classList.toggle("fullscreen-mode");
     const isFullscreen = document.body.classList.contains("fullscreen-mode");
-    fullscreenIcon.textContent = isFullscreen ? "✕" : "⛶";
+    fullscreenIcon.textContent = isFullscreen ? "⇲" : "⛶";
     localStorage.setItem("fullscreen-mode", isFullscreen);
 
     // Update URL with fullscreen parameter
