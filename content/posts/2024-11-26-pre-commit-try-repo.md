@@ -12,7 +12,7 @@ A productivity booster whenever trying out new
 
 **Example**:
 
-```console
+```shell
 % pre-commit try-repo https://github.com/mrtazz/checkmake
 [INFO] Initializing environment for https://github.com/mrtazz/checkmake.
 ===============================================================================
