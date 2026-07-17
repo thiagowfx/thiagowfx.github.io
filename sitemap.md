@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [myrepos: a wip action to find unfinished work](https://perrotta.dev/2026/07/myrepos-a-wip-action-to-find-unfinished-work/) (2026-07-17)
 - [safari: (permanently) allow pop-ups for a domain](https://perrotta.dev/2026/07/safari-permanently-allow-pop-ups-for-a-domain/) (2026-07-16)
 - [claude code: replace a hand-rolled loop with /goal](https://perrotta.dev/2026/07/claude-code-replace-a-hand-rolled-loop-with-/goal/) (2026-07-16)
 - [when Gen AI cites docs that don't exist](https://perrotta.dev/2026/07/when-gen-ai-cites-docs-that-dont-exist/) (2026-07-16)
@@ -1278,14 +1279,14 @@
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (183 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (2 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (3 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1149 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1150 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (15 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (9 posts)
-- [Git](https://perrotta.dev/tags/git/) (62 posts)
+- [Git](https://perrotta.dev/tags/git/) (63 posts)
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (43 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (154 posts)
