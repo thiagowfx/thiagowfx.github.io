@@ -3,6 +3,7 @@ title: "Project Aces OST"
 date: 2026-07-17T12:52:54+02:00
 tags:
   - bestof
+  - gaming
   - serenity
 ---
 
