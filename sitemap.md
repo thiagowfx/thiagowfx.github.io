@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [Project Aces OST](https://perrotta.dev/2026/07/project-aces-ost/) (2026-07-17)
 - [myrepos: a wip action to find unfinished work](https://perrotta.dev/2026/07/myrepos-a-wip-action-to-find-unfinished-work/) (2026-07-17)
 - [safari: (permanently) allow pop-ups for a domain](https://perrotta.dev/2026/07/safari-permanently-allow-pop-ups-for-a-domain/) (2026-07-16)
 - [claude code: replace a hand-rolled loop with /goal](https://perrotta.dev/2026/07/claude-code-replace-a-hand-rolled-loop-with-/goal/) (2026-07-16)
@@ -1277,7 +1278,7 @@
 - [Ai](https://perrotta.dev/tags/ai/) (101 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
-- [Bestof](https://perrotta.dev/tags/bestof/) (183 posts)
+- [Bestof](https://perrotta.dev/tags/bestof/) (184 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (3 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
@@ -1299,7 +1300,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (56 posts)
 - [Security](https://perrotta.dev/tags/security/) (61 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (261 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (262 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (12 posts)
