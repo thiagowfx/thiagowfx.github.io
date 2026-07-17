@@ -1,7 +1,7 @@
 ---
 title: "Projects"
 url: https://perrotta.dev/projects/
-last_updated: 2026-02-16
+last_updated: 2026-07-17
 ---
 
 
@@ -10,8 +10,9 @@ This is the closest I have to a [`/now`](https://sive.rs/now3) page.
 ## Personal projects
 
 - ★ [.dotfiles](https://github.com/thiagowfx/.dotfiles) - My dotfiles, managed with GNU stow. This repository is the closest I have to an `/uses` page.
-- ★ [pancake](https://github.com/thiagowfx/pancake) - A potpourri of sweet ingredients – miscellaneous utilities
 - ★ [not just serendipity](https://github.com/thiagowfx/thiagowfx.github.io) - My blog, built with Hugo (this site)
+- ★ [pancake](https://github.com/thiagowfx/pancake) - A potpourri of sweet ingredients – miscellaneous utilities
+- ★ [skills](https://github.com/thiagowfx/skills) - My personal Gen-AI / Claude Code skills, as a plugin marketplace
 - [adventofcode](https://github.com/thiagowfx/adventofcode) - My Advent of Code solutions
 - [homebrew-taps](https://github.com/thiagowfx/homebrew-taps) - My Homebrew taps with personal formulas and tooling
 - [pre-commit-hooks](https://github.com/thiagowfx/pre-commit-hooks) - A collection of useful hooks for pre-commit.com
