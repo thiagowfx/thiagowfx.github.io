@@ -21,6 +21,7 @@
 ## Blog Posts
 
 
+- [brew pin](https://perrotta.dev/2026/07/brew-pin/) (2026-07-18)
 - [The lifecycle of physical books](https://perrotta.dev/2026/07/the-lifecycle-of-physical-books/) (2026-07-18)
 - [Project Aces OST](https://perrotta.dev/2026/07/project-aces-ost/) (2026-07-17)
 - [myrepos: a wip action to find unfinished work](https://perrotta.dev/2026/07/myrepos-a-wip-action-to-find-unfinished-work/) (2026-07-17)
@@ -1283,7 +1284,7 @@
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (3 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1150 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1151 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1292,10 +1293,10 @@
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (43 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (154 posts)
-- [Macos](https://perrotta.dev/tags/macos/) (51 posts)
+- [Macos](https://perrotta.dev/tags/macos/) (52 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (60 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
-- [Pkm](https://perrotta.dev/tags/pkm/) (27 posts)
+- [Pkm](https://perrotta.dev/tags/pkm/) (28 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (33 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (56 posts)
