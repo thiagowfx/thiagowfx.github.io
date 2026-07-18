@@ -5,6 +5,8 @@ last_updated: 2026-07-18
 ---
 
 
+Typically:
+
 - **Step 1**: buy a physical book — via Amazon, bookstores, classifieds
   marketplaces (e.g. Craigslist in the US, Kijiji in Canada, Kleinanzeigen in
   Germany). Bonus points for used copies. This should take up to a week.
