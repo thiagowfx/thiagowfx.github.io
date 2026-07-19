@@ -8,6 +8,7 @@
 ## Pages
 
 
+- [Privacy](https://perrotta.dev/privacy/)
 - [Warrant Canary](https://perrotta.dev/canary/)
 - [AI](https://perrotta.dev/ai/)
 - [Blogroll](https://perrotta.dev/blogroll/)
