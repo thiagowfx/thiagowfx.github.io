@@ -197,8 +197,7 @@
           </p>
           <xsl:if test="rss/channel/copyright">
             <p>
-              © 2021 - 2025 Thiago Perrotta ·
-              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">some rights reserved</a> ·
+              © 2013 - 2026 Thiago Perrotta ·
               a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•ʔ bear</a>
             </p>
           </xsl:if>
