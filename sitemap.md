@@ -11,6 +11,7 @@
 - [Warrant Canary](https://perrotta.dev/canary/)
 - [AI](https://perrotta.dev/ai/)
 - [Blogroll](https://perrotta.dev/blogroll/)
+- [Contact](https://perrotta.dev/contact/)
 - [Graph](https://perrotta.dev/graph/)
 - [Pomodoro](https://perrotta.dev/pomodoro/)
 - [Privacy](https://perrotta.dev/privacy/)
