@@ -8,12 +8,12 @@
 ## Pages
 
 
-- [Privacy](https://perrotta.dev/privacy/)
 - [Warrant Canary](https://perrotta.dev/canary/)
 - [AI](https://perrotta.dev/ai/)
 - [Blogroll](https://perrotta.dev/blogroll/)
 - [Graph](https://perrotta.dev/graph/)
 - [Pomodoro](https://perrotta.dev/pomodoro/)
+- [Privacy](https://perrotta.dev/privacy/)
 - [Projects](https://perrotta.dev/projects/)
 - [Radio](https://perrotta.dev/radio/)
 - [Random](https://perrotta.dev/random/)

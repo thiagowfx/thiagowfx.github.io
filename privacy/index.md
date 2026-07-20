@@ -1,7 +1,7 @@
 ---
 title: "Privacy"
 url: https://perrotta.dev/privacy/
-last_updated: 2026-07-19
+last_updated: 2026-07-20
 ---
 
 
