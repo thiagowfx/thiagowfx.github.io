@@ -23,6 +23,7 @@
 ## Blog Posts
 
 
+- [logseq → obsidian](https://perrotta.dev/2026/07/logseq-obsidian/) (2026-07-20)
 - [Sports.app](https://perrotta.dev/2026/07/sports.app/) (2026-07-20)
 - [brew pin](https://perrotta.dev/2026/07/brew-pin/) (2026-07-18)
 - [The lifecycle of physical books](https://perrotta.dev/2026/07/the-lifecycle-of-physical-books/) (2026-07-18)
@@ -1280,14 +1281,14 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (101 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (102 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
-- [Bestof](https://perrotta.dev/tags/bestof/) (185 posts)
+- [Bestof](https://perrotta.dev/tags/bestof/) (186 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (3 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1151 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1152 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1299,13 +1300,13 @@
 - [Macos](https://perrotta.dev/tags/macos/) (52 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (60 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
-- [Pkm](https://perrotta.dev/tags/pkm/) (28 posts)
+- [Pkm](https://perrotta.dev/tags/pkm/) (29 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (33 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (56 posts)
 - [Security](https://perrotta.dev/tags/security/) (61 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (264 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (265 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (12 posts)
