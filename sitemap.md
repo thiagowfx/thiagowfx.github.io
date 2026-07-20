@@ -22,6 +22,7 @@
 ## Blog Posts
 
 
+- [Sports.app](https://perrotta.dev/2026/07/sports.app/) (2026-07-20)
 - [brew pin](https://perrotta.dev/2026/07/brew-pin/) (2026-07-18)
 - [The lifecycle of physical books](https://perrotta.dev/2026/07/the-lifecycle-of-physical-books/) (2026-07-18)
 - [Project Aces OST](https://perrotta.dev/2026/07/project-aces-ost/) (2026-07-17)
@@ -1303,7 +1304,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (56 posts)
 - [Security](https://perrotta.dev/tags/security/) (61 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (263 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (264 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (12 posts)
