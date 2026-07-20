@@ -37,7 +37,7 @@ Establish validation procedures using these tools:
 - **h-card**: name, nickname, url, email, photo
 - **h-entry**: name, published, url, content, author
 - **h-feed**: name, children (h-entry items)
-- **rel-me**: GitHub, Goodreads, LinkedIn, StackOverflow
+- **rel-me**: GitHub, Goodreads, LinkedIn, StackOverflow (linked from `/contact/`, not the footer)
 
 ### Re-validate When
 
