@@ -236,9 +236,9 @@ touch file:
         echo "Updated date in: {{ file }}"
     fi
 
-[doc('Edit the most recent blog post')]
+[doc('Edit the most recent blog post (--print to print its path)')]
 [group('manage')]
-last:
+last *args:
     #!/usr/bin/env bash
     set -euo pipefail
 
@@ -251,7 +251,11 @@ last:
       echo "No posts found in content/posts/"
       exit 1
     fi
-    [ -t 0 ] && {{ editor }} "$latest" || echo "$latest"
+    if [ "{{ args }}" = "--print" ]; then
+      echo "$latest"
+    else
+      [ -t 0 ] && {{ editor }} "$latest" || echo "$latest"
+    fi
 
 [doc('Create a lazy git commit and push')]
 [group('publish')]
