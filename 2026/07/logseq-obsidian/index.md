@@ -1,7 +1,7 @@
 ---
 title: "logseq → obsidian"
 url: https://perrotta.dev/2026/07/logseq-obsidian/
-last_updated: 2026-07-20
+last_updated: 2026-07-21
 ---
 
 
@@ -274,6 +274,9 @@ def convert(text: str, defined, referenced) -> str:
             lambda m: f"{m.group(1)}- {MARKER_MAP[m.group(2)]} ",
             line,
         )
+
+        # drop LogSeq priority markers
+        line = re.sub(r"\[#[A-C]\]\s*", "", line)
 
         # embeds and block refs
         line = re.sub(rf"\{{\{{embed \(\(({UUID})\)\)\}}\}}", resolve_embed, line)
