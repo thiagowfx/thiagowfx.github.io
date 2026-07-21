@@ -279,6 +279,9 @@ def convert(text: str, defined, referenced) -> str:
             line,
         )
 
+        # drop LogSeq priority markers
+        line = re.sub(r"\[#[A-C]\]\s*", "", line)
+
         # embeds and block refs
         line = re.sub(rf"\{{\{{embed \(\(({UUID})\)\)\}}\}}", resolve_embed, line)
         line = re.sub(r"\{\{embed \[\[([^]]+)\]\]\}\}", r"![[\1]]", line)
