@@ -12,7 +12,7 @@ to `app.model.cycleForward`[^1] by default, but has no default binding to cycle
 backward other than `shift+ctrl+p`, which is arguably difficult to remember.
 
 Every keybinding in pi is namespaced and overridable via
-`~/.pi/agent/keybindings.json`, documented in
+[`~/.pi/agent/keybindings.json`](https://github.com/thiagowfx/.dotfiles/blob/1f42eb6f6632f946c23d1278e7e3f18da78d5de8/pi/.pi/agent/keybindings.json), documented in
 [`docs/keybindings.md`](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/keybindings.md):
 
 ```json

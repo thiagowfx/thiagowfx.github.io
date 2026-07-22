@@ -23,6 +23,7 @@
 ## Blog Posts
 
 
+- [pi: /btw side-chat](https://perrotta.dev/2026/07/pi-/btw-side-chat/) (2026-07-22)
 - [pi: auto-retry stalled requests](https://perrotta.dev/2026/07/pi-auto-retry-stalled-requests/) (2026-07-22)
 - [pi: cycle models backward with ctrl+n](https://perrotta.dev/2026/07/pi-cycle-models-backward-with-ctrl-n/) (2026-07-22)
 - [pi: caveman mode](https://perrotta.dev/2026/07/pi-caveman-mode/) (2026-07-22)
@@ -1284,14 +1285,14 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (105 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (106 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (186 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (6 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (7 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1155 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1156 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)

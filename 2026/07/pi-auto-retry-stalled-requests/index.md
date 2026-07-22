@@ -36,7 +36,7 @@ five-minute clock ran out. Who has patience to wait for **5** minutes?!
 }
 ```
 
-Dropped into `~/.pi/agent/settings.json`, documented in
+Dropped into [`~/.pi/agent/settings.json`](https://github.com/thiagowfx/.dotfiles/commit/aae17ba8d7546901820d7474136a628b16d5feee), documented in
 [`docs/settings.md`](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/settings.md).
 Now a stall errors out after 30s and `pi` retries automatically with exponential
 backoff (2s, 4s, 8s…), up to five attempts. There's no need for `Esc` nor
