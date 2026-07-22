@@ -11,8 +11,19 @@
     <copyright>© 2013 - 2026 Thiago Perrotta ·
   a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)
 </copyright>
-    <lastBuildDate>Wed, 22 Jul 2026 13:28:27 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 22 Jul 2026 13:48:57 +0200</lastBuildDate>
     <atom:link href="https://perrotta.dev/tags/coding/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>pi: auto-retry stalled requests
+      </title>
+      <link>https://perrotta.dev/2026/07/pi-auto-retry-stalled-requests/</link>
+      <pubDate>Wed, 22 Jul 2026 13:45:41 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author>
+      <category>ai</category>
+      <category>coding</category>
+      <category>dev</category>
+      <guid>https://perrotta.dev/2026/07/pi-auto-retry-stalled-requests/</guid>
+      <description>&lt;p&gt;♠ &lt;a href=&#34;https://perrotta.dev/2026/07/pi-cycle-models-backward-with-ctrl-n/&#34;&gt;Previously&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: sometimes a prompt in &lt;a href=&#34;https://github.com/earendil-works/pi&#34;&gt;pi&lt;/a&gt;&#xA;just hangs, as if the network dropped. It never recovers on its own — I have to&#xA;hit &lt;code&gt;Esc&lt;/code&gt; and re-prompt.&lt;/p&gt;&#xA;&lt;p&gt;It&amp;rsquo;s 2026, this symptom should be self-recoverable.&lt;/p&gt;&#xA;&lt;p&gt;Pi already has agent-level retry on transient errors (&lt;code&gt;retry.enabled&lt;/code&gt; defaults&#xA;to &lt;code&gt;true&lt;/code&gt;). The catch is &lt;em&gt;when&lt;/em&gt; it fires: a stalled connection isn&amp;rsquo;t an error&#xA;until the HTTP idle timeout trips, and that defaults to five minutes:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;code&gt;httpIdleTimeoutMs&lt;/code&gt; | number | &lt;code&gt;300000&lt;/code&gt; | HTTP header/body idle timeout in&#xA;milliseconds [&amp;hellip;] Set to &lt;code&gt;0&lt;/code&gt; to disable.&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;So pi would have &lt;em&gt;eventually&lt;/em&gt; recovered. I was just quitting long before the&#xA;five-minute clock ran out. Who has patience to wait for &lt;strong&gt;5&lt;/strong&gt; minutes?!&lt;/p&gt;&#xA;&lt;p&gt;:∴ Lower the idle timeout to O(seconds) instead:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{&#xA;  &amp;#34;httpIdleTimeoutMs&amp;#34;: 30000,&#xA;  &amp;#34;retry&amp;#34;: {&#xA;    &amp;#34;enabled&amp;#34;: true,&#xA;    &amp;#34;maxRetries&amp;#34;: 5,&#xA;    &amp;#34;baseDelayMs&amp;#34;: 2000&#xA;  }&#xA;}&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Dropped into &lt;code&gt;~/.pi/agent/settings.json&lt;/code&gt;, documented in&#xA;&lt;a href=&#34;https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/settings.md&#34;&gt;&lt;code&gt;docs/settings.md&lt;/code&gt;&lt;/a&gt;.&#xA;Now a stall errors out after 30s and &lt;code&gt;pi&lt;/code&gt; retries automatically with exponential&#xA;backoff (2s, 4s, 8s…), up to five attempts. There&amp;rsquo;s no need for &lt;code&gt;Esc&lt;/code&gt; nor&#xA;re-prompting.&lt;/p&gt;&#xA;&lt;p&gt;The idle timer resets on every byte received, so long thinking or a slow stream&#xA;won&amp;rsquo;t trip it — only a genuinely dead connection will. Restart &lt;code&gt;pi&lt;/code&gt; for the&#xA;change to take effect.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;🤖 &lt;em&gt;Drafted with &lt;code&gt;/bloggify&lt;/code&gt;.&lt;/em&gt;&lt;/p&gt;&#xA;&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href=&#34;mailto:serendipity@perrotta.dev?subject=Reply to: pi: auto-retry stalled requests&#34;&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&#34;https://perrotta.dev/tags/ai/&#34;&gt;#ai&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/coding/&#34;&gt;#coding&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/dev/&#34;&gt;#dev&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>pi: cycle models backward with ctrl&#43;n
       </title>
