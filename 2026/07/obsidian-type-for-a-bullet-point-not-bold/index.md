@@ -17,6 +17,9 @@ a plain `*`, which we then have to delete.
 To turn this setting off: set **Settings → Editor → Auto pair Markdown syntax**
 to off.
 
-**Now**: `*` followed by a space at the start of a line converts it to a bullet,
-exactly like `-` does.
+**Now**: `*` followed by a space at the start of a line converts it to a
+bullet[^1], exactly like `-` does.
+
+[^1]: Surely inserting bullet points in Obsidian is a muscle memory artifact
+    from migrating from LogSeq.
 
