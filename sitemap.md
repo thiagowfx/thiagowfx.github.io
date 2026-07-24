@@ -23,6 +23,7 @@
 ## Blog Posts
 
 
+- [obsidian: type * for a bullet point, not ** bold](https://perrotta.dev/2026/07/obsidian-type-for-a-bullet-point-not-bold/) (2026-07-24)
 - [pi: /btw side-chat](https://perrotta.dev/2026/07/pi-/btw-side-chat/) (2026-07-22)
 - [pi: auto-retry stalled requests](https://perrotta.dev/2026/07/pi-auto-retry-stalled-requests/) (2026-07-22)
 - [pi: cycle models backward with ctrl+n](https://perrotta.dev/2026/07/pi-cycle-models-backward-with-ctrl-n/) (2026-07-22)
@@ -1292,7 +1293,7 @@
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (7 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1156 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1157 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1304,7 +1305,7 @@
 - [Macos](https://perrotta.dev/tags/macos/) (52 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (60 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
-- [Pkm](https://perrotta.dev/tags/pkm/) (29 posts)
+- [Pkm](https://perrotta.dev/tags/pkm/) (30 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (33 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (56 posts)
