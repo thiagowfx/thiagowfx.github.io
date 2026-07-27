@@ -23,6 +23,7 @@
 ## Blog Posts
 
 
+- [pi: asynchronous exit summaries](https://perrotta.dev/2026/07/pi-asynchronous-exit-summaries/) (2026-07-27)
 - [pi: update pinned npm packages](https://perrotta.dev/2026/07/pi-update-pinned-npm-packages/) (2026-07-27)
 - [Anki: archive a deck](https://perrotta.dev/2026/07/anki-archive-a-deck/) (2026-07-27)
 - [pi: test drive an extension](https://perrotta.dev/2026/07/pi-test-drive-an-extension/) (2026-07-26)
@@ -1289,14 +1290,14 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (108 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (109 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (186 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (8 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (9 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1160 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1161 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1308,7 +1309,7 @@
 - [Macos](https://perrotta.dev/tags/macos/) (52 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (60 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
-- [Pkm](https://perrotta.dev/tags/pkm/) (31 posts)
+- [Pkm](https://perrotta.dev/tags/pkm/) (32 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (33 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (56 posts)
