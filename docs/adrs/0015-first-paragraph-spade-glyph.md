@@ -58,27 +58,24 @@ correctly on list-first posts.
 
 ## Decision
 
-Not yet decided. Options considered:
+Keep `.e-content > p:first-child` for HTML and only add the RSS glyph when the
+rendered content begins with a paragraph. Anchor the RSS replacement regex to
+the start of `.Content`: `^(<p>)`.
 
-1. **`.e-content > p:first-of-type`** — spade on the first top-level paragraph,
-   even after a leading list/heading. CSS-only, but on list-first posts the
-   glyph lands mid-body, not at the visual opening.
-2. **`.e-content > :first-child`** — spade on the very first block whatever its
-   type. Guarantees a glyph at the opening, but prefixes a `<li>` bullet or a
-   heading, which reads oddly.
-3. **Leave `p:first-child`** — accept that list/heading-first posts get no
-   spade. Simplest; the glyph is decorative, not load-bearing.
+Posts beginning with a list, blockquote, heading, or other block receive no
+spade on either surface. The glyph is decorative, so omission is preferable to
+placing it inside a nested paragraph or midway through the post.
 
-Whatever is chosen for the HTML page, the RSS regex should be reconciled so the
-two surfaces agree on where "the start" is (or the divergence accepted
-explicitly).
+Alternatives rejected:
+
+1. **`.e-content > p:first-of-type`** — places the glyph on the first top-level
+   paragraph, which may be midway through a list-first post.
+2. **`.e-content > :first-child`** — prefixes blocks such as lists and headings,
+   where the glyph reads oddly.
 
 ## Consequences
 
-- Until decided, list-first posts show the spade in the feed (on a nested
-  `<p>`) but not on the HTML page — an inconsistency between surfaces.
-- The glyph is purely decorative; absence degrades gracefully. This is low
-  urgency.
-- Any chosen selector interacts with post-authoring conventions: if most posts
-  open with a paragraph, `p:first-child` already covers them and only the
-  list/heading-first minority is affected.
+- HTML and RSS agree: paragraph-first posts receive a spade; other posts do not.
+- The RSS regex no longer inserts the glyph into nested paragraphs.
+- The glyph remains purely decorative and degrades gracefully when omitted.
+- Authors who want the glyph can begin a post with a paragraph.

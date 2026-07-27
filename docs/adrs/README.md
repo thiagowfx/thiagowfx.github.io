@@ -19,8 +19,11 @@ technical decisions in the blog infrastructure.
 | [0008](0008-bearblog-discover-cross-posting.md) | Bear Blog Discover Cross-posting | Proposed | 2026-02-07 |
 | [0009](0009-inline-static-assets.md) | Inline Static Assets for Cache Efficiency | Proposed | 2026-02-07 |
 | [0010](0010-markdown-content-negotiation.md) | Markdown Content Negotiation for LLMs | Proposed | 2026-02-16 |
+| [0011](0011-email-obfuscation.md) | Email Obfuscation via HTML Entity Encoding | Accepted | 2026-04-05 |
+| [0012](0012-ai-scraper-poisoning.md) | AI Scraper Poisoning | Rejected | 2026-04-06 |
 | [0013](0013-no-query-strings.md) | No Query Strings | Proposed | 2026-05-24 |
 | [0014](0014-rss-club.md) | RSS Club (RSS-only posts) | Accepted | 2026-05-25 |
+| [0015](0015-first-paragraph-spade-glyph.md) | Spade Glyph on the First Paragraph | Accepted | 2026-07-18 |
 | [0016](0016-progressive-web-app.md) | Progressive Web App | Abandoned | 2026-07-27 |
 
 <!-- markdownlint-enable MD013 -->
@@ -35,7 +38,7 @@ technical decisions in the blog infrastructure.
 
 ## Status
 
-Proposed | Accepted | Deprecated | Superseded
+Proposed | Accepted | Partially Accepted | Rejected | Abandoned | Deprecated | Superseded
 
 ## Date
 
