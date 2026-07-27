@@ -4,6 +4,10 @@
 
 Proposed (tracked for future hosting changes)
 
+## Date
+
+2026-05-24
+
 ## Context
 
 [Chris Morgan](https://chrismorgan.info/no-query-strings) blocks any

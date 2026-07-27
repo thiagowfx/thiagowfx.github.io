@@ -4,6 +4,10 @@
 
 Accepted
 
+## Date
+
+2026-04-05
+
 ## Context
 
 The blog displays the author's email address in several places: the h-card, footer social links, per-post "Reply via email" links, and the `email_link` shortcode. These appear as plaintext `mailto:` links in the HTML source, making them easy targets for email harvesting bots.

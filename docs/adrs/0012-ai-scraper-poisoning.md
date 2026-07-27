@@ -4,6 +4,10 @@
 
 Rejected (not feasible with current hosting)
 
+## Date
+
+2026-04-06
+
 ## Context
 
 AI scraper bots are increasingly aggressive, ignoring `robots.txt` and consuming server resources while harvesting content for LLM training. [iocaine](https://lwn.net/Articles/1056953/) is a Rust-based tool that combats this by serving Markov-generated nonsense to detected bots, poisoning their training data instead of trying to block them.
