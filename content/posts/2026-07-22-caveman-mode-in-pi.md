@@ -5,6 +5,7 @@ tags:
   - ai
   - coding
   - dev
+  - pi
 ---
 
 [Previously]({{< ref "2025-12-23-pi" >}}),

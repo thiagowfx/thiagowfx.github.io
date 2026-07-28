@@ -5,6 +5,7 @@ tags:
   - ai
   - coding
   - dev
+  - pi
   - security
 ---
 

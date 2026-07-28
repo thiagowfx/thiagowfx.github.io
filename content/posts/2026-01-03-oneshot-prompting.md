@@ -5,6 +5,7 @@ tags:
   - ai
   - bestof
   - dev
+  - pi
 ---
 
 I just wrote [this post]({{< ref "2026-01-03-neovim-inline-git-hunk-control"

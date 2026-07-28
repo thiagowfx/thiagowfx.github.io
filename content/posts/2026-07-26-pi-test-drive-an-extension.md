@@ -4,6 +4,7 @@ date: 2026-07-26T01:24:35+02:00
 tags:
   - ai
   - dev
+  - pi
 ---
 
 **Problem statement**: using [pi](https://pi.dev/), install an extension
