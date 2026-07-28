@@ -24,6 +24,7 @@ way:
 * Canada: https://www.apple.com/ca/search/
 * Germany: https://www.apple.com/de/search/
 * USA: https://www.apple.com/us/search/
+* UK: https://www.apple.com/uk/search/
 
 Wanna see examples? Try searching for these apps in different stores[^1]:
 
