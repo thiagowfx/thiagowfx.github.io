@@ -23,6 +23,7 @@
 ## Blog Posts
 
 
+- [drskill: lint claude skills](https://perrotta.dev/2026/07/drskill-lint-claude-skills/) (2026-07-28)
 - [pi: block dangerous commands syntax-aware](https://perrotta.dev/2026/07/pi-block-dangerous-commands-syntax-aware/) (2026-07-28)
 - [pi: asynchronous exit summaries](https://perrotta.dev/2026/07/pi-asynchronous-exit-summaries/) (2026-07-27)
 - [pi: update pinned npm packages](https://perrotta.dev/2026/07/pi-update-pinned-npm-packages/) (2026-07-27)
@@ -1291,14 +1292,14 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (110 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (111 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (186 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (10 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (11 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1162 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1163 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
