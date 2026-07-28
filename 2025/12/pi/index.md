@@ -1,7 +1,7 @@
 ---
 title: "Pi"
 url: https://perrotta.dev/2025/12/pi/
-last_updated: 2026-02-16
+last_updated: 2026-07-28
 ---
 
 

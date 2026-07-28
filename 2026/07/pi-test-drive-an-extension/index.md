@@ -1,7 +1,7 @@
 ---
 title: "pi: test drive an extension"
 url: https://perrotta.dev/2026/07/pi-test-drive-an-extension/
-last_updated: 2026-07-26
+last_updated: 2026-07-28
 ---
 
 

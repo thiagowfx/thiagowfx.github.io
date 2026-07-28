@@ -1,7 +1,7 @@
 ---
 title: "pi: asynchronous exit summaries"
 url: https://perrotta.dev/2026/07/pi-asynchronous-exit-summaries/
-last_updated: 2026-07-27
+last_updated: 2026-07-28
 ---
 
 

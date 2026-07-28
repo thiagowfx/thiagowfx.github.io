@@ -1,7 +1,7 @@
 ---
 title: "pi: /btw side-chat"
 url: https://perrotta.dev/2026/07/pi-/btw-side-chat/
-last_updated: 2026-07-22
+last_updated: 2026-07-28
 ---
 
 
