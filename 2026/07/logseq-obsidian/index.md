@@ -1,7 +1,7 @@
 ---
 title: "logseq → obsidian"
 url: https://perrotta.dev/2026/07/logseq-obsidian/
-last_updated: 2026-07-21
+last_updated: 2026-07-29
 ---
 
 
@@ -17,7 +17,7 @@ This is _not OK_ for my workflow.
 
 The whole point of adopting LogSeq was, just like
 [Obsidian](https://obsidian.md/), the promise of
-managing my notes in plain markdown files.
+managing my notes in [plain markdown files](https://obsidian.md/about).
 
 Even though this migration is supposed to improve the performance of the app, it
 ends up breaking a fundamental reason why I decided to use it in the first
