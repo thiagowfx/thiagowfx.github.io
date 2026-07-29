@@ -12,7 +12,7 @@ Cursed knowledge learned while building software, that I wish I never knew.
 
 *2026-07-29*
 
-pi's session working directory is cursed because it's frozen at session creation with
+[pi](https://pi.dev)'s session working directory is cursed because it's frozen at session creation with
 no supported way to change it mid-run — extensions that need to redirect into a
 worktree resort to hacks like killing the process and replaying keystrokes via tmux.
 Multiple feature requests ([#3921](https://github.com/earendil-works/pi/issues/3921),
