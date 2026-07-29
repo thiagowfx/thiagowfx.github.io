@@ -204,7 +204,7 @@ real, folks.
   crawlers, sitemap pinging, llms.txt.
 
   Privacy-first: No analytics, no cookies, no ads, no tracking. Email-based replies. EXIF stripping on
-  images. Warrant canary page.
+  images.
 
   ---
   Strengths
