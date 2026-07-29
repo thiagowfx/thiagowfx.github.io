@@ -1,7 +1,7 @@
 ---
 title: "Canary"
 url: https://perrotta.dev/2025/11/canary/
-last_updated: 2025-12-25
+last_updated: 2026-07-29
 ---
 
 
@@ -30,7 +30,7 @@ Schee](https://www.usecue.com/blog/warrant-canary-added/):
 > I added the canary to be more transparent, but also (and more importantly) to
 > raise awareness of the growing digital surveillance worldwide.
 
-[Canary](/canary).
+## Update — 2026-07-29
 
-🐤
+I retired my warrant canary. It was cute, but unnecessary, and I doubt anyone noticed it.
 
