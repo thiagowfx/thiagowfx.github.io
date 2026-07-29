@@ -6,6 +6,8 @@ tocOpen: true
 
 Cursed knowledge learned while building software, that I wish I never knew.
 
+Inspired by [immich's Cursed Knowledge](https://immich.app/cursed-knowledge).
+
 ---
 
 ## pi session cwd
