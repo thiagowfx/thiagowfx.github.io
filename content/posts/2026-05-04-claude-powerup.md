@@ -3,6 +3,7 @@ title: "claude: /powerup"
 date: 2026-05-04T10:44:47-04:00
 tags:
   - ai
+  - claude
   - dev
 ---
 

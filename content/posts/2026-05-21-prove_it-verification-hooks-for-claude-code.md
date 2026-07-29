@@ -3,6 +3,7 @@ title: "prove_it: verification hooks for Claude Code"
 date: 2026-05-21T19:10:09+02:00
 tags:
   - ai
+  - claude
   - dev
 ---
 

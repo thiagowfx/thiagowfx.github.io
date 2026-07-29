@@ -4,6 +4,7 @@ date: 2025-10-08T00:31:31+02:00
 tags:
   - ai
   - bestof
+  - claude
   - dev
 ---
 

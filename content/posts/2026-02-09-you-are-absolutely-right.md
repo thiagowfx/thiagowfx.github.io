@@ -3,6 +3,7 @@ title: "You are absolutely right!"
 date: 2026-02-09T16:52:57+01:00
 tags:
   - ai
+  - claude
   - serenity
 ---
 

@@ -3,6 +3,7 @@ title: "claude: compact context"
 date: 2025-09-04T15:00:57+02:00
 tags:
   - ai
+  - claude
   - dev
 ---
 

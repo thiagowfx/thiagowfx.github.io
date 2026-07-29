@@ -3,6 +3,7 @@ title: "Claude Code: add context window % to status line"
 date: 2025-12-20T15:42:11-03:00
 tags:
   - ai
+  - claude
   - dev
 ---
 

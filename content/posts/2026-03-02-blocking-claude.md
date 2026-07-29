@@ -3,6 +3,7 @@ title: "Blocking Claude"
 date: 2026-03-02T02:25:28+01:00
 tags:
   - ai
+  - claude
   - dev
   - privacy
   - security

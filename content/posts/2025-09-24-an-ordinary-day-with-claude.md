@@ -3,6 +3,7 @@ title: "An ordinary day with Claude"
 date: 2025-09-24T13:34:58+02:00
 tags:
   - ai
+  - claude
   - dev
   - serenity
 ---

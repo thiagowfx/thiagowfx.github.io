@@ -3,6 +3,7 @@ title: "git freeze, git thaw"
 date: 2025-03-19T13:27:43+01:00
 tags:
   - bestof
+  - claude
   - dev
   - git
   - pre-commit

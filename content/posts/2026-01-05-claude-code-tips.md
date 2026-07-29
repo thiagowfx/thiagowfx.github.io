@@ -3,6 +3,7 @@ title: "Claude Code tips"
 date: 2026-01-05T15:18:13-03:00
 tags:
   - ai
+  - claude
   - dev
 ---
 

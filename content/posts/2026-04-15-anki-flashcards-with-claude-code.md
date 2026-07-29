@@ -4,6 +4,7 @@ date: 2026-04-15T16:09:12+02:00
 tags:
   - ai
   - bestof
+  - claude
   - dev
   - pkm
 ---

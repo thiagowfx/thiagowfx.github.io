@@ -2,6 +2,7 @@
 title: "You are absolutely right!"
 date: 2025-11-05T14:44:06+01:00
 tags:
+  - claude
   - dev
   - serenity
 ---

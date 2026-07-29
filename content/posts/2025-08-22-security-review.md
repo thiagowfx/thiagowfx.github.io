@@ -2,6 +2,7 @@
 title: "/security-review"
 date: 2025-08-22T15:31:01+02:00
 tags:
+  - claude
   - dev
   - security
 ---

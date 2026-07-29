@@ -3,6 +3,7 @@ title: "drskill: lint claude skills"
 date: 2026-07-28T19:09:34+02:00
 tags:
   - ai
+  - claude
   - coding
   - dev
 ---

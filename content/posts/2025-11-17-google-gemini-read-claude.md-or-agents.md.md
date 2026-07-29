@@ -2,6 +2,7 @@
 title: "Google Gemini: read CLAUDE.md or AGENTS.md"
 date: 2025-11-17T12:36:41-03:00
 tags:
+  - claude
   - dev
 ---
 

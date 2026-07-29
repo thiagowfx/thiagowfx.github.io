@@ -3,6 +3,7 @@ title: "Claude Code: release notes RSS feed"
 date: 2026-01-05T15:31:45-03:00
 tags:
   - ai
+  - claude
   - dev
 ---
 

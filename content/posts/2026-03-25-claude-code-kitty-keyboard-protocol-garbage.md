@@ -3,6 +3,7 @@ title: "claude code: kitty keyboard protocol garbage"
 date: 2026-03-25T14:15:27+01:00
 tags:
   - ai
+  - claude
   - dev
 ---
 

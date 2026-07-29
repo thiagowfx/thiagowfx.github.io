@@ -3,6 +3,7 @@ title: "when Gen AI cites docs that don't exist"
 date: 2026-07-16T12:34:22+02:00
 tags:
   - ai
+  - claude
   - dev
   - kubernetes
 ---

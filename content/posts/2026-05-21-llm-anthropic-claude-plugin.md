@@ -3,6 +3,7 @@ title: "llm: Anthropic Claude plugin"
 date: 2026-05-21T16:33:51+02:00
 tags:
   - ai
+  - claude
   - dev
 ---
 

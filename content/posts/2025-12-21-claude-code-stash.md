@@ -3,6 +3,7 @@ title: "Claude Code: stash"
 date: 2025-12-21T16:48:26-03:00
 tags:
   - ai
+  - claude
   - dev
 ---
 

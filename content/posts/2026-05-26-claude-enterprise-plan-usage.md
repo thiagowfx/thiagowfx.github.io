@@ -3,6 +3,7 @@ title: "Claude Enterprise: plan usage"
 date: 2026-05-26T13:11:11+02:00
 tags:
   - ai
+  - claude
   - dev
 ---
 

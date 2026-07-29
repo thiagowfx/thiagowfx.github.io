@@ -3,6 +3,7 @@ title: "claude code: replace a hand-rolled loop with /goal"
 date: 2026-07-16T13:44:25+02:00
 tags:
   - ai
+  - claude
   - coding
   - dev
 ---

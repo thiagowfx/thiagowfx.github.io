@@ -3,6 +3,7 @@ title: "claude: /simplify"
 date: 2026-04-12T10:18:17+02:00
 tags:
   - ai
+  - claude
   - dev
 ---
 

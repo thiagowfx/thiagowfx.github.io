@@ -3,6 +3,7 @@ title: "cco: additionalDirectories"
 date: 2026-03-18T17:31:13+01:00
 tags:
   - ai
+  - claude
   - dev
   - security
 ---

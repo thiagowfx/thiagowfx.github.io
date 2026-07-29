@@ -3,6 +3,7 @@ title: "Claude Code: swarm mode (agent teams)"
 date: 2026-02-09T18:14:01+01:00
 tags:
   - ai
+  - claude
   - dev
   - meta
 ---

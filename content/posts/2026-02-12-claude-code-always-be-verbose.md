@@ -3,6 +3,7 @@ title: "Claude Code: always be 'verbose'"
 date: 2026-02-12T13:37:25+01:00
 tags:
   - ai
+  - claude
   - dev
 ---
 

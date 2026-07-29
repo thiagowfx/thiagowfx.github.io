@@ -3,6 +3,7 @@ title: "claude: recap"
 date: 2026-04-24T00:52:56+02:00
 tags:
   - ai
+  - claude
   - dev
 ---
 

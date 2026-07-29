@@ -3,6 +3,7 @@ title: "claude, claudey, claudeyy"
 date: 2026-04-18T23:40:02+02:00
 tags:
   - ai
+  - claude
   - dev
 ---
 
