@@ -1,7 +1,7 @@
 ---
 title: "caveman: talk like caveman, save tokens"
 url: https://perrotta.dev/2026/06/caveman-talk-like-caveman-save-tokens/
-last_updated: 2026-06-25
+last_updated: 2026-07-29
 ---
 
 
@@ -44,5 +44,5 @@ stops narrating. No "Sure, I'd be happy to help with that." Just the answer.
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

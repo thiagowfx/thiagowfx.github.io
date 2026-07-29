@@ -1,7 +1,7 @@
 ---
 title: "Claude Enterprise: plan usage"
 url: https://perrotta.dev/2026/05/claude-enterprise-plan-usage/
-last_updated: 2026-05-26
+last_updated: 2026-07-29
 ---
 
 

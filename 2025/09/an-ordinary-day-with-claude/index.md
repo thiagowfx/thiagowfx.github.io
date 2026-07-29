@@ -1,7 +1,7 @@
 ---
 title: "An ordinary day with Claude"
 url: https://perrotta.dev/2025/09/an-ordinary-day-with-claude/
-last_updated: 2026-01-03
+last_updated: 2026-07-29
 ---
 
 

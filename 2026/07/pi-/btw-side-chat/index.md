@@ -1,7 +1,7 @@
 ---
 title: "pi: /btw side-chat"
 url: https://perrotta.dev/2026/07/pi-/btw-side-chat/
-last_updated: 2026-07-28
+last_updated: 2026-07-29
 ---
 
 
@@ -56,7 +56,7 @@ Added to [`~/.pi/agent/extensions/btw.ts`](https://github.com/thiagowfx/.dotfile
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 
 [^1]: I am no longer using [Arch](https://archlinux.org/), btw (sad!)
 

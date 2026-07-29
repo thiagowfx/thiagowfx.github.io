@@ -1,7 +1,7 @@
 ---
 title: "prove_it: verification hooks for Claude Code"
 url: https://perrotta.dev/2026/05/prove_it-verification-hooks-for-claude-code/
-last_updated: 2026-05-21
+last_updated: 2026-07-29
 ---
 
 

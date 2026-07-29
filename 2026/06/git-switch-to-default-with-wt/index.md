@@ -1,7 +1,7 @@
 ---
 title: "git: switch-to-default with wt"
 url: https://perrotta.dev/2026/06/git-switch-to-default-with-wt/
-last_updated: 2026-06-14
+last_updated: 2026-07-29
 ---
 
 
@@ -42,5 +42,5 @@ switch-to-default = !git switch --force \
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

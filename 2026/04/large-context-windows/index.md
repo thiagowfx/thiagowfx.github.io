@@ -1,7 +1,7 @@
 ---
 title: "Large context windows"
 url: https://perrotta.dev/2026/04/large-context-windows/
-last_updated: 2026-04-29
+last_updated: 2026-07-29
 ---
 
 

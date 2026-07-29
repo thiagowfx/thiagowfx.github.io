@@ -1,7 +1,7 @@
 ---
 title: "pi: block dangerous commands syntax-aware"
 url: https://perrotta.dev/2026/07/pi-block-dangerous-commands-syntax-aware/
-last_updated: 2026-07-28
+last_updated: 2026-07-29
 ---
 
 
@@ -97,5 +97,5 @@ The source lives in my [dotfiles](https://github.com/thiagowfx/.dotfiles/tree/d9
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

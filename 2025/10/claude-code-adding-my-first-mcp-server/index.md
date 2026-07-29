@@ -1,7 +1,7 @@
 ---
 title: "Claude Code: adding my first MCP server"
 url: https://perrotta.dev/2025/10/claude-code-adding-my-first-mcp-server/
-last_updated: 2026-02-16
+last_updated: 2026-07-29
 ---
 
 

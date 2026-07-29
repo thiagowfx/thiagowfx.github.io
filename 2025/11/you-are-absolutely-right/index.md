@@ -1,7 +1,7 @@
 ---
 title: "You are absolutely right!"
 url: https://perrotta.dev/2025/11/you-are-absolutely-right/
-last_updated: 2025-11-30
+last_updated: 2026-07-29
 ---
 
 

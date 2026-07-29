@@ -1,7 +1,7 @@
 ---
 title: "keychron k2: bluetooth always-on"
 url: https://perrotta.dev/2026/06/keychron-k2-bluetooth-always-on/
-last_updated: 2026-06-22
+last_updated: 2026-07-29
 ---
 
 
@@ -30,5 +30,5 @@ Time to shop for a new Keychron, with QMK?
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

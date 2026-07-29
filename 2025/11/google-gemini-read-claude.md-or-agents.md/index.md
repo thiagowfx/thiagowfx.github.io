@@ -1,7 +1,7 @@
 ---
 title: "Google Gemini: read CLAUDE.md or AGENTS.md"
 url: https://perrotta.dev/2025/11/google-gemini-read-claude.md-or-agents.md/
-last_updated: 2025-11-17
+last_updated: 2026-07-29
 ---
 
 

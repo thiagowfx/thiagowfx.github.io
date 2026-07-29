@@ -1,7 +1,7 @@
 ---
 title: "pi: cycle models backward with ctrl+n"
 url: https://perrotta.dev/2026/07/pi-cycle-models-backward-with-ctrl-n/
-last_updated: 2026-07-28
+last_updated: 2026-07-29
 ---
 
 
@@ -36,7 +36,7 @@ session.
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 
 [^1]: It cycles through models selected in `/scoped-models`.
 

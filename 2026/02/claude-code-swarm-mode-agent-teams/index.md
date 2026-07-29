@@ -1,7 +1,7 @@
 ---
 title: "Claude Code: swarm mode (agent teams)"
 url: https://perrotta.dev/2026/02/claude-code-swarm-mode-agent-teams/
-last_updated: 2026-02-09
+last_updated: 2026-07-29
 ---
 
 

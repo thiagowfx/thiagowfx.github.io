@@ -1,7 +1,7 @@
 ---
 title: "claude --resume"
 url: https://perrotta.dev/2025/09/claude--resume/
-last_updated: 2026-01-03
+last_updated: 2026-07-29
 ---
 
 

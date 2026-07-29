@@ -1,7 +1,7 @@
 ---
 title: "myrepos: a wip action to find unfinished work"
 url: https://perrotta.dev/2026/07/myrepos-a-wip-action-to-find-unfinished-work/
-last_updated: 2026-07-17
+last_updated: 2026-07-29
 ---
 
 
@@ -80,5 +80,5 @@ Runs read-only, so it's safe to run twice.
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

@@ -1,7 +1,7 @@
 ---
 title: "claude: ccusage"
 url: https://perrotta.dev/2025/09/claude-ccusage/
-last_updated: 2026-01-03
+last_updated: 2026-07-29
 ---
 
 

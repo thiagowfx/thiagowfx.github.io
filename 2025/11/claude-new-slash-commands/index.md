@@ -1,7 +1,7 @@
 ---
 title: "Claude: new slash commands"
 url: https://perrotta.dev/2025/11/claude-new-slash-commands/
-last_updated: 2026-03-26
+last_updated: 2026-07-29
 ---
 
 

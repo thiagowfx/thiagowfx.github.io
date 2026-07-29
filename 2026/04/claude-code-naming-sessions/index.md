@@ -1,7 +1,7 @@
 ---
 title: "claude code: naming sessions"
 url: https://perrotta.dev/2026/04/claude-code-naming-sessions/
-last_updated: 2026-04-12
+last_updated: 2026-07-29
 ---
 
 

@@ -1,7 +1,7 @@
 ---
 title: "Claude Code: add context window % to status line"
 url: https://perrotta.dev/2025/12/claude-code-add-context-window-to-status-line/
-last_updated: 2026-01-03
+last_updated: 2026-07-29
 ---
 
 

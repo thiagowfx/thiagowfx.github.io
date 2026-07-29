@@ -1,7 +1,7 @@
 ---
 title: "New APKBUILD: LLM edition"
 url: https://perrotta.dev/2026/02/new-apkbuild-llm-edition/
-last_updated: 2026-02-18
+last_updated: 2026-07-29
 ---
 
 

@@ -1298,6 +1298,7 @@
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (186 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
+- [Claude](https://perrotta.dev/tags/claude/) (59 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (12 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
 - [Dev](https://perrotta.dev/tags/dev/) (1164 posts)

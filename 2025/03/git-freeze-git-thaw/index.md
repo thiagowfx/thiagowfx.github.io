@@ -1,7 +1,7 @@
 ---
 title: "git freeze, git thaw"
 url: https://perrotta.dev/2025/03/git-freeze-git-thaw/
-last_updated: 2026-01-03
+last_updated: 2026-07-29
 ---
 
 

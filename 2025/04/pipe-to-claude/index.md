@@ -1,7 +1,7 @@
 ---
 title: "Pipe to Claude"
 url: https://perrotta.dev/2025/04/pipe-to-claude/
-last_updated: 2026-01-03
+last_updated: 2026-07-29
 ---
 
 

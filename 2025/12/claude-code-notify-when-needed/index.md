@@ -1,7 +1,7 @@
 ---
 title: "Claude Code: notify when needed"
 url: https://perrotta.dev/2025/12/claude-code-notify-when-needed/
-last_updated: 2026-01-03
+last_updated: 2026-07-29
 ---
 
 

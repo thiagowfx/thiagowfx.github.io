@@ -1,7 +1,7 @@
 ---
 title: "claude, claudey, claudeyy"
 url: https://perrotta.dev/2026/04/claude-claudey-claudeyy/
-last_updated: 2026-04-18
+last_updated: 2026-07-29
 ---
 
 

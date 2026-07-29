@@ -1,7 +1,7 @@
 ---
 title: "cco: OAuth refresh fix"
 url: https://perrotta.dev/2026/04/cco-oauth-refresh-fix/
-last_updated: 2026-04-12
+last_updated: 2026-07-29
 ---
 
 

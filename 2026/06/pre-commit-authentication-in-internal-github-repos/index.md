@@ -1,7 +1,7 @@
 ---
 title: "pre-commit: authentication in internal github repos"
 url: https://perrotta.dev/2026/06/pre-commit-authentication-in-internal-github-repos/
-last_updated: 2026-06-18
+last_updated: 2026-07-29
 ---
 
 
@@ -71,5 +71,5 @@ After the installation grant, the clone goes through and `prek` runs cleanly.
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

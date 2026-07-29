@@ -1,7 +1,7 @@
 ---
 title: "Ultrathink"
 url: https://perrotta.dev/2025/05/ultrathink/
-last_updated: 2025-05-19
+last_updated: 2026-07-29
 ---
 
 

@@ -1,7 +1,7 @@
 ---
 title: "pi: asynchronous exit summaries"
 url: https://perrotta.dev/2026/07/pi-asynchronous-exit-summaries/
-last_updated: 2026-07-28
+last_updated: 2026-07-29
 ---
 
 
@@ -74,5 +74,5 @@ JSON file now; summary happens during next session, without blocking exits.
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

@@ -1,7 +1,7 @@
 ---
 title: "espanso: reload config after editing"
 url: https://perrotta.dev/2026/06/espanso-reload-config-after-editing/
-last_updated: 2026-06-24
+last_updated: 2026-07-29
 ---
 
 
@@ -54,5 +54,5 @@ expands again.
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

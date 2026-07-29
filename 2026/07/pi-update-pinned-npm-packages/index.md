@@ -1,7 +1,7 @@
 ---
 title: "pi: update pinned npm packages"
 url: https://perrotta.dev/2026/07/pi-update-pinned-npm-packages/
-last_updated: 2026-07-28
+last_updated: 2026-07-29
 ---
 
 
@@ -76,5 +76,5 @@ and vendored-file updates.
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

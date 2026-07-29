@@ -1,7 +1,7 @@
 ---
 title: "bloggify"
 url: https://perrotta.dev/2026/06/bloggify/
-last_updated: 2026-06-22
+last_updated: 2026-07-29
 ---
 
 
@@ -56,5 +56,5 @@ As of today, it's not clear to me whether this approach will stick.
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

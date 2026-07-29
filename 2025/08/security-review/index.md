@@ -1,7 +1,7 @@
 ---
 title: "/security-review"
 url: https://perrotta.dev/2025/08/security-review/
-last_updated: 2026-01-01
+last_updated: 2026-07-29
 ---
 
 

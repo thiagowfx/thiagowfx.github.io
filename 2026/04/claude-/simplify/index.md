@@ -1,7 +1,7 @@
 ---
 title: "claude: /simplify"
 url: https://perrotta.dev/2026/04/claude-/simplify/
-last_updated: 2026-05-05
+last_updated: 2026-07-29
 ---
 
 

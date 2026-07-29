@@ -1,7 +1,7 @@
 ---
 title: "Claude Code: release notes RSS feed"
 url: https://perrotta.dev/2026/01/claude-code-release-notes-rss-feed/
-last_updated: 2026-01-05
+last_updated: 2026-07-29
 ---
 
 

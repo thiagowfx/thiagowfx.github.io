@@ -1,7 +1,7 @@
 ---
 title: "when Gen AI cites docs that don't exist"
 url: https://perrotta.dev/2026/07/when-gen-ai-cites-docs-that-dont-exist/
-last_updated: 2026-07-16
+last_updated: 2026-07-29
 ---
 
 
@@ -54,5 +54,5 @@ Human-in-the-loop is still very much needed, folks.
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

@@ -1,7 +1,7 @@
 ---
 title: "Grill me"
 url: https://perrotta.dev/2026/05/grill-me/
-last_updated: 2026-05-25
+last_updated: 2026-07-29
 ---
 
 

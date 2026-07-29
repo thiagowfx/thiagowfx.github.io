@@ -1,7 +1,7 @@
 ---
 title: "new blog post via Claude Code"
 url: https://perrotta.dev/2026/02/new-blog-post-via-claude-code/
-last_updated: 2026-02-13
+last_updated: 2026-07-29
 ---
 
 

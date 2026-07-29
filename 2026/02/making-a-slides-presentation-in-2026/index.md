@@ -1,7 +1,7 @@
 ---
 title: "Making a slides presentation in 2026"
 url: https://perrotta.dev/2026/02/making-a-slides-presentation-in-2026/
-last_updated: 2026-02-07
+last_updated: 2026-07-29
 ---
 
 

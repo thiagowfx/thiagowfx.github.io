@@ -1,7 +1,7 @@
 ---
 title: "pi: caveman mode"
 url: https://perrotta.dev/2026/07/pi-caveman-mode/
-last_updated: 2026-07-28
+last_updated: 2026-07-29
 ---
 
 
@@ -93,5 +93,5 @@ caveman project became.
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

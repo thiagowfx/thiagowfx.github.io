@@ -1,7 +1,7 @@
 ---
 title: "cco: claude condom (sandbox)"
 url: https://perrotta.dev/2026/02/cco-claude-condom-sandbox/
-last_updated: 2026-03-02
+last_updated: 2026-07-29
 ---
 
 

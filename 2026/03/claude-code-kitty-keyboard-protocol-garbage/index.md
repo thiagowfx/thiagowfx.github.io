@@ -1,7 +1,7 @@
 ---
 title: "claude code: kitty keyboard protocol garbage"
 url: https://perrotta.dev/2026/03/claude-code-kitty-keyboard-protocol-garbage/
-last_updated: 2026-03-25
+last_updated: 2026-07-29
 ---
 
 

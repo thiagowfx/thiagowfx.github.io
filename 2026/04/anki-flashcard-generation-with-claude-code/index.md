@@ -1,7 +1,7 @@
 ---
 title: "anki: flashcard generation with claude code"
 url: https://perrotta.dev/2026/04/anki-flashcard-generation-with-claude-code/
-last_updated: 2026-04-16
+last_updated: 2026-07-29
 ---
 
 

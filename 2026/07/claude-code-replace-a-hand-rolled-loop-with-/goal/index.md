@@ -1,7 +1,7 @@
 ---
 title: "claude code: replace a hand-rolled loop with /goal"
 url: https://perrotta.dev/2026/07/claude-code-replace-a-hand-rolled-loop-with-/goal/
-last_updated: 2026-07-16
+last_updated: 2026-07-29
 ---
 
 
@@ -65,5 +65,5 @@ used previously.
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

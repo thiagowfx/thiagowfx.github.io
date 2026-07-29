@@ -1,7 +1,7 @@
 ---
 title: "claude code: custom commands"
 url: https://perrotta.dev/2025/10/claude-code-custom-commands/
-last_updated: 2026-03-26
+last_updated: 2026-07-29
 ---
 
 

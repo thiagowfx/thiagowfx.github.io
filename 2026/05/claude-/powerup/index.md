@@ -1,7 +1,7 @@
 ---
 title: "claude: /powerup"
 url: https://perrotta.dev/2026/05/claude-/powerup/
-last_updated: 2026-05-04
+last_updated: 2026-07-29
 ---
 
 

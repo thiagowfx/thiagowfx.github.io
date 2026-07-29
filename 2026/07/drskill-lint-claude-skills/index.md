@@ -1,7 +1,7 @@
 ---
 title: "drskill: lint claude skills"
 url: https://perrotta.dev/2026/07/drskill-lint-claude-skills/
-last_updated: 2026-07-28
+last_updated: 2026-07-29
 ---
 
 
@@ -89,5 +89,5 @@ will break the check. I should add it to CI at some point.
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 
