@@ -36,7 +36,7 @@ here, _but_ the **Arch** thing itself, instead! <– –. Now, let's go back to
 Ubuntu and some motivations behind this change. The thing is: I would try Fedora
 or open SUSE at first. And I actually installed Fedora. However, I wiped it just
 a few hours later; it kept freezing. This wasn't the only reason for this
-wiping, however: I find fedora is really annnoying in some points… Well, so I've
+wiping, however: I find fedora is really annoying in some points… Well, so I've
 ended up on Ubuntu. Linux Mint would be an option, however I felt I should get
 out of my comfort zone, so Ubuntu would be better in that sense.
 
