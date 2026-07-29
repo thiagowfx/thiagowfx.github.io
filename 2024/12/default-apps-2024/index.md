@@ -1,7 +1,7 @@
 ---
 title: "Default apps 2024"
 url: https://perrotta.dev/2024/12/default-apps-2024/
-last_updated: 2026-01-04
+last_updated: 2026-07-29
 ---
 
 
@@ -40,7 +40,7 @@ And also for how many didn't.
 - Automation: None. I tried Hammerspoon this year but found no use for it.
 - Second Brain: A mixture of Obsidian and Logseq. Which I'd really like to end, it would be easier to have a single app to rule them all, as they both support multiple vaults / graphs anyway (e.g. to partition personal vs work notes).
 - Operating System: [Alpine Linux](https://alpinelinux.org/) is my current favorite for servers, and I'm biased anyway because I maintain a couple of aports (packages) there. For desktop, it's awfully hard to use anything other than macOS ever since M1 processors got released. I miss Linux desktop from time to time but realistically it's no longer an intrinsic goal of mine; that said, I'd likely go back to my beloved Arch Linux should that ever reoccur.
-- Shell: `zsh` + [`grml-zsh-config`](https://grml.org/zsh/), no change here. Sometimes I think of migrating to `fish`, but the POSIX incompability always discourages me to do so.
+- Shell: `zsh` + [`grml-zsh-config`](https://grml.org/zsh/), no change here. Sometimes I think of migrating to `fish`, but the POSIX incompatibility always discourages me to do so.
 - Terminal Multiplexer: `tmux`, but only for remote sessions (`ssh`). Locally I tend to just open new terminal tabs on VSCode and/or iTerm2. Alas, `tmux` + `VSCode` do not play well together anyway (citation needed, for another day).
 
 This post was inspired by https://micro.webology.dev/2024/12/19/default-apps.html.
