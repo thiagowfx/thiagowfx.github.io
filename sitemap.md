@@ -11,6 +11,7 @@
 - [AI](https://perrotta.dev/ai/)
 - [Blogroll](https://perrotta.dev/blogroll/)
 - [Contact](https://perrotta.dev/contact/)
+- [Cursed Knowledge](https://perrotta.dev/cursed-knowledge/)
 - [Graph](https://perrotta.dev/graph/)
 - [Pomodoro](https://perrotta.dev/pomodoro/)
 - [Privacy](https://perrotta.dev/privacy/)
