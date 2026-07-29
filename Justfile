@@ -257,6 +257,14 @@ last *args:
       [ -t 0 ] && {{ editor }} "$latest" || echo "$latest"
     fi
 
+[doc('Open the Cursed Knowledge page in your editor')]
+[group('manage')]
+cursed:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    [ -t 0 ] && {{ editor }} content/cursed-knowledge.md || echo content/cursed-knowledge.md
+
 [doc('Create a lazy git commit and push')]
 [group('publish')]
 lazy *args:
