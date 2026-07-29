@@ -80,4 +80,4 @@ and vendored-file updates.
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

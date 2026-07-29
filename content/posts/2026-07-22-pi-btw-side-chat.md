@@ -59,6 +59,6 @@ Added to [`~/.pi/agent/extensions/btw.ts`](https://github.com/thiagowfx/.dotfile
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 
 [^1]: I am no longer using [Arch](https://archlinux.org/), btw (sad!)

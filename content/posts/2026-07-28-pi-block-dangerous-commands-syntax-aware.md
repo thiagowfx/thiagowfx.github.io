@@ -101,4 +101,4 @@ The source lives in my [dotfiles](https://github.com/thiagowfx/.dotfiles/tree/d9
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

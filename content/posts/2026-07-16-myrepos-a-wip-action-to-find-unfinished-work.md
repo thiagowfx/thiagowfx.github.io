@@ -82,4 +82,4 @@ Runs read-only, so it's safe to run twice.
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

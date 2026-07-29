@@ -39,6 +39,6 @@ session.
 
 - - -
 
-🤖 *Drafted with `/bloggify`.*
+🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 
 [^1]: It cycles through models selected in `/scoped-models`.
