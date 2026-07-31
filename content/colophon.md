@@ -19,7 +19,7 @@ There are no ads, analytics, tracking cookies, or comments. See the
 [privacy page]({{< ref "privacy" >}}) and [AI page]({{< ref "ai" >}}) for more.
 Posts are also available through [RSS](/index.xml). Every page is published as
 plain Markdown alongside its HTML version — append `index.md` to any page URL,
-as in [this page's Markdown source](/colophon/index.md).
+as in [this page's Markdown source]({{< ref "colophon" >}}index.md).
 
 Blog content is licensed under
 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
