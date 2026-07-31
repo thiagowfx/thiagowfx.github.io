@@ -1,7 +1,7 @@
 ---
 title: "AI"
 url: https://perrotta.dev/ai/
-last_updated: 2026-07-16
+last_updated: 2026-07-31
 ---
 
 
@@ -25,7 +25,6 @@ paragraph by paragraph and edit it until it sounds like me. See
 
 ## References
 
-- [Not By AI](https://notbyai.fyi)
 - [Jake Worth](https://www.jakeworth.com/ai/)
   - [AI Manifesto](https://www.bydamo.la/p/ai-manifesto)
 
