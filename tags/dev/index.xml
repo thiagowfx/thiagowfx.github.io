@@ -11,8 +11,18 @@
     <copyright>© 2013 - 2026 Thiago Perrotta ·
   a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)
 </copyright>
-    <lastBuildDate>Fri, 31 Jul 2026 01:31:04 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 31 Jul 2026 14:07:08 +0200</lastBuildDate>
     <atom:link href="https://perrotta.dev/tags/dev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DNS: negative cache behind a local resolver
+      </title>
+      <link>https://perrotta.dev/2026/07/dns-negative-cache-behind-a-local-resolver/</link>
+      <pubDate>Fri, 31 Jul 2026 14:02:20 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author>
+      <category>dev</category>
+      <category>macos</category>
+      <guid>https://perrotta.dev/2026/07/dns-negative-cache-behind-a-local-resolver/</guid>
+      <description>&lt;p&gt;♠ &lt;strong&gt;Problem statement&lt;/strong&gt;: a newly created Route 53 record resolved through public DNS,&#xA;but &lt;del&gt;Chrome&lt;/del&gt; Brave and macOS still returned &lt;code&gt;DNS_PROBE_POSSIBLE&lt;/code&gt;.&lt;/p&gt;&#xA;&lt;p&gt;It smells like a DNS caching issue.&lt;/p&gt;&#xA;&lt;p&gt;Flushing &lt;code&gt;mDNSResponder&lt;/code&gt; did nothing though.&lt;/p&gt;&#xA;&lt;p&gt;The system resolver was &lt;strong&gt;Tailscale&lt;/strong&gt;&amp;rsquo;s local DNS&#xA;proxy, so I asked that resolver rather than trusting &lt;code&gt;dig&lt;/code&gt;&amp;rsquo;s default path:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;% dig &amp;#43;time=3 &amp;#43;tries=1 @100.100.100.100 kargo.tools.example-corp.net A &amp;#43;noall &amp;#43;answer &amp;#43;authority &amp;#43;comments&#xA;; &amp;lt;&amp;lt;&amp;gt;&amp;gt; DiG 9.10.6 &amp;lt;&amp;lt;&amp;gt;&amp;gt; &amp;#43;time=3 &amp;#43;tries=1 @100.100.100.100 kargo.tools.example-corp.net A &amp;#43;noall &amp;#43;answer &amp;#43;authority &amp;#43;comments&#xA;; (1 server found)&#xA;;; -&amp;gt;&amp;gt;HEADER&amp;lt;&amp;lt;- opcode: QUERY, status: NXDOMAIN, id: 13683&#xA;;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1&#xA;&#xA;;; AUTHORITY SECTION:&#xA;tools.example-corp.net. 225 IN SOA ns-1609.awsdns-09.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Route 53&amp;rsquo;s authoritative nameserver and several public resolvers already had it:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;% for resolver in 1.1.1.1 1.1.1.2 8.8.8.8; do&#xA;    printf &amp;#39;%-16s &amp;#39; &amp;#34;$resolver&amp;#34;&#xA;    dig &amp;#43;time=2 &amp;#43;tries=1 &amp;#43;short @&amp;#34;$resolver&amp;#34; kargo.tools.example-corp.net A | paste -sd, -&#xA;  done&#xA;1.1.1.1          192.0.2.11,198.51.100.50,203.0.113.95&#xA;1.1.1.2          192.0.2.11,203.0.113.95,198.51.100.50&#xA;8.8.8.8          203.0.113.95,198.51.100.50,192.0.2.11&#xA;&#xA;% dig &amp;#43;short @ns-1609.awsdns-09.co.uk kargo.tools.example-corp.net A&#xA;192.0.2.11&#xA;203.0.113.95&#xA;198.51.100.50&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Tailscale had cached the previous &lt;code&gt;NXDOMAIN&lt;/code&gt; response for a couple of minutes.&#xA;Its cache is not macOS&amp;rsquo;s cache; restarting &lt;code&gt;mDNSResponder&lt;/code&gt; cannot clear it.&#xA;Waiting out that TTL fixed the web browser lookup.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;🤖 &lt;em&gt;Drafted with &lt;a href=&#34;https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md&#34;&gt;&lt;code&gt;/bloggify&lt;/code&gt;&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;&#xA;&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href=&#34;mailto:serendipity@perrotta.dev?subject=Reply to: DNS: negative cache behind a local resolver&#34;&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&#34;https://perrotta.dev/tags/dev/&#34;&gt;#dev&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/macos/&#34;&gt;#macos&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>pi: with free models
       </title>
@@ -451,17 +461,6 @@
       <category>serenity</category>
       <guid>https://perrotta.dev/2026/05/rss-club/</guid>
       <description>&lt;p&gt;♠ In the spirit of &lt;a href=&#34;https://daverupert.com/rss-club/&#34;&gt;RSS Club&lt;/a&gt; by Dave&#xA;Rupert:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Congratulations on joining a secret society! RSS Club is a collection of blogs&#xA;(personal and otherwise) committed to providing RSS-only content. It&amp;rsquo;s like a&#xA;newsletter delivered to your feed reader to celebrate the medium of RSS and&#xA;breakaway from social media.&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;I achieved this by setting a &lt;code&gt;rss_only: true&lt;/code&gt; property in the frontmatter of&#xA;this markdown document + performing some Hugo templating magic.&lt;/p&gt;&#xA;&lt;p&gt;Is this a good avenue to rant &amp;ldquo;non-publicly&amp;rdquo;? :P&lt;/p&gt;&#xA;&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href=&#34;mailto:serendipity@perrotta.dev?subject=Reply to: RSS club&#34;&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&#34;https://perrotta.dev/tags/dev/&#34;&gt;#dev&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/serenity/&#34;&gt;#serenity&lt;/a&gt;&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>No slop grenade
-      </title>
-      <link>https://perrotta.dev/2026/05/no-slop-grenade/</link>
-      <pubDate>Mon, 25 May 2026 16:00:50 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author>
-      <category>ai</category>
-      <category>dev</category>
-      <category>serenity</category>
-      <guid>https://perrotta.dev/2026/05/no-slop-grenade/</guid>
-      <description>&lt;p&gt;♠ An addition to the &lt;a href=&#34;https://perrotta.dev/2025/09/nohello/&#34;&gt;&amp;ldquo;No Hello&amp;rdquo;&lt;/a&gt; series:&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://noslopgrenade.com/&#34;&gt;No (AI) Slop Grenade&lt;/a&gt;:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Stop throwing AI-generated walls of text into conversations.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Don&amp;rsquo;t do this&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;You&lt;/strong&gt;: Should we use Redis or Memcached?&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Them&lt;/strong&gt;: Great question! The choice between Redis and Memcached is a nuanced decision that requires careful consideration of multiple factors. Let me break down the key differences: Redis offers a rich set of data structures including strings, hashes, lists, sets, and sorted sets, which provide flexibility for various use cases. It supports persistence through RDB snapshots and AOF logs, enabling data durability &amp;hellip;more&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Instead, be human&lt;/strong&gt;:&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;You&lt;/strong&gt;: Should we use Redis or Memcached?&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Them&lt;/strong&gt;: Redis. We need pub/sub for the notifications feature.&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Clanker&#34;&gt;Clankers&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href=&#34;mailto:serendipity@perrotta.dev?subject=Reply to: No slop grenade&#34;&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&#34;https://perrotta.dev/tags/ai/&#34;&gt;#ai&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/dev/&#34;&gt;#dev&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/serenity/&#34;&gt;#serenity&lt;/a&gt;&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
