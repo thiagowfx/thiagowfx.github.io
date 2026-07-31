@@ -10,6 +10,7 @@
 
 - [AI](https://perrotta.dev/ai/)
 - [Blogroll](https://perrotta.dev/blogroll/)
+- [Colophon](https://perrotta.dev/colophon/)
 - [Contact](https://perrotta.dev/contact/)
 - [Cursed Knowledge](https://perrotta.dev/cursed-knowledge/)
 - [Graph](https://perrotta.dev/graph/)
