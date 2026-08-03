@@ -144,12 +144,18 @@ document.addEventListener("click", function (event) {
       return response.text();
     })
     .then(function (markdown) {
+      const attribution =
+        "\n\n---\n\nOriginally published at [perrotta.dev](" +
+        button.dataset.copySource +
+        ").\n";
+      const attributedMarkdown = markdown.trimEnd() + attribution;
+
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        return navigator.clipboard.writeText(markdown);
+        return navigator.clipboard.writeText(attributedMarkdown);
       }
 
       const textarea = document.createElement("textarea");
-      textarea.value = markdown;
+      textarea.value = attributedMarkdown;
       textarea.style.position = "fixed";
       textarea.style.opacity = "0";
       document.body.appendChild(textarea);
