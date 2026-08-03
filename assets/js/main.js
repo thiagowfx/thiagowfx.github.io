@@ -125,6 +125,60 @@ document.addEventListener("click", function (event) {
     });
 });
 
+document.addEventListener("click", function (event) {
+  const button = event.target.closest("[data-copy-markdown]");
+  if (!button || button.disabled) {
+    return;
+  }
+
+  const originalHtml = button.innerHTML;
+  const originalLabel = button.getAttribute("aria-label");
+  button.disabled = true;
+  button.setAttribute("aria-label", "Copying Markdown");
+
+  fetch(button.dataset.copyMarkdown)
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error("Failed to fetch Markdown: " + response.status);
+      }
+      return response.text();
+    })
+    .then(function (markdown) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(markdown);
+      }
+
+      const textarea = document.createElement("textarea");
+      textarea.value = markdown;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      const copied = document.execCommand("copy");
+      textarea.remove();
+      if (!copied) {
+        throw new Error("Failed to copy Markdown");
+      }
+    })
+    .then(function () {
+      button.setAttribute("aria-label", "Markdown copied");
+      button.innerHTML =
+        '<svg aria-hidden="true" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    })
+    .catch(function () {
+      button.setAttribute("aria-label", "Failed to copy Markdown");
+      button.innerHTML =
+        '<svg aria-hidden="true" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+    })
+    .finally(function () {
+      setTimeout(function () {
+        button.innerHTML = originalHtml;
+        button.setAttribute("aria-label", originalLabel);
+        button.disabled = false;
+      }, 2000);
+    });
+});
+
 // Reading progress indicator
 const readingProgress = document.getElementById("reading-progress");
 if (readingProgress) {
