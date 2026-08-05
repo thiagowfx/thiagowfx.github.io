@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [dual-review: address review findings automatically](https://perrotta.dev/2026/08/dual-review-address-review-findings-automatically/) (2026-08-05)
 - [pi: remove redundant github MCP](https://perrotta.dev/2026/08/pi-remove-redundant-github-mcp/) (2026-08-03)
 - [DNS: negative cache behind a local resolver](https://perrotta.dev/2026/07/dns-negative-cache-behind-a-local-resolver/) (2026-07-31)
 - [pi: with free models](https://perrotta.dev/2026/07/pi-with-free-models/) (2026-07-31)
@@ -1299,15 +1300,15 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (114 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (115 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (186 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
-- [Claude](https://perrotta.dev/tags/claude/) (59 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (13 posts)
+- [Claude](https://perrotta.dev/tags/claude/) (60 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (14 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1170 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1171 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1317,7 +1318,7 @@
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (155 posts)
 - [Macos](https://perrotta.dev/tags/macos/) (53 posts)
-- [Meta](https://perrotta.dev/tags/meta/) (60 posts)
+- [Meta](https://perrotta.dev/tags/meta/) (61 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pi](https://perrotta.dev/tags/pi/) (13 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (33 posts)
