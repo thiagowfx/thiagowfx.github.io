@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [atuin: hooks for LLM agent shell history](https://perrotta.dev/2026/08/atuin-hooks-for-llm-agent-shell-history/) (2026-08-06)
 - [dual-review: address review findings automatically](https://perrotta.dev/2026/08/dual-review-address-review-findings-automatically/) (2026-08-05)
 - [pi: remove redundant github MCP](https://perrotta.dev/2026/08/pi-remove-redundant-github-mcp/) (2026-08-03)
 - [DNS: negative cache behind a local resolver](https://perrotta.dev/2026/07/dns-negative-cache-behind-a-local-resolver/) (2026-07-31)
@@ -1300,15 +1301,15 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (115 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (116 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (10 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (186 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
-- [Claude](https://perrotta.dev/tags/claude/) (60 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (14 posts)
+- [Claude](https://perrotta.dev/tags/claude/) (61 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (15 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1171 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1172 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1320,7 +1321,7 @@
 - [Macos](https://perrotta.dev/tags/macos/) (53 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (61 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
-- [Pi](https://perrotta.dev/tags/pi/) (13 posts)
+- [Pi](https://perrotta.dev/tags/pi/) (14 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (33 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (33 posts)
