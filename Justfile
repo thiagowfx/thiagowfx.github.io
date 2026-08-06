@@ -281,7 +281,7 @@ lazy *args:
 [doc('List all available Hugo tags')]
 [group('manage')]
 list-tags:
-    @fd -e md . content/posts -x awk '/^tags:/{f=1;next} f && /^  - /{print substr($0,5)} f && /^[^ ]/{f=0}' | sort -u
+    @fd -e md . content/posts -x awk '/^tags:/{f=1;next} f && /^  - /{print substr($0,5)} f && /^[^ ]/{f=0}' | sort | uniq -c | sort -rn | awk '{printf "%d %s\n", $1, $2}'
 
 [doc('Delete hugo build artifacts')]
 [group('utils')]
