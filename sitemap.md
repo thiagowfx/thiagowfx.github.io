@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [Reply to: The Wisdom Paradox - Sketchplanations](https://perrotta.dev/2026/08/reply-to-the-wisdom-paradox-sketchplanations/) (2026-08-07)
 - [atuin: hooks for LLM agent shell history](https://perrotta.dev/2026/08/atuin-hooks-for-llm-agent-shell-history/) (2026-08-06)
 - [dual-review: address review findings automatically](https://perrotta.dev/2026/08/dual-review-address-review-findings-automatically/) (2026-08-05)
 - [pi: remove redundant github MCP](https://perrotta.dev/2026/08/pi-remove-redundant-github-mcp/) (2026-08-03)
@@ -1322,13 +1323,13 @@
 - [Meta](https://perrotta.dev/tags/meta/) (61 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pi](https://perrotta.dev/tags/pi/) (14 posts)
-- [Pkm](https://perrotta.dev/tags/pkm/) (33 posts)
+- [Pkm](https://perrotta.dev/tags/pkm/) (34 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (33 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (56 posts)
 - [Security](https://perrotta.dev/tags/security/) (64 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (266 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (267 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (12 posts)
