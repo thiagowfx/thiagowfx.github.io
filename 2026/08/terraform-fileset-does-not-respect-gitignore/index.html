@@ -7,53 +7,55 @@
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)">
-  <title class="title">Terraform: AWS deployment to random availability zones | ¬ just serendipity 🍀</title><meta name="title" content="Terraform: AWS deployment to random availability zones">
-<meta name="description" content="A common scenario: there&rsquo;s a new deployment you would like to roll out to AWS. Let&rsquo;s say you pick &ldquo;us-east-1&rdquo; as your cloud region. …">
-<meta name="keywords" content="aws,dev,terraform,"><meta property="og:url" content="https://perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/">
+  <title class="title">terraform: fileset does not respect gitignore | ¬ just serendipity 🍀</title><meta name="title" content="terraform: fileset does not respect gitignore">
+<meta name="description" content="Problem statement: a terraform project planned clean locally (terraform plan), but CI insisted on a diff. Every apply fixed it for one side and broke it for the …">
+<meta name="keywords" content="aws,coding,dev,git,terraform,"><meta property="og:url" content="https://perrotta.dev/2026/08/terraform-fileset-does-not-respect-gitignore/">
   <meta property="og:site_name" content="¬ just serendipity 🍀">
-  <meta property="og:title" content="Terraform: AWS deployment to random availability zones">
-  <meta property="og:description" content="A common scenario: there’s a new deployment you would like to roll out to AWS. Let’s say you pick “us-east-1” as your cloud region. There are multiple availability zones within it:
-us-east-1a us-east-1b us-east-1c us-east-1d us-east-1e us-east-1f Suppose you want to pick two of them for your service/app, and you don’t particularly care about which one. How to proceed?
-Option #1: Hard-coding # Pick two arbitrary zones and hard-code them.">
+  <meta property="og:title" content="terraform: fileset does not respect gitignore">
+  <meta property="og:description" content="Problem statement: a terraform project planned clean locally (terraform plan), but CI insisted on a diff. Every apply fixed it for one side and broke it for the other, back-and-forth.
+The culprit was a null_resource that rebuilds an AWS Lambda for a NodeJS app bundle whenever its sources change, keyed on a hash of the whole directory:
+terraform resource &#34;null_resource&#34; &#34;lambda_build&#34; { triggers = { dir_sha = sha256(join(&#34;&#34;, [for f in sort(fileset(&#34;${path.module}/lambda&#34;, &#34;**&#34;)) : &#34;${f}:${filesha256(&#34;${path.module}/lambda/${f}&#34;)}&#34;])) } provisioner &#34;local-exec&#34; { command = &#34;cd ${path.module}/lambda &amp;&amp; npm ci &amp;&amp; npm run build&#34; } } fileset() walks the filesystem. It has no idea .gitignore exists. So node_modules/ and dist/, present locally after a build, but absent in a fresh CI checkout, creates the discrepancy.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2024-05-21T14:31:03+02:00">
-    <meta property="article:modified_time" content="2026-01-03T19:26:40-03:00">
+    <meta property="article:published_time" content="2026-08-07T11:27:13+02:00">
+    <meta property="article:modified_time" content="2026-08-07T11:46:39+02:00">
     <meta property="article:tag" content="Aws">
+    <meta property="article:tag" content="Coding">
     <meta property="article:tag" content="Dev">
+    <meta property="article:tag" content="Git">
     <meta property="article:tag" content="Terraform">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Terraform: AWS deployment to random availability zones">
-  <meta name="twitter:description" content="A common scenario: there’s a new deployment you would like to roll out to AWS. Let’s say you pick “us-east-1” as your cloud region. There are multiple availability zones within it:
-us-east-1a us-east-1b us-east-1c us-east-1d us-east-1e us-east-1f Suppose you want to pick two of them for your service/app, and you don’t particularly care about which one. How to proceed?
-Option #1: Hard-coding # Pick two arbitrary zones and hard-code them.">
+  <meta name="twitter:title" content="terraform: fileset does not respect gitignore">
+  <meta name="twitter:description" content="Problem statement: a terraform project planned clean locally (terraform plan), but CI insisted on a diff. Every apply fixed it for one side and broke it for the other, back-and-forth.
+The culprit was a null_resource that rebuilds an AWS Lambda for a NodeJS app bundle whenever its sources change, keyed on a hash of the whole directory:
+terraform resource &#34;null_resource&#34; &#34;lambda_build&#34; { triggers = { dir_sha = sha256(join(&#34;&#34;, [for f in sort(fileset(&#34;${path.module}/lambda&#34;, &#34;**&#34;)) : &#34;${f}:${filesha256(&#34;${path.module}/lambda/${f}&#34;)}&#34;])) } provisioner &#34;local-exec&#34; { command = &#34;cd ${path.module}/lambda &amp;&amp; npm ci &amp;&amp; npm run build&#34; } } fileset() walks the filesystem. It has no idea .gitignore exists. So node_modules/ and dist/, present locally after a build, but absent in a fresh CI checkout, creates the discrepancy.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "BlogPosting",
-      "headline": "Terraform: AWS deployment to random availability zones",
-      "description": "A common scenario: there\u0026rsquo;s a new deployment you would like to roll out to AWS. Let\u0026rsquo;s say you pick \u0026ldquo;us-east-1\u0026rdquo; as your cloud region. …",
-      "url": "https://perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/",
-      "datePublished": "2024-05-21T14:31:03+02:00",
-      "dateModified": "2026-01-03T19:26:40-03:00",
+      "headline": "terraform: fileset does not respect gitignore",
+      "description": "Problem statement: a terraform project planned clean locally (terraform plan), but CI insisted on a diff. Every apply fixed it for one side and broke it for the …",
+      "url": "https://perrotta.dev/2026/08/terraform-fileset-does-not-respect-gitignore/",
+      "datePublished": "2026-08-07T11:27:13+02:00",
+      "dateModified": "2026-08-07T11:46:39+02:00",
       "author": {"@type":"Person","name":"Thiago Perrotta","url":"https://perrotta.dev/"},
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/"
-      },"keywords": ["aws","dev","terraform"]
+        "@id": "https://perrotta.dev/2026/08/terraform-fileset-does-not-respect-gitignore/"
+      },"keywords": ["aws","coding","dev","git","terraform"]
     },
     {
       "@type": "BreadcrumbList",
-      "itemListElement": [{"@type":"ListItem","item":"https://perrotta.dev","name":"Home","position":1},{"@type":"ListItem","item":"https://perrotta.dev/posts/","name":"Posts","position":2},{"@type":"ListItem","name":"Terraform: AWS deployment to random availability zones","position":3}]
+      "itemListElement": [{"@type":"ListItem","item":"https://perrotta.dev","name":"Home","position":1},{"@type":"ListItem","item":"https://perrotta.dev/posts/","name":"Posts","position":2},{"@type":"ListItem","name":"terraform: fileset does not respect gitignore","position":3}]
     }
   ]
 }
 </script><meta name="referrer" content="no-referrer-when-downgrade">
-  <link rel="icon" href="https://perrotta.dev/favicon.ico"><link rel="canonical" href="https://perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/"><link rel="alternate" type="text/markdown" href="https://perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/index.md" title="Terraform: AWS deployment to random availability zones"><link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0">
+  <link rel="icon" href="https://perrotta.dev/favicon.ico"><link rel="canonical" href="https://perrotta.dev/2026/08/terraform-fileset-does-not-respect-gitignore/"><link rel="alternate" type="text/markdown" href="https://perrotta.dev/2026/08/terraform-fileset-does-not-respect-gitignore/index.md" title="terraform: fileset does not respect gitignore"><link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0">
   <link rel="author" href="https://perrotta.dev/" title="Thiago Perrotta">
 <style>
   .e-content>p:first-child::before{content:"♠";color:var(--color-gray);margin-right:.5em}.heading-anchor{margin-left:.3em;color:var(--color-gray);text-decoration:none;opacity:0;transition:opacity .2s ease}h2:hover .heading-anchor,h3:hover .heading-anchor,h4:hover .heading-anchor,h5:hover .heading-anchor,h6:hover .heading-anchor,.heading-anchor:focus{opacity:1}:root{--color-light-gray:#5c5f77;--color-light-grayer:#6c6f85;--color-dark-gray:#9399b2;--color-dark-grayer:#7f849c;--font-title:"Inter", "Fira Sans", "Lato", system-ui, -apple-system,
@@ -1503,15 +1505,15 @@ Option #1: Hard-coding # Pick two arbitrary zones and hard-code them.">
     }
   });
 </script>
-<a href="https://perrotta.dev/2024/05/adding-a-healthcheck-to-chartmuseum-in-aws-fargate/" data-nav="prev" hidden></a>
-<a href="https://perrotta.dev/2024/05/github-actions-workflow/" data-nav="next" hidden></a>
+<a href="https://perrotta.dev/2026/08/atuin-hooks-for-llm-agent-shell-history/" data-nav="prev" hidden></a>
+
 <article class="h-entry">
 <div class="article-header">
   <h2>
-    <span class="p-name">Terraform: AWS deployment to random availability zones</span>
+    <span class="p-name">terraform: fileset does not respect gitignore</span>
   </h2>
   <div class="article-header-actions">
-      <button class="copy-markdown-btn" type="button" data-copy-markdown="/2024/05/terraform-aws-deployment-to-random-availability-zones/index.md" data-copy-source="https://perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/" aria-label="Copy as Markdown" title="Copy as Markdown">
+      <button class="copy-markdown-btn" type="button" data-copy-markdown="/2026/08/terraform-fileset-does-not-respect-gitignore/index.md" data-copy-source="https://perrotta.dev/2026/08/terraform-fileset-does-not-respect-gitignore/" aria-label="Copy as Markdown" title="Copy as Markdown">
         <svg aria-hidden="true" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
       </button>
     <button id="fullscreen-btn" class="fullscreen-btn" aria-label="Toggle fullscreen mode" title="Toggle fullscreen mode (f)">
@@ -1522,108 +1524,98 @@ Option #1: Hard-coding # Pick two arbitrary zones and hard-code them.">
 <p>
   
   <span class="pubdate-single">
-    <time class="dt-published" datetime='2024-05-21T14:31:03&#43;02:00'>
-      21 May, 2024
+    <time class="dt-published" datetime='2026-08-07T11:27:13&#43;02:00'>
+      07 Aug, 2026
     </time>
-     • 246 words   • 2 min 
-    
-    • updated <time datetime='2026-01-03'>03 Jan, 2026</time>
+     • 383 words   • 2 min 
     
   </span>
   
 </p>
-    <div class="old-entry-warning" role="note">
-      ⚠️ This post is over one year old. It may no longer be up to date or relevant. Opinions may have changed.
-    </div>
-<div class="e-content"> <p>A common scenario: there&rsquo;s a new deployment you would like to roll out to AWS.
-Let&rsquo;s say you pick &ldquo;us-east-1&rdquo; as your cloud region. There are multiple
-availability zones within it:</p>
-<ul>
-<li>us-east-1a</li>
-<li>us-east-1b</li>
-<li>us-east-1c</li>
-<li>us-east-1d</li>
-<li>us-east-1e</li>
-<li>us-east-1f</li>
-</ul>
-<p>Suppose you want to pick two of them for your service/app, and you don&rsquo;t
-particularly care about which one. How to proceed?</p>
-<h2 id="option-1-hard-coding">
-  Option #1: Hard-coding
-  <a class="heading-anchor" href="#option-1-hard-coding" aria-label="Link to this section">#</a>
-</h2>
-<p>Pick two arbitrary zones and hard-code them.</p>
+<div class="e-content"> <p><strong>Problem statement</strong>: a terraform project planned clean locally (<code>terraform plan</code>), but CI insisted on a diff. Every apply fixed it for one side and broke
+it for the other, back-and-forth.</p>
+<p>The culprit was a <code>null_resource</code> that rebuilds an AWS Lambda for a NodeJS app
+bundle whenever its sources change, keyed on a hash of the whole directory:</p>
 <div class="codeblock" data-lang="terraform">
    <div class="codeblock-header">
      <span class="codeblock-language">terraform</span>
      <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
    </div>
-   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-terraform" data-lang="terraform"><span class="line"><span class="cl"><span class="kr">variable</span> <span class="s2">&#34;availability_zones&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">type</span>    <span class="o">=</span><span class="nb"> list</span><span class="p">(</span><span class="nx">string</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">default</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;us-east-1a&#34;</span><span class="p">,</span> <span class="s2">&#34;us-east-1b&#34;</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-terraform" data-lang="terraform"><span class="line"><span class="cl"><span class="kr">resource</span> <span class="s2">&#34;null_resource&#34;</span> <span class="s2">&#34;lambda_build&#34;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">triggers</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">dir_sha</span> <span class="o">=</span> <span class="nb">sha256</span><span class="p">(</span><span class="nb">join</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="p">[</span><span class="k">for</span> <span class="nx">f</span> <span class="k">in</span><span class="nb"> sort</span><span class="p">(</span><span class="nb">fileset</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nx">path</span><span class="p">.</span><span class="nb">module</span><span class="si">}</span><span class="s2">/lambda&#34;</span><span class="p">,</span> <span class="s2">&#34;**&#34;</span><span class="p">))</span> <span class="o">:</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nx">f</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nb">filesha256</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nx">path</span><span class="p">.</span><span class="nb">module</span><span class="si">}</span><span class="s2">/lambda/</span><span class="si">${</span><span class="nx">f</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kr">resource</span> <span class="s2">&#34;aws_subnet&#34;</span> <span class="s2">&#34;private&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">vpc_id</span>            <span class="o">=</span> <span class="nx">aws_vpc</span><span class="p">.</span><span class="nx">chartmuseum</span><span class="p">.</span><span class="nx">id</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">cidr_block</span>        <span class="o">=</span><span class="nb"> element</span><span class="p">(</span><span class="nb">var</span><span class="p">.</span><span class="nx">private_subnets</span><span class="p">,</span> <span class="nb">count</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">availability_zone</span> <span class="o">=</span><span class="nb"> element</span><span class="p">(</span><span class="nb">var</span><span class="p">.</span><span class="nx">availability_zones</span><span class="p">,</span> <span class="nb">count</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">count</span>             <span class="o">=</span><span class="nb"> length</span><span class="p">(</span><span class="nb">var</span><span class="p">.</span><span class="nx">private_subnets</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">provisioner</span> <span class="s2">&#34;local-exec&#34;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">command</span> <span class="o">=</span> <span class="s2">&#34;cd </span><span class="si">${</span><span class="nx">path</span><span class="p">.</span><span class="nb">module</span><span class="si">}</span><span class="s2">/lambda &amp;&amp; npm ci &amp;&amp; npm run build&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div>
 </div>
-<p><strong>Caveat</strong>: <a href="https://www.goodreads.com/book/show/10639.The_Paradox_of_Choice">The paradox of
-choice</a>,
-unnecessary decision fatigue.</p>
-<h2 id="option-2-pick-the-first-two">
-  Option #2: Pick the first two
-  <a class="heading-anchor" href="#option-2-pick-the-first-two" aria-label="Link to this section">#</a>
-</h2>
-<p>Use the AWS data source to dynamically find all zones, and pick the first two.</p>
+<p><a href="https://developer.hashicorp.com/terraform/language/functions/fileset"><code>fileset()</code></a>
+walks the filesystem. It has no idea <code>.gitignore</code> exists. So <code>node_modules/</code>
+and <code>dist/</code>, present locally after a build, but absent in a fresh CI checkout,
+creates the discrepancy.</p>
+<p>A minimal reproduction test case, with <code>node_modules/</code> and <code>dist/</code> gitignored:</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% git ls-files lambda <span class="p">|</span> wc -l
+</span></span><span class="line"><span class="cl"><span class="m">2</span>
+</span></span><span class="line"><span class="cl">% <span class="nb">echo</span> <span class="s1">&#39;sha256(join(&#34;&#34;, [for f in sort(fileset(&#34;./lambda&#34;, &#34;**&#34;)) : &#34;${f}:${filesha256(&#34;./lambda/${f}&#34;)}&#34;]))&#39;</span> <span class="p">|</span> terraform console
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;a0af67e204ae2b73a7452d0c2755be1f665b377b5d49e7cc520bd31607adb832&#34;</span></span></span></code></pre></div>
+</div>
+<p>Then with <code>npm ci &amp;&amp; npm run build</code>:</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% find lambda -type f <span class="p">|</span> wc -l
+</span></span><span class="line"><span class="cl"><span class="m">4</span>
+</span></span><span class="line"><span class="cl">% git status --porcelain <span class="p">|</span> wc -l
+</span></span><span class="line"><span class="cl"><span class="m">0</span>
+</span></span><span class="line"><span class="cl">% <span class="nb">echo</span> <span class="s1">&#39;sha256(join(&#34;&#34;, [for f in sort(fileset(&#34;./lambda&#34;, &#34;**&#34;)) : &#34;${f}:${filesha256(&#34;./lambda/${f}&#34;)}&#34;]))&#39;</span> <span class="p">|</span> terraform console
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;728a40d04abc2b8292d57465d1f037f833a67d4cc0607a6c64cef487292d9be6&#34;</span></span></span></code></pre></div>
+</div>
+<p>Git says nothing changed; Terraform says everything did (ugh!).</p>
+<p>That&rsquo;s the issue. CI plans one value, my laptop plans the other, and each
+apply sets up the next one to &ldquo;detect drift&rdquo; again.</p>
+<p>Nothing in AWS had changed. The deployed artifact was byte-identical the whole
+time; only the build trigger churned.</p>
+<p>The fix is to hash the build <em>inputs</em>, not the build <em>directory</em>:</p>
 <div class="codeblock" data-lang="terraform">
    <div class="codeblock-header">
      <span class="codeblock-language">terraform</span>
      <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
    </div>
-   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-terraform" data-lang="terraform"><span class="line"><span class="cl"><span class="kr">data</span> <span class="s2">&#34;aws_availability_zones&#34;</span> <span class="s2">&#34;available&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">state</span> <span class="o">=</span> <span class="s2">&#34;available&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kr">resource</span> <span class="s2">&#34;aws_subnet&#34;</span> <span class="s2">&#34;private&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">vpc_id</span>            <span class="o">=</span> <span class="nx">aws_vpc</span><span class="p">.</span><span class="nx">chartmuseum</span><span class="p">.</span><span class="nx">id</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">cidr_block</span>        <span class="o">=</span><span class="nb"> element</span><span class="p">(</span><span class="nb">var</span><span class="p">.</span><span class="nx">private_subnets</span><span class="p">,</span> <span class="nb">count</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">availability_zone</span> <span class="o">=</span><span class="nb"> element</span><span class="p">(</span><span class="nb">data</span><span class="p">.</span><span class="nx">aws_availability_zones</span><span class="p">.</span><span class="nx">available</span><span class="p">.</span><span class="nx">names</span><span class="p">,</span> <span class="nb">count</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">count</span>             <span class="o">=</span><span class="nb"> length</span><span class="p">(</span><span class="nb">var</span><span class="p">.</span><span class="nx">private_subnets</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-terraform" data-lang="terraform"><span class="line"><span class="cl"><span class="nx">dir_sha</span> <span class="o">=</span> <span class="nb">sha256</span><span class="p">(</span><span class="nb">join</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="p">[</span><span class="k">for</span> <span class="nx">f</span> <span class="k">in</span><span class="nb"> sort</span><span class="p">(</span><span class="nx">setunion</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">fileset</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nx">path</span><span class="p">.</span><span class="nb">module</span><span class="si">}</span><span class="s2">/lambda&#34;</span><span class="p">,</span> <span class="s2">&#34;src/**&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="s2">&#34;package.json&#34;</span><span class="p">,</span> <span class="s2">&#34;package-lock.json&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl"><span class="p">))</span> <span class="o">:</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nx">f</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nb">filesha256</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nx">path</span><span class="p">.</span><span class="nb">module</span><span class="si">}</span><span class="s2">/lambda/</span><span class="si">${</span><span class="nx">f</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">]))</span></span></span></code></pre></div>
 </div>
-<p>Note that <code>terraform plan</code> should display the full zone list.</p>
-<p><strong>Caveat</strong>: Heavily biased towards the first two zones.</p>
-<h2 id="option-3-random-shuffling">
-  Option #3: Random shuffling
-  <a class="heading-anchor" href="#option-3-random-shuffling" aria-label="Link to this section">#</a>
-</h2>
-<p>Pick two zones at random!</p>
-<div class="codeblock" data-lang="terraform">
+<p>Same value on both sides, and still sensitive to anything that actually matters:</p>
+<div class="codeblock" data-lang="shell">
    <div class="codeblock-header">
-     <span class="codeblock-language">terraform</span>
+     <span class="codeblock-language">shell</span>
      <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
    </div>
-   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-terraform" data-lang="terraform"><span class="line"><span class="cl"><span class="kr">data</span> <span class="s2">&#34;aws_availability_zones&#34;</span> <span class="s2">&#34;available&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">state</span> <span class="o">=</span> <span class="s2">&#34;available&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kr">resource</span> <span class="s2">&#34;random_shuffle&#34;</span> <span class="s2">&#34;aws_availability_zone_names&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">input</span>        <span class="o">=</span> <span class="nb">data</span><span class="p">.</span><span class="nx">aws_availability_zones</span><span class="p">.</span><span class="nx">available</span><span class="p">.</span><span class="nx">names</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">result_count</span> <span class="o">=</span> <span class="m">2</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kr">resource</span> <span class="s2">&#34;aws_subnet&#34;</span> <span class="s2">&#34;private&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">vpc_id</span>            <span class="o">=</span> <span class="nx">aws_vpc</span><span class="p">.</span><span class="nx">chartmuseum</span><span class="p">.</span><span class="nx">id</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">cidr_block</span>        <span class="o">=</span><span class="nb"> element</span><span class="p">(</span><span class="nb">var</span><span class="p">.</span><span class="nx">private_subnets</span><span class="p">,</span> <span class="nb">count</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">availability_zone</span> <span class="o">=</span><span class="nb"> element</span><span class="p">(</span><span class="nx">random_shuffle</span><span class="p">.</span><span class="nx">aws_availability_zone_names</span><span class="p">.</span><span class="nx">result</span><span class="p">,</span> <span class="nb">count</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">count</span>             <span class="o">=</span><span class="nb"> length</span><span class="p">(</span><span class="nb">var</span><span class="p">.</span><span class="nx">private_subnets</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% <span class="c1"># dirty tree, after npm ci</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;a0af67e204ae2b73a7452d0c2755be1f665b377b5d49e7cc520bd31607adb832&#34;</span>
+</span></span><span class="line"><span class="cl">% <span class="c1"># pristine `git archive` checkout</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;a0af67e204ae2b73a7452d0c2755be1f665b377b5d49e7cc520bd31607adb832&#34;</span>
+</span></span><span class="line"><span class="cl">% <span class="c1"># after editing lambda/src/handler.ts (hypotetically)</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;53ef69e287a65f9785cf05985942a5c62a8175348c91c7d9c83039bfc31b8714&#34;</span></span></span></code></pre></div>
 </div>
-<p><strong>Winner</strong>: In my opinion, this is the most elegant approach.</p>
-<p><code>random_shuffle</code> will output the selected regions upon running <code>terraform apply</code>.</p>
+<p><code>terraform console</code> is the right tool here — it evaluates an expression against
+the real filesystem without an apply, so both variants can be diffed against a
+pristine <code>git archive</code> tree and a working one before committing anything.</p>
+<p>The general shape: any <code>fileset()</code> over a directory that also holds build
+artifacts, virtualenvs, or vendored dependencies is environment-dependent, and
+will read as permanent drift for exactly as long as nobody looks closely.</p>
+<hr>
+<p>🤖 <em>Drafted with <a href="https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md"><code>/bloggify</code></a>.</em></p>
  </div><div class="post-footer-meta">
 <p style="text-align: center; margin: 2em 0 1em;">— § —</p>
 <div style="display: flex; justify-content: space-between">
@@ -1631,29 +1623,30 @@ unnecessary decision fatigue.</p>
   <p style="margin: 0;">
     Reply via
     <a
-      href="mailto:&#x73;&#x65;&#x72;&#x65;&#x6e;&#x64;&#x69;&#x70;&#x69;&#x74;&#x79;&#x40;&#x70;&#x65;&#x72;&#x72;&#x6f;&#x74;&#x74;&#x61;&#x2e;&#x64;&#x65;&#x76;?subject=Reply to: Terraform: AWS deployment to random availability zones"
+      href="mailto:&#x73;&#x65;&#x72;&#x65;&#x6e;&#x64;&#x69;&#x70;&#x69;&#x74;&#x79;&#x40;&#x70;&#x65;&#x72;&#x72;&#x6f;&#x74;&#x74;&#x61;&#x2e;&#x64;&#x65;&#x76;?subject=Reply to: terraform: fileset does not respect gitignore"
       >email</a
     >
   </p>
   
   
-  <p style="margin: 0;"><a href="https://perrotta.dev/tags/aws/">#aws</a> <a href="https://perrotta.dev/tags/dev/">#dev</a> <a href="https://perrotta.dev/tags/terraform/">#terraform</a>
+  <p style="margin: 0;"><a href="https://perrotta.dev/tags/aws/">#aws</a> <a href="https://perrotta.dev/tags/coding/">#coding</a> <a href="https://perrotta.dev/tags/dev/">#dev</a> <a href="https://perrotta.dev/tags/git/">#git</a> <a href="https://perrotta.dev/tags/terraform/">#terraform</a>
   </p>
   
 </div>
 </div><div class="related-posts" style="border: 2px solid var(--border-color); border-radius: .5rem; padding: 1.5rem; margin-top: 1.5rem;"><h4 id="related-posts" style="margin-top: 0;">Related Posts</h4>
   <section style="display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0;"><article style="flex: 1 1 250px; padding: 1rem; background: var(--code-bg); border-radius: .25rem; color: var(--text-color);">
       <h5 style="margin-top: 0; margin-bottom: .5rem; color: var(--heading-color);">
-        <a href="https://perrotta.dev/2026/08/terraform-fileset-does-not-respect-gitignore/">terraform: fileset does not respect gitignore</a>
-      </h5><p style="margin: .5rem 0; font-size: .9rem;">Problem statement: a terraform project planned clean locally (terraform plan), but CI insisted on a diff. Every apply fixed it for one side and broke …</p><small style="color: var(--color-gray);">Aug 07, 2026</small>
-    </article><article style="flex: 1 1 250px; padding: 1rem; background: var(--code-bg); border-radius: .25rem; color: var(--text-color);">
-      <h5 style="margin-top: 0; margin-bottom: .5rem; color: var(--heading-color);">
         <a href="https://perrotta.dev/2025/11/terraformer/">Terraformer</a>
       </h5><p style="margin: .5rem 0; font-size: .9rem;">terraformer:
 CLI tool to generate terraform files from existing infrastructure (reverse Terraform). Infrastructure to Code
 In other words: …</p><small style="color: var(--color-gray);">Nov 19, 2025</small>
-    </article></section><p class="previously" style="margin-bottom: 0; margin-top: 0.5rem;"><a href="https://perrotta.dev/2024/05/adding-a-healthcheck-to-chartmuseum-in-aws-fargate/" title="Adding a healthcheck to chartmuseum in AWS Fargate">Previously</a>, <a href="https://perrotta.dev/2024/02/integrating-terraform-with-ansible/" title="Integrating terraform with ansible">previously</a>, <a href="https://perrotta.dev/2024/01/terraforming-a-linode-hello-world/" title="Terraforming a Linode: hello world">previously</a>, <a href="https://perrotta.dev/2024/05/pritunl-log-in-via-cli/" title="Pritunl log in via CLI">previously</a>, <a href="https://perrotta.dev/2024/05/mongodb-find-idle-connections/" title="MongoDB: find idle connections">previously</a>.
-  </p></div><a class="u-url" href="https://perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/" aria-hidden="true" style="display:none;"></a>
+    </article><article style="flex: 1 1 250px; padding: 1rem; background: var(--code-bg); border-radius: .25rem; color: var(--text-color);">
+      <h5 style="margin-top: 0; margin-bottom: .5rem; color: var(--heading-color);">
+        <a href="https://perrotta.dev/2025/03/terraform-rename-resources/">Terraform: rename resources</a>
+      </h5><p style="margin: .5rem 0; font-size: .9rem;">Sometimes I need to make a simple refactoring rename change to a terraform resource that has already been applied. For example:
+terraform resource …</p><small style="color: var(--color-gray);">Mar 19, 2025</small>
+    </article></section><p class="previously" style="margin-bottom: 0; margin-top: 0.5rem;"><a href="https://perrotta.dev/2026/07/git-repair-unreachable-object-corruption/" title="git: repair unreachable object corruption">Previously</a>, <a href="https://perrotta.dev/2026/07/myrepos-a-wip-action-to-find-unfinished-work/" title="myrepos: a wip action to find unfinished work">previously</a>, <a href="https://perrotta.dev/2024/05/terraform-aws-deployment-to-random-availability-zones/" title="Terraform: AWS deployment to random availability zones">previously</a>.
+  </p></div><a class="u-url" href="https://perrotta.dev/2026/08/terraform-fileset-does-not-respect-gitignore/" aria-hidden="true" style="display:none;"></a>
 <span class="p-author h-card" style="display:none;">
   <a class="p-name u-url" href="https://perrotta.dev/" rel="author">Thiago Perrotta</a>
 </span>
