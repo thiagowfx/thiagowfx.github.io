@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [homebrew: turn go install into a formula](https://perrotta.dev/2026/08/homebrew-turn-go-install-into-a-formula/) (2026-08-10)
 - [terraform: fileset does not respect gitignore](https://perrotta.dev/2026/08/terraform-fileset-does-not-respect-gitignore/) (2026-08-07)
 - [Reply to: The Wisdom Paradox - Sketchplanations](https://perrotta.dev/2026/08/reply-to-the-wisdom-paradox-sketchplanations/) (2026-08-07)
 - [atuin: hooks for LLM agent shell history](https://perrotta.dev/2026/08/atuin-hooks-for-llm-agent-shell-history/) (2026-08-06)
@@ -1309,9 +1310,9 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (186 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (16 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (17 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1173 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1174 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1320,7 +1321,7 @@
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (43 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (155 posts)
-- [Macos](https://perrotta.dev/tags/macos/) (53 posts)
+- [Macos](https://perrotta.dev/tags/macos/) (54 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (61 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pi](https://perrotta.dev/tags/pi/) (14 posts)
