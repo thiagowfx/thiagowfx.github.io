@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [hwatch](https://perrotta.dev/2026/08/hwatch/) (2026-08-11)
 - [homebrew: replace deprecated and orphaned packages](https://perrotta.dev/2026/08/homebrew-replace-deprecated-and-orphaned-packages/) (2026-08-10)
 - [homebrew: turn go install into a formula](https://perrotta.dev/2026/08/homebrew-turn-go-install-into-a-formula/) (2026-08-10)
 - [terraform: fileset does not respect gitignore](https://perrotta.dev/2026/08/terraform-fileset-does-not-respect-gitignore/) (2026-08-07)
@@ -1313,7 +1314,7 @@
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (18 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1175 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1176 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)

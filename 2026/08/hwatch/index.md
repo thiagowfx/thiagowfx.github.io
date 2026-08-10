@@ -1,0 +1,75 @@
+---
+title: "hwatch"
+url: https://perrotta.dev/2026/08/hwatch/
+last_updated: 2026-08-10
+---
+
+
+[hwatch](https://github.com/blacknon/hwatch):
+
+> hwatch: alternative watch command with history, diff view, JSONL logging, and
+> change hooks. since 2018.
+
+Or, even better, from its man page [`hwatch(1)`](https://manpages.debian.org/testing/hwatch/hwatch.1.en.html):
+
+> hwatch is like watch command, repeatedly executes a command and displays its
+> output.  However, the output results can be scrolled and displayed.  In
+> addition, the difference of the execution result is recorded with the time
+> stamp, and it can be checked later.  When checking, it is also possible to
+> display the diff with the previous difference together.
+
+This is the first project I've ever stumbled upon that (i) is written in Rust,
+and (ii) doesn't brag about being written in Rust. Am I having a dream? Not
+kidding, there's not a single mention of Rust in its
+[README.md](https://github.com/blacknon/hwatch).
+
+As usual, it is available via your favorite [package
+manager](https://repology.org/project/hwatch/versions).
+
+I particularly like:
+
+> that records the result of command execution, can display it history and diffs [...]
+
+A simple way to test it:
+
+```shell
+% hwatch git status
+```
+
+Then make a silly change like:
+
+```shell
+% touch foo
+```
+
+It behaves just like vanilla
+[`watch(1)`](https://man.archlinux.org/man/watch.1):
+
+> watch runs command repeatedly, displaying its output and errors (the first
+> screenful). This allows you to watch the program output change over time. By
+> default, command is run every 2 seconds and watch will run until interrupted.
+> A header informs of the start and running time of command as well as its exit
+> code.
+
+...plus a few goodies such as history tracking.
+
+`h` opens a pop-up with in-app keyboard shortcuts[^1].
+
+`--aftercommand` (hook) is also interesting:
+
+```shell
+% hwatch --aftercommand '/usr/bin/afplay /System/Library/Sounds/Glass.aiff' git st
+```
+
+...makes a chime sound upon each diff[^2].
+
+A poor man's stopwatch:
+
+```shell
+% hwatch --aftercommand '/usr/bin/afplay /System/Library/Sounds/Glass.aiff' --interval 1 date
+```
+
+[^1]: Why not `?`? :(
+
+[^2]: There's also a native `--beep` option but it did not work in my terminal.
+
