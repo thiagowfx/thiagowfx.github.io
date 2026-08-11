@@ -93,16 +93,17 @@
 - [Links são o terror](https://perrotta.dev/pt/2013/07/links-s%C3%A3o-o-terror/) (2013-07-25)
 - [4 dicas sobre apps de Android](https://perrotta.dev/pt/2013/05/4-dicas-sobre-apps-de-android/) (2013-05-31)
 - [Uma palavra sobre o dia das mães](https://perrotta.dev/pt/2013/05/uma-palavra-sobre-o-dia-das-m%C3%A3es/) (2013-05-12)
+- [Minha primeira semana com Android](https://perrotta.dev/pt/2013/05/minha-primeira-semana-com-android/) (2013-05-06)
 
 ## Tags
 
 
 - [Bestof](https://perrotta.dev/pt/tags/bestof/) (3 posts)
-- [Dev](https://perrotta.dev/pt/tags/dev/) (65 posts)
+- [Dev](https://perrotta.dev/pt/tags/dev/) (66 posts)
 - [Gaming](https://perrotta.dev/pt/tags/gaming/) (3 posts)
 - [Git](https://perrotta.dev/pt/tags/git/) (1 posts)
 - [Leetcode](https://perrotta.dev/pt/tags/leetcode/) (1 posts)
-- [Legacy](https://perrotta.dev/pt/tags/legacy/) (75 posts)
+- [Legacy](https://perrotta.dev/pt/tags/legacy/) (76 posts)
 - [Meta](https://perrotta.dev/pt/tags/meta/) (2 posts)
 - [Privacy](https://perrotta.dev/pt/tags/privacy/) (4 posts)
 - [Security](https://perrotta.dev/pt/tags/security/) (3 posts)
