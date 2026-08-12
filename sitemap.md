@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [cmux: search all windows](https://perrotta.dev/2026/08/cmux-search-all-windows/) (2026-08-12)
 - [hwatch](https://perrotta.dev/2026/08/hwatch/) (2026-08-11)
 - [homebrew: replace deprecated and orphaned packages](https://perrotta.dev/2026/08/homebrew-replace-deprecated-and-orphaned-packages/) (2026-08-10)
 - [homebrew: turn go install into a formula](https://perrotta.dev/2026/08/homebrew-turn-go-install-into-a-formula/) (2026-08-10)
@@ -1306,15 +1307,15 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (116 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (117 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (11 posts)
-- [Bestof](https://perrotta.dev/tags/bestof/) (186 posts)
+- [Bestof](https://perrotta.dev/tags/bestof/) (187 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (18 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1177 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1178 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
