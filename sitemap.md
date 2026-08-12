@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [git: cd from worktree to main checkout](https://perrotta.dev/2026/08/git-cd-from-worktree-to-main-checkout/) (2026-08-12)
 - [cmux: search all windows](https://perrotta.dev/2026/08/cmux-search-all-windows/) (2026-08-12)
 - [hwatch](https://perrotta.dev/2026/08/hwatch/) (2026-08-11)
 - [homebrew: replace deprecated and orphaned packages](https://perrotta.dev/2026/08/homebrew-replace-deprecated-and-orphaned-packages/) (2026-08-10)
@@ -1313,14 +1314,14 @@
 - [Bestof](https://perrotta.dev/tags/bestof/) (187 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (18 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (19 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1178 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1179 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (9 posts)
-- [Git](https://perrotta.dev/tags/git/) (65 posts)
+- [Git](https://perrotta.dev/tags/git/) (66 posts)
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (43 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (156 posts)

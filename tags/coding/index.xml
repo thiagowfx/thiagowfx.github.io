@@ -11,8 +11,19 @@
     <copyright>© 2013 - present Thiago Perrotta ·
   a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)
 </copyright>
-    <lastBuildDate>Mon, 10 Aug 2026 15:14:43 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 12 Aug 2026 17:27:36 +0200</lastBuildDate>
     <atom:link href="https://perrotta.dev/tags/coding/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>git: cd from worktree to main checkout
+      </title>
+      <link>https://perrotta.dev/2026/08/git-cd-from-worktree-to-main-checkout/</link>
+      <pubDate>Wed, 12 Aug 2026 17:22:01 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author>
+      <category>coding</category>
+      <category>dev</category>
+      <category>git</category>
+      <guid>https://perrotta.dev/2026/08/git-cd-from-worktree-to-main-checkout/</guid>
+      <description>&lt;p&gt;♠ &lt;a href=&#34;https://perrotta.dev/2024/10/cdg-change-directory-to-the-git-root/&#34;&gt;Previously&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: make my &lt;code&gt;cdg&lt;/code&gt; shortcut jump from a linked Git worktree&#xA;back to the main checkout when already at the worktree root.&lt;/p&gt;&#xA;&lt;p&gt;The shortcut originally stopped at the current checkout&amp;rsquo;s root:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;alias cdg=&amp;#39;cd &amp;#34;$(git root)&amp;#34;&amp;#39;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;I wanted two consecutive calls from a worktree subdirectory to behave like&#xA;the following:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-plaintext&#34;&gt;worktree/subdirectory&#xA;        ↓ cdg&#xA;worktree (at the root)&#xA;        ↓ cdg&#xA;main checkout (at the root)&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;An alias cannot succinctly express the necessary conditional behavior, whereas&#xA;an external script cannot change its parent shell&amp;rsquo;s working directory. A shell&#xA;function can:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cdg() {&#xA;&#x9;# This file is sourced by bash and zsh, both of which support local.&#xA;&#x9;# shellcheck disable=SC3043&#xA;&#x9;local line main_is_bare main_worktree root worktrees&#xA;&#xA;&#x9;root=$(git rev-parse --path-format=absolute --show-toplevel) || return&#xA;&#xA;&#x9;if [ &amp;#34;$(pwd -P)&amp;#34; != &amp;#34;$root&amp;#34; ]; then&#xA;&#x9;&#x9;cd &amp;#34;$root&amp;#34; || return&#xA;&#x9;&#x9;return&#xA;&#x9;fi&#xA;&#xA;&#x9;worktrees=$(git worktree list --porcelain) || return&#xA;&#x9;main_worktree=&#xA;&#x9;main_is_bare=false&#xA;&#x9;while IFS= read -r line; do&#xA;&#x9;&#x9;case &amp;#34;$line&amp;#34; in&#xA;&#x9;&#x9;&#x9;worktree\ *) main_worktree=${line#worktree } ;;&#xA;&#x9;&#x9;&#x9;bare) main_is_bare=true ;;&#xA;&#x9;&#x9;&#x9;&amp;#39;&amp;#39;) break ;;&#xA;&#x9;&#x9;esac&#xA;&#x9;done &amp;lt;&amp;lt;-EOF&#xA;&#x9;$worktrees&#xA;&#x9;EOF&#xA;&#xA;&#x9;if [ &amp;#34;$main_is_bare&amp;#34; = false ] &amp;amp;&amp;amp; [ -n &amp;#34;$main_worktree&amp;#34; ] &amp;amp;&amp;amp; [ &amp;#34;$main_worktree&amp;#34; != &amp;#34;$root&amp;#34; ]; then&#xA;&#x9;&#x9;cd &amp;#34;$main_worktree&amp;#34; || return&#xA;&#x9;fi&#xA;}&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;The first entry from &lt;code&gt;git worktree list --porcelain&lt;/code&gt; is the main checkout. At&#xA;its root, &lt;code&gt;cdg&lt;/code&gt; remains a no-op. If that entry is a bare repository, it also&#xA;stays put instead of entering the Git directory.&lt;/p&gt;&#xA;&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href=&#34;mailto:serendipity@perrotta.dev?subject=Reply to: git: cd from worktree to main checkout&#34;&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&#34;https://perrotta.dev/tags/coding/&#34;&gt;#coding&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/dev/&#34;&gt;#dev&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/git/&#34;&gt;#git&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>homebrew: replace deprecated and orphaned packages
       </title>
