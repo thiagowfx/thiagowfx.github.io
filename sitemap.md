@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [pi: am I sandboxed?](https://perrotta.dev/2026/08/pi-am-i-sandboxed/) (2026-08-15)
 - [git: cd from worktree to main checkout](https://perrotta.dev/2026/08/git-cd-from-worktree-to-main-checkout/) (2026-08-12)
 - [cmux: search all windows](https://perrotta.dev/2026/08/cmux-search-all-windows/) (2026-08-12)
 - [hwatch](https://perrotta.dev/2026/08/hwatch/) (2026-08-11)
@@ -1308,15 +1309,15 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (117 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (118 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (11 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (187 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (19 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (20 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1180 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1181 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1328,12 +1329,12 @@
 - [Macos](https://perrotta.dev/tags/macos/) (55 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (61 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
-- [Pi](https://perrotta.dev/tags/pi/) (14 posts)
+- [Pi](https://perrotta.dev/tags/pi/) (15 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (34 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (33 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (56 posts)
-- [Security](https://perrotta.dev/tags/security/) (64 posts)
+- [Security](https://perrotta.dev/tags/security/) (65 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
 - [Serenity](https://perrotta.dev/tags/serenity/) (268 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (13 posts)
