@@ -109,5 +109,5 @@
 - [Privacy](https://perrotta.dev/pt/tags/privacy/) (4 posts)
 - [Security](https://perrotta.dev/pt/tags/security/) (3 posts)
 - [Selfhosted](https://perrotta.dev/pt/tags/selfhosted/) (1 posts)
-- [Serenity](https://perrotta.dev/pt/tags/serenity/) (19 posts)
+- [Serenity](https://perrotta.dev/pt/tags/serenity/) (20 posts)
 - [Socialmedia](https://perrotta.dev/pt/tags/socialmedia/) (1 posts)
