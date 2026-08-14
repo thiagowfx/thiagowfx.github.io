@@ -4,6 +4,7 @@ date: 2013-09-07T18:54:47-03:00
 tags:
   - dev
   - legacy
+  - serenity
 ---
 
 Eu comecei a escrever esse post faz uns 3 meses, no dia dos namorados desse ano
