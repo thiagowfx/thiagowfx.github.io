@@ -1,6 +1,8 @@
 ---
 title: "Contact"
 email: true
+aliases:
+  - /about
 ---
 
 You can also find me in the following platforms[^1]:
