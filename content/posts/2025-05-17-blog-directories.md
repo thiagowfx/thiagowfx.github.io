@@ -35,12 +35,12 @@ A few directories I like[^1]:
 - ✪ https://indieblog.page/
 - ✪ https://kagi.com/smallweb
 - ✪ https://marginalia-search.com/
-- https://minifeed.net/
 - ✪ https://powrss.com/
 - ✪ https://rss.social/
 - ✪ https://scour.ing/
 - ✪ https://static.quest
 - ✪ https://xn--sr8hvo.ws/dashboard (an indieweb webring)
+- https://minifeed.net/
 - https://ooh.directory/
 - https://www.blogsareback.com/
 - ✗ https://baccyflap.com/noai/?slug=njs#links
