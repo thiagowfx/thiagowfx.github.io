@@ -40,6 +40,7 @@ A few directories I like[^1]:
 - ✪ https://scour.ing/
 - ✪ https://static.quest
 - ✪ https://xn--sr8hvo.ws/dashboard (an indieweb webring)
+- https://minifeed.net/
 - https://ooh.directory/
 - https://www.blogsareback.com/
 - ✗ https://baccyflap.com/noai/?slug=njs#links
