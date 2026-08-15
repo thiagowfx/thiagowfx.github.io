@@ -35,6 +35,7 @@ A few directories I like[^1]:
 - ✪ https://indieblog.page/
 - ✪ https://kagi.com/smallweb
 - ✪ https://marginalia-search.com/
+- ✪ https://minifeed.net/
 - ✪ https://powrss.com/
 - ✪ https://rss.social/
 - ✪ https://scour.ing/
