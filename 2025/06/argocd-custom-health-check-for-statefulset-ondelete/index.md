@@ -1,7 +1,7 @@
 ---
 title: "ArgoCD: custom health check for StatefulSet (OnDelete)"
 url: https://perrotta.dev/2025/06/argocd-custom-health-check-for-statefulset-ondelete/
-last_updated: 2026-01-03
+last_updated: 2026-08-16
 ---
 
 

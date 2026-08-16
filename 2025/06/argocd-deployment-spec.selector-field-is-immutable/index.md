@@ -1,7 +1,7 @@
 ---
 title: "ArgoCD: deployment spec.selector: field is immutable"
 url: https://perrotta.dev/2025/06/argocd-deployment-spec.selector-field-is-immutable/
-last_updated: 2026-01-03
+last_updated: 2026-08-16
 ---
 
 

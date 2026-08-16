@@ -1,7 +1,7 @@
 ---
 title: "ArgoCD: stale Vault secret after population"
 url: https://perrotta.dev/2026/05/argocd-stale-vault-secret-after-population/
-last_updated: 2026-05-13
+last_updated: 2026-08-16
 ---
 
 

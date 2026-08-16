@@ -1,7 +1,7 @@
 ---
 title: "ArgoCD: persistent PDB selector diff"
 url: https://perrotta.dev/2026/05/argocd-persistent-pdb-selector-diff/
-last_updated: 2026-05-22
+last_updated: 2026-08-16
 ---
 
 

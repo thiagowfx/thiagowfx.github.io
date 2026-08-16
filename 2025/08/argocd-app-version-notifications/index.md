@@ -1,7 +1,7 @@
 ---
 title: "ArgoCD: app version notifications"
 url: https://perrotta.dev/2025/08/argocd-app-version-notifications/
-last_updated: 2026-01-03
+last_updated: 2026-08-16
 ---
 
 

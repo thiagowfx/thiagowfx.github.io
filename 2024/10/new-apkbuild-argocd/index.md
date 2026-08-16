@@ -1,7 +1,7 @@
 ---
 title: "New APKBUILD: argocd"
 url: https://perrotta.dev/2024/10/new-apkbuild-argocd/
-last_updated: 2026-01-03
+last_updated: 2026-08-16
 ---
 
 

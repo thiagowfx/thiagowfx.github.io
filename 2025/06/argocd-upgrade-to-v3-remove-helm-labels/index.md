@@ -1,7 +1,7 @@
 ---
 title: "ArgoCD: upgrade to v3, remove helm labels"
 url: https://perrotta.dev/2025/06/argocd-upgrade-to-v3-remove-helm-labels/
-last_updated: 2026-01-03
+last_updated: 2026-08-16
 ---
 
 

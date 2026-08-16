@@ -1,7 +1,7 @@
 ---
 title: "ArgoCD: sync stuck in terminating"
 url: https://perrotta.dev/2026/05/argocd-sync-stuck-in-terminating/
-last_updated: 2026-05-05
+last_updated: 2026-08-16
 ---
 
 

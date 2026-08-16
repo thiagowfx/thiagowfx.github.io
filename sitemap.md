@@ -1312,6 +1312,7 @@
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
 - [Ai](https://perrotta.dev/tags/ai/) (119 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
+- [Argocd](https://perrotta.dev/tags/argocd/) (15 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (11 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (187 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
