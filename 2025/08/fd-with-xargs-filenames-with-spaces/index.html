@@ -1273,6 +1273,106 @@ shell % fd kustomization.yaml | ifne xargs -n 1 ack &#34;base/mongo&#34; -l [...
     opacity: 0.7;
   }
 
+  .mini-graph {
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 1.25rem 1.25rem 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .mini-graph h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .mini-graph h4 a {
+    text-decoration: none;
+  }
+
+  .mini-graph svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .mini-graph a {
+    text-decoration: none;
+  }
+
+  .mini-graph circle {
+    fill: var(--color-gray);
+  }
+
+  .mini-graph circle.mini-graph-current {
+    fill: var(--link-color);
+  }
+
+  .mini-graph .mini-graph-edge {
+    stroke: var(--border-color);
+    stroke-width: 1.5;
+    stroke-opacity: 0.7;
+  }
+
+  .mini-graph text {
+    font-family: var(--font-body);
+    font-size: 12px;
+    fill: var(--text-color);
+    paint-order: stroke;
+    stroke: var(--bg-color);
+    stroke-width: 2px;
+    stroke-linejoin: round;
+  }
+
+  .mini-graph .mini-graph-header {
+    font-size: 10px;
+    fill: var(--color-gray);
+    letter-spacing: 0.04em;
+  }
+
+  .mini-graph .mini-graph-current-label {
+    fill: var(--heading-color);
+    font-weight: 600;
+  }
+
+  .mini-graph .mini-graph-more {
+    font-size: 11px;
+    fill: var(--color-gray);
+  }
+
+  .mini-graph a:hover circle {
+    fill: var(--link-color);
+  }
+
+  .mini-graph a:hover text {
+    fill: var(--link-color);
+  }
+
+  .mini-graph-list {
+    display: none;
+    font-size: 0.9rem;
+  }
+
+  .mini-graph-list ul {
+    margin: 0.25rem 0 0.75rem;
+    padding-left: 1.2rem;
+  }
+
+  .mini-graph-list-header {
+    margin: 0;
+    color: var(--color-gray);
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 700px) {
+    .mini-graph svg {
+      display: none;
+    }
+
+    .mini-graph-list {
+      display: block;
+    }
+  }
+
   body.fullscreen-mode {
     background: var(--bg-color);
   }
@@ -1596,182 +1696,26 @@ shell fd -e tf | ifne xargs gsed -i -e &#39;s/required_version = &#34;~&gt; …<
       <a href="https://perrotta.dev/2025/08/gnu-sed-follow-symlinks/">GNU sed: follow symlinks</a>
       <small style="color: var(--color-gray);">(Aug 14, 2025)</small>
     </li></ul>
-</div><div class="mini-graph" style="border: 2px solid var(--border-color); border-radius: .5rem; padding: 1.5rem 1.5rem 1rem; margin-top: 1.5rem;">
-  <h4 id="connections" style="margin-top: 0; margin-bottom: 0.25rem;"><a href="/graph/" style="text-decoration: none;">Connections</a></h4>
-  <div id="mini-graph-container" style="position: relative; width: 100%; height: 220px; overflow: hidden;">
-    <div id="mini-graph-tooltip" style="position: absolute; pointer-events: none; background: var(--bg-color); border: 1px solid var(--border-color); border-radius: .25rem; padding: 0.3rem 0.5rem; font-size: 0.8rem; max-width: 240px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); display: none; z-index: 10; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></div>
-  </div>
-</div>
-
-<script src="/vendor/d3.v7.min.js"></script>
-<script>
-(function() {
-  const nodes = [{"id":"2025-04-30-the-ack-xargs-sed-pattern","isCurrent":false,"title":"The ack + xargs + sed pattern","url":"https://perrotta.dev/2025/04/the-ack--xargs--sed-pattern/"},{"id":"2025-08-08-fd-with-xargs-filenames-with-spaces","isCurrent":true,"title":"fd with xargs: filenames with spaces","url":"https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/"},{"id":"2025-08-14-gnu-sed-follow-symlinks","isCurrent":false,"title":"GNU sed: follow symlinks","url":"https://perrotta.dev/2025/08/gnu-sed-follow-symlinks/"}];
-  const edges = [{"source":"2025-08-08-fd-with-xargs-filenames-with-spaces","target":"2025-04-30-the-ack-xargs-sed-pattern"},{"source":"2025-08-14-gnu-sed-follow-symlinks","target":"2025-08-08-fd-with-xargs-filenames-with-spaces"}];
-  const currentId = "2025-08-08-fd-with-xargs-filenames-with-spaces";
-
-  const container = document.getElementById('mini-graph-container');
-  const tooltip = document.getElementById('mini-graph-tooltip');
-  const width = container.clientWidth;
-  const height = container.clientHeight;
-
-  const style = getComputedStyle(document.documentElement);
-  const linkColor = style.getPropertyValue('--border-color').trim() || '#ccc';
-  const currentColor = style.getPropertyValue('--link-color').trim() || '#0066cc';
-  const neighborColor = style.getPropertyValue('--color-gray').trim() || '#999';
-  const bgColor = style.getPropertyValue('--bg-color').trim() || '#fff';
-
-  
-  const currentNode = nodes.find(n => n.id === currentId);
-  if (currentNode) {
-    currentNode.fx = width / 2;
-    currentNode.fy = height / 2;
-  }
-
-  const svg = d3.select('#mini-graph-container')
-    .append('svg')
-    .attr('width', '100%')
-    .attr('height', '100%')
-    .attr('viewBox', [0, 0, width, height]);
-
-  const g = svg.append('g');
-
-  
-  svg.append('defs').append('marker')
-    .attr('id', 'mini-arrow')
-    .attr('viewBox', '0 0 10 10')
-    .attr('refX', 10)
-    .attr('refY', 5)
-    .attr('markerWidth', 6)
-    .attr('markerHeight', 6)
-    .attr('orient', 'auto')
-    .append('path')
-    .attr('d', 'M0,0 L10,5 L0,10 Z')
-    .attr('fill', linkColor);
-
-  const nodeRadius = d => d.isCurrent ? 8 : 5;
-
-  const simulation = d3.forceSimulation(nodes)
-    .force('link', d3.forceLink(edges).id(d => d.id).distance(120))
-    .force('charge', d3.forceManyBody().strength(-300))
-    .force('center', d3.forceCenter(width / 2, height / 2))
-    .force('collision', d3.forceCollide().radius(50));
-
-  const link = g.append('g')
-    .selectAll('line')
-    .data(edges)
-    .join('line')
-    .attr('stroke', linkColor)
-    .attr('stroke-opacity', 0.6)
-    .attr('stroke-width', 1.5)
-    .attr('marker-end', 'url(#mini-arrow)');
-
-  const node = g.append('g')
-    .selectAll('circle')
-    .data(nodes, d => d.id)
-    .join('circle')
-    .attr('r', nodeRadius)
-    .attr('fill', d => d.isCurrent ? currentColor : neighborColor)
-    .attr('stroke', bgColor)
-    .attr('stroke-width', 1.5)
-    .style('cursor', d => d.isCurrent ? 'default' : 'pointer')
-    .call(d3.drag()
-      .on('start', dragstarted)
-      .on('drag', dragged)
-      .on('end', dragended));
-
-  const label = g.append('g')
-    .selectAll('text')
-    .data(nodes, d => d.id)
-    .join('text')
-    .text(d => d.title.length > 25 ? d.title.slice(0, 24) + '…' : d.title)
-    .attr('font-size', '11px')
-    .attr('fill', 'var(--text-color)')
-    .attr('dx', d => nodeRadius(d) + 4)
-    .attr('dy', '0.35em')
-    .style('cursor', d => d.isCurrent ? 'default' : 'pointer');
-
-  function handleClick(event, d) {
-    if (!d.isCurrent) window.location.href = d.url;
-  }
-
-  node.on('click', handleClick);
-  label.on('click', handleClick);
-
-  node.on('mouseover', function(event, d) {
-    tooltip.textContent = d.title;
-    tooltip.style.display = 'block';
-    const rect = container.getBoundingClientRect();
-    const x = event.clientX - rect.left + 10;
-    const y = event.clientY - rect.top - 10;
-    tooltip.style.left = Math.min(x, rect.width - 250) + 'px';
-    tooltip.style.top = Math.max(0, y) + 'px';
-
-    d3.select(this).attr('fill', currentColor);
-  });
-
-  node.on('mousemove', function(event) {
-    const rect = container.getBoundingClientRect();
-    const x = event.clientX - rect.left + 10;
-    const y = event.clientY - rect.top - 10;
-    tooltip.style.left = Math.min(x, rect.width - 250) + 'px';
-    tooltip.style.top = Math.max(0, y) + 'px';
-  });
-
-  node.on('mouseout', function(event, d) {
-    tooltip.style.display = 'none';
-    d3.select(this).attr('fill', d.isCurrent ? currentColor : neighborColor);
-  });
-
-  simulation.on('tick', () => {
-    
-    const pad = 60;
-    nodes.forEach(d => {
-      if (!d.fx) d.x = Math.max(pad, Math.min(width - pad, d.x));
-      if (!d.fy) d.y = Math.max(pad, Math.min(height - pad, d.y));
-    });
-
-    
-    link.each(function(d) {
-      const dx = d.target.x - d.source.x;
-      const dy = d.target.y - d.source.y;
-      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-      const r = nodeRadius(d.target);
-      d3.select(this)
-        .attr('x1', d.source.x)
-        .attr('y1', d.source.y)
-        .attr('x2', d.target.x - (dx / dist) * r)
-        .attr('y2', d.target.y - (dy / dist) * r);
-    });
-    node
-      .attr('cx', d => d.x)
-      .attr('cy', d => d.y);
-    label
-      .attr('x', d => d.x)
-      .attr('y', d => d.y);
-  });
-
-  function dragstarted(event) {
-    if (!event.active) simulation.alphaTarget(0.3).restart();
-    event.subject.fx = event.subject.x;
-    event.subject.fy = event.subject.y;
-  }
-
-  function dragged(event) {
-    event.subject.fx = event.x;
-    event.subject.fy = event.y;
-  }
-
-  function dragended(event) {
-    if (!event.active) simulation.alphaTarget(0);
-    
-    if (event.subject.id !== currentId) {
-      event.subject.fx = null;
-      event.subject.fy = null;
-    }
-  }
-})();
-</script><a class="u-url" href="https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/" aria-hidden="true" style="display:none;"></a>
+</div><div class="mini-graph">
+  <h4 id="connections"><a href="/graph/">Connections</a></h4>
+  <svg
+    viewBox="0 0 640 100"
+    role="img"
+    aria-label="Posts linking to and from this one"
+    preserveAspectRatio="xMidYMid meet"><line class="mini-graph-edge" x1="180" y1="50" x2="308" y2="50" /><line class="mini-graph-edge" x1="332" y1="50" x2="459" y2="50" /><text class="mini-graph-header" x="162" y="14" text-anchor="end">Linked from</text><text class="mini-graph-header" x="478" y="14">Links to</text><a href="https://perrotta.dev/2025/08/gnu-sed-follow-symlinks/">
+        <title>GNU sed: follow symlinks</title>
+        <circle cx="172" cy="50" r="4.5" />
+        <text x="162" y="50" text-anchor="end" dy="0.35em">GNU sed: follow symlinks</text>
+      </a><a href="https://perrotta.dev/2025/04/the-ack--xargs--sed-pattern/">
+        <title>The ack &#43; xargs &#43; sed pattern</title>
+        <circle cx="468" cy="50" r="4.5" />
+        <text x="478" y="50" dy="0.35em">The ack + xargs + sed…</text>
+      </a><circle class="mini-graph-current" cx="320" cy="50" r="7" />
+    <text class="mini-graph-current-label" x="320" y="70" text-anchor="middle">fd with xargs: filenames with spaces</text>
+  </svg><div class="mini-graph-list"><p class="mini-graph-list-header">Linked from</p>
+      <ul><li><a href="https://perrotta.dev/2025/08/gnu-sed-follow-symlinks/">GNU sed: follow symlinks</a></li></ul><p class="mini-graph-list-header">Links to</p>
+      <ul><li><a href="https://perrotta.dev/2025/04/the-ack--xargs--sed-pattern/">The ack &#43; xargs &#43; sed pattern</a></li></ul></div>
+</div><a class="u-url" href="https://perrotta.dev/2025/08/fd-with-xargs-filenames-with-spaces/" aria-hidden="true" style="display:none;"></a>
 <span class="p-author h-card" style="display:none;">
   <a class="p-name u-url" href="https://perrotta.dev/" rel="author">Thiago Perrotta</a>
 </span>
