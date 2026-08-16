@@ -1,7 +1,7 @@
 ---
 title: "Blog directories"
 url: https://perrotta.dev/2025/05/blog-directories/
-last_updated: 2026-08-15
+last_updated: 2026-08-17
 ---
 
 
@@ -37,6 +37,7 @@ A few directories I like[^1]:
 - ✪ https://rss.social/
 - ✪ https://scour.ing/
 - ✪ https://static.quest
+- ✪ https://weirdnet.org/
 - ✪ https://xn--sr8hvo.ws/dashboard (an indieweb webring)
 - https://minifeed.net/
 - https://ooh.directory/
