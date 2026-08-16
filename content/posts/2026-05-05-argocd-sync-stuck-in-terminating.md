@@ -2,6 +2,7 @@
 title: "ArgoCD: sync stuck in terminating"
 date: 2026-05-05T13:51:10-02:00
 tags:
+  - argocd
   - dev
   - kubernetes
 ---

@@ -2,6 +2,7 @@
 title: "ArgoCD: every application in unknown state"
 date: 2025-06-13T22:34:33+02:00
 tags:
+  - argocd
   - bestof
   - dev
   - kubernetes

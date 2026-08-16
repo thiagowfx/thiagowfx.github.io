@@ -2,6 +2,7 @@
 title: "ArgoCD: deployment spec.selector: field is immutable"
 date: 2025-06-30T13:04:51+02:00
 tags:
+  - argocd
   - dev
   - kubernetes
 ---

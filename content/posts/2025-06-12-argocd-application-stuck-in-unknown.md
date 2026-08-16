@@ -2,6 +2,7 @@
 title: "ArgoCD: application stuck in unknown"
 date: 2025-06-12T11:51:32+02:00
 tags:
+  - argocd
   - dev
   - kubernetes
 ---

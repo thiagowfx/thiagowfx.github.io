@@ -2,6 +2,7 @@
 title: "ArgoCD: custom health check for StatefulSet (OnDelete)"
 date: 2025-06-13T21:40:01+02:00
 tags:
+  - argocd
   - bestof
   - dev
   - kubernetes

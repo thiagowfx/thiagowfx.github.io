@@ -2,6 +2,7 @@
 title: "ArgoCD: app version notifications"
 date: 2025-08-12T12:07:20+02:00
 tags:
+  - argocd
   - dev
   - kubernetes
 ---

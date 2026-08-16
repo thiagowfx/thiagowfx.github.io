@@ -2,6 +2,7 @@
 title: "ArgoCD: stale Vault secret after population"
 date: 2026-05-13T12:34:36+02:00
 tags:
+  - argocd
   - dev
   - kubernetes
 ---

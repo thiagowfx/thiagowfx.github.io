@@ -2,6 +2,7 @@
 title: "ArgoCD: cache: key is missing"
 date: 2025-01-09T20:20:03-03:00
 tags:
+  - argocd
   - dev
   - kubernetes
 ---

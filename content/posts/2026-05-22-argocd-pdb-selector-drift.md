@@ -2,6 +2,7 @@
 title: "ArgoCD: persistent PDB selector diff"
 date: 2026-05-22T16:51:12+02:00
 tags:
+  - argocd
   - dev
   - kubernetes
 ---

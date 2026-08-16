@@ -2,6 +2,7 @@
 title: "ArgoCD: vertical-pod-autoscaler sync loop"
 date: 2025-02-13T13:17:36+01:00
 tags:
+  - argocd
   - dev
   - kubernetes
 ---
