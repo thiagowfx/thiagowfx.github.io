@@ -1,7 +1,7 @@
 ---
 title: "ADRs and LLMs"
 url: https://perrotta.dev/2026/01/adrs-and-llms/
-last_updated: 2026-02-06
+last_updated: 2026-08-17
 ---
 
 
@@ -55,7 +55,7 @@ code in a version‑controlled repository (_cof_ git _cof_):
 
 They are usually numbered, though there's no hard rule saying that you have to
 do so with monotonically increasing numbers. You could use calendar versioning
-    (`2025-11-11-foo.md`), or any other numbering scheme if desired.
+(`2025-11-11-foo.md`), or any other numbering scheme if desired.
 
 GHF has an introductory
 [article](https://www.georgefairbanks.com/blog/comparch-wicsa-2011-panel-discussion-and-haiku-tutorial/)
@@ -98,7 +98,7 @@ it, we store our ADRs.
 
 A `README.md` describes how to define an ADR:
 
-```shell
+````markdown
 # Architecture Decision Records
 
 This directory contains Architecture Decision Records (ADRs) for significant
@@ -148,6 +148,7 @@ Include alternatives considered where applicable.
 
 What becomes easier or more difficult to do because of this change?
 ```
+````
 
 Whenever a new significant direction is adopted in the repository, or whenever
 something (a tool, a dependency, a process) _quasi_-disrupting is introduced, it

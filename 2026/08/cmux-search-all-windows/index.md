@@ -1,7 +1,7 @@
 ---
 title: "cmux: search all windows"
 url: https://perrotta.dev/2026/08/cmux-search-all-windows/
-last_updated: 2026-08-12
+last_updated: 2026-08-17
 ---
 
 
@@ -38,7 +38,6 @@ In the early LLM days, I would ask [ChatGPT](https://chatgpt.com/) or
 [Duck](https://duck.ai/), but I'd be limited to the training cut-off of the
 underlying model.
 
-
 [^1]: _"""This should not happen"""_. We're poor humans with poor attention
     spans. Managing more than 4-7 workspaces at once is counter-productive due
     to context switching tax. One _should not_ end up in this situation in the
@@ -48,5 +47,4 @@ underlying model.
     is what enables the decision to get a digest of ~~slop~~ LLM results. I
     quite dislike the approach of [other search engines](http://google.com/),
     unconditionally shoving questionable AI results on everyone's face.
-
 
