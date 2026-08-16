@@ -1,7 +1,7 @@
 ---
 title: "terraform: fileset does not respect gitignore"
 url: https://perrotta.dev/2026/08/terraform-fileset-does-not-respect-gitignore/
-last_updated: 2026-08-07
+last_updated: 2026-08-16
 ---
 
 

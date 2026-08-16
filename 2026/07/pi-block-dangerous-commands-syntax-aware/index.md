@@ -1,7 +1,7 @@
 ---
 title: "pi: block dangerous commands syntax-aware"
 url: https://perrotta.dev/2026/07/pi-block-dangerous-commands-syntax-aware/
-last_updated: 2026-07-29
+last_updated: 2026-08-16
 ---
 
 

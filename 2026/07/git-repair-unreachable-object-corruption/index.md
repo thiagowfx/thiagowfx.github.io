@@ -1,7 +1,7 @@
 ---
 title: "git: repair unreachable object corruption"
 url: https://perrotta.dev/2026/07/git-repair-unreachable-object-corruption/
-last_updated: 2026-07-31
+last_updated: 2026-08-16
 ---
 
 

@@ -1,7 +1,7 @@
 ---
 title: "pi: auto-retry stalled requests"
 url: https://perrotta.dev/2026/07/pi-auto-retry-stalled-requests/
-last_updated: 2026-07-29
+last_updated: 2026-08-16
 ---
 
 

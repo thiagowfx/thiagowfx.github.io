@@ -1,7 +1,7 @@
 ---
 title: "pre-commit: authentication in internal github repos"
 url: https://perrotta.dev/2026/06/pre-commit-authentication-in-internal-github-repos/
-last_updated: 2026-07-29
+last_updated: 2026-08-16
 ---
 
 

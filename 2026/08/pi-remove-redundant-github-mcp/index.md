@@ -1,7 +1,7 @@
 ---
 title: "pi: remove redundant github MCP"
 url: https://perrotta.dev/2026/08/pi-remove-redundant-github-mcp/
-last_updated: 2026-08-03
+last_updated: 2026-08-16
 ---
 
 

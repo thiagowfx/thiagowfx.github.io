@@ -1315,6 +1315,7 @@
 - [Argocd](https://perrotta.dev/tags/argocd/) (16 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (11 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (187 posts)
+- [Bloggify](https://perrotta.dev/tags/bloggify/) (28 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (21 posts)

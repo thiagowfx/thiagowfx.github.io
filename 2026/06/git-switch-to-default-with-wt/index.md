@@ -1,7 +1,7 @@
 ---
 title: "git: switch-to-default with wt"
 url: https://perrotta.dev/2026/06/git-switch-to-default-with-wt/
-last_updated: 2026-07-29
+last_updated: 2026-08-16
 ---
 
 

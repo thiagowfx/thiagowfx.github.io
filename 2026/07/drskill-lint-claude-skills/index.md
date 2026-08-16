@@ -1,7 +1,7 @@
 ---
 title: "drskill: lint claude skills"
 url: https://perrotta.dev/2026/07/drskill-lint-claude-skills/
-last_updated: 2026-07-29
+last_updated: 2026-08-16
 ---
 
 

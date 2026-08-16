@@ -1,7 +1,7 @@
 ---
 title: "when Gen AI cites docs that don't exist"
 url: https://perrotta.dev/2026/07/when-gen-ai-cites-docs-that-dont-exist/
-last_updated: 2026-07-29
+last_updated: 2026-08-16
 ---
 
 

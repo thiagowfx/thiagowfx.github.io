@@ -1,7 +1,7 @@
 ---
 title: "pi: am I sandboxed?"
 url: https://perrotta.dev/2026/08/pi-am-i-sandboxed/
-last_updated: 2026-08-15
+last_updated: 2026-08-16
 ---
 
 

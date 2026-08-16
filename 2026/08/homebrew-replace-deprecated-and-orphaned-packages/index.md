@@ -1,7 +1,7 @@
 ---
 title: "homebrew: replace deprecated and orphaned packages"
 url: https://perrotta.dev/2026/08/homebrew-replace-deprecated-and-orphaned-packages/
-last_updated: 2026-08-10
+last_updated: 2026-08-16
 ---
 
 

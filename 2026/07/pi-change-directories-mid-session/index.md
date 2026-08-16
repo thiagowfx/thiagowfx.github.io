@@ -1,7 +1,7 @@
 ---
 title: "pi: change directories mid-session"
 url: https://perrotta.dev/2026/07/pi-change-directories-mid-session/
-last_updated: 2026-07-29
+last_updated: 2026-08-16
 ---
 
 

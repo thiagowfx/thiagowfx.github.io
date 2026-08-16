@@ -1,7 +1,7 @@
 ---
 title: "pi: cycle models backward with ctrl+n"
 url: https://perrotta.dev/2026/07/pi-cycle-models-backward-with-ctrl-n/
-last_updated: 2026-07-29
+last_updated: 2026-08-16
 ---
 
 
