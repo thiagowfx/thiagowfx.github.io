@@ -2,6 +2,7 @@
 title: "Helm repository with a trailing slash"
 date: 2025-06-24T11:32:50+02:00
 tags:
+  - argocd
   - dev
   - kubernetes
   - pre-commit
