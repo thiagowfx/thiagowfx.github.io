@@ -77,14 +77,31 @@
     role="img"
     aria-label="Posts linking to and from this one"
     preserveAspectRatio="xMidYMid meet">
-    {{- /* Edges first so nodes and labels paint on top */ -}}
+    <defs>
+      <marker
+        id="mini-graph-arrow"
+        viewBox="0 0 10 10"
+        refX="5"
+        refY="5"
+        markerWidth="5"
+        markerHeight="5"
+        orient="auto">
+        <path d="M0,0 L10,5 L0,10 Z" />
+      </marker>
+    </defs>
+
+    {{- /* Edges first so nodes and labels paint on top. Each edge is a
+           two-segment path so the arrowhead sits at its midpoint, away from
+           the hub where many edges meet. */ -}}
     {{- range $i, $n := $insShown -}}
-      {{- $y := add $insTop (mul $i $rowH) -}}
-      <line class="mini-graph-edge" x1="{{ add $leftX 8.0 }}" y1="{{ $y }}" x2="{{ sub $centerX 12.0 }}" y2="{{ $cy }}" />
+      {{- $x1 := add $leftX 8.0 -}}{{- $y1 := add $insTop (mul $i $rowH) -}}
+      {{- $x2 := sub $centerX 12.0 -}}
+      <path class="mini-graph-edge" marker-mid="url(#mini-graph-arrow)" d="M{{ $x1 }},{{ $y1 }} L{{ div (add $x1 $x2) 2.0 }},{{ div (add $y1 $cy) 2.0 }} L{{ $x2 }},{{ $cy }}" />
     {{- end -}}
     {{- range $i, $n := $outsShown -}}
-      {{- $y := add $outsTop (mul $i $rowH) -}}
-      <line class="mini-graph-edge" x1="{{ add $centerX 12.0 }}" y1="{{ $cy }}" x2="{{ sub $rightX 9.0 }}" y2="{{ $y }}" />
+      {{- $x1 := add $centerX 12.0 -}}
+      {{- $x2 := sub $rightX 9.0 -}}{{- $y2 := add $outsTop (mul $i $rowH) -}}
+      <path class="mini-graph-edge" marker-mid="url(#mini-graph-arrow)" d="M{{ $x1 }},{{ $cy }} L{{ div (add $x1 $x2) 2.0 }},{{ div (add $cy $y2) 2.0 }} L{{ $x2 }},{{ $y2 }}" />
     {{- end -}}
 
     {{- /* Column headers */ -}}
