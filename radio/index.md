@@ -1,7 +1,7 @@
 ---
 title: "Radio"
 url: https://perrotta.dev/radio/
-last_updated: 2026-06-09
+last_updated: 2026-08-16
 ---
 
 
@@ -10,4 +10,8 @@ last_updated: 2026-06-09
 - [Claude FM 🎵 music for thinking and building](https://www.youtube.com/live/YmQ7jRgf4f0) via `/radio` in Claude Code
 - [Dune 2000 Soundtrack]({{< ref "2025-08-04-dune-2000-soundtrack" >}}) ([playlist](https://music.youtube.com/watch?v=l_yuGtZ9U0Y&list=RDAMVMl_yuGtZ9U0Y))
 - [Italianismo: Radio Italiana ao vivo](https://italianismo.com.br/radio-italiana-ao-vivo/)
+
+## last.fm
+
+- [@yossarian_flew](https://www.last.fm/user/yossarian_flew)
 
