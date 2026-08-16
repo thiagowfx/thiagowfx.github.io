@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [markdown: nested code fences](https://perrotta.dev/2026/08/markdown-nested-code-fences/) (2026-08-17)
 - [microSD card: wiping before selling](https://perrotta.dev/2026/08/microsd-card-wiping-before-selling/) (2026-08-16)
 - [homebrew: cask drift after an in-app update](https://perrotta.dev/2026/08/homebrew-cask-drift-after-an-in-app-update/) (2026-08-16)
 - [new tag: bloggify](https://perrotta.dev/2026/08/new-tag-bloggify/) (2026-08-16)
@@ -1321,12 +1322,12 @@
 - [Argocd](https://perrotta.dev/tags/argocd/) (16 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (11 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (187 posts)
-- [Bloggify](https://perrotta.dev/tags/bloggify/) (30 posts)
+- [Bloggify](https://perrotta.dev/tags/bloggify/) (31 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (22 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (23 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1188 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1189 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1336,7 +1337,7 @@
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (160 posts)
 - [Macos](https://perrotta.dev/tags/macos/) (57 posts)
-- [Meta](https://perrotta.dev/tags/meta/) (62 posts)
+- [Meta](https://perrotta.dev/tags/meta/) (63 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pi](https://perrotta.dev/tags/pi/) (16 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (34 posts)
