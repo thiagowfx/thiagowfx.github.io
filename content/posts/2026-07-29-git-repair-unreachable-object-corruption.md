@@ -2,6 +2,7 @@
 title: "git: repair unreachable object corruption"
 date: 2026-07-29T22:16:46+02:00
 tags:
+  - bloggify
   - coding
   - dev
   - git

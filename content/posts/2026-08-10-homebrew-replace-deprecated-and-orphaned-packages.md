@@ -2,6 +2,7 @@
 title: "homebrew: replace deprecated and orphaned packages"
 date: 2026-08-10T15:10:42+02:00
 tags:
+  - bloggify
   - coding
   - dev
   - macos

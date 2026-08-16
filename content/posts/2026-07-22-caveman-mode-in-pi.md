@@ -3,6 +3,7 @@ title: "pi: caveman mode"
 date: 2026-07-22T12:14:47+02:00
 tags:
   - ai
+  - bloggify
   - coding
   - dev
   - pi

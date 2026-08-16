@@ -3,6 +3,7 @@ title: "pi: cycle models backward with ctrl+n"
 date: 2026-07-22T13:23:53+02:00
 tags:
   - ai
+  - bloggify
   - coding
   - dev
   - pi

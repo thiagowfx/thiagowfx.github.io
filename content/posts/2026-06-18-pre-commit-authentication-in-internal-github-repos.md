@@ -2,6 +2,7 @@
 title: "pre-commit: authentication in internal github repos"
 date: 2026-06-18T14:42:26+02:00
 tags:
+  - bloggify
   - dev
   - git
   - pre-commit

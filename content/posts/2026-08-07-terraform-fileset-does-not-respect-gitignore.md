@@ -3,6 +3,7 @@ title: "terraform: fileset does not respect gitignore"
 date: 2026-08-07T11:27:13+02:00
 tags:
   - aws
+  - bloggify
   - coding
   - dev
   - git

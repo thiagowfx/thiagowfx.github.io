@@ -3,6 +3,7 @@ title: "dual-review: address review findings automatically"
 date: 2026-08-05T14:01:30+02:00
 tags:
   - ai
+  - bloggify
   - claude
   - coding
   - dev

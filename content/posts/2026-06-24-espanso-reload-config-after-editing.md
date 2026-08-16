@@ -2,6 +2,7 @@
 title: "espanso: reload config after editing"
 date: 2026-06-24T13:34:06+02:00
 tags:
+  - bloggify
   - dev
   - macos
 ---

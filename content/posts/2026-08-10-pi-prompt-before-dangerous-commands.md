@@ -3,6 +3,7 @@ title: "pi: prompt before dangerous commands"
 date: 2026-08-16T13:28:44+02:00
 tags:
   - ai
+  - bloggify
   - coding
   - dev
   - pi

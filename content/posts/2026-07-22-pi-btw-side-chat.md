@@ -3,6 +3,7 @@ title: "pi: /btw side-chat"
 date: 2026-07-22T14:07:54+02:00
 tags:
   - ai
+  - bloggify
   - coding
   - dev
   - pi

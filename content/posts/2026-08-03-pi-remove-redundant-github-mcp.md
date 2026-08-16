@@ -3,6 +3,7 @@ title: "pi: remove redundant github MCP"
 date: 2026-08-03T18:47:51+02:00
 tags:
   - ai
+  - bloggify
   - dev
   - pi
 ---

@@ -2,6 +2,7 @@
 title: "git: switch-to-default with wt"
 date: 2026-06-14T20:03:03+02:00
 tags:
+  - bloggify
   - dev
   - git
 ---

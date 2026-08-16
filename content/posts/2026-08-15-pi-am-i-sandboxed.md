@@ -3,6 +3,7 @@ title: "pi: am I sandboxed?"
 date: 2026-08-15T00:56:29+02:00
 tags:
   - ai
+  - bloggify
   - coding
   - dev
   - pi

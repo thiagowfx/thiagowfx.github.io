@@ -3,6 +3,7 @@ title: "pi: block dangerous commands syntax-aware"
 date: 2026-07-28T10:57:06+02:00
 tags:
   - ai
+  - bloggify
   - coding
   - dev
   - pi

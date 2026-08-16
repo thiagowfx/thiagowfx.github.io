@@ -2,6 +2,7 @@
 title: "obsidian: logseq-compatible tasks"
 date: 2026-07-29T14:34:39+02:00
 tags:
+  - bloggify
   - dev
   - pkm
   - security

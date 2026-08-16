@@ -2,6 +2,7 @@
 title: "myrepos: a wip action to find unfinished work"
 date: 2026-07-17T12:23:10+02:00
 tags:
+  - bloggify
   - coding
   - dev
   - git

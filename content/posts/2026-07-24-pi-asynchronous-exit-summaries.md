@@ -3,6 +3,7 @@ title: "pi: asynchronous exit summaries"
 date: 2026-07-27T18:18:38+02:00
 tags:
   - ai
+  - bloggify
   - coding
   - dev
   - pi

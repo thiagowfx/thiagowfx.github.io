@@ -2,6 +2,7 @@
 title: "keychron k2: bluetooth always-on"
 date: 2026-06-20T23:51:02+02:00
 tags:
+  - bloggify
   - macos
 ---
 

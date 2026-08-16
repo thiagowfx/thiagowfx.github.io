@@ -3,6 +3,7 @@ title: "pi: update pinned npm packages"
 date: 2026-07-27T14:28:59+02:00
 tags:
   - ai
+  - bloggify
   - coding
   - dev
   - pi

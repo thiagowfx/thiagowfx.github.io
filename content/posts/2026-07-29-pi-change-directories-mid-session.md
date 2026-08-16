@@ -3,6 +3,7 @@ title: "pi: change directories mid-session"
 date: 2026-07-29T14:13:03+02:00
 tags:
   - ai
+  - bloggify
   - coding
   - dev
   - pi
