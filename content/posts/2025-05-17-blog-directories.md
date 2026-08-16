@@ -39,6 +39,7 @@ A few directories I like[^1]:
 - ✪ https://rss.social/
 - ✪ https://scour.ing/
 - ✪ https://static.quest
+- ✪ https://weirdnet.org/
 - ✪ https://xn--sr8hvo.ws/dashboard (an indieweb webring)
 - https://minifeed.net/
 - https://ooh.directory/
