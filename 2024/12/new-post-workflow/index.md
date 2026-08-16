@@ -1,7 +1,7 @@
 ---
 title: "New post workflow"
 url: https://perrotta.dev/2024/12/new-post-workflow/
-last_updated: 2026-03-11
+last_updated: 2026-08-17
 ---
 
 
@@ -20,7 +20,6 @@ tags:
   - bestof
   - dev
   - meta
-  - pt
   - privacy
   - serenity
 ---
