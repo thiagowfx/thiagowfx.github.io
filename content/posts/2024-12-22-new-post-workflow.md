@@ -20,7 +20,6 @@ tags:
   - bestof
   - dev
   - meta
-  - pt
   - privacy
   - serenity
 ---
