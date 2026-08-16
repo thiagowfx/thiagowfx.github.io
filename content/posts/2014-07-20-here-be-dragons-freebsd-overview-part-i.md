@@ -1,5 +1,5 @@
 ---
-title: "Here be dragons! Free BSD Overview (part I)"
+title: "Here be dragons! FreeBSD Overview (part I)"
 date: 2014-07-20T12:00:00-03:00
 tags:
   - bestof
