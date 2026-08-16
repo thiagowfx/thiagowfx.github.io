@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [new tag: bloggify](https://perrotta.dev/2026/08/new-tag-bloggify/) (2026-08-16)
 - [pi: prompt before dangerous commands](https://perrotta.dev/2026/08/pi-prompt-before-dangerous-commands/) (2026-08-16)
 - [pi: am I sandboxed?](https://perrotta.dev/2026/08/pi-am-i-sandboxed/) (2026-08-15)
 - [git: cd from worktree to main checkout](https://perrotta.dev/2026/08/git-cd-from-worktree-to-main-checkout/) (2026-08-12)
@@ -1310,17 +1311,17 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (119 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (120 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Argocd](https://perrotta.dev/tags/argocd/) (16 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (11 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (187 posts)
-- [Bloggify](https://perrotta.dev/tags/bloggify/) (28 posts)
+- [Bloggify](https://perrotta.dev/tags/bloggify/) (29 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (21 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1182 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1183 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1330,7 +1331,7 @@
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (157 posts)
 - [Macos](https://perrotta.dev/tags/macos/) (55 posts)
-- [Meta](https://perrotta.dev/tags/meta/) (61 posts)
+- [Meta](https://perrotta.dev/tags/meta/) (62 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pi](https://perrotta.dev/tags/pi/) (16 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (34 posts)
