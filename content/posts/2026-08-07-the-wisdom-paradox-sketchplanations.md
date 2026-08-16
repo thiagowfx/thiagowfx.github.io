@@ -22,7 +22,6 @@ external_link: "https://sketchplanations.com/the-wisdom-paradox"
 > the grown-ups are doing it all wrong, and the path to better is obvious. Then,
 > as an adult, it somehow seems more difficult than before.
 
-
 Some 20 years ago I became familiar with this principle, and it's beautiful.
 
 There's no greater feeling of satisfaction than learning and overcoming your own
