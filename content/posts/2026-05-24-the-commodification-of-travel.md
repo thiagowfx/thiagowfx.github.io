@@ -38,3 +38,5 @@ time, I had *zero* urge to take a myriad of photos. I had very little desire to
 do the popular touristic attractions. I explored the city at my own pace. It was
     peaceful. There was no social pressure of any kind. Why hasn't this been the
     default?
+
+**Update(2026-08-17)**: See also: https://www.chriscorrigan.com/parkinglot/visting-and-staying-present/
