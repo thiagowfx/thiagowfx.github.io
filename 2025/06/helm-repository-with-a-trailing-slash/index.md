@@ -1,7 +1,7 @@
 ---
 title: "Helm repository with a trailing slash"
 url: https://perrotta.dev/2025/06/helm-repository-with-a-trailing-slash/
-last_updated: 2026-01-03
+last_updated: 2026-08-16
 ---
 
 
