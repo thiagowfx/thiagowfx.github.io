@@ -1309,6 +1309,7 @@
 - [Openbox Challenge - Day 1](https://perrotta.dev/2013/10/openbox-challenge-day-1/) (2013-10-27)
 - [Wrapping up](https://perrotta.dev/2013/10/wrapping-up/) (2013-10-27)
 - [Web Privacy with Firefox](https://perrotta.dev/2013/10/web-privacy-with-firefox/) (2013-10-20)
+- [Hello World! FreeBSD Overview (Part III)](https://perrotta.dev/2013/04/hello-world-freebsd-overview-part-iii/) (2013-04-20)
 
 ## Tags
 
@@ -1324,7 +1325,7 @@
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (22 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1186 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1187 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1332,7 +1333,7 @@
 - [Git](https://perrotta.dev/tags/git/) (66 posts)
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (43 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
-- [Legacy](https://perrotta.dev/tags/legacy/) (158 posts)
+- [Legacy](https://perrotta.dev/tags/legacy/) (159 posts)
 - [Macos](https://perrotta.dev/tags/macos/) (57 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (62 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
