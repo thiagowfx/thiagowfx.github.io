@@ -8,6 +8,9 @@ last_updated: 2026-08-18
 **Problem statement**: review an AI-written ~~slop~~ pull request from a
 teammate.
 
+We'll use a [clanker](https://lucumr.pocoo.org/2026/5/26/clankers/) to review slop
+PRs.
+
 **First**, I invoke the
 [`/meat`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/meat/SKILL.md)
 skill, turning the diff into a reading guide, inspired by [David Crawshaw](https://meat.dev/):
