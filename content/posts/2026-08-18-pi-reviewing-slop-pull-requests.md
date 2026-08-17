@@ -4,7 +4,6 @@ date: 2026-08-18T00:47:17+02:00
 tags:
   - ai
   - bestof
-  - bloggify
   - coding
   - dev
 ---
