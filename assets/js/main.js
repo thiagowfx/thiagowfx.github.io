@@ -131,6 +131,11 @@ document.addEventListener("click", function (event) {
     return;
   }
 
+  if (event.ctrlKey || event.metaKey || event.altKey) {
+    window.open(button.dataset.copyMarkdown, "_blank", "noopener,noreferrer");
+    return;
+  }
+
   const originalHtml = button.innerHTML;
   const originalLabel = button.getAttribute("aria-label");
   button.disabled = true;
