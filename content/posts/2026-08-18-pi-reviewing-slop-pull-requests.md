@@ -3,6 +3,7 @@ title: "Reviewing slop pull requests"
 date: 2026-08-18T00:47:17+02:00
 tags:
   - ai
+  - bestof
   - bloggify
   - coding
   - dev
@@ -10,6 +11,9 @@ tags:
 
 **Problem statement**: review an AI-written ~~slop~~ pull request from a
 teammate.
+
+We'll use a [clanker](https://lucumr.pocoo.org/2026/5/26/clankers/) to review slop
+PRs.
 
 **First**, I invoke the
 [`/meat`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/meat/SKILL.md)
