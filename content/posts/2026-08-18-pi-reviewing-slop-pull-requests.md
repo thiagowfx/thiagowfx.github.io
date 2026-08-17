@@ -9,6 +9,8 @@ tags:
   - dev
 ---
 
+[Previously]({{< ref "2026-08-05-dual-review-address-findings-automatically" >}}).
+
 **Problem statement**: review an AI-written ~~slop~~ pull request from a
 teammate.
 
