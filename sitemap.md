@@ -24,6 +24,8 @@
 ## Blog Posts
 
 
+- [Reviewing slop pull requests](https://perrotta.dev/2026/08/reviewing-slop-pull-requests/) (2026-08-18)
+- [pi: fork vs clone sessions](https://perrotta.dev/2026/08/pi-fork-vs-clone-sessions/) (2026-08-17)
 - [markdown: nested code fences](https://perrotta.dev/2026/08/markdown-nested-code-fences/) (2026-08-17)
 - [microSD card: wiping before selling](https://perrotta.dev/2026/08/microsd-card-wiping-before-selling/) (2026-08-16)
 - [homebrew: cask drift after an in-app update](https://perrotta.dev/2026/08/homebrew-cask-drift-after-an-in-app-update/) (2026-08-16)
@@ -1318,17 +1320,17 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (120 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (122 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Argocd](https://perrotta.dev/tags/argocd/) (16 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (11 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (187 posts)
-- [Bloggify](https://perrotta.dev/tags/bloggify/) (31 posts)
+- [Bloggify](https://perrotta.dev/tags/bloggify/) (32 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (23 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (25 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1190 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1192 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1340,7 +1342,7 @@
 - [Macos](https://perrotta.dev/tags/macos/) (57 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (63 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
-- [Pi](https://perrotta.dev/tags/pi/) (16 posts)
+- [Pi](https://perrotta.dev/tags/pi/) (17 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (34 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (33 posts)
