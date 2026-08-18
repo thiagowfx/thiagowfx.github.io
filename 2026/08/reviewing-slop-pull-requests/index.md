@@ -43,10 +43,10 @@ One sentence with intent and observable result.
 That gives me the author's system model (the "meat" of their PR) without the PR
 body's narrative.
 
-**Second**, [`/dual-review`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/dual-review/SKILL.md)[^2]
+**Second**, [`/dual-review`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/dual-review/SKILL.md)[^1]
 tries to break that model:
 
-[^2]: Inspired by an internal skill created by our CISO.
+[^1]: Inspired by an internal skill created by our CISO.
 
 ```text
 /dual-review <PR-URL> [--post]
@@ -55,6 +55,8 @@ tries to break that model:
 It runs _two_ review passes with different lenses / perspectives, then validates
 every candidate against source and focused probes. Reviewer agreement changes
 investigation priority.
+
+`--post` instructs the clanker to write a comment in the PR.
 
 To recap:
 
