@@ -1,7 +1,7 @@
 ---
 title: "Blog directories"
 url: https://perrotta.dev/2025/05/blog-directories/
-last_updated: 2026-08-17
+last_updated: 2026-08-18
 ---
 
 
@@ -33,13 +33,13 @@ A few directories I like[^1]:
 - ✪ https://indieblog.page/
 - ✪ https://kagi.com/smallweb
 - ✪ https://marginalia-search.com/
+- ✪ https://minifeed.net/
 - ✪ https://powrss.com/
 - ✪ https://rss.social/
 - ✪ https://scour.ing/
 - ✪ https://static.quest
 - ✪ https://weirdnet.org/
 - ✪ https://xn--sr8hvo.ws/dashboard (an indieweb webring)
-- https://minifeed.net/
 - https://ooh.directory/
 - https://www.blogsareback.com/
 - ✗ https://baccyflap.com/noai/?slug=njs#links
