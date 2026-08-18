@@ -1,15 +1,15 @@
 ---
 title: "Novos paradigmas @ Redes sociais \u0026 News"
 url: https://perrotta.dev/pt/posts/2014-05-30-novos-paradigmas-redes-sociais-news/
-last_updated: 2026-03-29
+last_updated: 2026-08-18
 ---
 
 
 Produtividade já foi uma questão que discuti bastante por aqui. Por exemplo,
-[esse](http://thiagoperrotta.wordpress.com/2013/06/23/privacidade-nas-redes-sociais-parte-i/)
-post contém alguns pensamentos soltos, e [esse
-outro](http://thiagoperrotta.wordpress.com/2013/11/01/journal-4-aaaaaargh-facebook/)
-algumas *guidelines* para o Facebook.
+[esse]({{< ref "2013-06-23-privacidade-nas-redes-sociais-parte-i" >}}) post
+contém alguns pensamentos soltos, e [esse
+outro](/posts/2013-11-01-aaaaaargh-facebook/) algumas *guidelines* para o
+Facebook.
 
 Apesar de tudo, essa não é a única questão para a qual temos que abrir nossos
 olhos. Parando para refletir um pouco, se você se imaginar há 3 anos e comparar
