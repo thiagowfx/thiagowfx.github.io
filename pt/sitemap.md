@@ -102,7 +102,7 @@
 ## Tags
 
 
-- [Bestof](https://perrotta.dev/pt/tags/bestof/) (4 posts)
+- [Bestof](https://perrotta.dev/pt/tags/bestof/) (5 posts)
 - [Dev](https://perrotta.dev/pt/tags/dev/) (69 posts)
 - [Gaming](https://perrotta.dev/pt/tags/gaming/) (3 posts)
 - [Git](https://perrotta.dev/pt/tags/git/) (1 posts)
