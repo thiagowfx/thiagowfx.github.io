@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [git: intent-to-add breaks autostash](https://perrotta.dev/2026/08/git-intent-to-add-breaks-autostash/) (2026-08-19)
 - [pi: handing off to a focused session](https://perrotta.dev/2026/08/pi-handing-off-to-a-focused-session/) (2026-08-19)
 - [ChatGPT / OpenAI / Codex plan usage](https://perrotta.dev/2026/08/chatgpt-/-openai-/-codex-plan-usage/) (2026-08-19)
 - [Reviewing slop pull requests](https://perrotta.dev/2026/08/reviewing-slop-pull-requests/) (2026-08-18)
@@ -1327,17 +1328,17 @@
 - [Argocd](https://perrotta.dev/tags/argocd/) (16 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (11 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (191 posts)
-- [Bloggify](https://perrotta.dev/tags/bloggify/) (32 posts)
+- [Bloggify](https://perrotta.dev/tags/bloggify/) (33 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (26 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (27 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
 - [Dev](https://perrotta.dev/tags/dev/) (1197 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (9 posts)
-- [Git](https://perrotta.dev/tags/git/) (66 posts)
+- [Git](https://perrotta.dev/tags/git/) (67 posts)
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (43 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (165 posts)
