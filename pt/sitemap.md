@@ -87,6 +87,7 @@
 - [Microsoft Visio...ou: funcionalidade, cadê você?](https://perrotta.dev/pt/2013/10/microsoft-visio...ou-funcionalidade-cad%C3%AA-voc%C3%AA/) (2013-10-10)
 - [Movendo (quase) todas as músicas para a nuvem](https://perrotta.dev/pt/2013/10/movendo-quase-todas-as-m%C3%BAsicas-para-a-nuvem/) (2013-10-05)
 - [Removendo {crap,bloat}ware de um Windows OEM](https://perrotta.dev/pt/2013/10/removendo-crapbloatware-de-um-windows-oem/) (2013-10-02)
+- [Era uma vez...kernel panic, uma história de amor (Parte 1.5)](https://perrotta.dev/pt/2013/09/era-uma-vez...kernel-panic-uma-hist%C3%B3ria-de-amor-parte-1.5/) (2013-09-27)
 - [(YouTube) Flash Player Issues @ Firefox @ Linux](https://perrotta.dev/pt/2013/09/youtube-flash-player-issues-@-firefox-@-linux/) (2013-09-19)
 - [Ontem: Maratona de Programação](https://perrotta.dev/pt/2013/09/ontem-maratona-de-programa%C3%A7%C3%A3o/) (2013-09-15)
 - [Era uma vez...kernel panic, uma história de amor (Parte 1)](https://perrotta.dev/pt/2013/09/era-uma-vez...kernel-panic-uma-hist%C3%B3ria-de-amor-parte-1/) (2013-09-07)
@@ -102,12 +103,12 @@
 ## Tags
 
 
-- [Bestof](https://perrotta.dev/pt/tags/bestof/) (5 posts)
-- [Dev](https://perrotta.dev/pt/tags/dev/) (69 posts)
+- [Bestof](https://perrotta.dev/pt/tags/bestof/) (6 posts)
+- [Dev](https://perrotta.dev/pt/tags/dev/) (70 posts)
 - [Gaming](https://perrotta.dev/pt/tags/gaming/) (3 posts)
 - [Git](https://perrotta.dev/pt/tags/git/) (1 posts)
 - [Leetcode](https://perrotta.dev/pt/tags/leetcode/) (1 posts)
-- [Legacy](https://perrotta.dev/pt/tags/legacy/) (80 posts)
+- [Legacy](https://perrotta.dev/pt/tags/legacy/) (81 posts)
 - [Meta](https://perrotta.dev/pt/tags/meta/) (2 posts)
 - [Privacy](https://perrotta.dev/pt/tags/privacy/) (6 posts)
 - [Security](https://perrotta.dev/pt/tags/security/) (3 posts)
