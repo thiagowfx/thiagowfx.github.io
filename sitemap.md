@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [pi: handing off to a focused session](https://perrotta.dev/2026/08/pi-handing-off-to-a-focused-session/) (2026-08-19)
 - [ChatGPT / OpenAI / Codex plan usage](https://perrotta.dev/2026/08/chatgpt-/-openai-/-codex-plan-usage/) (2026-08-19)
 - [Reviewing slop pull requests](https://perrotta.dev/2026/08/reviewing-slop-pull-requests/) (2026-08-18)
 - [pi: fork vs clone sessions](https://perrotta.dev/2026/08/pi-fork-vs-clone-sessions/) (2026-08-17)
@@ -1321,17 +1322,17 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (123 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (124 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Argocd](https://perrotta.dev/tags/argocd/) (16 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (11 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (191 posts)
-- [Bloggify](https://perrotta.dev/tags/bloggify/) (31 posts)
+- [Bloggify](https://perrotta.dev/tags/bloggify/) (32 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (25 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (26 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1196 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1197 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (12 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1343,7 +1344,7 @@
 - [Macos](https://perrotta.dev/tags/macos/) (57 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (63 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
-- [Pi](https://perrotta.dev/tags/pi/) (17 posts)
+- [Pi](https://perrotta.dev/tags/pi/) (18 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (34 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (33 posts)
