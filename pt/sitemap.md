@@ -54,6 +54,7 @@
 - [Scilab Notes (HOWTO)](https://perrotta.dev/pt/2014/03/scilab-notes-howto/) (2014-03-07)
 - ['Livrando-se' da notificação de voicemail no Android](https://perrotta.dev/pt/2014/03/livrando-se-da-notifica%C3%A7%C3%A3o-de-voicemail-no-android/) (2014-03-04)
 - [Bloqueando {websites,ads,malware} no Linux](https://perrotta.dev/pt/2014/03/bloqueando-websitesadsmalware-no-linux/) (2014-03-02)
+- [Editores de Texto](https://perrotta.dev/pt/2014/02/editores-de-texto/) (2014-02-27)
 - [Consertando caracteres estranhos em Markdown](https://perrotta.dev/pt/2014/02/consertando-caracteres-estranhos-em-markdown/) (2014-02-27)
 - [Novo blog – ICPC Journal](https://perrotta.dev/pt/2014/02/novo-blog-icpc-journal/) (2014-02-22)
 - [Notas de Física 3](https://perrotta.dev/pt/2014/02/notas-de-f%C3%ADsica-3/) (2014-02-17)
@@ -100,12 +101,12 @@
 ## Tags
 
 
-- [Bestof](https://perrotta.dev/pt/tags/bestof/) (3 posts)
-- [Dev](https://perrotta.dev/pt/tags/dev/) (67 posts)
+- [Bestof](https://perrotta.dev/pt/tags/bestof/) (4 posts)
+- [Dev](https://perrotta.dev/pt/tags/dev/) (68 posts)
 - [Gaming](https://perrotta.dev/pt/tags/gaming/) (3 posts)
 - [Git](https://perrotta.dev/pt/tags/git/) (1 posts)
 - [Leetcode](https://perrotta.dev/pt/tags/leetcode/) (1 posts)
-- [Legacy](https://perrotta.dev/pt/tags/legacy/) (78 posts)
+- [Legacy](https://perrotta.dev/pt/tags/legacy/) (79 posts)
 - [Meta](https://perrotta.dev/pt/tags/meta/) (2 posts)
 - [Privacy](https://perrotta.dev/pt/tags/privacy/) (6 posts)
 - [Security](https://perrotta.dev/pt/tags/security/) (3 posts)
