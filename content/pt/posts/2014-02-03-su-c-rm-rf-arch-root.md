@@ -2,6 +2,7 @@
 title: "su -c \"rm -rf /arch-root\""
 date: 2014-02-03T13:26:09-03:00
 tags:
+  - bestof
   - dev
   - legacy
 ---
