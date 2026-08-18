@@ -62,6 +62,7 @@
 - [Meu primeiro PKGBUILD](https://perrotta.dev/pt/2014/02/meu-primeiro-pkgbuild/) (2014-02-13)
 - [renew my Arch, please](https://perrotta.dev/pt/2014/02/renew-my-arch-please/) (2014-02-05)
 - [#CPBR7 - Parte 1 - Hackatons (Firefox OS + CERT.br)](https://perrotta.dev/pt/2014/02/%23cpbr7-parte-1-hackatons-firefox-os--cert.br/) (2014-02-03)
+- [su -c "rm -rf /arch-root"](https://perrotta.dev/pt/2014/02/su-c-rm-rf-/arch-root/) (2014-02-03)
 - [Software e outras coisas livres, revisitados - Parte 0.0.01](https://perrotta.dev/pt/2014/02/software-e-outras-coisas-livres-revisitados-parte-0.0.01/) (2014-02-01)
 - [#CPBR7 random musings](https://perrotta.dev/pt/2014/01/%23cpbr7-random-musings/) (2014-01-29)
 - [Imagetextos](https://perrotta.dev/pt/2014/01/imagetextos/) (2014-01-26)
@@ -102,11 +103,11 @@
 
 
 - [Bestof](https://perrotta.dev/pt/tags/bestof/) (4 posts)
-- [Dev](https://perrotta.dev/pt/tags/dev/) (68 posts)
+- [Dev](https://perrotta.dev/pt/tags/dev/) (69 posts)
 - [Gaming](https://perrotta.dev/pt/tags/gaming/) (3 posts)
 - [Git](https://perrotta.dev/pt/tags/git/) (1 posts)
 - [Leetcode](https://perrotta.dev/pt/tags/leetcode/) (1 posts)
-- [Legacy](https://perrotta.dev/pt/tags/legacy/) (79 posts)
+- [Legacy](https://perrotta.dev/pt/tags/legacy/) (80 posts)
 - [Meta](https://perrotta.dev/pt/tags/meta/) (2 posts)
 - [Privacy](https://perrotta.dev/pt/tags/privacy/) (6 posts)
 - [Security](https://perrotta.dev/pt/tags/security/) (3 posts)
