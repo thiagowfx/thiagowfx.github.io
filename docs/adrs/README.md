@@ -25,6 +25,7 @@ technical decisions in the blog infrastructure.
 | [0014](0014-rss-club.md) | RSS Club (RSS-only posts) | Accepted | 2026-05-25 |
 | [0015](0015-first-paragraph-spade-glyph.md) | Spade Glyph on the First Paragraph | Accepted | 2026-07-18 |
 | [0016](0016-progressive-web-app.md) | Progressive Web App | Abandoned | 2026-07-27 |
+| [0017](0017-agent-skill-discovery.md) | Agent Skill Discovery | Proposed | 2026-08-19 |
 
 <!-- markdownlint-enable MD013 -->
 
