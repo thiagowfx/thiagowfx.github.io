@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [/ship-and-burn a pull request](https://perrotta.dev/2026/08/ship-and-burn-a-pull-request/) (2026-08-19)
 - [kubernetes: force-refresh a cached multi-architecture image](https://perrotta.dev/2026/08/kubernetes-force-refresh-a-cached-multi-architecture-image/) (2026-08-19)
 - [kargo: cool down upstream releases with a holding stage](https://perrotta.dev/2026/08/kargo-cool-down-upstream-releases-with-a-holding-stage/) (2026-08-19)
 - [git: intent-to-add breaks autostash](https://perrotta.dev/2026/08/git-intent-to-add-breaks-autostash/) (2026-08-19)
@@ -1325,22 +1326,22 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (124 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (125 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Argocd](https://perrotta.dev/tags/argocd/) (18 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (12 posts)
-- [Bestof](https://perrotta.dev/tags/bestof/) (192 posts)
+- [Bestof](https://perrotta.dev/tags/bestof/) (193 posts)
 - [Bloggify](https://perrotta.dev/tags/bloggify/) (35 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (27 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (28 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1199 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1200 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (9 posts)
-- [Git](https://perrotta.dev/tags/git/) (67 posts)
+- [Git](https://perrotta.dev/tags/git/) (68 posts)
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (45 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (165 posts)
