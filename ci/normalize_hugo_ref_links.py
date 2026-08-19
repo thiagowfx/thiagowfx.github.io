@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
-"""Strip content/posts/ prefix from Hugo ref shortcode links."""
+"""Normalize targets in Hugo ref shortcode links."""
 
 import re
 import sys
 from pathlib import Path
+
+
+HUGO_REF_RE = re.compile(
+    r'(?P<prefix>\{\{[<%]\s*ref\s+)(?P<quote>["\'])'
+    r'(?P<target>[^"\']+)(?P=quote)'
+)
 
 
 def fix_file(filename):
@@ -11,7 +17,7 @@ def fix_file(filename):
     with open(filename, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    modified = strip_prefix(content)
+    modified = normalize_hugo_ref_links(content)
 
     if modified != content:
         with open(filename, 'w', encoding='utf-8') as f:
@@ -20,13 +26,21 @@ def fix_file(filename):
     return False
 
 
-def strip_prefix(content):
-    """Strip content/posts/ prefix from Hugo ref shortcode links."""
-    return re.sub(
-        r'(\{\{[<|%]\s*ref\s+["\'])content/posts/([^"\']+)(["\'])',
-        r'\1\2\3',
-        content,
-    )
+def normalize_hugo_ref_links(content):
+    """Strip content/posts/ prefixes and .md suffixes from Hugo ref targets."""
+
+    def normalize(match):
+        target = match.group('target')
+        target = target.removeprefix('content/posts/')
+
+        path, separator, fragment = target.partition('#')
+        path = path.removesuffix('.md')
+        target = path + separator + fragment
+
+        quote = match.group('quote')
+        return f"{match.group('prefix')}{quote}{target}{quote}"
+
+    return HUGO_REF_RE.sub(normalize, content)
 
 
 def main(argv=None):
