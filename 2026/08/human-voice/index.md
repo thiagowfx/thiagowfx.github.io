@@ -58,5 +58,5 @@ Today's example: [angristan/fast-resume#87](https://github.com/angristan/fast-re
 Check out [fast-resume]({{< ref "2026-05-25-fast-resume-search-coding-agent-sessions" >}}) if you haven't
 yet. It's awesome.
 
-I think this is a good compromise. ∎
+I think this is a good compromise.
 
