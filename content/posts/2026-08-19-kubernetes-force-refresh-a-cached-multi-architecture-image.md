@@ -80,7 +80,7 @@ metadata:
   name: argocd-image-refresh
   namespace: argocd
 spec:
-  nodeName: ip-10-25-54-66.cn-north-1.compute.internal
+  nodeName: ip-10-0-0-42.cn-north-1.compute.internal
   restartPolicy: Never
   tolerations:
     - key: arch
