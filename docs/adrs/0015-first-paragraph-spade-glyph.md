@@ -12,7 +12,7 @@ Accepted
 
 Two separate mechanisms prepend a spade glyph (`♠`) to the start of each post:
 
-- **HTML page** (`assets/theme.css`, added in `0a3e8cb7`): a CSS rule
+- **HTML page** (`static/theme.css`, added in `0a3e8cb7`): a CSS rule
   `.e-content > p:first-child::before { content: "♠"; … }` renders the glyph
   before the post body on the site.
 - **RSS feed** (`layouts/_default/rss.xml`, added in `29a4aede`): a
