@@ -38,7 +38,7 @@ Chosen over GitHub Actions/server-side approach because:
    <link rel="webmention" href="https://webmention.io/perrotta.dev/webmention" />
    ```
 
-3. Download webmention.js to `static/js/webmention.min.js`
+3. Add webmention.js to `assets/js/webmention.js` and process it with Hugo Pipes
 
 4. Add display container to `layouts/_default/single.html`:
 
@@ -57,7 +57,7 @@ Chosen over GitHub Actions/server-side approach because:
 - `layouts/_default/baseof.html` - endpoint link, script include
 - `layouts/_default/single.html` - webmention container
 - `layouts/partials/style.html` - webmention styling
-- `static/js/webmention.min.js` - new file
+- `assets/js/webmention.js` - new file
 
 ## Consequences
 

@@ -2,7 +2,7 @@
 
 ## Status
 
-Partially Accepted
+Deprecated
 
 ## Date
 
@@ -10,48 +10,42 @@ Partially Accepted
 
 ## Context
 
-Lighthouse audit identified DOM bloat (98 total elements). Large DOM increases
-style calculation time, layout reflows, and memory usage.
+An early Lighthouse audit reported 98 elements on the tested page. The original
+plan used DOM element count as a direct optimization target.
+
+Later features added search controls, language and navigation menus, post cards,
+copy controls, table-of-contents markup, and post graphs. The repository no
+longer uses a fixed DOM element budget.
 
 ## Decision
 
-Phased approach to reduce DOM element count:
+The original phased decision included these changes:
 
-### Phase 1 (Accepted, Implemented)
+1. Replace hidden previous and next links with a JavaScript object.
+2. Reduce wrappers in related posts and the search widget.
+3. Lazy-load footer badge images.
+4. Later replace social SVGs, hidden microformats, and badge images.
 
-1. **Hidden navigation links → JavaScript object**: Removed 2 hidden anchor
-   elements, replaced with `window.navigationLinks` object
-2. **Related posts restructure**: Simplified from 5+ wrapper elements to
-   semantic `<aside>` with direct anchor links (-2-4 elements)
-3. **Lazy-load badge images**: Added `loading="lazy"` to 8 badge images
-4. **Search widget consolidation**: Merged wrapper divs (-1 element)
+Only lazy loading for footer badges remains unchanged.
 
-**Result**: 98 → ~91-93 elements (~5-7% reduction)
+## Current State
 
-### Phase 2 (Proposed, Not Yet Implemented)
+- `layouts/_default/single.html` renders hidden `data-nav="prev"` and
+  `data-nav="next"` anchors for keyboard navigation. It does not define
+  `window.navigationLinks`.
+- `layouts/partials/related-posts.html` renders full cards for related posts and
+  a separate list of previous posts.
+- `layouts/_default/baseof.html` keeps the hidden `h-card`.
+- Single pages keep hidden `u-url` and author microformat elements.
+- Footer badge images use `loading="lazy"`.
+- Social SVG replacement and CSS badge backgrounds were not implemented.
 
-1. **Social link SVGs → Unicode/icon font**: Replace 8 SVG icons with Unicode
-   characters (-17-20 elements)
-2. **h-card → JSON-LD**: Convert hidden microformat div to structured data
-   script (-6 elements)
-3. **Remove aria-hidden anchors**: Remove redundant microformat anchors
-   (-2 elements)
-
-**Target**: ~65-68 elements (-33-35% total reduction)
-
-### Phase 3 (Proposed, Lower Priority)
-
-Badge images as CSS backgrounds instead of `<img>` tags (-8 elements).
+DOM structure now follows feature and semantic needs. Element count alone is not
+an active acceptance criterion.
 
 ## Consequences
 
-**Easier:**
-
-- Faster style calculations and layout
-- Lower memory usage
-- Better Lighthouse DOM scores
-
-**Harder:**
-
-- Phase 2 SVG→Unicode may reduce icon clarity on some devices
-- h-card→JSON-LD requires validating IndieWeb compatibility
+- New features can use semantic elements without a fixed count target.
+- Lazy footer images still avoid unnecessary image loads.
+- DOM performance must be measured through browser behavior, not an old element
+  count.

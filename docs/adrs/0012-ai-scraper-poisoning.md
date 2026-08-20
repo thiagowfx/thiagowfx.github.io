@@ -10,19 +10,34 @@ Rejected
 
 ## Context
 
-AI scraper bots are increasingly aggressive, ignoring `robots.txt` and consuming server resources while harvesting content for LLM training. [iocaine](https://lwn.net/Articles/1056953/) is a Rust-based tool that combats this by serving Markov-generated nonsense to detected bots, poisoning their training data instead of trying to block them.
+[iocaine](https://lwn.net/Articles/1056953/) is a Rust service that returns
+Markov-generated text to selected crawlers. It needs a server or reverse proxy
+that can inspect each request.
+
+The blog runs on GitHub Pages. It only serves static files. The site policy also
+changed after this decision. `layouts/robots.txt` now publishes
+`Content-Signal: search=yes, ai-train=yes, ai-input=yes` and does not block AI
+crawler user agents.
 
 ## Decision
 
-Not adopting iocaine or similar scraper-poisoning tools. The blog is hosted on GitHub Pages, which only serves static files. iocaine requires running as a reverse proxy / server process that inspects incoming requests and conditionally serves poisoned content — this is incompatible with static hosting.
+Do not adopt iocaine or another scraper-poisoning service.
+
+The hosting model cannot run it. The current crawler policy also permits AI
+training, so poisoned responses would conflict with the published policy.
 
 ## Alternatives Considered
 
-- **`robots.txt`**: Already in place, but aggressive bots ignore it.
-- **Cloudflare in front of GitHub Pages**: Would provide bot management, WAF rules, and rate limiting. Most practical option if protection is ever needed.
-- **`ai.txt` / well-known metadata**: Newer convention, same honor-system problem as `robots.txt`.
+- **`robots.txt`**: The current file permits search, AI training, and AI input.
+  It only disallows category pages for the default user agent.
+- **Cloudflare in front of GitHub Pages**: A proxy could add bot controls, rate
+  limits, or conditional responses. The live site does not use this setup.
+- **`ai.txt` or well-known metadata**: Static metadata can state policy, but it
+  cannot enforce request handling.
 
 ## Consequences
 
-- GitHub Pages bears the server cost of scraping, not us — the impact is philosophical (content used for training without consent), not operational.
-- If hosting moves to a VPS or similar in the future, iocaine becomes viable and this decision should be revisited.
+- GitHub Pages handles crawler traffic and its server cost.
+- The site serves the same content to browsers and AI crawlers.
+- No poisoning service or crawler-detection rules need maintenance.
+- Revisit this decision only if both hosting and crawler policy change.

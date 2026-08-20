@@ -21,10 +21,11 @@ Posts like "Reply to: ..." were scattered without a unifying category.
 Created a new "commentary" category for link blog format posts:
 
 1. **Archetype**: `archetypes/commentary.md` with frontmatter including
-   `category: commentary` and `external_link` field
-2. **Justfile recipe**: `just commentary "title"` (alias: `just comment`)
-3. **Migrated 11 existing posts** to commentary category with `external_link`
-   populated
+   `categories: [commentary]` and the `external_link` field
+2. **Justfile recipe**: `just commentary <url> ["optional title"]` (alias:
+   `just comment`). The recipe fetches the page title when no title is given.
+3. **Initial migration**: Added the commentary category and `external_link` to
+   11 existing posts
 
 Posts in this category:
 

@@ -45,6 +45,6 @@ limited benefit for this site.
   happens to satisfy a request.
 - No service-worker cache lifecycle or offline-content synchronization needs to be
   maintained.
-- The implementation remains unmerged, and the `pwa` branch may be deleted.
+- The implementation remains unmerged. No local or remote `pwa` branch exists.
 - Reconsider only if offline access or installability becomes an explicit user
   requirement.

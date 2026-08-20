@@ -33,6 +33,22 @@ Flagged assets:
 The blog already inlines CSS via Hugo Pipes (`commit eef4d55370`), establishing a
 precedent for eliminating external asset requests.
 
+## Current State
+
+As of 2026-08-20, the proposal is not implemented:
+
+- All eight badge images remain under `static/vendor/`.
+- `static/thiagowfx.webp` serves both page headers and `static/rss.xsl`.
+- `assets/js/main.js` is still emitted as a fingerprinted, deferred external
+  file.
+- A live response from GitHub Pages still has `Cache-Control: max-age=600`.
+- The generated production homepage is about 50 KiB before compression, with
+  CSS already inlined.
+
+The asset names and transfer sizes in the table above come from the original
+Lighthouse audit. Fingerprinted names and generated sizes can change on each
+build.
+
 ## Decision
 
 ### Option A: Inline assets as data URIs (recommended)

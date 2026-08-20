@@ -10,10 +10,11 @@ Proposed
 
 ## Context
 
-The blog already generates a Markdown output (`/index.md`) for every page via Hugo's
-custom output formats (`config/_default/config.yml`), and every HTML page includes a
-`<link rel="alternate" type="text/markdown">` tag in `<head>` for discoverability.
-A `/llms.txt` file is also generated at the site root.
+The blog generates a Markdown output (`index.md`) for each regular content page
+through Hugo's custom output formats (`config/_default/config.yml`). Each matching
+HTML page includes a `<link rel="alternate" type="text/markdown">` tag in `<head>`
+for discoverability. List pages and the homepage do not have the Markdown output.
+A `/llms.txt` file is generated at the site root.
 
 LLMs and AI agents benefit from consuming raw Markdown rather than parsing HTML.
 The standard HTTP mechanism for a client to request a specific representation is the
@@ -22,6 +23,12 @@ append `/index.md` to any URL; there is no server-side content negotiation.
 
 GitHub Pages does not support custom response headers or URL rewriting, so content
 negotiation must be handled by a reverse proxy.
+
+## Current State
+
+The proposal is not implemented. The live site is served directly by GitHub Pages.
+A request with `Accept: text/markdown` still returns `Content-Type: text/html`.
+Markdown remains available through the alternate link and direct `index.md` URL.
 
 ## Decision
 
@@ -33,8 +40,9 @@ transform rule:
 - **When**: `http.request.headers["accept"][*] contains "text/markdown"`
 - **Then**: Rewrite path to `concat(http.request.uri.path, "index.md")`
 
-This rewrites the origin request so GitHub Pages serves the pre-built Markdown file.
-No Workers, no code in the repo, no build changes.
+This rewrites the origin request so GitHub Pages serves the pre-built Markdown file
+for a regular page whose request path ends in `/`. No Workers, repository code, or
+build changes are required.
 
 Example:
 
@@ -82,7 +90,8 @@ middleware for content negotiation.
 
 ### If Option A is adopted
 
-- Clients sending `Accept: text/markdown` receive the raw Markdown for any page
+- Clients sending `Accept: text/markdown` receive raw Markdown for regular pages
+  that have a Markdown output
 - Zero code changes in the repository — the Markdown output already exists
 - Requires Cloudflare proxy setup (free tier): DNS pointing to Cloudflare, one
   transform rule

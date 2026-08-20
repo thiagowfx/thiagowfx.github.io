@@ -25,7 +25,13 @@ Search matches against `title`, `tags`, and `summary` with simple substring matc
 and wildcard support. This works well for finding posts by topic or tag, but fails
 when users search for specific terms that only appear in the body text.
 
-The current index weighs ~331 KB (gzipped: ~60 KB) for ~1000 posts.
+As of 2026-08-20, the index contains 1,300 English posts. It excludes the one
+`rss_only` post. The generated file is 418,479 bytes (~409 KiB) and 115,022 bytes
+(~112 KiB) when gzip-compressed.
+
+The dedicated search page now also supports tag chips, a year range, sort order,
+and URL state through `q`, `tag`, `from`, `to`, and `sort`. These additions do not
+change which text fields are searchable.
 
 ## Decision
 
@@ -67,7 +73,7 @@ Replace the custom substring matcher with a purpose-built library:
 
 | Criteria         | Current  | Option A     | Option B   | Option C (Pagefind) |
 | ---------------- | -------- | ------------ | ---------- | ------------------- |
-| Index size       | ~331 KB  | ~700 KB–1 MB | ~2–4 MB    | ~50–100 KB chunks   |
+| Index size       | ~409 KiB | ~700 KB–1 MB | ~2–4 MB    | ~50–100 KB chunks   |
 | Body text search | No       | Partial      | Full       | Full                |
 | Fuzzy matching   | No       | No           | No         | Yes                 |
 | Build dependency | Hugo     | Hugo         | Hugo       | Hugo + Pagefind CLI |

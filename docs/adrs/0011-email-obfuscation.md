@@ -10,7 +10,9 @@ Accepted
 
 ## Context
 
-The blog displays the author's email address in several places: the h-card, footer social links, per-post "Reply via email" links, and the `email_link` shortcode. These appear as plaintext `mailto:` links in the HTML source, making them easy targets for email harvesting bots.
+The blog displays the author's email address in HTML through the hidden h-card,
+per-post "Reply via email" links, and the `email_link` shortcode. Without encoding,
+these would be plaintext `mailto:` links in the HTML source.
 
 ## Decision
 
@@ -26,12 +28,16 @@ Hugo's production minifier (tdewolff) decodes HTML entities as part of its optim
 
 - `layouts/partials/obfuscated-email.html`: iterates over each character, converts to `&#x{hex};` format, returns the encoded string.
 - Callers use `safeHTMLAttr` for `href` attributes and `safeHTML` for display text, to prevent Hugo's template engine from double-escaping the `&` in entities.
-- All four email usage sites updated: `baseof.html` (h-card + footer), `single.html` (reply link), `email_link.html` (shortcode).
+- All three HTML usage sites use the partial: `baseof.html` (h-card),
+  `single.html` (reply link), and `email_link.html` (shortcode).
 
 ## Consequences
 
 - Bots scraping the HTML source see `&#x73;&#x65;&#x72;...` instead of the plaintext email.
 - Browsers decode the entities automatically, so all mailto links work normally for users.
 - No JavaScript required.
-- The email remains configured in one place (`config.yml`); the partial reads it dynamically.
+- The email remains configured in one place (`config/_default/config.yml`); the
+  partial reads it dynamically.
 - HTML minification is disabled in production, with negligible impact on page size.
+- RSS feeds and `/llms.txt` still contain the plaintext address as contact and
+  author metadata. This decision only covers HTML pages.

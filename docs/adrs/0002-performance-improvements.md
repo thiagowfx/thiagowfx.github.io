@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted
+Partially Accepted
 
 ## Date
 
@@ -10,55 +10,53 @@ Accepted
 
 ## Context
 
-Google PageSpeed Insights identified critical performance issues:
+Google PageSpeed Insights identified these performance issues:
 
-- Render-blocking CSS requests (150 ms estimated savings)
-- Forced reflow issues from DOM operations
-- Suboptimal network dependency tree
-- Missing cache lifetime headers (15 KiB estimated savings)
+- Render-blocking CSS requests
+- Forced reflow from DOM operations
+- A long network dependency chain
+- Short cache lifetimes for static assets
+
+The implementation changed after the original audit. This ADR now records the
+parts that remain in the repository.
 
 ## Decision
 
-Implemented four optimizations:
+### Inline CSS
 
-### 1. Eliminate Render-Blocking CSS
+`layouts/partials/style.html` reads `static/theme.css`, minifies it with Hugo
+Pipes, and emits it with the rest of the site CSS in one `<style>` element.
+There is no asynchronous stylesheet or `<noscript>` fallback.
 
-- Inlined critical CSS directly in `<style>` tag
-- Converted external stylesheet to `rel=preload` with async loading
-- Added `<noscript>` fallback
+### Defer JavaScript
 
-### 2. Prevent Forced Reflows
+`assets/js/main.js` is minified and fingerprinted with Hugo Pipes. The base
+layout loads the generated file with `defer`. Event handlers initialize after
+the document has been parsed.
 
-- Deferred snowflake canvas initialization to after DOMContentLoaded
-- Changed multiple style assignments to single `cssText` assignment
-- Consolidated dropdown menu event listeners into delegated handler
+### Load images according to priority
 
-### 3. Cache Lifetime Configuration
+The header avatar has fixed dimensions and `fetchpriority="high"`. Footer badge
+images have fixed dimensions and `loading="lazy"`.
 
-- Static assets (CSS, JS): 1 year
-- Images (WebP, PNG, SVG): 1 month
-- HTML pages: 1 day
-- RSS/Sitemap: No cache (must-revalidate)
+### Accept GitHub Pages cache policy
 
-### 4. Network Dependency Optimization
+The repository does not define cache headers. GitHub Pages serves HTML and
+static assets with `Cache-Control: max-age=600`. ADR-0009 evaluates inlining
+small assets or adding a proxy to change this behavior.
 
-- CSS no longer blocks JavaScript execution
-- Snowflake animation deferred to after page load
-
-**Files modified:**
-
-- `layouts/_default/baseof.html`
-- `layouts/partials/style.html`
+The snowflake animation and its canvas initialization no longer exist.
 
 ## Consequences
 
 **Easier:**
 
-- Faster page loads (~150 ms reduction on first contentful paint)
-- Better Lighthouse scores
-- Reduced layout shift from animations
+- CSS needs no separate request.
+- Fingerprinted JavaScript can change without stale asset URLs.
+- Image dimensions reduce layout movement.
 
 **Harder:**
 
-- CSS is now split between inline critical and async-loaded non-critical
-- Cache headers require CDN (Cloudflare) for GitHub Pages
+- Inlined CSS is repeated in each HTML response.
+- GitHub Pages keeps control of cache lifetime.
+- CSS and JavaScript processing depend on Hugo Pipes.

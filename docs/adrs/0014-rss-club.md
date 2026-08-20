@@ -31,12 +31,15 @@ The post is still rendered at its permalink. Anyone with the URL (e.g. an RSS su
 - `layouts/index.html` — featured (`bestof`) grid on the homepage.
 - `layouts/404.html` — recent posts fallback.
 - `layouts/_default/random.html` — random-post redirect.
-- `layouts/_default/search.search.json` — full-text search index.
+- `layouts/_default/search.search.json` — client-side search index.
 - `layouts/_default/home.llms.txt` — LLM-facing index.
 - `layouts/_default/home.sitemapmd.md` — markdown sitemap.
 - `layouts/sitemap.xml` — XML sitemap (the standard `sitemap: disable: true` front matter already works here; `rss_only` should imply it).
 - `layouts/_default/graph.graphdata.json` — interactive graph nodes.
-- `layouts/partials/related-posts.html` and `layouts/partials/backlinks.html` — pre-computed link data already keys by filename; adding/removing `rss_only` does not retroactively rewrite `data/links.json`, but neighbors don't appear in any *list* the user can browse, so the only leak is if a *public* post links to an `rss_only` one. The partials read pre-computed IDs and resolve them to pages — they will resolve and render. To plug this, the partials filter resolved pages by `.Params.rss_only`.
+- `layouts/partials/related-posts.html` and `layouts/partials/backlinks.html` —
+  filter resolved pre-computed page IDs by `.Params.rss_only`.
+- `layouts/partials/mini-graph.html` — must apply the same filter when it resolves
+  incoming and outgoing page IDs.
 
 ### Surfaces that should keep `rss_only` posts
 
@@ -59,14 +62,33 @@ A determined search engine can still discover the URL (RSS aggregators expose fe
 1. **List filter** — in `list.html`, filter `$pages` by `Params.rss_only != true` at the top, so both the main posts list and taxonomy term pages skip them. The taxonomy header count uses the filtered slice too.
 2. **Per-post template filters** — in `single.html`, filter `$posts` before computing prev/next. In `index.html`, filter the `bestof` slice. In `404.html`, filter `RegularPages`. In `random.html`, skip `rss_only`. In `search.search.json`, `home.llms.txt`, `home.sitemapmd.md`, `sitemap.xml`, `graph.graphdata.json`, add the same filter.
 3. **Related/backlinks partials** — after resolving pre-computed IDs to pages, filter out pages with `.Params.rss_only`.
-4. **`noindex`** — in `seo_tags.html`, emit `<meta name="robots" content="noindex">` when `.Params.rss_only` is true.
+4. **`noindex`** — in `seo_tags.html`, emit
+   `<meta name="robots" content="noindex, nofollow">` when `.Params.rss_only` is
+   true.
 
 The archetype (`archetypes/blog.md`) deliberately does NOT include `rss_only: false` — it would clutter every new post's front matter. Authors add `rss_only: true` only when needed.
+
+## Current State
+
+As of 2026-08-20, one post uses `rss_only: true`. The original surfaces apply the
+filter. Two later additions have gaps:
+
+- `layouts/partials/mini-graph.html` resolves backlinks and outlinks without an
+  `rss_only` check. A linked RSS-only post can appear in a public post's mini
+  graph.
+- Category and tag cloud counts in `layouts/_default/list.html` use taxonomy
+  `.Pages` directly. They can include RSS-only posts in aggregate counts, but do
+  not show their titles or URLs.
+
+The full graph output filters RSS-only nodes and edges. The pre-computed
+`data/links.json` still includes all posts.
 
 ## Consequences
 
 - Authors get a one-line flag (`rss_only: true`) to publish to RSS subscribers only.
-- Cost: every template that enumerates posts needs the filter. Missing one is a leak — that's why the surfaces list above is exhaustive. Anyone adding a new enumeration template should add the filter (CLAUDE.md / future ADR worthy if the surface count grows).
+- Cost: every template that enumerates posts needs the filter. New enumeration
+  templates must add it explicitly. The mini-graph gap above shows this maintenance
+  cost.
 - Pre-computed `data/links.json` (built by `ci/precompute_links.py`) still contains references to/from `rss_only` posts. Filtering happens at the template layer when resolving IDs to pages. If `rss_only` posts ever need to be excluded from the *computation* of related/backlinks (so they don't show up as "related" to public posts), the script would need to learn the flag — out of scope here.
 - `rss_only` posts are not in the sitemap, so search engines learn about them only via the RSS feed or external links. Combined with `noindex`, the practical result is that they stay out of search results.
 - `rss: false` and `rss_only: true` are independent flags. Setting both is meaningless (post would be in neither place) but harmless.

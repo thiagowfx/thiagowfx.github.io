@@ -10,7 +10,8 @@ Accepted
 
 ## Context
 
-Hugo build times were slow (~18 seconds) due to O(n²) template computations:
+At the time of this decision, Hugo build times were slow (~18 seconds) due to
+O(n²) template computations:
 
 | Partial              | Cumulative Time | Avg/Call | Calls |
 | -------------------- | --------------- | -------- | ----- |
@@ -44,6 +45,7 @@ Runs in ~4 seconds and outputs:
     "2024-01-01-post-slug": {
       "hugo_path": "/posts/2024-01-01-post-slug",
       "backlinks": ["other-post-1", "other-post-2"],
+      "outlinks": ["linked-post-1"],
       "related": ["related-post-1", "related-post-2"],
       "previously": ["prev-1", "prev-2", "prev-3", "prev-4", "prev-5"]
     }
@@ -60,12 +62,12 @@ Runs in ~4 seconds and outputs:
 
 **2. Updated Hugo templates**
 
-Partials now read from `$.Site.Data.links`:
+Partials now read from `hugo.Data.links`:
 
 ```go-html-template
-{{- $linkData := index $.Site.Data.links.posts $currentFilename -}}
+{{- $linkData := index hugo.Data.links.posts $currentFilename -}}
 {{- $backlinkIds := $linkData.backlinks | default slice -}}
-{{- $paths := $.Site.Data.links.paths -}}
+{{- $paths := hugo.Data.links.paths -}}
 {{- range $backlinkIds -}}
   {{- $page := $.Site.GetPage (index $paths .) -}}
   ...
@@ -90,9 +92,26 @@ build: precompute
 2. **Lazy-load via JavaScript**: Implemented for graph page, but partials need server-side data
 3. **Skip in development**: Implemented initially, but pre-compute approach is fast enough
 
+## Current State
+
+As of 2026-08-20:
+
+- The script processes 1,301 posts and 321 graph edges in about 6.4 seconds on
+  the local development machine.
+- `outlinks` are part of each post record and support the per-post mini graph.
+- `layouts/partials/related-posts.html` renders both related and previous posts.
+  There is no separate `previously.html` partial.
+- `just build` always runs `precompute` before the production Hugo build.
+- `just watch` does not run `precompute`. It uses the checked-in
+  `data/links.json` until that file is regenerated.
+- `just build-quick` skips the relationship partials and does not run the Python
+  script.
+
 ## Consequences
 
-### Performance Results
+### Historical Performance Results
+
+These measurements were recorded when the decision was accepted:
 
 | Metric             | Before | After  | Improvement |
 | ------------------ | ------ | ------ | ----------- |
@@ -109,8 +128,8 @@ build: precompute
 ### Easier
 
 - Faster development iteration with `just watch`
-- Production builds complete in ~8 seconds
-- Graph visualization works with all 1000+ posts
+- Production builds completed in ~8 seconds at the time of acceptance
+- Graph visualization now works with more than 1,300 posts
 - Centralized relationship logic in one Python script
 
 ### Harder
@@ -121,7 +140,8 @@ build: precompute
 
 ### Current Limitations
 
-Adding a new post still requires full recomputation (~4 seconds) because:
+Adding a new post still requires full recomputation (about 6.4 seconds in the
+2026-08-20 local measurement) because:
 
 - Related posts: O(n²) to score each post against all others
 - Previously: O(n²) to check tag overlap with older posts
