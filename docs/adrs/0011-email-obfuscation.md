@@ -1,4 +1,4 @@
-# ADR: Email Obfuscation via HTML Entity Encoding
+# ADR-0011: Email Obfuscation via HTML Entity Encoding
 
 ## Status
 

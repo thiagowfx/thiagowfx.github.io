@@ -1,4 +1,4 @@
-# ADR-0015: Spade glyph on the first paragraph
+# ADR-0015: Spade Glyph on the First Paragraph
 
 ## Status
 

@@ -5,8 +5,6 @@ technical decisions in the blog infrastructure.
 
 ## ADRs
 
-<!-- markdownlint-disable MD013 -->
-
 | Number | Title | Status | Date |
 | ------ | ----- | ------ | ---- |
 | [0001](0001-commentary-category.md) | Commentary Category | Accepted | 2025-01-04 |
@@ -27,12 +25,10 @@ technical decisions in the blog infrastructure.
 | [0016](0016-progressive-web-app.md) | Progressive Web App | Abandoned | 2026-07-27 |
 | [0017](0017-agent-skill-discovery.md) | Agent Skill Discovery | Proposed | 2026-08-19 |
 
-<!-- markdownlint-enable MD013 -->
-
 ## Adding New ADRs
 
-1. Create a new file: `NNNN-short-title.md` (increment the number)
-2. Use this template:
+1. Create a new file: `NNNN-short-title.md` (increment the number).
+2. Copy the template below, then add a row to the table above.
 
 ```markdown
 # ADR-NNNN: Title
@@ -59,3 +55,6 @@ Include alternatives considered where applicable.
 
 What becomes easier or more difficult to do because of this change?
 ```
+
+Optional sections: `## Alternatives Considered` and `## Implementation` go between
+`## Decision` and `## Consequences`. `## Future Improvements` goes last.

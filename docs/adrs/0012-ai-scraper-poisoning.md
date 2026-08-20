@@ -1,8 +1,8 @@
-# 0012 — AI Scraper Poisoning
+# ADR-0012: AI Scraper Poisoning
 
 ## Status
 
-Rejected (not feasible with current hosting)
+Rejected
 
 ## Date
 
@@ -22,7 +22,7 @@ Not adopting iocaine or similar scraper-poisoning tools. The blog is hosted on G
 - **Cloudflare in front of GitHub Pages**: Would provide bot management, WAF rules, and rate limiting. Most practical option if protection is ever needed.
 - **`ai.txt` / well-known metadata**: Newer convention, same honor-system problem as `robots.txt`.
 
-## Notes
+## Consequences
 
 - GitHub Pages bears the server cost of scraping, not us — the impact is philosophical (content used for training without consent), not operational.
 - If hosting moves to a VPS or similar in the future, iocaine becomes viable and this decision should be revisited.

@@ -1,8 +1,8 @@
-# 0013 — No Query Strings
+# ADR-0013: No Query Strings
 
 ## Status
 
-Proposed (tracked for future hosting changes)
+Proposed
 
 ## Date
 
@@ -46,7 +46,7 @@ Cloudflare or to a server we control, implement the rule then.
 - **Move off GitHub Pages**: Cloudflare Pages, Netlify, or a Caddy VPS would
   let this be done natively. Overkill for this alone.
 
-## Notes
+## Consequences
 
 - Impact is mostly cosmetic: the blog doesn't run analytics that key off
   query strings, so tracking parameters added by external sites don't change
