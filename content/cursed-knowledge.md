@@ -1,5 +1,10 @@
 ---
 title: "Cursed Knowledge"
+layout: cursed-knowledge
+outputs:
+  - HTML
+  - Markdown
+  - RSS
 email: false
 tocOpen: true
 ---
