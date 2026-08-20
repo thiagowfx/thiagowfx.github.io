@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [Terminals](https://perrotta.dev/2026/08/terminals/) (2026-08-20)
 - [ThoughtWorks Technology Radar](https://perrotta.dev/2026/08/thoughtworks-technology-radar/) (2026-08-20)
 - [human voice](https://perrotta.dev/2026/08/human-voice/) (2026-08-19)
 - [/ship-and-burn a pull request](https://perrotta.dev/2026/08/ship-and-burn-a-pull-request/) (2026-08-19)
@@ -1328,7 +1329,7 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (126 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (127 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Argocd](https://perrotta.dev/tags/argocd/) (18 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (12 posts)
@@ -1338,7 +1339,7 @@
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (28 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1202 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1203 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1357,7 +1358,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (59 posts)
 - [Security](https://perrotta.dev/tags/security/) (68 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (271 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (272 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (12 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (13 posts)
