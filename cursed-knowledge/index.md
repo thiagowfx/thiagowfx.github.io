@@ -1,7 +1,7 @@
 ---
 title: "Cursed Knowledge"
 url: https://perrotta.dev/cursed-knowledge/
-last_updated: 2026-07-29
+last_updated: 2026-08-20
 ---
 
 
@@ -10,6 +10,18 @@ Cursed knowledge learned while building software, that I wish I never knew.
 Inspired by [immich's Cursed Knowledge](https://immich.app/cursed-knowledge).
 
 ---
+
+## kargo promotion queues
+
+*2026-08-20*
+
+[Kargo](https://kargo.io/)'s `NewestFreight` auto-promotion policy does not make the newest
+promotion win. It selects the newest candidate, then creates a new `Promotion` for each
+candidate while earlier Promotions remain in a FIFO queue. Rapid Freight discovery can
+therefore deploy every stale intermediate version after the current Promotion finishes.
+No `Stage` or `ProjectConfig` setting supersedes pending Promotions. The workarounds are
+to disable auto-promotion or abort old Promotions manually while upstream feature request
+[#3108](https://github.com/akuity/kargo/issues/3108) remains open.
 
 ## pi session cwd
 
