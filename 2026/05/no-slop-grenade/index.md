@@ -1,7 +1,7 @@
 ---
 title: "No slop grenade"
 url: https://perrotta.dev/2026/05/no-slop-grenade/
-last_updated: 2026-05-25
+last_updated: 2026-08-20
 ---
 
 
@@ -24,4 +24,6 @@ An addition to the ["No Hello"]({{< ref "2025-09-16-nohello" >}}) series:
 > **Them**: Redis. We need pub/sub for the notifications feature.
 
 [Clankers](https://en.wikipedia.org/wiki/Clanker).
+
+**Update (2026-08-20)**: See also: [Don't paste the AI](https://dontpastetheai.com/).
 
