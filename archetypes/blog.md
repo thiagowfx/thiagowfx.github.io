@@ -1,6 +1,7 @@
 ---
 {{- $today := now.Format "2006-01-02"}}
-title: "{{ replace .Name $today "" | humanize }}"
+{{- $envTitle := getenv "HUGO_TITLE" }}
+title: {{ with $envTitle }}{{ strings.FirstUpper . | jsonify }}{{ else }}{{ replace $.Name $today "" | humanize | jsonify }}{{ end }}
 date: {{ .Date }}
 categories:
 {{- range $plural, $terms := .Site.Taxonomies }}

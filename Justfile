@@ -51,7 +51,7 @@ new *args:
     fi
     filename=$(echo "${title}" | tr '[:upper:]' '[:lower:]' | sed -e 's/[,:/]/-/g' | tr -s ' ' | tr ' ' '-' | tr -s '-')
     filepath="content/posts/$(date "+%Y-%m-%d")-${filename}.md"
-    hugo new --kind blog "${filepath}"
+    HUGO_TITLE="${title}" hugo new --kind blog "${filepath}"
     [ -t 0 ] && {{ editor }} "${filepath}" || echo "${filepath}"
 
 alias blog := new
