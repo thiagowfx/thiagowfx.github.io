@@ -7,22 +7,51 @@
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)">
-  <title class="title">Coding | ¬ just serendipity 🍀</title><meta name="title" content="Coding">
-<meta name="description" content="not just serendipity, the blog from Thiago Perrotta">
-<meta name="keywords" content="coding,commentary,recipes,advent-of-code,ai,alpine-linux,argocd,aws,bestof,bloggify,bytebytego,claude,coding,degoogling,dev,docker,fosdem,gaming,ghostty,git,kubernetes,leetcode,legacy,macos,meta,movies,pi,pkm,posse,pre-commit,privacy,security,selfhosted,serenity,socialmedia,ssh,terraform,vim,"><meta property="og:url" content="https://perrotta.dev/posts/coding/">
+  <title class="title">Desvendando (ou não) o btrfs | ¬ just serendipity 🍀</title><meta name="title" content="Desvendando (ou não) o btrfs">
+<meta name="description" content="Atenção: o conteúdo a seguir é apenas uma introdução.
+Overview # Uma das coisas que mais demorei para fazer nesse mundo Unix foi brincar com testar um …">
+<meta name="keywords" content="dev,legacy,"><meta property="og:url" content="https://perrotta.dev/pt/posts/2014-09-20-desvendando-ou-nao-o-btrfs/">
   <meta property="og:site_name" content="¬ just serendipity 🍀">
-  <meta property="og:title" content="Coding">
-  <meta property="og:description" content="not just serendipity, the blog from Thiago Perrotta">
+  <meta property="og:title" content="Desvendando (ou não) o btrfs">
+  <meta property="og:description" content="Atenção: o conteúdo a seguir é apenas uma introdução.
+Overview # Uma das coisas que mais demorei para fazer nesse mundo Unix foi brincar com testar um filesystem diferente do ext{2,3,4}. Existem pelo menos duas alternativas populares hoje em dia, para isso: no mundo BSD, o ZFS; e no mundo Linux, o btrfs. Ambos são filesystems avançados, o que você pode entender como “é melhor eu ficar longe disso para não fazer besteira” e “deve ter uma porção de features que eu provavelmente nunca pensei em usar e/ou que precisaria algum dia”.">
   <meta property="og:locale" content="en_us">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="pt">
+    <meta property="article:published_time" content="2014-09-20T20:22:43-03:00">
+    <meta property="article:modified_time" content="2026-08-21T02:45:51+02:00">
+    <meta property="article:tag" content="Dev">
+    <meta property="article:tag" content="Legacy">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Coding">
-  <meta name="twitter:description" content="not just serendipity, the blog from Thiago Perrotta">
-<meta name="referrer" content="no-referrer-when-downgrade">
-  <link rel="icon" href="https://perrotta.dev/favicon.ico">
-  <link rel="alternate" type="application/rss+xml" href="https://perrotta.dev/posts/coding/index.xml" title="¬ just serendipity 🍀">
-  <link rel="canonical" href="https://perrotta.dev/posts/coding/"><link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0">
+  <meta name="twitter:title" content="Desvendando (ou não) o btrfs">
+  <meta name="twitter:description" content="Atenção: o conteúdo a seguir é apenas uma introdução.
+Overview # Uma das coisas que mais demorei para fazer nesse mundo Unix foi brincar com testar um filesystem diferente do ext{2,3,4}. Existem pelo menos duas alternativas populares hoje em dia, para isso: no mundo BSD, o ZFS; e no mundo Linux, o btrfs. Ambos são filesystems avançados, o que você pode entender como “é melhor eu ficar longe disso para não fazer besteira” e “deve ter uma porção de features que eu provavelmente nunca pensei em usar e/ou que precisaria algum dia”.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Desvendando (ou não) o btrfs",
+      "description": "Atenção: o conteúdo a seguir é apenas uma introdução.\nOverview # Uma das coisas que mais demorei para fazer nesse mundo Unix foi brincar com testar um …",
+      "url": "https://perrotta.dev/pt/posts/2014-09-20-desvendando-ou-nao-o-btrfs/",
+      "datePublished": "2014-09-20T20:22:43-03:00",
+      "dateModified": "2026-08-21T02:45:51+02:00",
+      "author": {"@type":"Person","name":"Thiago Perrotta","url":"https://perrotta.dev/"},
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://perrotta.dev/pt/posts/2014-09-20-desvendando-ou-nao-o-btrfs/"
+      },"keywords": ["dev","legacy"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [{"@type":"ListItem","item":"https://perrotta.dev","name":"Home","position":1},{"@type":"ListItem","item":"https://perrotta.dev/pt/","name":"Pt","position":2},{"@type":"ListItem","name":"Desvendando (ou não) o btrfs","position":3}]
+    }
+  ]
+}
+</script><meta name="referrer" content="no-referrer-when-downgrade">
+  <link rel="icon" href="https://perrotta.dev/favicon.ico"><link rel="canonical" href="https://perrotta.dev/pt/posts/2014-09-20-desvendando-ou-nao-o-btrfs/"><link rel="alternate" type="text/markdown" href="https://perrotta.dev/pt/posts/2014-09-20-desvendando-ou-nao-o-btrfs/index.md" title="Desvendando (ou não) o btrfs"><link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0">
   <link rel="author" href="https://perrotta.dev/" title="Thiago Perrotta">
 <style>
   .e-content>p:first-child::before{content:"♠";color:var(--color-gray);margin-right:.5em}.post-end-mark{color:var(--color-gray)}.heading-anchor{margin-left:.3em;color:var(--color-gray);text-decoration:none;opacity:0;transition:opacity .2s ease}h2:hover .heading-anchor,h3:hover .heading-anchor,h4:hover .heading-anchor,h5:hover .heading-anchor,h6:hover .heading-anchor,.heading-anchor:focus{opacity:1}:root{--color-light-gray:#5c5f77;--color-light-grayer:#6c6f85;--color-dark-gray:#9399b2;--color-dark-grayer:#7f849c;--font-title:"Inter", "Fira Sans", "Lato", system-ui, -apple-system,
@@ -1563,411 +1592,251 @@
     </nav>
   </header>
   <main>
-<div class="h-feed">
-<div class="content">
-
-  <h2 id="posts" class="p-name" style="display: flex; align-items: center; gap: 0;"> Posts (0)<a href='https://perrotta.dev/posts/coding/index.xml' class="rss-link" title="RSS feed" aria-label="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" aria-label="RSS" role="img" viewBox="0 0 512 512" height="1em" width="1em"><path d="m0 0H512V512H0" fill="#f80"/><path fill="#fff" d="m109 271A132 133 0 01241 403h60A192 193 0 00109 211v-54A246 247 0 01355 403h60A306 307 0 00109 97m35 235a35 35 0 102 0"/></svg>
-</a>
-  </h2>
-<div class="search-container">
-  <input type="text" id="search-input" placeholder="Search posts... (use * as wildcard)" autocomplete="off" >
-  <div id="search-info" class="search-info"></div>
-</div>
-<div id="search-results" class="search-results"></div>
-<script type="module">
-  let searchIndex = null;
-  const searchInput = document.getElementById('search-input');
-  const searchResults = document.getElementById('search-results');
-  const searchInfo = document.getElementById('search-info');
-  const tagChips = document.getElementById('search-tag-chips');
-  const yearFromFilter = document.getElementById('search-year-from');
-  const yearToFilter = document.getElementById('search-year-to');
-  const sortFilter = document.getElementById('search-sort');
-  const selectedTags = new Set();
-  const globalTagCounts = new Map();
-  
-  
-  const hasFilters = Boolean(tagChips && yearFromFilter && yearToFilter && sortFilter);
-  const yearFromVal = () => hasFilters ? yearFromFilter.value : '';
-  const yearToVal = () => hasFilters ? yearToFilter.value : '';
-  const sortVal = () => hasFilters ? sortFilter.value : 'relevance';
-  const contentSelector = '#posts-content';
-  const contentEl = contentSelector ? document.querySelector(contentSelector) : null;
-  const excludeTags = new Set([]);
-  const includeTags = new Set([]);
-  const excludeCategories = new Set(["coding","recipes"]);
-  const includeCategories = new Set([]);
-  const i18n = {
-    postsIndexed: 'posts indexed',
-    noResults: 'No results found',
-    loading: 'Loading search index'
-  };
-
-  const debounce = (fn, delay) => {
-    let timeout;
-    return (...args) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => fn(...args), delay);
-    };
-  };
-
-  const escapeHtml = (text) => {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-  };
-
-  const termToRegex = (term) => {
-    const escaped = term.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
-    return new RegExp(escaped.replace(/\*/g, '.*'), 'i');
-  };
-
-  const matchesTerm = (text, term) => {
-    if (term.includes('*')) {
-      return termToRegex(term).test(text);
+<div id="reading-progress" class="reading-progress" aria-hidden="true"></div>
+<script>
+  document.addEventListener('keydown', function(event) {
+    if (event.target.closest('input:not([type="hidden"]), textarea, [contenteditable="true"]')) return;
+    if (event.key === 'j' || event.key === 'ArrowLeft') {
+      const prev = document.querySelector('[data-nav="prev"]');
+      if (prev && prev.href) window.location.href = prev.href;
+    } else if (event.key === 'k' || event.key === 'ArrowRight') {
+      const next = document.querySelector('[data-nav="next"]');
+      if (next && next.href) window.location.href = next.href;
     }
-    return text.includes(term);
-  };
-
-  const highlightMatch = (text, query) => {
-    if (!text) return '';
-    const escaped = escapeHtml(text);
-    const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 0);
-    return terms.reduce((result, term) => {
-      const pattern = term.includes('*')
-        ? term.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '[^\\s]*')
-        : term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      return result.replace(new RegExp(`(${pattern})`, 'gi'), '<mark>$1</mark>');
-    }, escaped);
-  };
-
-  const updateURL = (query) => {
-    const url = new URL(window.location);
-    const syncParam = (key, value) => {
-      if (value) {
-        url.searchParams.set(key, value);
-      } else {
-        url.searchParams.delete(key);
-      }
-    };
-    syncParam('q', query);
-    if (hasFilters) {
-      syncParam('tag', [...selectedTags].join(','));
-      syncParam('from', yearFromVal());
-      syncParam('to', yearToVal());
-      syncParam('sort', sortVal() === 'relevance' ? '' : sortVal());
-    }
-    history.replaceState(null, '', url);
-  };
-
-  const renderResults = (results, query) => {
-    if (results.length === 0) {
-      searchInfo.textContent = i18n.noResults;
-      searchResults.innerHTML = '<p class="no-results">No posts match your search.</p>';
-      return;
-    }
-
-    searchInfo.textContent = `${results.length} result${results.length === 1 ? '' : 's'} found`;
-
-    searchResults.innerHTML = results.map(({ post }) => {
-      const categories = (post.categories ?? [])
-        .map(c => `<a href="${langPath}/categories/${c}/" class="search-tag">%${escapeHtml(c)}</a>`)
-        .join(' ');
-      const tags = (post.tags ?? [])
-        .map(t => `<a href="${langPath}/tags/${t}/" class="search-tag">#${escapeHtml(t)}</a>`)
-        .join(' ');
-      const allTags = [categories, tags].filter(Boolean).join(' • ');
-
-      return `
-        <div class="search-result">
-          <a href="${escapeHtml(post.url)}" class="search-result-title">${highlightMatch(post.title, query)}</a>
-          <div class="search-result-meta">
-            <span class="search-result-date">${escapeHtml(post.date)}</span>
-            ${allTags ? `<span class="search-result-tags">${allTags}</span>` : ''}
-          </div>
-          ${post.summary ? `<p class="search-result-summary">${highlightMatch(post.summary, query)}</p>` : ''}
-        </div>
-      `;
-    }).join('');
-  };
-
-  const performSearch = (query) => {
-    if (!searchIndex) return;
-
-    const q = query.toLowerCase().trim();
-    const yearFrom = yearFromVal();
-    const yearTo = yearToVal();
-    const sortMode = sortVal();
-    const filtersActive = Boolean(selectedTags.size || yearFrom || yearTo || sortMode !== 'relevance');
-
-    if (q.length === 0 && !filtersActive) {
-      searchResults.innerHTML = '';
-      searchInfo.textContent = `${searchIndex.length} ${i18n.postsIndexed}`;
-      if (contentEl) contentEl.style.display = '';
-      updateChips(null);
-      updateURL('');
-      return;
-    }
-
-    if (contentEl) contentEl.style.display = 'none';
-
-    const terms = q.split(/\s+/).filter(t => t.length > 0);
-    const results = [];
-    
-    
-    
-    const tagMatchCounts = new Map();
-
-    for (const post of searchIndex) {
-      const year = (post.date ?? '').slice(0, 4);
-      if (yearFrom && year < yearFrom) continue;
-      if (yearTo && year > yearTo) continue;
-
-      const title = (post.title ?? '').toLowerCase();
-      const summary = (post.summary ?? '').toLowerCase();
-      const tags = (post.tags ?? []).map(t => t.toLowerCase());
-      const tagsText = tags.join(' ');
-
-      let allMatch = true;
-      let score = 0;
-
-      for (const term of terms) {
-        const inTitle = matchesTerm(title, term);
-        const inSummary = matchesTerm(summary, term);
-        const inTags = matchesTerm(tagsText, term);
-
-        if (!inTitle && !inSummary && !inTags) {
-          allMatch = false;
-          break;
-        }
-
-        if (inTitle) score += 10;
-        if (inTags) score += 5;
-        if (inSummary) score += 1;
-      }
-
-      if (!allMatch) continue;
-
-      
-      const postTags = post.tags ?? [];
-      if (![...selectedTags].every(t => postTags.includes(t))) continue;
-      postTags.forEach(t => tagMatchCounts.set(t, (tagMatchCounts.get(t) ?? 0) + 1));
-      results.push({ post, score });
-    }
-
-    const sorters = {
-      relevance: (a, b) => b.score - a.score || b.post.date.localeCompare(a.post.date),
-      newest: (a, b) => b.post.date.localeCompare(a.post.date),
-      oldest: (a, b) => a.post.date.localeCompare(b.post.date),
-    };
-    results.sort(sorters[sortMode] ?? sorters.relevance);
-
-    updateChips(tagMatchCounts);
-    updateURL(query);
-    renderResults(results, query);
-  };
-
-  const lang = 'en' || 'en';
-  const langPath = lang === 'en' ? '' : '/' + lang;
-
-  
-  const params = new URLSearchParams(window.location.search);
-  const desiredFilters = {
-    tags: (params.get('tag') ?? '').split(',').filter(Boolean),
-    from: params.get('from') ?? '',
-    to: params.get('to') ?? '',
-    sort: params.get('sort') ?? '',
-  };
-  if (hasFilters && desiredFilters.sort) sortFilter.value = desiredFilters.sort;
-
-  const populateFilterOptions = () => {
-    if (!hasFilters) return;
-    const addOption = (select, value, label) => {
-      const opt = document.createElement('option');
-      opt.value = value;
-      opt.textContent = label ?? value;
-      select.appendChild(opt);
-    };
-
-    
-    searchIndex.forEach(post => (post.tags ?? []).forEach(t => globalTagCounts.set(t, (globalTagCounts.get(t) ?? 0) + 1)));
-    const tags = [...globalTagCounts.keys()].sort((a, b) => globalTagCounts.get(b) - globalTagCounts.get(a) || a.localeCompare(b));
-
-    tags.forEach(t => {
-      const chip = document.createElement('button');
-      chip.type = 'button';
-      chip.className = 'search-tag-chip';
-      chip.dataset.tag = t;
-      chip.setAttribute('aria-pressed', 'false');
-      chip.append(`#${t} `);
-      const count = document.createElement('span');
-      count.className = 'search-tag-chip-count';
-      count.textContent = globalTagCounts.get(t);
-      chip.appendChild(count);
-      chip.addEventListener('click', () => {
-        const active = chip.getAttribute('aria-pressed') === 'true';
-        chip.setAttribute('aria-pressed', String(!active));
-        if (active) selectedTags.delete(t); else selectedTags.add(t);
-        performSearch(searchInput.value);
-      });
-      tagChips.appendChild(chip);
-    });
-
-    const years = [...new Set(searchIndex.map(post => (post.date ?? '').slice(0, 4)).filter(Boolean))]
-      .sort().reverse();
-    years.forEach(y => { addOption(yearFromFilter, y); addOption(yearToFilter, y); });
-
-    
-    desiredFilters.tags.forEach(t => {
-      const chip = tagChips.querySelector(`[data-tag="${CSS.escape(t)}"]`);
-      if (chip) { chip.setAttribute('aria-pressed', 'true'); selectedTags.add(t); }
-    });
-    if (years.includes(desiredFilters.from)) yearFromFilter.value = desiredFilters.from;
-    if (years.includes(desiredFilters.to)) yearToFilter.value = desiredFilters.to;
-  };
-
-  
-  
-  
-  const updateChips = (counts) => {
-    if (!hasFilters) return;
-    tagChips.querySelectorAll('.search-tag-chip').forEach(chip => {
-      const t = chip.dataset.tag;
-      const n = counts ? (counts.get(t) ?? 0) : globalTagCounts.get(t);
-      chip.querySelector('.search-tag-chip-count').textContent = n;
-      chip.hidden = counts ? !(n > 0 || selectedTags.has(t)) : false;
-    });
-  };
-
-  const loadSearchIndex = () => {
-    if (searchIndex !== null) return;
-    searchInfo.textContent = i18n.loading;
-    searchInfo.classList.add('loading');
-    const fetchWithTimeout = (url, timeout = 5000) =>
-      fetch(url, { signal: AbortSignal.timeout(timeout) });
-    const fetchIndex = (url, retries = 1) =>
-      fetchWithTimeout(url).catch(err =>
-        retries > 0 ? fetchWithTimeout(url) : Promise.reject(err)
-      );
-    fetchIndex(langPath + '/search/index.json')
-      .then(response => response.json())
-      .then(data => {
-        searchIndex = data;
-        if (includeTags.size > 0) {
-          searchIndex = searchIndex.filter(post => (post.tags ?? []).some(t => includeTags.has(t)));
-        }
-        if (excludeTags.size > 0) {
-          searchIndex = searchIndex.filter(post => !(post.tags ?? []).some(t => excludeTags.has(t)));
-        }
-        if (includeCategories.size > 0) {
-          searchIndex = searchIndex.filter(post => (post.categories ?? []).some(c => includeCategories.has(c)));
-        }
-        if (excludeCategories.size > 0) {
-          searchIndex = searchIndex.filter(post => !(post.categories ?? []).some(c => excludeCategories.has(c)));
-        }
-        populateFilterOptions();
-        searchInfo.classList.remove('loading');
-        searchInfo.textContent = `${searchIndex.length} ${i18n.postsIndexed}`;
-        const q = searchInput.value.trim();
-        const filtersActive = selectedTags.size || yearFromVal() || yearToVal() || sortVal() !== 'relevance';
-        if (q || filtersActive) {
-          performSearch(searchInput.value);
-        }
-      })
-      .catch(err => {
-        searchInfo.classList.remove('loading');
-        searchInfo.textContent = 'Error loading search index';
-        console.error('Search index load error:', err);
-      });
-  };
-
-  
-  const q = params.get('q');
-  if (q) searchInput.value = q;
-  const urlFiltersActive = hasFilters && (desiredFilters.tags.length || desiredFilters.from || desiredFilters.to || desiredFilters.sort);
-  if (q || urlFiltersActive) {
-    loadSearchIndex();
-  } else {
-    searchInput.addEventListener('focus', loadSearchIndex, { once: true });
-  }
-
-  searchInput.addEventListener('input', debounce(e => performSearch(e.target.value), 150));
-  if (hasFilters) {
-    [yearFromFilter, yearToFilter, sortFilter].forEach(el =>
-      el.addEventListener('change', () => performSearch(searchInput.value))
-    );
-  }
+  });
 </script>
-
-
-  <div id="posts-content">
-  <div class="e-content">
-
-
-  
-  
-
-  
-    <ul class="blog-posts">
-      <li>No posts yet</li>
-    </ul>
-  
-  <hr>
-  <h2 id="categories">
-    Categories
-    <a href='https://perrotta.dev/categories/#categories' aria-label="View all categories">%</a>
+<a href="https://perrotta.dev/pt/posts/2014-07-25-meus-dois-minutos-de-fama/" data-nav="prev" hidden></a>
+<a href="https://perrotta.dev/pt/posts/2014-11-01-encontro-hackergroup-ufrj-diario-1/" data-nav="next" hidden></a>
+<article class="h-entry">
+<div class="article-header">
+  <h2>
+    <span class="p-name">Desvendando (ou não) o btrfs</span>
   </h2>
-  <div class="tag-cloud">
-    <a href="https://perrotta.dev/categories/coding/" class="tag-pill">%coding<span class="tag-count">327</span></a>
-    <a href="https://perrotta.dev/categories/commentary/" class="tag-pill">%commentary<span class="tag-count">26</span></a>
-    <a href="https://perrotta.dev/categories/recipes/" class="tag-pill">%recipes<span class="tag-count">4</span></a>
-  </div>
-  <hr>
-  <h2 id="tags">
-    Tags
-    <a href='https://perrotta.dev/posts/#tags' aria-label="View all tags">#</a>
-  </h2>
-  <div class="tag-cloud">
-    <a href="https://perrotta.dev/tags/advent-of-code/" class="tag-pill">#advent-of-code<span class="tag-count">35</span></a>
-    <a href="https://perrotta.dev/tags/ai/" class="tag-pill">#ai<span class="tag-count">127</span></a>
-    <a href="https://perrotta.dev/tags/alpine-linux/" class="tag-pill">#alpine-linux<span class="tag-count">30</span></a>
-    <a href="https://perrotta.dev/tags/argocd/" class="tag-pill">#argocd<span class="tag-count">18</span></a>
-    <a href="https://perrotta.dev/tags/aws/" class="tag-pill">#aws<span class="tag-count">12</span></a>
-    <a href="https://perrotta.dev/tags/bestof/" class="tag-pill">#bestof<span class="tag-count">194</span></a>
-    <a href="https://perrotta.dev/tags/bloggify/" class="tag-pill">#bloggify<span class="tag-count">35</span></a>
-    <a href="https://perrotta.dev/tags/bytebytego/" class="tag-pill">#bytebytego<span class="tag-count">42</span></a>
-    <a href="https://perrotta.dev/tags/claude/" class="tag-pill">#claude<span class="tag-count">61</span></a>
-    <a href="https://perrotta.dev/tags/coding/" class="tag-pill">#coding<span class="tag-count">28</span></a>
-    <a href="https://perrotta.dev/tags/degoogling/" class="tag-pill">#degoogling<span class="tag-count">10</span></a>
-    <a href="https://perrotta.dev/tags/dev/" class="tag-pill">#dev<span class="tag-count">1204</span></a>
-    <a href="https://perrotta.dev/tags/docker/" class="tag-pill">#docker<span class="tag-count">13</span></a>
-    <a href="https://perrotta.dev/tags/fosdem/" class="tag-pill">#fosdem<span class="tag-count">6</span></a>
-    <a href="https://perrotta.dev/tags/gaming/" class="tag-pill">#gaming<span class="tag-count">16</span></a>
-    <a href="https://perrotta.dev/tags/ghostty/" class="tag-pill">#ghostty<span class="tag-count">9</span></a>
-    <a href="https://perrotta.dev/tags/git/" class="tag-pill">#git<span class="tag-count">68</span></a>
-    <a href="https://perrotta.dev/tags/kubernetes/" class="tag-pill">#kubernetes<span class="tag-count">45</span></a>
-    <a href="https://perrotta.dev/tags/leetcode/" class="tag-pill">#leetcode<span class="tag-count">207</span></a>
-    <a href="https://perrotta.dev/tags/legacy/" class="tag-pill">#legacy<span class="tag-count">166</span></a>
-    <a href="https://perrotta.dev/tags/macos/" class="tag-pill">#macos<span class="tag-count">57</span></a>
-    <a href="https://perrotta.dev/tags/meta/" class="tag-pill">#meta<span class="tag-count">63</span></a>
-    <a href="https://perrotta.dev/tags/movies/" class="tag-pill">#movies<span class="tag-count">3</span></a>
-    <a href="https://perrotta.dev/tags/pi/" class="tag-pill">#pi<span class="tag-count">18</span></a>
-    <a href="https://perrotta.dev/tags/pkm/" class="tag-pill">#pkm<span class="tag-count">34</span></a>
-    <a href="https://perrotta.dev/tags/posse/" class="tag-pill">#posse<span class="tag-count">2</span></a>
-    <a href="https://perrotta.dev/tags/pre-commit/" class="tag-pill">#pre-commit<span class="tag-count">33</span></a>
-    <a href="https://perrotta.dev/tags/privacy/" class="tag-pill">#privacy<span class="tag-count">59</span></a>
-    <a href="https://perrotta.dev/tags/security/" class="tag-pill">#security<span class="tag-count">68</span></a>
-    <a href="https://perrotta.dev/tags/selfhosted/" class="tag-pill">#selfhosted<span class="tag-count">12</span></a>
-    <a href="https://perrotta.dev/tags/serenity/" class="tag-pill">#serenity<span class="tag-count">272</span></a>
-    <a href="https://perrotta.dev/tags/socialmedia/" class="tag-pill">#socialmedia<span class="tag-count">12</span></a>
-    <a href="https://perrotta.dev/tags/ssh/" class="tag-pill">#ssh<span class="tag-count">7</span></a>
-    <a href="https://perrotta.dev/tags/terraform/" class="tag-pill">#terraform<span class="tag-count">13</span></a>
-    <a href="https://perrotta.dev/tags/vim/" class="tag-pill">#vim<span class="tag-count">13</span></a>
-  </div>
-  </div>
-  </div>
+  <div class="article-header-actions">
+    <button id="fullscreen-btn" class="fullscreen-btn" aria-label="Toggle fullscreen mode" title="Toggle fullscreen mode (f)">
+      <span id="fullscreen-icon">⛶</span>
+    </button>
   </div>
 </div>
+<p>
+  
+  <span class="pubdate-single">
+    <time class="dt-published" datetime='2014-09-20T20:22:43-03:00'>
+      20 Sep, 2014
+    </time>
+     • 1278 words   • 6 min 
+    
+    • updated <time datetime='2026-08-21'>21 Aug, 2026</time>
+    
+  </span>
+  
+</p>
+<details class="toc">
+  <summary>Table of Contents</summary>
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#btrfs-vamos-lá">btrfs, vamos lá</a></li>
+    <li><a href="#referências">Referências</a></li>
+  </ul>
+</nav>
+</details><div class="e-content"> <p><strong>Atenção</strong>: o conteúdo a seguir é apenas uma <strong>introdução</strong>.</p>
+<h2 id="overview">
+  Overview
+  <a class="heading-anchor" href="#overview" aria-label="Link to this section">#</a>
+</h2>
+<p>Uma das coisas que mais demorei para fazer nesse mundo <strong>Unix</strong> foi brincar com
+testar um filesystem diferente do <strong>ext{2,3,4}</strong>. Existem pelo menos duas
+alternativas populares hoje em dia, para isso: no mundo BSD, o <strong>ZFS</strong>; e no
+mundo Linux, o <strong>btrfs</strong>. Ambos são <em>filesystems</em> avançados, o que você pode
+entender como &ldquo;é melhor eu ficar longe disso para não fazer besteira&rdquo; e &ldquo;deve
+ter uma porção de <em>features</em> que eu provavelmente nunca pensei em usar e/ou que
+precisaria algum dia&rdquo;.</p>
+<p>Muito bem, como eu estou usando Linux como meu sistema principal, resolvi partir
+para o <strong>btrfs</strong>. É bem provável que o futuro ocorra da seguinte maneira: Ubuntu
+com btrfs (esse é o presente, na verdade), depois algum BSD com ZFS
+(provavelmente ou o FreeBSD ou o PC-BSD), e depois finalmente o meu querido e
+eterno Arch Linux com…bem, se vai ser com btrfs ou com ext4 eu vou ver, mas é
+bem possível que seja com btrfs.</p>
+<p>Então, vamos lá. Em primeiro lugar, por que outro filesystem diferente do ext4?
+A resposta para essa pergunta não é muito diferente da &ldquo;por que outra distro?&rdquo;.
+Utilizar tecnologias alternativas espontaneamente é, para mim, um <strong>hobby</strong>. <em>A
+priori</em> não existe um motivo especial para fazer isso, mas essa é uma forma de
+aprender mais e, se tiver sorte, descobrir algo legal e/ou útil.</p>
+<h2 id="btrfs-vamos-lá">
+  btrfs, vamos lá
+  <a class="heading-anchor" href="#btrfs-vamos-l%c3%a1" aria-label="Link to this section">#</a>
+</h2>
+<p>Agora vamos às especificidades do btrfs. Em primeiro lugar, alguns ainda o
+consideram experimental. Mas, convenhamos, ele é considerado experimental desde
+vários anos atrás; hoje em dia eu diria que ele está razoavelmente estável, sim.
+No meu sistema,</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">thiago@ideapad ~ % btrfs version
+</span></span><span class="line"><span class="cl">Btrfs v3.12</span></span></code></pre></div>
+</div>
+<p>Inclusive, o instalador do openSUSE 13.1 oferece gentilmente se você quer
+experimentar o <em>btrfs</em>. Além disso, o instalador do Fedora 20 suporta
+perfeitamente um <em>filesystem setup</em> com btrfs. Já o instalador do Ubuntu 14.04
+não possui nada específico em relação ao btrfs, mas você pode optar por usá-lo
+especificando-o manualmente.</p>
+<p>Uma desvantagem do btrfs – essa é possivelmente a maior delas <strong>hoje</strong> – é que
+não existe suporte para <strong>hibernar</strong> o sistema. Na verdade, eu leio por aí de
+que não existe suporte nem para <strong>swap</strong> sequer. Mas, eu estou utilizando swap
+neste momento e não estou tendo problemas. Então, sei lá. O negócio de swap é
+que ele é lento pra caramba, então o ideal é precisar não usá-lo de qualquer
+forma. Com 4G de RAM infelizmente eu acabo utilizando-o uma vez ou outra…mas,
+não abrindo muitos programas ao mesmo tempo dá para segurar a onda legal. Por
+sinal, abrir vários programas ao mesmo tempo não é necessariamente benéfico de
+qualquer forma, já que incentiva o <em>multitasking</em>, o que acaba aumentando
+globalmente o tempo para realizar todas as tarefas que você pretende. Eu sou
+cada vez mais fã e adepto das aplicações que podem restaurar os seus estados.
+Isso é usualmente melhor do que contar com o sistema para restaurar todas as
+suas aplicações. Exemplos de aplicações que fazem isso? Bem, temos os
+navegadores, para começar (Firefox/Chromium). Alguns leitores de PDF também
+abrem na última página que você leu (exemplo do meu favorito: zathura). Também
+tem alguns players de vídeo que abrem o arquivo no último ponto assistido (ainda
+estou para achar um aqui. Sei que existe, só não parei para procurar). Ou
+players de música que salvam a última playlist (exemplo: audacious). Enfim, deu
+para entender a ideia, não é? Até mesmo o Emacs, como editor de texto, salva a
+última linha editada de dado arquivo.</p>
+<p>Se você consegue viver sem hibernar o seu sistema, siga em frente.</p>
+<p>O btrfs possui uma porção de features que eu nem sei direito para que servem, ou
+mesmo como usá-las, mas vou tentar destrinchar algumas delas aqui.</p>
+<p>A que mais me atrai é a feature de <strong>snapshots</strong>. Você pode criar um snapshot,
+digamos, da sua <strong>/home</strong>. Um <strong>snapshot</strong> é como se fosse uma &ldquo;foto&rdquo;, ou uma
+marcação na linha do tempo de como os seus arquivos estavam em dado momento do
+tempo (melhor ainda: não apenas <strong>como</strong>, mas <strong>com que conteúdo</strong> também). Ou
+seja, se você criar um snapshot da sua home agora, daqui a um mês você pode
+visualizar como ela estava hoje. E não é apenas visualizar, você também pode
+copiar ou ler qualquer arquivo daquela época; pode até mesmo escrever neles. E
+mais uma coisa: esse snapshot não é tão custoso como (digamos) a <em>feature</em> de
+snapshot do VirtualBox: lá, se você quiser ver um snapshot, basicamente tem que
+carregá-lo completamente (e no lugar do último); aqui no btrfs, um snapshot é
+algo completamente transparente, que pode ser visualizado e manipulado a
+qualquer hora, <em>on-line</em>, sem ter que carregá-lo completamente. Na prática, ele
+se comporta como um diretório no seu filesystem.</p>
+<p>Então, digamos, acabei de criar um snapshot da minha home assim:</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% btrfs subvolume snapshot /home /home/snapshot-2014-09-20</span></span></code></pre></div>
+</div>
+<p>Após fazer isso, aparece um diretório <code>/home/snapshot-2014-09-20</code> na minha
+<code>/home</code> (surpresa?). O conteúdo desse diretório é exatamente o mesmo que o da
+minha <code>/home</code>. E melhor ainda: o espaço em disco que isso ocupa é praticamente o
+mesmo! Digamos, se a minha <code>/home</code> tiver 30GiB, então após a criação do snapshot
+o espaço que isso tudo ocupa vai continuar a ser 30GiB (com possivelmente alguns
+KiB ou MiB a mais para metadados, tudo bem). Não é uma cópia (digamos, para
+ficar com 60GiB). Isso tem a ver com uma feature do btrfs que se chama
+<strong>copy-on-write</strong>. Se você me perguntar o que isso significa, eu vou dizer que
+não tenho certeza. Mesmo após ler várias fontes sobre isso, ainda é algo que me
+confunde sobre como é o funcionamento disso. Mas, pelo menos, eu posso dizer que
+<strong>it just works</strong> (^TM).</p>
+<p><strong>Snapshots</strong>, pra mim, já é algo suficiente para me fazer querer o btrfs. Mas
+não para por aí. Existe o conceito de snapshots programados onde, digamos, você
+pode configurar o seu sistema para criar um snapshot diariamente, digamos,
+mantendo um limite de 20 deles. E por que isso é útil? Caramba, imagina que você
+delete alguns arquivos sem querer (com <code>rm -rf</code>, ou mesmo na lixeira, se for
+pelo gerenciador de arquivos). Aí basta que você volte em um snapshot anterior e
+os recupere.</p>
+<p>Quer mais? Então imagina que você crie um snapshot da sua partição raiz (<code>/</code>).
+Agora você dá o temido</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% sudo apt-get dist-upgrade</span></span></code></pre></div>
+</div>
+<p>no Ubuntu, ou mesmo</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% sudo emerge -uaDN @world</span></span></code></pre></div>
+</div>
+<p>no Gentoo, ou</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% sudo pacman -Syu</span></span></code></pre></div>
+</div>
+<p>no Arch. E suponha que isso deixe o seu sistema sem <strong>bootar</strong>. E agora,
+ferrou??? Não, não ferrou, você vai lá no snapshot do seu sistema, restaura ele,
+e <em>boom</em>, tudo volta ao normal. Snapshots são muito bons para reparar danos de
+eventuais upgrades desastrosos.</p>
+<p>Tem mais. RAID. Existe suporte nativo de RAID no btrfs. Não vou falar muito
+sobre isso aqui porque não estou usando isso agora, mas vejo certos casos em que
+isso seria (é!) muito útil.</p>
+<p>E tem mais ainda. Que eu não vou falar aqui porque eu mesmo não sei descrever as
+outras features até então =P</p>
+<h2 id="referências">
+  Referências
+  <a class="heading-anchor" href="#refer%c3%aancias" aria-label="Link to this section">#</a>
+</h2>
+<p>Vou deixar algumas boas referências sobre btrfs aqui:</p>
+<ul>
+<li>
+<p><a href="http://www.funtoo.org/BTRFS_Fun">http://www.funtoo.org/BTRFS_Fun</a></p>
+</li>
+<li>
+<p><a href="http://www.reddit.com/r/archlinux/comments/2cv6j7/btrfs_how_big_are_my_snapshots_really_and_how_do/">http://www.reddit.com/r/archlinux/comments/2cv6j7/btrfs_how_big_are_my_snapshots_really_and_how_do/</a></p>
+</li>
+<li>
+<p><a href="http://snapper.io/">http://snapper.io/</a></p>
+</li>
+<li>
+<p><a href="https://wiki.archlinux.org/index.php/Btrfs">https://wiki.archlinux.org/index.php/Btrfs</a></p>
+</li>
+<li>
+<p><a href="https://wiki.archlinux.org/index.php/Snapper">https://wiki.archlinux.org/index.php/Snapper</a></p>
+</li>
+<li>
+<p><a href="https://wiki.archlinux.org/index.php/Btrfs_-_Tips_and_tricks">https://wiki.archlinux.org/index.php/Btrfs_-_Tips_and_tricks</a></p>
+</li>
+<li>
+<p><a href="https://www.youtube.com/v/9H7e6BcI5Fo">https://www.youtube.com/v/9H7e6BcI5Fo</a></p>
+</li>
+</ul>
+<p>Agora, vou continuar brincando com snapshots e possivelmente com outras features
+desse filesystem. Não me arrependo de não ter instalado o Ubuntu com ext4, até
+então. Até uma próxima.</p>
+<p><strong>OBS.:</strong> se eu escrever outro post sobre btrfs, ele provavelmente será em
+inglês. Na verdade, o motivo para esse ter sido em português é porque eu não sei
+tanto sobre btrfs para falar sobre ele de modo mais formal (é difícil escrever
+de modo não-informal fora da sua língua-mãe, não acham?). <span class="post-end-mark">∎</span></p>
+ </div><div class="post-footer-meta">
+<p style="text-align: center; margin: 2em 0 1em;">— § —</p>
+<div style="display: flex; justify-content: space-between">
+  
+  <p style="margin: 0;">
+    Reply via
+    <a
+      href="mailto:&#x73;&#x65;&#x72;&#x65;&#x6e;&#x64;&#x69;&#x70;&#x69;&#x74;&#x79;&#x40;&#x70;&#x65;&#x72;&#x72;&#x6f;&#x74;&#x74;&#x61;&#x2e;&#x64;&#x65;&#x76;?subject=Reply to: Desvendando (ou não) o btrfs"
+      >email</a
+    >
+  </p>
+  
+  
+  <p style="margin: 0;"><a href="https://perrotta.dev/tags/dev/">#dev</a> <a href="https://perrotta.dev/tags/legacy/">#legacy</a>
+  </p>
+  
+</div>
+</div><a class="u-url" href="https://perrotta.dev/pt/posts/2014-09-20-desvendando-ou-nao-o-btrfs/" aria-hidden="true" style="display:none;"></a>
+<span class="p-author h-card" style="display:none;">
+  <a class="p-name u-url" href="https://perrotta.dev/" rel="author">Thiago Perrotta</a>
+</span>
+</article>
   </main>
   <hr>
   <footer>

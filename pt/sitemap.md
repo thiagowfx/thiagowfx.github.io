@@ -18,6 +18,7 @@
 - [Matroshka](https://perrotta.dev/pt/2016/10/matroshka/) (2016-10-16)
 - [Mulheres na computação, cadê vocês?](https://perrotta.dev/pt/2015/03/mulheres-na-computa%C3%A7%C3%A3o-cad%C3%AA-voc%C3%AAs/) (2015-03-08)
 - [Encontro 'Hackergroup UFRJ' - Diário #1](https://perrotta.dev/pt/2014/11/encontro-hackergroup-ufrj-di%C3%A1rio-%231/) (2014-11-01)
+- [Desvendando (ou não) o btrfs](https://perrotta.dev/pt/2014/09/desvendando-ou-n%C3%A3o-o-btrfs/) (2014-09-20)
 - [Meus dois minutos de fama](https://perrotta.dev/pt/2014/07/meus-dois-minutos-de-fama/) (2014-07-25)
 - [Emacs e golang, uma dupla perfeita](https://perrotta.dev/pt/2014/07/emacs-e-golang-uma-dupla-perfeita/) (2014-07-22)
 - [Melhorando a renderização de fontes no Windows](https://perrotta.dev/pt/2014/07/melhorando-a-renderiza%C3%A7%C3%A3o-de-fontes-no-windows/) (2014-07-12)
@@ -104,11 +105,11 @@
 
 
 - [Bestof](https://perrotta.dev/pt/tags/bestof/) (6 posts)
-- [Dev](https://perrotta.dev/pt/tags/dev/) (70 posts)
+- [Dev](https://perrotta.dev/pt/tags/dev/) (71 posts)
 - [Gaming](https://perrotta.dev/pt/tags/gaming/) (3 posts)
 - [Git](https://perrotta.dev/pt/tags/git/) (1 posts)
 - [Leetcode](https://perrotta.dev/pt/tags/leetcode/) (1 posts)
-- [Legacy](https://perrotta.dev/pt/tags/legacy/) (81 posts)
+- [Legacy](https://perrotta.dev/pt/tags/legacy/) (82 posts)
 - [Meta](https://perrotta.dev/pt/tags/meta/) (2 posts)
 - [Privacy](https://perrotta.dev/pt/tags/privacy/) (6 posts)
 - [Security](https://perrotta.dev/pt/tags/security/) (3 posts)
