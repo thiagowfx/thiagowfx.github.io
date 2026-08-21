@@ -39,6 +39,12 @@ Subject: Google notice of content restriction
 >
 > https://reportcontent.google.com/forms/dsa_appeal
 
+In case you're curious, it was a blank review. I did not write any text at
+all.
+
+In other words, a 1-star review without any commentary is apparently deemed
+defamatory. What a great system.
+
 This has happened more than once.
 
 I can no longer recommend Google Maps as a reliable source for unbiased reviews.
