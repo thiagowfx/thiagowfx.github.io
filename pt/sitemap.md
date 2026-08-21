@@ -92,6 +92,7 @@
 - [(YouTube) Flash Player Issues @ Firefox @ Linux](https://perrotta.dev/pt/2013/09/youtube-flash-player-issues-@-firefox-@-linux/) (2013-09-19)
 - [Ontem: Maratona de Programação](https://perrotta.dev/pt/2013/09/ontem-maratona-de-programa%C3%A7%C3%A3o/) (2013-09-15)
 - [Era uma vez...kernel panic, uma história de amor (Parte 1)](https://perrotta.dev/pt/2013/09/era-uma-vez...kernel-panic-uma-hist%C3%B3ria-de-amor-parte-1/) (2013-09-07)
+- [Dual Booting Linux and Windows – Final thoughts](https://perrotta.dev/pt/2013/09/dual-booting-linux-and-windows-final-thoughts/) (2013-09-05)
 - [Como rodar JNLP no Linux](https://perrotta.dev/pt/2013/09/como-rodar-jnlp-no-linux/) (2013-09-02)
 - [Como receber spam do POP3 do gmail](https://perrotta.dev/pt/2013/08/como-receber-spam-do-pop3-do-gmail/) (2013-08-25)
 - [São tantas licenças...](https://perrotta.dev/pt/2013/08/s%C3%A3o-tantas-licen%C3%A7as.../) (2013-08-22)
@@ -105,11 +106,11 @@
 
 
 - [Bestof](https://perrotta.dev/pt/tags/bestof/) (6 posts)
-- [Dev](https://perrotta.dev/pt/tags/dev/) (71 posts)
+- [Dev](https://perrotta.dev/pt/tags/dev/) (72 posts)
 - [Gaming](https://perrotta.dev/pt/tags/gaming/) (3 posts)
 - [Git](https://perrotta.dev/pt/tags/git/) (1 posts)
 - [Leetcode](https://perrotta.dev/pt/tags/leetcode/) (1 posts)
-- [Legacy](https://perrotta.dev/pt/tags/legacy/) (82 posts)
+- [Legacy](https://perrotta.dev/pt/tags/legacy/) (83 posts)
 - [Meta](https://perrotta.dev/pt/tags/meta/) (2 posts)
 - [Privacy](https://perrotta.dev/pt/tags/privacy/) (6 posts)
 - [Security](https://perrotta.dev/pt/tags/security/) (3 posts)
