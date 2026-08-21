@@ -52,7 +52,7 @@ I can no longer recommend Google Maps as a reliable source for unbiased reviews.
 It is certainly a reliable proxy for _popularity_, but that's all.
 
 Some businesses take advantage of the situation to attempt to take down bad
-reviews, and they're often successful while at it.. Therefore you cannot trust
+reviews, and they're often successful while at it. Therefore you cannot trust
 the leftover glamourous reviews.
 
 I stopped using Yelp many years ago for the same reason.
