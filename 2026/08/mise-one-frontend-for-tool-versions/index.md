@@ -12,7 +12,7 @@ Thanks to the ThoughtWorks Technology Radar I finally decided to adopt
 programming language runtime:
 
 - `rbenv` (ruby)
-- `tfenv` (terrafor)
+- `tfenv` (terraform)
 - `nvm` (nodejs)
 - `pyenv` (python)
 
