@@ -7,53 +7,59 @@
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)">
-  <title class="title">Golang fuzzing | ¬ just serendipity 🍀</title><meta name="title" content="Golang fuzzing">
-<meta name="description" content="Given go.mod:
-go.mod module testfuzzing go 1.24.3 Given fuzz_test.go:
-fuzz_test.go go package testfuzzing import ( &#34;encoding/json&#34; &#34;testing&#34; ) …">
-<meta name="keywords" content="dev,"><meta property="og:url" content="https://perrotta.dev/2025/05/golang-fuzzing/">
+  <title class="title">kargo: notify when a soak completes | ¬ just serendipity 🍀</title><meta name="title" content="kargo: notify when a soak completes">
+<meta name="description" content="Previously.
+Problem statement: notify a Slack channel whenever Freight finishes soaking in an upstream Kargo Stage, without promoting it to the next …">
+<meta name="keywords" content="argocd,bloggify,dev,kubernetes,"><meta property="og:url" content="https://perrotta.dev/2026/08/kargo-notify-when-a-soak-completes/">
   <meta property="og:site_name" content="¬ just serendipity 🍀">
-  <meta property="og:title" content="Golang fuzzing">
-  <meta property="og:description" content="Given go.mod:
-go.mod module testfuzzing go 1.24.3 Given fuzz_test.go:
-fuzz_test.go go package testfuzzing import ( &#34;encoding/json&#34; &#34;testing&#34; ) func FuzzJsonIsValid(f *testing.F) { f.Fuzz(func(t *testing.T, data []byte) { json.Valid(data) }) } Run:">
+  <meta property="og:title" content="kargo: notify when a soak completes">
+  <meta property="og:description" content="Previously.
+Problem statement: notify a Slack channel whenever Freight finishes soaking in an upstream Kargo Stage, without promoting it to the next environment.
+A soak does not finish a process. Once requiredSoakTime elapses, Kargo simply makes the Freight available downstream. There is no soak-complete event in the Kargo event list.
+Worakround: I made availability start a notification-only promotion. Relevant excerpt, with variable values omitted:
+apps/base/kargo-pipelines/manifests/argocd/stage-notify-remaining-gardens-ready.yaml yaml metadata: name: notify-remaining-gardens-ready spec: requestedFreight: - origin: kind: Warehouse name: argocd sources: stages: - staging-gardens requiredSoakTime: 48h0m0s promotionTemplate: spec: steps: - uses: http config: method: POST url: https://slack.com/api/chat.postMessage responseContentType: application/json successExpression: response.status == 200 &amp;&amp; response.body.ok == true failureExpression: response.status != 200 || response.body.ok != true body: |- ${{ quote({ &#34;channel&#34;: vars.slackChannel, &#34;username&#34;: &#34;Kargo&#34;, &#34;icon_emoji&#34;: &#34;:kargo:&#34;, &#34;unfurl_links&#34;: false, &#34;text&#34;: &#34;:white_check_mark: *argocd*: chart &#34; &#43; chartFrom(vars.chartRepo, &#34;argocd&#34;).Version &#43; &#34; completed 48h of soak in staging-gardens and is ready for promotion to remaining-gardens.&#34; &#43; &#34;\nFreight: `&#34; &#43; ctx.targetFreight.name &#43; &#34;`&#34; }) }} …wherein remaining-gardens = prod.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-05-28T17:37:06+02:00">
-    <meta property="article:modified_time" content="2026-03-26T18:46:44+01:00">
+    <meta property="article:published_time" content="2026-08-21T18:38:23+02:00">
+    <meta property="article:modified_time" content="2026-08-21T18:53:15+02:00">
+    <meta property="article:tag" content="Argocd">
+    <meta property="article:tag" content="Bloggify">
     <meta property="article:tag" content="Dev">
+    <meta property="article:tag" content="Kubernetes">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Golang fuzzing">
-  <meta name="twitter:description" content="Given go.mod:
-go.mod module testfuzzing go 1.24.3 Given fuzz_test.go:
-fuzz_test.go go package testfuzzing import ( &#34;encoding/json&#34; &#34;testing&#34; ) func FuzzJsonIsValid(f *testing.F) { f.Fuzz(func(t *testing.T, data []byte) { json.Valid(data) }) } Run:">
+  <meta name="twitter:title" content="kargo: notify when a soak completes">
+  <meta name="twitter:description" content="Previously.
+Problem statement: notify a Slack channel whenever Freight finishes soaking in an upstream Kargo Stage, without promoting it to the next environment.
+A soak does not finish a process. Once requiredSoakTime elapses, Kargo simply makes the Freight available downstream. There is no soak-complete event in the Kargo event list.
+Worakround: I made availability start a notification-only promotion. Relevant excerpt, with variable values omitted:
+apps/base/kargo-pipelines/manifests/argocd/stage-notify-remaining-gardens-ready.yaml yaml metadata: name: notify-remaining-gardens-ready spec: requestedFreight: - origin: kind: Warehouse name: argocd sources: stages: - staging-gardens requiredSoakTime: 48h0m0s promotionTemplate: spec: steps: - uses: http config: method: POST url: https://slack.com/api/chat.postMessage responseContentType: application/json successExpression: response.status == 200 &amp;&amp; response.body.ok == true failureExpression: response.status != 200 || response.body.ok != true body: |- ${{ quote({ &#34;channel&#34;: vars.slackChannel, &#34;username&#34;: &#34;Kargo&#34;, &#34;icon_emoji&#34;: &#34;:kargo:&#34;, &#34;unfurl_links&#34;: false, &#34;text&#34;: &#34;:white_check_mark: *argocd*: chart &#34; &#43; chartFrom(vars.chartRepo, &#34;argocd&#34;).Version &#43; &#34; completed 48h of soak in staging-gardens and is ready for promotion to remaining-gardens.&#34; &#43; &#34;\nFreight: `&#34; &#43; ctx.targetFreight.name &#43; &#34;`&#34; }) }} …wherein remaining-gardens = prod.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "BlogPosting",
-      "headline": "Golang fuzzing",
-      "description": "Given go.mod:\ngo.mod module testfuzzing go 1.24.3 Given fuzz_test.go:\nfuzz_test.go go package testfuzzing import ( \u0026#34;encoding/json\u0026#34; \u0026#34;testing\u0026#34; ) …",
-      "url": "https://perrotta.dev/2025/05/golang-fuzzing/",
-      "datePublished": "2025-05-28T17:37:06+02:00",
-      "dateModified": "2026-03-26T18:46:44+01:00",
+      "headline": "kargo: notify when a soak completes",
+      "description": "Previously.\nProblem statement: notify a Slack channel whenever Freight finishes soaking in an upstream Kargo Stage, without promoting it to the next …",
+      "url": "https://perrotta.dev/2026/08/kargo-notify-when-a-soak-completes/",
+      "datePublished": "2026-08-21T18:38:23+02:00",
+      "dateModified": "2026-08-21T18:53:15+02:00",
       "author": {"@type":"Person","name":"Thiago Perrotta","url":"https://perrotta.dev/"},
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://perrotta.dev/2025/05/golang-fuzzing/"
-      },"keywords": ["dev"]
+        "@id": "https://perrotta.dev/2026/08/kargo-notify-when-a-soak-completes/"
+      },"keywords": ["argocd","bloggify","dev","kubernetes"]
     },
     {
       "@type": "BreadcrumbList",
-      "itemListElement": [{"@type":"ListItem","item":"https://perrotta.dev","name":"Home","position":1},{"@type":"ListItem","item":"https://perrotta.dev/posts/","name":"Posts","position":2},{"@type":"ListItem","name":"Golang fuzzing","position":3}]
+      "itemListElement": [{"@type":"ListItem","item":"https://perrotta.dev","name":"Home","position":1},{"@type":"ListItem","item":"https://perrotta.dev/posts/","name":"Posts","position":2},{"@type":"ListItem","name":"kargo: notify when a soak completes","position":3}]
     }
   ]
 }
 </script><meta name="referrer" content="no-referrer-when-downgrade">
-  <link rel="icon" href="https://perrotta.dev/favicon.ico"><link rel="canonical" href="https://perrotta.dev/2025/05/golang-fuzzing/"><link rel="alternate" type="text/markdown" href="https://perrotta.dev/2025/05/golang-fuzzing/index.md" title="Golang fuzzing"><link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0">
+  <link rel="icon" href="https://perrotta.dev/favicon.ico"><link rel="canonical" href="https://perrotta.dev/2026/08/kargo-notify-when-a-soak-completes/"><link rel="alternate" type="text/markdown" href="https://perrotta.dev/2026/08/kargo-notify-when-a-soak-completes/index.md" title="kargo: notify when a soak completes"><link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0">
   <link rel="author" href="https://perrotta.dev/" title="Thiago Perrotta">
 <style>
   .e-content>p:first-child::before{content:"♠";color:var(--color-gray);margin-right:.5em}.post-end-mark{color:var(--color-gray)}.heading-anchor{margin-left:.3em;color:var(--color-gray);text-decoration:none;opacity:0;transition:opacity .2s ease}h2:hover .heading-anchor,h3:hover .heading-anchor,h4:hover .heading-anchor,h5:hover .heading-anchor,h6:hover .heading-anchor,.heading-anchor:focus{opacity:1}:root{--color-light-gray:#5c5f77;--color-light-grayer:#6c6f85;--color-dark-gray:#9399b2;--color-dark-grayer:#7f849c;--font-title:"Inter", "Fira Sans", "Lato", system-ui, -apple-system,
@@ -1607,15 +1613,15 @@ fuzz_test.go go package testfuzzing import ( &#34;encoding/json&#34; &#34;testin
     }
   });
 </script>
-<a href="https://perrotta.dev/2025/05/which-book-should-i-read-next/" data-nav="prev" hidden></a>
-<a href="https://perrotta.dev/2025/05/limited-creativity/" data-nav="next" hidden></a>
+<a href="https://perrotta.dev/2026/08/google-notice-of-content-restriction/" data-nav="prev" hidden></a>
+
 <article class="h-entry">
 <div class="article-header">
   <h2>
-    <span class="p-name">Golang fuzzing</span>
+    <span class="p-name">kargo: notify when a soak completes</span>
   </h2>
   <div class="article-header-actions">
-      <button class="copy-markdown-btn" type="button" data-copy-markdown="/2025/05/golang-fuzzing/index.md" data-copy-source="https://perrotta.dev/2025/05/golang-fuzzing/" aria-label="Copy as Markdown" title="Copy as Markdown (Ctrl/Cmd/Alt-click to view source)">
+      <button class="copy-markdown-btn" type="button" data-copy-markdown="/2026/08/kargo-notify-when-a-soak-completes/index.md" data-copy-source="https://perrotta.dev/2026/08/kargo-notify-when-a-soak-completes/" aria-label="Copy as Markdown" title="Copy as Markdown (Ctrl/Cmd/Alt-click to view source)">
         <svg aria-hidden="true" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
       </button>
     <button id="fullscreen-btn" class="fullscreen-btn" aria-label="Toggle fullscreen mode" title="Toggle fullscreen mode (f)">
@@ -1626,73 +1632,89 @@ fuzz_test.go go package testfuzzing import ( &#34;encoding/json&#34; &#34;testin
 <p>
   
   <span class="pubdate-single">
-    <time class="dt-published" datetime='2025-05-28T17:37:06&#43;02:00'>
-      28 May, 2025
+    <time class="dt-published" datetime='2026-08-21T18:38:23&#43;02:00'>
+      21 Aug, 2026
     </time>
-     • 210 words   • 1 min 
-    
-    • updated <time datetime='2026-03-26'>26 Mar, 2026</time>
+     • 253 words   • 2 min 
     
   </span>
   
-</p>
-    <div class="old-entry-warning" role="note">
-      ⚠️ This post is over one year old. It may no longer be up to date or relevant. Opinions may have changed.
-    </div><div class="e-content"> <p>Given <code>go.mod</code>:</p>
-<div class="codeblock">
+</p><div class="e-content"> <p><a href="https://perrotta.dev/2026/08/kargo-cool-down-upstream-releases-with-a-holding-stage/">Previously</a>.</p>
+<p><strong>Problem statement</strong>: notify a Slack channel whenever Freight finishes soaking in
+an upstream Kargo Stage, without promoting it to the next environment.</p>
+<p>A soak does not finish a process. Once <code>requiredSoakTime</code> elapses, Kargo simply
+makes the Freight available downstream. There is no soak-complete event in the
+<a href="https://docs.kargo.io/user-guide/reference-docs/events/event-reference">Kargo event list</a>.</p>
+<p><strong>Worakround</strong>: I made availability start a notification-only promotion. Relevant excerpt,
+with variable values omitted:</p>
+<div class="codeblock" data-lang="yaml">
    <div class="codeblock-header">
-     <span class="codeblock-language">go.mod</span>
-     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+     <span class="codeblock-language">apps/base/kargo-pipelines/manifests/argocd/stage-notify-remaining-gardens-ready.yaml</span>
+     <span class="codeblock-actions"><span class="codeblock-lang-badge">yaml</span> <button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
    </div>
-   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">module testfuzzing
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">go 1.24.3</span></span></code></pre></div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">notify-remaining-gardens-ready</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">requestedFreight</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">origin</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Warehouse</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">argocd</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">sources</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">stages</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span>- <span class="l">staging-gardens</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">requiredSoakTime</span><span class="p">:</span><span class="w"> </span><span class="l">48h0m0s</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">promotionTemplate</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">http</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">config</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l">POST</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l">https://slack.com/api/chat.postMessage</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">responseContentType</span><span class="p">:</span><span class="w"> </span><span class="l">application/json</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">successExpression</span><span class="p">:</span><span class="w"> </span><span class="l">response.status == 200 &amp;&amp; response.body.ok == true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">failureExpression</span><span class="p">:</span><span class="w"> </span><span class="l">response.status != 200 || response.body.ok != true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">body</span><span class="p">:</span><span class="w"> </span><span class="p">|-</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">              ${{ quote({
+</span></span></span><span class="line"><span class="cl"><span class="sd">                &#34;channel&#34;: vars.slackChannel,
+</span></span></span><span class="line"><span class="cl"><span class="sd">                &#34;username&#34;: &#34;Kargo&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="sd">                &#34;icon_emoji&#34;: &#34;:kargo:&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="sd">                &#34;unfurl_links&#34;: false,
+</span></span></span><span class="line"><span class="cl"><span class="sd">                &#34;text&#34;: &#34;:white_check_mark: *argocd*: chart &#34; + chartFrom(vars.chartRepo, &#34;argocd&#34;).Version
+</span></span></span><span class="line"><span class="cl"><span class="sd">                  + &#34; completed 48h of soak in staging-gardens and is ready for promotion to remaining-gardens.&#34;
+</span></span></span><span class="line"><span class="cl"><span class="sd">                  + &#34;\nFreight: `&#34; + ctx.targetFreight.name + &#34;`&#34;
+</span></span></span><span class="line"><span class="cl"><span class="sd">              })
+</span></span></span><span class="line"><span class="cl"><span class="sd">              }}</span></span></span></code></pre></div>
 </div>
-<p>Given <code>fuzz_test.go</code>:</p>
-<div class="codeblock" data-lang="go">
+<p>&hellip;wherein remaining-gardens = prod.</p>
+<p>Only the notification Stage auto-promotes:</p>
+<div class="codeblock" data-lang="yaml">
    <div class="codeblock-header">
-     <span class="codeblock-language">fuzz_test.go</span>
-     <span class="codeblock-actions"><span class="codeblock-lang-badge">go</span> <button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+     <span class="codeblock-language">apps/base/kargo-pipelines/manifests/argocd/project-config.yaml</span>
+     <span class="codeblock-actions"><span class="codeblock-lang-badge">yaml</span> <button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
    </div>
-   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nx">testfuzzing</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="p">(</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s">&#34;encoding/json&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s">&#34;testing&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">FuzzJsonIsValid</span><span class="p">(</span><span class="nx">f</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">F</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nx">f</span><span class="p">.</span><span class="nf">Fuzz</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nx">json</span><span class="p">.</span><span class="nf">Valid</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">})</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">promotionPolicies</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">stageSelector</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">notify-remaining-gardens-ready</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">autoPromotionEnabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span></span></span></code></pre></div>
 </div>
-<p>Run:</p>
+<p>Once the HTTP step succeeds, the Freight occupies this Stage and does not send
+again. The real downstream Stage remains human-gated. A Slack API error fails
+only the notification Promotion, which can be retried.</p>
 <div class="codeblock" data-lang="shell">
    <div class="codeblock-header">
      <span class="codeblock-language">shell</span>
      <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
    </div>
-   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% go <span class="nb">test</span> -fuzz<span class="o">=</span>FuzzJsonIsValid
-</span></span><span class="line"><span class="cl">fuzz: elapsed: 0s, gathering baseline coverage: 0/325 completed
-</span></span><span class="line"><span class="cl">fuzz: elapsed: 0s, gathering baseline coverage: 325/325 completed, now fuzzing with <span class="m">12</span> workers
-</span></span><span class="line"><span class="cl">fuzz: elapsed: 3s, execs: <span class="m">1193906</span> <span class="o">(</span>397950/sec<span class="o">)</span>, new interesting: <span class="m">2</span> <span class="o">(</span>total: 327<span class="o">)</span>
-</span></span><span class="line"><span class="cl">fuzz: elapsed: 6s, execs: <span class="m">2450910</span> <span class="o">(</span>419012/sec<span class="o">)</span>, new interesting: <span class="m">2</span> <span class="o">(</span>total: 327<span class="o">)</span>
-</span></span><span class="line"><span class="cl">fuzz: elapsed: 9s, execs: <span class="m">3720167</span> <span class="o">(</span>423002/sec<span class="o">)</span>, new interesting: <span class="m">2</span> <span class="o">(</span>total: 327<span class="o">)</span>
-</span></span><span class="line"><span class="cl">fuzz: elapsed: 12s, execs: <span class="m">4994906</span> <span class="o">(</span>424923/sec<span class="o">)</span>, new interesting: <span class="m">2</span> <span class="o">(</span>total: 327<span class="o">)</span>
-</span></span><span class="line"><span class="cl">fuzz: elapsed: 15s, execs: <span class="m">6159087</span> <span class="o">(</span>388000/sec<span class="o">)</span>, new interesting: <span class="m">2</span> <span class="o">(</span>total: 327<span class="o">)</span>
-</span></span><span class="line"><span class="cl">fuzz: elapsed: 18s, execs: <span class="m">7364384</span> <span class="o">(</span>401883/sec<span class="o">)</span>, new interesting: <span class="m">2</span> <span class="o">(</span>total: 327<span class="o">)</span>
-</span></span><span class="line"><span class="cl">fuzz: elapsed: 21s, execs: <span class="m">8588030</span> <span class="o">(</span>407881/sec<span class="o">)</span>, new interesting: <span class="m">2</span> <span class="o">(</span>total: 327<span class="o">)</span>
-</span></span><span class="line"><span class="cl">fuzz: elapsed: 24s, execs: <span class="m">9826978</span> <span class="o">(</span>412996/sec<span class="o">)</span>, new interesting: <span class="m">2</span> <span class="o">(</span>total: 327<span class="o">)</span>
-</span></span><span class="line"><span class="cl">fuzz: elapsed: 27s, execs: <span class="m">11093873</span> <span class="o">(</span>422306/sec<span class="o">)</span>, new interesting: <span class="m">3</span> <span class="o">(</span>total: 328<span class="o">)</span>
-</span></span><span class="line"><span class="cl">fuzz: elapsed: 30s, execs: <span class="m">12359227</span> <span class="o">(</span>421773/sec<span class="o">)</span>, new interesting: <span class="m">3</span> <span class="o">(</span>total: 328<span class="o">)</span>
-</span></span><span class="line"><span class="cl">^Cfuzz: elapsed: 31s, execs: <span class="m">12650530</span> <span class="o">(</span>403107/sec<span class="o">)</span>, new interesting: <span class="m">3</span> <span class="o">(</span>total: 328<span class="o">)</span>
-</span></span><span class="line"><span class="cl">PASS
-</span></span><span class="line"><span class="cl">ok      testfuzzing     31.154s
-</span></span><span class="line"><span class="cl">go <span class="nb">test</span> -fuzz<span class="o">=</span>FuzzJsonIsValid  286.93s user 61.51s system 1105% cpu 31.505 total</span></span></code></pre></div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% prek run kargo-promotion-tasks --all-files
+</span></span><span class="line"><span class="cl">Check Kargo PromotionTask references.....................................Passed</span></span></code></pre></div>
 </div>
-<p>It&rsquo;s very cool (and convenient!) that golang supports fuzzing natively, and
-integrated with its test framework. <a href="https://go.dev/doc/security/fuzz/">Docs</a>. <span class="post-end-mark">∎</span></p>
+<p>This uses Kargo&rsquo;s generic <a href="https://docs.kargo.io/user-guide/reference-docs/promotion-steps/http"><code>http</code>
+step</a> as
+the notification transport and Kargo itself as the timer.</p>
+<p>There&rsquo;s no need to enroll into Akuity Platform ($$) just for the sake of
+<a href="https://docs.kargo.io/user-guide/reference-docs/promotion-steps/send-message"><code>send-message</code></a>.</p>
+<hr>
+<p>🤖 <em>Drafted with <a href="https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md"><code>/bloggify</code></a>.</em> <span class="post-end-mark">∎</span></p>
  </div><div class="post-footer-meta">
 <p style="text-align: center; margin: 2em 0 1em;">— § —</p>
 <div style="display: flex; justify-content: space-between">
@@ -1700,28 +1722,56 @@ integrated with its test framework. <a href="https://go.dev/doc/security/fuzz/">
   <p style="margin: 0;">
     Reply via
     <a
-      href="mailto:&#x73;&#x65;&#x72;&#x65;&#x6e;&#x64;&#x69;&#x70;&#x69;&#x74;&#x79;&#x40;&#x70;&#x65;&#x72;&#x72;&#x6f;&#x74;&#x74;&#x61;&#x2e;&#x64;&#x65;&#x76;?subject=Reply to: Golang fuzzing"
+      href="mailto:&#x73;&#x65;&#x72;&#x65;&#x6e;&#x64;&#x69;&#x70;&#x69;&#x74;&#x79;&#x40;&#x70;&#x65;&#x72;&#x72;&#x6f;&#x74;&#x74;&#x61;&#x2e;&#x64;&#x65;&#x76;?subject=Reply to: kargo: notify when a soak completes"
       >email</a
     >
   </p>
   
   
-  <p style="margin: 0;"><a href="https://perrotta.dev/tags/dev/">#dev</a>
+  <p style="margin: 0;"><a href="https://perrotta.dev/tags/argocd/">#argocd</a> <a href="https://perrotta.dev/tags/bloggify/">#bloggify</a> <a href="https://perrotta.dev/tags/dev/">#dev</a> <a href="https://perrotta.dev/tags/kubernetes/">#kubernetes</a>
   </p>
   
 </div>
 </div><div class="related-posts" style="border: 2px solid var(--border-color); border-radius: .5rem; padding: 1.5rem; margin-top: 1.5rem;"><h4 id="related-posts" style="margin-top: 0;">Related Posts</h4>
   <section style="display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0;"><article style="flex: 1 1 250px; padding: 1rem; background: var(--code-bg); border-radius: .25rem; color: var(--text-color);">
       <h5 style="margin-top: 0; margin-bottom: .5rem; color: var(--heading-color);">
-        <a href="https://perrotta.dev/2024/11/pre-commit-additional-dependencies-in-golang/">pre-commit: additional dependencies in golang</a>
-      </h5><p style="margin: .5rem 0; font-size: .9rem;">When working with pre-commit.com and specifying language: golang for a given hook, you may want to install dependencies as part of the hook …</p><small style="color: var(--color-gray);">Nov 21, 2024</small>
+        <a href="https://perrotta.dev/2026/08/kargo-cool-down-upstream-releases-with-a-holding-stage/">kargo: cool down upstream releases with a holding stage</a>
+      </h5><p style="margin: .5rem 0; font-size: .9rem;">Problem statement: wait before opening an upstream Helm chart upgrade PR, without putting a timer in the PR workflow.
+In other words: implement …</p><small style="color: var(--color-gray);">Aug 19, 2026</small>
     </article><article style="flex: 1 1 250px; padding: 1rem; background: var(--code-bg); border-radius: .25rem; color: var(--text-color);">
       <h5 style="margin-top: 0; margin-bottom: .5rem; color: var(--heading-color);">
-        <a href="https://perrotta.dev/2026/08/kargo-notify-when-a-soak-completes/">kargo: notify when a soak completes</a>
+        <a href="https://perrotta.dev/2026/08/kubernetes-force-refresh-a-cached-multi-architecture-image/">kubernetes: force-refresh a cached multi-architecture image</a>
       </h5><p style="margin: .5rem 0; font-size: .9rem;">Previously.
-Problem statement: notify a Slack channel whenever Freight finishes soaking in an upstream Kargo Stage, without promoting it to the next …</p><small style="color: var(--color-gray);">Aug 21, 2026</small>
-    </article></section><p class="previously" style="margin-bottom: 0; margin-top: 0.5rem;"><a href="https://perrotta.dev/2025/05/pre-commit-add-hugo-build/" title="pre-commit: add hugo build">Previously</a>, <a href="https://perrotta.dev/2025/05/postgresql-major-version-upgrade-on-alpine-linux/" title="PostgreSQL major version upgrade on Alpine Linux">previously</a>, <a href="https://perrotta.dev/2025/05/tailspin/" title="Tailspin">previously</a>, <a href="https://perrotta.dev/2025/05/watch-with--color/" title="watch with --color">previously</a>, <a href="https://perrotta.dev/2025/05/npx-serve/" title="npx serve">previously</a>.
-  </p></div><a class="u-url" href="https://perrotta.dev/2025/05/golang-fuzzing/" aria-hidden="true" style="display:none;"></a>
+Problem statement: a Kubernetes ARM64 node kept running an AMD64 image after I replaced the registry tag with a multi-architecture image …</p><small style="color: var(--color-gray);">Aug 19, 2026</small>
+    </article></section><p class="previously" style="margin-bottom: 0; margin-top: 0.5rem;"><a href="https://perrotta.dev/2026/07/when-gen-ai-cites-docs-that-dont-exist/" title="when Gen AI cites docs that don&#39;t exist">Previously</a>, <a href="https://perrotta.dev/2026/05/argocd-persistent-pdb-selector-diff/" title="ArgoCD: persistent PDB selector diff">previously</a>, <a href="https://perrotta.dev/2026/05/argocd-stale-vault-secret-after-population/" title="ArgoCD: stale Vault secret after population">previously</a>.
+  </p></div><div class="mini-graph">
+  <h4 id="connections"><a href="/graph/">Connections</a></h4>
+  <svg
+    viewBox="0 0 640 100"
+    role="img"
+    aria-label="Posts linking to and from this one"
+    preserveAspectRatio="xMidYMid meet"
+    paint-order="stroke">
+    <defs>
+      <marker
+        id="mini-graph-arrow"
+        viewBox="0 0 10 10"
+        refX="5"
+        refY="5"
+        markerWidth="5"
+        markerHeight="5"
+        orient="auto">
+        <path d="M0,0 L10,5 L0,10 Z" />
+      </marker>
+    </defs><path class="mini-graph-edge" marker-mid="url(#mini-graph-arrow)" d="M252,50 L315.5,50 L379,50" /><text class="mini-graph-header" x="398" y="14">Links to</text><a href="https://perrotta.dev/2026/08/kargo-cool-down-upstream-releases-with-a-holding-stage/">
+        <title>kargo: cool down upstream releases with a holding stage</title>
+        <circle cx="388" cy="50" r="4.5" />
+        <text x="398" y="50" dy="0.35em">kargo: cool down upstream…</text>
+      </a><circle class="mini-graph-current" cx="240" cy="50" r="7" />
+    <text class="mini-graph-current-label" x="240" y="70" text-anchor="middle">kargo: notify when a soak completes</text>
+  </svg><div class="mini-graph-list"><p class="mini-graph-list-header">Links to</p>
+      <ul><li><a href="https://perrotta.dev/2026/08/kargo-cool-down-upstream-releases-with-a-holding-stage/">kargo: cool down upstream releases with a holding stage</a></li></ul></div>
+</div><a class="u-url" href="https://perrotta.dev/2026/08/kargo-notify-when-a-soak-completes/" aria-hidden="true" style="display:none;"></a>
 <span class="p-author h-card" style="display:none;">
   <a class="p-name u-url" href="https://perrotta.dev/" rel="author">Thiago Perrotta</a>
 </span>
