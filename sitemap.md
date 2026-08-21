@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [Google notice of content restriction](https://perrotta.dev/2026/08/google-notice-of-content-restriction/) (2026-08-21)
 - [Terminals](https://perrotta.dev/2026/08/terminals/) (2026-08-20)
 - [ThoughtWorks Technology Radar](https://perrotta.dev/2026/08/thoughtworks-technology-radar/) (2026-08-20)
 - [human voice](https://perrotta.dev/2026/08/human-voice/) (2026-08-19)
@@ -1355,10 +1356,10 @@
 - [Pkm](https://perrotta.dev/tags/pkm/) (34 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (33 posts)
-- [Privacy](https://perrotta.dev/tags/privacy/) (59 posts)
+- [Privacy](https://perrotta.dev/tags/privacy/) (60 posts)
 - [Security](https://perrotta.dev/tags/security/) (68 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (272 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (273 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (12 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (13 posts)
