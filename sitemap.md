@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [mise: one frontend for tool versions](https://perrotta.dev/2026/08/mise-one-frontend-for-tool-versions/) (2026-08-21)
 - [Google notice of content restriction](https://perrotta.dev/2026/08/google-notice-of-content-restriction/) (2026-08-21)
 - [Terminals](https://perrotta.dev/2026/08/terminals/) (2026-08-20)
 - [ThoughtWorks Technology Radar](https://perrotta.dev/2026/08/thoughtworks-technology-radar/) (2026-08-20)
@@ -1330,7 +1331,7 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (127 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (128 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Argocd](https://perrotta.dev/tags/argocd/) (18 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (12 posts)
@@ -1338,9 +1339,9 @@
 - [Bloggify](https://perrotta.dev/tags/bloggify/) (35 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (28 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (29 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1205 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1206 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
