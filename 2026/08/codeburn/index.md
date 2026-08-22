@@ -1,0 +1,88 @@
+---
+title: "CodeBurn"
+url: https://perrotta.dev/2026/08/codeburn/
+last_updated: 2026-08-23
+---
+
+
+[Previously]({{< ref "2025-09-04-claude-ccusage" >}}).
+
+[`CodeBurn`](https://github.com/getagentseal/codeburn) shows Gen AI / LLM code
+usage: where did all the money ~~burning tokens~~ ($$) go?
+
+> CodeBurn is a free, open-source, local-first tool that tracks AI coding token
+> usage and cost across 41 tools and agents (Claude Code, Pi, Codex, Cursor,
+> and more), broken down by model, project, and task.
+
+It reads the session files already on disk. No wrapper, proxy, or API key is
+needed, and nothing leaves the machine (great!).
+
+It's a TUI.
+
+Installation methods:
+
+```shell
+% brew install codeburn
+```
+
+OR
+
+```shell
+% npx codeburn
+```
+
+The same data is also available via web and desktop interfaces. On macOS,
+`menubar` downloads the native app to `~/Applications` and launches it:
+
+```shell
+% codeburn menubar
+Resolving CodeBurn Menubar v0.9.20...
+Downloading CodeBurnMenubar-v0.9.20.zip...
+Verifying checksum...
+Unpacking...
+Verifying app bundle...
+Launching CodeBurn Menubar...
+
+  Ready. /Users/thiago.perrotta/Applications/CodeBurnMenubar.app
+```
+
+It shows the current spend in the menu bar. Clicking it opens local breakdowns
+by agent, model, and activity, plus trends, forecasts, and exports. It refreshes
+every 30 seconds by default and backs off on battery.
+
+It tracks spend calculated from local sessions, not provider usage windows or
+reset countdowns. [Codexbar]({{< ref "2026-05-31-codexbar" >}}) does the latter.
+
+I find that the CLI TUI is enough.
+
+A few subcommands:
+
+`yield` correlates AI sessions with nearby Git commits. It classifies the money
+spent as productive, reverted, abandoned, or ambiguous:
+
+```shell
+% codeburn yield -p 30days
+
+  Analyzing yield for Last 30 Days...
+
+
+Productive:   $594.85 (31%) - 117 sessions shipped to main
+Reverted:       $0.00 (0%) - 0 sessions were reverted
+Abandoned:    $611.66 (32%) - 377 sessions never committed
+Ambiguous:    $709.10 (37%) - 220 sessions lost commits to concurrent sessions
+
+Attribution: timestamp-window based (heuristic)
+
+Total:       $1915.61     - 714 sessions
+```
+
+It's an experimental timestamp-based heuristic, but a neat answer to "did all
+those tokens produce code that shipped?"
+
+`report` opens the interactive dashboard for a given period, with token and cost
+breakdowns by tool, model, project, and task:
+
+```shell
+% codeburn report --provider pi -p month
+```
+
