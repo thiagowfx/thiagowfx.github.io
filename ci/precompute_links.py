@@ -4,6 +4,7 @@
 This script scans all blog posts and computes:
 - backlinks: posts that link to each post via ref shortcodes
 - related: top 2 related posts by title words, tags, categories, and links
+- tag_related: top 2 posts with shared tags, excluding direct links
 - previously: older posts with shared tags (jwz-style)
 - graph: nodes and edges for the graph visualization
 
@@ -207,6 +208,33 @@ def compute_related_posts(
     return [s[0] for s in scored[:2]]
 
 
+def compute_tag_related_posts(
+    post: dict,
+    all_posts: list[dict],
+    outlinks_set: set[str],
+    backlinks_set: set[str],
+    limit: int = 2,
+) -> list[str]:
+    """Compute tag connections, excluding posts with direct links."""
+    post_tags = set(post["tags"])
+    if not post_tags:
+        return []
+
+    direct_ids = outlinks_set | backlinks_set
+    scored = []
+    for other in all_posts:
+        other_id = other["id"]
+        if other_id == post["id"] or other_id in direct_ids:
+            continue
+
+        shared_tags = post_tags & set(other["tags"])
+        if shared_tags:
+            scored.append((other_id, len(shared_tags), other["date"]))
+
+    scored.sort(key=lambda item: (item[1], item[2], item[0]), reverse=True)
+    return [item[0] for item in scored[:limit]]
+
+
 def compute_previously(post: dict, all_posts: list[dict], limit: int = 5) -> list[str]:
     """Compute previously links (older posts with shared tags)."""
     if not post["tags"]:
@@ -286,10 +314,9 @@ def main():
         backlinks_with_date.sort(key=lambda x: x[1], reverse=True)
         sorted_backlinks = [b[0] for b in backlinks_with_date]
 
-        related = compute_related_posts(
-            post, posts_by_date, outlinks_index.get(post_id, set()), backlinks
-        )
-
+        outlinks = outlinks_index.get(post_id, set())
+        related = compute_related_posts(post, posts_by_date, outlinks, backlinks)
+        tag_related = compute_tag_related_posts(post, posts_by_date, outlinks, backlinks)
         previously = compute_previously(post, posts_by_date)
 
         # Sort outlinks by date (newest first), filtered to valid posts
@@ -301,6 +328,7 @@ def main():
             "backlinks": sorted_backlinks,
             "outlinks": valid_outlinks,
             "related": related,
+            "tag_related": tag_related,
             "previously": previously,
         }
 

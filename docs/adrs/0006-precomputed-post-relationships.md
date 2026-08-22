@@ -47,6 +47,7 @@ Runs in ~4 seconds and outputs:
       "backlinks": ["other-post-1", "other-post-2"],
       "outlinks": ["linked-post-1"],
       "related": ["related-post-1", "related-post-2"],
+      "tag_related": ["tag-related-post-1", "tag-related-post-2"],
       "previously": ["prev-1", "prev-2", "prev-3", "prev-4", "prev-5"]
     }
   },
@@ -99,6 +100,9 @@ As of 2026-08-20:
 - The script processes 1,301 posts and 321 graph edges in about 6.4 seconds on
   the local development machine.
 - `outlinks` are part of each post record and support the per-post mini graph.
+- `tag_related` contains up to two posts ranked by shared tag count and date.
+  Direct links are excluded. The per-post mini graph renders these as secondary,
+  non-directional connections.
 - `layouts/partials/related-posts.html` renders both related and previous posts.
   There is no separate `previously.html` partial.
 - `just build` always runs `precompute` before the production Hugo build.

@@ -5,11 +5,14 @@
 {{- $linkData := index hugo.Data.links.posts $currentFilename -}}
 {{- $backlinkIds := slice -}}
 {{- $outlinkIds := slice -}}
+{{- $tagRelatedIds := slice -}}
 {{- with $linkData -}}
   {{- $backlinkIds = .backlinks | default slice -}}
   {{- $outlinkIds = .outlinks | default slice -}}
+  {{- $tagRelatedIds = .tag_related | default slice -}}
 {{- end -}}
 {{- $paths := hugo.Data.links.paths -}}
+{{- $currentTags := .Params.tags | default slice -}}
 
 {{- /* Sets for membership tests */ -}}
 {{- $inSet := dict -}}
@@ -23,7 +26,9 @@
 {{- range $id, $_ := $inSet -}}
   {{- with index $paths $id -}}
     {{- with $.Site.GetPage . -}}
-      {{- $ins = $ins | append (dict "title" .Title "url" .Permalink) -}}
+      {{- if ne .Params.rss_only true -}}
+        {{- $ins = $ins | append (dict "title" .Title "url" .Permalink) -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
@@ -31,14 +36,32 @@
 {{- range $id, $_ := $outSet -}}
   {{- with index $paths $id -}}
     {{- with $.Site.GetPage . -}}
-      {{- $outs = $outs | append (dict "title" .Title "url" .Permalink) -}}
+      {{- if ne .Params.rss_only true -}}
+        {{- $outs = $outs | append (dict "title" .Title "url" .Permalink) -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
 
-{{- if or $ins $outs -}}
+{{- /* Tag connections are symmetric and exclude direct links. */ -}}
+{{- $tagRelated := slice -}}
+{{- range $tagRelatedIds -}}
+  {{- $hugoPath := index $paths . -}}
+  {{- with $hugoPath -}}
+    {{- with $.Site.GetPage . -}}
+      {{- if ne .Params.rss_only true -}}
+        {{- $otherTags := .Params.tags | default slice -}}
+        {{- $sharedTags := intersect $currentTags $otherTags -}}
+        {{- $tagRelated = $tagRelated | append (dict "title" .Title "url" .Permalink "tags" $sharedTags) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if gt (len $tagRelated) 2 -}}{{- $tagRelated = first 2 $tagRelated -}}{{- end -}}
 
-{{- /* Cap rows per column; overflow points at the full graph */ -}}
+{{- if or $ins $outs $tagRelated -}}
+
+{{- /* Cap rows per direct-link column; overflow points at the full graph. */ -}}
 {{- $maxRows := 10 -}}
 {{- $insMore := 0 -}}
 {{- $outsMore := 0 -}}
@@ -53,29 +76,37 @@
   {{- $outsShown = first $maxRows $outs -}}
 {{- end -}}
 
-{{- /* Geometry (SVG user units; the viewBox scales to the container) */ -}}
+{{- /* Geometry (SVG user units; the viewBox scales to the container). */ -}}
 {{- $w := 640.0 -}}
 {{- $rowH := 30.0 -}}
-{{- /* Columns sit 148 units from the current post; the group shifts when a
-       column is empty so the drawing stays roughly centered. */ -}}
+{{- /* Direct-link columns sit 148 units from the current post. The group
+       shifts when one column is empty so the drawing stays centered. */ -}}
 {{- $centerX := 320.0 -}}
-{{- if not $ins -}}{{- $centerX = 240.0 -}}{{- else if not $outs -}}{{- $centerX = 400.0 -}}{{- end -}}
+{{- if and (not $ins) $outs -}}
+  {{- $centerX = 240.0 -}}
+{{- else if and $ins (not $outs) -}}
+  {{- $centerX = 400.0 -}}
+{{- end -}}
 {{- $leftX := sub $centerX 148.0 -}}
 {{- $rightX := add $centerX 148.0 -}}
 {{- $insRows := add (len $insShown) (cond (gt $insMore 0) 1 0) -}}
 {{- $outsRows := add (len $outsShown) (cond (gt $outsMore 0) 1 0) -}}
 {{- $rows := math.Max $insRows $outsRows -}}
-{{- $h := math.Max 100.0 (add (mul $rows $rowH) 56.0) -}}
-{{- $cy := div $h 2.0 -}}
+{{- $directH := math.Max 100.0 (add (mul $rows $rowH) 56.0) -}}
+{{- $tagExtra := cond (gt (len $tagRelated) 0) 82.0 0.0 -}}
+{{- $h := add $directH $tagExtra -}}
+{{- $cy := div $directH 2.0 -}}
 {{- $insTop := sub $cy (div (mul (sub $insRows 1) $rowH) 2.0) -}}
 {{- $outsTop := sub $cy (div (mul (sub $outsRows 1) $rowH) 2.0) -}}
+{{- $tagY := add $directH 42.0 -}}
+{{- $tagStartX := sub $centerX (div (mul (sub (len $tagRelated) 1) 220.0) 2.0) -}}
 
 <div class="mini-graph">
   <h4 id="connections"><a href="/graph/">Connections</a></h4>
   <svg
     viewBox="0 0 {{ $w }} {{ $h }}"
     role="img"
-    aria-label="Posts linking to and from this one"
+    aria-label="Posts with direct links or shared tags"
     preserveAspectRatio="xMidYMid meet"
     paint-order="stroke">
     <defs>
@@ -91,35 +122,39 @@
       </marker>
     </defs>
 
-    {{- /* Edges first so nodes and labels paint on top. Each edge is a
-           two-segment path so the arrowhead sits at its midpoint, away from
-           the hub where many edges meet. */ -}}
+    {{- /* Edges first so nodes and labels paint on top. Direct edges use two
+           segments so the arrowhead stays away from the shared hub. */ -}}
     {{- range $i, $n := $insShown -}}
-      {{- $x1 := add $leftX 8.0 -}}{{- $y1 := add $insTop (mul $i $rowH) -}}
+      {{- $x1 := add $leftX 9.0 -}}{{- $y1 := add $insTop (mul $i $rowH) -}}
       {{- $x2 := sub $centerX 12.0 -}}
-      <path class="mini-graph-edge" marker-mid="url(#mini-graph-arrow)" d="M{{ $x1 }},{{ $y1 }} L{{ div (add $x1 $x2) 2.0 }},{{ div (add $y1 $cy) 2.0 }} L{{ $x2 }},{{ $cy }}" />
+      <path class="mini-graph-direct-edge" marker-mid="url(#mini-graph-arrow)" d="M{{ $x1 }},{{ $y1 }} L{{ div (add $x1 $x2) 2.0 }},{{ div (add $y1 $cy) 2.0 }} L{{ $x2 }},{{ $cy }}" />
     {{- end -}}
     {{- range $i, $n := $outsShown -}}
       {{- $x1 := add $centerX 12.0 -}}
       {{- $x2 := sub $rightX 9.0 -}}{{- $y2 := add $outsTop (mul $i $rowH) -}}
-      <path class="mini-graph-edge" marker-mid="url(#mini-graph-arrow)" d="M{{ $x1 }},{{ $cy }} L{{ div (add $x1 $x2) 2.0 }},{{ div (add $cy $y2) 2.0 }} L{{ $x2 }},{{ $y2 }}" />
+      <path class="mini-graph-direct-edge" marker-mid="url(#mini-graph-arrow)" d="M{{ $x1 }},{{ $cy }} L{{ div (add $x1 $x2) 2.0 }},{{ div (add $cy $y2) 2.0 }} L{{ $x2 }},{{ $y2 }}" />
+    {{- end -}}
+    {{- range $i, $n := $tagRelated -}}
+      {{- $x := add $tagStartX (mul $i 220.0) -}}
+      <path class="mini-graph-tag-edge" d="M{{ $centerX }},{{ add $cy 9.0 }} L{{ $x }},{{ sub $tagY 7.0 }}" />
     {{- end -}}
 
-    {{- /* Column headers */ -}}
     {{- if $insShown -}}
       <text class="mini-graph-header" x="{{ sub $leftX 10.0 }}" y="14" text-anchor="end">Linked from</text>
     {{- end -}}
     {{- if $outsShown -}}
       <text class="mini-graph-header" x="{{ add $rightX 10.0 }}" y="14">Links to</text>
     {{- end -}}
+    {{- if $tagRelated -}}
+      <text class="mini-graph-header mini-graph-tag-header" x="{{ $centerX }}" y="{{ add $directH 14.0 }}" text-anchor="middle">Shared tags</text>
+    {{- end -}}
 
-    {{- /* Left column: incoming */ -}}
     {{- range $i, $n := $insShown -}}
       {{- $y := add $insTop (mul $i $rowH) -}}
-      <a href="{{ $n.url }}">
+      <a class="mini-graph-direct" href="{{ $n.url }}">
         <title>{{ $n.title }}</title>
-        <circle cx="{{ $leftX }}" cy="{{ $y }}" r="4.5" />
-        <text x="{{ sub $leftX 10.0 }}" y="{{ $y }}" text-anchor="end" dy="0.35em">{{ $n.title | truncate 27 "…" }}</text>
+        <circle class="mini-graph-direct-node" cx="{{ $leftX }}" cy="{{ $y }}" r="5.5" />
+        <text class="mini-graph-direct-label" x="{{ sub $leftX 10.0 }}" y="{{ $y }}" text-anchor="end" dy="0.35em">{{ $n.title | truncate 27 "…" }}</text>
       </a>
     {{- end -}}
     {{- if gt $insMore 0 -}}
@@ -129,13 +164,12 @@
       </a>
     {{- end -}}
 
-    {{- /* Right column: outgoing */ -}}
     {{- range $i, $n := $outsShown -}}
       {{- $y := add $outsTop (mul $i $rowH) -}}
-      <a href="{{ $n.url }}">
+      <a class="mini-graph-direct" href="{{ $n.url }}">
         <title>{{ $n.title }}</title>
-        <circle cx="{{ $rightX }}" cy="{{ $y }}" r="4.5" />
-        <text x="{{ add $rightX 10.0 }}" y="{{ $y }}" dy="0.35em">{{ $n.title | truncate 27 "…" }}</text>
+        <circle class="mini-graph-direct-node" cx="{{ $rightX }}" cy="{{ $y }}" r="5.5" />
+        <text class="mini-graph-direct-label" x="{{ add $rightX 10.0 }}" y="{{ $y }}" dy="0.35em">{{ $n.title | truncate 27 "…" }}</text>
       </a>
     {{- end -}}
     {{- if gt $outsMore 0 -}}
@@ -145,23 +179,37 @@
       </a>
     {{- end -}}
 
-    {{- /* Current post */ -}}
+    {{- range $i, $n := $tagRelated -}}
+      {{- $x := add $tagStartX (mul $i 220.0) -}}
+      <a class="mini-graph-tag" href="{{ $n.url }}">
+        <title>{{ $n.title }} — shared tags: {{ delimit $n.tags ", " }}</title>
+        <circle class="mini-graph-tag-node" cx="{{ $x }}" cy="{{ $tagY }}" r="4.5" />
+        <text class="mini-graph-tag-label" x="{{ $x }}" y="{{ add $tagY 19.0 }}" text-anchor="middle">{{ $n.title | truncate 26 "…" }}</text>
+      </a>
+    {{- end -}}
+
     <circle class="mini-graph-current" cx="{{ $centerX }}" cy="{{ $cy }}" r="7" />
     <text class="mini-graph-current-label" x="{{ $centerX }}" y="{{ add $cy 20.0 }}" text-anchor="middle">{{ .Title | truncate 38 "…" }}</text>
   </svg>
 
-  {{- /* Narrow screens get a plain list: the SVG text would scale down too far */ -}}
+  {{- /* Narrow screens get a plain list: the SVG text would scale down too far. */ -}}
   <div class="mini-graph-list">
     {{- with $ins -}}
-      <p class="mini-graph-list-header">Linked from</p>
-      <ul>
+      <p class="mini-graph-list-header mini-graph-list-direct-header">Linked from</p>
+      <ul class="mini-graph-list-direct">
         {{- range . -}}<li><a href="{{ .url }}">{{ .title }}</a></li>{{- end -}}
       </ul>
     {{- end -}}
     {{- with $outs -}}
-      <p class="mini-graph-list-header">Links to</p>
-      <ul>
+      <p class="mini-graph-list-header mini-graph-list-direct-header">Links to</p>
+      <ul class="mini-graph-list-direct">
         {{- range . -}}<li><a href="{{ .url }}">{{ .title }}</a></li>{{- end -}}
+      </ul>
+    {{- end -}}
+    {{- with $tagRelated -}}
+      <p class="mini-graph-list-header">Shared tags</p>
+      <ul class="mini-graph-list-tags">
+        {{- range . -}}<li><a href="{{ .url }}">{{ .title }}</a> <small>({{ delimit .tags ", " }})</small></li>{{- end -}}
       </ul>
     {{- end -}}
   </div>
