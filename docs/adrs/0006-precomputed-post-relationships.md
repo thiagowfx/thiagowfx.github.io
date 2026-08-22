@@ -61,6 +61,21 @@ Runs in ~4 seconds and outputs:
 }
 ```
 
+#### Tag-related selection
+
+`tag_related` uses this selection order:
+
+1. Keep posts that share at least one tag with the current post.
+2. Exclude the current post and all direct incoming or outgoing links.
+3. Sort by shared tag count, newest date, then post ID. All fields use
+   descending order.
+4. Keep the first two posts.
+
+This relationship uses tags only. Title words and categories do not affect the
+ranking. `layouts/partials/mini-graph.html` also applies a defensive two-post
+cap and filters `rss_only` posts. The template does not replace a filtered post
+with the next ranked candidate, so it can render fewer than two tag links.
+
 **2. Updated Hugo templates**
 
 Partials now read from `hugo.Data.links`:
