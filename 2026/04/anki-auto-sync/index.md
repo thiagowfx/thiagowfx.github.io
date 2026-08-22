@@ -1,7 +1,7 @@
 ---
 title: "anki: auto-sync"
 url: https://perrotta.dev/2026/04/anki-auto-sync/
-last_updated: 2026-04-12
+last_updated: 2026-08-22
 ---
 
 

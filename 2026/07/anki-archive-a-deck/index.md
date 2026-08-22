@@ -1,7 +1,7 @@
 ---
 title: "Anki: archive a deck"
 url: https://perrotta.dev/2026/07/anki-archive-a-deck/
-last_updated: 2026-07-27
+last_updated: 2026-08-22
 ---
 
 

@@ -1,7 +1,7 @@
 ---
 title: "Anki: API access"
 url: https://perrotta.dev/2026/04/anki-api-access/
-last_updated: 2026-05-05
+last_updated: 2026-08-22
 ---
 
 
