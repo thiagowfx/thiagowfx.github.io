@@ -2,6 +2,7 @@
 title: "Anki workflow"
 date: 2024-12-23T00:12:52-03:00
 tags:
+  - anki
   - bestof
   - dev
   - pkm

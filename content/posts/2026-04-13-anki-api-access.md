@@ -3,6 +3,7 @@ title: "Anki: API access"
 date: 2026-04-13T02:15:10+02:00
 tags:
   - ai
+  - anki
   - dev
   - pkm
 ---

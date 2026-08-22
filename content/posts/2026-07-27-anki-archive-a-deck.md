@@ -2,6 +2,7 @@
 title: "Anki: archive a deck"
 date: 2026-07-27T10:49:00+02:00
 tags:
+  - anki
   - dev
   - pkm
 ---

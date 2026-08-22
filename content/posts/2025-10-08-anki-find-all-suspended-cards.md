@@ -2,6 +2,7 @@
 title: "Anki: find all suspended flashcards"
 date: 2025-10-08T19:14:48+02:00
 tags:
+  - anki
   - dev
   - pkm
   - serenity

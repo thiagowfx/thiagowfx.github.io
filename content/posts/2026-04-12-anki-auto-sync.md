@@ -2,6 +2,7 @@
 title: "anki: auto-sync"
 date: 2026-04-12T10:38:15+02:00
 tags:
+  - anki
   - dev
   - pkm
 ---

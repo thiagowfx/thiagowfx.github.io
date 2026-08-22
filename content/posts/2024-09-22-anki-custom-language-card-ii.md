@@ -2,6 +2,7 @@
 title: "Anki: custom language card (cont.)"
 date: 2024-09-22T13:02:39+02:00
 tags:
+  - anki
   - bestof
   - dev
   - pkm

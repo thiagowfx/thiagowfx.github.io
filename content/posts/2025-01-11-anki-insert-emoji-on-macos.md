@@ -2,6 +2,7 @@
 title: "Anki: insert emoji on macOS"
 date: 2025-01-11T00:28:48-03:00
 tags:
+  - anki
   - dev
   - macos
   - pkm

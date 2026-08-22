@@ -3,6 +3,7 @@ title: "anki: flashcard generation with claude code"
 date: 2026-04-15T16:09:12+02:00
 tags:
   - ai
+  - anki
   - bestof
   - claude
   - dev
