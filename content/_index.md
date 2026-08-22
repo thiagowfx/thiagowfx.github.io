@@ -19,4 +19,4 @@ I believe in the power of the {indie, small} Web for sharing valuable,
 distraction-free content. Hopefully this will inspire you to leave your own mark
 there too.
 
-Want to chat? See my [contact page]({{< ref "contact" >}}).
+Want to connect? See my [contact page]({{< ref "contact" >}}).
