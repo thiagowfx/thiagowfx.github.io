@@ -7,55 +7,55 @@
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)">
-  <title class="title">sd-world: perform a full system upgrade | ¬ just serendipity 🍀</title><meta name="title" content="sd-world: perform a full system upgrade">
-<meta name="description" content="Whenever I want to upgrade any one of my systems, I run sd-world.
-You can find the current version of sd-world in my dotfiles repository.
-Here&rsquo;s a …">
-<meta name="keywords" content="dev,"><meta property="og:url" content="https://perrotta.dev/2024/01/sd-world-perform-a-full-system-upgrade/">
+  <title class="title">prometheus: a 117GB WAL that could not truncate | ¬ just serendipity 🍀</title><meta name="title" content="prometheus: a 117GB WAL that could not truncate">
+<meta name="description" content="Previously.
+With the volume expanded, the next failure surfaced. The pod came up, served for 14 minutes, then hit a different wall:
+shell % kubectl -n …">
+<meta name="keywords" content="bloggify,dev,kubernetes,"><meta property="og:url" content="https://perrotta.dev/2026/08/prometheus-a-117gb-wal-that-could-not-truncate/">
   <meta property="og:site_name" content="¬ just serendipity 🍀">
-  <meta property="og:title" content="sd-world: perform a full system upgrade">
-  <meta property="og:description" content="Whenever I want to upgrade any one of my systems, I run sd-world.
-You can find the current version of sd-world in my dotfiles repository.
-Here’s a snapshot1:
-shell #!/usr/bin/env bash # perform a full system upgrade set -euo pipefail log() { local bold=$(tput bold) normal=$(tput sgr0) echo &#34;${bold}$*${normal}&#34; } run_if_exists() { if command -v &#34;$1&#34; &gt;/dev/null 2&gt;&amp;1; then if [[ $# -eq 1 ]]; then log &#34;Running $1...&#34; &#34;$1&#34; else shift log &#34;Running $*...&#34; &#34;$@&#34; fi elif [[ -d &#34;$1&#34; ]]; then shift log &#34;Running $*...&#34; &#34;$@&#34; fi } # usage: do_git &lt;path/to/git/repo&gt; do_git() { if [[ -d &#34;$1&#34; ]]; then run_if_exists &#34;$1&#34; git -C &#34;$1&#34; pull origin master fi } case &#34;$(uname)&#34; in # linux Linux) # alpine linux run_if_exists &#34;apk&#34; doas apk upgrade # arch linux run_if_exists &#34;pacman&#34; sudo pacman -Syu # debian linux # warning: macos has /usr/bin/apt which is a Java thing run_if_exists &#34;apt-get&#34; sudo apt-get upgrade -y run_if_exists &#34;apt-get&#34; sudo apt-get autoremove ;; # macOS Darwin) # homebrew run_if_exists &#34;brew&#34; brew upgrade run_if_exists &#34;brew&#34; brew cleanup # system update and app store # run_if_exists &#34;softwareupdate&#34; softwareupdate --install --all run_if_exists &#34;mas&#34; mas upgrade ;; # windows MINGW*) # third-party package manager run_if_exists &#34;scoop&#34; scoop update ;; esac # flatpaks run_if_exists &#34;flatpak&#34; flatpak update # nix run_if_exists &#34;nix-channel&#34; nix-channel --update run_if_exists &#34;nix-env&#34; nix-env -u # pihole # update pihole itself and gravity lists run_if_exists &#34;pihole&#34; pihole -up # dotfiles do_git &#34;$HOME/.dotfiles&#34; do_git &#34;$HOME/.dotfiles_corp&#34; There’s a lot to unpack here.">
+  <meta property="og:title" content="prometheus: a 117GB WAL that could not truncate">
+  <meta property="og:description" content="Previously.
+With the volume expanded, the next failure surfaced. The pod came up, served for 14 minutes, then hit a different wall:
+shell % kubectl -n monitoring get pod prometheus-...-prometheus-0 -o json | \ jq &#39;.status.containerStatuses[] | select(.name==&#34;prometheus&#34;) | .lastState.terminated&#39; { &#34;reason&#34;: &#34;OOMKilled&#34;, &#34;exitCode&#34;: 137, &#34;startedAt&#34;: &#34;2026-08-22T20:35:12Z&#34;, &#34;finishedAt&#34;: &#34;2026-08-22T20:49:29Z&#34; } Not disk this time — 129GB was free. The WAL was the problem:">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2024-01-28T01:42:04-03:00">
-    <meta property="article:modified_time" content="2025-12-31T02:31:25-03:00">
+    <meta property="article:published_time" content="2026-08-22T23:35:00+02:00">
+    <meta property="article:modified_time" content="2026-08-22T23:56:02+02:00">
+    <meta property="article:tag" content="Bloggify">
     <meta property="article:tag" content="Dev">
+    <meta property="article:tag" content="Kubernetes">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="sd-world: perform a full system upgrade">
-  <meta name="twitter:description" content="Whenever I want to upgrade any one of my systems, I run sd-world.
-You can find the current version of sd-world in my dotfiles repository.
-Here’s a snapshot1:
-shell #!/usr/bin/env bash # perform a full system upgrade set -euo pipefail log() { local bold=$(tput bold) normal=$(tput sgr0) echo &#34;${bold}$*${normal}&#34; } run_if_exists() { if command -v &#34;$1&#34; &gt;/dev/null 2&gt;&amp;1; then if [[ $# -eq 1 ]]; then log &#34;Running $1...&#34; &#34;$1&#34; else shift log &#34;Running $*...&#34; &#34;$@&#34; fi elif [[ -d &#34;$1&#34; ]]; then shift log &#34;Running $*...&#34; &#34;$@&#34; fi } # usage: do_git &lt;path/to/git/repo&gt; do_git() { if [[ -d &#34;$1&#34; ]]; then run_if_exists &#34;$1&#34; git -C &#34;$1&#34; pull origin master fi } case &#34;$(uname)&#34; in # linux Linux) # alpine linux run_if_exists &#34;apk&#34; doas apk upgrade # arch linux run_if_exists &#34;pacman&#34; sudo pacman -Syu # debian linux # warning: macos has /usr/bin/apt which is a Java thing run_if_exists &#34;apt-get&#34; sudo apt-get upgrade -y run_if_exists &#34;apt-get&#34; sudo apt-get autoremove ;; # macOS Darwin) # homebrew run_if_exists &#34;brew&#34; brew upgrade run_if_exists &#34;brew&#34; brew cleanup # system update and app store # run_if_exists &#34;softwareupdate&#34; softwareupdate --install --all run_if_exists &#34;mas&#34; mas upgrade ;; # windows MINGW*) # third-party package manager run_if_exists &#34;scoop&#34; scoop update ;; esac # flatpaks run_if_exists &#34;flatpak&#34; flatpak update # nix run_if_exists &#34;nix-channel&#34; nix-channel --update run_if_exists &#34;nix-env&#34; nix-env -u # pihole # update pihole itself and gravity lists run_if_exists &#34;pihole&#34; pihole -up # dotfiles do_git &#34;$HOME/.dotfiles&#34; do_git &#34;$HOME/.dotfiles_corp&#34; There’s a lot to unpack here.">
+  <meta name="twitter:title" content="prometheus: a 117GB WAL that could not truncate">
+  <meta name="twitter:description" content="Previously.
+With the volume expanded, the next failure surfaced. The pod came up, served for 14 minutes, then hit a different wall:
+shell % kubectl -n monitoring get pod prometheus-...-prometheus-0 -o json | \ jq &#39;.status.containerStatuses[] | select(.name==&#34;prometheus&#34;) | .lastState.terminated&#39; { &#34;reason&#34;: &#34;OOMKilled&#34;, &#34;exitCode&#34;: 137, &#34;startedAt&#34;: &#34;2026-08-22T20:35:12Z&#34;, &#34;finishedAt&#34;: &#34;2026-08-22T20:49:29Z&#34; } Not disk this time — 129GB was free. The WAL was the problem:">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "BlogPosting",
-      "headline": "sd-world: perform a full system upgrade",
-      "description": "Whenever I want to upgrade any one of my systems, I run sd-world.\nYou can find the current version of sd-world in my dotfiles repository.\nHere\u0026rsquo;s a …",
-      "url": "https://perrotta.dev/2024/01/sd-world-perform-a-full-system-upgrade/",
-      "datePublished": "2024-01-28T01:42:04-03:00",
-      "dateModified": "2025-12-31T02:31:25-03:00",
+      "headline": "prometheus: a 117GB WAL that could not truncate",
+      "description": "Previously.\nWith the volume expanded, the next failure surfaced. The pod came up, served for 14 minutes, then hit a different wall:\nshell % kubectl -n …",
+      "url": "https://perrotta.dev/2026/08/prometheus-a-117gb-wal-that-could-not-truncate/",
+      "datePublished": "2026-08-22T23:35:00+02:00",
+      "dateModified": "2026-08-22T23:56:02+02:00",
       "author": {"@type":"Person","name":"Thiago Perrotta","url":"https://perrotta.dev/"},
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://perrotta.dev/2024/01/sd-world-perform-a-full-system-upgrade/"
-      },"keywords": ["dev"]
+        "@id": "https://perrotta.dev/2026/08/prometheus-a-117gb-wal-that-could-not-truncate/"
+      },"keywords": ["bloggify","dev","kubernetes"]
     },
     {
       "@type": "BreadcrumbList",
-      "itemListElement": [{"@type":"ListItem","item":"https://perrotta.dev","name":"Home","position":1},{"@type":"ListItem","item":"https://perrotta.dev/posts/","name":"Posts","position":2},{"@type":"ListItem","name":"sd-world: perform a full system upgrade","position":3}]
+      "itemListElement": [{"@type":"ListItem","item":"https://perrotta.dev","name":"Home","position":1},{"@type":"ListItem","item":"https://perrotta.dev/posts/","name":"Posts","position":2},{"@type":"ListItem","name":"prometheus: a 117GB WAL that could not truncate","position":3}]
     }
   ]
 }
 </script><meta name="referrer" content="no-referrer-when-downgrade">
-  <link rel="icon" href="https://perrotta.dev/favicon.ico"><link rel="canonical" href="https://perrotta.dev/2024/01/sd-world-perform-a-full-system-upgrade/"><link rel="alternate" type="text/markdown" href="https://perrotta.dev/2024/01/sd-world-perform-a-full-system-upgrade/index.md" title="sd-world: perform a full system upgrade"><link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0">
+  <link rel="icon" href="https://perrotta.dev/favicon.ico"><link rel="canonical" href="https://perrotta.dev/2026/08/prometheus-a-117gb-wal-that-could-not-truncate/"><link rel="alternate" type="text/markdown" href="https://perrotta.dev/2026/08/prometheus-a-117gb-wal-that-could-not-truncate/index.md" title="prometheus: a 117GB WAL that could not truncate"><link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0">
   <link rel="author" href="https://perrotta.dev/" title="Thiago Perrotta">
 <style>
   .e-content>p:first-child::before{content:"♠";color:var(--color-gray);margin-right:.5em}.post-end-mark{color:var(--color-gray)}.heading-anchor{margin-left:.3em;color:var(--color-gray);text-decoration:none;opacity:0;transition:opacity .2s ease}h2:hover .heading-anchor,h3:hover .heading-anchor,h4:hover .heading-anchor,h5:hover .heading-anchor,h6:hover .heading-anchor,.heading-anchor:focus{opacity:1}:root{--color-light-gray:#5c5f77;--color-light-grayer:#6c6f85;--color-dark-gray:#9399b2;--color-dark-grayer:#7f849c;--font-title:"Inter", "Fira Sans", "Lato", system-ui, -apple-system,
@@ -1650,15 +1650,15 @@ shell #!/usr/bin/env bash # perform a full system upgrade set -euo pipefail log(
     }
   });
 </script>
-<a href="https://perrotta.dev/2024/01/google-chrome-for-testing-reliable-downloads-for-browser-automation/" data-nav="prev" hidden></a>
-<a href="https://perrotta.dev/2024/01/anki-find-all-notes-with-an-empty-field/" data-nav="next" hidden></a>
+<a href="https://perrotta.dev/2026/08/azure-disk-resize-needs-the-pvc-patch-too/" data-nav="prev" hidden></a>
+
 <article class="h-entry">
 <div class="article-header">
   <h2>
-    <span class="p-name">sd-world: perform a full system upgrade</span>
+    <span class="p-name">prometheus: a 117GB WAL that could not truncate</span>
   </h2>
   <div class="article-header-actions">
-      <button class="copy-markdown-btn" type="button" data-copy-markdown="/2024/01/sd-world-perform-a-full-system-upgrade/index.md" data-copy-source="https://perrotta.dev/2024/01/sd-world-perform-a-full-system-upgrade/" aria-label="Copy as Markdown" title="Copy as Markdown (Ctrl/Cmd/Alt-click to view source)">
+      <button class="copy-markdown-btn" type="button" data-copy-markdown="/2026/08/prometheus-a-117gb-wal-that-could-not-truncate/index.md" data-copy-source="https://perrotta.dev/2026/08/prometheus-a-117gb-wal-that-could-not-truncate/" aria-label="Copy as Markdown" title="Copy as Markdown (Ctrl/Cmd/Alt-click to view source)">
         <svg aria-hidden="true" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
       </button>
     <button id="fullscreen-btn" class="fullscreen-btn" aria-label="Toggle fullscreen mode" title="Toggle fullscreen mode (f)">
@@ -1669,193 +1669,137 @@ shell #!/usr/bin/env bash # perform a full system upgrade set -euo pipefail log(
 <p>
   
   <span class="pubdate-single">
-    <time class="dt-published" datetime='2024-01-28T01:42:04-03:00'>
-      28 Jan, 2024
+    <time class="dt-published" datetime='2026-08-22T23:35:00&#43;02:00'>
+      22 Aug, 2026
     </time>
-     • 637 words   • 3 min 
-    
-    • updated <time datetime='2025-12-31'>31 Dec, 2025</time>
+     • 420 words   • 2 min 
     
   </span>
   
-</p>
-    <div class="old-entry-warning" role="note">
-      ⚠️ This post is over one year old. It may no longer be up to date or relevant. Opinions may have changed.
-    </div><div class="e-content"> <p>Whenever I want to upgrade any one of my systems, I run <code>sd-world</code>.</p>
-<p>You can find the current version of <code>sd-world</code>
-<a href="https://github.com/thiagowfx/.dotfiles/blob/master/scripts/.bin/sd-world">in my dotfiles repository</a>.</p>
-<p>Here&rsquo;s a snapshot<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
+</p><div class="e-content"> <p><a href="https://perrotta.dev/2026/08/azure-disk-resize-needs-the-pvc-patch-too/">Previously</a>.</p>
+<p>With the volume expanded, the next failure surfaced. The pod came up, served
+for 14 minutes, then hit a different wall:</p>
 <div class="codeblock" data-lang="shell">
    <div class="codeblock-header">
      <span class="codeblock-language">shell</span>
      <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
    </div>
-   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
-</span></span></span><span class="line"><span class="cl"><span class="c1"># perform a full system upgrade</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">set</span> -euo pipefail
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">log<span class="o">()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">local</span> <span class="nv">bold</span><span class="o">=</span><span class="k">$(</span>tput bold<span class="k">)</span> <span class="nv">normal</span><span class="o">=</span><span class="k">$(</span>tput sgr0<span class="k">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">bold</span><span class="si">}</span><span class="nv">$*</span><span class="si">${</span><span class="nv">normal</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">run_if_exists<span class="o">()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nb">command</span> -v <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> &gt;/dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="o">[[</span> <span class="nv">$#</span> -eq <span class="m">1</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">			log <span class="s2">&#34;Running </span><span class="nv">$1</span><span class="s2">...&#34;</span>
-</span></span><span class="line"><span class="cl">			<span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">		<span class="k">else</span>
-</span></span><span class="line"><span class="cl">			<span class="nb">shift</span>
-</span></span><span class="line"><span class="cl">			log <span class="s2">&#34;Running </span><span class="nv">$*</span><span class="s2">...&#34;</span>
-</span></span><span class="line"><span class="cl">			<span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">		<span class="k">fi</span>
-</span></span><span class="line"><span class="cl">	<span class="k">elif</span> <span class="o">[[</span> -d <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">shift</span>
-</span></span><span class="line"><span class="cl">		log <span class="s2">&#34;Running </span><span class="nv">$*</span><span class="s2">...&#34;</span>
-</span></span><span class="line"><span class="cl">		<span class="s2">&#34;</span><span class="nv">$@</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># usage: do_git &lt;path/to/git/repo&gt;</span>
-</span></span><span class="line"><span class="cl">do_git<span class="o">()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[[</span> -d <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">		run_if_exists <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> git -C <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> pull origin master
-</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="s2">&#34;</span><span class="k">$(</span>uname<span class="k">)</span><span class="s2">&#34;</span> in
-</span></span><span class="line"><span class="cl">	<span class="c1"># linux</span>
-</span></span><span class="line"><span class="cl">	Linux<span class="o">)</span>
-</span></span><span class="line"><span class="cl">		<span class="c1"># alpine linux</span>
-</span></span><span class="line"><span class="cl">		run_if_exists <span class="s2">&#34;apk&#34;</span> doas apk upgrade
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		<span class="c1"># arch linux</span>
-</span></span><span class="line"><span class="cl">		run_if_exists <span class="s2">&#34;pacman&#34;</span> sudo pacman -Syu
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		<span class="c1"># debian linux</span>
-</span></span><span class="line"><span class="cl">		<span class="c1"># warning: macos has /usr/bin/apt which is a Java thing</span>
-</span></span><span class="line"><span class="cl">		run_if_exists <span class="s2">&#34;apt-get&#34;</span> sudo apt-get upgrade -y
-</span></span><span class="line"><span class="cl">		run_if_exists <span class="s2">&#34;apt-get&#34;</span> sudo apt-get autoremove
-</span></span><span class="line"><span class="cl">		<span class="p">;;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1"># macOS</span>
-</span></span><span class="line"><span class="cl">	Darwin<span class="o">)</span>
-</span></span><span class="line"><span class="cl">		<span class="c1"># homebrew</span>
-</span></span><span class="line"><span class="cl">		run_if_exists <span class="s2">&#34;brew&#34;</span> brew upgrade
-</span></span><span class="line"><span class="cl">		run_if_exists <span class="s2">&#34;brew&#34;</span> brew cleanup
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		<span class="c1"># system update and app store</span>
-</span></span><span class="line"><span class="cl">		<span class="c1"># run_if_exists &#34;softwareupdate&#34; softwareupdate --install --all</span>
-</span></span><span class="line"><span class="cl">		run_if_exists <span class="s2">&#34;mas&#34;</span> mas upgrade
-</span></span><span class="line"><span class="cl">		<span class="p">;;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1"># windows</span>
-</span></span><span class="line"><span class="cl">	MINGW*<span class="o">)</span>
-</span></span><span class="line"><span class="cl">		<span class="c1"># third-party package manager</span>
-</span></span><span class="line"><span class="cl">		run_if_exists <span class="s2">&#34;scoop&#34;</span> scoop update
-</span></span><span class="line"><span class="cl">		<span class="p">;;</span>
-</span></span><span class="line"><span class="cl"><span class="k">esac</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># flatpaks</span>
-</span></span><span class="line"><span class="cl">run_if_exists <span class="s2">&#34;flatpak&#34;</span> flatpak update
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># nix</span>
-</span></span><span class="line"><span class="cl">run_if_exists <span class="s2">&#34;nix-channel&#34;</span> nix-channel --update
-</span></span><span class="line"><span class="cl">run_if_exists <span class="s2">&#34;nix-env&#34;</span> nix-env -u
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># pihole</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># update pihole itself and gravity lists</span>
-</span></span><span class="line"><span class="cl">run_if_exists <span class="s2">&#34;pihole&#34;</span> pihole -up
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># dotfiles</span>
-</span></span><span class="line"><span class="cl">do_git <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.dotfiles&#34;</span>
-</span></span><span class="line"><span class="cl">do_git <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.dotfiles_corp&#34;</span></span></span></code></pre></div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% kubectl -n monitoring get pod prometheus-...-prometheus-0 -o json <span class="p">|</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">    jq <span class="s1">&#39;.status.containerStatuses[] | select(.name==&#34;prometheus&#34;) | .lastState.terminated&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;reason&#34;</span>: <span class="s2">&#34;OOMKilled&#34;</span>,
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;exitCode&#34;</span>: 137,
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;startedAt&#34;</span>: <span class="s2">&#34;2026-08-22T20:35:12Z&#34;</span>,
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;finishedAt&#34;</span>: <span class="s2">&#34;2026-08-22T20:49:29Z&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div>
 </div>
-<p>There&rsquo;s a lot to unpack here.</p>
-<h2 id="why-is-it-called-sd-world">
-  Why is it called <code>sd-world</code>?
-  <a class="heading-anchor" href="#why-is-it-called-sd-world" aria-label="Link to this section">#</a>
-</h2>
-<p><code>world</code> is an inspiration taken from <a href="https://www.gentoo.org/">Gentoo Linux</a>.
-To upgrade a typical gentoo system, you usually run:</p>
+<p>Not disk this time — 129GB was free. The WAL was the problem:</p>
 <div class="codeblock" data-lang="shell">
    <div class="codeblock-header">
      <span class="codeblock-language">shell</span>
      <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
    </div>
-   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">emerge --ask --quiet --update --changed-use --deep @world</span></span></code></pre></div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% du -sh /prometheus/prometheus-db/wal
+</span></span><span class="line"><span class="cl">117.7G	/prometheus/prometheus-db/wal
+</span></span><span class="line"><span class="cl">% ls /prometheus/prometheus-db/wal <span class="p">|</span> wc -l
+</span></span><span class="line"><span class="cl"><span class="m">1062</span></span></span></code></pre></div>
 </div>
-<p>There&rsquo;s something deeply inspiring about saying it out loud: &ldquo;emerge the
-world&rdquo;. As if the whole world is at your fingertips.</p>
-<p><code>sd</code> stands for &ldquo;script directory&rdquo;, it&rsquo;s an inspiration taken from <a href="https://ianthehenry.com/posts/sd-my-script-directory/">Ian
-Henry</a>.</p>
-<p><strong>Rationale</strong>: I tend to put scripts I run semi-frequently in a <code>.bin</code>
-directory that is in my system <code>$PATH</code>. However, there&rsquo;s always a chance their
-name could clash with a built-in one (e.g. in <code>/usr/bin/</code>). In order to prevent
-(or mitigate) it from happening, a prefix is added. For a long time in my life
-I used the <code>t-</code> prefix, merely because of my first name initial. At some point
-I migrated to <code>sd-</code>. That&rsquo;s all, nothing fancy about it.</p>
-<h2 id="why-bash">
-  Why <code>bash</code>?
-  <a class="heading-anchor" href="#why-bash" aria-label="Link to this section">#</a>
-</h2>
-<p><code>bash</code> is the de-facto standard shell in most Linux distributions I care about.
-And it&rsquo;s also easily available in macOS and BSDs. And it&rsquo;s POSIX compliant.</p>
-<p><strong>Therefore</strong>: availability, portability and compatibility.</p>
-<h2 id="why-usrbinenv-bash-instead-of-binbash">
-  Why <code>/usr/bin/env bash</code> instead of <code>/bin/bash</code>?
-  <a class="heading-anchor" href="#why-usrbinenv-bash-instead-of-binbash" aria-label="Link to this section">#</a>
-</h2>
-<p>Because the <code>env</code> shebang is more portable. This is more relevant when working
-with BSDs. On Linux <code>/bin/bash</code> should be mostly fine.</p>
-<h2 id="why-set--euo-pipefail">
-  Why <code>set -euo pipefail</code>?
-  <a class="heading-anchor" href="#why-set--euo-pipefail" aria-label="Link to this section">#</a>
-</h2>
-<p>A well-established <a href="https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425">good
-practice</a>.</p>
-<h2 id="why-use-a-separate-log-function">
-  Why use a separate <code>log</code> function?
-  <a class="heading-anchor" href="#why-use-a-separate-log-function" aria-label="Link to this section">#</a>
-</h2>
-<ol>
-<li>Old habits die hard.</li>
-<li>Consistent formatting.</li>
-</ol>
-<h2 id="why-run_if_exists">
-  Why <code>run_if_exists</code>?
-  <a class="heading-anchor" href="#why-run_if_exists" aria-label="Link to this section">#</a>
-</h2>
-<p>Since the script attempts to upgrade (potentially) many package managers, at
-the very least we try to skip the ones that aren&rsquo;t installed. For example,
-there&rsquo;s no need to attempt to run <code>pacman</code> in a macOS system.</p>
-<h2 id="what-else">
-  What else?
-  <a class="heading-anchor" href="#what-else" aria-label="Link to this section">#</a>
-</h2>
-<p>The rest should be quite straightforward to understand. Some design decisions:</p>
-<ul>
-<li><code>sudo</code> permissions are not asked upfront, because not every system uses
-<code>sudo</code>. Notably, Alpine Linux and OpenBSD use <code>doas</code> by default. Also,
-laziness is OK as the script is intended for interactive use.</li>
-<li><code>git</code> is there merely for convenience. Updating my dotfiles could be done
-from a separate script, but that would be overkill for my simple use case.</li>
-<li>There&rsquo;s no concurrency / parallelism, and that&rsquo;s intentional. I prefer output
-readability and system stability in this case.</li>
-</ul>
-<p><a href="https://en.wikipedia.org/wiki/Scarface:_The_World_Is_Yours">The world is yours</a>. <span class="post-end-mark">∎</span></p>
-<div class="footnotes" role="doc-endnotes">
+<p>A healthy WAL holds about two hours. This one spanned two days, because WAL
+truncation happens at head compaction, and head compaction was OOMKilling
+before it could commit. I caught it mid-attempt once:</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% ls -d /prometheus/prometheus-db/wal/checkpoint.*
+</span></span><span class="line"><span class="cl">/prometheus/prometheus-db/wal/checkpoint.00188884
+</span></span><span class="line"><span class="cl">/prometheus/prometheus-db/wal/checkpoint.00189585.tmp</span></span></code></pre></div>
+</div>
+<p>That <code>.tmp</code> never landed. The next check, it was gone and the old checkpoint
+from two days earlier was still the newest one. Each cycle ingested a little
+more than it compacted, so the head grew, and the OOM arrived sooner. 205
+restarts of no net progress.</p>
+<p>The memory limit had no room to grow either:</p>
+<div class="codeblock" data-lang="yaml">
+   <div class="codeblock-header">
+     <span class="codeblock-language">yaml</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w">      </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">limits</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">14Gi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">11Gi</span></span></span></code></pre></div>
+</div>
+<p>14Gi against a <code>Standard_D4ps_v6</code> with 15.0Gi allocatable. Raising it makes the
+pod unschedulable.</p>
+<p>So: delete the WAL. Thanos had already shipped every local block, which is what
+made this cheap:</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% cat /prometheus/prometheus-db/thanos.shipper.json
+</span></span><span class="line"><span class="cl"><span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;version&#34;</span>: 1,
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;uploaded&#34;</span>: <span class="o">[</span>
+</span></span><span class="line"><span class="cl">		<span class="s2">&#34;01M0NKKGWJVKD3R84S90WW9R7G&#34;</span>,
+</span></span><span class="line"><span class="cl">		<span class="s2">&#34;01M0NMBBC2Y31KMSJRA7VSGYXA&#34;</span>,
+</span></span><span class="line"><span class="cl">		<span class="s2">&#34;01M0NMDM1XRJ0P1MMRBKF5HDV0&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div>
+</div>
+<p>Scaling the StatefulSet down does not work — prometheus-operator owns it and put
+the replica back within two minutes. The <code>Prometheus</code> CR is the real lever:</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% kubectl -n monitoring patch prometheus clustermon-kube-prometheus-prometheus <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --type merge -p <span class="s1">&#39;{&#34;spec&#34;:{&#34;replicas&#34;:0}}&#39;</span></span></span></code></pre></div>
+</div>
+<p>Then a scratch pod on the PVC, where I nearly deleted nothing at all:</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% kubectl -n monitoring <span class="nb">exec</span> wal-cleanup -- ls /prometheus
+</span></span><span class="line"><span class="cl">lost+found
+</span></span><span class="line"><span class="cl">prometheus-db</span></span></code></pre></div>
+</div>
+<p>The StatefulSet mounts that volume with a <code>subPath</code>. Deleting <code>/prometheus/wal</code>
+would have removed nothing, and the restart would have looked like a fix.
+The data is one level down:</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">% kubectl -n monitoring <span class="nb">exec</span> wal-cleanup -- <span class="se">\
+</span></span></span><span class="line"><span class="cl">    find /prometheus/prometheus-db/wal /prometheus/prometheus-db/chunks_head -mindepth <span class="m">1</span> -delete
+</span></span><span class="line"><span class="cl">% kubectl -n monitoring <span class="nb">exec</span> wal-cleanup -- df -h /prometheus <span class="p">|</span> tail -1
+</span></span><span class="line"><span class="cl">/dev/sda                250.9G      3.8G    247.1G   2% /prometheus</span></span></code></pre></div>
+</div>
+<p>Replay after that:</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">total_replay_duration</span><span class="o">=</span>280.16µs</span></span></code></pre></div>
+</div>
+<p>Down from ten minutes. Cost: five hours of local samples, everything older still
+queryable through Thanos.</p>
+<p>Two independent limits, hit in sequence: the volume, then the memory ceiling
+that kept compaction from ever committing. The remaining one is a limit sized at
+93% of the node it runs on, and that needs a bigger node pool.</p>
 <hr>
-<ol>
-<li id="fn:1">
-<p>Prefer to refer to the up-to-date version in my
-<a href="https://github.com/thiagowfx/.dotfiles">dotfiles</a> repository though. I
-included a snapshot merely because there&rsquo;s a non-zero chance the git
-version could be moved elsewhere someday.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
+<p>🤖 <em>Drafted with <a href="https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md"><code>/bloggify</code></a>.</em> <span class="post-end-mark">∎</span></p>
  </div><div class="post-footer-meta">
 <p style="text-align: center; margin: 2em 0 1em;">— § —</p>
 <div style="display: flex; justify-content: space-between">
@@ -1863,42 +1807,31 @@ version could be moved elsewhere someday.&#160;<a href="#fnref:1" class="footnot
   <p style="margin: 0;">
     Reply via
     <a
-      href="mailto:&#x73;&#x65;&#x72;&#x65;&#x6e;&#x64;&#x69;&#x70;&#x69;&#x74;&#x79;&#x40;&#x70;&#x65;&#x72;&#x72;&#x6f;&#x74;&#x74;&#x61;&#x2e;&#x64;&#x65;&#x76;?subject=Reply to: sd-world: perform a full system upgrade"
+      href="mailto:&#x73;&#x65;&#x72;&#x65;&#x6e;&#x64;&#x69;&#x70;&#x69;&#x74;&#x79;&#x40;&#x70;&#x65;&#x72;&#x72;&#x6f;&#x74;&#x74;&#x61;&#x2e;&#x64;&#x65;&#x76;?subject=Reply to: prometheus: a 117GB WAL that could not truncate"
       >email</a
     >
   </p>
   
   
-  <p style="margin: 0;"><a href="https://perrotta.dev/tags/dev/">#dev</a>
+  <p style="margin: 0;"><a href="https://perrotta.dev/tags/bloggify/">#bloggify</a> <a href="https://perrotta.dev/tags/dev/">#dev</a> <a href="https://perrotta.dev/tags/kubernetes/">#kubernetes</a>
   </p>
   
 </div>
 </div><div class="related-posts" style="border: 2px solid var(--border-color); border-radius: .5rem; padding: 1.5rem; margin-top: 1.5rem;"><h4 id="related-posts" style="margin-top: 0;">Related Posts</h4>
   <section style="display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0;"><article style="flex: 1 1 250px; padding: 1rem; background: var(--code-bg); border-radius: .25rem; color: var(--text-color);">
       <h5 style="margin-top: 0; margin-bottom: .5rem; color: var(--heading-color);">
-        <a href="https://perrotta.dev/2025/10/new-script-sd-world-perform-a-full-system-upgrade/">New script: sd-world: perform a full system upgrade</a>
-      </h5><p style="margin: .5rem 0; font-size: .9rem;">Previously.
-Whenever I want to upgrade any one of my systems, I run sd-world.
-Now the script has evolved, being hosted in pancake:
-it handles …</p><small style="color: var(--color-gray);">Oct 01, 2025</small>
+        <a href="https://perrotta.dev/2026/08/azure-disk-resize-needs-the-pvc-patch-too/">azure disk: resize needs the PVC patch too</a>
+      </h5><p style="margin: .5rem 0; font-size: .9rem;">Problem statement: a Prometheus pod crash-looped on a full 128GiB volume. I resized the Azure-managed disk to 256Gi in the Azure Portal (ClickOps) to …</p><small style="color: var(--color-gray);">Aug 22, 2026</small>
     </article><article style="flex: 1 1 250px; padding: 1rem; background: var(--code-bg); border-radius: .25rem; color: var(--text-color);">
       <h5 style="margin-top: 0; margin-bottom: .5rem; color: var(--heading-color);">
-        <a href="https://perrotta.dev/2024/10/prodaccess/">prodaccess</a>
-      </h5><p style="margin: .5rem 0; font-size: .9rem;">At Google we had a prodaccess command used to log in and authenticate in all sorts of internal corp systems1 for 20 hours. It became a daily ritual to …</p><small style="color: var(--color-gray);">Oct 18, 2024</small>
-    </article></section><p class="previously" style="margin-bottom: 0; margin-top: 0.5rem;"><a href="https://perrotta.dev/2024/01/google-chrome-for-testing-reliable-downloads-for-browser-automation/" title="(Google) Chrome for Testing: reliable downloads for browser automation">Previously</a>, <a href="https://perrotta.dev/2024/01/terraforming-a-linode-hello-world/" title="Terraforming a Linode: hello world">previously</a>, <a href="https://perrotta.dev/2024/01/the-fundamental-right-to-paste/" title="The fundamental right to paste">previously</a>, <a href="https://perrotta.dev/2024/01/remove-large-files-from-your-computer/" title="Remove large files from your computer">previously</a>, <a href="https://perrotta.dev/2024/01/create-a-family-tree-with-graphviz/" title="Create a family tree with graphviz">previously</a>.
-  </p></div><div class="backlinks" style="border: 2px solid var(--border-color); border-radius: .5rem; padding: 1.5rem 1.5rem 1rem; margin-top: 1.5rem;">
-  <h4 id="backlinks" style="margin-top: 0; margin-bottom: 0.25rem;">Backlinks</h4>
-  <ul style="margin-bottom: 0;"><li>
-      <a href="https://perrotta.dev/2025/10/new-script-sd-world-perform-a-full-system-upgrade/">New script: sd-world: perform a full system upgrade</a>
-      <small style="color: var(--color-gray);">(Oct 01, 2025)</small>
-    </li><li>
-      <a href="https://perrotta.dev/2024/10/prodaccess/">prodaccess</a>
-      <small style="color: var(--color-gray);">(Oct 18, 2024)</small>
-    </li></ul>
-</div><div class="mini-graph">
+        <a href="https://perrotta.dev/2026/07/when-gen-ai-cites-docs-that-dont-exist/">when Gen AI cites docs that don&#39;t exist</a>
+      </h5><p style="margin: .5rem 0; font-size: .9rem;">Today in AGI: two Claude agents, same annotation, opposite answers.
+I had a PR touching an ArgoCD PostSync hook. Ordering hooks within a phase needs …</p><small style="color: var(--color-gray);">Jul 16, 2026</small>
+    </article></section><p class="previously" style="margin-bottom: 0; margin-top: 0.5rem;"><a href="https://perrotta.dev/2026/08/kargo-notify-when-a-soak-completes/" title="kargo: notify when a soak completes">Previously</a>, <a href="https://perrotta.dev/2026/08/kubernetes-force-refresh-a-cached-multi-architecture-image/" title="kubernetes: force-refresh a cached multi-architecture image">previously</a>, <a href="https://perrotta.dev/2026/08/kargo-cool-down-upstream-releases-with-a-holding-stage/" title="kargo: cool down upstream releases with a holding stage">previously</a>.
+  </p></div><div class="mini-graph">
   <h4 id="connections"><a href="/graph/">Connections</a></h4>
   <svg
-    viewBox="0 0 640 198"
+    viewBox="0 0 640 182"
     role="img"
     aria-label="Posts with direct links or shared tags"
     preserveAspectRatio="xMidYMid meet"
@@ -1924,28 +1857,24 @@ it handles …</p><small style="color: var(--color-gray);">Oct 01, 2025</small>
         orient="auto">
         <path class="mini-graph-tag-arrow" d="M0,0 L10,5 L0,10 Z" />
       </marker>
-    </defs><path class="mini-graph-direct-edge" marker-mid="url(#mini-graph-arrow)" d="M261,43 L324.5,50.5 L388,58" /><path class="mini-graph-direct-edge" marker-mid="url(#mini-graph-arrow)" d="M261,73 L324.5,65.5 L388,58" /><path class="mini-graph-tag-edge" marker-mid="url(#mini-graph-tag-arrow)" d="M400,67 L345,109 L290,151" /><path class="mini-graph-tag-edge" marker-mid="url(#mini-graph-tag-arrow)" d="M400,67 L455,109 L510,151" /><text class="mini-graph-header" x="242" y="14" text-anchor="end">Linked from</text><text class="mini-graph-header mini-graph-tag-header" x="400" y="130" text-anchor="middle">Shared tags</text><a class="mini-graph-direct" href="https://perrotta.dev/2024/10/prodaccess/">
-        <title>prodaccess</title>
-        <circle class="mini-graph-direct-node" cx="252" cy="43" r="5.5" />
-        <text class="mini-graph-direct-label" x="242" y="43" text-anchor="end" dy="0.35em">prodaccess</text>
-      </a><a class="mini-graph-direct" href="https://perrotta.dev/2025/10/new-script-sd-world-perform-a-full-system-upgrade/">
-        <title>New script: sd-world: perform a full system upgrade</title>
-        <circle class="mini-graph-direct-node" cx="252" cy="73" r="5.5" />
-        <text class="mini-graph-direct-label" x="242" y="73" text-anchor="end" dy="0.35em">New script: sd-world:…</text>
-      </a><a class="mini-graph-tag" href="https://perrotta.dev/2026/08/prometheus-a-117gb-wal-that-could-not-truncate/">
-        <title>prometheus: a 117GB WAL that could not truncate — shared tags: dev</title>
-        <circle class="mini-graph-tag-node" cx="290" cy="158" r="4.5" />
-        <text class="mini-graph-tag-label" x="290" y="177" text-anchor="middle">prometheus: a 117GB WAL…</text>
-      </a><a class="mini-graph-tag" href="https://perrotta.dev/2026/08/azure-disk-resize-needs-the-pvc-patch-too/">
-        <title>azure disk: resize needs the PVC patch too — shared tags: dev</title>
-        <circle class="mini-graph-tag-node" cx="510" cy="158" r="4.5" />
-        <text class="mini-graph-tag-label" x="510" y="177" text-anchor="middle">azure disk: resize needs…</text>
-      </a><circle class="mini-graph-current" cx="400" cy="58" r="7" />
-    <text class="mini-graph-current-label" x="400" y="78" text-anchor="middle">sd-world: perform a full system…</text>
-  </svg><div class="mini-graph-list"><p class="mini-graph-list-header mini-graph-list-direct-header">Linked from</p>
-      <ul class="mini-graph-list-direct"><li><a href="https://perrotta.dev/2024/10/prodaccess/">prodaccess</a></li><li><a href="https://perrotta.dev/2025/10/new-script-sd-world-perform-a-full-system-upgrade/">New script: sd-world: perform a full system upgrade</a></li></ul><p class="mini-graph-list-header">Shared tags</p>
-      <ul class="mini-graph-list-tags"><li><a href="https://perrotta.dev/2026/08/prometheus-a-117gb-wal-that-could-not-truncate/">prometheus: a 117GB WAL that could not truncate</a> <small>(dev)</small></li><li><a href="https://perrotta.dev/2026/08/azure-disk-resize-needs-the-pvc-patch-too/">azure disk: resize needs the PVC patch too</a> <small>(dev)</small></li></ul></div>
-</div><a class="u-url" href="https://perrotta.dev/2024/01/sd-world-perform-a-full-system-upgrade/" aria-hidden="true" style="display:none;"></a>
+    </defs><path class="mini-graph-direct-edge" marker-mid="url(#mini-graph-arrow)" d="M252,50 L315.5,50 L379,50" /><path class="mini-graph-tag-edge" marker-mid="url(#mini-graph-tag-arrow)" d="M240,59 L185,97 L130,135" /><path class="mini-graph-tag-edge" marker-mid="url(#mini-graph-tag-arrow)" d="M240,59 L295,97 L350,135" /><text class="mini-graph-header" x="398" y="14">Links to</text><text class="mini-graph-header mini-graph-tag-header" x="240" y="114" text-anchor="middle">Shared tags</text><a class="mini-graph-direct" href="https://perrotta.dev/2026/08/azure-disk-resize-needs-the-pvc-patch-too/">
+        <title>azure disk: resize needs the PVC patch too</title>
+        <circle class="mini-graph-direct-node" cx="388" cy="50" r="5.5" />
+        <text class="mini-graph-direct-label" x="398" y="50" dy="0.35em">azure disk: resize needs…</text>
+      </a><a class="mini-graph-tag" href="https://perrotta.dev/2026/08/kargo-notify-when-a-soak-completes/">
+        <title>kargo: notify when a soak completes — shared tags: bloggify, dev, kubernetes</title>
+        <circle class="mini-graph-tag-node" cx="130" cy="142" r="4.5" />
+        <text class="mini-graph-tag-label" x="130" y="161" text-anchor="middle">kargo: notify when a soak…</text>
+      </a><a class="mini-graph-tag" href="https://perrotta.dev/2026/08/kubernetes-force-refresh-a-cached-multi-architecture-image/">
+        <title>kubernetes: force-refresh a cached multi-architecture image — shared tags: bloggify, dev, kubernetes</title>
+        <circle class="mini-graph-tag-node" cx="350" cy="142" r="4.5" />
+        <text class="mini-graph-tag-label" x="350" y="161" text-anchor="middle">kubernetes: force-refresh…</text>
+      </a><circle class="mini-graph-current" cx="240" cy="50" r="7" />
+    <text class="mini-graph-current-label" x="240" y="70" text-anchor="middle">prometheus: a 117GB WAL that could not…</text>
+  </svg><div class="mini-graph-list"><p class="mini-graph-list-header mini-graph-list-direct-header">Links to</p>
+      <ul class="mini-graph-list-direct"><li><a href="https://perrotta.dev/2026/08/azure-disk-resize-needs-the-pvc-patch-too/">azure disk: resize needs the PVC patch too</a></li></ul><p class="mini-graph-list-header">Shared tags</p>
+      <ul class="mini-graph-list-tags"><li><a href="https://perrotta.dev/2026/08/kargo-notify-when-a-soak-completes/">kargo: notify when a soak completes</a> <small>(bloggify, dev, kubernetes)</small></li><li><a href="https://perrotta.dev/2026/08/kubernetes-force-refresh-a-cached-multi-architecture-image/">kubernetes: force-refresh a cached multi-architecture image</a> <small>(bloggify, dev, kubernetes)</small></li></ul></div>
+</div><a class="u-url" href="https://perrotta.dev/2026/08/prometheus-a-117gb-wal-that-could-not-truncate/" aria-hidden="true" style="display:none;"></a>
 <span class="p-author h-card" style="display:none;">
   <a class="p-name u-url" href="https://perrotta.dev/" rel="author">Thiago Perrotta</a>
 </span>
