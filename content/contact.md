@@ -5,6 +5,11 @@ aliases:
   - /about
 ---
 
+{{< email_link >}}Email{{< /email_link >}} is the best way to reach out.
+
+I do not have an SLO: replies are best-effort, though I tend to reply quickly
+whenever I'm not too busy.
+
 You can also find me in the following platforms[^1]:
 
 <!-- keep-sorted start -->
