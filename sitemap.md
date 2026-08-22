@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [LLM: Devise a plan](https://perrotta.dev/2026/08/llm-devise-a-plan/) (2026-08-22)
 - [kargo: notify when a soak completes](https://perrotta.dev/2026/08/kargo-notify-when-a-soak-completes/) (2026-08-21)
 - [mise: one frontend for tool versions](https://perrotta.dev/2026/08/mise-one-frontend-for-tool-versions/) (2026-08-21)
 - [Google notice of content restriction](https://perrotta.dev/2026/08/google-notice-of-content-restriction/) (2026-08-21)
@@ -1332,7 +1333,7 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (128 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (129 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Anki](https://perrotta.dev/tags/anki/) (11 posts)
 - [Argocd](https://perrotta.dev/tags/argocd/) (19 posts)
@@ -1343,7 +1344,7 @@
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (29 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1207 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1208 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
