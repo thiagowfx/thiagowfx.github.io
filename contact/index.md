@@ -1,9 +1,14 @@
 ---
 title: "Contact"
 url: https://perrotta.dev/contact/
-last_updated: 2026-08-14
+last_updated: 2026-08-22
 ---
 
+
+{{< email_link >}}Email{{< /email_link >}} is the best way to reach out.
+
+I do not have an SLO: replies are best-effort, though I tend to reply quickly
+whenever I'm not too busy.
 
 You can also find me in the following platforms[^1]:
 
