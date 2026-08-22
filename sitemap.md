@@ -24,6 +24,7 @@
 ## Blog Posts
 
 
+- [hugo: tag-based post connections](https://perrotta.dev/2026/08/hugo-tag-based-post-connections/) (2026-08-22)
 - [LLM: Devise a plan](https://perrotta.dev/2026/08/llm-devise-a-plan/) (2026-08-22)
 - [kargo: notify when a soak completes](https://perrotta.dev/2026/08/kargo-notify-when-a-soak-completes/) (2026-08-21)
 - [mise: one frontend for tool versions](https://perrotta.dev/2026/08/mise-one-frontend-for-tool-versions/) (2026-08-21)
@@ -1339,12 +1340,12 @@
 - [Argocd](https://perrotta.dev/tags/argocd/) (19 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (12 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (194 posts)
-- [Bloggify](https://perrotta.dev/tags/bloggify/) (36 posts)
+- [Bloggify](https://perrotta.dev/tags/bloggify/) (37 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
-- [Coding](https://perrotta.dev/tags/coding/) (29 posts)
+- [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1208 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1209 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1354,7 +1355,7 @@
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (167 posts)
 - [Macos](https://perrotta.dev/tags/macos/) (57 posts)
-- [Meta](https://perrotta.dev/tags/meta/) (63 posts)
+- [Meta](https://perrotta.dev/tags/meta/) (64 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pi](https://perrotta.dev/tags/pi/) (18 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (34 posts)
