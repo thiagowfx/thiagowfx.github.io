@@ -44,8 +44,8 @@ def compute_tag_related_posts(
     return [item[0] for item in scored[:limit]]
 ```
 
-Direct links remain directional, solid, and prominent. Shared-tag links are
-symmetric, dashed, and muted:
+Direct links remain solid and prominent. Shared-tag links use smaller arrows
+with dashed, muted edges:
 
 ```css {filename="layouts/partials/style.html"}
 .mini-graph .mini-graph-direct-edge {

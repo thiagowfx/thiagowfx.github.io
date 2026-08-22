@@ -43,7 +43,7 @@
   {{- end -}}
 {{- end -}}
 
-{{- /* Tag connections are symmetric and exclude direct links. */ -}}
+{{- /* Precomputed tag connections exclude direct links. */ -}}
 {{- $tagRelated := slice -}}
 {{- range $tagRelatedIds -}}
   {{- $hugoPath := index $paths . -}}
@@ -120,6 +120,16 @@
         orient="auto">
         <path d="M0,0 L10,5 L0,10 Z" />
       </marker>
+      <marker
+        id="mini-graph-tag-arrow"
+        viewBox="0 0 10 10"
+        refX="5"
+        refY="5"
+        markerWidth="5"
+        markerHeight="5"
+        orient="auto">
+        <path class="mini-graph-tag-arrow" d="M0,0 L10,5 L0,10 Z" />
+      </marker>
     </defs>
 
     {{- /* Edges first so nodes and labels paint on top. Direct edges use two
@@ -136,7 +146,9 @@
     {{- end -}}
     {{- range $i, $n := $tagRelated -}}
       {{- $x := add $tagStartX (mul $i 220.0) -}}
-      <path class="mini-graph-tag-edge" d="M{{ $centerX }},{{ add $cy 9.0 }} L{{ $x }},{{ sub $tagY 7.0 }}" />
+      {{- $y1 := add $cy 9.0 -}}
+      {{- $y2 := sub $tagY 7.0 -}}
+      <path class="mini-graph-tag-edge" marker-mid="url(#mini-graph-tag-arrow)" d="M{{ $centerX }},{{ $y1 }} L{{ div (add $centerX $x) 2.0 }},{{ div (add $y1 $y2) 2.0 }} L{{ $x }},{{ $y2 }}" />
     {{- end -}}
 
     {{- if $insShown -}}

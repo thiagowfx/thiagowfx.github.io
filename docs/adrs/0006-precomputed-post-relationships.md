@@ -117,7 +117,7 @@ As of 2026-08-20:
 - `outlinks` are part of each post record and support the per-post mini graph.
 - `tag_related` contains up to two posts ranked by shared tag count and date.
   Direct links are excluded. The per-post mini graph renders these as secondary,
-  non-directional connections.
+  dashed connections.
 - `layouts/partials/related-posts.html` renders both related and previous posts.
   There is no separate `previously.html` partial.
 - `just build` always runs `precompute` before the production Hugo build.
