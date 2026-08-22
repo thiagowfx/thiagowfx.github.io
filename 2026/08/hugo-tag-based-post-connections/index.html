@@ -17,12 +17,12 @@ I …">
   <meta property="og:description" content="Previously.
 Problem statement: post connections showed only direct links, while posts with the same tags remained disconnected in the graph of this blog.
 I added a second kind of edge. The pre-computation picks up to two posts with the most shared tags, breaks ties by date, and excludes direct links:
-ci/precompute_links.py python def compute_tag_related_posts( post: dict, all_posts: list[dict], outlinks_set: set[str], backlinks_set: set[str], limit: int = 2, ) -&gt; list[str]: &#34;&#34;&#34;Compute tag connections, excluding posts with direct links.&#34;&#34;&#34; post_tags = set(post[&#34;tags&#34;]) if not post_tags: return [] direct_ids = outlinks_set | backlinks_set scored = [] for other in all_posts: other_id = other[&#34;id&#34;] if other_id == post[&#34;id&#34;] or other_id in direct_ids: continue shared_tags = post_tags &amp; set(other[&#34;tags&#34;]) if shared_tags: scored.append((other_id, len(shared_tags), other[&#34;date&#34;])) scored.sort(key=lambda item: (item[1], item[2], item[0]), reverse=True) return [item[0] for item in scored[:limit]] Direct links remain directional, solid, and prominent. Shared-tag links are symmetric, dashed, and muted:">
+ci/precompute_links.py python def compute_tag_related_posts( post: dict, all_posts: list[dict], outlinks_set: set[str], backlinks_set: set[str], limit: int = 2, ) -&gt; list[str]: &#34;&#34;&#34;Compute tag connections, excluding posts with direct links.&#34;&#34;&#34; post_tags = set(post[&#34;tags&#34;]) if not post_tags: return [] direct_ids = outlinks_set | backlinks_set scored = [] for other in all_posts: other_id = other[&#34;id&#34;] if other_id == post[&#34;id&#34;] or other_id in direct_ids: continue shared_tags = post_tags &amp; set(other[&#34;tags&#34;]) if shared_tags: scored.append((other_id, len(shared_tags), other[&#34;date&#34;])) scored.sort(key=lambda item: (item[1], item[2], item[0]), reverse=True) return [item[0] for item in scored[:limit]] Direct links remain solid and prominent. Shared-tag links use smaller arrows with dashed, muted edges:">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2026-08-22T13:29:06+02:00">
-    <meta property="article:modified_time" content="2026-08-22T13:35:16+02:00">
+    <meta property="article:modified_time" content="2026-08-22T13:41:40+02:00">
     <meta property="article:tag" content="Bloggify">
     <meta property="article:tag" content="Coding">
     <meta property="article:tag" content="Dev">
@@ -33,7 +33,7 @@ ci/precompute_links.py python def compute_tag_related_posts( post: dict, all_pos
   <meta name="twitter:description" content="Previously.
 Problem statement: post connections showed only direct links, while posts with the same tags remained disconnected in the graph of this blog.
 I added a second kind of edge. The pre-computation picks up to two posts with the most shared tags, breaks ties by date, and excludes direct links:
-ci/precompute_links.py python def compute_tag_related_posts( post: dict, all_posts: list[dict], outlinks_set: set[str], backlinks_set: set[str], limit: int = 2, ) -&gt; list[str]: &#34;&#34;&#34;Compute tag connections, excluding posts with direct links.&#34;&#34;&#34; post_tags = set(post[&#34;tags&#34;]) if not post_tags: return [] direct_ids = outlinks_set | backlinks_set scored = [] for other in all_posts: other_id = other[&#34;id&#34;] if other_id == post[&#34;id&#34;] or other_id in direct_ids: continue shared_tags = post_tags &amp; set(other[&#34;tags&#34;]) if shared_tags: scored.append((other_id, len(shared_tags), other[&#34;date&#34;])) scored.sort(key=lambda item: (item[1], item[2], item[0]), reverse=True) return [item[0] for item in scored[:limit]] Direct links remain directional, solid, and prominent. Shared-tag links are symmetric, dashed, and muted:">
+ci/precompute_links.py python def compute_tag_related_posts( post: dict, all_posts: list[dict], outlinks_set: set[str], backlinks_set: set[str], limit: int = 2, ) -&gt; list[str]: &#34;&#34;&#34;Compute tag connections, excluding posts with direct links.&#34;&#34;&#34; post_tags = set(post[&#34;tags&#34;]) if not post_tags: return [] direct_ids = outlinks_set | backlinks_set scored = [] for other in all_posts: other_id = other[&#34;id&#34;] if other_id == post[&#34;id&#34;] or other_id in direct_ids: continue shared_tags = post_tags &amp; set(other[&#34;tags&#34;]) if shared_tags: scored.append((other_id, len(shared_tags), other[&#34;date&#34;])) scored.sort(key=lambda item: (item[1], item[2], item[0]), reverse=True) return [item[0] for item in scored[:limit]] Direct links remain solid and prominent. Shared-tag links use smaller arrows with dashed, muted edges:">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -44,7 +44,7 @@ ci/precompute_links.py python def compute_tag_related_posts( post: dict, all_pos
       "description": "Previously.\nProblem statement: post connections showed only direct links, while posts with the same tags remained disconnected in the graph of this blog.\nI …",
       "url": "https://perrotta.dev/2026/08/hugo-tag-based-post-connections/",
       "datePublished": "2026-08-22T13:29:06+02:00",
-      "dateModified": "2026-08-22T13:35:16+02:00",
+      "dateModified": "2026-08-22T13:41:40+02:00",
       "author": {"@type":"Person","name":"Thiago Perrotta","url":"https://perrotta.dev/"},
       "mainEntityOfPage": {
         "@type": "WebPage",
@@ -1337,6 +1337,10 @@ ci/precompute_links.py python def compute_tag_related_posts( post: dict, all_pos
     fill: var(--link-color);
   }
 
+  .mini-graph marker path.mini-graph-tag-arrow {
+    fill: var(--color-gray);
+  }
+
   .mini-graph text {
     font-family: var(--font-body);
     font-size: 12px;
@@ -1671,7 +1675,7 @@ ci/precompute_links.py python def compute_tag_related_posts( post: dict, all_pos
     <time class="dt-published" datetime='2026-08-22T13:29:06&#43;02:00'>
       22 Aug, 2026
     </time>
-     • 246 words   • 2 min 
+     • 247 words   • 2 min 
     
   </span>
   
@@ -1711,8 +1715,8 @@ the <strong>most shared tags</strong>, breaks ties by date, and excludes direct 
 </span></span><span class="line"><span class="cl">    <span class="n">scored</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">scored</span><span class="p">[:</span><span class="n">limit</span><span class="p">]]</span></span></span></code></pre></div>
 </div>
-<p>Direct links remain directional, solid, and prominent. Shared-tag links are
-symmetric, dashed, and muted:</p>
+<p>Direct links remain solid and prominent. Shared-tag links use smaller arrows
+with dashed, muted edges:</p>
 <div class="codeblock" data-lang="css">
    <div class="codeblock-header">
      <span class="codeblock-language">layouts/partials/style.html</span>
@@ -1818,7 +1822,17 @@ Archiving is better …</p><small style="color: var(--color-gray);">Jul 27, 2026
         orient="auto">
         <path d="M0,0 L10,5 L0,10 Z" />
       </marker>
-    </defs><path class="mini-graph-direct-edge" marker-mid="url(#mini-graph-arrow)" d="M252,58 L315.5,50.5 L379,43" /><path class="mini-graph-direct-edge" marker-mid="url(#mini-graph-arrow)" d="M252,58 L315.5,65.5 L379,73" /><path class="mini-graph-tag-edge" d="M240,67 L130,151" /><path class="mini-graph-tag-edge" d="M240,67 L350,151" /><text class="mini-graph-header" x="398" y="14">Links to</text><text class="mini-graph-header mini-graph-tag-header" x="240" y="130" text-anchor="middle">Shared tags</text><a class="mini-graph-direct" href="https://perrotta.dev/2026/07/anki-archive-a-deck/">
+      <marker
+        id="mini-graph-tag-arrow"
+        viewBox="0 0 10 10"
+        refX="5"
+        refY="5"
+        markerWidth="5"
+        markerHeight="5"
+        orient="auto">
+        <path class="mini-graph-tag-arrow" d="M0,0 L10,5 L0,10 Z" />
+      </marker>
+    </defs><path class="mini-graph-direct-edge" marker-mid="url(#mini-graph-arrow)" d="M252,58 L315.5,50.5 L379,43" /><path class="mini-graph-direct-edge" marker-mid="url(#mini-graph-arrow)" d="M252,58 L315.5,65.5 L379,73" /><path class="mini-graph-tag-edge" marker-mid="url(#mini-graph-tag-arrow)" d="M240,67 L185,109 L130,151" /><path class="mini-graph-tag-edge" marker-mid="url(#mini-graph-tag-arrow)" d="M240,67 L295,109 L350,151" /><text class="mini-graph-header" x="398" y="14">Links to</text><text class="mini-graph-header mini-graph-tag-header" x="240" y="130" text-anchor="middle">Shared tags</text><a class="mini-graph-direct" href="https://perrotta.dev/2026/07/anki-archive-a-deck/">
         <title>Anki: archive a deck</title>
         <circle class="mini-graph-direct-node" cx="388" cy="43" r="5.5" />
         <text class="mini-graph-direct-label" x="398" y="43" dy="0.35em">Anki: archive a deck</text>
