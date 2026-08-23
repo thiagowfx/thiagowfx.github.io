@@ -46,7 +46,7 @@ def replace_dashes(content):
             # Replace ' -- ' only outside inline code spans.
             parts = line.split('`')
             for i in range(0, len(parts), 2):
-                parts[i] = re.sub(r' --(?=[ ,;.!?)])', ' –', parts[i])
+                parts[i] = re.sub(r'(?<!\S)--(?=[ ,;.!?)])', '–', parts[i])
             line = '`'.join(parts)
 
         result.append(line)
@@ -58,7 +58,7 @@ def main(argv=None):
     argv = argv or sys.argv[1:]
 
     if not argv:
-        markdown_files = list(Path('content/posts').glob('*.md'))
+        markdown_files = list(Path('content').glob('**/posts/*.md'))
         if not markdown_files:
             return 0
         argv = [str(f) for f in markdown_files]
