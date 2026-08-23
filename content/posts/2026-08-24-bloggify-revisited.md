@@ -12,7 +12,7 @@ Yours truly, [more than two months ago]({{< ref "2026-06-09-bloggify" >}}):
 
 > As of today, it's not clear to me whether this approach will stick.
 
-Clearly this approach is here to stay: https://perrotta.dev/tags/bloggif⠀ (40+
+Clearly this approach is here to stay: [bloggify]({{< ref "/tags/bloggify" >}}) (40+
 posts at the time of this writing).
 
 I am starting to ponder whether to split `/bloggify` posts into an [Agent
