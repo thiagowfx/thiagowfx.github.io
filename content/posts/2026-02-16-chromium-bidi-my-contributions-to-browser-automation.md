@@ -211,7 +211,7 @@ keep a project maintainable as it grows.
 This was one of the most rewarding projects I worked on at Google. Building a
 browser automation protocol from scratch, contributing to W3C specs, and seeing
 it all come together in real test infrastructure used by other browser vendors
--- it's the kind of work that makes you appreciate the craft of software
+– it's the kind of work that makes you appreciate the craft of software
 engineering at the standards level.
 
 The project is [still

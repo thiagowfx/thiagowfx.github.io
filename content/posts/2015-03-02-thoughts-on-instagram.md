@@ -31,7 +31,7 @@ day.
 (in principle), even after you delete them. And what one person – for example,
 either a complete stranger or the company behind Instagram itself – could to
 with them? So many things. The most common underrated example is: selling them
--- plus information associated with them – to other companies, so they can (for
+– plus information associated with them – to other companies, so they can (for
 example) better target ads to you. This is not simply a matter of ads: it also
 creates a bigger and bigger bubblein which you get stuck.
 
