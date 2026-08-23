@@ -1,7 +1,7 @@
 ---
 title: "Como rodar JNLP no Linux"
 url: https://perrotta.dev/pt/2013/09/como-rodar-jnlp-no-linux/
-last_updated: 2026-03-02
+last_updated: 2026-08-23
 ---
 
 
@@ -112,6 +112,4 @@ gksudo javaws download_agent
 ```
 
 E seja feliz.
-
-Obrigado por ler.
 

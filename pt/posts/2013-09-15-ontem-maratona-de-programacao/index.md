@@ -1,7 +1,7 @@
 ---
 title: "Ontem: Maratona de Programação"
 url: https://perrotta.dev/pt/posts/2013-09-15-ontem-maratona-de-programacao/
-last_updated: 2026-03-03
+last_updated: 2026-08-23
 ---
 
 
@@ -132,6 +132,4 @@ que vem, se esse blog ainda existir, certamente ainda terá mais posts ^^
 
 (Só não posso terminar de fechar sem dizer que a experiência foi – *sempre é!*
 -- bastante legal e boa!)
-
-*Obrigado por ler.*
 
