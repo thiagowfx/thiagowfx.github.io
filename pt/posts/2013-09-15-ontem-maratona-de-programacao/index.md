@@ -131,5 +131,5 @@ menos no início do ano. Isso pelo menos para a Maratona desse ano...na do ano
 que vem, se esse blog ainda existir, certamente ainda terá mais posts ^^
 
 (Só não posso terminar de fechar sem dizer que a experiência foi – *sempre é!*
--- bastante legal e boa!)
+– bastante legal e boa!)
 
