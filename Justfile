@@ -301,6 +301,11 @@ lint *args:
         prek run --files {{ args }}
     fi
 
+[doc('Run unit tests for CI scripts')]
+[group('utils')]
+test:
+    prek run test --all-files
+
 [doc('Ping search engines about sitemap changes')]
 [group('publish')]
 ping sitemap="https://perrotta.dev/sitemap.xml":

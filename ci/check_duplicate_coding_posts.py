@@ -24,7 +24,7 @@ def extract_leetcode_number(filepath):
         with open(filepath, 'r', encoding='utf-8') as f:
             content = f.read()
             # Match: title: "LeetCode #123" or similar
-            title_match = re.search(r'title:.*?[Ll]eetcode\s+#?(\d+)', content)
+            title_match = re.search(r'title:.*?[Ll]eet[Cc]ode\s+#?(\d+)', content)
             if title_match:
                 return int(title_match.group(1))
     except (IOError, UnicodeDecodeError):
