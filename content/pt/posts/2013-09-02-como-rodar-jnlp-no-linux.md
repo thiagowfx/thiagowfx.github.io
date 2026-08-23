@@ -113,5 +113,3 @@ gksudo javaws download_agent
 ```
 
 E seja feliz.
-
-Obrigado por ler.

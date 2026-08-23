@@ -134,5 +134,3 @@ que vem, se esse blog ainda existir, certamente ainda terá mais posts ^^
 
 (Só não posso terminar de fechar sem dizer que a experiência foi – *sempre é!*
 -- bastante legal e boa!)
-
-*Obrigado por ler.*
