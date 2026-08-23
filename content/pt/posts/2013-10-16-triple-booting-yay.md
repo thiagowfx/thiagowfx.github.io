@@ -71,8 +71,7 @@ Fedora, openSUSE. Vale a pena. Sempre tem uma coisinha legal. E é uma forma de
 satisfazer a curiosidade...
 
 Vamos tomar uma outra linha nesse post, agora. Num post anterior eu falei sobre
-design. [Nesse post
-aqui](http://thiagoperrotta.wordpress.com/2013/09/27/era-uma-vezkernel-panic-uma-historia-de-amor-parte-1-5/).
+design. [Nesse post aqui]({{< ref "2013-09-27-era-uma-vezkernel-panic-uma-historia-de-amor-parte-1-5" >}}).
 Agora estou aplicando parte do que eu falei lá. Mais especificamente, sobre a
 parte de 'usar as aplicações para a forma para qual seus projetistas a
 projetaram para ser usadas'. Ou pelo menos quase isso. Eu vou seguir esse
@@ -136,5 +135,3 @@ do nível de *expertise* desses caras (dessas também, existem ótimas
     programadoras por aí =P) e, acima de tudo, pela admiração de alguns
     (projetos e desenvolvedores). Bom. As coisas vão caminhando com calma,
     certo? Mas não com **tanta** calma.
-
-Obrigado por ler.
