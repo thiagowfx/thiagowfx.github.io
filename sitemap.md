@@ -25,6 +25,7 @@
 ## Blog Posts
 
 
+- [terrateam: plan from drift issues](https://perrotta.dev/2026/08/terrateam-plan-from-drift-issues/) (2026-08-24)
 - [Books](https://perrotta.dev/2026/08/books/) (2026-08-24)
 - [bloggify, revisited](https://perrotta.dev/2026/08/bloggify-revisited/) (2026-08-24)
 - [pi: statusline with GitHub PR link](https://perrotta.dev/2026/08/pi-statusline-with-github-pr-link/) (2026-08-24)
@@ -1348,12 +1349,12 @@
 - [Argocd](https://perrotta.dev/tags/argocd/) (19 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (12 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (196 posts)
-- [Bloggify](https://perrotta.dev/tags/bloggify/) (42 posts)
+- [Bloggify](https://perrotta.dev/tags/bloggify/) (43 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1218 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1219 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1375,5 +1376,5 @@
 - [Serenity](https://perrotta.dev/tags/serenity/) (276 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (12 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
-- [Terraform](https://perrotta.dev/tags/terraform/) (13 posts)
+- [Terraform](https://perrotta.dev/tags/terraform/) (14 posts)
 - [Vim](https://perrotta.dev/tags/vim/) (13 posts)
