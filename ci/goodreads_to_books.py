@@ -4,15 +4,15 @@
 # dependencies = ["PyYAML"]
 # ///
 """
-Import a Goodreads CSV export into data/reading.yaml.
+Import a Goodreads CSV export into data/books.yaml.
 
 Usage:
-    ci/goodreads_to_reading.py ~/Downloads/goodreads_library_export.csv
-    ci/goodreads_to_reading.py export.csv --min-rating 4 --no-covers
+    ci/goodreads_to_books.py ~/Downloads/goodreads_library_export.csv
+    ci/goodreads_to_books.py export.csv --min-rating 4 --no-covers
 
 Keeps only books on the "read" shelf whose rating is at least --min-rating.
 Category placement and hand-written notes survive re-imports: books already
-present in data/reading.yaml keep their category, series, note and cover, by
+present in data/books.yaml keep their category, series, note and cover, by
 their Goodreads book id. New books land in the "Miscellaneous" category, and
 book ids listed under "excluded" stay out of the page for good. Deleting a book
 by hand and re-importing brings it back, so --exclude-missing turns every book
@@ -41,8 +41,8 @@ import urllib.request
 
 import yaml
 
-DATA_FILE = pathlib.Path(__file__).resolve().parent.parent / "data" / "reading.yaml"
-SCHEMA_REF = "# yaml-language-server: $schema=../schemas/reading.json"
+DATA_FILE = pathlib.Path(__file__).resolve().parent.parent / "data" / "books.yaml"
+SCHEMA_REF = "# yaml-language-server: $schema=../schemas/books.json"
 MISCELLANEOUS = "Miscellaneous"
 BOOK_URL = "https://www.goodreads.com/book/show/{id}"
 COVER_PATTERN = re.compile(r'<meta property="og:image" content="([^"]+)"')

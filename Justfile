@@ -306,6 +306,11 @@ lint *args:
 test:
     prek run test --all-files
 
+[doc('Import a Goodreads CSV export into data/books.yaml')]
+[group('manage')]
+goodreads-import csv="~/Downloads/goodreads_library_export.csv" *args:
+    ci/goodreads_to_books.py {{ csv }} {{ args }}
+
 [doc('Ping search engines about sitemap changes')]
 [group('publish')]
 ping sitemap="https://perrotta.dev/sitemap.xml":

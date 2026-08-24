@@ -7,7 +7,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from goodreads_to_reading import (
+from goodreads_to_books import (
     add_covers,
     book_id,
     clean_title,
@@ -171,7 +171,7 @@ class RenderTest(unittest.TestCase):
 
         self.assertEqual(
             text,
-            "# yaml-language-server: $schema=../schemas/reading.json\n"
+            "# yaml-language-server: $schema=../schemas/books.json\n"
             "profile: https://example.com/me\n"
             'updated: "2026-01-02"\n'
             "categories:\n"
@@ -235,7 +235,7 @@ class ReadExistingTest(unittest.TestCase):
 
     def test_reads_back_what_render_wrote(self):
         with tempfile.TemporaryDirectory() as directory:
-            path = Path(directory) / "reading.yaml"
+            path = Path(directory) / "books.yaml"
             book = {
                 "id": "4099",
                 "title": "Book",
@@ -289,9 +289,9 @@ class FetchSeriesUrlsTest(unittest.TestCase):
         ]
         links = {"Known": "https://example.com/known"}
 
-        with patch("goodreads_to_reading.fetch_page", return_value=SERIES_JSON) as page:
+        with patch("goodreads_to_books.fetch_page", return_value=SERIES_JSON) as page:
             with patch(
-                "goodreads_to_reading.series_url", return_value="https://example.com/f"
+                "goodreads_to_books.series_url", return_value="https://example.com/f"
             ):
                 with quiet():
                     added = fetch_series_urls(books, links, 0)
@@ -308,7 +308,7 @@ class AddCoversTest(unittest.TestCase):
             {"id": "2", "title": "Needs one", "cover": None},
         ]
 
-        with patch("goodreads_to_reading.fetch_cover", return_value="c.jpg") as fetch:
+        with patch("goodreads_to_books.fetch_cover", return_value="c.jpg") as fetch:
             with quiet():
                 fetched = add_covers(books, 0, lambda: None)
 
@@ -319,7 +319,7 @@ class AddCoversTest(unittest.TestCase):
     def test_gives_up_once_goodreads_keeps_refusing(self):
         books = [{"id": str(i), "title": str(i), "cover": None} for i in range(20)]
 
-        with patch("goodreads_to_reading.fetch_cover", return_value=None) as fetch:
+        with patch("goodreads_to_books.fetch_cover", return_value=None) as fetch:
             with quiet():
                 fetched = add_covers(books, 0, lambda: None)
 
@@ -331,9 +331,9 @@ class MainTest(unittest.TestCase):
     def test_imports_and_then_keeps_category_note_and_date(self):
         with tempfile.TemporaryDirectory() as directory:
             export = write_export(directory, [row("1", "First"), row("2", "Second")])
-            output = Path(directory) / "reading.yaml"
+            output = Path(directory) / "books.yaml"
             argv = [
-                "goodreads_to_reading.py",
+                "goodreads_to_books.py",
                 str(export),
                 "--output",
                 str(output),
@@ -364,15 +364,15 @@ class MainTest(unittest.TestCase):
     def test_leaves_excluded_books_out(self):
         with tempfile.TemporaryDirectory() as directory:
             export = write_export(directory, [row("1", "Kept"), row("2", "Dropped")])
-            output = Path(directory) / "reading.yaml"
+            output = Path(directory) / "books.yaml"
             output.write_text(
-                "# yaml-language-server: $schema=../schemas/reading.json\n"
+                "# yaml-language-server: $schema=../schemas/books.json\n"
                 "excluded:\n"
                 '  - "2"\n'
                 "categories: []\n"
             )
             argv = [
-                "goodreads_to_reading.py",
+                "goodreads_to_books.py",
                 str(export),
                 "--output",
                 str(output),

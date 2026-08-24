@@ -1,0 +1,155 @@
+{{- define "main" }}
+<style>
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .books-item {
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
+  .books-item a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .books-cover {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+    border-radius: .25rem;
+    background: color-mix(in srgb, var(--text-color) 6%, var(--bg-color));
+  }
+  .books-cover-missing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    text-align: center;
+    font-weight: 600;
+    overflow: hidden;
+  }
+  .books-item a:hover .books-cover {
+    border-color: var(--link-color);
+  }
+  .books-item-title {
+    font-weight: 600;
+    margin-top: 0.4rem;
+  }
+  .books-item-meta {
+    color: var(--color-gray);
+    font-size: 0.75rem;
+  }
+  .books-item-note {
+    margin-top: 0.2rem;
+  }
+  .books-series-count {
+    color: var(--color-gray);
+    font-weight: 400;
+  }
+  .books-series .books-cover {
+    box-shadow: 3px -3px 0 -1px var(--bg-color), 3px -3px 0 0 var(--border-color),
+      6px -6px 0 -1px var(--bg-color), 6px -6px 0 0 var(--border-color);
+  }
+  .books-stars {
+    color: #e2b714;
+    letter-spacing: 0.05em;
+  }
+</style>
+
+{{- $data := hugo.Data.books }}
+{{- $categories := $data.categories }}
+{{- $seriesLinks := dict }}
+{{- range $data.series }}{{ $seriesLinks = merge $seriesLinks (dict .name .url) }}{{ end }}
+{{- $total := 0 }}
+{{- range $categories }}{{ $total = add $total (len .books) }}{{ end }}
+
+<h2>{{ .Title }}</h2>
+
+{{- $updated := or $data.updated (.Lastmod.Format "2006-01-02") }}
+{{- $updated = time.AsTime $updated }}
+<p>
+  <span class="pubdate-single">
+    Last updated on
+    <time datetime='{{ $updated.Format "2006-01-02" }}'>{{ $updated.Format (default "02 Jan, 2006" .Site.Params.dateFormat) }}</time>
+  </span>
+</p>
+
+<p>My favorite books, {{ $total }} of them across {{ len $categories }} categories.
+  Backed by <a href="https://github.com/thiagowfx/perrotta.dev/blob/master/data/books.yaml"><code>data/books.yaml</code></a>,
+  validated against a JSON schema. Everything I read lives on
+  <a href="{{ $data.profile }}">Goodreads</a>, and the covers come from there too.</p>
+
+{{- range $category := $categories }}
+{{- /* One entry per standalone book, plus one per series that has several. */}}
+{{- $entries := slice }}
+{{- $names := slice }}
+{{- range $category.books }}
+  {{- with .series }}
+    {{- if not (in $names .) }}{{ $names = $names | append . }}{{ end }}
+  {{- else }}
+    {{- $entries = $entries | append (dict "sort" (lower .title) "book" .) }}
+  {{- end }}
+{{- end }}
+{{- range $name := $names }}
+  {{- $books := sort (where $category.books "series" $name) "year" }}
+  {{- if eq (len $books) 1 }}
+    {{- $entries = $entries | append (dict "sort" (lower (index $books 0).title) "book" (index $books 0)) }}
+  {{- else }}
+    {{- $entries = $entries | append (dict "sort" (lower $name) "name" $name "books" $books) }}
+  {{- end }}
+{{- end }}
+<h3>{{ $category.name }}</h3>
+<div class="books-grid">
+  {{- range sort $entries "sort" }}
+  {{- if .name }}
+  {{- $first := index .books 0 }}
+  {{- $titles := slice }}
+  {{- range .books }}{{ $titles = $titles | append .title }}{{ end }}
+  {{- $label := printf "%s: %d books by %s (%s)" .name (len .books) $first.author (delimit $titles ", ") }}
+  {{- $href := or (index $seriesLinks .name) $first.url }}
+  <div class="books-item books-series">
+    <a href="{{ $href }}" title="{{ $label }}">
+      {{- with $first.cover }}
+      <img class="books-cover" src="{{ . }}" alt="Cover of {{ $first.title }} by {{ $first.author }}" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+      {{- else }}
+      <span class="books-cover books-cover-missing" aria-hidden="true">{{ .name }}</span>
+      {{- end }}
+      <div class="books-item-title">{{ .name }}
+        <span class="books-series-count">&middot; {{ len .books }} books</span>
+      </div>
+    </a>
+    <div class="books-item-meta">
+      {{ $first.author }}
+      {{- with $first.rating }}<br><span class="books-stars" title="{{ . }} out of 5">{{ strings.Repeat . "&#9733;" | safeHTML }}{{ strings.Repeat (sub 5 .) "&#9734;" | safeHTML }}</span>{{ end }}
+    </div>
+  </div>
+  {{- else }}
+  {{- $book := .book }}
+  {{- $label := printf "%s by %s" $book.title $book.author }}
+  <div class="books-item">
+    <a href="{{ $book.url }}" title="{{ $label }}">
+      {{- with $book.cover }}
+      <img class="books-cover" src="{{ . }}" alt="Cover of {{ $label }}" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+      {{- else }}
+      <span class="books-cover books-cover-missing" aria-hidden="true">{{ $book.title }}</span>
+      {{- end }}
+      <div class="books-item-title">{{ $book.title }}</div>
+    </a>
+    <div class="books-item-meta">
+      {{ $book.author }}
+      {{- with $book.year }} &middot; {{ . }}{{ end }}
+      {{- with $book.rating }}<br><span class="books-stars" title="{{ . }} out of 5">{{ strings.Repeat . "&#9733;" | safeHTML }}{{ strings.Repeat (sub 5 .) "&#9734;" | safeHTML }}</span>{{ end }}
+    </div>
+    {{- with $book.note }}<div class="books-item-note">{{ . }}</div>{{ end }}
+  </div>
+  {{- end }}
+  {{- end }}
+</div>
+{{- end }}
+
+{{ .Content }}
+{{- end -}}
