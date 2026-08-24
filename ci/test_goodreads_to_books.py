@@ -165,7 +165,6 @@ class RenderTest(unittest.TestCase):
             "year": 1999,
             "rating": 5,
             "cover": "https://example.com/4099.jpg",
-            "note": "Good one.",
         }
 
         text = render(
@@ -185,8 +184,7 @@ class RenderTest(unittest.TestCase):
             "        year: 1999\n"
             "        rating: 5\n"
             "        url: https://www.goodreads.com/book/show/4099\n"
-            "        cover: https://example.com/4099.jpg\n"
-            "        note: Good one.\n",
+            "        cover: https://example.com/4099.jpg\n",
         )
 
     def test_sorts_categories_with_miscellaneous_last_and_books_by_title(self):
@@ -264,7 +262,6 @@ class ReadExistingTest(unittest.TestCase):
                 "author": "Author",
                 "year": None,
                 "rating": 5,
-                "note": "Note.",
                 "cover": "https://example.com/c.jpg",
             }
             book["series"] = "Some Series"
@@ -287,7 +284,6 @@ class ReadExistingTest(unittest.TestCase):
             self.assertEqual(links, {"Some Series": "https://example.com/s"})
             self.assertEqual(known["4099"]["series"], "Some Series")
             self.assertEqual(known["4099"]["category"], "Technical")
-            self.assertEqual(known["4099"]["note"], "Note.")
             self.assertEqual(known["4099"]["cover"], "https://example.com/c.jpg")
 
 
@@ -335,7 +331,6 @@ class OverrideTest(unittest.TestCase):
                 "        author: Ada Lovelace\n"
                 "        rating: 5\n"
                 "        url: https://www.goodreads.com/book/show/22034\n"
-                "        note: Mine.\n"
             )
             argv = [
                 "goodreads_to_books.py",
@@ -351,7 +346,6 @@ class OverrideTest(unittest.TestCase):
 
             self.assertIn("  - name: Fiction\n", text)
             self.assertNotIn("Miscellaneous", text)
-            self.assertIn("        note: Mine.\n", text)
             self.assertIn("        url: https://www.goodreads.com/book/show/22034\n", text)
             self.assertNotIn("O Poderoso Chefao", text)
 
@@ -416,7 +410,7 @@ class AddCoversTest(unittest.TestCase):
 
 
 class MainTest(unittest.TestCase):
-    def test_imports_and_then_keeps_category_note_and_date(self):
+    def test_imports_and_then_keeps_category_and_date(self):
         with tempfile.TemporaryDirectory() as directory:
             export = write_export(directory, [row("1", "First"), row("2", "Second")])
             output = Path(directory) / "books.yaml"
@@ -439,8 +433,6 @@ class MainTest(unittest.TestCase):
                 r'^updated: ".*"$', 'updated: "2020-01-01"', first, flags=re.M
             )
             edited = edited.replace("  - name: Miscellaneous", "  - name: Fiction")
-            url = "        url: https://www.goodreads.com/book/show/1\n"
-            edited = edited.replace(url, url + "        note: Mine.\n")
             output.write_text(edited)
             before = output.read_text()
 

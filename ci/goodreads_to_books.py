@@ -11,8 +11,8 @@ Usage:
     ci/goodreads_to_books.py export.csv --min-rating 4 --no-covers
 
 Keeps only books on the "read" shelf whose rating is at least --min-rating.
-Category placement and hand-written notes survive re-imports: books already
-present in data/books.yaml keep their category, series, note and cover, by
+Category placement survives re-imports: books already present in
+data/books.yaml keep their category, series and cover, matched by
 their Goodreads book id. New books land in the "Miscellaneous" category, and
 book ids listed under "excluded" stay out of the page for good. Deleting a book
 by hand and re-importing brings it back, so --exclude-missing turns every book
@@ -326,8 +326,6 @@ def render(profile, updated, excluded, links, overrides, categories):
                 lines.append("        series: {}".format(quote(book["series"])))
             if book.get("cover"):
                 lines.append("        cover: {}".format(quote(book["cover"])))
-            if book.get("note"):
-                lines.append("        note: {}".format(quote(book["note"])))
     return "\n".join(lines) + "\n"
 
 
@@ -396,7 +394,6 @@ def main():
             kept += 1
         book["category"] = previous["category"] if previous else MISCELLANEOUS
         book["series"] = previous.get("series") if previous else None
-        book["note"] = previous.get("note") if previous else None
         book["cover"] = previous.get("cover") if previous else None
         # The override has the last word, even over what the file already held.
         if book["id"] in overrides:
@@ -424,7 +421,7 @@ def main():
     covered = sum(1 for book in books if book.get("cover"))
     print(
         "wrote {} books in {} categories to {}"
-        " ({} kept their category, series, note and cover; {} covers, {} fetched;"
+        " ({} kept their category, series and cover; {} covers, {} fetched;"
         " {} excluded)".format(
             len(books),
             len(categories),
