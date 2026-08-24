@@ -64,8 +64,6 @@
 {{- $categories := $data.categories }}
 {{- $seriesLinks := dict }}
 {{- range $data.series }}{{ $seriesLinks = merge $seriesLinks (dict .name .url) }}{{ end }}
-{{- $total := 0 }}
-{{- range $categories }}{{ $total = add $total (len .books) }}{{ end }}
 
 <h2>{{ .Title }}</h2>
 
@@ -78,10 +76,13 @@
   </span>
 </p>
 
-<p>My favorite books, {{ $total }} of them across {{ len $categories }} categories.
+<p>My favorite books, split across {{ len $categories }} categories.
   Backed by <a href="https://github.com/thiagowfx/perrotta.dev/blob/master/data/books.yaml"><code>data/books.yaml</code></a>,
   validated against a JSON schema. Everything I read lives on
   <a href="{{ $data.profile }}">Goodreads</a>, and the covers come from there too.</p>
+
+<p>Book recommendations are almost always welcome, just
+  <a href="{{ "contact" | relURL }}">send them over</a>!</p>
 
 {{- range $category := $categories }}
 {{- /* One entry per standalone book, plus one per series that has several. */}}
@@ -102,7 +103,12 @@
     {{- $entries = $entries | append (dict "sort" (lower $name) "name" $name "books" $books) }}
   {{- end }}
 {{- end }}
-<h3>{{ $category.name }}</h3>
+{{- /* Mirrors layouts/_default/_markup/render-heading.html, which only runs on markdown. */}}
+{{- $anchor := anchorize $category.name }}
+<h3 id="{{ $anchor }}">
+  {{ $category.name }}
+  <a class="heading-anchor" href="#{{ $anchor }}" aria-label="Link to this section">#</a>
+</h3>
 <div class="books-grid">
   {{- range sort $entries "sort" }}
   {{- if .name }}

@@ -8,11 +8,14 @@ from pathlib import Path
 from unittest.mock import patch
 
 from goodreads_to_books import (
+    EXCLUDED_SORT,
     add_covers,
+    apply_override,
     book_id,
     clean_title,
     fetch_series_urls,
     main,
+    marker,
     parse_export,
     quote,
     read_existing,
@@ -166,7 +169,7 @@ class RenderTest(unittest.TestCase):
         }
 
         text = render(
-            "https://example.com/me", "2026-01-02", {}, {}, {"Technical": [book]}
+            "https://example.com/me", "2026-01-02", {}, {}, {}, {"Technical": [book]}
         )
 
         self.assertEqual(
@@ -196,6 +199,7 @@ class RenderTest(unittest.TestCase):
             None,
             {},
             {},
+            {},
             {
                 "Miscellaneous": [book("1", "Zebra")],
                 "Technical": [book("2", "b title"), book("3", "A title")],
@@ -217,11 +221,29 @@ class RenderTest(unittest.TestCase):
         )
 
     def test_comments_the_excluded_ids_with_their_titles(self):
-        text = render(None, None, {"7": "Zebra", "8": "Apple"}, {}, {})
+        text = render(None, None, {"7": "Zebra", "8": "Apple"}, {}, {}, {})
+
+        # The markers come from the module: spelling them out here would let
+        # the keep-sorted hook treat this expectation as a block to sort.
+        self.assertEqual(
+            text.splitlines()[1:6],
+            [
+                "excluded:",
+                marker(EXCLUDED_SORT),
+                '  - "8" # Apple',
+                '  - "7" # Zebra',
+                marker("end"),
+            ],
+        )
+
+    def test_breaks_a_tie_on_the_title_with_the_id(self):
+        text = render(
+            None, None, {"58493107": "Goomics", "41810925": "Goomics"}, {}, {}, {}
+        )
 
         self.assertEqual(
-            text.splitlines()[1:4],
-            ["excluded:", '  - "8" # Apple', '  - "7" # Zebra'],
+            [line for line in text.splitlines() if line.startswith("  - ")],
+            ['  - "41810925" # Goomics', '  - "58493107" # Goomics'],
         )
 
 
@@ -230,7 +252,7 @@ class ReadExistingTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             self.assertEqual(
                 read_existing(Path(directory) / "absent.yaml"),
-                (None, None, [], {}, {}),
+                (None, None, [], {}, {}, {}),
             )
 
     def test_reads_back_what_render_wrote(self):
@@ -252,11 +274,12 @@ class ReadExistingTest(unittest.TestCase):
                     "2026-01-02",
                     {"7": "Gone"},
                     {"Some Series": "https://example.com/s"},
+                    {},
                     {"Technical": [book]},
                 )
             )
 
-            profile, updated, excluded, links, known = read_existing(path)
+            profile, updated, excluded, links, overrides, known = read_existing(path)
 
             self.assertEqual(profile, "https://example.com/me")
             self.assertEqual(updated, "2026-01-02")
@@ -266,6 +289,71 @@ class ReadExistingTest(unittest.TestCase):
             self.assertEqual(known["4099"]["category"], "Technical")
             self.assertEqual(known["4099"]["note"], "Note.")
             self.assertEqual(known["4099"]["cover"], "https://example.com/c.jpg")
+
+
+class OverrideTest(unittest.TestCase):
+    def test_replaces_only_the_fields_it_carries(self):
+        book = {
+            "id": "15779555",
+            "title": "O Poderoso Chefao",
+            "author": "Mario Puzo",
+            "year": 1969,
+            "rating": 5,
+            "cover": "https://example.com/pt.jpg",
+        }
+
+        apply_override(
+            book,
+            {
+                "id": "15779555",
+                "title": "The Godfather",
+                "url": "https://www.goodreads.com/book/show/22034",
+                "cover": "https://example.com/en.jpg",
+            },
+        )
+
+        self.assertEqual(book["title"], "The Godfather")
+        self.assertEqual(book["url"], "https://www.goodreads.com/book/show/22034")
+        self.assertEqual(book["cover"], "https://example.com/en.jpg")
+        self.assertEqual(book["author"], "Mario Puzo")
+        self.assertEqual(book["year"], 1969)
+
+    def test_an_override_keeps_the_category_of_the_shelved_edition(self):
+        with tempfile.TemporaryDirectory() as directory:
+            export = write_export(directory, [row("15779555", "O Poderoso Chefao")])
+            output = Path(directory) / "books.yaml"
+            output.write_text(
+                "# yaml-language-server: $schema=../schemas/books.json\n"
+                "overrides:\n"
+                '  - id: "15779555"\n'
+                "    title: The Godfather\n"
+                "    url: https://www.goodreads.com/book/show/22034\n"
+                "categories:\n"
+                "  - name: Fiction\n"
+                "    books:\n"
+                "      - title: The Godfather\n"
+                "        author: Ada Lovelace\n"
+                "        rating: 5\n"
+                "        url: https://www.goodreads.com/book/show/22034\n"
+                "        note: Mine.\n"
+            )
+            argv = [
+                "goodreads_to_books.py",
+                str(export),
+                "--output",
+                str(output),
+                "--no-covers",
+            ]
+
+            with patch("sys.argv", argv), quiet():
+                main()
+            text = output.read_text()
+
+            self.assertIn("  - name: Fiction\n", text)
+            self.assertNotIn("Miscellaneous", text)
+            self.assertIn("        note: Mine.\n", text)
+            self.assertIn("        url: https://www.goodreads.com/book/show/22034\n", text)
+            self.assertNotIn("O Poderoso Chefao", text)
 
 
 class SeriesUrlTest(unittest.TestCase):

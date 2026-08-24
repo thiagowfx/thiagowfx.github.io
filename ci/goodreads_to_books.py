@@ -16,7 +16,9 @@ present in data/books.yaml keep their category, series, note and cover, by
 their Goodreads book id. New books land in the "Miscellaneous" category, and
 book ids listed under "excluded" stay out of the page for good. Deleting a book
 by hand and re-importing brings it back, so --exclude-missing turns every book
-missing from the data file into an excluded one instead.
+missing from the data file into an excluded one instead. An entry under
+"overrides" replaces what the CSV says about one book, which is how a shelved
+translation ends up pointing at the edition worth linking.
 
 The CSV export carries no cover image, so each new book costs one request to
 its public Goodreads page, whose og:image points at the cover on Amazon's CDN.
@@ -64,6 +66,14 @@ COVER_FAILURE_LIMIT = 5
 COVER_SAVE_EVERY = 10
 # The fix-smartquotes prek hook rewrites these, so normalize them on import.
 SMART_QUOTES = {"\u2018": "'", "\u2019": "'", "\u201c": '"', "\u201d": '"'}
+# Sorts the excluded ids by their title comment. Its own start marker is built
+# at runtime, so the keep-sorted hook does not mistake it for one of its own.
+EXCLUDED_SORT = "start case=no by_regex=" + r"\d\D\s(.*)$"
+
+
+def marker(directive):
+    """Render a keep-sorted comment for the data file."""
+    return "  # keep-{} {}".format("sorted", directive)
 
 
 def without_updated(text):
@@ -79,25 +89,49 @@ def book_id(url):
 
 
 def read_existing(path):
-    """Return (profile, updated, excluded, links, {book id: book}) from a file."""
+    """Return (profile, updated, excluded, links, overrides, books) from a file."""
     if not path.exists():
-        return None, None, [], {}, {}
+        return None, None, [], {}, {}, {}
     data = yaml.safe_load(path.read_text()) or {}
+    overrides = {str(entry["id"]): entry for entry in data.get("overrides") or []}
+    # An override moves the entry's url, so map it back to the id in the CSV.
+    shelved = {
+        book_id(entry["url"]): key
+        for key, entry in overrides.items()
+        if entry.get("url")
+    }
     known = {}
     for category in data.get("categories") or []:
         for book in category.get("books") or []:
             key = book_id(book.get("url"))
+            key = shelved.get(key, key)
             if key:
                 known[key] = dict(book, category=category["name"])
     excluded = [str(key) for key in data.get("excluded") or []]
     links = {entry["name"]: entry["url"] for entry in data.get("series") or []}
-    return data.get("profile"), data.get("updated"), excluded, links, known
+    return (
+        data.get("profile"),
+        data.get("updated"),
+        excluded,
+        links,
+        overrides,
+        known,
+    )
+
+
+def apply_override(book, override):
+    """Replace what the CSV said about a book with the override's fields."""
+    for field in ("title", "author", "year", "url", "cover"):
+        if override.get(field) is not None:
+            book[field] = override[field]
+    return book
 
 
 def fetch_page(book):
     """Return the HTML of a book's public Goodreads page, or None."""
     request = urllib.request.Request(
-        BOOK_URL.format(id=book["id"]), headers={"User-Agent": USER_AGENT}
+        book.get("url") or BOOK_URL.format(id=book["id"]),
+        headers={"User-Agent": USER_AGENT},
     )
     try:
         with urllib.request.urlopen(request, timeout=30) as response:
@@ -246,7 +280,7 @@ def quote(value):
     return text
 
 
-def render(profile, updated, excluded, links, categories):
+def render(profile, updated, excluded, links, overrides, categories):
     """Render the data file. This script owns the order, so no sort markers."""
     lines = [SCHEMA_REF]
     if profile:
@@ -255,8 +289,21 @@ def render(profile, updated, excluded, links, categories):
         lines.append('updated: "{}"'.format(updated))
     if excluded:
         lines.append("excluded:")
-        for key, title in sorted(excluded.items(), key=lambda item: item[1].casefold()):
+        lines.append(marker(EXCLUDED_SORT))
+        # Ties on the title fall back to the id, the way keep-sorted breaks them.
+        for key, title in sorted(
+            excluded.items(), key=lambda item: (item[1].casefold(), item[0])
+        ):
             lines.append('  - "{}" # {}'.format(key, title))
+        lines.append(marker("end"))
+    if overrides:
+        lines.append("overrides:")
+        for key in sorted(overrides, key=lambda key: overrides[key]["title"].casefold()):
+            entry = overrides[key]
+            lines.append('  - id: "{}"'.format(key))
+            for field in ("title", "author", "year", "url", "cover", "shelved"):
+                if entry.get(field) is not None:
+                    lines.append("    {}: {}".format(field, quote(entry[field])))
     if links:
         lines.append("series:")
         for name in sorted(links, key=str.casefold):
@@ -273,7 +320,8 @@ def render(profile, updated, excluded, links, categories):
             if book["year"]:
                 lines.append("        year: {}".format(book["year"]))
             lines.append("        rating: {}".format(book["rating"]))
-            lines.append("        url: {}".format(BOOK_URL.format(id=book["id"])))
+            url = book.get("url") or BOOK_URL.format(id=book["id"])
+            lines.append("        url: {}".format(url))
             if book.get("series"):
                 lines.append("        series: {}".format(quote(book["series"])))
             if book.get("cover"):
@@ -326,7 +374,7 @@ def main():
     if not args.csv.exists():
         sys.exit("error: no such file: {}".format(args.csv))
 
-    profile, updated, excluded, links, known = read_existing(args.output)
+    profile, updated, excluded, links, overrides, known = read_existing(args.output)
     excluded = set(excluded) | set(args.exclude)
     if args.exclude_missing and known:
         excluded |= {
@@ -350,6 +398,9 @@ def main():
         book["series"] = previous.get("series") if previous else None
         book["note"] = previous.get("note") if previous else None
         book["cover"] = previous.get("cover") if previous else None
+        # The override has the last word, even over what the file already held.
+        if book["id"] in overrides:
+            apply_override(book, overrides[book["id"]])
         categories.setdefault(book["category"], []).append(book)
 
     stamp = [updated]
@@ -357,10 +408,12 @@ def main():
     def save():
         """Write the file, dating it only when the books themselves changed."""
         previous = args.output.read_text() if args.output.exists() else ""
-        body = render(profile, None, dropped, links, categories)
+        body = render(profile, None, dropped, links, overrides, categories)
         if without_updated(previous) != without_updated(body) or not stamp[0]:
             stamp[0] = datetime.date.today().isoformat()
-        args.output.write_text(render(profile, stamp[0], dropped, links, categories))
+        args.output.write_text(
+            render(profile, stamp[0], dropped, links, overrides, categories)
+        )
 
     fetched = 0
     if not args.no_covers:
