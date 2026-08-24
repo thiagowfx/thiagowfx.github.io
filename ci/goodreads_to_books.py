@@ -23,7 +23,8 @@ translation ends up pointing at the edition worth linking.
 The CSV export carries no cover image, so each new book costs one request to
 its public Goodreads page, whose og:image points at the cover on Amazon's CDN.
 The same page names the series a book belongs to, so one request per series
-also fills in the link under "series".
+fills in its link under "series", and one more reads how many primary works
+the series holds, which is what the page shows next to a collapsed series.
 Covers already in the data file are never fetched again, and the file is saved
 as they arrive, so a run that Goodreads cuts short resumes where it stopped.
 Goodreads answers with an AWS WAF challenge when it finds the requests too
@@ -48,6 +49,7 @@ SCHEMA_REF = "# yaml-language-server: $schema=../schemas/books.json"
 MISCELLANEOUS = "Miscellaneous"
 BOOK_URL = "https://www.goodreads.com/book/show/{id}"
 COVER_PATTERN = re.compile(r'<meta property="og:image" content="([^"]+)"')
+SERIES_WORKS_PATTERN = re.compile(r"([0-9]+) primary works")
 SERIES_PATTERN = re.compile(
     r'\{"__typename":"Series","id":"[^"]*",'
     r'"title":"((?:[^"\\]|\\.)*)","webUrl":"([^"]*)"\}'
@@ -108,7 +110,12 @@ def read_existing(path):
             if key:
                 known[key] = dict(book, category=category["name"])
     excluded = [str(key) for key in data.get("excluded") or []]
-    links = {entry["name"]: entry["url"] for entry in data.get("series") or []}
+    links = {
+        entry["name"]: {
+            field: entry[field] for field in ("url", "count") if field in entry
+        }
+        for entry in data.get("series") or []
+    }
     return (
         data.get("profile"),
         data.get("updated"),
@@ -127,26 +134,30 @@ def apply_override(book, override):
     return book
 
 
-def fetch_page(book):
-    """Return the HTML of a book's public Goodreads page, or None."""
-    request = urllib.request.Request(
-        book.get("url") or BOOK_URL.format(id=book["id"]),
-        headers={"User-Agent": USER_AGENT},
-    )
+def fetch_url(url, label):
+    """Return the HTML of a public Goodreads page, or None."""
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     try:
         with urllib.request.urlopen(request, timeout=30) as response:
             status = response.status
             page = response.read().decode("utf-8", "replace")
     except (urllib.error.URLError, TimeoutError) as error:
-        print("  {}: {}".format(book["title"], error), file=sys.stderr)
+        print("  {}: {}".format(label, error), file=sys.stderr)
         return None
     if status != 200 or not page:
         print(
-            "  {}: HTTP {}, {} bytes".format(book["title"], status, len(page)),
+            "  {}: HTTP {}, {} bytes".format(label, status, len(page)),
             file=sys.stderr,
         )
         return None
     return page
+
+
+def fetch_page(book):
+    """Return the HTML of a book's public Goodreads page, or None."""
+    return fetch_url(
+        book.get("url") or BOOK_URL.format(id=book["id"]), book["title"]
+    )
 
 
 def series_url(page, name):
@@ -158,23 +169,38 @@ def series_url(page, name):
     return None
 
 
-def fetch_series_urls(books, links, delay):
-    """Fill in the link of every series that has none yet. Returns how many."""
+def series_works(page):
+    """Return how many primary works a series page lists, or None."""
+    match = SERIES_WORKS_PATTERN.search(page or "")
+    return int(match.group(1)) if match else None
+
+
+def fetch_series(books, links, delay):
+    """Fill in the link and size of every series that lacks them. Returns how many."""
     named = sorted({book["series"] for book in books if book.get("series")})
     added = 0
     for name in named:
-        if links.get(name):
-            continue
-        volumes = [book for book in books if book.get("series") == name]
-        print("series: {}".format(name))
-        page = fetch_page(volumes[0])
-        url = series_url(page, name)
-        if url:
-            links[name] = url
-            added += 1
-        else:
-            print("  {}: no series page".format(name), file=sys.stderr)
-        time.sleep(delay)
+        entry = links.setdefault(name, {})
+        if not entry.get("url"):
+            volumes = [book for book in books if book.get("series") == name]
+            print("series link: {}".format(name))
+            url = series_url(fetch_page(volumes[0]), name)
+            time.sleep(delay)
+            if url:
+                entry["url"] = url
+                added += 1
+            else:
+                print("  {}: no series page".format(name), file=sys.stderr)
+        if entry.get("url") and not entry.get("count"):
+            print("series size: {}".format(name))
+            count = series_works(fetch_url(entry["url"], name))
+            time.sleep(delay)
+            if count:
+                entry["count"] = count
+            else:
+                print("  {}: no work count".format(name), file=sys.stderr)
+        if not entry:
+            del links[name]
     return added
 
 
@@ -308,7 +334,9 @@ def render(profile, updated, excluded, links, overrides, categories):
         lines.append("series:")
         for name in sorted(links, key=str.casefold):
             lines.append("  - name: {}".format(quote(name)))
-            lines.append("    url: {}".format(quote(links[name])))
+            lines.append("    url: {}".format(quote(links[name]["url"])))
+            if links[name].get("count"):
+                lines.append("    count: {}".format(links[name]["count"]))
     lines.append("categories:")
     ordered = sorted(categories, key=lambda n: (n == MISCELLANEOUS, n.casefold()))
     for name in ordered:
@@ -415,7 +443,7 @@ def main():
     fetched = 0
     if not args.no_covers:
         fetched = add_covers(books, args.cover_delay, save)
-        fetch_series_urls(books, links, args.cover_delay)
+        fetch_series(books, links, args.cover_delay)
 
     save()
     covered = sum(1 for book in books if book.get("cover"))

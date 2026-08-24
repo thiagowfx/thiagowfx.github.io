@@ -13,7 +13,7 @@ from goodreads_to_books import (
     apply_override,
     book_id,
     clean_title,
-    fetch_series_urls,
+    fetch_series,
     main,
     marker,
     parse_export,
@@ -21,6 +21,7 @@ from goodreads_to_books import (
     read_existing,
     render,
     series_url,
+    series_works,
     without_updated,
 )
 
@@ -270,7 +271,7 @@ class ReadExistingTest(unittest.TestCase):
                     "https://example.com/me",
                     "2026-01-02",
                     {"7": "Gone"},
-                    {"Some Series": "https://example.com/s"},
+                    {"Some Series": {"url": "https://example.com/s", "count": 4}},
                     {},
                     {"Technical": [book]},
                 )
@@ -281,7 +282,9 @@ class ReadExistingTest(unittest.TestCase):
             self.assertEqual(profile, "https://example.com/me")
             self.assertEqual(updated, "2026-01-02")
             self.assertEqual(excluded, ["7"])
-            self.assertEqual(links, {"Some Series": "https://example.com/s"})
+            self.assertEqual(
+                links, {"Some Series": {"url": "https://example.com/s", "count": 4}}
+            )
             self.assertEqual(known["4099"]["series"], "Some Series")
             self.assertEqual(known["4099"]["category"], "Technical")
             self.assertEqual(known["4099"]["cover"], "https://example.com/c.jpg")
@@ -362,25 +365,40 @@ class SeriesUrlTest(unittest.TestCase):
         self.assertIsNone(series_url(None, "Frontlines"))
 
 
-class FetchSeriesUrlsTest(unittest.TestCase):
-    def test_only_fetches_series_without_a_link(self):
+class FetchSeriesTest(unittest.TestCase):
+    def test_only_fetches_what_a_series_is_missing(self):
         books = [
             {"id": "1", "title": "One", "series": "Known"},
             {"id": "2", "title": "Two", "series": "Fresh"},
             {"id": "3", "title": "Three"},
         ]
-        links = {"Known": "https://example.com/known"}
+        links = {"Known": {"url": "https://example.com/known", "count": 3}}
 
         with patch("goodreads_to_books.fetch_page", return_value=SERIES_JSON) as page:
             with patch(
-                "goodreads_to_books.series_url", return_value="https://example.com/f"
-            ):
-                with quiet():
-                    added = fetch_series_urls(books, links, 0)
+                "goodreads_to_books.fetch_url", return_value="8 primary works"
+            ) as series_page:
+                with patch(
+                    "goodreads_to_books.series_url",
+                    return_value="https://example.com/f",
+                ):
+                    with quiet():
+                        added = fetch_series(books, links, 0)
 
         page.assert_called_once()
+        series_page.assert_called_once()
         self.assertEqual(added, 1)
-        self.assertEqual(links["Fresh"], "https://example.com/f")
+        self.assertEqual(
+            links["Fresh"], {"url": "https://example.com/f", "count": 8}
+        )
+        self.assertEqual(
+            links["Known"], {"url": "https://example.com/known", "count": 3}
+        )
+
+    def test_reads_the_work_count_off_a_series_page(self):
+        self.assertEqual(series_works("7 primary works 9 total works"), 7)
+        self.assertIsNone(series_works("no counts here"))
+        self.assertIsNone(series_works(None))
 
 
 class AddCoversTest(unittest.TestCase):

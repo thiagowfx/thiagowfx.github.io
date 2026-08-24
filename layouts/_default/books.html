@@ -61,7 +61,11 @@
 {{- $data := hugo.Data.books }}
 {{- $categories := $data.categories }}
 {{- $seriesLinks := dict }}
-{{- range $data.series }}{{ $seriesLinks = merge $seriesLinks (dict .name .url) }}{{ end }}
+{{- $seriesCounts := dict }}
+{{- range $entry := $data.series }}
+  {{- $seriesLinks = merge $seriesLinks (dict $entry.name $entry.url) }}
+  {{- with $entry.count }}{{ $seriesCounts = merge $seriesCounts (dict $entry.name .) }}{{ end }}
+{{- end }}
 
 <h2>{{ .Title }}</h2>
 
@@ -114,7 +118,8 @@
   {{- $first := index .books 0 }}
   {{- $titles := slice }}
   {{- range .books }}{{ $titles = $titles | append .title }}{{ end }}
-  {{- $label := printf "%s: %d books by %s (%s)" .name (len .books) $first.author (delimit $titles ", ") }}
+  {{- $count := or (index $seriesCounts .name) (len .books) }}
+  {{- $label := printf "%s: %d books by %s, %d of them here (%s)" .name $count $first.author (len .books) (delimit $titles ", ") }}
   {{- $href := or (index $seriesLinks .name) $first.url }}
   <div class="books-item books-series">
     <a href="{{ $href }}" title="{{ $label }}">
@@ -124,7 +129,7 @@
       <span class="books-cover books-cover-missing" aria-hidden="true">{{ .name }}</span>
       {{- end }}
       <div class="books-item-title">{{ .name }}
-        <span class="books-series-count">&middot; {{ len .books }} books</span>
+        <span class="books-series-count">&middot; {{ $count }} books</span>
       </div>
     </a>
     <div class="books-item-meta">
