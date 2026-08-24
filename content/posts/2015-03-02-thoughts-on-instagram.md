@@ -21,7 +21,7 @@ because it is mainstream, and period? No, no, no. But...for every mainstream
 service, caution is needed.
 
 **A.1 Privacy**: Most accounts from people I currently follow on Instagram are
-public by default (neverthless, this is the default setting of Instagram). Not
+public by default (nevertheless, this is the default setting of Instagram). Not
 cool, dude, not cool. This is a short essay and you probably know what I would
 talk here, so let's be **brief** : most of those people are either not concerned
 or don't know what the problem of this deliberate practice might cause them a
