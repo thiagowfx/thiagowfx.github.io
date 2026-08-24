@@ -25,6 +25,7 @@
 ## Blog Posts
 
 
+- [pi: prompt template or skill?](https://perrotta.dev/2026/08/pi-prompt-template-or-skill/) (2026-08-25)
 - [terrateam: plan from drift issues](https://perrotta.dev/2026/08/terrateam-plan-from-drift-issues/) (2026-08-24)
 - [Books](https://perrotta.dev/2026/08/books/) (2026-08-24)
 - [bloggify, revisited](https://perrotta.dev/2026/08/bloggify-revisited/) (2026-08-24)
@@ -1343,7 +1344,7 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (132 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (133 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Anki](https://perrotta.dev/tags/anki/) (12 posts)
 - [Argocd](https://perrotta.dev/tags/argocd/) (19 posts)
@@ -1354,7 +1355,7 @@
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1219 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1220 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1366,7 +1367,7 @@
 - [Macos](https://perrotta.dev/tags/macos/) (57 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (65 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
-- [Pi](https://perrotta.dev/tags/pi/) (19 posts)
+- [Pi](https://perrotta.dev/tags/pi/) (20 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (35 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (33 posts)
