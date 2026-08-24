@@ -1377,4 +1377,5 @@
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (12 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (14 posts)
+- [Terrateam](https://perrotta.dev/tags/terrateam/) (4 posts)
 - [Vim](https://perrotta.dev/tags/vim/) (13 posts)

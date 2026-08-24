@@ -1,7 +1,7 @@
 ---
 title: "Justfile with checks"
 url: https://perrotta.dev/2026/04/justfile-with-checks/
-last_updated: 2026-04-27
+last_updated: 2026-08-25
 ---
 
 

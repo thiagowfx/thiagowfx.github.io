@@ -1,7 +1,7 @@
 ---
 title: "Gimme subagents"
 url: https://perrotta.dev/2026/02/gimme-subagents/
-last_updated: 2026-07-29
+last_updated: 2026-08-25
 ---
 
 

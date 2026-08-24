@@ -1,7 +1,7 @@
 ---
 title: "terrateam: plan from drift issues"
 url: https://perrotta.dev/2026/08/terrateam-plan-from-drift-issues/
-last_updated: 2026-08-24
+last_updated: 2026-08-25
 ---
 
 

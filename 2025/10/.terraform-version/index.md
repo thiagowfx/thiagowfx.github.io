@@ -1,7 +1,7 @@
 ---
 title: ".terraform-version"
 url: https://perrotta.dev/2025/10/.terraform-version/
-last_updated: 2025-10-24
+last_updated: 2026-08-25
 ---
 
 
