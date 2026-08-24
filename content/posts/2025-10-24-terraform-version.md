@@ -3,6 +3,7 @@ title: ".terraform-version"
 date: 2025-10-24T15:12:18+02:00
 tags:
   - dev
+  - terrateam
 ---
 
 `.terraform-version` at the root of a git repository is recognized by various

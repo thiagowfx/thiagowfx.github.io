@@ -5,6 +5,7 @@ tags:
   - bloggify
   - dev
   - terraform
+  - terrateam
 ---
 
 **Problem statement**: Terrateam opens drift reports as GitHub issues, but `terrateam plan` only works on pull requests.

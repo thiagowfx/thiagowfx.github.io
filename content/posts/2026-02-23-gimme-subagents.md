@@ -6,6 +6,7 @@ tags:
   - bestof
   - claude
   - dev
+  - terrateam
 ---
 
 **Scenario**: we're test-driving the adoption of a
