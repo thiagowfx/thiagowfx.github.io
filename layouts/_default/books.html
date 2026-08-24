@@ -118,8 +118,11 @@
   {{- $first := index .books 0 }}
   {{- $titles := slice }}
   {{- range .books }}{{ $titles = $titles | append .title }}{{ end }}
-  {{- $count := or (index $seriesCounts .name) (len .books) }}
-  {{- $label := printf "%s: %d books by %s, %d of them here (%s)" .name $count $first.author (len .books) (delimit $titles ", ") }}
+  {{- /* Read against the whole series, when Goodreads told us how long it is. */}}
+  {{- $whole := index $seriesCounts .name }}
+  {{- $tally := printf "%d" (len .books) }}
+  {{- if and $whole (gt $whole (len .books)) }}{{ $tally = printf "%d/%d" (len .books) $whole }}{{ end }}
+  {{- $label := printf "%s by %s: %s books here (%s)" .name $first.author $tally (delimit $titles ", ") }}
   {{- $href := or (index $seriesLinks .name) $first.url }}
   <div class="books-item books-series">
     <a href="{{ $href }}" title="{{ $label }}">
@@ -129,7 +132,7 @@
       <span class="books-cover books-cover-missing" aria-hidden="true">{{ .name }}</span>
       {{- end }}
       <div class="books-item-title">{{ .name }}
-        <span class="books-series-count">&middot; {{ $count }} books</span>
+        <span class="books-series-count">&middot; {{ $tally }} books</span>
       </div>
     </a>
     <div class="books-item-meta">
