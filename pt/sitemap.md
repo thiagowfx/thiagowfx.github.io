@@ -97,6 +97,7 @@
 - [Como rodar JNLP no Linux](https://perrotta.dev/pt/2013/09/como-rodar-jnlp-no-linux/) (2013-09-02)
 - [Como receber spam do POP3 do gmail](https://perrotta.dev/pt/2013/08/como-receber-spam-do-pop3-do-gmail/) (2013-08-25)
 - [São tantas licenças...](https://perrotta.dev/pt/2013/08/s%C3%A3o-tantas-licen%C3%A7as.../) (2013-08-22)
+- [9 melhores apps para Android - Parte 1 - KISS](https://perrotta.dev/pt/2013/08/9-melhores-apps-para-android-parte-1-kiss/) (2013-08-14)
 - [Links são o terror](https://perrotta.dev/pt/2013/07/links-s%C3%A3o-o-terror/) (2013-07-25)
 - [Privacidade nas Redes Sociais – Parte I](https://perrotta.dev/pt/2013/06/privacidade-nas-redes-sociais-parte-i/) (2013-06-23)
 - [4 dicas sobre apps de Android](https://perrotta.dev/pt/2013/05/4-dicas-sobre-apps-de-android/) (2013-05-31)
@@ -107,11 +108,11 @@
 
 
 - [Bestof](https://perrotta.dev/pt/tags/bestof/) (6 posts)
-- [Dev](https://perrotta.dev/pt/tags/dev/) (72 posts)
+- [Dev](https://perrotta.dev/pt/tags/dev/) (73 posts)
 - [Gaming](https://perrotta.dev/pt/tags/gaming/) (3 posts)
 - [Git](https://perrotta.dev/pt/tags/git/) (1 posts)
 - [Leetcode](https://perrotta.dev/pt/tags/leetcode/) (1 posts)
-- [Legacy](https://perrotta.dev/pt/tags/legacy/) (84 posts)
+- [Legacy](https://perrotta.dev/pt/tags/legacy/) (85 posts)
 - [Meta](https://perrotta.dev/pt/tags/meta/) (3 posts)
 - [Privacy](https://perrotta.dev/pt/tags/privacy/) (6 posts)
 - [Security](https://perrotta.dev/pt/tags/security/) (3 posts)
