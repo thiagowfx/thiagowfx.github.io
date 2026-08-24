@@ -1,7 +1,7 @@
 ---
 title: "From orgmode to asciidoc (OR: ditching emacs)"
 url: https://perrotta.dev/2015/02/from-orgmode-to-asciidoc-or-ditching-emacs/
-last_updated: 2026-02-17
+last_updated: 2026-08-24
 ---
 
 
@@ -19,7 +19,7 @@ Org-mode was a fellow companion, now what? I even moved out of wordpress just to
 blog with org files[^1]. **Orgmode** is the most amazing to-do / organizing /
 planning / tracking tool I've ever used, however it is completely tied up to
 emacs. The only thing we can do about that is to get all the knowledge and
-**discipline** that orgmode teached to us, and then move on.
+**discipline** that orgmode taught to us, and then move on.
 
     And I moved on.
 

@@ -1,7 +1,7 @@
 ---
 title: "TV remote controller"
 url: https://perrotta.dev/2026/01/tv-remote-controller/
-last_updated: 2026-01-23
+last_updated: 2026-08-24
 ---
 
 
@@ -10,7 +10,7 @@ nowhere. I replaced its AAA batteries to no avail.
 
 What is the alternative? I bought a cheap IR replacement at Amazon but it did
 not work either. Apparently it only works on select TV models, and on Android TV
-_boxes_. Why does it work on Android TV boxes but not on Android TVs? Mistery.
+_boxes_. Why does it work on Android TV boxes but not on Android TVs? Mystery.
 
 From here, my options were:
 
