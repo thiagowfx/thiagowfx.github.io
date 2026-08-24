@@ -25,6 +25,7 @@
 ## Blog Posts
 
 
+- [Books](https://perrotta.dev/2026/08/books/) (2026-08-24)
 - [bloggify, revisited](https://perrotta.dev/2026/08/bloggify-revisited/) (2026-08-24)
 - [pi: statusline with GitHub PR link](https://perrotta.dev/2026/08/pi-statusline-with-github-pr-link/) (2026-08-24)
 - [CodeBurn](https://perrotta.dev/2026/08/codeburn/) (2026-08-23)
@@ -1346,7 +1347,7 @@
 - [Anki](https://perrotta.dev/tags/anki/) (12 posts)
 - [Argocd](https://perrotta.dev/tags/argocd/) (19 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (12 posts)
-- [Bestof](https://perrotta.dev/tags/bestof/) (195 posts)
+- [Bestof](https://perrotta.dev/tags/bestof/) (196 posts)
 - [Bloggify](https://perrotta.dev/tags/bloggify/) (42 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (61 posts)
@@ -1371,7 +1372,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (60 posts)
 - [Security](https://perrotta.dev/tags/security/) (68 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (275 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (276 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (12 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (13 posts)
