@@ -1,7 +1,7 @@
 ---
 title: "Stress"
 url: https://perrotta.dev/2025/11/stress/
-last_updated: 2025-12-25
+last_updated: 2026-08-25
 ---
 
 

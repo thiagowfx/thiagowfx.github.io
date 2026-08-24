@@ -1,7 +1,7 @@
 ---
 title: "Terraform: perform a global update"
 url: https://perrotta.dev/2024/07/terraform-perform-a-global-update/
-last_updated: 2025-09-05
+last_updated: 2026-08-25
 ---
 
 

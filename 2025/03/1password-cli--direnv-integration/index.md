@@ -1,7 +1,7 @@
 ---
 title: "1Password CLI + direnv integration"
 url: https://perrotta.dev/2025/03/1password-cli--direnv-integration/
-last_updated: 2026-01-01
+last_updated: 2026-08-25
 ---
 
 
