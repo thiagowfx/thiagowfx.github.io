@@ -10,7 +10,7 @@ aliases:
 I do not have an SLO: replies are best-effort, though I tend to reply quickly
 whenever I'm not too busy.
 
-You can also find me in the following platforms[^1]:
+You can also find me on these platforms[^1]:
 
 <!-- keep-sorted start -->
 - <a href="https://github.com/thiagowfx" rel="me">GitHub</a>
