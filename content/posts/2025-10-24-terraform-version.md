@@ -3,6 +3,7 @@ title: ".terraform-version"
 date: 2025-10-24T15:12:18+02:00
 tags:
   - dev
+  - terraform
   - terrateam
 ---
 

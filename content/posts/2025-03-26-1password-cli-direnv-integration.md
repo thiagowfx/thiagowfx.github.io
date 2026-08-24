@@ -5,6 +5,7 @@ tags:
   - bestof
   - dev
   - security
+  - terraform
 ---
 
 Let's stay you're working on a terraform module that has a sensitive variable

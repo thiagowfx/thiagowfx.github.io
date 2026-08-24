@@ -3,6 +3,7 @@ title: "Terraform: perform a global update"
 date: 2024-07-02T12:33:37+02:00
 tags:
   - dev
+  - terraform
 ---
 
 Given a `terraform/modules` directory tree, we would like to globally update the
