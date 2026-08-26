@@ -1,7 +1,7 @@
 ---
 title: "pre-commit: create hooks for unsupported tools"
 url: https://perrotta.dev/2024/12/pre-commit-create-hooks-for-unsupported-tools/
-last_updated: 2026-01-03
+last_updated: 2026-08-26
 ---
 
 
@@ -37,7 +37,7 @@ repos:
         entry: pint --offline lint
         types:
           - yaml
-        files: ^helm/clustermon-alerts/rules/
+        files: ^helm/prometheus-alerts/rules/
 ```
 
 That simply works™. How did I get there? Starting with the references:

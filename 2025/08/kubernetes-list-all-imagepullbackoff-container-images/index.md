@@ -1,7 +1,7 @@
 ---
 title: "Kubernetes: list all ImagePullBackOff container images"
 url: https://perrotta.dev/2025/08/kubernetes-list-all-imagepullbackoff-container-images/
-last_updated: 2026-01-03
+last_updated: 2026-08-26
 ---
 
 
@@ -25,8 +25,8 @@ ubuntu@universe:~ $ kubectl get pods --all-namespaces -o json | jq -r '.items[]
       | select(any(.status.containerStatuses[]; .state.waiting.reason == "ImagePullBackOff"))
       | .metadata.namespace + "/" + .metadata.name + "\t" +
         ( [.status.containerStatuses[] | select(.state.waiting.reason == "ImagePullBackOff").image] | join(", ") )'
-monitoring/clustermon-kube-prometheus-operator-67c8b6c87c-w72km {my-registry-name}.azurecr.cn/quay.io/prometheus-operator/prometheus-operator:v0.83.0
-monitoring/clustermon-prometheus-node-exporter-v7bpt    {my-registry-name}.azurecr.cn/quay.io/prometheus/node-exporter:v1.9.1
+monitoring/prometheus-kube-prometheus-operator-67c8b6c87c-w72km {my-registry-name}.azurecr.cn/quay.io/prometheus-operator/prometheus-operator:v0.83.0
+monitoring/prometheus-prometheus-node-exporter-v7bpt    {my-registry-name}.azurecr.cn/quay.io/prometheus/node-exporter:v1.9.1
 ```
 
 How to `skopeo`? First, log in:

@@ -1,7 +1,7 @@
 ---
 title: "prometheus: a 117GB WAL that could not truncate"
 url: https://perrotta.dev/2026/08/prometheus-a-117gb-wal-that-could-not-truncate/
-last_updated: 2026-08-22
+last_updated: 2026-08-26
 ---
 
 
@@ -47,7 +47,7 @@ restarts of no net progress.
 
 The memory limit had no room to grow either:
 
-```yaml {filename="{...}/clustermon/values.yaml"}
+```yaml {filename="{...}/prometheus/values.yaml"}
       resources:
         limits:
           memory: 14Gi
@@ -78,7 +78,7 @@ Scaling the StatefulSet down does not work — prometheus-operator owns it and p
 the replica back within two minutes. The `Prometheus` CR is the real lever:
 
 ```shell
-% kubectl -n monitoring patch prometheus clustermon-kube-prometheus-prometheus \
+% kubectl -n monitoring patch prometheus prometheus-kube-prometheus-prometheus \
     --type merge -p '{"spec":{"replicas":0}}'
 ```
 
