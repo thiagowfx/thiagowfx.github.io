@@ -25,6 +25,7 @@
 ## Blog Posts
 
 
+- [claude code: /goal](https://perrotta.dev/2026/08/claude-code-/goal/) (2026-08-26)
 - [Continuity](https://perrotta.dev/2026/08/continuity/) (2026-08-25)
 - [pi: prompt template or skill?](https://perrotta.dev/2026/08/pi-prompt-template-or-skill/) (2026-08-25)
 - [terrateam: plan from drift issues](https://perrotta.dev/2026/08/terrateam-plan-from-drift-issues/) (2026-08-24)
@@ -1345,24 +1346,24 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (133 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (134 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Anki](https://perrotta.dev/tags/anki/) (12 posts)
-- [Argocd](https://perrotta.dev/tags/argocd/) (19 posts)
+- [Argocd](https://perrotta.dev/tags/argocd/) (20 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (12 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (196 posts)
-- [Bloggify](https://perrotta.dev/tags/bloggify/) (43 posts)
+- [Bloggify](https://perrotta.dev/tags/bloggify/) (44 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
-- [Claude](https://perrotta.dev/tags/claude/) (61 posts)
+- [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1221 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1222 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (9 posts)
 - [Git](https://perrotta.dev/tags/git/) (69 posts)
-- [Kubernetes](https://perrotta.dev/tags/kubernetes/) (48 posts)
+- [Kubernetes](https://perrotta.dev/tags/kubernetes/) (49 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (171 posts)
 - [Macos](https://perrotta.dev/tags/macos/) (58 posts)
