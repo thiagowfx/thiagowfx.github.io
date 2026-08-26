@@ -39,7 +39,7 @@ repos:
         entry: pint --offline lint
         types:
           - yaml
-        files: ^helm/clustermon-alerts/rules/
+        files: ^helm/prometheus-alerts/rules/
 ```
 
 That simply works™. How did I get there? Starting with the references:

@@ -12,11 +12,11 @@ To match the full path, use `-p`. It is often useful to combine it with `--type
 file`.
 
 ```shell
-% fd -p clustermon --type file
-apps/base/clustermon/clustermon.yaml
-apps/base/clustermon/kustomization.yaml
-apps/overlays/g02/clustermon/patches.yaml
-apps/overlays/g02/clustermon/values.yaml
+% fd -p prometheus --type file
+apps/base/prometheus/prometheus.yaml
+apps/base/prometheus/kustomization.yaml
+apps/overlays/g02/prometheus/patches.yaml
+apps/overlays/g02/prometheus/values.yaml
 ```
 
 A natural extension is to pipe it to `| ifne xargs -n 1 gsed -i -e
