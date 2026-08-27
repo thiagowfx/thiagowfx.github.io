@@ -1,16 +1,17 @@
 {{- define "main" }}
 <div class="h-feed">
 <div class="content">
-  {{- $pages := where .Pages "Site.Language.Lang" .Site.Language.Lang }}
-  {{- $pages = where $pages "Params.rss_only" "!=" true }}
-  {{- $excludeCategories := slice "coding" "recipes" }}
-  {{- /* On the all-posts list, drop coding/recipes so the header count matches
-         the rendered list and the search index (which excludes them too). */}}
+  {{- $pages := .Pages }}
   {{- if and (not .Data.Singular) (eq .Section "posts") }}
-    {{- $pages = where $pages "Kind" "page" }}
-    {{- $pages = where $pages "Params.categories" "intersect" $excludeCategories | symdiff $pages }}
+    {{- $pages = partial "archive-pages.html" (dict "pages" $pages "lang" .Site.Language.Lang) }}
+  {{- else }}
+    {{- $pages = where $pages "Site.Language.Lang" .Site.Language.Lang }}
+    {{- $pages = where $pages "Params.rss_only" "!=" true }}
   {{- end }}
 
+  {{- if and (not .Data.Singular) (eq .Section "posts") }}
+  <div class="archive-heading">
+  {{- end }}
   <h2 id="posts" class="p-name" style="display: flex; align-items: center; gap: 0;">
     {{- if .Data.Singular }}
       {{- if eq .Section "tags" }} {{ i18n "postsTaggedWith" }} #{{ .Name }}
@@ -19,6 +20,10 @@
     {{- else }} {{ i18n "allPosts" }} ({{ len $pages }}) {{- end }}
     {{- with .OutputFormats.Get "RSS" }}<a href='{{ .Permalink }}' class="rss-link" title="RSS feed" aria-label="RSS feed">{{- partial "rss-icon.html" $ -}}</a>{{- end }}
   </h2>
+  {{- if and (not .Data.Singular) (eq .Section "posts") }}
+    {{- partial "archive-view-toggle.html" (dict "current" "list") }}
+  </div>
+  {{- end }}
 
   {{- if .Data.Singular }}
    {{- if eq .Section "tags" }}
@@ -43,32 +48,6 @@
 
   {{ $currentYear := now.Year | printf "%d" }}
   {{ $pagesGroupedByYear := $pages.GroupByDate "2006" }}
-  {{- if and (not .Data.Singular) (eq .Section "posts") }}
-    {{- $filteredGroups := slice }}
-    {{- range $group := $pagesGroupedByYear }}
-      {{- $filteredPages := slice }}
-      {{- range $page := $group.Pages }}
-        {{- $isExcluded := false }}
-        {{- $isSectionPage := eq .Kind "section" }}
-        {{- if $isSectionPage }}
-          {{- $isExcluded = true }}
-        {{- else }}
-          {{- range $cat := $page.Params.categories }}
-            {{- if in $excludeCategories $cat }}
-              {{- $isExcluded = true }}
-            {{- end }}
-          {{- end }}
-        {{- end }}
-        {{- if not $isExcluded }}
-          {{- $filteredPages = $filteredPages | append $page }}
-        {{- end }}
-      {{- end }}
-      {{- if gt (len $filteredPages) 0 }}
-        {{- $filteredGroups = $filteredGroups | append (dict "Key" $group.Key "Pages" $filteredPages) }}
-      {{- end }}
-    {{- end }}
-    {{- $pagesGroupedByYear = $filteredGroups }}
-  {{- end }}
 
   {{ if not $pagesGroupedByYear }}
     <ul class="blog-posts">

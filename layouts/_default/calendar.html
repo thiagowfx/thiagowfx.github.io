@@ -1,0 +1,291 @@
+{{- define "main" }}
+<style>
+  .calendar-intro {
+    margin-bottom: 2rem;
+  }
+
+  .calendar-year {
+    scroll-margin-top: 1rem;
+  }
+
+  .calendar-year + .calendar-year {
+    margin-top: 3rem;
+  }
+
+  .calendar-year h3 {
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .calendar-months {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.75rem 0.75rem;
+  }
+
+  .calendar-month h4 {
+    font-size: 0.9rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    font-family: var(--font-code);
+    font-size: 0.65rem;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .calendar-weekday,
+  .calendar-day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 24px;
+  }
+
+  .calendar-weekday {
+    color: var(--color-gray);
+    font-size: 0.8em;
+    font-weight: 600;
+  }
+
+  .calendar-day--future {
+    color: var(--color-grayer);
+    opacity: 0.55;
+  }
+
+  .calendar-day--has-post {
+    position: relative;
+    margin: 0;
+  }
+
+  .calendar-day--has-post summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 24px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .calendar-day--has-post summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .calendar-day--post {
+    display: block;
+    width: 1.35em;
+    height: 1.35em;
+    border-radius: 50%;
+    background: var(--link-color);
+  }
+
+  .calendar-day--featured {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: light-dark(#df8e1d, #f9e2af);
+  }
+
+  .calendar-day--featured-icon {
+    font-size: 1.75em;
+    line-height: 1;
+  }
+
+  .calendar-day--has-post summary:hover .calendar-day--post {
+    opacity: 0.75;
+  }
+
+  .calendar-day--has-post summary:focus-visible {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+    border-radius: 50%;
+  }
+
+  .calendar-day--has-post[open] {
+    z-index: 2;
+  }
+
+  .calendar-day--has-post[open] .calendar-day--post {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+  }
+
+  .calendar-popover {
+    position: absolute;
+    top: calc(100% + 0.45em);
+    left: 50%;
+    translate: -50% 0;
+    z-index: 3;
+    width: max-content;
+    max-width: min(14rem, calc(100vw - 2rem));
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0.35rem;
+    box-shadow: 0 8px 24px light-dark(rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.45));
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    line-height: 1.3;
+    text-align: left;
+  }
+
+  .calendar-popover a {
+    display: block;
+    padding: 0.55rem 0.7rem;
+    color: var(--text-color);
+    text-decoration: none;
+  }
+
+  .calendar-popover a + a {
+    border-top: 1px solid var(--border-color);
+  }
+
+  .calendar-popover a:hover span:first-child {
+    color: var(--link-color);
+    text-decoration: underline;
+  }
+
+  .calendar-month:nth-child(3n + 1) .calendar-popover,
+  .calendar-day:nth-child(7n + 1) .calendar-popover {
+    left: 0;
+    translate: 0 0;
+  }
+
+  .calendar-month:nth-child(3n) .calendar-popover,
+  .calendar-day:nth-child(7n) .calendar-popover {
+    left: auto;
+    right: 0;
+    translate: 0 0;
+  }
+
+  @media (max-width: 600px) {
+    .calendar-months {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem 0.5rem;
+    }
+
+    .calendar-month:nth-child(2n + 1) .calendar-popover {
+      left: 0;
+      right: auto;
+      translate: 0 0;
+    }
+
+    .calendar-month:nth-child(2n) .calendar-popover {
+      left: auto;
+      right: 0;
+      translate: 0 0;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .calendar-months {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+{{- $pages := where .Site.RegularPages "Section" "posts" }}
+{{- $pages = partial "archive-pages.html" (dict "pages" $pages "lang" .Site.Language.Lang) }}
+{{- $groups := $pages.GroupByDate "2006" }}
+{{- $monthLabels := split (i18n "calendarMonths") "|" }}
+{{- $weekdayLabels := split (i18n "calendarWeekdays") "|" }}
+{{- $postsByDate := newScratch }}
+{{- range $pages }}
+  {{- $key := .Date.Format "2006-01-02" }}
+  {{- $dayPages := $postsByDate.Get $key | default (slice) }}
+  {{- $postsByDate.Set $key ($dayPages | append .) }}
+{{- end }}
+
+<div class="archive-heading">
+  <h2>{{ .Title }}</h2>
+  {{- partial "archive-view-toggle.html" (dict "current" "calendar") }}
+</div>
+<p class="calendar-intro">{{ i18n "calendarLegend" }}</p>
+
+<div class="calendar">
+  {{- range $groups }}
+  {{- $year := .Key }}
+  <section class="calendar-year" id="year-{{ $year }}">
+    <h3>{{ $year }}</h3>
+    <div class="calendar-months">
+      {{- range seq 1 12 }}
+      {{- $month := . }}
+      {{- $first := time.AsTime (printf "%s-%02d-01" $year $month) }}
+      {{- $last := ($first.AddDate 0 1 -1) }}
+      <section class="calendar-month" aria-labelledby="month-{{ $year }}-{{ printf "%02d" $month }}">
+        <h4 id="month-{{ $year }}-{{ printf "%02d" $month }}">{{ index $monthLabels (sub $month 1) }}</h4>
+        <div class="calendar-grid">
+          {{- range $weekdayLabels }}
+          <span class="calendar-weekday" aria-hidden="true">{{ . }}</span>
+          {{- end }}
+          {{- range seq 1 (int $first.Weekday) }}
+          <span class="calendar-day" aria-hidden="true"></span>
+          {{- end }}
+          {{- range seq 1 $last.Day }}
+          {{- $day := . }}
+          {{- $date := printf "%s-%02d-%02d" $year $month $day }}
+          {{- $dateTime := time.AsTime $date }}
+          {{- $dayPages := $postsByDate.Get $date }}
+          {{- $future := $dateTime.After now }}
+          {{- if $dayPages }}
+            {{- $featured := false }}
+            {{- range $dayPages }}
+              {{- if in .Params.tags "bestof" }}{{ $featured = true }}{{ end }}
+            {{- end }}
+          <details class="calendar-day calendar-day--has-post{{ if $future }} calendar-day--future{{ end }}">
+            <summary aria-label="{{ $date }}: {{ len $dayPages }} {{ i18n "allPosts" | lower }}">
+              <span class="calendar-day--post{{ if $featured }} calendar-day--featured{{ end }}" aria-hidden="true">{{ if $featured }}<span class="calendar-day--featured-icon">★</span>{{ end }}</span>
+            </summary>
+            <div class="calendar-popover">
+              {{- range $dayPages }}
+              <a href="{{ .Permalink }}">
+                <span>{{ if in .Params.tags "bestof" }}★ {{ end }}{{ .Title }}</span>
+              </a>
+              {{- end }}
+            </div>
+          </details>
+          {{- else }}
+          <span class="calendar-day{{ if $future }} calendar-day--future{{ end }}">{{ $day }}</span>
+          {{- end }}
+          {{- end }}
+        </div>
+      </section>
+      {{- end }}
+    </div>
+  </section>
+  {{- else }}
+  <p>{{ i18n "noPostsYet" }}</p>
+  {{- end }}
+</div>
+
+<script>
+  document.querySelectorAll(".calendar-day--has-post").forEach(function (day) {
+    day.addEventListener("toggle", function () {
+      if (!day.open) return;
+      document.querySelectorAll(".calendar-day--has-post[open]").forEach(function (other) {
+        if (other !== day) other.open = false;
+      });
+    });
+  });
+
+  document.addEventListener("click", function (event) {
+    if (event.target.closest(".calendar-day--has-post")) return;
+    document.querySelectorAll(".calendar-day--has-post[open]").forEach(function (day) {
+      day.open = false;
+    });
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key !== "Escape") return;
+    document.querySelectorAll(".calendar-day--has-post[open]").forEach(function (day) {
+      day.open = false;
+      day.querySelector("summary").focus();
+    });
+  });
+</script>
+{{- end -}}
