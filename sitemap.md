@@ -25,6 +25,7 @@
 ## Blog Posts
 
 
+- [miniflux: add country flags to all feeds 🌐](https://perrotta.dev/2026/08/miniflux-add-country-flags-to-all-feeds/) (2026-08-28)
 - [claude code: /goal](https://perrotta.dev/2026/08/claude-code-/goal/) (2026-08-26)
 - [Continuity](https://perrotta.dev/2026/08/continuity/) (2026-08-25)
 - [pi: prompt template or skill?](https://perrotta.dev/2026/08/pi-prompt-template-or-skill/) (2026-08-25)
@@ -1351,13 +1352,13 @@
 - [Anki](https://perrotta.dev/tags/anki/) (12 posts)
 - [Argocd](https://perrotta.dev/tags/argocd/) (20 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (12 posts)
-- [Bestof](https://perrotta.dev/tags/bestof/) (197 posts)
+- [Bestof](https://perrotta.dev/tags/bestof/) (198 posts)
 - [Bloggify](https://perrotta.dev/tags/bloggify/) (44 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1223 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1224 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1375,7 +1376,7 @@
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (33 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (60 posts)
 - [Security](https://perrotta.dev/tags/security/) (68 posts)
-- [Selfhosted](https://perrotta.dev/tags/selfhosted/) (12 posts)
+- [Selfhosted](https://perrotta.dev/tags/selfhosted/) (13 posts)
 - [Serenity](https://perrotta.dev/tags/serenity/) (278 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (12 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (7 posts)
