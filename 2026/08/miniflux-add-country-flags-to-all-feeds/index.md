@@ -27,10 +27,7 @@ exhausted the ones I knew about.
 The next natural step, in 2026, is to resort to Gen AI to finish the heavy
 lifting, now that the initial pattern has been established.
 
-With my [OpenAI Codex]({{< ref
-"2026-08-19-chatgpt-openai-codex-plan-usage" >}}) subscription
-
-- Pi, I prompted away:
+With my [OpenAI Codex]({{< ref "2026-08-19-chatgpt-openai-codex-plan-usage" >}}) subscription and pi, I prompted away:
 
 > User: List all prompts I ran in this session, bulleted list:
 >
