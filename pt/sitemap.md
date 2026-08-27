@@ -17,6 +17,7 @@
 - [Emissor NFE Sebrae v4.01 para emissão de notas fiscais](https://perrotta.dev/pt/2025/01/emissor-nfe-sebrae-v4.01-para-emiss%C3%A3o-de-notas-fiscais/) (2025-01-08)
 - [Matroshka](https://perrotta.dev/pt/2016/10/matroshka/) (2016-10-16)
 - [Mulheres na computação, cadê vocês?](https://perrotta.dev/pt/2015/03/mulheres-na-computa%C3%A7%C3%A3o-cad%C3%AA-voc%C3%AAs/) (2015-03-08)
+- [#cpbr8: impressões de um campuseiro](https://perrotta.dev/pt/2015/02/%23cpbr8-impress%C3%B5es-de-um-campuseiro/) (2015-02-12)
 - [Encontro 'Hackergroup UFRJ' - Diário #1](https://perrotta.dev/pt/2014/11/encontro-hackergroup-ufrj-di%C3%A1rio-%231/) (2014-11-01)
 - [Desvendando (ou não) o btrfs](https://perrotta.dev/pt/2014/09/desvendando-ou-n%C3%A3o-o-btrfs/) (2014-09-20)
 - [Meus dois minutos de fama](https://perrotta.dev/pt/2014/07/meus-dois-minutos-de-fama/) (2014-07-25)
@@ -109,14 +110,14 @@
 ## Tags
 
 
-- [Bestof](https://perrotta.dev/pt/tags/bestof/) (6 posts)
-- [Dev](https://perrotta.dev/pt/tags/dev/) (75 posts)
+- [Bestof](https://perrotta.dev/pt/tags/bestof/) (7 posts)
+- [Dev](https://perrotta.dev/pt/tags/dev/) (76 posts)
 - [Gaming](https://perrotta.dev/pt/tags/gaming/) (3 posts)
 - [Git](https://perrotta.dev/pt/tags/git/) (1 posts)
 - [Leetcode](https://perrotta.dev/pt/tags/leetcode/) (1 posts)
-- [Legacy](https://perrotta.dev/pt/tags/legacy/) (87 posts)
+- [Legacy](https://perrotta.dev/pt/tags/legacy/) (88 posts)
 - [Meta](https://perrotta.dev/pt/tags/meta/) (3 posts)
 - [Privacy](https://perrotta.dev/pt/tags/privacy/) (6 posts)
 - [Security](https://perrotta.dev/pt/tags/security/) (3 posts)
 - [Selfhosted](https://perrotta.dev/pt/tags/selfhosted/) (1 posts)
-- [Serenity](https://perrotta.dev/pt/tags/serenity/) (22 posts)
+- [Serenity](https://perrotta.dev/pt/tags/serenity/) (23 posts)
