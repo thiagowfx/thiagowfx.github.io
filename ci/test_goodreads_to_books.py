@@ -9,6 +9,7 @@ from unittest.mock import patch
 
 from goodreads_to_books import (
     EXCLUDED_SORT,
+    OVERRIDES_SORT,
     add_covers,
     apply_override,
     book_id,
@@ -94,6 +95,15 @@ class CleanTitleTest(unittest.TestCase):
         self.assertEqual(
             clean_title("Naked Statistics (Revised)"), "Naked Statistics (Revised)"
         )
+
+    def test_drops_the_quotes_a_title_is_wrapped_in(self):
+        self.assertEqual(
+            clean_title('"Surely You\'re Joking, Mr. Feynman!": Adventures'),
+            "Surely You're Joking, Mr. Feynman!: Adventures",
+        )
+
+    def test_keeps_quotes_inside_a_title(self):
+        self.assertEqual(clean_title('Say "hi" to the world'), 'Say "hi" to the world')
 
     def test_normalizes_smart_quotes_and_spacing(self):
         self.assertEqual(clean_title("It\u2019s  Alive"), "It's Alive")
@@ -244,6 +254,30 @@ class RenderTest(unittest.TestCase):
             [line for line in text.splitlines() if line.startswith("  - ")],
             ['  - "41810925" # Goomics', '  - "58493107" # Goomics'],
         )
+
+
+class RenderOverridesTest(unittest.TestCase):
+    def test_leads_each_entry_with_its_title_and_sorts_them(self):
+        overrides = {
+            "2": {"id": "2", "title": "Zebra", "url": "https://example.com/z"},
+            "1": {"id": "1", "title": "Apple"},
+        }
+
+        text = render(None, None, {}, {}, overrides, {})
+
+        self.assertEqual(
+            text.splitlines()[1:8],
+            [
+                "overrides:",
+                marker(OVERRIDES_SORT),
+                "  - title: Apple",
+                '    id: "1"',
+                "  - title: Zebra",
+                '    id: "2"',
+                "    url: https://example.com/z",
+            ],
+        )
+        self.assertEqual(text.splitlines()[8], marker("end", "    "))
 
 
 class ReadExistingTest(unittest.TestCase):

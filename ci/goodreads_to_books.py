@@ -71,11 +71,13 @@ SMART_QUOTES = {"\u2018": "'", "\u2019": "'", "\u201c": '"', "\u201d": '"'}
 # Sorts the excluded ids by their title comment. Its own start marker is built
 # at runtime, so the keep-sorted hook does not mistake it for one of its own.
 EXCLUDED_SORT = "start case=no by_regex=" + r"\d\D\s(.*)$"
+# Sorts the overrides by title, which is why each entry leads with one.
+OVERRIDES_SORT = "start block=yes case=no by_regex=title: (.*)"
 
 
-def marker(directive):
+def marker(directive, indent="  "):
     """Render a keep-sorted comment for the data file."""
-    return "  # keep-{} {}".format("sorted", directive)
+    return "{}# keep-{} {}".format(indent, "sorted", directive)
 
 
 def without_updated(text):
@@ -288,7 +290,9 @@ def plain_text(value):
 
 def clean_title(title):
     """Drop a trailing series marker, e.g. "Dune (Dune, #1)" -> "Dune"."""
-    return plain_text(re.sub(r"\s*\([^()]*#\d+[^()]*\)\s*$", "", title))
+    title = plain_text(re.sub(r"\s*\([^()]*#\d+[^()]*\)\s*$", "", title))
+    # A title Goodreads wraps in quotes only costs escapes in the data file.
+    return title.replace('"', "") if title.startswith('"') else title
 
 
 def quote(value):
@@ -324,12 +328,18 @@ def render(profile, updated, excluded, links, overrides, categories):
         lines.append(marker("end"))
     if overrides:
         lines.append("overrides:")
-        for key in sorted(overrides, key=lambda key: overrides[key]["title"].casefold()):
+        lines.append(marker(OVERRIDES_SORT))
+        for key in sorted(
+            overrides, key=lambda key: (overrides[key].get("title", "").casefold(), key)
+        ):
             entry = overrides[key]
-            lines.append('  - id: "{}"'.format(key))
-            for field in ("title", "author", "year", "url", "cover", "shelved"):
+            lines.append("  - title: {}".format(quote(entry["title"])))
+            lines.append('    id: "{}"'.format(key))
+            for field in ("author", "year", "url", "cover"):
                 if entry.get(field) is not None:
                     lines.append("    {}: {}".format(field, quote(entry[field])))
+        # yamlfmt reindents a trailing comment to match the last item's keys.
+        lines.append(marker("end", "    "))
     if links:
         lines.append("series:")
         for name in sorted(links, key=str.casefold):
