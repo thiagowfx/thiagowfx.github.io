@@ -8,6 +8,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from goodreads_to_books import (
+    BOOKS_SORT,
     EXCLUDED_SORT,
     OVERRIDES_SORT,
     add_covers,
@@ -190,17 +191,19 @@ class RenderTest(unittest.TestCase):
             "categories:\n"
             "  - name: Technical\n"
             "    books:\n"
+            + marker(BOOKS_SORT, "      ") + "\n"
             "      - title: The Pragmatic Programmer\n"
             "        author: Andy Hunt\n"
             "        year: 1999\n"
             "        rating: 5\n"
             "        url: https://www.goodreads.com/book/show/4099\n"
-            "        cover: https://example.com/4099.jpg\n",
+            "        cover: https://example.com/4099.jpg\n"
+            + marker("end", "        ") + "\n",
         )
 
-    def test_sorts_categories_with_miscellaneous_last_and_books_by_title(self):
-        def book(book_id, title):
-            return {"id": book_id, "title": title, "author": "A", "year": None,
+    def test_sorts_categories_with_miscellaneous_last_and_books_by_year(self):
+        def book(book_id, title, year=None):
+            return {"id": book_id, "title": title, "author": "A", "year": year,
                     "rating": 4}
 
         text = render(
@@ -211,8 +214,12 @@ class RenderTest(unittest.TestCase):
             {},
             {
                 "Miscellaneous": [book("1", "Zebra")],
-                "Technical": [book("2", "b title"), book("3", "A title")],
-                "Fiction": [book("4", "Novel")],
+                "Technical": [
+                    book("2", "older", 1999),
+                    book("3", "newer", 2020),
+                    book("4", "same year, later title", 1999),
+                ],
+                "Fiction": [book("5", "Novel")],
             },
         )
 
@@ -222,8 +229,9 @@ class RenderTest(unittest.TestCase):
                 "  - name: Fiction",
                 "      - title: Novel",
                 "  - name: Technical",
-                "      - title: A title",
-                "      - title: b title",
+                "      - title: newer",
+                "      - title: same year, later title",
+                "      - title: older",
                 "  - name: Miscellaneous",
                 "      - title: Zebra",
             ],

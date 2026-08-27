@@ -71,8 +71,11 @@ SMART_QUOTES = {"\u2018": "'", "\u2019": "'", "\u201c": '"', "\u201d": '"'}
 # Sorts the excluded ids by their title comment. Its own start marker is built
 # at runtime, so the keep-sorted hook does not mistake it for one of its own.
 EXCLUDED_SORT = "start case=no by_regex=" + r"\d\D\s(.*)$"
-# Sorts the overrides by title, which is why each entry leads with one.
-OVERRIDES_SORT = "start block=yes case=no by_regex=title: (.*)"
+# Sorts the overrides by title, which is why each entry leads with one. A
+# keep-sorted option value cannot hold spaces, hence the \s in the patterns.
+OVERRIDES_SORT = r"start case=no by_regex=title:\s+(.*)"
+# Newest first, the way the page reads best.
+BOOKS_SORT = r"start order=desc numeric=yes by_regex=year:\s+(\d+)"
 
 
 def marker(directive, indent="  "):
@@ -352,7 +355,14 @@ def render(profile, updated, excluded, links, overrides, categories):
     for name in ordered:
         lines.append("  - name: {}".format(quote(name)))
         lines.append("    books:")
-        for book in sorted(categories[name], key=lambda b: b["title"].casefold()):
+        lines.append(marker(BOOKS_SORT, "      "))
+        # keep-sorted reverses the whole comparison, so ties on the year fall
+        # back to the entry text, descending.
+        for book in sorted(
+            categories[name],
+            key=lambda b: (b.get("year") or 0, quote(b["title"])),
+            reverse=True,
+        ):
             lines.append("      - title: {}".format(quote(book["title"])))
             lines.append("        author: {}".format(quote(book["author"])))
             if book["year"]:
@@ -364,6 +374,8 @@ def render(profile, updated, excluded, links, overrides, categories):
                 lines.append("        series: {}".format(quote(book["series"])))
             if book.get("cover"):
                 lines.append("        cover: {}".format(quote(book["cover"])))
+        # yamlfmt reindents a trailing comment to match the last item's keys.
+        lines.append(marker("end", "        "))
     return "\n".join(lines) + "\n"
 
 

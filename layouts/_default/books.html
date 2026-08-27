@@ -94,14 +94,14 @@
   {{- with .series }}
     {{- if not (in $names .) }}{{ $names = $names | append . }}{{ end }}
   {{- else }}
-    {{- $entries = $entries | append (dict "sort" (printf "1 %s" (lower .title)) "book" .) }}
+    {{- $entries = $entries | append (dict "sort" (partial "books-sort-key.html" .) "book" .) }}
   {{- end }}
 {{- end }}
 {{- /* The leading rank keeps whole series ahead of the standalone books. */}}
 {{- range $name := $names }}
   {{- $books := sort (where $category.books "series" $name) "year" }}
   {{- if eq (len $books) 1 }}
-    {{- $entries = $entries | append (dict "sort" (printf "1 %s" (lower (index $books 0).title)) "book" (index $books 0)) }}
+    {{- $entries = $entries | append (dict "sort" (partial "books-sort-key.html" (index $books 0)) "book" (index $books 0)) }}
   {{- else }}
     {{- $entries = $entries | append (dict "sort" (printf "0 %s" (lower $name)) "name" $name "books" $books) }}
   {{- end }}
