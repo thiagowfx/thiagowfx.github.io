@@ -32,11 +32,7 @@ With my [OpenAI Codex]({{< ref
 
 - Pi, I prompted away:
 
-> ╭ user ─────────────────────────────────────────────────────────╮
-> │                                                               │
-> │ List all prompts I ran in this session, bulleted list:        │
-> │                                                               │
-> ╰───────────────────────────────────────────────────────────────╯
+> User: List all prompts I ran in this session, bulleted list:
 >
 > Thinking: Listing all user prompt messages
 >
