@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="https://perrotta.dev/rss.xsl"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on ¬ just serendipity 🍀</title>
+    <link>https://perrotta.dev/</link>
+    <description>Recent content in Linux on ¬ just serendipity 🍀</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <managingEditor>serendipity@perrotta.dev (Thiago Perrotta)</managingEditor>
+    <webMaster>serendipity@perrotta.dev (Thiago Perrotta)</webMaster>
+    <copyright>© 2013 - 2026 Thiago Perrotta ·
+  a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)
+</copyright>
+    <lastBuildDate>Sat, 29 Aug 2026 02:50:05 +0200</lastBuildDate>
+    <atom:link href="https://perrotta.dev/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ssh: pipe SQL through doas with base64
+      </title>
+      <link>https://perrotta.dev/2026/08/ssh-pipe-sql-through-doas-with-base64/</link>
+      <pubDate>Sat, 29 Aug 2026 02:44:43 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author>
+      <category>bloggify</category>
+      <category>dev</category>
+      <category>linux</category>
+      <category>ssh</category>
+      <guid>https://perrotta.dev/2026/08/ssh-pipe-sql-through-doas-with-base64/</guid>
+      <description>&lt;p&gt;♠ &lt;strong&gt;Problem statement&lt;/strong&gt;: nested shell quotes made a remote PostgreSQL update&#xA;harder to run than the update itself.&lt;/p&gt;&#xA;&lt;p&gt;The target is an Alpine Linux host. Its Miniflux configuration contains the database&#xA;connection string, so &lt;code&gt;psql&lt;/code&gt; must run after sourcing &lt;code&gt;/etc/miniflux.conf&lt;/code&gt; through&#xA;&lt;code&gt;doas&lt;/code&gt;.&lt;/p&gt;&#xA;&lt;p&gt;An inline command quickly becomes a quoting puzzle. SQL contains single quotes,&#xA;Unicode, and sometimes apostrophes. The local shell also expands unquoted&#xA;characters before &lt;code&gt;ssh&lt;/code&gt; sends anything to the server.&lt;/p&gt;&#xA;&lt;p&gt;I wrote SQL to a temporary file, encoded it locally, and sent only base64 over&#xA;SSH:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;% base64 /tmp/miniflux-flags.sql | tr -d &amp;#39;\n&amp;#39; | \&#xA;  ssh knol &amp;#39;doas sh -c &amp;#39;\&amp;#39;&amp;#39;&#xA;    . /etc/miniflux.conf&#xA;    base64 -d | psql &amp;#34;$DATABASE_URL&amp;#34; -X -v ON_ERROR_STOP=1&#xA;  &amp;#39;\&amp;#39;&amp;#39;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Remote shell receives a simple command. &lt;code&gt;base64 -d&lt;/code&gt; reconstructs SQL on the&#xA;server. &lt;code&gt;psql&lt;/code&gt; reads it from standard input. &lt;code&gt;ON_ERROR_STOP=1&lt;/code&gt; makes a SQL&#xA;error stop the command instead of continuing to later statements.&lt;/p&gt;&#xA;&lt;p&gt;The file contained real, guarded updates:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;BEGIN;&#xA;UPDATE feeds SET title = title || &amp;#39; 🇺🇸&amp;#39;&#xA;WHERE id = 1394 AND title = &amp;#39;furbo.org: Craig Hockenberry&amp;#39;&#xA;RETURNING id, title;&#xA;UPDATE feeds SET title = title || &amp;#39; 🇨🇦&amp;#39;&#xA;WHERE id = 1406 AND title = &amp;#39;Ansuz: Matthew Skala&amp;#39;&#xA;RETURNING id, title;&#xA;UPDATE feeds SET title = title || &amp;#39; 🇬🇧&amp;#39;&#xA;WHERE id = 1411 AND title = &amp;#39;Ian Jackson&amp;#39;&#xA;RETURNING id, title;&#xA;-- eight more exact-title guards&#xA;COMMIT;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;The remote output stayed useful:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-plaintext&#34;&gt;BEGIN&#xA; id  |              title&#xA;-----&amp;#43;---------------------------------&#xA;1394 | furbo.org: Craig Hockenberry 🇺🇸&#xA;(1 row)&#xA;UPDATE 1&#xA;...&#xA;UPDATE 1&#xA;COMMIT&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;A second query verified every ID after commit:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-plaintext&#34;&gt; id  |              title&#xA;-----&amp;#43;---------------------------------&#xA;1394 | furbo.org: Craig Hockenberry 🇺🇸&#xA;1406 | Ansuz: Matthew Skala 🇨🇦&#xA;1411 | Ian Jackson 🇬🇧&#xA;1444 | Matthew Garrett: mjg59 🇬🇧&#xA;1459 | Cloudscaling by Randy Bias 🇺🇸&#xA;1460 | Marcin Juszkiewicz 🇵🇱&#xA;1464 | Liss is More by Casey Liss 🇺🇸&#xA;1472 | Jerod Santo 🇺🇸&#xA;1482 | Matthias Kirschner 🇩🇪&#xA;1545 | Charles Leifer 🇺🇸&#xA;(10 rows)&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Base64 does not encrypt anything. It only moves one opaque payload through&#xA;several shells. That is enough to keep local parsing away from SQL.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;🤖 &lt;em&gt;Drafted with &lt;a href=&#34;https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md&#34;&gt;&lt;code&gt;/bloggify&lt;/code&gt;&lt;/a&gt;.&lt;/em&gt; ∎&lt;/p&gt;&#xA;&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href=&#34;mailto:serendipity@perrotta.dev?subject=Reply to: ssh: pipe SQL through doas with base64&#34;&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&#34;https://perrotta.dev/tags/bloggify/&#34;&gt;#bloggify&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/dev/&#34;&gt;#dev&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/linux/&#34;&gt;#linux&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/ssh/&#34;&gt;#ssh&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
