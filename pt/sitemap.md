@@ -9,6 +9,7 @@
 
 
 - [Busca](https://perrotta.dev/pt/search/)
+- [Calendário](https://perrotta.dev/pt/calendar/)
 
 ## Blog Posts
 

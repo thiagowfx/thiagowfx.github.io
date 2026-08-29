@@ -11,6 +11,7 @@
 - [AI](https://perrotta.dev/ai/)
 - [Blogroll](https://perrotta.dev/blogroll/)
 - [Books](https://perrotta.dev/books/)
+- [Calendar](https://perrotta.dev/calendar/)
 - [Colophon](https://perrotta.dev/colophon/)
 - [Contact](https://perrotta.dev/contact/)
 - [Cursed Knowledge](https://perrotta.dev/cursed-knowledge/)
