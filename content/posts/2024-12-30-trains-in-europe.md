@@ -34,6 +34,7 @@ There's no point in searching in all of them: pick one or two and call it a day.
 This list is intentionally non-exhaustive.
 
 <!-- keep-sorted start -->
+- [Bahnscanner](https://bahnscanner.de/) for Germany 🇩🇪
 - [Deutsche Bahn (DB)](https://int.bahn.de/en/) for Germany 🇩🇪
 - [MAV](https://www.mavcsoport.hu/en) for Hungary 🇭🇺
 - [NS](https://www.ns.nl/en) for the Netherlands 🇳🇱
