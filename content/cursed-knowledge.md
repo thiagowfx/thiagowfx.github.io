@@ -38,3 +38,16 @@ Multiple feature requests ([#3921](https://github.com/earendil-works/pi/issues/3
 [#2992](https://github.com/earendil-works/pi/issues/2992),
 [#4423](https://github.com/earendil-works/pi/issues/4423)) were all closed
 not-planned/unsupported.
+
+## argocd sync windows block pruning
+
+*2026-08-31*
+
+An `AppProject` `allow` sync window restricts every automated sync operation on the
+listed apps to that window, including pruning. Deleting an `Application` from Git makes
+the parent app-of-apps drop it from `status.resources` on its next sync, but if the child
+is itself windowed, ArgoCD can't prune the now-orphaned object outside the window —
+the controller logs `Sync prevented by sync window` and leaves it in place indefinitely.
+The orphan then fails to render, since its Git-sourced values file is already gone,
+which flips its sync status to `Unknown` and pages on `ArgoCdAppSyncUnknown`. No
+`deletionTimestamp`, no stuck finalizer — the object was simply never asked to go.
