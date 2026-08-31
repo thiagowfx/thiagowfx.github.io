@@ -1,7 +1,7 @@
 ---
 title: "Trains in Europe"
 url: https://perrotta.dev/2024/12/trains-in-europe/
-last_updated: 2026-02-16
+last_updated: 2026-08-31
 ---
 
 
@@ -33,6 +33,7 @@ There's no point in searching in all of them: pick one or two and call it a day.
 This list is intentionally non-exhaustive.
 
 <!-- keep-sorted start -->
+- [Bahnscanner](https://bahnscanner.de/) for Germany 🇩🇪
 - [Deutsche Bahn (DB)](https://int.bahn.de/en/) for Germany 🇩🇪
 - [MAV](https://www.mavcsoport.hu/en) for Hungary 🇭🇺
 - [NS](https://www.ns.nl/en) for the Netherlands 🇳🇱
