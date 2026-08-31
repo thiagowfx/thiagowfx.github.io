@@ -39,7 +39,7 @@ Multiple feature requests ([#3921](https://github.com/earendil-works/pi/issues/3
 [#4423](https://github.com/earendil-works/pi/issues/4423)) were all closed
 not-planned/unsupported.
 
-## argocd sync windows block pruning
+## [argocd sync windows block pruning]({{< ref "2026-08-31-argocd-sync-windows-block-pruning" >}})
 
 *2026-08-31*
 
