@@ -1,0 +1,76 @@
+{{- define "main" }}
+<style>
+  .tv-shows-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .tv-shows-item {
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
+  .tv-shows-item a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .tv-shows-cover {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    background: color-mix(in srgb, var(--text-color) 6%, var(--bg-color));
+  }
+  .tv-shows-item a:hover .tv-shows-cover {
+    border-color: var(--link-color);
+  }
+  .tv-shows-item-title {
+    margin-top: 0.4rem;
+    font-weight: 600;
+  }
+  .tv-shows-item-meta {
+    color: var(--color-gray);
+    font-size: 0.75rem;
+  }
+</style>
+
+{{- $data := index hugo.Data "tv-shows" }}
+
+<h2>{{ .Title }}</h2>
+
+{{- $updated := or $data.updated (.Lastmod.Format "2006-01-02") }}
+{{- $updated = time.AsTime $updated }}
+<p>
+  <span class="pubdate-single">
+    Last updated on
+    <time datetime='{{ $updated.Format "2006-01-02" }}'>{{ $updated.Format (default "02 Jan, 2006" .Site.Params.dateFormat) }}</time>
+  </span>
+</p>
+
+<p>A sample of my favorite TV shows, sorted alphabetically. Not intended to be exhaustive.
+  Backed by <a href="https://github.com/thiagowfx/thiagowfx.github.io/blob/master/data/tv-shows.yaml"><code>data/tv-shows.yaml</code></a>,
+  validated against a JSON schema. Everything I watch lives on
+  <a href="https://trakt.tv/">Trakt</a>. Show details and posters come from
+  <a href="https://www.themoviedb.org/">The Movie Database</a>.</p>
+
+<p>TV show recommendations are almost always welcome, just
+  <a href="{{ "contact" | relURL }}">send them over</a>!</p>
+
+<div class="tv-shows-grid">
+  {{- range $data.shows }}
+  <div class="tv-shows-item">
+    <a href="{{ .url }}" title="{{ .title }} ({{ .years }})">
+      <img class="tv-shows-cover" src="{{ .cover }}" alt="Poster for {{ .title }}" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+      <div class="tv-shows-item-title">{{ .title }}</div>
+    </a>
+    <div class="tv-shows-item-meta">
+      {{ .years }} &middot; {{ .seasons }} {{ cond (eq .seasons 1) "season" "seasons" }}
+    </div>
+  </div>
+  {{- end }}
+</div>
+
+{{ .Content }}
+{{- end -}}
