@@ -1,11 +1,11 @@
 ---
 title: "Update DNS NS servers from Porkbun to Cloudflare"
 url: https://perrotta.dev/2024/12/update-dns-ns-servers-from-porkbun-to-cloudflare/
-last_updated: 2026-01-03
+last_updated: 2026-09-01
 ---
 
 
-[Porkbun](porkbun.com) is my registrar of choice. It is quite decent but alas it
+[Porkbun](https://porkbun.com) is my registrar of choice. It is quite decent but alas it
 [does
 not](https://kb.porkbun.com/article/10-how-to-set-up-email-forwarding-service)
 support wildcard or catch-all emails, as per their own docs.

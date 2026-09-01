@@ -1,11 +1,11 @@
 ---
 title: "LeetCode #448: Find All Numbers Disappeared in an Array"
 url: https://perrotta.dev/2025/09/leetcode-%23448-find-all-numbers-disappeared-in-an-array/
-last_updated: 2026-01-03
+last_updated: 2026-09-01
 ---
 
 
-[LeetCode #448: Find All Numbers Disappeared in an Array](/find-all-numbers-disappeared-in-an-array/):
+[LeetCode #448: Find All Numbers Disappeared in an Array](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/):
 
 Set difference!
 
