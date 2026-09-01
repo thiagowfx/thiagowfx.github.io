@@ -329,7 +329,7 @@ update-git:
 [doc('Update prek hooks')]
 [group('utils')]
 update-prek:
-    prek auto-update --freeze --jobs "$(nproc)" && prek run --all-files
+    prek update --freeze --jobs "$(nproc)" && prek run --all-files
 
 [doc('Update JSON schemas')]
 [group('utils')]
