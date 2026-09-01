@@ -1,7 +1,7 @@
 ---
 title: "Notify search engines of new posts"
 url: https://perrotta.dev/2025/02/notify-search-engines-of-new-posts/
-last_updated: 2026-02-17
+last_updated: 2026-09-01
 ---
 
 
@@ -66,4 +66,7 @@ Deeper into the rabbit hole:
 I'll keep pinging it anyway, the cost is virtually free. You can't just
 [deprecate](https://killedbygoogle.com/) features people [rely
 on](https://www.hyrumslaw.com/).
+
+**Update(2026-09-01)**: Both endpoints are now retired. I removed this recipe
+and its CI step.
 
