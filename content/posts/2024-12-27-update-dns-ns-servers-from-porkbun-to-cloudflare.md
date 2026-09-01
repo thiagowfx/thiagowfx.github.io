@@ -8,7 +8,7 @@ tags:
   - security
 ---
 
-[Porkbun](porkbun.com) is my registrar of choice. It is quite decent but alas it
+[Porkbun](https://porkbun.com) is my registrar of choice. It is quite decent but alas it
 [does
 not](https://kb.porkbun.com/article/10-how-to-set-up-email-forwarding-service)
 support wildcard or catch-all emails, as per their own docs.
