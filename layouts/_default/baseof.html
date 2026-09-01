@@ -66,6 +66,7 @@
        </div>
     </div>
     <nav aria-label="Main navigation">
+      {{- $currentSite := .Site }}
       {{- range .Site.Menus.main }}
       {{- if not .Parent }}
       {{- if .Params.dropdown }}
@@ -76,12 +77,19 @@
         </button>
         <div class="nav-dropdown-menu">
           {{- range .Children }}
-          <a href="{{ .URL | relLangURL }}" class="nav-dropdown-item">{{ .Name }}</a>
+          {{- $url := .URL | relURL }}
+          {{- with $currentSite.GetPage .URL }}
+          {{- $url = .RelPermalink }}
+          {{- end }}
+          <a href="{{ $url }}" class="nav-dropdown-item">{{ .Name }}</a>
           {{- end }}
         </div>
       </div>
       {{- else }}
-      {{- $url := .URL | relLangURL }}
+      {{- $url := .URL | relURL }}
+      {{- with $currentSite.GetPage .URL }}
+      {{- $url = .RelPermalink }}
+      {{- end }}
       <a href="{{ $url }}">
         <span class="nav-text">{{ .Name }}</span>
       </a>
