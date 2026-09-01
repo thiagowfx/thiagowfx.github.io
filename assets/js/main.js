@@ -108,10 +108,10 @@ document.addEventListener("click", function (event) {
   if (!navigator.clipboard || !navigator.clipboard.writeText) {
     return;
   }
+  button.dataset.originalHtml = button.innerHTML;
   navigator.clipboard
     .writeText(text)
     .then(function () {
-      button.dataset.originalHtml = button.innerHTML;
       button.innerHTML =
         '<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><polyline points="20 6 9 17 4 12"></polyline></svg>';
       setTimeout(function () {
