@@ -68,3 +68,6 @@ Deeper into the rabbit hole:
 I'll keep pinging it anyway, the cost is virtually free. You can't just
 [deprecate](https://killedbygoogle.com/) features people [rely
 on](https://www.hyrumslaw.com/).
+
+**Update(2026-09-01)**: Both endpoints are now retired. I removed this recipe
+and its CI step.

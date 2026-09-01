@@ -20,7 +20,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Reset a post's date to now: `just touch <path>` (updates frontmatter `date:` and renames the file's date prefix)
 - Clean build artifacts: `just clean`
 - Update dependencies: `just update` (updates git submodules and prek hooks)
-- Ping search engines: `just ping` (notifies Google and Bing of sitemap changes)
 
 ## Test/Lint Commands
 

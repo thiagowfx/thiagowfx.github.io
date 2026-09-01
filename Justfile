@@ -311,12 +311,6 @@ test:
 goodreads-import csv="~/Downloads/goodreads_library_export.csv" *args:
     ci/goodreads_to_books.py {{ csv }} {{ args }}
 
-[doc('Ping search engines about sitemap changes')]
-[group('publish')]
-ping sitemap="https://perrotta.dev/sitemap.xml":
-    curl -sS -o /dev/null "https://www.google.com/ping?sitemap={{ sitemap }}"
-    curl -sS -o /dev/null "https://www.bing.com/ping?sitemap={{ sitemap }}"
-
 [doc('Update git submodules, prek hooks, JSON schemas, and vendored dependencies')]
 [group('utils')]
 update: update-git update-prek update-json-schemas update-vendor
