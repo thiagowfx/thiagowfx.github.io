@@ -1,7 +1,7 @@
 ---
 title: "migrating from pre-commit to prek"
 url: https://perrotta.dev/2026/04/migrating-from-pre-commit-to-prek/
-last_updated: 2026-04-20
+last_updated: 2026-09-01
 ---
 
 
@@ -36,7 +36,7 @@ The CI workflow on this blog ([`prek.yml`](https://github.com/thiagowfx/thiagowf
 now uses [`j178/prek-action`](https://github.com/j178/prek-action) instead of
 `pre-commit/action`, and the monthly autoupdate job
 ([`prek-autoupdate.yml`](https://github.com/thiagowfx/thiagowfx.github.io/blob/master/.github/workflows/prek-autoupdate.yml))
-runs `prek auto-update --freeze` — the [`--freeze`]({{< ref "2025-03-20-pre-commit-pin-dependencies-with-freeze" >}})
+runs `prek update --freeze` — the [`--freeze`]({{< ref "2025-03-20-pre-commit-pin-dependencies-with-freeze" >}})
 flag works the same.
 
 The [benchmark](https://prek.j178.dev/benchmark/) is what sold me. On cold
