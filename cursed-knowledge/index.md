@@ -11,6 +11,7 @@ Inspired by [Immich's Cursed Knowledge](https://immich.app/cursed-knowledge).
 
 ---
 
+<!-- keep-sorted start order=desc group_start_regex=^##\s by_regex=\*(\d{4}-\d{2}-\d{2})\* newline_separated=yes -->
 ## [argocd sync windows block pruning]({{< ref "2026-08-31-argocd-sync-windows-block-pruning" >}})
 
 *2026-08-31*
@@ -47,4 +48,5 @@ Multiple feature requests ([#3921](https://github.com/earendil-works/pi/issues/3
 [#2992](https://github.com/earendil-works/pi/issues/2992),
 [#4423](https://github.com/earendil-works/pi/issues/4423)) were all closed
 not-planned/unsupported.
+<!-- keep-sorted end -->
 
