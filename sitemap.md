@@ -26,6 +26,7 @@
 ## Blog Posts
 
 
+- [direnv: silence a blocked .envrc](https://perrotta.dev/2026/09/direnv-silence-a-blocked-.envrc/) (2026-09-02)
 - [Hacker News RSS (hnrss): replace broken feed endpoint](https://perrotta.dev/2026/09/hacker-news-rss-hnrss-replace-broken-feed-endpoint/) (2026-09-02)
 - [prek 0.5: auto-update → update](https://perrotta.dev/2026/09/prek-0.5-auto-update-update/) (2026-09-01)
 - [git: diff against the default branch](https://perrotta.dev/2026/08/git-diff-against-the-default-branch/) (2026-08-31)
@@ -1365,7 +1366,7 @@
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1230 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1231 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
