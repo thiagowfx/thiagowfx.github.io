@@ -11,8 +11,18 @@
     <copyright>© 2013 - 2026 Thiago Perrotta ·
   a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)
 </copyright>
-    <lastBuildDate>Fri, 28 Aug 2026 01:56:12 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 02 Sep 2026 13:26:13 +0200</lastBuildDate>
     <atom:link href="https://perrotta.dev/tags/selfhosted/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hacker News RSS (hnrss): replace broken feed endpoint
+      </title>
+      <link>https://perrotta.dev/2026/09/hacker-news-rss-hnrss-replace-broken-feed-endpoint/</link>
+      <pubDate>Wed, 02 Sep 2026 13:19:22 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author>
+      <category>dev</category>
+      <category>selfhosted</category>
+      <guid>https://perrotta.dev/2026/09/hacker-news-rss-hnrss-replace-broken-feed-endpoint/</guid>
+      <description>&lt;p&gt;♠ &lt;a href=&#34;https://perrotta.dev/2022/02/praise-for-blog-aggregators/&#34;&gt;Previously&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Problem statement&lt;/strong&gt;: my filtered Hacker News feed stopped working in&#xA;Miniflux because its HNRSS endpoint returned a bad gateway response.&lt;/p&gt;&#xA;&lt;p&gt;This has been happening for a couple of weeks, to the point it became&#xA;unreliable.&lt;/p&gt;&#xA;&lt;p&gt;The feed selected stories with more than 650 points:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-plaintext&#34;&gt;https://hnrss.org/newest?points=650&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Miniflux reported the upstream failure without hiding it:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-plaintext&#34;&gt;The website is not available at the moment due to a bad gateway error.&#xA;The problem is not on Miniflux side. Please, try again later.&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;HNRSS is open source, and another public instance runs a&#xA;&lt;a href=&#34;https://github.com/kakwa/hnrss-ai-filtering&#34;&gt;fork&lt;/a&gt; against the same Hacker News&#xA;Algolia data. So I replaced the domain:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-diff&#34;&gt;-https://hnrss.org/newest?points=650&#xA;&amp;#43;https://hnrss.kakwalab.ovh/newest?points=650&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;The replacement returned an XML feed with 20 items:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;% curl -L --max-time 15 -sS \&#xA;    &amp;#39;https://hnrss.kakwalab.ovh/newest?points=650&amp;#39; \&#xA;    -o /tmp/hnrss.xml \&#xA;    -w &amp;#39;%{http_code} %{content_type} %{size_download} bytes\n&amp;#39;&#xA;200 application/xml; charset=utf-8 15929 bytes&#xA;&#xA;% python3 -c &amp;#39;import xml.etree.ElementTree as ET; \&#xA;r=ET.parse(&amp;#34;/tmp/hnrss.xml&amp;#34;).getroot(); \&#xA;i=r.findall(&amp;#34;./channel/item&amp;#34;); print(len(i)); print(i[0].findtext(&amp;#34;title&amp;#34;))&amp;#39;&#xA;20&#xA;Hang on to Your Firefox&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;∎&lt;/p&gt;&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href=&#34;mailto:serendipity@perrotta.dev?subject=Reply to: Hacker News RSS (hnrss): replace broken feed endpoint&#34;&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&#34;https://perrotta.dev/tags/dev/&#34;&gt;#dev&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/selfhosted/&#34;&gt;#selfhosted&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>★ miniflux: add country flags to all feeds 🌐
       </title>

@@ -26,6 +26,7 @@
 ## Blog Posts
 
 
+- [Hacker News RSS (hnrss): replace broken feed endpoint](https://perrotta.dev/2026/09/hacker-news-rss-hnrss-replace-broken-feed-endpoint/) (2026-09-02)
 - [prek 0.5: auto-update → update](https://perrotta.dev/2026/09/prek-0.5-auto-update-update/) (2026-09-01)
 - [git: diff against the default branch](https://perrotta.dev/2026/08/git-diff-against-the-default-branch/) (2026-08-31)
 - [argocd: sync windows block pruning](https://perrotta.dev/2026/08/argocd-sync-windows-block-pruning/) (2026-08-31)
@@ -1364,7 +1365,7 @@
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1229 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1230 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1383,7 +1384,7 @@
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (34 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (60 posts)
 - [Security](https://perrotta.dev/tags/security/) (68 posts)
-- [Selfhosted](https://perrotta.dev/tags/selfhosted/) (13 posts)
+- [Selfhosted](https://perrotta.dev/tags/selfhosted/) (14 posts)
 - [Serenity](https://perrotta.dev/tags/serenity/) (278 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (12 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (8 posts)
