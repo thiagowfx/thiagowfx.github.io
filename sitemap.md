@@ -27,6 +27,7 @@
 ## Blog Posts
 
 
+- [mise: prune old installations](https://perrotta.dev/2026/09/mise-prune-old-installations/) (2026-09-03)
 - [direnv: silence a blocked .envrc](https://perrotta.dev/2026/09/direnv-silence-a-blocked-.envrc/) (2026-09-02)
 - [Hacker News RSS (hnrss): replace broken feed endpoint](https://perrotta.dev/2026/09/hacker-news-rss-hnrss-replace-broken-feed-endpoint/) (2026-09-02)
 - [AgentsView vs fast-resume](https://perrotta.dev/2026/09/agentsview-vs-fast-resume/) (2026-09-01)
@@ -1369,7 +1370,7 @@
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1232 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1233 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
