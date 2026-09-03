@@ -1,7 +1,7 @@
 ---
 title: "pre-commit: authentication in internal github repos"
 url: https://perrotta.dev/2026/06/pre-commit-authentication-in-internal-github-repos/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -68,8 +68,4 @@ Two things worth noting.
   silently returns a 404 from the App installation endpoint otherwise.
 
 After the installation grant, the clone goes through and `prek` runs cleanly.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

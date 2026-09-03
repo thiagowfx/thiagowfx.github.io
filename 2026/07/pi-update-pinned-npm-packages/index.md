@@ -1,7 +1,7 @@
 ---
 title: "pi: update pinned npm packages"
 url: https://perrotta.dev/2026/07/pi-update-pinned-npm-packages/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -73,8 +73,4 @@ It handles every `npm:` entry, including scoped packages:
 
 The aggregate `just update` recipe invokes it alongside submodule, prek hook,
 and vendored-file updates.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

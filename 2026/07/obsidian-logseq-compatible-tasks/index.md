@@ -1,7 +1,7 @@
 ---
 title: "obsidian: logseq-compatible tasks"
 url: https://perrotta.dev/2026/07/obsidian-logseq-compatible-tasks/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -68,8 +68,4 @@ Low risk, and no task-format conversion needed.
 
 This should make it easier for me to adapt my LogSeq muscle memory to Obsidian,
 even if at the cost of enabling community plug-ins.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

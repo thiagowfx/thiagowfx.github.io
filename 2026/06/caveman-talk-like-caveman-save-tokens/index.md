@@ -1,7 +1,7 @@
 ---
 title: "caveman: talk like caveman, save tokens"
 url: https://perrotta.dev/2026/06/caveman-talk-like-caveman-save-tokens/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -41,8 +41,4 @@ In practice: responses are punchy. The model still reasons correctly; it just
 stops narrating. No "Sure, I'd be happy to help with that." Just the answer.
 
 ~~You're absolutely right.~~ no more!?
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

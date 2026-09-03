@@ -1,7 +1,7 @@
 ---
 title: "anki: migrate English notes to TTS note types"
 url: https://perrotta.dev/2026/08/anki-migrate-english-notes-to-tts-note-types/
-last_updated: 2026-08-23
+last_updated: 2026-09-03
 ---
 
 
@@ -66,8 +66,4 @@ count. After a full upload to AnkiWeb, a normal sync passed.
 
 No reverse cards, and all English notes can now speak for themselves (pun
 intended!).
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

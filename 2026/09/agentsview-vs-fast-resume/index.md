@@ -73,7 +73,3 @@ for updates; `fr` 2.11.2 has neither mechanism.
 
 Given the aforementioned trade-offs: I am happier with `fr`. KISS.
 
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
-

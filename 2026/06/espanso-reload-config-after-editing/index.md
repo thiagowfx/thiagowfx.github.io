@@ -1,7 +1,7 @@
 ---
 title: "espanso: reload config after editing"
 url: https://perrotta.dev/2026/06/espanso-reload-config-after-editing/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -51,8 +51,4 @@ bounce it through `launchd`, which owns the process:
 expands again.
 
 **Meta**: should I create a trigger for this command? :P
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

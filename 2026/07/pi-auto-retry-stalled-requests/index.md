@@ -1,7 +1,7 @@
 ---
 title: "pi: auto-retry stalled requests"
 url: https://perrotta.dev/2026/07/pi-auto-retry-stalled-requests/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -45,8 +45,4 @@ re-prompting.
 The idle timer resets on every byte received, so long thinking or a slow stream
 won't trip it — only a genuinely dead connection will. Restart `pi` for the
 change to take effect.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

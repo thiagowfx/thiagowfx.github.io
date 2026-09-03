@@ -1,7 +1,7 @@
 ---
 title: "dual-review: address review findings automatically"
 url: https://perrotta.dev/2026/08/dual-review-address-review-findings-automatically/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -49,8 +49,4 @@ what's fixable, and pushes.
 Why two review(er)s instead of one? Because LLMs are non-deterministic.
 
 Why not more than two review(er)s then? Tokens ($$$) and time. It's a balance.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

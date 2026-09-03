@@ -1,7 +1,7 @@
 ---
 title: "claude code: ship your skills as a plugin marketplace"
 url: https://perrotta.dev/2026/06/claude-code-ship-your-skills-as-a-plugin-marketplace/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -81,8 +81,4 @@ me](https://github.com/thiagowfx/skills/blob/bb5c0d6ef60b7873d8df907a668db833674
 about how to package the skills. Quite meta, eh?
 
 **Next up**: point the dotfiles at the repo so there's a single source of truth.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

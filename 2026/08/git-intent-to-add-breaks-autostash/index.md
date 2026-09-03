@@ -1,7 +1,7 @@
 ---
 title: "git: intent-to-add breaks autostash"
 url: https://perrotta.dev/2026/08/git-intent-to-add-breaks-autostash/
-last_updated: 2026-08-19
+last_updated: 2026-09-03
 ---
 
 
@@ -39,8 +39,4 @@ path metadata without file content to stash.
 % git reset
 % git pull
 ```
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

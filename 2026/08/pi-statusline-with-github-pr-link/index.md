@@ -1,7 +1,7 @@
 ---
 title: "pi: statusline with GitHub PR link"
 url: https://perrotta.dev/2026/08/pi-statusline-with-github-pr-link/
-last_updated: 2026-08-24
+last_updated: 2026-09-03
 ---
 
 
@@ -137,8 +137,4 @@ Removed npm:@narumitw/pi-github-pr
 
 Files under `~/.pi/agent/extensions/*.ts` are auto-discovered, so `/reload`
 picks it up without restarting the session.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

@@ -1,7 +1,7 @@
 ---
 title: "claude code: replace a hand-rolled loop with /goal"
 url: https://perrotta.dev/2026/07/claude-code-replace-a-hand-rolled-loop-with-/goal/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -62,8 +62,4 @@ The lesson generalizes past this one skill: whenever the harness grows a
 primitive, the custom code that predates it becomes technical debt. `/loop`,
 Stop hooks, and `/goal` now cover most of the "keep going until X" constructs I
 used previously.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

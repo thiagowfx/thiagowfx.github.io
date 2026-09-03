@@ -1,7 +1,7 @@
 ---
 title: "markdown: nested code fences"
 url: https://perrotta.dev/2026/08/markdown-nested-code-fences/
-last_updated: 2026-08-17
+last_updated: 2026-09-03
 ---
 
 
@@ -85,8 +85,4 @@ markdownlint-cli2........................................................Passed
 
 Rule of thumb: count the backticks of the innermost block, then add one for
 every level above it.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

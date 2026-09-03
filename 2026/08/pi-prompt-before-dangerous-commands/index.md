@@ -1,7 +1,7 @@
 ---
 title: "pi: prompt before dangerous commands"
 url: https://perrotta.dev/2026/08/pi-prompt-before-dangerous-commands/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -61,8 +61,4 @@ The tests exercise all three decisions:
 ```
 
 Same guardrails, with an escape hatch operated by a human rather than a model.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

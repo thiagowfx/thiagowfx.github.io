@@ -1,7 +1,7 @@
 ---
 title: "pi: caveman mode"
 url: https://perrotta.dev/2026/07/pi-caveman-mode/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -90,8 +90,4 @@ stay full verbosity, never compressed.
 
 This experience was an eye-opener for me to realize how bloated the upstream
 caveman project became.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

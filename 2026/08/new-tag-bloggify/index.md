@@ -1,7 +1,7 @@
 ---
 title: "new tag: bloggify"
 url: https://perrotta.dev/2026/08/new-tag-bloggify/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -55,8 +55,4 @@ EntryTag=(?i)^bloggify$
 Added as a global block rule in miniflux, and every future `/bloggify`-drafted
 post never reaches the inbox. `/tags/bloggify/` on the blog itself works too,
 for anyone who'd rather subscribe to the opposite: only the AI-assisted posts.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

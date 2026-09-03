@@ -1,7 +1,7 @@
 ---
 title: "homebrew: cask drift after an in-app update"
 url: https://perrotta.dev/2026/08/homebrew-cask-drift-after-an-in-app-update/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -96,8 +96,4 @@ The general shape: a cask whose app ships its own updater will drift, and
 Homebrew only notices when the vendor also renames the bundle. `--adopt` is for
 an app Homebrew never tracked; for an app it tracked *wrongly*, the receipt has
 to go first.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

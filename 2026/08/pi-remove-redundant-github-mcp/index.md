@@ -1,7 +1,7 @@
 ---
 title: "pi: remove redundant github MCP"
 url: https://perrotta.dev/2026/08/pi-remove-redundant-github-mcp/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -41,8 +41,4 @@ another interface without adding capability.
 
 MCP remains useful for APIs without a better (or any) CLI, but it should be
 avoided wherever possible.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

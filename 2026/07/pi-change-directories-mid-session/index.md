@@ -1,7 +1,7 @@
 ---
 title: "pi: change directories mid-session"
 url: https://perrotta.dev/2026/07/pi-change-directories-mid-session/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -72,8 +72,4 @@ For now, the boring path is the supported one:
 ```
 
 Session cwd is a runtime boundary. Oh well.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

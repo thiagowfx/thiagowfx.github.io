@@ -1,7 +1,7 @@
 ---
 title: "azure disk: resize needs the PVC patch too"
 url: https://perrotta.dev/2026/08/azure-disk-resize-needs-the-pvc-patch-too/
-last_updated: 2026-08-22
+last_updated: 2026-09-03
 ---
 
 
@@ -66,8 +66,4 @@ The lesson: patch the PVC and then let CSI follow up.
 
 Resizing in Azure first just creates a split state where the volume is bigger
 but nothing can use it.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

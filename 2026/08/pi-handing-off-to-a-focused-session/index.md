@@ -1,7 +1,7 @@
 ---
 title: "pi: handing off to a focused session"
 url: https://perrotta.dev/2026/08/pi-handing-off-to-a-focused-session/
-last_updated: 2026-08-19
+last_updated: 2026-09-03
 ---
 
 
@@ -108,8 +108,4 @@ to have reached the same conclusion:
 I am ditching it.
 
 A better workflow is to backtrack the session tree with `/tree` or `Esc Esc`.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

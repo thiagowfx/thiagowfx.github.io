@@ -1,7 +1,7 @@
 ---
 title: "homebrew: replace deprecated and orphaned packages"
 url: https://perrotta.dev/2026/08/homebrew-replace-deprecated-and-orphaned-packages/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -80,8 +80,4 @@ Both offending entries are now gone:
 shottr
 tflint
 ```
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

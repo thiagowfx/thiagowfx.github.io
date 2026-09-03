@@ -1,7 +1,7 @@
 ---
 title: "kargo: cool down upstream releases with a holding stage"
 url: https://perrotta.dev/2026/08/kargo-cool-down-upstream-releases-with-a-holding-stage/
-last_updated: 2026-08-19
+last_updated: 2026-09-03
 ---
 
 
@@ -72,8 +72,4 @@ did not complete 72 hours, it does not advance. This makes the hold a stability
 window: only a release that remains current for three days opens a PR.
 
 Explicit Freight approval remains the escape hatch because it bypasses the soak.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

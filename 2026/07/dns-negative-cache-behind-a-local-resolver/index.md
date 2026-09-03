@@ -1,7 +1,7 @@
 ---
 title: "DNS: negative cache behind a local resolver"
 url: https://perrotta.dev/2026/07/dns-negative-cache-behind-a-local-resolver/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -46,8 +46,4 @@ Route 53's authoritative nameserver and several public resolvers already had it:
 Tailscale had cached the previous `NXDOMAIN` response for a couple of minutes.
 Its cache is not macOS's cache; restarting `mDNSResponder` cannot clear it.
 Waiting out that TTL fixed the web browser lookup.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

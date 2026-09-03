@@ -1,7 +1,7 @@
 ---
 title: "terraform: fileset does not respect gitignore"
 url: https://perrotta.dev/2026/08/terraform-fileset-does-not-respect-gitignore/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -84,8 +84,4 @@ pristine `git archive` tree and a working one before committing anything.
 The general shape: any `fileset()` over a directory that also holds build
 artifacts, virtualenvs, or vendored dependencies is environment-dependent, and
 will read as permanent drift for exactly as long as nobody looks closely.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

@@ -1,7 +1,7 @@
 ---
 title: "blog: calendar view"
 url: https://perrotta.dev/2026/08/blog-calendar-view/
-last_updated: 2026-08-29
+last_updated: 2026-09-03
 ---
 
 
@@ -78,8 +78,4 @@ pixels tall, and mobile uses two month columns:
  Pages             │ 2968 │ 225 │ 21
 Total in 8080 ms
 ```
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

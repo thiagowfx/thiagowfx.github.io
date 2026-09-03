@@ -1,7 +1,7 @@
 ---
 title: "bloggify"
 url: https://perrotta.dev/2026/06/bloggify/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -53,8 +53,4 @@ The line didn't disappear. It just got *blurrier*.
 making manual changes to it to better match my style**.
 
 As of today, it's not clear to me whether this approach will stick.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

@@ -1,7 +1,7 @@
 ---
 title: "pi: am I sandboxed?"
 url: https://perrotta.dev/2026/08/pi-am-i-sandboxed/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -58,8 +58,4 @@ useful lesson is that agent introspection is a documentation lookup, not a
 measurement — for anything security-relevant, make it run the command.
 
 The sandbox was [cco]({{< ref "2026-02-26-cco-claude-condom-sandbox" >}}).
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

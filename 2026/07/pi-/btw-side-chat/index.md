@@ -1,7 +1,7 @@
 ---
 title: "pi: /btw side-chat"
 url: https://perrotta.dev/2026/07/pi-/btw-side-chat/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -53,10 +53,6 @@ overlay, and returns. The main session is untouched, so the next real prompt
 doesn't pay for any of it.
 
 Added to [`~/.pi/agent/extensions/btw.ts`](https://github.com/thiagowfx/.dotfiles/blob/1f42eb6f6632f946c23d1278e7e3f18da78d5de8/pi/.pi/agent/extensions/btw.ts).
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 
 [^1]: I am no longer using [Arch](https://archlinux.org/), btw (sad!)
 

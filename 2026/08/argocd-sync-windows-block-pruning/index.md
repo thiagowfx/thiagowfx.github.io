@@ -1,7 +1,7 @@
 ---
 title: "argocd: sync windows block pruning"
 url: https://perrotta.dev/2026/08/argocd-sync-windows-block-pruning/
-last_updated: 2026-08-31
+last_updated: 2026-09-03
 ---
 
 
@@ -70,8 +70,4 @@ bookkeeping, not the workload it deployed:
 
 The actual `infra-services` resources it created are still tracked by label
 and get pruned once the window opens — or by hand in the meantime.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

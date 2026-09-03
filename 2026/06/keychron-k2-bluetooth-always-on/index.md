@@ -1,7 +1,7 @@
 ---
 title: "keychron k2: bluetooth always-on"
 url: https://perrotta.dev/2026/06/keychron-k2-bluetooth-always-on/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -27,8 +27,4 @@ The only real fix: flip the side switch to **Cable**, plug in USB-C. No
 Bluetooth, no sleep, no drops.
 
 Time to shop for a new Keychron, with QMK?
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

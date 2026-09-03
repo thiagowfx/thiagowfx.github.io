@@ -1,7 +1,7 @@
 ---
 title: "TV Shows"
 url: https://perrotta.dev/2026/08/tv-shows/
-last_updated: 2026-08-31
+last_updated: 2026-09-03
 ---
 
 
@@ -59,8 +59,4 @@ menu:
 ```
 
 TV show recommendations are almost always welcome.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

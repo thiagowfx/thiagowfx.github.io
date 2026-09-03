@@ -1,7 +1,7 @@
 ---
 title: "hugo: tag-based post connections"
 url: https://perrotta.dev/2026/08/hugo-tag-based-post-connections/
-last_updated: 2026-08-22
+last_updated: 2026-09-03
 ---
 
 
@@ -88,8 +88,4 @@ polluting the presentation.
 
 I've been loving how this little blog is evolving into my beloved (public)
 digital garden.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

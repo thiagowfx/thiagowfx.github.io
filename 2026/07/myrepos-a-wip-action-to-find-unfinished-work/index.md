@@ -1,7 +1,7 @@
 ---
 title: "myrepos: a wip action to find unfinished work"
 url: https://perrotta.dev/2026/07/myrepos-a-wip-action-to-find-unfinished-work/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -77,8 +77,4 @@ repos, and I still have to scan for the ones that are actually behind or dirty.
 reason attached. Much more ergonomic than visually diffing a wall of green.
 
 Runs read-only, so it's safe to run twice.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

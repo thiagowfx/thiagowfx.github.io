@@ -1,7 +1,7 @@
 ---
 title: "git: repair unreachable object corruption"
 url: https://perrotta.dev/2026/07/git-repair-unreachable-object-corruption/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -68,8 +68,4 @@ recovery material remains available.
 It's very weird to experience this kind of error. We're not used to it.
 
 The one trick to remember from this post is `git fsck`.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

@@ -1,7 +1,7 @@
 ---
 title: "terrateam: plan from drift issues"
 url: https://perrotta.dev/2026/08/terrateam-plan-from-drift-issues/
-last_updated: 2026-08-25
+last_updated: 2026-09-03
 ---
 
 
@@ -74,8 +74,4 @@ tests/test_relay.py ...................                                  [100%]
 ```
 
 A scheduled job deletes inactive relay branches after 30 hours. Terrateam still owns plan execution; the relay only translates the issue command into its existing PR protocol.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

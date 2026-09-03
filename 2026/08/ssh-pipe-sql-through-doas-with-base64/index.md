@@ -1,7 +1,7 @@
 ---
 title: "ssh: pipe SQL through doas with base64"
 url: https://perrotta.dev/2026/08/ssh-pipe-sql-through-doas-with-base64/
-last_updated: 2026-08-29
+last_updated: 2026-09-03
 ---
 
 
@@ -82,8 +82,4 @@ A second query verified every ID after commit:
 
 Base64 does not encrypt anything. It only moves one opaque payload through
 several shells. That is enough to keep local parsing away from SQL.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

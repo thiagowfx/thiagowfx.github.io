@@ -1,7 +1,7 @@
 ---
 title: "git: switch-to-default with wt"
 url: https://perrotta.dev/2026/06/git-switch-to-default-with-wt/
-last_updated: 2026-08-16
+last_updated: 2026-09-03
 ---
 
 
@@ -39,8 +39,4 @@ switch-to-default = !git switch --force \
 
 `wt` first, then fall back to `origin/HEAD` if `wt` is not installed, then
 `master` as a last resort.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 

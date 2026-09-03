@@ -1,7 +1,7 @@
 ---
 title: "kubernetes: force-refresh a cached multi-architecture image"
 url: https://perrotta.dev/2026/08/kubernetes-force-refresh-a-cached-multi-architecture-image/
-last_updated: 2026-08-19
+last_updated: 2026-09-03
 ---
 
 
@@ -109,8 +109,4 @@ a replacement, and the ARM64 binary started normally.
 % kubectl -n argocd delete pod argocd-image-refresh
 % kubectl -n argocd delete pod -l job-name=argocd-redis-secret-init
 ```
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
 
