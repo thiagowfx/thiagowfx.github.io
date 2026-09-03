@@ -5,8 +5,8 @@ last_updated: 2026-09-03
 ---
 
 
-**Today I learned**: mise can remove tool versions no longer referenced by its
-tracked configuration files.
+**Today I learned**: [mise](https://mise.jdx.dev/) can remove tool versions no
+longer referenced by its tracked configuration files.
 
 List versions eligible for cleanup (dry-run):
 
