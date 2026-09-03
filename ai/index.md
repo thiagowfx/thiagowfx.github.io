@@ -1,7 +1,7 @@
 ---
 title: "AI"
 url: https://perrotta.dev/ai/
-last_updated: 2026-07-31
+last_updated: 2026-09-03
 ---
 
 
@@ -23,9 +23,9 @@ file I codified from my old posts. I read the whole draft paragraph by paragraph
 and edit it until it sounds like me. See [the blog post]({{< ref
 "2026-06-09-bloggify" >}}) for the full reasoning.
 
-Whenever a post is drafted this way, I link back to the `/bloggify` skill from
-the post itself — that link **is** the disclosure. No link means no AI was
-involved in writing it.
+Whenever a post is drafted this way, I include it in the [Agent Blog]({{< ref
+"/tags/bloggify" >}}) and add a visible disclosure that links back to the
+`/bloggify` skill. No disclosure means no AI was involved in writing it.
 
 Agentic LLMs are occasionally used in the context of design, tooling and
 infrastructure of this site.
