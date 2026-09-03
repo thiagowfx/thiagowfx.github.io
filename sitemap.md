@@ -28,6 +28,7 @@
 
 
 - [mise: prune old installations](https://perrotta.dev/2026/09/mise-prune-old-installations/) (2026-09-03)
+- [pi: enable fullscreen TUI mode](https://perrotta.dev/2026/09/pi-enable-fullscreen-tui-mode/) (2026-09-03)
 - [direnv: silence a blocked .envrc](https://perrotta.dev/2026/09/direnv-silence-a-blocked-.envrc/) (2026-09-02)
 - [Hacker News RSS (hnrss): replace broken feed endpoint](https://perrotta.dev/2026/09/hacker-news-rss-hnrss-replace-broken-feed-endpoint/) (2026-09-02)
 - [AgentsView vs fast-resume](https://perrotta.dev/2026/09/agentsview-vs-fast-resume/) (2026-09-01)
@@ -1370,7 +1371,7 @@
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1233 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1234 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1383,7 +1384,7 @@
 - [Macos](https://perrotta.dev/tags/macos/) (58 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (66 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
-- [Pi](https://perrotta.dev/tags/pi/) (20 posts)
+- [Pi](https://perrotta.dev/tags/pi/) (21 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (36 posts)
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (34 posts)
