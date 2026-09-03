@@ -141,7 +141,3 @@ Removed npm:@narumitw/pi-github-pr
 
 Files under `~/.pi/agent/extensions/*.ts` are auto-discovered, so `/reload`
 picks it up without restarting the session.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

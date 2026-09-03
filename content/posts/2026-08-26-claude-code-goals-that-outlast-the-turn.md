@@ -45,7 +45,3 @@ The failure mode it fixes is specific: an agent that declares victory one step
 early. It does not make the agent smarter — mine still burned several turns on
 wrong theories, and I had to redirect it more than once. It only refuses to let
 "I opened a PR" stand in for "the apps are green".
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

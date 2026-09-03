@@ -71,7 +71,3 @@ Two things worth noting.
   silently returns a 404 from the App installation endpoint otherwise.
 
 After the installation grant, the clone goes through and `prek` runs cleanly.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

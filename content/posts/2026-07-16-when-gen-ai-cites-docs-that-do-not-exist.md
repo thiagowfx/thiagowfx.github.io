@@ -55,7 +55,3 @@ Same model family, same question, one right and one wrong. Verify against the
 upstream source, not against the more confident agent.
 
 Human-in-the-loop is still very much needed, folks.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

@@ -78,7 +78,3 @@ It handles every `npm:` entry, including scoped packages:
 
 The aggregate `just update` recipe invokes it alongside submodule, prek hook,
 and vendored-file updates.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

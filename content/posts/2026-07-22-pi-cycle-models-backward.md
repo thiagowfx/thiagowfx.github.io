@@ -38,8 +38,4 @@ session.
 ∴ `ctrl+p`/`ctrl+n` now cycle models forward/backward, matching the readline
 (emacs!) history bindings I already have muscle memory for.
 
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
-
 [^1]: It cycles through models selected in `/scoped-models`.

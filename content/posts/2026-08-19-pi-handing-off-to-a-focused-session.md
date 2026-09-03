@@ -112,7 +112,3 @@ to have reached the same conclusion:
 I am ditching it.
 
 A better workflow is to backtrack the session tree with `/tree` or `Esc Esc`.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

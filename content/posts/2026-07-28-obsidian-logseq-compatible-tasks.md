@@ -71,7 +71,3 @@ Low risk, and no task-format conversion needed.
 
 This should make it easier for me to adapt my LogSeq muscle memory to Obsidian,
 even if at the cost of enabling community plug-ins.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

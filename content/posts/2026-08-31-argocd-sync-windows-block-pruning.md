@@ -73,7 +73,3 @@ bookkeeping, not the workload it deployed:
 
 The actual `infra-services` resources it created are still tracked by label
 and get pruned once the window opens — or by hand in the meantime.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

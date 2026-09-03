@@ -115,7 +115,3 @@ queryable through Thanos.
 Two independent limits, hit in sequence: the volume, then the memory ceiling
 that kept compaction from ever committing. The remaining one is a limit sized at
 93% of the node it runs on, and that needs a bigger node pool.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

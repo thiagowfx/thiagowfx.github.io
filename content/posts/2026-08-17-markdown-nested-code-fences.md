@@ -88,7 +88,3 @@ markdownlint-cli2........................................................Passed
 
 Rule of thumb: count the backticks of the innermost block, then add one for
 every level above it.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

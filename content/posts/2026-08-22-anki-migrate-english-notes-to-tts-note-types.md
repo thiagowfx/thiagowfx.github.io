@@ -69,7 +69,3 @@ count. After a full upload to AnkiWeb, a normal sync passed.
 
 No reverse cards, and all English notes can now speak for themselves (pun
 intended!).
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

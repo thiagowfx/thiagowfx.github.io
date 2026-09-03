@@ -68,7 +68,3 @@ The lesson: patch the PVC and then let CSI follow up.
 
 Resizing in Azure first just creates a split state where the volume is bigger
 but nothing can use it.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

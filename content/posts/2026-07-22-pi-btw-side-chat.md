@@ -58,8 +58,4 @@ doesn't pay for any of it.
 
 Added to [`~/.pi/agent/extensions/btw.ts`](https://github.com/thiagowfx/.dotfiles/blob/1f42eb6f6632f946c23d1278e7e3f18da78d5de8/pi/.pi/agent/extensions/btw.ts).
 
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
-
 [^1]: I am no longer using [Arch](https://archlinux.org/), btw (sad!)

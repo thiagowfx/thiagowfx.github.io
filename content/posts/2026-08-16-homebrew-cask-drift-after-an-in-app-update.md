@@ -99,7 +99,3 @@ The general shape: a cask whose app ships its own updater will drift, and
 Homebrew only notices when the vendor also renames the bundle. `--adopt` is for
 an app Homebrew never tracked; for an app it tracked *wrongly*, the receipt has
 to go first.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

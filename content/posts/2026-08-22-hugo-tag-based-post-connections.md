@@ -91,7 +91,3 @@ polluting the presentation.
 
 I've been loving how this little blog is evolving into my beloved (public)
 digital garden.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

@@ -89,7 +89,3 @@ pristine `git archive` tree and a working one before committing anything.
 The general shape: any `fileset()` over a directory that also holds build
 artifacts, virtualenvs, or vendored dependencies is environment-dependent, and
 will read as permanent drift for exactly as long as nobody looks closely.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

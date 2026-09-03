@@ -90,7 +90,3 @@ No findings.
 
 Restoring `<url>` temporarily made `just doctor` exit 2 again, so future warnings
 will break the check. I should add it to CI at some point.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

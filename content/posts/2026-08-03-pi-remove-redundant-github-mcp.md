@@ -44,7 +44,3 @@ another interface without adding capability.
 
 MCP remains useful for APIs without a better (or any) CLI, but it should be
 avoided wherever possible.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

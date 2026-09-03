@@ -86,7 +86,3 @@ me](https://github.com/thiagowfx/skills/blob/bb5c0d6ef60b7873d8df907a668db833674
 about how to package the skills. Quite meta, eh?
 
 **Next up**: point the dotfiles at the repo so there's a single source of truth.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

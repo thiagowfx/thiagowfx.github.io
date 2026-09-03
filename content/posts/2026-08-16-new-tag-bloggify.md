@@ -58,7 +58,3 @@ EntryTag=(?i)^bloggify$
 Added as a global block rule in miniflux, and every future `/bloggify`-drafted
 post never reaches the inbox. `/tags/bloggify/` on the blog itself works too,
 for anyone who'd rather subscribe to the opposite: only the AI-assisted posts.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

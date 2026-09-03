@@ -77,7 +77,3 @@ tests/test_relay.py ...................                                  [100%]
 ```
 
 A scheduled job deletes inactive relay branches after 30 hours. Terrateam still owns plan execution; the relay only translates the issue command into its existing PR protocol.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

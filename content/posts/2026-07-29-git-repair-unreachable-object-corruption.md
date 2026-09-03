@@ -71,7 +71,3 @@ recovery material remains available.
 It's very weird to experience this kind of error. We're not used to it.
 
 The one trick to remember from this post is `git fsck`.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

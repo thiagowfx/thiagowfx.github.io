@@ -28,7 +28,3 @@ The only real fix: flip the side switch to **Cable**, plug in USB-C. No
 Bluetooth, no sleep, no drops.
 
 Time to shop for a new Keychron, with QMK?
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

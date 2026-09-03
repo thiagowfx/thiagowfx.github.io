@@ -99,7 +99,3 @@ guard-test
 The guard blocked the command; `/tmp/foo/marker` survived.
 
 The source lives in my [dotfiles](https://github.com/thiagowfx/.dotfiles/tree/d917c6b98e8107490bea92367c89d1b05e1de89b/pi/.pi/agent/extensions/dangerous-command-guard).
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

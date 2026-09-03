@@ -81,7 +81,3 @@ the notification transport and Kargo itself as the timer.
 
 There's no need to enroll into Akuity Platform ($$) just for the sake of
 [`send-message`](https://docs.kargo.io/user-guide/reference-docs/promotion-steps/send-message).
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

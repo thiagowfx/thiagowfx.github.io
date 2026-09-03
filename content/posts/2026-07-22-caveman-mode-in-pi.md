@@ -94,7 +94,3 @@ stay full verbosity, never compressed.
 
 This experience was an eye-opener for me to realize how bloated the upstream
 caveman project became.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

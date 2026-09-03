@@ -53,7 +53,3 @@ bounce it through `launchd`, which owns the process:
 expands again.
 
 **Meta**: should I create a trigger for this command? :P
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

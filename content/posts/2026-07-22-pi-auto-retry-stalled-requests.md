@@ -49,7 +49,3 @@ re-prompting.
 The idle timer resets on every byte received, so long thinking or a slow stream
 won't trip it — only a genuinely dead connection will. Restart `pi` for the
 change to take effect.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

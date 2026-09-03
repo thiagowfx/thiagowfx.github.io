@@ -45,7 +45,3 @@ In practice: responses are punchy. The model still reasons correctly; it just
 stops narrating. No "Sure, I'd be happy to help with that." Just the answer.
 
 ~~You're absolutely right.~~ no more!?
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

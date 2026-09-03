@@ -115,7 +115,3 @@ a replacement, and the ARM64 binary started normally.
 % kubectl -n argocd delete pod argocd-image-refresh
 % kubectl -n argocd delete pod -l job-name=argocd-redis-secret-init
 ```
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

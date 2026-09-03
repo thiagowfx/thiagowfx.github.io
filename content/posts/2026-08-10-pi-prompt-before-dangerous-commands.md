@@ -66,7 +66,3 @@ The tests exercise all three decisions:
 ```
 
 Same guardrails, with an escape hatch operated by a human rather than a model.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

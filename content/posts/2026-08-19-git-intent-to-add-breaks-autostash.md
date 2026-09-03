@@ -41,7 +41,3 @@ path metadata without file content to stash.
 % git reset
 % git pull
 ```
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*

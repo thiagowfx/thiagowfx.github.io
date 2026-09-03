@@ -85,7 +85,3 @@ A second query verified every ID after commit:
 
 Base64 does not encrypt anything. It only moves one opaque payload through
 several shells. That is enough to keep local parsing away from SQL.
-
-- - -
-
-🤖 *Drafted with [`/bloggify`](https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md).*
