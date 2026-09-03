@@ -5,6 +5,8 @@ tags:
   - dev
 ---
 
+[Previously]({{< ref "2026-08-21-mise-one-frontend-for-tool-versions" >}}).
+
 **Today I learned**: [mise](https://mise.jdx.dev/) can remove tool versions no
 longer referenced by its tracked configuration files.
 
