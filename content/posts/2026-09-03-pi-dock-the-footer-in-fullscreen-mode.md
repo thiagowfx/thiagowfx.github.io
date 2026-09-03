@@ -2,6 +2,7 @@
 title: "pi: enable fullscreen TUI mode"
 date: 2026-09-03T13:48:57+02:00
 tags:
+  - bloggify
   - dev
   - pi
 ---
@@ -43,5 +44,18 @@ index 7d2fee8b..57fd5094 100644
 The transcript scrolls inside Pi. The editor, queued messages, widgets, and
 footer stay docked at the bottom.
 
-The same setting is available under `/settings` as **TUI mode**. Pi 0.84.4
-supports `regular` and `fullscreen`.
+The same setting is available under `/settings` as **TUI mode**.
+[Pi 0.84.4](https://github.com/earendil-works/pi/releases/tag/v0.84.4) supports
+`regular` and `fullscreen`.
+
+Fullscreen mode also owns mouse selection. Dragging with the primary mouse button
+copies the selected text on release by default:
+
+```json
+{
+  "fullscreenCopyOnSelect": true
+}
+```
+
+Pi confirms the copy with a reverse-video `Copied!` flash in the top-right corner
+for one second, which is quite easy to miss.
