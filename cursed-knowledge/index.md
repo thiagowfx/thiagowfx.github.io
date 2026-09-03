@@ -1,7 +1,7 @@
 ---
 title: "Cursed Knowledge"
 url: https://perrotta.dev/cursed-knowledge/
-last_updated: 2026-09-02
+last_updated: 2026-09-03
 ---
 
 
@@ -12,6 +12,15 @@ Inspired by [Immich's Cursed Knowledge](https://immich.app/cursed-knowledge).
 ---
 
 <!-- keep-sorted start order=desc group_start_regex=^##\s by_regex=\*(\d{4}-\d{2}-\d{2})\* newline_separated=yes -->
+## pi fullscreen copy feedback
+
+*2026-09-03*
+
+[pi](https://pi.dev)'s fullscreen TUI copies a mouse selection on release when
+`fullscreenCopyOnSelect` is enabled, which it is by default. It does show feedback:
+a reverse-video `Copied!` flash in the top-right corner for one second. There is no
+setting to change its position, duration, or style, so the confirmation is easy to miss.
+
 ## [argocd sync windows block pruning]({{< ref "2026-08-31-argocd-sync-windows-block-pruning" >}})
 
 *2026-08-31*
