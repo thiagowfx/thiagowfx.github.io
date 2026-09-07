@@ -1,7 +1,7 @@
 ---
 title: "Cursed Knowledge"
 url: https://perrotta.dev/cursed-knowledge/
-last_updated: 2026-09-03
+last_updated: 2026-09-07
 ---
 
 
@@ -12,7 +12,7 @@ Inspired by [Immich's Cursed Knowledge](https://immich.app/cursed-knowledge).
 ---
 
 <!-- keep-sorted start order=desc group_start_regex=^##\s by_regex=\*(\d{4}-\d{2}-\d{2})\* newline_separated=yes -->
-## pi fullscreen copy feedback
+## pi: fullscreen copy feedback
 
 *2026-09-03*
 
@@ -21,7 +21,7 @@ Inspired by [Immich's Cursed Knowledge](https://immich.app/cursed-knowledge).
 a reverse-video `Copied!` flash in the top-right corner for one second. There is no
 setting to change its position, duration, or style, so the confirmation is easy to miss.
 
-## [argocd sync windows block pruning]({{< ref "2026-08-31-argocd-sync-windows-block-pruning" >}})
+## [argocd: sync windows block pruning]({{< ref "2026-08-31-argocd-sync-windows-block-pruning" >}})
 
 *2026-08-31*
 
@@ -34,7 +34,7 @@ The orphan then fails to render, since its Git-sourced values file is already go
 which flips its sync status to `Unknown` and pages on `ArgoCdAppSyncUnknown`. No
 `deletionTimestamp`, no stuck finalizer — the object was simply never asked to go.
 
-## kargo promotion queues
+## kargo: promotion queues
 
 *2026-08-20*
 
@@ -46,7 +46,7 @@ No `Stage` or `ProjectConfig` setting supersedes pending Promotions. The workaro
 to disable auto-promotion or abort old Promotions manually while upstream feature request
 [#3108](https://github.com/akuity/kargo/issues/3108) remains open.
 
-## pi session cwd
+## pi: session cwd
 
 *2026-07-29*
 
