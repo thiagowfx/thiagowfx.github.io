@@ -27,6 +27,7 @@
 ## Blog Posts
 
 
+- [espanso: restart a stale daemon after upgrading](https://perrotta.dev/2026/09/espanso-restart-a-stale-daemon-after-upgrading/) (2026-09-07)
 - [Gen AI is the future](https://perrotta.dev/2026/09/gen-ai-is-the-future/) (2026-09-07)
 - [pi: git-ai: trace code commits back to agent sessions](https://perrotta.dev/2026/09/pi-git-ai-trace-code-commits-back-to-agent-sessions/) (2026-09-07)
 - [mise: prune old installations](https://perrotta.dev/2026/09/mise-prune-old-installations/) (2026-09-03)
@@ -1368,12 +1369,12 @@
 - [Argocd](https://perrotta.dev/tags/argocd/) (21 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (12 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (200 posts)
-- [Bloggify](https://perrotta.dev/tags/bloggify/) (50 posts)
+- [Bloggify](https://perrotta.dev/tags/bloggify/) (51 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1235 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1236 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1383,7 +1384,7 @@
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (172 posts)
 - [Linux](https://perrotta.dev/tags/linux/) (1 posts)
-- [Macos](https://perrotta.dev/tags/macos/) (58 posts)
+- [Macos](https://perrotta.dev/tags/macos/) (59 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (66 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pi](https://perrotta.dev/tags/pi/) (22 posts)
