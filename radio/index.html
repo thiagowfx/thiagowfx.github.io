@@ -2087,18 +2087,17 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
   </div>
 </div>
 <script type="module">
-  let searchIndex = null;
-  let contentIndex = null;
-  let contentIndexPromise = null;
+  import { SearchIndex } from '\/js\/search.min.338ef3fdd4dadfd658d4ba5ea17bb4aa974582e63b2b9f44d9f1a2db6b2cd576.js';
+
   const modal = document.getElementById('search-modal');
   const modalInput = document.getElementById('search-modal-input');
   const modalResults = document.getElementById('search-modal-results');
   const modalInfo = document.getElementById('search-modal-info');
   const contentSearch = document.getElementById('search-modal-content-toggle');
   const backdrop = modal.querySelector('.search-modal-backdrop');
-
   const lang = 'en' || 'en';
   const langPath = lang === 'en' ? '' : '/' + lang;
+  const search = new SearchIndex(langPath);
 
   const debounce = (fn, delay) => {
     let timeout;
@@ -2114,21 +2113,6 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
     return div.innerHTML;
   };
 
-  const matchesTerm = (text, term) => {
-    if (term.includes('*')) {
-      const escaped = term.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
-      return new RegExp(escaped.replace(/\*/g, '[^\\s]*'), 'i').test(text);
-    }
-    return text.includes(term);
-  };
-
-  const fetchWithTimeout = (url, timeout = 5000) =>
-    fetch(url, { signal: AbortSignal.timeout(timeout) });
-  const fetchIndex = (url, retries = 1) =>
-    fetchWithTimeout(url).catch(err =>
-      retries > 0 ? fetchWithTimeout(url) : Promise.reject(err)
-    );
-
   const highlightMatch = (text, query) => {
     if (!text) return '';
     const escaped = escapeHtml(text);
@@ -2142,15 +2126,14 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
   };
 
   const loadSearchIndex = () => {
-    if (searchIndex !== null) return Promise.resolve();
+    if (search.posts !== null) return Promise.resolve(search.posts);
     modalInfo.textContent = 'Loading search index';
     modalInfo.classList.add('loading');
-    return fetchIndex(langPath + '/search/index.json')
-      .then(response => response.json())
-      .then(data => {
-        searchIndex = data;
+    return search.loadPosts()
+      .then(posts => {
         modalInfo.classList.remove('loading');
         modalInfo.textContent = '';
+        return posts;
       })
       .catch(err => {
         modalInfo.classList.remove('loading');
@@ -2159,21 +2142,8 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
       });
   };
 
-  const loadContentIndex = () => {
-    if (contentIndex !== null) return Promise.resolve();
-    if (contentIndexPromise !== null) return contentIndexPromise;
-
-    contentIndexPromise = fetchIndex(langPath + '/search-content/index.json')
-      .then(response => response.json())
-      .then(data => {
-        contentIndex = new Map(data.map(post => [post.url, (post.content ?? '').toLowerCase()]));
-      })
-      .finally(() => { contentIndexPromise = null; });
-    return contentIndexPromise;
-  };
-
   const performSearch = (query) => {
-    if (!searchIndex) return;
+    if (!search.posts) return;
 
     const q = query.toLowerCase().trim();
     if (q.length === 0) {
@@ -2182,42 +2152,7 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
       return;
     }
 
-    const terms = q.split(/\s+/).filter(t => t.length > 0);
-    const results = [];
-
-    for (const post of searchIndex) {
-      const title = (post.title ?? '').toLowerCase();
-      const summary = (post.summary ?? '').toLowerCase();
-      const content = contentSearch.checked ? (contentIndex?.get(post.url) ?? '') : '';
-      const tags = (post.tags ?? []).map(t => t.toLowerCase());
-      const tagsText = tags.join(' ');
-
-      let allMatch = true;
-      let score = 0;
-
-      for (const term of terms) {
-        const inTitle = matchesTerm(title, term);
-        const inSummary = matchesTerm(summary, term);
-        const inContent = contentSearch.checked && matchesTerm(content, term);
-        const inTags = matchesTerm(tagsText, term);
-
-        if (!inTitle && !inSummary && !inContent && !inTags) {
-          allMatch = false;
-          break;
-        }
-
-        if (inTitle) score += 10;
-        if (inTags) score += 5;
-        if (inSummary || inContent) score += 1;
-      }
-
-      if (allMatch) {
-        results.push({ post, score });
-      }
-    }
-
-    results.sort((a, b) => b.score - a.score || b.post.date.localeCompare(a.post.date));
-
+    const results = search.search(q, search.posts, contentSearch.checked);
     if (results.length === 0) {
       modalInfo.textContent = 'No results found';
       modalResults.innerHTML = '';
@@ -2225,7 +2160,6 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
     }
 
     modalInfo.textContent = `${results.length} result${results.length === 1 ? '' : 's'}`;
-
     modalResults.innerHTML = results.slice(0, 20).map(({ post }, i) => {
       const tags = (post.tags ?? [])
         .map(t => `<span class="search-tag">#${escapeHtml(t)}</span>`)
@@ -2249,9 +2183,7 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
     const items = modalResults.querySelectorAll('.search-modal-result');
     if (items.length === 0) return;
     activeIndex = Math.max(0, Math.min(newIndex, items.length - 1));
-    items.forEach((item, i) => {
-      item.classList.toggle('active', i === activeIndex);
-    });
+    items.forEach((item, i) => item.classList.toggle('active', i === activeIndex));
     items[activeIndex].scrollIntoView({ block: 'nearest' });
   };
 
@@ -2260,9 +2192,7 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
     document.body.style.overflow = 'hidden';
     loadSearchIndex().then(() => {
       modalInput.focus();
-      if (modalInput.value) {
-        performSearch(modalInput.value);
-      }
+      if (modalInput.value) performSearch(modalInput.value);
     });
   };
 
@@ -2275,7 +2205,6 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
     activeIndex = 0;
   };
 
-  
   document.addEventListener('keydown', (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
       e.preventDefault();
@@ -2284,7 +2213,6 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
     }
   });
 
-  
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal.classList.contains('open')) {
       e.preventDefault();
@@ -2292,7 +2220,6 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
     }
   });
 
-  
   modalInput.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -2302,22 +2229,14 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
       updateActive(activeIndex - 1);
     } else if (e.key === 'Enter') {
       const items = modalResults.querySelectorAll('.search-modal-result');
-      if (items[activeIndex]) {
-        items[activeIndex].click();
-      }
+      if (items[activeIndex]) items[activeIndex].click();
     }
   });
 
-  
   const searchToggle = document.getElementById('search-toggle');
-  if (searchToggle) {
-    searchToggle.addEventListener('click', openModal);
-  }
-
-  
+  if (searchToggle) searchToggle.addEventListener('click', openModal);
   backdrop.addEventListener('click', closeModal);
 
-  
   modalInput.addEventListener('input', debounce((e) => {
     activeIndex = 0;
     performSearch(e.target.value);
@@ -2331,7 +2250,7 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
 
     modalInfo.textContent = 'Loading search index';
     modalInfo.classList.add('loading');
-    loadContentIndex()
+    search.loadContent()
       .then(() => {
         modalInfo.classList.remove('loading');
         performSearch(modalInput.value);
