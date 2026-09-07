@@ -5,6 +5,8 @@ last_updated: 2026-09-07
 ---
 
 
+Just an ordinary day with OpenAI inference via [`pi`](https://pi.dev):
+
 > Error: Codex error: Our servers are currently overloaded. Please try again
 > later.
 
