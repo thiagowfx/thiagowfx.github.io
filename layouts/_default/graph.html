@@ -82,10 +82,24 @@
     font-size: 0.75rem;
     margin-top: 0.15rem;
   }
+  .graph-node-label {
+    fill: var(--text-color);
+    font-family: var(--font-body);
+    font-size: 11px;
+    paint-order: stroke;
+    pointer-events: none;
+    stroke: var(--bg-color);
+    stroke-linejoin: round;
+    stroke-width: 3px;
+  }
+  .graph-node-label-match {
+    fill: var(--heading-color, var(--text-color));
+    font-weight: 600;
+  }
 </style>
 
 <h2>{{ .Title }}</h2>
-<p>Interactive graph of blog posts and their connections. Drag nodes to rearrange. Click a node to visit the post.</p>
+<p>Interactive graph of blog posts and their links. Arrows show link direction. Search shows matching posts with their immediate connections. Drag nodes to rearrange. Click a node to visit the post.</p>
 
 <div id="graph-container">
   <p id="graph-loading" style="padding: 1rem; color: var(--color-gray);">Loading graph data...</p>
@@ -116,7 +130,13 @@
     .then(response => response.json())
     .then(data => {
       const allNodes = data.nodes;
-      const links = data.edges;
+      const edgeKeys = new Set();
+      const links = data.edges.filter(edge => {
+        const key = `${edge.source}\u0000${edge.target}`;
+        if (edgeKeys.has(key)) return false;
+        edgeKeys.add(key);
+        return true;
+      });
 
       // Pre-compute connected node IDs from edges
       const connectedNodeIds = new Set();
@@ -179,13 +199,17 @@
       const nodeColor = style.getPropertyValue('--link-color').trim() || '#0066cc';
       const bgColor = style.getPropertyValue('--bg-color').trim() || '#fff';
 
-      // Pre-compute connection counts (before d3 mutates link objects)
+      // Pre-compute connection counts before d3 mutates link objects
       const connectionCount = new Map();
+      const incomingCount = new Map();
+      const outgoingCount = new Map();
       links.forEach(l => {
         const sid = typeof l.source === 'object' ? l.source.id : l.source;
         const tid = typeof l.target === 'object' ? l.target.id : l.target;
         connectionCount.set(sid, (connectionCount.get(sid) || 0) + 1);
         connectionCount.set(tid, (connectionCount.get(tid) || 0) + 1);
+        outgoingCount.set(sid, (outgoingCount.get(sid) || 0) + 1);
+        incomingCount.set(tid, (incomingCount.get(tid) || 0) + 1);
       });
 
       const nodeRadius = d => {
@@ -201,15 +225,37 @@
         .force('collision', d3.forceCollide().radius(20));
 
       // Draw layers
+      const defs = svg.append('defs');
+      function addArrowMarker(id, color) {
+        defs.append('marker')
+          .attr('id', id)
+          .attr('viewBox', '0 0 10 10')
+          .attr('refX', 5)
+          .attr('refY', 5)
+          .attr('markerWidth', 5)
+          .attr('markerHeight', 5)
+          .attr('orient', 'auto')
+          .append('path')
+          .attr('d', 'M0,0 L10,5 L0,10 Z')
+          .attr('fill', color);
+      }
+      addArrowMarker('graph-arrow', linkColor);
+      addArrowMarker('graph-arrow-highlight', '#ff6600');
+
       const linkGroup = g.append('g');
       const nodeGroup = g.append('g');
+      const labelGroup = g.append('g');
 
-      let link = linkGroup.selectAll('line')
+      let link = linkGroup.selectAll('path')
         .data(links)
-        .join('line')
+        .join('path')
+        .attr('fill', 'none')
         .attr('stroke', linkColor)
         .attr('stroke-opacity', 0.6)
-        .attr('stroke-width', 1.5);
+        .attr('stroke-width', 1.5)
+        .attr('marker-mid', 'url(#graph-arrow)');
+
+      let label = labelGroup.selectAll('text');
 
       let node = nodeGroup.selectAll('circle')
         .data(activeNodes, d => d.id)
@@ -246,14 +292,18 @@
           // Highlight connected links
           link.attr('stroke', l => (l.source.id === d.id || l.target.id === d.id) ? '#ff6600' : linkColor)
               .attr('stroke-width', l => (l.source.id === d.id || l.target.id === d.id) ? 2.5 : 1.5)
-              .attr('stroke-opacity', l => (l.source.id === d.id || l.target.id === d.id) ? 1 : 0.15);
+              .attr('stroke-opacity', l => (l.source.id === d.id || l.target.id === d.id) ? 1 : 0.15)
+              .attr('marker-mid', l => (l.source.id === d.id || l.target.id === d.id)
+                ? 'url(#graph-arrow-highlight)'
+                : 'url(#graph-arrow)');
 
           // Show tooltip
-          const count = connectionCount.get(d.id) || 0;
+          const incoming = incomingCount.get(d.id) || 0;
+          const outgoing = outgoingCount.get(d.id) || 0;
           tooltipTitle.textContent = d.title;
           const datePart = d.date ? d.date.substring(0, 10) : '';
           const tagsPart = (d.tags || []).length ? ' · ' + d.tags.join(', ') : '';
-          tooltipMeta.textContent = `${datePart}${datePart ? ' · ' : ''}${count} connection${count !== 1 ? 's' : ''}${tagsPart}`;
+          tooltipMeta.textContent = `${datePart}${datePart ? ' · ' : ''}${incoming} in · ${outgoing} out${tagsPart}`;
           tooltip.style.display = 'block';
 
           const rect = container.getBoundingClientRect();
@@ -273,7 +323,10 @@
 
         sel.on('mouseout', function() {
           node.attr('fill', nodeColor).attr('opacity', 1);
-          link.attr('stroke', linkColor).attr('stroke-width', 1.5).attr('stroke-opacity', 0.6);
+          link.attr('stroke', linkColor)
+              .attr('stroke-width', 1.5)
+              .attr('stroke-opacity', 0.6)
+              .attr('marker-mid', 'url(#graph-arrow)');
           tooltip.style.display = 'none';
         });
       }
@@ -319,17 +372,26 @@
         const hasYearFilter = yFrom !== minYear || yTo !== maxYear;
         const baseNodes = getBaseNodes();
 
-        // Filter nodes by search, tag, and year range
-        if (query || tag || hasYearFilter) {
-          activeNodes = baseNodes.filter(n => {
-            const matchesSearch = !query || n.title.toLowerCase().includes(query);
-            const matchesTag = !tag || (n.tags || []).includes(tag);
-            const year = n.date ? n.date.substring(0, 4) : '';
-            const matchesYear = !hasYearFilter || (year >= yFrom && year <= yTo);
-            return matchesSearch && matchesTag && matchesYear;
+        const matchesContext = n => {
+          const matchesTag = !tag || (n.tags || []).includes(tag);
+          const year = n.date ? n.date.substring(0, 4) : '';
+          const matchesYear = !hasYearFilter || (year >= yFrom && year <= yTo);
+          return matchesTag && matchesYear;
+        };
+        const matchingNodes = baseNodes.filter(n =>
+          matchesContext(n) && (!query || n.title.toLowerCase().includes(query))
+        );
+        const matchingIds = new Set(matchingNodes.map(n => n.id));
+
+        // A search becomes a local relationship graph instead of isolated results.
+        if (query) {
+          const neighborhoodIds = new Set(matchingIds);
+          matchingIds.forEach(id => {
+            (neighbors.get(id) || []).forEach(neighborId => neighborhoodIds.add(neighborId));
           });
+          activeNodes = baseNodes.filter(n => neighborhoodIds.has(n.id) && matchesContext(n));
         } else {
-          activeNodes = baseNodes;
+          activeNodes = matchingNodes;
         }
 
         // Filter links to only those where both endpoints are visible
@@ -341,16 +403,18 @@
         });
 
         // Rebuild links
-        link = linkGroup.selectAll('line')
+        link = linkGroup.selectAll('path')
           .data(activeLinks, l => {
             const sid = typeof l.source === 'object' ? l.source.id : l.source;
             const tid = typeof l.target === 'object' ? l.target.id : l.target;
             return sid + '-' + tid;
           })
-          .join('line')
+          .join('path')
+          .attr('fill', 'none')
           .attr('stroke', linkColor)
           .attr('stroke-opacity', 0.6)
-          .attr('stroke-width', 1.5);
+          .attr('stroke-width', 1.5)
+          .attr('marker-mid', 'url(#graph-arrow)');
 
         // Rebuild nodes
         node = nodeGroup.selectAll('circle')
@@ -372,6 +436,21 @@
           );
         bindNodeEvents(node);
 
+        // Label the complete neighborhood for focused searches. For broad
+        // searches, label only direct matches to keep the graph readable.
+        const labeledNodes = query
+          ? (activeNodes.length <= 40 ? activeNodes : matchingNodes.slice(0, 40))
+          : [];
+        label = labelGroup.selectAll('text')
+          .data(labeledNodes, d => d.id)
+          .join('text')
+          .attr('class', d => matchingIds.has(d.id)
+            ? 'graph-node-label graph-node-label-match'
+            : 'graph-node-label')
+          .attr('dx', d => nodeRadius(d) + 4)
+          .attr('dy', '0.35em')
+          .text(d => d.title.length > 48 ? d.title.substring(0, 47) + '…' : d.title);
+
         // Update simulation
         simulation.nodes(activeNodes);
         simulation.force('link', d3.forceLink(activeLinks).id(d => d.id).distance(80));
@@ -387,15 +466,19 @@
 
       // Update positions on tick
       simulation.on('tick', () => {
-        link
-          .attr('x1', d => d.source.x)
-          .attr('y1', d => d.source.y)
-          .attr('x2', d => d.target.x)
-          .attr('y2', d => d.target.y);
+        link.attr('d', d => {
+          const mx = (d.source.x + d.target.x) / 2;
+          const my = (d.source.y + d.target.y) / 2;
+          return `M${d.source.x},${d.source.y} L${mx},${my} L${d.target.x},${d.target.y}`;
+        });
 
         node
           .attr('cx', d => d.x)
           .attr('cy', d => d.y);
+
+        label
+          .attr('x', d => d.x)
+          .attr('y', d => d.y);
       });
 
       // Toggle singletons

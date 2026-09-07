@@ -58,6 +58,12 @@
   {{- end -}}
 {{- end -}}
 {{- if gt (len $tagRelated) 2 -}}{{- $tagRelated = first 2 $tagRelated -}}{{- end -}}
+{{- $sharedTags := slice -}}
+{{- range $tagRelated -}}
+  {{- range .tags -}}
+    {{- if not (in $sharedTags .) -}}{{- $sharedTags = $sharedTags | append . -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
 
 {{- if or $ins $outs $tagRelated -}}
 
@@ -93,13 +99,17 @@
 {{- $outsRows := add (len $outsShown) (cond (gt $outsMore 0) 1 0) -}}
 {{- $rows := math.Max $insRows $outsRows -}}
 {{- $directH := math.Max 100.0 (add (mul $rows $rowH) 56.0) -}}
-{{- $tagExtra := cond (gt (len $tagRelated) 0) 82.0 0.0 -}}
+{{- $tagExtra := cond (gt (len $tagRelated) 0) 132.0 0.0 -}}
 {{- $h := add $directH $tagExtra -}}
 {{- $cy := div $directH 2.0 -}}
 {{- $insTop := sub $cy (div (mul (sub $insRows 1) $rowH) 2.0) -}}
 {{- $outsTop := sub $cy (div (mul (sub $outsRows 1) $rowH) 2.0) -}}
-{{- $tagY := add $directH 42.0 -}}
-{{- $tagStartX := sub $centerX (div (mul (sub (len $tagRelated) 1) 220.0) 2.0) -}}
+{{- $tagNodeY := add $directH 48.0 -}}
+{{- $tagY := add $directH 96.0 -}}
+{{- $postStartX := sub $centerX (div (mul (sub (len $tagRelated) 1) 220.0) 2.0) -}}
+{{- $tagGap := 104.0 -}}
+{{- if gt (len $sharedTags) 6 -}}{{- $tagGap = div 520.0 (sub (len $sharedTags) 1) -}}{{- end -}}
+{{- $tagStartX := sub $centerX (div (mul (sub (len $sharedTags) 1) $tagGap) 2.0) -}}
 
 <div class="mini-graph">
   <h4 id="connections"><a href="/graph/">Connections</a></h4>
@@ -120,16 +130,6 @@
         orient="auto">
         <path d="M0,0 L10,5 L0,10 Z" />
       </marker>
-      <marker
-        id="mini-graph-tag-arrow"
-        viewBox="0 0 10 10"
-        refX="5"
-        refY="5"
-        markerWidth="5"
-        markerHeight="5"
-        orient="auto">
-        <path class="mini-graph-tag-arrow" d="M0,0 L10,5 L0,10 Z" />
-      </marker>
     </defs>
 
     {{- /* Edges first so nodes and labels paint on top. Direct edges use two
@@ -144,11 +144,15 @@
       {{- $x2 := sub $rightX 9.0 -}}{{- $y2 := add $outsTop (mul $i $rowH) -}}
       <path class="mini-graph-direct-edge" marker-mid="url(#mini-graph-arrow)" d="M{{ $x1 }},{{ $cy }} L{{ div (add $x1 $x2) 2.0 }},{{ div (add $cy $y2) 2.0 }} L{{ $x2 }},{{ $y2 }}" />
     {{- end -}}
-    {{- range $i, $n := $tagRelated -}}
-      {{- $x := add $tagStartX (mul $i 220.0) -}}
-      {{- $y1 := add $cy 9.0 -}}
-      {{- $y2 := sub $tagY 7.0 -}}
-      <path class="mini-graph-tag-edge" marker-mid="url(#mini-graph-tag-arrow)" d="M{{ $centerX }},{{ $y1 }} L{{ div (add $centerX $x) 2.0 }},{{ div (add $y1 $y2) 2.0 }} L{{ $x }},{{ $y2 }}" />
+    {{- range $tagIndex, $tag := $sharedTags -}}
+      {{- $tagX := add $tagStartX (mul $tagIndex $tagGap) -}}
+      <path class="mini-graph-tag-edge" d="M{{ $centerX }},{{ add $cy 9.0 }} L{{ $tagX }},{{ sub $tagNodeY 11.0 }}" />
+      {{- range $postIndex, $post := $tagRelated -}}
+        {{- if in $post.tags $tag -}}
+          {{- $postX := add $postStartX (mul $postIndex 220.0) -}}
+          <path class="mini-graph-tag-edge" d="M{{ $tagX }},{{ add $tagNodeY 11.0 }} L{{ $postX }},{{ sub $tagY 7.0 }}" />
+        {{- end -}}
+      {{- end -}}
     {{- end -}}
 
     {{- if $insShown -}}
@@ -191,11 +195,19 @@
       </a>
     {{- end -}}
 
+    {{- range $tagIndex, $tag := $sharedTags -}}
+      {{- $x := add $tagStartX (mul $tagIndex $tagGap) -}}
+      <a class="mini-graph-tag-node" href="{{ printf "tags/%s/" ($tag | urlize) | relURL }}">
+        <title>View posts tagged {{ $tag }}</title>
+        <rect x="{{ sub $x 44.0 }}" y="{{ sub $tagNodeY 10.0 }}" width="88" height="20" rx="10" />
+        <text class="mini-graph-tag-key" x="{{ $x }}" y="{{ $tagNodeY }}" text-anchor="middle" dy="0.35em">{{ printf "#%s" $tag | truncate 14 "…" }}</text>
+      </a>
+    {{- end -}}
     {{- range $i, $n := $tagRelated -}}
-      {{- $x := add $tagStartX (mul $i 220.0) -}}
+      {{- $x := add $postStartX (mul $i 220.0) -}}
       <a class="mini-graph-tag" href="{{ $n.url }}">
-        <title>{{ $n.title }} — shared tags: {{ delimit $n.tags ", " }}</title>
-        <circle class="mini-graph-tag-node" cx="{{ $x }}" cy="{{ $tagY }}" r="4.5" />
+        <title>{{ $n.title }}</title>
+        <circle class="mini-graph-tag-post-node" cx="{{ $x }}" cy="{{ $tagY }}" r="4.5" />
         <text class="mini-graph-tag-label" x="{{ $x }}" y="{{ add $tagY 19.0 }}" text-anchor="middle">{{ $n.title | truncate 26 "…" }}</text>
       </a>
     {{- end -}}
@@ -221,7 +233,12 @@
     {{- with $tagRelated -}}
       <p class="mini-graph-list-header">Shared tags</p>
       <ul class="mini-graph-list-tags">
-        {{- range . -}}<li><a href="{{ .url }}">{{ .title }}</a> <small>({{ delimit .tags ", " }})</small></li>{{- end -}}
+        {{- range . -}}
+          <li>
+            <a href="{{ .url }}">{{ .title }}</a>
+            <small>({{ range $i, $tag := .tags }}{{ if $i }}, {{ end }}<a href="{{ printf "tags/%s/" ($tag | urlize) | relURL }}">{{ $tag }}</a>{{ end }})</small>
+          </li>
+        {{- end -}}
       </ul>
     {{- end -}}
   </div>
