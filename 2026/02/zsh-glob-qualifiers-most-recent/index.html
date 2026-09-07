@@ -891,6 +891,20 @@ Attaching these qualifiers to appropriate globs allows commands to pick up a gen
     color: var(--color-gray);
   }
 
+  .search-content-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-gray);
+    cursor: pointer;
+  }
+
+  .search-content-toggle input {
+    accent-color: var(--link-color);
+  }
+
   .search-info {
     margin-top: 8px;
     font-size: 0.85em;
@@ -1116,6 +1130,12 @@ Attaching these qualifiers to appropriate globs allows commands to pick up a gen
     color: var(--color-gray);
     background: var(--code-bg);
     flex-shrink: 0;
+  }
+
+  .search-modal-content-toggle {
+    margin-top: 0;
+    padding: 6px 16px;
+    border-bottom: 1px solid var(--border-color);
   }
 
   .search-modal-container > .search-info {
@@ -1908,16 +1928,23 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
       <input type="text" id="search-modal-input" placeholder="Search posts... (use * as wildcard)" autocomplete="off">
       <kbd class="search-modal-kbd">ESC</kbd>
     </div>
+    <label class="search-content-toggle search-modal-content-toggle">
+      <input type="checkbox" id="search-modal-content-toggle">
+      Search post content
+    </label>
     <div id="search-modal-info" class="search-info"></div>
     <div id="search-modal-results" class="search-modal-results"></div>
   </div>
 </div>
 <script type="module">
   let searchIndex = null;
+  let contentIndex = null;
+  let contentIndexPromise = null;
   const modal = document.getElementById('search-modal');
   const modalInput = document.getElementById('search-modal-input');
   const modalResults = document.getElementById('search-modal-results');
   const modalInfo = document.getElementById('search-modal-info');
+  const contentSearch = document.getElementById('search-modal-content-toggle');
   const backdrop = modal.querySelector('.search-modal-backdrop');
 
   const lang = 'en' || 'en';
@@ -1940,10 +1967,17 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
   const matchesTerm = (text, term) => {
     if (term.includes('*')) {
       const escaped = term.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
-      return new RegExp(escaped.replace(/\*/g, '.*'), 'i').test(text);
+      return new RegExp(escaped.replace(/\*/g, '[^\\s]*'), 'i').test(text);
     }
     return text.includes(term);
   };
+
+  const fetchWithTimeout = (url, timeout = 5000) =>
+    fetch(url, { signal: AbortSignal.timeout(timeout) });
+  const fetchIndex = (url, retries = 1) =>
+    fetchWithTimeout(url).catch(err =>
+      retries > 0 ? fetchWithTimeout(url) : Promise.reject(err)
+    );
 
   const highlightMatch = (text, query) => {
     if (!text) return '';
@@ -1961,12 +1995,6 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
     if (searchIndex !== null) return Promise.resolve();
     modalInfo.textContent = 'Loading search index';
     modalInfo.classList.add('loading');
-    const fetchWithTimeout = (url, timeout = 5000) =>
-      fetch(url, { signal: AbortSignal.timeout(timeout) });
-    const fetchIndex = (url, retries = 1) =>
-      fetchWithTimeout(url).catch(err =>
-        retries > 0 ? fetchWithTimeout(url) : Promise.reject(err)
-      );
     return fetchIndex(langPath + '/search/index.json')
       .then(response => response.json())
       .then(data => {
@@ -1979,6 +2007,19 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
         modalInfo.textContent = 'Error loading search index';
         console.error('Search index load error:', err);
       });
+  };
+
+  const loadContentIndex = () => {
+    if (contentIndex !== null) return Promise.resolve();
+    if (contentIndexPromise !== null) return contentIndexPromise;
+
+    contentIndexPromise = fetchIndex(langPath + '/search-content/index.json')
+      .then(response => response.json())
+      .then(data => {
+        contentIndex = new Map(data.map(post => [post.url, (post.content ?? '').toLowerCase()]));
+      })
+      .finally(() => { contentIndexPromise = null; });
+    return contentIndexPromise;
   };
 
   const performSearch = (query) => {
@@ -1997,6 +2038,7 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
     for (const post of searchIndex) {
       const title = (post.title ?? '').toLowerCase();
       const summary = (post.summary ?? '').toLowerCase();
+      const content = contentSearch.checked ? (contentIndex?.get(post.url) ?? '') : '';
       const tags = (post.tags ?? []).map(t => t.toLowerCase());
       const tagsText = tags.join(' ');
 
@@ -2006,16 +2048,17 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
       for (const term of terms) {
         const inTitle = matchesTerm(title, term);
         const inSummary = matchesTerm(summary, term);
+        const inContent = contentSearch.checked && matchesTerm(content, term);
         const inTags = matchesTerm(tagsText, term);
 
-        if (!inTitle && !inSummary && !inTags) {
+        if (!inTitle && !inSummary && !inContent && !inTags) {
           allMatch = false;
           break;
         }
 
         if (inTitle) score += 10;
         if (inTags) score += 5;
-        if (inSummary) score += 1;
+        if (inSummary || inContent) score += 1;
       }
 
       if (allMatch) {
@@ -2129,6 +2172,27 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
     activeIndex = 0;
     performSearch(e.target.value);
   }, 150));
+  contentSearch.addEventListener('change', () => {
+    activeIndex = 0;
+    if (!contentSearch.checked) {
+      performSearch(modalInput.value);
+      return;
+    }
+
+    modalInfo.textContent = 'Loading search index';
+    modalInfo.classList.add('loading');
+    loadContentIndex()
+      .then(() => {
+        modalInfo.classList.remove('loading');
+        performSearch(modalInput.value);
+      })
+      .catch(err => {
+        contentSearch.checked = false;
+        modalInfo.classList.remove('loading');
+        modalInfo.textContent = 'Error loading search index';
+        console.error('Content search index load error:', err);
+      });
+  });
 </script>
 
   <script src="/js/main.min.3db6194c8c1384559960c4dc6196b59d30de3a20b6f60f9d4a6f5dbec306454f.js" defer></script>
