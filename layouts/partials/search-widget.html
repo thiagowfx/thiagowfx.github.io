@@ -29,10 +29,11 @@
 <div id="search-tag-chips" class="search-tag-chips" role="group" aria-label="{{ i18n "filterByTag" }}"></div>
 {{- end }}
 <div id="search-results" class="search-results"></div>
+{{- $searchJS := resources.Get "js/search.js" | minify | fingerprint }}
 <script type="module">
+  import { SearchIndex } from '{{ $searchJS.RelPermalink }}';
+
   let searchIndex = null;
-  let contentIndex = null;
-  let contentIndexPromise = null;
   const searchInput = document.getElementById('search-input');
   const searchResults = document.getElementById('search-results');
   const searchInfo = document.getElementById('search-info');
@@ -43,6 +44,9 @@
   const sortFilter = document.getElementById('search-sort');
   const selectedTags = new Set();
   const globalTagCounts = new Map();
+  const lang = '{{ $.lang }}' || 'en';
+  const langPath = lang === 'en' ? '' : '/' + lang;
+  const search = new SearchIndex(langPath);
   // Filter controls are only rendered on the dedicated search page (showFilters);
   // on blog/tag/category list pages the widget is search-only. Guard accordingly.
   const hasFilters = Boolean(tagChips && yearFromFilter && yearToFilter && sortFilter);
@@ -74,25 +78,6 @@
     div.textContent = text;
     return div.innerHTML;
   };
-
-  const termToRegex = (term) => {
-    const escaped = term.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
-    return new RegExp(escaped.replace(/\*/g, '[^\\s]*'), 'i');
-  };
-
-  const matchesTerm = (text, term) => {
-    if (term.includes('*')) {
-      return termToRegex(term).test(text);
-    }
-    return text.includes(term);
-  };
-
-  const fetchWithTimeout = (url, timeout = 5000) =>
-    fetch(url, { signal: AbortSignal.timeout(timeout) });
-  const fetchIndex = (url, retries = 1) =>
-    fetchWithTimeout(url).catch(err =>
-      retries > 0 ? fetchWithTimeout(url) : Promise.reject(err)
-    );
 
   const highlightMatch = (text, query) => {
     if (!text) return '';
@@ -176,51 +161,22 @@
 
     if (contentEl) contentEl.style.display = 'none';
 
-    const terms = q.split(/\s+/).filter(t => t.length > 0);
-    const results = [];
+    const posts = searchIndex.filter(post => {
+      const year = (post.date ?? '').slice(0, 4);
+      return (!yearFrom || year >= yearFrom) && (!yearTo || year <= yearTo);
+    });
+    const results = search.search(q, posts, contentSearch.checked).filter(({ post }) =>
+      [...selectedTags].every(tag => (post.tags ?? []).includes(tag))
+    );
     // Tag -> count of posts that match the query + year AND every currently
     // selected tag. Each count previews "results if I also add this tag", drives
     // the chip counts, and hides chips that would yield nothing (AND semantics).
     const tagMatchCounts = new Map();
-
-    for (const post of searchIndex) {
-      const year = (post.date ?? '').slice(0, 4);
-      if (yearFrom && year < yearFrom) continue;
-      if (yearTo && year > yearTo) continue;
-
-      const title = (post.title ?? '').toLowerCase();
-      const summary = (post.summary ?? '').toLowerCase();
-      const content = contentSearch.checked ? (contentIndex?.get(post.url) ?? '') : '';
-      const tags = (post.tags ?? []).map(t => t.toLowerCase());
-      const tagsText = tags.join(' ');
-
-      let allMatch = true;
-      let score = 0;
-
-      for (const term of terms) {
-        const inTitle = matchesTerm(title, term);
-        const inSummary = matchesTerm(summary, term);
-        const inContent = contentSearch.checked && matchesTerm(content, term);
-        const inTags = matchesTerm(tagsText, term);
-
-        if (!inTitle && !inSummary && !inContent && !inTags) {
-          allMatch = false;
-          break;
-        }
-
-        if (inTitle) score += 10;
-        if (inTags) score += 5;
-        if (inSummary || inContent) score += 1;
-      }
-
-      if (!allMatch) continue;
-
-      // AND: a post must carry every selected tag to count or appear in results.
-      const postTags = post.tags ?? [];
-      if (![...selectedTags].every(t => postTags.includes(t))) continue;
-      postTags.forEach(t => tagMatchCounts.set(t, (tagMatchCounts.get(t) ?? 0) + 1));
-      results.push({ post, score });
-    }
+    results.forEach(({ post }) => {
+      (post.tags ?? []).forEach(tag =>
+        tagMatchCounts.set(tag, (tagMatchCounts.get(tag) ?? 0) + 1)
+      );
+    });
 
     const sorters = {
       relevance: (a, b) => b.score - a.score || b.post.date.localeCompare(a.post.date),
@@ -232,22 +188,6 @@
     updateChips(tagMatchCounts);
     updateURL(query);
     renderResults(results, query);
-  };
-
-  const lang = '{{ $.lang }}' || 'en';
-  const langPath = lang === 'en' ? '' : '/' + lang;
-
-  const loadContentIndex = () => {
-    if (contentIndex !== null) return Promise.resolve();
-    if (contentIndexPromise !== null) return contentIndexPromise;
-
-    contentIndexPromise = fetchIndex(langPath + '/search-content/index.json')
-      .then(response => response.json())
-      .then(data => {
-        contentIndex = new Map(data.map(post => [post.url, (post.content ?? '').toLowerCase()]));
-      })
-      .finally(() => { contentIndexPromise = null; });
-    return contentIndexPromise;
   };
 
   // Desired filter values read from the URL, applied once their controls exist.
@@ -323,10 +263,9 @@
     if (searchIndex !== null) return;
     searchInfo.textContent = i18n.loading;
     searchInfo.classList.add('loading');
-    fetchIndex(langPath + '/search/index.json')
-      .then(response => response.json())
-      .then(data => {
-        searchIndex = data;
+    search.loadPosts()
+      .then(posts => {
+        searchIndex = posts;
         if (includeTags.size > 0) {
           searchIndex = searchIndex.filter(post => (post.tags ?? []).some(t => includeTags.has(t)));
         }
@@ -375,7 +314,7 @@
     loadSearchIndex();
     searchInfo.textContent = i18n.loading;
     searchInfo.classList.add('loading');
-    loadContentIndex()
+    search.loadContent()
       .then(() => {
         searchInfo.classList.remove('loading');
         performSearch(searchInput.value);
