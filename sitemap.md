@@ -28,6 +28,7 @@
 
 
 - [espanso: restart a stale daemon after upgrading](https://perrotta.dev/2026/09/espanso-restart-a-stale-daemon-after-upgrading/) (2026-09-07)
+- [float](https://perrotta.dev/2026/09/float/) (2026-09-07)
 - [Gen AI is the future](https://perrotta.dev/2026/09/gen-ai-is-the-future/) (2026-09-07)
 - [pi: git-ai: trace code commits back to agent sessions](https://perrotta.dev/2026/09/pi-git-ai-trace-code-commits-back-to-agent-sessions/) (2026-09-07)
 - [mise: prune old installations](https://perrotta.dev/2026/09/mise-prune-old-installations/) (2026-09-03)
@@ -1374,7 +1375,7 @@
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1236 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1237 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
