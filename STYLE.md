@@ -9,7 +9,7 @@ Detailed style guide derived from analysis of existing posts. See `CLAUDE.md` fo
 - **Length**: 15–85 lines of markdown, most under 50. Strong preference for brevity.
 - **Sections**: Most posts have no headings at all. Structure is implicit and flows naturally:
   1. Optional `[Previously]({{< ref "..." >}}).` backlink to related earlier posts
-  2. A bold **Problem statement** or **Today I learned** opener (one sentence)
+  2. A bold **Problem statement** question or **Today I learned** opener (one sentence)
   3. Short prose paragraph setting context (1–3 sentences)
   4. Code block(s) showing the solution, command output, or diff
   5. Short closing remark (0–2 sentences), sometimes a link to an upstream issue
@@ -26,7 +26,7 @@ Detailed style guide derived from analysis of existing posts. See `CLAUDE.md` fo
 
 ## Technical Content
 
-- **Show, don't explain**: State the problem in one bold sentence → show the actual command/config/code → show the actual output → optionally show what didn't work first.
+- **Show, don't explain**: Ask the problem as one bold question → show the actual command/config/code → show the actual output → optionally show what didn't work first.
 - **Real output**: Paste actual terminal output, git diffs, commit hashes, file paths. Not sanitized toy examples.
 - **Shell prompt**: `%` for zsh, `$` for bash.
 - **Blockquotes**: Use `>` for quoting external documentation or project descriptions, not paraphrasing.
@@ -45,7 +45,7 @@ Detailed style guide derived from analysis of existing posts. See `CLAUDE.md` fo
 
 Use one of these patterns:
 
-- **Bold problem statement**: `**Problem statement**: [one sentence].` — most common
+- **Bold problem statement**: `**Problem statement**: [one question]?` — most common. Always use a question.
 - **TIL**: `**Today I learned**: [tool/feature/technique].`
 - **Previously link**: `[Previously]({{< ref "..." >}}).` — for follow-up posts
 - **Declarative statement**: "I just added X." / "Y has been released."
