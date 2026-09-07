@@ -27,6 +27,7 @@
 ## Blog Posts
 
 
+- [Gen AI is the future](https://perrotta.dev/2026/09/gen-ai-is-the-future/) (2026-09-07)
 - [pi: git-ai: trace code commits back to agent sessions](https://perrotta.dev/2026/09/pi-git-ai-trace-code-commits-back-to-agent-sessions/) (2026-09-07)
 - [mise: prune old installations](https://perrotta.dev/2026/09/mise-prune-old-installations/) (2026-09-03)
 - [pi: enable fullscreen TUI mode](https://perrotta.dev/2026/09/pi-enable-fullscreen-tui-mode/) (2026-09-03)
@@ -1361,7 +1362,7 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (136 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (137 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Anki](https://perrotta.dev/tags/anki/) (12 posts)
 - [Argocd](https://perrotta.dev/tags/argocd/) (21 posts)
@@ -1392,7 +1393,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (61 posts)
 - [Security](https://perrotta.dev/tags/security/) (68 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (14 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (279 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (280 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (12 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (8 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (18 posts)
