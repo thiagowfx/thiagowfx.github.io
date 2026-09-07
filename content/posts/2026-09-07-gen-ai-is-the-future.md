@@ -6,5 +6,7 @@ tags:
   - serenity
 ---
 
+Just an ordinary day with OpenAI inference via [`pi`](https://pi.dev):
+
 > Error: Codex error: Our servers are currently overloaded. Please try again
 > later.
