@@ -2,11 +2,11 @@
 
 ## Status
 
-Proposed
+Accepted
 
 ## Date
 
-2026-02-07
+2026-09-06
 
 ## Context
 
@@ -35,7 +35,12 @@ change which text fields are searchable.
 
 ## Decision
 
-Evaluate three approaches to adding body text search:
+Adopt Option B, but store complete plain-text bodies in a separate JSON index.
+The existing index keeps titles, tags, summaries, and metadata. Both search
+interfaces use this smaller index by default. A checkbox loads the content index
+and enables body matching.
+
+The following options were evaluated:
 
 ### Option A: Add Truncated Content (500–1000 chars)
 
@@ -73,43 +78,28 @@ Replace the custom substring matcher with a purpose-built library:
 
 | Criteria         | Current  | Option A     | Option B   | Option C (Pagefind) |
 | ---------------- | -------- | ------------ | ---------- | ------------------- |
-| Index size       | ~409 KiB | ~700 KB–1 MB | ~2–4 MB    | ~50–100 KB chunks   |
+| Index size       | ~409 KiB | ~700 KB–1 MB | ~2.5 MB    | ~50–100 KB chunks   |
 | Body text search | No       | Partial      | Full       | Full                |
 | Fuzzy matching   | No       | No           | No         | Yes                 |
 | Build dependency | Hugo     | Hugo         | Hugo       | Hugo + Pagefind CLI |
 | Code complexity  | Low      | Low          | Low        | Medium              |
 | Load time impact | Minimal  | Moderate     | Noticeable | Minimal (chunked)   |
 
-### Recommendation
+### Rationale
 
-Option C (Pagefind) is the strongest candidate if full-text search is desired.
-It provides full body search with smaller transferred payloads than even the current
-index, and adds fuzzy matching. The trade-off is an additional build step
-(`pagefind --site public` after `hugo`).
-
-Option A is the pragmatic middle ground if the goal is incremental improvement
-without new dependencies.
-
-No change has been made yet — this ADR captures the analysis for future reference.
+Full content guarantees that searches find terms anywhere in a post. Separating
+content keeps the default transfer close to its previous size. It also keeps the
+current filters, wildcard matching, URL state, and build process. Pagefind would
+require a new build dependency and a rewrite of both search interfaces.
 
 ## Consequences
 
-### If Option A or B is adopted
-
-- Search index grows, increasing initial load time for first search interaction
-- Client-side search becomes slower as substring matching scales linearly with content size
-- No new build dependencies
-
-### If Option C (Pagefind) is adopted
-
-- New build dependency (`pagefind` CLI) added to `just build`
-- Search widget HTML/JS would be replaced with Pagefind's UI or API
-- Index is pre-chunked and compressed, so load time may actually decrease
-- Fuzzy matching improves search UX (typo tolerance, stemming)
-- Current search features (tag/category filtering, wildcard matching, URL sync) would
-  need to be re-implemented or adapted to Pagefind's API
-
-### If no change is made
-
-- Users cannot find posts by body content — only title, tags, and first 150 chars
-- The current lightweight approach remains fast and dependency-free
+- Default search transfers the metadata index only. It is approximately 419 KiB,
+  or 115 KiB compressed.
+- Body search loads a second index. It is approximately 2.1 MiB, or 725 KiB
+  compressed.
+- Search finds terms in complete body text only after users enable body matching.
+- Each index is cached after its first load.
+- Search keeps its current substring and wildcard behavior.
+- No new build dependency is required.
+- Pagefind remains an option if index transfer or scan time becomes a problem.
