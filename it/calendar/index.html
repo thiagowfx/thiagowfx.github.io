@@ -582,47 +582,6 @@
     vertical-align: middle;
   }
 
-  .archive-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    margin: 1.5rem 0 1rem;
-  }
-
-  .archive-heading h2 {
-    margin: 0;
-  }
-
-  .archive-view-toggle {
-    display: flex;
-    flex-shrink: 0;
-    font-family: var(--font-title);
-    font-size: 0.8rem;
-  }
-
-  .archive-view-toggle a {
-    margin-right: 0;
-    border: 1px solid var(--border-color);
-    padding: 0.3rem 0.65rem;
-    text-decoration: none;
-  }
-
-  .archive-view-toggle a:first-child {
-    border-radius: 0.35rem 0 0 0.35rem;
-  }
-
-  .archive-view-toggle a:last-child {
-    border-radius: 0 0.35rem 0.35rem 0;
-  }
-
-  .archive-view-toggle a[aria-current="page"] {
-    background: var(--link-color);
-    border-color: var(--link-color);
-    color: var(--bg-color);
-    pointer-events: none;
-  }
-
   .rss-link svg {
     height: 1.2em;
     width: 1.2em;
@@ -1675,6 +1634,7 @@
           <a href="/blogroll/" class="nav-dropdown-item">📰 Blogroll</a>
           <a href="/it/tags/" class="nav-dropdown-item">🏷️ Tags</a>
           <a href="/it/categories/" class="nav-dropdown-item">📂 Categories</a>
+          <a href="/it/calendar/" class="nav-dropdown-item">📅 Calendar</a>
           <a href="/graph/" class="nav-dropdown-item">🕸️ Graph</a>
           <a href="/random/" class="nav-dropdown-item">🎲 Random</a>
           <a href="/books/" class="nav-dropdown-item">📚 Books</a>
@@ -1690,7 +1650,24 @@
   <main>
 <style>
   .calendar-intro {
+    margin-bottom: 1rem;
+  }
+
+  .calendar-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
     margin-bottom: 2rem;
+  }
+
+  .calendar-controls select {
+    padding: 0.35rem 0.5rem;
+  }
+
+  .calendar-stats {
+    color: var(--color-gray);
+    font-size: 0.9rem;
   }
 
   .calendar-year {
@@ -1725,6 +1702,14 @@
     font-size: 0.65rem;
     font-variant-numeric: tabular-nums;
     line-height: 1;
+  }
+
+  .calendar-day-slot {
+    min-width: 0;
+  }
+
+  .calendar-day-slot > * {
+    width: 100%;
   }
 
   .calendar-weekday,
@@ -1840,13 +1825,13 @@
   }
 
   .calendar-month:nth-child(3n + 1) .calendar-popover,
-  .calendar-day:nth-child(7n + 1) .calendar-popover {
+  .calendar-day-slot:nth-child(7n + 1) .calendar-popover {
     left: 0;
     translate: 0 0;
   }
 
   .calendar-month:nth-child(3n) .calendar-popover,
-  .calendar-day:nth-child(7n) .calendar-popover {
+  .calendar-day-slot:nth-child(7n) .calendar-popover {
     left: auto;
     right: 0;
     translate: 0 0;
@@ -1878,14 +1863,17 @@
   }
 </style>
 
-<div class="archive-heading">
-  <h2>Calendario</h2><nav class="archive-view-toggle" aria-label="Vista archivio">
-  <a href="/it/posts/">Elenco</a>
-  <a href="/it/calendar/" aria-current="page">Calendario</a>
-</nav>
-
-</div>
+<h2>Calendario</h2>
 <p class="calendar-intro">I punti indicano i giorni di pubblicazione. Le stelle indicano i post in evidenza.</p>
+<div class="calendar-controls">
+  <label for="calendar-tag-filter">Filtra per tag</label>
+  <select id="calendar-tag-filter">
+    <option value="">Tutti i tag</option>
+    <option value="meta">#meta</option>
+    <option value="serenity">#serenity</option>
+  </select>
+  <span id="calendar-stats" class="calendar-stats" aria-live="polite"></span>
+</div>
 
 <div class="calendar">
   <section class="calendar-year" id="year-2026">
@@ -2049,16 +2037,19 @@
           <span class="calendar-day">9</span>
           <span class="calendar-day">10</span>
           <span class="calendar-day">11</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2026-04-12: 1 post">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/it/2026/04/ciao-mondo/">
-                <span>Ciao mondo</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2026-04-12">
+              <summary aria-label="2026-04-12: 1 post">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/it/2026/04/ciao-mondo/" data-calendar-tags="meta serenity" data-calendar-featured="false">
+                  <span>Ciao mondo</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>12</span>
+          </div>
           <span class="calendar-day">13</span>
           <span class="calendar-day">14</span>
           <span class="calendar-day">15</span>
@@ -2284,7 +2275,7 @@
           <span class="calendar-day">5</span>
           <span class="calendar-day">6</span>
           <span class="calendar-day">7</span>
-          <span class="calendar-day calendar-day--future">8</span>
+          <span class="calendar-day">8</span>
           <span class="calendar-day calendar-day--future">9</span>
           <span class="calendar-day calendar-day--future">10</span>
           <span class="calendar-day calendar-day--future">11</span>
@@ -2450,25 +2441,90 @@
 </div>
 
 <script>
-  document.querySelectorAll(".calendar-day--has-post").forEach(function (day) {
-    day.addEventListener("toggle", function () {
+  const calendarTagFilter = document.querySelector("#calendar-tag-filter");
+  const calendarStats = document.querySelector("#calendar-stats");
+  const calendarDaySlots = document.querySelectorAll(".calendar-day-slot");
+  const calendarPostLabel = "post";
+
+  const closeCalendarDays = () => {
+    document.querySelectorAll(".calendar-day--has-post[open]").forEach((day) => {
+      day.open = false;
+    });
+  };
+
+  const filterCalendar = (tag) => {
+    let visiblePosts = 0;
+
+    closeCalendarDays();
+    calendarDaySlots.forEach((slot) => {
+      const day = slot.querySelector(".calendar-day--has-post");
+      const emptyDay = slot.querySelector("[data-calendar-empty]");
+      const links = day.querySelectorAll("[data-calendar-tags]");
+      let visibleDayPosts = 0;
+      let featured = false;
+
+      links.forEach((link) => {
+        const tags = link.dataset.calendarTags.split(" ").filter(Boolean);
+        const visible = !tag || tags.includes(tag);
+        link.hidden = !visible;
+        if (visible) {
+          visibleDayPosts += 1;
+          visiblePosts += 1;
+          featured ||= link.dataset.calendarFeatured === "true";
+        }
+      });
+
+      day.hidden = visibleDayPosts === 0;
+      emptyDay.hidden = visibleDayPosts !== 0;
+      day.querySelector("summary").setAttribute(
+        "aria-label",
+        `${day.dataset.calendarDate}: ${visibleDayPosts} ${calendarPostLabel}`,
+      );
+
+      const marker = day.querySelector("[data-calendar-marker]");
+      marker.classList.toggle("calendar-day--featured", featured);
+      marker.querySelector(".calendar-day--featured-icon").hidden = !featured;
+    });
+
+    document.querySelectorAll(".calendar-year").forEach((year) => {
+      year.hidden = !year.querySelector(".calendar-day--has-post:not([hidden])");
+    });
+    calendarStats.textContent = `${visiblePosts} ${calendarPostLabel}`;
+  };
+
+  document.querySelectorAll(".calendar-day--has-post").forEach((day) => {
+    day.addEventListener("toggle", () => {
       if (!day.open) return;
-      document.querySelectorAll(".calendar-day--has-post[open]").forEach(function (other) {
+      document.querySelectorAll(".calendar-day--has-post[open]").forEach((other) => {
         if (other !== day) other.open = false;
       });
     });
   });
 
-  document.addEventListener("click", function (event) {
-    if (event.target.closest(".calendar-day--has-post")) return;
-    document.querySelectorAll(".calendar-day--has-post[open]").forEach(function (day) {
-      day.open = false;
-    });
+  const requestedTag = new URLSearchParams(window.location.search).get("tag")?.toLowerCase();
+  const knownTag = Array.from(calendarTagFilter.options).some((option) => option.value === requestedTag);
+  if (knownTag) calendarTagFilter.value = requestedTag;
+  filterCalendar(calendarTagFilter.value);
+
+  calendarTagFilter.addEventListener("change", () => {
+    const url = new URL(window.location.href);
+    if (calendarTagFilter.value) {
+      url.searchParams.set("tag", calendarTagFilter.value);
+    } else {
+      url.searchParams.delete("tag");
+    }
+    window.history.replaceState({}, "", url);
+    filterCalendar(calendarTagFilter.value);
   });
 
-  document.addEventListener("keydown", function (event) {
+  document.addEventListener("click", (event) => {
+    if (event.target.closest(".calendar-day--has-post")) return;
+    closeCalendarDays();
+  });
+
+  document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
-    document.querySelectorAll(".calendar-day--has-post[open]").forEach(function (day) {
+    document.querySelectorAll(".calendar-day--has-post[open]").forEach((day) => {
       day.open = false;
       day.querySelector("summary").focus();
     });

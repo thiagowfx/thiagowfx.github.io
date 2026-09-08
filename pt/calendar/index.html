@@ -582,47 +582,6 @@
     vertical-align: middle;
   }
 
-  .archive-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    margin: 1.5rem 0 1rem;
-  }
-
-  .archive-heading h2 {
-    margin: 0;
-  }
-
-  .archive-view-toggle {
-    display: flex;
-    flex-shrink: 0;
-    font-family: var(--font-title);
-    font-size: 0.8rem;
-  }
-
-  .archive-view-toggle a {
-    margin-right: 0;
-    border: 1px solid var(--border-color);
-    padding: 0.3rem 0.65rem;
-    text-decoration: none;
-  }
-
-  .archive-view-toggle a:first-child {
-    border-radius: 0.35rem 0 0 0.35rem;
-  }
-
-  .archive-view-toggle a:last-child {
-    border-radius: 0 0.35rem 0.35rem 0;
-  }
-
-  .archive-view-toggle a[aria-current="page"] {
-    background: var(--link-color);
-    border-color: var(--link-color);
-    color: var(--bg-color);
-    pointer-events: none;
-  }
-
   .rss-link svg {
     height: 1.2em;
     width: 1.2em;
@@ -1675,6 +1634,7 @@
           <a href="/blogroll/" class="nav-dropdown-item">📰 Blogroll</a>
           <a href="/pt/tags/" class="nav-dropdown-item">🏷️ Tags</a>
           <a href="/pt/categories/" class="nav-dropdown-item">📂 Categories</a>
+          <a href="/pt/calendar/" class="nav-dropdown-item">📅 Calendar</a>
           <a href="/graph/" class="nav-dropdown-item">🕸️ Graph</a>
           <a href="/random/" class="nav-dropdown-item">🎲 Random</a>
           <a href="/books/" class="nav-dropdown-item">📚 Books</a>
@@ -1690,7 +1650,24 @@
   <main>
 <style>
   .calendar-intro {
+    margin-bottom: 1rem;
+  }
+
+  .calendar-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
     margin-bottom: 2rem;
+  }
+
+  .calendar-controls select {
+    padding: 0.35rem 0.5rem;
+  }
+
+  .calendar-stats {
+    color: var(--color-gray);
+    font-size: 0.9rem;
   }
 
   .calendar-year {
@@ -1725,6 +1702,14 @@
     font-size: 0.65rem;
     font-variant-numeric: tabular-nums;
     line-height: 1;
+  }
+
+  .calendar-day-slot {
+    min-width: 0;
+  }
+
+  .calendar-day-slot > * {
+    width: 100%;
   }
 
   .calendar-weekday,
@@ -1840,13 +1825,13 @@
   }
 
   .calendar-month:nth-child(3n + 1) .calendar-popover,
-  .calendar-day:nth-child(7n + 1) .calendar-popover {
+  .calendar-day-slot:nth-child(7n + 1) .calendar-popover {
     left: 0;
     translate: 0 0;
   }
 
   .calendar-month:nth-child(3n) .calendar-popover,
-  .calendar-day:nth-child(7n) .calendar-popover {
+  .calendar-day-slot:nth-child(7n) .calendar-popover {
     left: auto;
     right: 0;
     translate: 0 0;
@@ -1878,14 +1863,26 @@
   }
 </style>
 
-<div class="archive-heading">
-  <h2>Calendário</h2><nav class="archive-view-toggle" aria-label="Visualização do arquivo">
-  <a href="/pt/posts/">Lista</a>
-  <a href="/pt/calendar/" aria-current="page">Calendário</a>
-</nav>
-
-</div>
+<h2>Calendário</h2>
 <p class="calendar-intro">Os pontos marcam os dias de publicação. As estrelas marcam os posts em destaque.</p>
+<div class="calendar-controls">
+  <label for="calendar-tag-filter">Filtrar por tag</label>
+  <select id="calendar-tag-filter">
+    <option value="">Todas as tags</option>
+    <option value="bestof">#bestof</option>
+    <option value="dev">#dev</option>
+    <option value="gaming">#gaming</option>
+    <option value="git">#git</option>
+    <option value="leetcode">#leetcode</option>
+    <option value="legacy">#legacy</option>
+    <option value="meta">#meta</option>
+    <option value="privacy">#privacy</option>
+    <option value="security">#security</option>
+    <option value="selfhosted">#selfhosted</option>
+    <option value="serenity">#serenity</option>
+  </select>
+  <span id="calendar-stats" class="calendar-stats" aria-live="polite"></span>
+</div>
 
 <div class="calendar">
   <section class="calendar-year" id="year-2025">
@@ -1911,30 +1908,36 @@
           <span class="calendar-day">5</span>
           <span class="calendar-day">6</span>
           <span class="calendar-day">7</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2025-01-08: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2025/01/emissor-nfe-sebrae-v4.01-para-emiss%C3%A3o-de-notas-fiscais/">
-                <span>Emissor NFE Sebrae v4.01 para emissão de notas fiscais</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2025-01-08">
+              <summary aria-label="2025-01-08: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2025/01/emissor-nfe-sebrae-v4.01-para-emiss%C3%A3o-de-notas-fiscais/" data-calendar-tags="dev" data-calendar-featured="false">
+                  <span>Emissor NFE Sebrae v4.01 para emissão de notas fiscais</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>8</span>
+          </div>
           <span class="calendar-day">9</span>
           <span class="calendar-day">10</span>
           <span class="calendar-day">11</span>
           <span class="calendar-day">12</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2025-01-13: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2025/01/pare-de-receber-telemarketing-n%C3%A3o-me-perturbe/">
-                <span>Pare de receber telemarketing: Não Me Perturbe</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2025-01-13">
+              <summary aria-label="2025-01-13: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2025/01/pare-de-receber-telemarketing-n%C3%A3o-me-perturbe/" data-calendar-tags="privacy serenity" data-calendar-featured="false">
+                  <span>Pare de receber telemarketing: Não Me Perturbe</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>13</span>
+          </div>
           <span class="calendar-day">14</span>
           <span class="calendar-day">15</span>
           <span class="calendar-day">16</span>
@@ -2905,16 +2908,19 @@
           <span class="calendar-day">13</span>
           <span class="calendar-day">14</span>
           <span class="calendar-day">15</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2016-10-16: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2016/10/matroshka/">
-                <span>Matroshka</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2016-10-16">
+              <summary aria-label="2016-10-16: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2016/10/matroshka/" data-calendar-tags="dev" data-calendar-featured="false">
+                  <span>Matroshka</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>16</span>
+          </div>
           <span class="calendar-day">17</span>
           <span class="calendar-day">18</span>
           <span class="calendar-day">19</span>
@@ -3098,16 +3104,19 @@
           <span class="calendar-day">9</span>
           <span class="calendar-day">10</span>
           <span class="calendar-day">11</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2015-02-12: 1 posts">
-              <span class="calendar-day--post calendar-day--featured" aria-hidden="true"><span class="calendar-day--featured-icon">★</span></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2015/02/%23cpbr8-impress%C3%B5es-de-um-campuseiro/">
-                <span>★ #cpbr8: impressões de um campuseiro</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2015-02-12">
+              <summary aria-label="2015-02-12: 1 posts">
+                <span class="calendar-day--post calendar-day--featured" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon">★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2015/02/%23cpbr8-impress%C3%B5es-de-um-campuseiro/" data-calendar-tags="bestof dev legacy serenity" data-calendar-featured="true">
+                  <span>★ #cpbr8: impressões de um campuseiro</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>12</span>
+          </div>
           <span class="calendar-day">13</span>
           <span class="calendar-day">14</span>
           <span class="calendar-day">15</span>
@@ -3145,16 +3154,19 @@
           <span class="calendar-day">5</span>
           <span class="calendar-day">6</span>
           <span class="calendar-day">7</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2015-03-08: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2015/03/mulheres-na-computa%C3%A7%C3%A3o-cad%C3%AA-voc%C3%AAs/">
-                <span>Mulheres na computação, cadê vocês?</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2015-03-08">
+              <summary aria-label="2015-03-08: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2015/03/mulheres-na-computa%C3%A7%C3%A3o-cad%C3%AA-voc%C3%AAs/" data-calendar-tags="legacy serenity" data-calendar-featured="false">
+                  <span>Mulheres na computação, cadê vocês?</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>8</span>
+          </div>
           <span class="calendar-day">9</span>
           <span class="calendar-day">10</span>
           <span class="calendar-day">11</span>
@@ -3610,64 +3622,79 @@
           <span class="calendar-day" aria-hidden="true"></span>
           <span class="calendar-day" aria-hidden="true"></span>
           <span class="calendar-day">1</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-01-02: 2 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/01/android-games-2013/">
-                <span>Android Games (2013)</span>
-              </a>
-              <a href="https://perrotta.dev/pt/2014/01/por-que-o-arch-linux/">
-                <span>Por que o Arch Linux?</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-01-02">
+              <summary aria-label="2014-01-02: 2 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/01/android-games-2013/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Android Games (2013)</span>
+                </a>
+                <a href="https://perrotta.dev/pt/2014/01/por-que-o-arch-linux/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Por que o Arch Linux?</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>2</span>
+          </div>
           <span class="calendar-day">3</span>
           <span class="calendar-day">4</span>
           <span class="calendar-day">5</span>
           <span class="calendar-day">6</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-01-07: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/01/testando-uma-iso-no-linux-sem-o-virtualbox/">
-                <span>Testando uma ISO no Linux sem o VirtualBox</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-01-07">
+              <summary aria-label="2014-01-07: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/01/testando-uma-iso-no-linux-sem-o-virtualbox/" data-calendar-tags="dev" data-calendar-featured="false">
+                  <span>Testando uma ISO no Linux sem o VirtualBox</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>7</span>
+          </div>
           <span class="calendar-day">8</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-01-09: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/01/redshift-ajustar-a-temperatura-de-cor-do-monitor-dia/noite/">
-                <span>Redshift - Ajustar a temperatura de cor do monitor dia/noite</span>
-              </a>
-            </div>
-          </details>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-01-10: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/01/se-os-downloads-no-steam-estiverem-muito-lentos.../">
-                <span>Se os downloads no Steam estiverem muito lentos...</span>
-              </a>
-            </div>
-          </details>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-01-11: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/01/cansei-de-guardar-tantos-arquivos-do-siga/">
-                <span>Cansei de guardar tantos arquivos do SIGA</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-01-09">
+              <summary aria-label="2014-01-09: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/01/redshift-ajustar-a-temperatura-de-cor-do-monitor-dia/noite/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Redshift - Ajustar a temperatura de cor do monitor dia/noite</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>9</span>
+          </div>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-01-10">
+              <summary aria-label="2014-01-10: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/01/se-os-downloads-no-steam-estiverem-muito-lentos.../" data-calendar-tags="gaming legacy" data-calendar-featured="false">
+                  <span>Se os downloads no Steam estiverem muito lentos...</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>10</span>
+          </div>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-01-11">
+              <summary aria-label="2014-01-11: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/01/cansei-de-guardar-tantos-arquivos-do-siga/" data-calendar-tags="dev git legacy" data-calendar-featured="false">
+                  <span>Cansei de guardar tantos arquivos do SIGA</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>11</span>
+          </div>
           <span class="calendar-day">12</span>
           <span class="calendar-day">13</span>
           <span class="calendar-day">14</span>
@@ -3678,50 +3705,62 @@
           <span class="calendar-day">19</span>
           <span class="calendar-day">20</span>
           <span class="calendar-day">21</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-01-22: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/01/sugest%C3%A3o-de-guia-de-instala%C3%A7%C3%A3o-do-windows-8.1/">
-                <span>Sugestão de guia de instalação do Windows 8[.1]</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-01-22">
+              <summary aria-label="2014-01-22: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/01/sugest%C3%A3o-de-guia-de-instala%C3%A7%C3%A3o-do-windows-8.1/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Sugestão de guia de instalação do Windows 8[.1]</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>22</span>
+          </div>
           <span class="calendar-day">23</span>
           <span class="calendar-day">24</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-01-25: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/01/usando-meu-primeiro-custom-kernel/">
-                <span>(Usando) meu primeiro custom kernel</span>
-              </a>
-            </div>
-          </details>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-01-26: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/01/imagetextos/">
-                <span>Imagetextos</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-01-25">
+              <summary aria-label="2014-01-25: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/01/usando-meu-primeiro-custom-kernel/" data-calendar-tags="dev legacy selfhosted" data-calendar-featured="false">
+                  <span>(Usando) meu primeiro custom kernel</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>25</span>
+          </div>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-01-26">
+              <summary aria-label="2014-01-26: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/01/imagetextos/" data-calendar-tags="legacy serenity" data-calendar-featured="false">
+                  <span>Imagetextos</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>26</span>
+          </div>
           <span class="calendar-day">27</span>
           <span class="calendar-day">28</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-01-29: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/01/%23cpbr7-random-musings/">
-                <span>#CPBR7 random musings</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-01-29">
+              <summary aria-label="2014-01-29: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/01/%23cpbr7-random-musings/" data-calendar-tags="legacy serenity" data-calendar-featured="false">
+                  <span>#CPBR7 random musings</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>29</span>
+          </div>
           <span class="calendar-day">30</span>
           <span class="calendar-day">31</span>
         </div>
@@ -3742,41 +3781,50 @@
           <span class="calendar-day" aria-hidden="true"></span>
           <span class="calendar-day" aria-hidden="true"></span>
           <span class="calendar-day" aria-hidden="true"></span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-02-01: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/02/software-e-outras-coisas-livres-revisitados-parte-0.0.01/">
-                <span>Software e outras coisas livres, revisitados - Parte 0.0.01</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-02-01">
+              <summary aria-label="2014-02-01: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/02/software-e-outras-coisas-livres-revisitados-parte-0.0.01/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Software e outras coisas livres, revisitados - Parte 0.0.01</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>1</span>
+          </div>
           <span class="calendar-day">2</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-02-03: 2 posts">
-              <span class="calendar-day--post calendar-day--featured" aria-hidden="true"><span class="calendar-day--featured-icon">★</span></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/02/%23cpbr7-parte-1-hackatons-firefox-os--cert.br/">
-                <span>★ #CPBR7 - Parte 1 - Hackatons (Firefox OS &#43; CERT.br)</span>
-              </a>
-              <a href="https://perrotta.dev/pt/2014/02/su-c-rm-rf-/arch-root/">
-                <span>★ su -c &#34;rm -rf /arch-root&#34;</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-02-03">
+              <summary aria-label="2014-02-03: 2 posts">
+                <span class="calendar-day--post calendar-day--featured" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon">★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/02/%23cpbr7-parte-1-hackatons-firefox-os--cert.br/" data-calendar-tags="bestof dev legacy serenity" data-calendar-featured="true">
+                  <span>★ #CPBR7 - Parte 1 - Hackatons (Firefox OS &#43; CERT.br)</span>
+                </a>
+                <a href="https://perrotta.dev/pt/2014/02/su-c-rm-rf-/arch-root/" data-calendar-tags="bestof dev legacy" data-calendar-featured="true">
+                  <span>★ su -c &#34;rm -rf /arch-root&#34;</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>3</span>
+          </div>
           <span class="calendar-day">4</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-02-05: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/02/renew-my-arch-please/">
-                <span>renew my Arch, please</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-02-05">
+              <summary aria-label="2014-02-05: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/02/renew-my-arch-please/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>renew my Arch, please</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>5</span>
+          </div>
           <span class="calendar-day">6</span>
           <span class="calendar-day">7</span>
           <span class="calendar-day">8</span>
@@ -3784,69 +3832,84 @@
           <span class="calendar-day">10</span>
           <span class="calendar-day">11</span>
           <span class="calendar-day">12</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-02-13: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/02/meu-primeiro-pkgbuild/">
-                <span>Meu primeiro PKGBUILD</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-02-13">
+              <summary aria-label="2014-02-13: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/02/meu-primeiro-pkgbuild/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Meu primeiro PKGBUILD</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>13</span>
+          </div>
           <span class="calendar-day">14</span>
           <span class="calendar-day">15</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-02-16: 1 posts">
-              <span class="calendar-day--post calendar-day--featured" aria-hidden="true"><span class="calendar-day--featured-icon">★</span></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/02/ace-combat-dassault-horizon--mini-review/">
-                <span>★ Ace Combat (D)assault Horizon -- Mini Review</span>
-              </a>
-            </div>
-          </details>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-02-17: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/02/notas-de-f%C3%ADsica-3/">
-                <span>Notas de Física 3</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-02-16">
+              <summary aria-label="2014-02-16: 1 posts">
+                <span class="calendar-day--post calendar-day--featured" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon">★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/02/ace-combat-dassault-horizon--mini-review/" data-calendar-tags="bestof legacy gaming serenity" data-calendar-featured="true">
+                  <span>★ Ace Combat (D)assault Horizon -- Mini Review</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>16</span>
+          </div>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-02-17">
+              <summary aria-label="2014-02-17: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/02/notas-de-f%C3%ADsica-3/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Notas de Física 3</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>17</span>
+          </div>
           <span class="calendar-day">18</span>
           <span class="calendar-day">19</span>
           <span class="calendar-day">20</span>
           <span class="calendar-day">21</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-02-22: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/02/novo-blog-icpc-journal/">
-                <span>Novo blog – ICPC Journal</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-02-22">
+              <summary aria-label="2014-02-22: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/02/novo-blog-icpc-journal/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Novo blog – ICPC Journal</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>22</span>
+          </div>
           <span class="calendar-day">23</span>
           <span class="calendar-day">24</span>
           <span class="calendar-day">25</span>
           <span class="calendar-day">26</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-02-27: 2 posts">
-              <span class="calendar-day--post calendar-day--featured" aria-hidden="true"><span class="calendar-day--featured-icon">★</span></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/02/editores-de-texto/">
-                <span>★ Editores de Texto</span>
-              </a>
-              <a href="https://perrotta.dev/pt/2014/02/consertando-caracteres-estranhos-em-markdown/">
-                <span>Consertando caracteres estranhos em Markdown</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-02-27">
+              <summary aria-label="2014-02-27: 2 posts">
+                <span class="calendar-day--post calendar-day--featured" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon">★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/02/editores-de-texto/" data-calendar-tags="bestof dev legacy" data-calendar-featured="true">
+                  <span>★ Editores de Texto</span>
+                </a>
+                <a href="https://perrotta.dev/pt/2014/02/consertando-caracteres-estranhos-em-markdown/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Consertando caracteres estranhos em Markdown</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>27</span>
+          </div>
           <span class="calendar-day">28</span>
         </div>
       </section>
@@ -3867,39 +3930,48 @@
           <span class="calendar-day" aria-hidden="true"></span>
           <span class="calendar-day" aria-hidden="true"></span>
           <span class="calendar-day">1</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-03-02: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/03/bloqueando-websitesadsmalware-no-linux/">
-                <span>Bloqueando {websites,ads,malware} no Linux</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-03-02">
+              <summary aria-label="2014-03-02: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/03/bloqueando-websitesadsmalware-no-linux/" data-calendar-tags="dev legacy privacy security" data-calendar-featured="false">
+                  <span>Bloqueando {websites,ads,malware} no Linux</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>2</span>
+          </div>
           <span class="calendar-day">3</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-03-04: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/03/livrando-se-da-notifica%C3%A7%C3%A3o-de-voicemail-no-android/">
-                <span>&#39;Livrando-se&#39; da notificação de voicemail no Android</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-03-04">
+              <summary aria-label="2014-03-04: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/03/livrando-se-da-notifica%C3%A7%C3%A3o-de-voicemail-no-android/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>&#39;Livrando-se&#39; da notificação de voicemail no Android</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>4</span>
+          </div>
           <span class="calendar-day">5</span>
           <span class="calendar-day">6</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-03-07: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/03/scilab-notes-howto/">
-                <span>Scilab Notes (HOWTO)</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-03-07">
+              <summary aria-label="2014-03-07: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/03/scilab-notes-howto/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Scilab Notes (HOWTO)</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>7</span>
+          </div>
           <span class="calendar-day">8</span>
           <span class="calendar-day">9</span>
           <span class="calendar-day">10</span>
@@ -3908,59 +3980,71 @@
           <span class="calendar-day">13</span>
           <span class="calendar-day">14</span>
           <span class="calendar-day">15</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-03-16: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/03/pull-request/">
-                <span>pull request</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-03-16">
+              <summary aria-label="2014-03-16: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/03/pull-request/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>pull request</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>16</span>
+          </div>
           <span class="calendar-day">17</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-03-18: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/03/211-aka-2048/">
-                <span>2^11 (aka 2048)</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-03-18">
+              <summary aria-label="2014-03-18: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/03/211-aka-2048/" data-calendar-tags="dev gaming legacy" data-calendar-featured="false">
+                  <span>2^11 (aka 2048)</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>18</span>
+          </div>
           <span class="calendar-day">19</span>
           <span class="calendar-day">20</span>
           <span class="calendar-day">21</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-03-22: 2 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/03/ct-sem-luz-vamos-indexar-isso/">
-                <span>CT sem luz: vamos indexar isso!</span>
-              </a>
-              <a href="https://perrotta.dev/pt/2014/03/removendo-bloatware-@-android/">
-                <span>(Removendo) Bloatware @ Android</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-03-22">
+              <summary aria-label="2014-03-22: 2 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/03/ct-sem-luz-vamos-indexar-isso/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>CT sem luz: vamos indexar isso!</span>
+                </a>
+                <a href="https://perrotta.dev/pt/2014/03/removendo-bloatware-@-android/" data-calendar-tags="dev legacy privacy" data-calendar-featured="false">
+                  <span>(Removendo) Bloatware @ Android</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>22</span>
+          </div>
           <span class="calendar-day">23</span>
           <span class="calendar-day">24</span>
           <span class="calendar-day">25</span>
           <span class="calendar-day">26</span>
           <span class="calendar-day">27</span>
           <span class="calendar-day">28</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-03-29: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/03/erro-de-sincroniza%C3%A7%C3%A3o-no-chromium/">
-                <span>Erro de sincronização no Chromium</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-03-29">
+              <summary aria-label="2014-03-29: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/03/erro-de-sincroniza%C3%A7%C3%A3o-no-chromium/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Erro de sincronização no Chromium</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>29</span>
+          </div>
           <span class="calendar-day">30</span>
           <span class="calendar-day">31</span>
         </div>
@@ -3982,120 +4066,147 @@
           <span class="calendar-day">3</span>
           <span class="calendar-day">4</span>
           <span class="calendar-day">5</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-04-06: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/04/sugest%C3%A3o-de-app-de-grava%C3%A7%C3%A3o-de-som/">
-                <span>Sugestão de app de gravação de som</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-04-06">
+              <summary aria-label="2014-04-06: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/04/sugest%C3%A3o-de-app-de-grava%C3%A7%C3%A3o-de-som/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Sugestão de app de gravação de som</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>6</span>
+          </div>
           <span class="calendar-day">7</span>
           <span class="calendar-day">8</span>
           <span class="calendar-day">9</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-04-10: 2 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/04/btrfs-lets-go/">
-                <span>btrfs, let&#39;s go</span>
-              </a>
-              <a href="https://perrotta.dev/pt/2014/04/s%C3%A9ries-com-finais-ruins/">
-                <span>Séries com finais ruins</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-04-10">
+              <summary aria-label="2014-04-10: 2 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/04/btrfs-lets-go/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>btrfs, let&#39;s go</span>
+                </a>
+                <a href="https://perrotta.dev/pt/2014/04/s%C3%A9ries-com-finais-ruins/" data-calendar-tags="legacy serenity" data-calendar-featured="false">
+                  <span>Séries com finais ruins</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>10</span>
+          </div>
           <span class="calendar-day">11</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-04-12: 2 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/04/android-dev-summary/">
-                <span>Android dev: summary</span>
-              </a>
-              <a href="https://perrotta.dev/pt/2014/04/integrando-qt-creator-com-cmake/">
-                <span>Integrando QT Creator com cmake</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-04-12">
+              <summary aria-label="2014-04-12: 2 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/04/android-dev-summary/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Android dev: summary</span>
+                </a>
+                <a href="https://perrotta.dev/pt/2014/04/integrando-qt-creator-com-cmake/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Integrando QT Creator com cmake</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>12</span>
+          </div>
           <span class="calendar-day">13</span>
           <span class="calendar-day">14</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-04-15: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/04/spotify/">
-                <span>Spotify</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-04-15">
+              <summary aria-label="2014-04-15: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/04/spotify/" data-calendar-tags="dev legacy serenity" data-calendar-featured="false">
+                  <span>Spotify</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>15</span>
+          </div>
           <span class="calendar-day">16</span>
           <span class="calendar-day">17</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-04-18: 2 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/04/recovery-t%C3%ADpico-via-usb/">
-                <span>Recovery típico via USB</span>
-              </a>
-              <a href="https://perrotta.dev/pt/2014/04/opini%C3%A3o-ubuntu-14.04-lan%C3%A7ado/">
-                <span>[Opinião] Ubuntu 14.04 lançado</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-04-18">
+              <summary aria-label="2014-04-18: 2 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/04/recovery-t%C3%ADpico-via-usb/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Recovery típico via USB</span>
+                </a>
+                <a href="https://perrotta.dev/pt/2014/04/opini%C3%A3o-ubuntu-14.04-lan%C3%A7ado/" data-calendar-tags="dev legacy serenity" data-calendar-featured="false">
+                  <span>[Opinião] Ubuntu 14.04 lançado</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>18</span>
+          </div>
           <span class="calendar-day">19</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-04-20: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/04/dota-2-@-linux/">
-                <span>Dota 2 @ Linux</span>
-              </a>
-            </div>
-          </details>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-04-21: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/04/i3lock-wrapper-pkgbuild/">
-                <span>i3lock-wrapper PKGBUILD</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-04-20">
+              <summary aria-label="2014-04-20: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/04/dota-2-@-linux/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Dota 2 @ Linux</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>20</span>
+          </div>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-04-21">
+              <summary aria-label="2014-04-21: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/04/i3lock-wrapper-pkgbuild/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>i3lock-wrapper PKGBUILD</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>21</span>
+          </div>
           <span class="calendar-day">22</span>
           <span class="calendar-day">23</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-04-24: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/04/emacs-i-just-love-you/">
-                <span>Emacs, I just love you</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-04-24">
+              <summary aria-label="2014-04-24: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/04/emacs-i-just-love-you/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Emacs, I just love you</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>24</span>
+          </div>
           <span class="calendar-day">25</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-04-26: 2 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/04/openpgp/">
-                <span>OpenPGP</span>
-              </a>
-              <a href="https://perrotta.dev/pt/2014/04/os-servidores-de-dns-da-net/virtua-foram-hackeados/">
-                <span>Os servidores de DNS da Net/Virtua foram hackeados</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-04-26">
+              <summary aria-label="2014-04-26: 2 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/04/openpgp/" data-calendar-tags="legacy privacy security" data-calendar-featured="false">
+                  <span>OpenPGP</span>
+                </a>
+                <a href="https://perrotta.dev/pt/2014/04/os-servidores-de-dns-da-net/virtua-foram-hackeados/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Os servidores de DNS da Net/Virtua foram hackeados</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>26</span>
+          </div>
           <span class="calendar-day">27</span>
           <span class="calendar-day">28</span>
           <span class="calendar-day">29</span>
@@ -4116,80 +4227,98 @@
           <span class="calendar-day" aria-hidden="true"></span>
           <span class="calendar-day" aria-hidden="true"></span>
           <span class="calendar-day" aria-hidden="true"></span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-05-01: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/05/instalando-o-gentoo-a-partir-do-arch/">
-                <span>Instalando o Gentoo a partir do Arch</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-05-01">
+              <summary aria-label="2014-05-01: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/05/instalando-o-gentoo-a-partir-do-arch/" data-calendar-tags="dev" data-calendar-featured="false">
+                  <span>Instalando o Gentoo a partir do Arch</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>1</span>
+          </div>
           <span class="calendar-day">2</span>
           <span class="calendar-day">3</span>
           <span class="calendar-day">4</span>
           <span class="calendar-day">5</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-05-06: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/05/kernel-panic-uma-hist%C3%B3ria-de-amor-parte/">
-                <span>Kernel Panic, uma história de amor, parte ????</span>
-              </a>
-            </div>
-          </details>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-05-07: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/05/reformatando-um-pen-drive-@-linux/">
-                <span>(Re)formatando um pen-drive (@ Linux)</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-05-06">
+              <summary aria-label="2014-05-06: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/05/kernel-panic-uma-hist%C3%B3ria-de-amor-parte/" data-calendar-tags="dev legacy serenity" data-calendar-featured="false">
+                  <span>Kernel Panic, uma história de amor, parte ????</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>6</span>
+          </div>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-05-07">
+              <summary aria-label="2014-05-07: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/05/reformatando-um-pen-drive-@-linux/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>(Re)formatando um pen-drive (@ Linux)</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>7</span>
+          </div>
           <span class="calendar-day">8</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-05-09: 2 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/05/openpgp/">
-                <span>OpenPGP</span>
-              </a>
-              <a href="https://perrotta.dev/pt/2014/05/redesign-do-blog/">
-                <span>Redesign do blog</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-05-09">
+              <summary aria-label="2014-05-09: 2 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/05/openpgp/" data-calendar-tags="legacy security" data-calendar-featured="false">
+                  <span>OpenPGP</span>
+                </a>
+                <a href="https://perrotta.dev/pt/2014/05/redesign-do-blog/" data-calendar-tags="legacy meta" data-calendar-featured="false">
+                  <span>Redesign do blog</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>9</span>
+          </div>
           <span class="calendar-day">10</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-05-11: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/05/f%C3%ADsica-3-@-ufrj-sugest%C3%A3o-de-refer%C3%AAncias/">
-                <span>Física 3 @ UFRJ: Sugestão de referências</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-05-11">
+              <summary aria-label="2014-05-11: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/05/f%C3%ADsica-3-@-ufrj-sugest%C3%A3o-de-refer%C3%AAncias/" data-calendar-tags="legacy serenity" data-calendar-featured="false">
+                  <span>Física 3 @ UFRJ: Sugestão de referências</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>11</span>
+          </div>
           <span class="calendar-day">12</span>
           <span class="calendar-day">13</span>
           <span class="calendar-day">14</span>
           <span class="calendar-day">15</span>
           <span class="calendar-day">16</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-05-17: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/05/my-setup-series-aka-how-i-do-my-computing/">
-                <span>&#39;My setup&#39; series (aka &#39;How I do my computing&#39;)</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-05-17">
+              <summary aria-label="2014-05-17: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/05/my-setup-series-aka-how-i-do-my-computing/" data-calendar-tags="dev legacy serenity" data-calendar-featured="false">
+                  <span>&#39;My setup&#39; series (aka &#39;How I do my computing&#39;)</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>17</span>
+          </div>
           <span class="calendar-day">18</span>
           <span class="calendar-day">19</span>
           <span class="calendar-day">20</span>
@@ -4202,16 +4331,19 @@
           <span class="calendar-day">27</span>
           <span class="calendar-day">28</span>
           <span class="calendar-day">29</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-05-30: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/05/novos-paradigmas-@-redes-sociais-news/">
-                <span>Novos paradigmas @ Redes sociais &amp; News</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-05-30">
+              <summary aria-label="2014-05-30: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/05/novos-paradigmas-@-redes-sociais-news/" data-calendar-tags="legacy privacy serenity" data-calendar-featured="false">
+                  <span>Novos paradigmas @ Redes sociais &amp; News</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>30</span>
+          </div>
           <span class="calendar-day">31</span>
         </div>
       </section>
@@ -4240,32 +4372,38 @@
           <span class="calendar-day">11</span>
           <span class="calendar-day">12</span>
           <span class="calendar-day">13</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-06-14: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/06/hello-my-little-ol-arch-server/">
-                <span>Hello, my little ol&#39; Arch Server</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-06-14">
+              <summary aria-label="2014-06-14: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/06/hello-my-little-ol-arch-server/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Hello, my little ol&#39; Arch Server</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>14</span>
+          </div>
           <span class="calendar-day">15</span>
           <span class="calendar-day">16</span>
           <span class="calendar-day">17</span>
           <span class="calendar-day">18</span>
           <span class="calendar-day">19</span>
           <span class="calendar-day">20</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-06-21: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/06/ol%C3%A1-desenvolvimento-web/">
-                <span>Olá, desenvolvimento web</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-06-21">
+              <summary aria-label="2014-06-21: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/06/ol%C3%A1-desenvolvimento-web/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Olá, desenvolvimento web</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>21</span>
+          </div>
           <span class="calendar-day">22</span>
           <span class="calendar-day">23</span>
           <span class="calendar-day">24</span>
@@ -4273,26 +4411,32 @@
           <span class="calendar-day">26</span>
           <span class="calendar-day">27</span>
           <span class="calendar-day">28</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-06-29: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/06/asciinema/">
-                <span>Asciinema</span>
-              </a>
-            </div>
-          </details>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-06-30: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/06/setups-no-windows-nunca-mais/">
-                <span>Setups no Windows, nunca mais</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-06-29">
+              <summary aria-label="2014-06-29: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/06/asciinema/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Asciinema</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>29</span>
+          </div>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-06-30">
+              <summary aria-label="2014-06-30: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/06/setups-no-windows-nunca-mais/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Setups no Windows, nunca mais</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>30</span>
+          </div>
         </div>
       </section>
       <section class="calendar-month" aria-labelledby="month-2014-07">
@@ -4313,30 +4457,36 @@
           <span class="calendar-day">4</span>
           <span class="calendar-day">5</span>
           <span class="calendar-day">6</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-07-07: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/07/tchau-wordpress/">
-                <span>Tchau, Wordpress?!?</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-07-07">
+              <summary aria-label="2014-07-07: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/07/tchau-wordpress/" data-calendar-tags="legacy meta" data-calendar-featured="false">
+                  <span>Tchau, Wordpress?!?</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>7</span>
+          </div>
           <span class="calendar-day">8</span>
           <span class="calendar-day">9</span>
           <span class="calendar-day">10</span>
           <span class="calendar-day">11</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-07-12: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/07/melhorando-a-renderiza%C3%A7%C3%A3o-de-fontes-no-windows/">
-                <span>Melhorando a renderização de fontes no Windows</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-07-12">
+              <summary aria-label="2014-07-12: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/07/melhorando-a-renderiza%C3%A7%C3%A3o-de-fontes-no-windows/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Melhorando a renderização de fontes no Windows</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>12</span>
+          </div>
           <span class="calendar-day">13</span>
           <span class="calendar-day">14</span>
           <span class="calendar-day">15</span>
@@ -4346,28 +4496,34 @@
           <span class="calendar-day">19</span>
           <span class="calendar-day">20</span>
           <span class="calendar-day">21</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-07-22: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/07/emacs-e-golang-uma-dupla-perfeita/">
-                <span>Emacs e golang, uma dupla perfeita</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-07-22">
+              <summary aria-label="2014-07-22: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/07/emacs-e-golang-uma-dupla-perfeita/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Emacs e golang, uma dupla perfeita</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>22</span>
+          </div>
           <span class="calendar-day">23</span>
           <span class="calendar-day">24</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-07-25: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/07/meus-dois-minutos-de-fama/">
-                <span>Meus dois minutos de fama</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-07-25">
+              <summary aria-label="2014-07-25: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/07/meus-dois-minutos-de-fama/" data-calendar-tags="legacy serenity" data-calendar-featured="false">
+                  <span>Meus dois minutos de fama</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>25</span>
+          </div>
           <span class="calendar-day">26</span>
           <span class="calendar-day">27</span>
           <span class="calendar-day">28</span>
@@ -4454,16 +4610,19 @@
           <span class="calendar-day">17</span>
           <span class="calendar-day">18</span>
           <span class="calendar-day">19</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-09-20: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/09/desvendando-ou-n%C3%A3o-o-btrfs/">
-                <span>Desvendando (ou não) o btrfs</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-09-20">
+              <summary aria-label="2014-09-20: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/09/desvendando-ou-n%C3%A3o-o-btrfs/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Desvendando (ou não) o btrfs</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>20</span>
+          </div>
           <span class="calendar-day">21</span>
           <span class="calendar-day">22</span>
           <span class="calendar-day">23</span>
@@ -4538,16 +4697,19 @@
           <span class="calendar-day" aria-hidden="true"></span>
           <span class="calendar-day" aria-hidden="true"></span>
           <span class="calendar-day" aria-hidden="true"></span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2014-11-01: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2014/11/encontro-hackergroup-ufrj-di%C3%A1rio-%231/">
-                <span>Encontro &#39;Hackergroup UFRJ&#39; - Diário #1</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2014-11-01">
+              <summary aria-label="2014-11-01: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2014/11/encontro-hackergroup-ufrj-di%C3%A1rio-%231/" data-calendar-tags="dev legacy serenity" data-calendar-featured="false">
+                  <span>Encontro &#39;Hackergroup UFRJ&#39; - Diário #1</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>1</span>
+          </div>
           <span class="calendar-day">2</span>
           <span class="calendar-day">3</span>
           <span class="calendar-day">4</span>
@@ -4827,31 +4989,37 @@
           <span class="calendar-day">3</span>
           <span class="calendar-day">4</span>
           <span class="calendar-day">5</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-05-06: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/05/minha-primeira-semana-com-android/">
-                <span>Minha primeira semana com Android</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-05-06">
+              <summary aria-label="2013-05-06: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/05/minha-primeira-semana-com-android/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Minha primeira semana com Android</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>6</span>
+          </div>
           <span class="calendar-day">7</span>
           <span class="calendar-day">8</span>
           <span class="calendar-day">9</span>
           <span class="calendar-day">10</span>
           <span class="calendar-day">11</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-05-12: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/05/uma-palavra-sobre-o-dia-das-m%C3%A3es/">
-                <span>Uma palavra sobre o dia das mães</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-05-12">
+              <summary aria-label="2013-05-12: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/05/uma-palavra-sobre-o-dia-das-m%C3%A3es/" data-calendar-tags="legacy serenity" data-calendar-featured="false">
+                  <span>Uma palavra sobre o dia das mães</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>12</span>
+          </div>
           <span class="calendar-day">13</span>
           <span class="calendar-day">14</span>
           <span class="calendar-day">15</span>
@@ -4870,16 +5038,19 @@
           <span class="calendar-day">28</span>
           <span class="calendar-day">29</span>
           <span class="calendar-day">30</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-05-31: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/05/4-dicas-sobre-apps-de-android/">
-                <span>4 dicas sobre apps de Android</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-05-31">
+              <summary aria-label="2013-05-31: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/05/4-dicas-sobre-apps-de-android/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>4 dicas sobre apps de Android</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>31</span>
+          </div>
         </div>
       </section>
       <section class="calendar-month" aria-labelledby="month-2013-06">
@@ -4920,16 +5091,19 @@
           <span class="calendar-day">20</span>
           <span class="calendar-day">21</span>
           <span class="calendar-day">22</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-06-23: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/06/privacidade-nas-redes-sociais-parte-i/">
-                <span>Privacidade nas Redes Sociais – Parte I</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-06-23">
+              <summary aria-label="2013-06-23: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/06/privacidade-nas-redes-sociais-parte-i/" data-calendar-tags="legacy privacy serenity" data-calendar-featured="false">
+                  <span>Privacidade nas Redes Sociais – Parte I</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>23</span>
+          </div>
           <span class="calendar-day">24</span>
           <span class="calendar-day">25</span>
           <span class="calendar-day">26</span>
@@ -4974,16 +5148,19 @@
           <span class="calendar-day">22</span>
           <span class="calendar-day">23</span>
           <span class="calendar-day">24</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-07-25: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/07/links-s%C3%A3o-o-terror/">
-                <span>Links são o terror</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-07-25">
+              <summary aria-label="2013-07-25: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/07/links-s%C3%A3o-o-terror/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Links são o terror</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>25</span>
+          </div>
           <span class="calendar-day">26</span>
           <span class="calendar-day">27</span>
           <span class="calendar-day">28</span>
@@ -5019,16 +5196,19 @@
           <span class="calendar-day">11</span>
           <span class="calendar-day">12</span>
           <span class="calendar-day">13</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-08-14: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/08/9-melhores-apps-para-android-parte-1-kiss/">
-                <span>9 melhores apps para Android - Parte 1 - KISS</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-08-14">
+              <summary aria-label="2013-08-14: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/08/9-melhores-apps-para-android-parte-1-kiss/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>9 melhores apps para Android - Parte 1 - KISS</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>14</span>
+          </div>
           <span class="calendar-day">15</span>
           <span class="calendar-day">16</span>
           <span class="calendar-day">17</span>
@@ -5036,28 +5216,34 @@
           <span class="calendar-day">19</span>
           <span class="calendar-day">20</span>
           <span class="calendar-day">21</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-08-22: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/08/s%C3%A3o-tantas-licen%C3%A7as.../">
-                <span>São tantas licenças...</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-08-22">
+              <summary aria-label="2013-08-22: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/08/s%C3%A3o-tantas-licen%C3%A7as.../" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>São tantas licenças...</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>22</span>
+          </div>
           <span class="calendar-day">23</span>
           <span class="calendar-day">24</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-08-25: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/08/como-receber-spam-do-pop3-do-gmail/">
-                <span>Como receber spam do POP3 do gmail</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-08-25">
+              <summary aria-label="2013-08-25: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/08/como-receber-spam-do-pop3-do-gmail/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Como receber spam do POP3 do gmail</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>25</span>
+          </div>
           <span class="calendar-day">26</span>
           <span class="calendar-day">27</span>
           <span class="calendar-day">28</span>
@@ -5079,39 +5265,48 @@
           <span class="calendar-day" aria-hidden="true"></span>
           <span class="calendar-day" aria-hidden="true"></span>
           <span class="calendar-day">1</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-09-02: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/09/como-rodar-jnlp-no-linux/">
-                <span>Como rodar JNLP no Linux</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-09-02">
+              <summary aria-label="2013-09-02: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/09/como-rodar-jnlp-no-linux/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Como rodar JNLP no Linux</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>2</span>
+          </div>
           <span class="calendar-day">3</span>
           <span class="calendar-day">4</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-09-05: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/09/dual-booting-linux-and-windows-final-thoughts/">
-                <span>Dual Booting Linux and Windows – Final thoughts</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-09-05">
+              <summary aria-label="2013-09-05: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/09/dual-booting-linux-and-windows-final-thoughts/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Dual Booting Linux and Windows – Final thoughts</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>5</span>
+          </div>
           <span class="calendar-day">6</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-09-07: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/09/era-uma-vez...kernel-panic-uma-hist%C3%B3ria-de-amor-parte-1/">
-                <span>Era uma vez...kernel panic, uma história de amor (Parte 1)</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-09-07">
+              <summary aria-label="2013-09-07: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/09/era-uma-vez...kernel-panic-uma-hist%C3%B3ria-de-amor-parte-1/" data-calendar-tags="dev legacy serenity" data-calendar-featured="false">
+                  <span>Era uma vez...kernel panic, uma história de amor (Parte 1)</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>7</span>
+          </div>
           <span class="calendar-day">8</span>
           <span class="calendar-day">9</span>
           <span class="calendar-day">10</span>
@@ -5119,32 +5314,38 @@
           <span class="calendar-day">12</span>
           <span class="calendar-day">13</span>
           <span class="calendar-day">14</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-09-15: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/09/ontem-maratona-de-programa%C3%A7%C3%A3o/">
-                <span>Ontem: Maratona de Programação</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-09-15">
+              <summary aria-label="2013-09-15: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/09/ontem-maratona-de-programa%C3%A7%C3%A3o/" data-calendar-tags="dev leetcode legacy" data-calendar-featured="false">
+                  <span>Ontem: Maratona de Programação</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>15</span>
+          </div>
           <span class="calendar-day">16</span>
           <span class="calendar-day">17</span>
           <span class="calendar-day">18</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-09-19: 2 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/09/4-melhores-apps-para-android-parte-2-multim%C3%ADdia/">
-                <span>4 Melhores apps para Android - Parte 2 - Multimídia</span>
-              </a>
-              <a href="https://perrotta.dev/pt/2013/09/youtube-flash-player-issues-@-firefox-@-linux/">
-                <span>(YouTube) Flash Player Issues @ Firefox @ Linux</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-09-19">
+              <summary aria-label="2013-09-19: 2 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/09/4-melhores-apps-para-android-parte-2-multim%C3%ADdia/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>4 Melhores apps para Android - Parte 2 - Multimídia</span>
+                </a>
+                <a href="https://perrotta.dev/pt/2013/09/youtube-flash-player-issues-@-firefox-@-linux/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>(YouTube) Flash Player Issues @ Firefox @ Linux</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>19</span>
+          </div>
           <span class="calendar-day">20</span>
           <span class="calendar-day">21</span>
           <span class="calendar-day">22</span>
@@ -5152,16 +5353,19 @@
           <span class="calendar-day">24</span>
           <span class="calendar-day">25</span>
           <span class="calendar-day">26</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-09-27: 1 posts">
-              <span class="calendar-day--post calendar-day--featured" aria-hidden="true"><span class="calendar-day--featured-icon">★</span></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/09/era-uma-vez...kernel-panic-uma-hist%C3%B3ria-de-amor-parte-1.5/">
-                <span>★ Era uma vez...kernel panic, uma história de amor (Parte 1.5)</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-09-27">
+              <summary aria-label="2013-09-27: 1 posts">
+                <span class="calendar-day--post calendar-day--featured" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon">★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/09/era-uma-vez...kernel-panic-uma-hist%C3%B3ria-de-amor-parte-1.5/" data-calendar-tags="bestof dev legacy" data-calendar-featured="true">
+                  <span>★ Era uma vez...kernel panic, uma história de amor (Parte 1.5)</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>27</span>
+          </div>
           <span class="calendar-day">28</span>
           <span class="calendar-day">29</span>
           <span class="calendar-day">30</span>
@@ -5180,57 +5384,69 @@
           <span class="calendar-day" aria-hidden="true"></span>
           <span class="calendar-day" aria-hidden="true"></span>
           <span class="calendar-day">1</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-10-02: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/10/removendo-crapbloatware-de-um-windows-oem/">
-                <span>Removendo {crap,bloat}ware de um Windows OEM</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-10-02">
+              <summary aria-label="2013-10-02: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/10/removendo-crapbloatware-de-um-windows-oem/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Removendo {crap,bloat}ware de um Windows OEM</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>2</span>
+          </div>
           <span class="calendar-day">3</span>
           <span class="calendar-day">4</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-10-05: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/10/movendo-quase-todas-as-m%C3%BAsicas-para-a-nuvem/">
-                <span>Movendo (quase) todas as músicas para a nuvem</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-10-05">
+              <summary aria-label="2013-10-05: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/10/movendo-quase-todas-as-m%C3%BAsicas-para-a-nuvem/" data-calendar-tags="dev legacy serenity" data-calendar-featured="false">
+                  <span>Movendo (quase) todas as músicas para a nuvem</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>5</span>
+          </div>
           <span class="calendar-day">6</span>
           <span class="calendar-day">7</span>
           <span class="calendar-day">8</span>
           <span class="calendar-day">9</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-10-10: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/10/microsoft-visio...ou-funcionalidade-cad%C3%AA-voc%C3%AA/">
-                <span>Microsoft Visio...ou: funcionalidade, cadê você?</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-10-10">
+              <summary aria-label="2013-10-10: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/10/microsoft-visio...ou-funcionalidade-cad%C3%AA-voc%C3%AA/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Microsoft Visio...ou: funcionalidade, cadê você?</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>10</span>
+          </div>
           <span class="calendar-day">11</span>
           <span class="calendar-day">12</span>
           <span class="calendar-day">13</span>
           <span class="calendar-day">14</span>
           <span class="calendar-day">15</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-10-16: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/10/triple-booting-yay/">
-                <span>Triple booting, yay!</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-10-16">
+              <summary aria-label="2013-10-16: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/10/triple-booting-yay/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Triple booting, yay!</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>16</span>
+          </div>
           <span class="calendar-day">17</span>
           <span class="calendar-day">18</span>
           <span class="calendar-day">19</span>
@@ -5239,16 +5455,19 @@
           <span class="calendar-day">22</span>
           <span class="calendar-day">23</span>
           <span class="calendar-day">24</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-10-25: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/10/at%C3%A9-mais-e-obrigado-pelos-peixes/">
-                <span>Até mais, e obrigado pelos peixes</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-10-25">
+              <summary aria-label="2013-10-25: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/10/at%C3%A9-mais-e-obrigado-pelos-peixes/" data-calendar-tags="dev legacy serenity" data-calendar-featured="false">
+                  <span>Até mais, e obrigado pelos peixes</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>25</span>
+          </div>
           <span class="calendar-day">26</span>
           <span class="calendar-day">27</span>
           <span class="calendar-day">28</span>
@@ -5281,16 +5500,19 @@
           <span class="calendar-day">7</span>
           <span class="calendar-day">8</span>
           <span class="calendar-day">9</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-11-10: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/11/linux-no-ssd-minhas-configura%C3%A7%C3%B5es/">
-                <span>Linux no SSD: minhas configurações</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-11-10">
+              <summary aria-label="2013-11-10: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/11/linux-no-ssd-minhas-configura%C3%A7%C3%B5es/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Linux no SSD: minhas configurações</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>10</span>
+          </div>
           <span class="calendar-day">11</span>
           <span class="calendar-day">12</span>
           <span class="calendar-day">13</span>
@@ -5301,16 +5523,19 @@
           <span class="calendar-day">18</span>
           <span class="calendar-day">19</span>
           <span class="calendar-day">20</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-11-21: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/11/ah-orgulho/">
-                <span>Ah, orgulho</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-11-21">
+              <summary aria-label="2013-11-21: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/11/ah-orgulho/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Ah, orgulho</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>21</span>
+          </div>
           <span class="calendar-day">22</span>
           <span class="calendar-day">23</span>
           <span class="calendar-day">24</span>
@@ -5318,16 +5543,19 @@
           <span class="calendar-day">26</span>
           <span class="calendar-day">27</span>
           <span class="calendar-day">28</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-11-29: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/11/quick-obmep/">
-                <span>(quick) OBMEP</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-11-29">
+              <summary aria-label="2013-11-29: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/11/quick-obmep/" data-calendar-tags="dev legacy serenity" data-calendar-featured="false">
+                  <span>(quick) OBMEP</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>29</span>
+          </div>
           <span class="calendar-day">30</span>
         </div>
       </section>
@@ -5343,16 +5571,19 @@
           <span class="calendar-weekday" aria-hidden="true">S</span>
           <span class="calendar-day" aria-hidden="true"></span>
           <span class="calendar-day" aria-hidden="true"></span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-12-01: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/12/economizando-um-pouco-de-bateria-no-linux/">
-                <span>Economizando um pouco de bateria no Linux</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-12-01">
+              <summary aria-label="2013-12-01: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/12/economizando-um-pouco-de-bateria-no-linux/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Economizando um pouco de bateria no Linux</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>1</span>
+          </div>
           <span class="calendar-day">2</span>
           <span class="calendar-day">3</span>
           <span class="calendar-day">4</span>
@@ -5360,72 +5591,87 @@
           <span class="calendar-day">6</span>
           <span class="calendar-day">7</span>
           <span class="calendar-day">8</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-12-09: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/12/opengl-development/">
-                <span>OpenGL Development</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-12-09">
+              <summary aria-label="2013-12-09: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/12/opengl-development/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>OpenGL Development</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>9</span>
+          </div>
           <span class="calendar-day">10</span>
           <span class="calendar-day">11</span>
           <span class="calendar-day">12</span>
           <span class="calendar-day">13</span>
           <span class="calendar-day">14</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-12-15: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/12/c%C3%A1lculo-@-ufrj-sugest%C3%A3o-de-refer%C3%AAncias/">
-                <span>Cálculo @ UFRJ: Sugestão de Referências</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-12-15">
+              <summary aria-label="2013-12-15: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/12/c%C3%A1lculo-@-ufrj-sugest%C3%A3o-de-refer%C3%AAncias/" data-calendar-tags="legacy serenity" data-calendar-featured="false">
+                  <span>Cálculo @ UFRJ: Sugestão de Referências</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>15</span>
+          </div>
           <span class="calendar-day">16</span>
           <span class="calendar-day">17</span>
           <span class="calendar-day">18</span>
           <span class="calendar-day">19</span>
           <span class="calendar-day">20</span>
           <span class="calendar-day">21</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-12-22: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/12/habilitando-hiberna%C3%A7%C3%A3o-no-arch/">
-                <span>Habilitando hibernação no Arch</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-12-22">
+              <summary aria-label="2013-12-22: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/12/habilitando-hiberna%C3%A7%C3%A3o-no-arch/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>Habilitando hibernação no Arch</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>22</span>
+          </div>
           <span class="calendar-day">23</span>
           <span class="calendar-day">24</span>
           <span class="calendar-day">25</span>
           <span class="calendar-day">26</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-12-27: 1 posts">
-              <span class="calendar-day--post" aria-hidden="true"></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/12/foss-@-android/">
-                <span>[F]OSS @ Android</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-12-27">
+              <summary aria-label="2013-12-27: 1 posts">
+                <span class="calendar-day--post" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon" hidden>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/12/foss-@-android/" data-calendar-tags="dev legacy" data-calendar-featured="false">
+                  <span>[F]OSS @ Android</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>27</span>
+          </div>
           <span class="calendar-day">28</span>
-          <details class="calendar-day calendar-day--has-post">
-            <summary aria-label="2013-12-29: 1 posts">
-              <span class="calendar-day--post calendar-day--featured" aria-hidden="true"><span class="calendar-day--featured-icon">★</span></span>
-            </summary>
-            <div class="calendar-popover">
-              <a href="https://perrotta.dev/pt/2013/12/retrospectiva-2013-blablabla/">
-                <span>★ Retrospectiva 2013 (blablabla)</span>
-              </a>
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post" data-calendar-date="2013-12-29">
+              <summary aria-label="2013-12-29: 1 posts">
+                <span class="calendar-day--post calendar-day--featured" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon">★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                <a href="https://perrotta.dev/pt/2013/12/retrospectiva-2013-blablabla/" data-calendar-tags="bestof dev legacy meta" data-calendar-featured="true">
+                  <span>★ Retrospectiva 2013 (blablabla)</span>
+                </a>
+              </div>
+            </details>
+            <span class="calendar-day" data-calendar-empty hidden>29</span>
+          </div>
           <span class="calendar-day">30</span>
           <span class="calendar-day">31</span>
         </div>
@@ -5435,25 +5681,90 @@
 </div>
 
 <script>
-  document.querySelectorAll(".calendar-day--has-post").forEach(function (day) {
-    day.addEventListener("toggle", function () {
+  const calendarTagFilter = document.querySelector("#calendar-tag-filter");
+  const calendarStats = document.querySelector("#calendar-stats");
+  const calendarDaySlots = document.querySelectorAll(".calendar-day-slot");
+  const calendarPostLabel = "posts";
+
+  const closeCalendarDays = () => {
+    document.querySelectorAll(".calendar-day--has-post[open]").forEach((day) => {
+      day.open = false;
+    });
+  };
+
+  const filterCalendar = (tag) => {
+    let visiblePosts = 0;
+
+    closeCalendarDays();
+    calendarDaySlots.forEach((slot) => {
+      const day = slot.querySelector(".calendar-day--has-post");
+      const emptyDay = slot.querySelector("[data-calendar-empty]");
+      const links = day.querySelectorAll("[data-calendar-tags]");
+      let visibleDayPosts = 0;
+      let featured = false;
+
+      links.forEach((link) => {
+        const tags = link.dataset.calendarTags.split(" ").filter(Boolean);
+        const visible = !tag || tags.includes(tag);
+        link.hidden = !visible;
+        if (visible) {
+          visibleDayPosts += 1;
+          visiblePosts += 1;
+          featured ||= link.dataset.calendarFeatured === "true";
+        }
+      });
+
+      day.hidden = visibleDayPosts === 0;
+      emptyDay.hidden = visibleDayPosts !== 0;
+      day.querySelector("summary").setAttribute(
+        "aria-label",
+        `${day.dataset.calendarDate}: ${visibleDayPosts} ${calendarPostLabel}`,
+      );
+
+      const marker = day.querySelector("[data-calendar-marker]");
+      marker.classList.toggle("calendar-day--featured", featured);
+      marker.querySelector(".calendar-day--featured-icon").hidden = !featured;
+    });
+
+    document.querySelectorAll(".calendar-year").forEach((year) => {
+      year.hidden = !year.querySelector(".calendar-day--has-post:not([hidden])");
+    });
+    calendarStats.textContent = `${visiblePosts} ${calendarPostLabel}`;
+  };
+
+  document.querySelectorAll(".calendar-day--has-post").forEach((day) => {
+    day.addEventListener("toggle", () => {
       if (!day.open) return;
-      document.querySelectorAll(".calendar-day--has-post[open]").forEach(function (other) {
+      document.querySelectorAll(".calendar-day--has-post[open]").forEach((other) => {
         if (other !== day) other.open = false;
       });
     });
   });
 
-  document.addEventListener("click", function (event) {
-    if (event.target.closest(".calendar-day--has-post")) return;
-    document.querySelectorAll(".calendar-day--has-post[open]").forEach(function (day) {
-      day.open = false;
-    });
+  const requestedTag = new URLSearchParams(window.location.search).get("tag")?.toLowerCase();
+  const knownTag = Array.from(calendarTagFilter.options).some((option) => option.value === requestedTag);
+  if (knownTag) calendarTagFilter.value = requestedTag;
+  filterCalendar(calendarTagFilter.value);
+
+  calendarTagFilter.addEventListener("change", () => {
+    const url = new URL(window.location.href);
+    if (calendarTagFilter.value) {
+      url.searchParams.set("tag", calendarTagFilter.value);
+    } else {
+      url.searchParams.delete("tag");
+    }
+    window.history.replaceState({}, "", url);
+    filterCalendar(calendarTagFilter.value);
   });
 
-  document.addEventListener("keydown", function (event) {
+  document.addEventListener("click", (event) => {
+    if (event.target.closest(".calendar-day--has-post")) return;
+    closeCalendarDays();
+  });
+
+  document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
-    document.querySelectorAll(".calendar-day--has-post[open]").forEach(function (day) {
+    document.querySelectorAll(".calendar-day--has-post[open]").forEach((day) => {
       day.open = false;
       day.querySelector("summary").focus();
     });
