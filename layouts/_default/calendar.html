@@ -1,7 +1,24 @@
 {{- define "main" }}
 <style>
   .calendar-intro {
+    margin-bottom: 1rem;
+  }
+
+  .calendar-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
     margin-bottom: 2rem;
+  }
+
+  .calendar-controls select {
+    padding: 0.35rem 0.5rem;
+  }
+
+  .calendar-stats {
+    color: var(--color-gray);
+    font-size: 0.9rem;
   }
 
   .calendar-year {
@@ -36,6 +53,14 @@
     font-size: 0.65rem;
     font-variant-numeric: tabular-nums;
     line-height: 1;
+  }
+
+  .calendar-day-slot {
+    min-width: 0;
+  }
+
+  .calendar-day-slot > * {
+    width: 100%;
   }
 
   .calendar-weekday,
@@ -151,13 +176,13 @@
   }
 
   .calendar-month:nth-child(3n + 1) .calendar-popover,
-  .calendar-day:nth-child(7n + 1) .calendar-popover {
+  .calendar-day-slot:nth-child(7n + 1) .calendar-popover {
     left: 0;
     translate: 0 0;
   }
 
   .calendar-month:nth-child(3n) .calendar-popover,
-  .calendar-day:nth-child(7n) .calendar-popover {
+  .calendar-day-slot:nth-child(7n) .calendar-popover {
     left: auto;
     right: 0;
     translate: 0 0;
@@ -190,10 +215,18 @@
 </style>
 
 {{- $pages := where .Site.RegularPages "Section" "posts" }}
-{{- $pages = partial "archive-pages.html" (dict "pages" $pages "lang" .Site.Language.Lang) }}
+{{- $pages = where $pages "Site.Language.Lang" .Site.Language.Lang }}
+{{- $pages = where $pages "Params.rss_only" "!=" true }}
 {{- $groups := $pages.GroupByDate "2006" }}
 {{- $monthLabels := split (i18n "calendarMonths") "|" }}
 {{- $weekdayLabels := split (i18n "calendarWeekdays") "|" }}
+{{- $tagNames := slice }}
+{{- range $pages }}
+  {{- range .Params.tags }}
+    {{- $tagNames = $tagNames | append . }}
+  {{- end }}
+{{- end }}
+{{- $tagNames = sort (uniq $tagNames) }}
 {{- $postsByDate := newScratch }}
 {{- range $pages }}
   {{- $key := .Date.Format "2006-01-02" }}
@@ -201,11 +234,18 @@
   {{- $postsByDate.Set $key ($dayPages | append .) }}
 {{- end }}
 
-<div class="archive-heading">
-  <h2>{{ .Title }}</h2>
-  {{- partial "archive-view-toggle.html" (dict "current" "calendar") }}
-</div>
+<h2>{{ .Title }}</h2>
 <p class="calendar-intro">{{ i18n "calendarLegend" }}</p>
+<div class="calendar-controls">
+  <label for="calendar-tag-filter">{{ i18n "filterByTag" }}</label>
+  <select id="calendar-tag-filter">
+    <option value="">{{ i18n "allTags" }}</option>
+    {{- range $tagNames }}
+    <option value="{{ . | urlize }}">#{{ . | lower }}</option>
+    {{- end }}
+  </select>
+  <span id="calendar-stats" class="calendar-stats" aria-live="polite"></span>
+</div>
 
 <div class="calendar">
   {{- range $groups }}
@@ -237,18 +277,25 @@
             {{- range $dayPages }}
               {{- if in .Params.tags "bestof" }}{{ $featured = true }}{{ end }}
             {{- end }}
-          <details class="calendar-day calendar-day--has-post{{ if $future }} calendar-day--future{{ end }}">
-            <summary aria-label="{{ $date }}: {{ len $dayPages }} {{ i18n "allPosts" | lower }}">
-              <span class="calendar-day--post{{ if $featured }} calendar-day--featured{{ end }}" aria-hidden="true">{{ if $featured }}<span class="calendar-day--featured-icon">★</span>{{ end }}</span>
-            </summary>
-            <div class="calendar-popover">
-              {{- range $dayPages }}
-              <a href="{{ .Permalink }}">
-                <span>{{ if in .Params.tags "bestof" }}★ {{ end }}{{ .Title }}</span>
-              </a>
-              {{- end }}
-            </div>
-          </details>
+          <div class="calendar-day-slot">
+            <details class="calendar-day calendar-day--has-post{{ if $future }} calendar-day--future{{ end }}" data-calendar-date="{{ $date }}">
+              <summary aria-label="{{ $date }}: {{ len $dayPages }} {{ i18n "allPosts" | lower }}">
+                <span class="calendar-day--post{{ if $featured }} calendar-day--featured{{ end }}" data-calendar-marker aria-hidden="true"><span class="calendar-day--featured-icon"{{ if not $featured }} hidden{{ end }}>★</span></span>
+              </summary>
+              <div class="calendar-popover">
+                {{- range $dayPages }}
+                {{- $postTags := slice }}
+                {{- range .Params.tags }}
+                  {{- $postTags = $postTags | append (. | urlize) }}
+                {{- end }}
+                <a href="{{ .Permalink }}" data-calendar-tags="{{ delimit $postTags " " }}" data-calendar-featured="{{ in .Params.tags "bestof" }}">
+                  <span>{{ if in .Params.tags "bestof" }}★ {{ end }}{{ .Title }}</span>
+                </a>
+                {{- end }}
+              </div>
+            </details>
+            <span class="calendar-day{{ if $future }} calendar-day--future{{ end }}" data-calendar-empty hidden>{{ $day }}</span>
+          </div>
           {{- else }}
           <span class="calendar-day{{ if $future }} calendar-day--future{{ end }}">{{ $day }}</span>
           {{- end }}
@@ -264,25 +311,90 @@
 </div>
 
 <script>
-  document.querySelectorAll(".calendar-day--has-post").forEach(function (day) {
-    day.addEventListener("toggle", function () {
+  const calendarTagFilter = document.querySelector("#calendar-tag-filter");
+  const calendarStats = document.querySelector("#calendar-stats");
+  const calendarDaySlots = document.querySelectorAll(".calendar-day-slot");
+  const calendarPostLabel = {{ i18n "allPosts" | lower | jsonify | safeJS }};
+
+  const closeCalendarDays = () => {
+    document.querySelectorAll(".calendar-day--has-post[open]").forEach((day) => {
+      day.open = false;
+    });
+  };
+
+  const filterCalendar = (tag) => {
+    let visiblePosts = 0;
+
+    closeCalendarDays();
+    calendarDaySlots.forEach((slot) => {
+      const day = slot.querySelector(".calendar-day--has-post");
+      const emptyDay = slot.querySelector("[data-calendar-empty]");
+      const links = day.querySelectorAll("[data-calendar-tags]");
+      let visibleDayPosts = 0;
+      let featured = false;
+
+      links.forEach((link) => {
+        const tags = link.dataset.calendarTags.split(" ").filter(Boolean);
+        const visible = !tag || tags.includes(tag);
+        link.hidden = !visible;
+        if (visible) {
+          visibleDayPosts += 1;
+          visiblePosts += 1;
+          featured ||= link.dataset.calendarFeatured === "true";
+        }
+      });
+
+      day.hidden = visibleDayPosts === 0;
+      emptyDay.hidden = visibleDayPosts !== 0;
+      day.querySelector("summary").setAttribute(
+        "aria-label",
+        `${day.dataset.calendarDate}: ${visibleDayPosts} ${calendarPostLabel}`,
+      );
+
+      const marker = day.querySelector("[data-calendar-marker]");
+      marker.classList.toggle("calendar-day--featured", featured);
+      marker.querySelector(".calendar-day--featured-icon").hidden = !featured;
+    });
+
+    document.querySelectorAll(".calendar-year").forEach((year) => {
+      year.hidden = !year.querySelector(".calendar-day--has-post:not([hidden])");
+    });
+    calendarStats.textContent = `${visiblePosts} ${calendarPostLabel}`;
+  };
+
+  document.querySelectorAll(".calendar-day--has-post").forEach((day) => {
+    day.addEventListener("toggle", () => {
       if (!day.open) return;
-      document.querySelectorAll(".calendar-day--has-post[open]").forEach(function (other) {
+      document.querySelectorAll(".calendar-day--has-post[open]").forEach((other) => {
         if (other !== day) other.open = false;
       });
     });
   });
 
-  document.addEventListener("click", function (event) {
-    if (event.target.closest(".calendar-day--has-post")) return;
-    document.querySelectorAll(".calendar-day--has-post[open]").forEach(function (day) {
-      day.open = false;
-    });
+  const requestedTag = new URLSearchParams(window.location.search).get("tag")?.toLowerCase();
+  const knownTag = Array.from(calendarTagFilter.options).some((option) => option.value === requestedTag);
+  if (knownTag) calendarTagFilter.value = requestedTag;
+  filterCalendar(calendarTagFilter.value);
+
+  calendarTagFilter.addEventListener("change", () => {
+    const url = new URL(window.location.href);
+    if (calendarTagFilter.value) {
+      url.searchParams.set("tag", calendarTagFilter.value);
+    } else {
+      url.searchParams.delete("tag");
+    }
+    window.history.replaceState({}, "", url);
+    filterCalendar(calendarTagFilter.value);
   });
 
-  document.addEventListener("keydown", function (event) {
+  document.addEventListener("click", (event) => {
+    if (event.target.closest(".calendar-day--has-post")) return;
+    closeCalendarDays();
+  });
+
+  document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
-    document.querySelectorAll(".calendar-day--has-post[open]").forEach(function (day) {
+    document.querySelectorAll(".calendar-day--has-post[open]").forEach((day) => {
       day.open = false;
       day.querySelector("summary").focus();
     });
