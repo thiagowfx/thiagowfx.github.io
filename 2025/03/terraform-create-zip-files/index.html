@@ -11,22 +11,22 @@
 <meta name="description" content="When creating .zip files with terraform, for example, with the purpose of uploading them to an AWS Lambda, at least two approaches exist to do so.
 In the …">
 <meta name="keywords" content="dev,terraform,"><meta property="og:url" content="https://perrotta.dev/2025/03/terraform-create-zip-files/">
-  <meta property="og:site_name" content="¬ just serendipity 🍀">
-  <meta property="og:title" content="Terraform: create zip files">
-  <meta property="og:description" content="When creating .zip files with terraform, for example, with the purpose of uploading them to an AWS Lambda, at least two approaches exist to do so.
+	<meta property="og:site_name" content="¬ just serendipity 🍀">
+	<meta property="og:title" content="Terraform: create zip files">
+	<meta property="og:description" content="When creating .zip files with terraform, for example, with the purpose of uploading them to an AWS Lambda, at least two approaches exist to do so.
 In the examples below, assume a NodeJS source file named index.mjs. It should be packaged into a lambda.zip archive.
 1) Use null_resource # terraform resource &#34;null_resource&#34; &#34;build_lambda&#34; { triggers = { source_code_hash = filebase64sha256(&#34;${path.module}/lambda/index.mjs&#34;) } provisioner &#34;local-exec&#34; { command = &lt;&lt;EOF cd ${path.module}/lambda zip -r lambda.zip index.mjs EOF } } resource &#34;aws_lambda_function&#34; &#34;this&#34; { function_name = &#34;dns-changer-delete&#34; role = aws_iam_role.this.arn filename = &#34;${path.module}/lambda/lambda.zip&#34; source_code_hash = filebase64sha256(&#34;${path.module}/lambda/lambda.zip&#34;) handler = &#34;index.handler&#34; runtime = &#34;nodejs22.x&#34; depends_on = [null_resource.build_lambda] } 2) Use archive_file # terraform data &#34;archive_file&#34; &#34;lambda_zip&#34; { type = &#34;zip&#34; source_file = &#34;${path.module}/lambda/index.mjs&#34; output_path = &#34;${path.module}/lambda/lambda.zip&#34; } resource &#34;aws_lambda_function&#34; &#34;this&#34; { function_name = &#34;dns-changer-delete&#34; description = &#34;Delete DNS record sets for DNS Changer&#34; role = aws_iam_role.this.arn filename = data.archive_file.lambda_zip.output_path source_code_hash = data.archive_file.lambda_zip.output_base64sha256 handler = &#34;index.handler&#34; runtime = &#34;nodejs22.x&#34; depends_on = [data.archive_file.lambda_zip] } I prefer the second approach.">
-  <meta property="og:locale" content="en_us">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-03-17T21:06:28+01:00">
-    <meta property="article:modified_time" content="2026-01-03T19:26:40-03:00">
-    <meta property="article:tag" content="Dev">
-    <meta property="article:tag" content="Terraform">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2025-03-17T21:06:28+01:00">
+		<meta property="article:modified_time" content="2026-01-03T19:26:40-03:00">
+		<meta property="article:tag" content="Dev">
+		<meta property="article:tag" content="Terraform">
 
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Terraform: create zip files">
-  <meta name="twitter:description" content="When creating .zip files with terraform, for example, with the purpose of uploading them to an AWS Lambda, at least two approaches exist to do so.
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Terraform: create zip files">
+	<meta name="twitter:description" content="When creating .zip files with terraform, for example, with the purpose of uploading them to an AWS Lambda, at least two approaches exist to do so.
 In the examples below, assume a NodeJS source file named index.mjs. It should be packaged into a lambda.zip archive.
 1) Use null_resource # terraform resource &#34;null_resource&#34; &#34;build_lambda&#34; { triggers = { source_code_hash = filebase64sha256(&#34;${path.module}/lambda/index.mjs&#34;) } provisioner &#34;local-exec&#34; { command = &lt;&lt;EOF cd ${path.module}/lambda zip -r lambda.zip index.mjs EOF } } resource &#34;aws_lambda_function&#34; &#34;this&#34; { function_name = &#34;dns-changer-delete&#34; role = aws_iam_role.this.arn filename = &#34;${path.module}/lambda/lambda.zip&#34; source_code_hash = filebase64sha256(&#34;${path.module}/lambda/lambda.zip&#34;) handler = &#34;index.handler&#34; runtime = &#34;nodejs22.x&#34; depends_on = [null_resource.build_lambda] } 2) Use archive_file # terraform data &#34;archive_file&#34; &#34;lambda_zip&#34; { type = &#34;zip&#34; source_file = &#34;${path.module}/lambda/index.mjs&#34; output_path = &#34;${path.module}/lambda/lambda.zip&#34; } resource &#34;aws_lambda_function&#34; &#34;this&#34; { function_name = &#34;dns-changer-delete&#34; description = &#34;Delete DNS record sets for DNS Changer&#34; role = aws_iam_role.this.arn filename = data.archive_file.lambda_zip.output_path source_code_hash = data.archive_file.lambda_zip.output_base64sha256 handler = &#34;index.handler&#34; runtime = &#34;nodejs22.x&#34; depends_on = [data.archive_file.lambda_zip] } I prefer the second approach.">
 <script type="application/ld+json">

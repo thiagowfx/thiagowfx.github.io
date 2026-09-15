@@ -12,23 +12,23 @@
 The following script works:
 shell #!/bin/bash # …">
 <meta name="keywords" content="dev,kubernetes,security,"><meta property="og:url" content="https://perrotta.dev/2025/04/hashicorp-vault-from-helm-values/">
-  <meta property="og:site_name" content="¬ just serendipity 🍀">
-  <meta property="og:title" content="HashiCorp Vault from helm values">
-  <meta property="og:description" content="Problem statement: Populate HashiCorp Vault with select keys from helm get values for a given chart release.
+	<meta property="og:site_name" content="¬ just serendipity 🍀">
+	<meta property="og:title" content="HashiCorp Vault from helm values">
+	<meta property="og:description" content="Problem statement: Populate HashiCorp Vault with select keys from helm get values for a given chart release.
 The following script works:
 shell #!/bin/bash # Usage: Tweak entries as needed and then run the script. set -euo pipefail # It&#39;s an associative array: a dictionary, a hash map # # Key: the entry to be populated in vault # Value: a `jq` JSON selector from the output of `helm get values -o json` declare -A entries=( # keep-sorted start [config.aws.accessKey]=&#34;.config.aws.accessKey&#34; [config.aws.secretKey]=&#34;.config.aws.secretKey&#34; [config.cronjob.apiPassword]=&#34;.config.cronjob.apiPassword&#34; [config.cronjob.apiUser]=&#34;.config.cronjob.apiUser&#34; [config.postgresql.adminpass]=&#34;.config.postgresql.adminpass&#34; [config.postgresql.password]=&#34;.config.postgresql.password&#34; [config.postgresql.ropass]=&#34;.config.postgresql.ropass&#34; [config.postgresql.rwpass]=&#34;.config.postgresql.rwpass&#34; [config.slack.token]=&#34;.config.slack.token&#34; [config.slack.verificationToken]=&#34;.config.slack.verificationToken&#34; # keep-sorted end ) main() { vault login FIRST=1 for entry in &#34;${!entries[@]}&#34;; do key=&#34;$entry&#34; value=&#34;${entries[$entry]}&#34; content=&#34;$(helm get values -n tools mychart -o json | jq -r &#34;$value&#34;)&#34; echo &#34;Populating vault $key from helm value $key: $content...&#34; if [[ &#34;$FIRST&#34; == &#34;1&#34; ]]; then vault kv put -mount=&#34;kv-v2&#34; &#34;services/mychart/&#34; &#34;$key=$content&#34; FIRST=0 else vault kv patch -mount=&#34;kv-v2&#34; &#34;services/mychart/&#34; &#34;$key=$content&#34; fi done vault kv get -mount=&#34;kv-v2&#34; &#34;services/mychart&#34; rm ~/.vault-token } main FIRST: In the first time we need to create an entry (vault kv put), in the second time we need to patch it (vault kv patch).">
-  <meta property="og:locale" content="en_us">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-04-23T16:56:16+02:00">
-    <meta property="article:modified_time" content="2026-01-03T19:23:09-03:00">
-    <meta property="article:tag" content="Dev">
-    <meta property="article:tag" content="Kubernetes">
-    <meta property="article:tag" content="Security">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2025-04-23T16:56:16+02:00">
+		<meta property="article:modified_time" content="2026-01-03T19:23:09-03:00">
+		<meta property="article:tag" content="Dev">
+		<meta property="article:tag" content="Kubernetes">
+		<meta property="article:tag" content="Security">
 
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="HashiCorp Vault from helm values">
-  <meta name="twitter:description" content="Problem statement: Populate HashiCorp Vault with select keys from helm get values for a given chart release.
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="HashiCorp Vault from helm values">
+	<meta name="twitter:description" content="Problem statement: Populate HashiCorp Vault with select keys from helm get values for a given chart release.
 The following script works:
 shell #!/bin/bash # Usage: Tweak entries as needed and then run the script. set -euo pipefail # It&#39;s an associative array: a dictionary, a hash map # # Key: the entry to be populated in vault # Value: a `jq` JSON selector from the output of `helm get values -o json` declare -A entries=( # keep-sorted start [config.aws.accessKey]=&#34;.config.aws.accessKey&#34; [config.aws.secretKey]=&#34;.config.aws.secretKey&#34; [config.cronjob.apiPassword]=&#34;.config.cronjob.apiPassword&#34; [config.cronjob.apiUser]=&#34;.config.cronjob.apiUser&#34; [config.postgresql.adminpass]=&#34;.config.postgresql.adminpass&#34; [config.postgresql.password]=&#34;.config.postgresql.password&#34; [config.postgresql.ropass]=&#34;.config.postgresql.ropass&#34; [config.postgresql.rwpass]=&#34;.config.postgresql.rwpass&#34; [config.slack.token]=&#34;.config.slack.token&#34; [config.slack.verificationToken]=&#34;.config.slack.verificationToken&#34; # keep-sorted end ) main() { vault login FIRST=1 for entry in &#34;${!entries[@]}&#34;; do key=&#34;$entry&#34; value=&#34;${entries[$entry]}&#34; content=&#34;$(helm get values -n tools mychart -o json | jq -r &#34;$value&#34;)&#34; echo &#34;Populating vault $key from helm value $key: $content...&#34; if [[ &#34;$FIRST&#34; == &#34;1&#34; ]]; then vault kv put -mount=&#34;kv-v2&#34; &#34;services/mychart/&#34; &#34;$key=$content&#34; FIRST=0 else vault kv patch -mount=&#34;kv-v2&#34; &#34;services/mychart/&#34; &#34;$key=$content&#34; fi done vault kv get -mount=&#34;kv-v2&#34; &#34;services/mychart&#34; rm ~/.vault-token } main FIRST: In the first time we need to create an entry (vault kv put), in the second time we need to patch it (vault kv patch).">
 <script type="application/ld+json">
