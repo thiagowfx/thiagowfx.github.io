@@ -315,6 +315,8 @@ goodreads-import csv="~/Downloads/goodreads_library_export.csv" *args:
 [group('utils')]
 update: update-git update-prek update-json-schemas update-vendor
 
+alias upgrade := update
+
 [doc('Update git submodules')]
 [group('utils')]
 update-git:
