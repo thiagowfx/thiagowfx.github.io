@@ -27,6 +27,7 @@
 ## Blog Posts
 
 
+- [Reply to: Put an AV test at the start of your slides](https://perrotta.dev/2026/09/reply-to-put-an-av-test-at-the-start-of-your-slides/) (2026-09-20)
 - [Reply to: I don't like LLMs](https://perrotta.dev/2026/09/reply-to-i-dont-like-llms/) (2026-09-20)
 - [@claude: troubleshoot](https://perrotta.dev/2026/09/@claude-troubleshoot/) (2026-09-16)
 - [lf: edit files and enter directories with enter](https://perrotta.dev/2026/09/lf-edit-files-and-enter-directories-with-enter/) (2026-09-16)
@@ -1398,7 +1399,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (61 posts)
 - [Security](https://perrotta.dev/tags/security/) (68 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (14 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (282 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (283 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (12 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (8 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (18 posts)
