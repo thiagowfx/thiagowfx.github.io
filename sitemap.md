@@ -27,6 +27,7 @@
 ## Blog Posts
 
 
+- [Reply to: I don't like LLMs](https://perrotta.dev/2026/09/reply-to-i-dont-like-llms/) (2026-09-20)
 - [@claude: troubleshoot](https://perrotta.dev/2026/09/@claude-troubleshoot/) (2026-09-16)
 - [lf: edit files and enter directories with enter](https://perrotta.dev/2026/09/lf-edit-files-and-enter-directories-with-enter/) (2026-09-16)
 - [espanso: restart a stale daemon after upgrading](https://perrotta.dev/2026/09/espanso-restart-a-stale-daemon-after-upgrading/) (2026-09-07)
@@ -1366,7 +1367,7 @@
 
 
 - [Advent-of-Code](https://perrotta.dev/tags/advent-of-code/) (35 posts)
-- [Ai](https://perrotta.dev/tags/ai/) (138 posts)
+- [Ai](https://perrotta.dev/tags/ai/) (139 posts)
 - [Alpine-Linux](https://perrotta.dev/tags/alpine-linux/) (30 posts)
 - [Anki](https://perrotta.dev/tags/anki/) (12 posts)
 - [Argocd](https://perrotta.dev/tags/argocd/) (21 posts)
@@ -1377,7 +1378,7 @@
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1239 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1240 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1397,7 +1398,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (61 posts)
 - [Security](https://perrotta.dev/tags/security/) (68 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (14 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (281 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (282 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (12 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (8 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (18 posts)
