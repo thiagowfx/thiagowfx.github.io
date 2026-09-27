@@ -22,11 +22,12 @@ parts that remain in the repository.
 
 ## Decision
 
-### Inline CSS
+### External CSS
 
-`layouts/partials/style.html` reads `static/theme.css`, minifies it with Hugo
-Pipes, and emits it with the rest of the site CSS in one `<style>` element.
-There is no asynchronous stylesheet or `<noscript>` fallback.
+`layouts/partials/style.html` concatenates `assets/css/theme.css` and
+`assets/css/style.css`, then minifies and fingerprints the result with Hugo
+Pipes. Pages load the generated file through one blocking stylesheet link.
+The fingerprint changes when either source file changes.
 
 ### Defer JavaScript
 
@@ -51,12 +52,13 @@ The snowflake animation and its canvas initialization no longer exist.
 
 **Easier:**
 
-- CSS needs no separate request.
-- Fingerprinted JavaScript can change without stale asset URLs.
+- Browsers reuse CSS across page visits.
+- HTML responses do not repeat shared CSS.
+- Fingerprinted CSS and JavaScript can change without stale asset URLs.
 - Image dimensions reduce layout movement.
 
 **Harder:**
 
-- Inlined CSS is repeated in each HTML response.
+- First visits need one blocking CSS request.
 - GitHub Pages keeps control of cache lifetime.
 - CSS and JavaScript processing depend on Hugo Pipes.
