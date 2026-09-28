@@ -56,7 +56,7 @@ Surely there’s no erase feature but, somehow, my mind feels intrinsically conn
 }
 </script><meta name="referrer" content="no-referrer-when-downgrade">
   <link rel="icon" href="https://perrotta.dev/favicon.ico"><link rel="canonical" href="https://perrotta.dev/2025/02/no-printer-yes-paper/"><link rel="alternate" type="text/markdown" href="https://perrotta.dev/2025/02/no-printer-yes-paper/index.md" title="No printer, yes paper"><link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0">
-  <link rel="author" href="https://perrotta.dev/" title="Thiago Perrotta"><link rel="stylesheet" href="/css/site.min.4346d9c60bed26ff0eca38b014ca75e91a7954b22cc1aa8664311b0e44432024.css">
+  <link rel="author" href="https://perrotta.dev/" title="Thiago Perrotta"><link rel="stylesheet" href="/css/site.min.af68175d71d68b1942ef966ad5c9810bc1ed34e96e8d80e687c613dedb88240e.css">
 
   <link rel="apple-touch-icon" href="https://perrotta.dev/apple-touch-icon.webp">
 </head>
@@ -94,11 +94,11 @@ Surely there’s no erase feature but, somehow, my mind feels intrinsically conn
         <span class="nav-text">Blog</span>
       </a>
       <div class="nav-dropdown">
-        <button class="nav-dropdown-trigger">
+        <button class="nav-dropdown-trigger" popovertarget="nav-dropdown-menu">
           <span class="nav-text">More</span>
           <span class="nav-dropdown-arrow">▼</span>
         </button>
-        <div class="nav-dropdown-menu">
+        <div id="nav-dropdown-menu" class="nav-dropdown-menu" popover>
           <a href="/search/" class="nav-dropdown-item">🔍 Search</a>
           <a href="/blogroll/" class="nav-dropdown-item">📰 Blogroll</a>
           <a href="/tags/" class="nav-dropdown-item">🏷️ Tags</a>
@@ -296,21 +296,21 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
         <img src="https://perrotta.dev/vendor/valid-rss-rogers.webp" width="88" height="31" alt="Valid RSS feed" loading="lazy">
       </a>
     </div>
-  </footer><div id="search-modal" class="search-modal" role="dialog" aria-modal="true" aria-label="Search">
-  <div class="search-modal-backdrop"></div>
-  <div class="search-modal-container">
-    <div class="search-modal-header">
-      <input type="text" id="search-modal-input" placeholder="Search posts... (use * as wildcard)" autocomplete="off">
-      <kbd class="search-modal-kbd">ESC</kbd>
-    </div>
-    <label class="search-content-toggle search-modal-content-toggle">
-      <input type="checkbox" id="search-modal-content-toggle">
-      Search post content
-    </label>
-    <div id="search-modal-info" class="search-info"></div>
-    <div id="search-modal-results" class="search-modal-results"></div>
+  </footer><dialog id="search-modal" class="search-modal" aria-label="Search" closedby="any">
+  <div class="search-modal-header">
+    <input type="text" id="search-modal-input" placeholder="Search posts... (use * as wildcard)" autocomplete="off">
+    <kbd class="search-modal-kbd">ESC</kbd>
+    <form class="search-modal-close-form" method="dialog">
+      <button class="search-modal-close" type="submit" aria-label="Close search" title="Close search">×</button>
+    </form>
   </div>
-</div>
+  <label class="search-content-toggle search-modal-content-toggle">
+    <input type="checkbox" id="search-modal-content-toggle">
+    Search post content
+  </label>
+  <div id="search-modal-info" class="search-info"></div>
+  <div id="search-modal-results" class="search-modal-results"></div>
+</dialog>
 <script type="module">
   import { SearchIndex } from '\/js\/search.min.338ef3fdd4dadfd658d4ba5ea17bb4aa974582e63b2b9f44d9f1a2db6b2cd576.js';
 
@@ -319,7 +319,6 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
   const modalResults = document.getElementById('search-modal-results');
   const modalInfo = document.getElementById('search-modal-info');
   const contentSearch = document.getElementById('search-modal-content-toggle');
-  const backdrop = modal.querySelector('.search-modal-backdrop');
   const lang = 'en' || 'en';
   const langPath = lang === 'en' ? '' : '/' + lang;
   const search = new SearchIndex(langPath);
@@ -413,35 +412,26 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
   };
 
   const openModal = () => {
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    if (modal.open) return;
+    modal.showModal();
+    modalInput.focus();
     loadSearchIndex().then(() => {
-      modalInput.focus();
       if (modalInput.value) performSearch(modalInput.value);
     });
   };
 
-  const closeModal = () => {
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
+  modal.addEventListener('close', () => {
     modalInput.value = '';
     modalResults.innerHTML = '';
     modalInfo.textContent = '';
     activeIndex = 0;
-  };
+  });
 
   document.addEventListener('keydown', (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
       e.preventDefault();
       e.stopPropagation();
       openModal();
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) {
-      e.preventDefault();
-      closeModal();
     }
   });
 
@@ -460,7 +450,6 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
 
   const searchToggle = document.getElementById('search-toggle');
   if (searchToggle) searchToggle.addEventListener('click', openModal);
-  backdrop.addEventListener('click', closeModal);
 
   modalInput.addEventListener('input', debounce((e) => {
     activeIndex = 0;
@@ -489,7 +478,7 @@ a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•
   });
 </script>
 
-  <script src="/js/main.min.3db6194c8c1384559960c4dc6196b59d30de3a20b6f60f9d4a6f5dbec306454f.js" defer></script>
+  <script src="/js/main.min.d1e6b4e53eeda413a2eb7b2ec1ef740096d0229c3fc3d75be675915a3cc7f86e.js" defer></script>
 </body>
 
 </html>
