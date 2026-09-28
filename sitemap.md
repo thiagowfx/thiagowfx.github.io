@@ -27,6 +27,7 @@
 ## Blog Posts
 
 
+- [typst: reusable polylux slides with section navigation](https://perrotta.dev/2026/09/typst-reusable-polylux-slides-with-section-navigation/) (2026-09-28)
 - [talisman: exempt git commit SHAs](https://perrotta.dev/2026/09/talisman-exempt-git-commit-shas/) (2026-09-28)
 - [postgres: point-in-time restore to roll back a breaking upgrade](https://perrotta.dev/2026/09/postgres-point-in-time-restore-to-roll-back-a-breaking-upgrade/) (2026-09-24)
 - [Reply to: Put an AV test at the start of your slides](https://perrotta.dev/2026/09/reply-to-put-an-av-test-at-the-start-of-your-slides/) (2026-09-20)
@@ -1376,12 +1377,12 @@
 - [Argocd](https://perrotta.dev/tags/argocd/) (21 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (13 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (200 posts)
-- [Bloggify](https://perrotta.dev/tags/bloggify/) (53 posts)
+- [Bloggify](https://perrotta.dev/tags/bloggify/) (54 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1242 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1243 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1392,7 +1393,7 @@
 - [Legacy](https://perrotta.dev/tags/legacy/) (172 posts)
 - [Linux](https://perrotta.dev/tags/linux/) (2 posts)
 - [Macos](https://perrotta.dev/tags/macos/) (59 posts)
-- [Meta](https://perrotta.dev/tags/meta/) (66 posts)
+- [Meta](https://perrotta.dev/tags/meta/) (67 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pi](https://perrotta.dev/tags/pi/) (22 posts)
 - [Pkm](https://perrotta.dev/tags/pkm/) (36 posts)

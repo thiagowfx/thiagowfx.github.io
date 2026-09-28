@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en-us" id="root-html">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)">
+  <title class="title">typst: reusable polylux slides with section navigation | ¬ just serendipity 🍀</title><meta name="title" content="typst: reusable polylux slides with section navigation">
+<meta name="description" content="Previously.
+Problem statement: how can I reuse a Typst slide layout without rebuilding its section navigation every time?
+Here is the complete Polylux template. …">
+<meta name="keywords" content="bloggify,dev,meta,"><meta property="og:url" content="https://perrotta.dev/2026/09/typst-reusable-polylux-slides-with-section-navigation/">
+	<meta property="og:site_name" content="¬ just serendipity 🍀">
+	<meta property="og:title" content="typst: reusable polylux slides with section navigation">
+	<meta property="og:description" content="Previously.
+Problem statement: how can I reuse a Typst slide layout without rebuilding its section navigation every time?
+Here is the complete Polylux template. Put these three files in one directory. theme.typ owns the Metropolis-inspired layout and Frankfurt-style navigation: section names above one dot per content slide. Its state records the section counts and active slide. new-section creates a divider without a dot; slide adds a dot; untracked-slide is for title or closing pages.">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-09-28T23:58:53+02:00">
+		<meta property="article:modified_time" content="2026-09-29T00:11:10+02:00">
+		<meta property="article:tag" content="Bloggify">
+		<meta property="article:tag" content="Dev">
+		<meta property="article:tag" content="Meta">
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="typst: reusable polylux slides with section navigation">
+	<meta name="twitter:description" content="Previously.
+Problem statement: how can I reuse a Typst slide layout without rebuilding its section navigation every time?
+Here is the complete Polylux template. Put these three files in one directory. theme.typ owns the Metropolis-inspired layout and Frankfurt-style navigation: section names above one dot per content slide. Its state records the section counts and active slide. new-section creates a divider without a dot; slide adds a dot; untracked-slide is for title or closing pages.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "typst: reusable polylux slides with section navigation",
+      "description": "Previously.\nProblem statement: how can I reuse a Typst slide layout without rebuilding its section navigation every time?\nHere is the complete Polylux template. …",
+      "url": "https://perrotta.dev/2026/09/typst-reusable-polylux-slides-with-section-navigation/",
+      "datePublished": "2026-09-28T23:58:53+02:00",
+      "dateModified": "2026-09-29T00:11:10+02:00",
+      "author": {"@type":"Person","name":"Thiago Perrotta","url":"https://perrotta.dev/"},
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://perrotta.dev/2026/09/typst-reusable-polylux-slides-with-section-navigation/"
+      },"keywords": ["bloggify","dev","meta"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [{"@type":"ListItem","item":"https://perrotta.dev","name":"Home","position":1},{"@type":"ListItem","item":"https://perrotta.dev/posts/","name":"Posts","position":2},{"@type":"ListItem","name":"typst: reusable polylux slides with section navigation","position":3}]
+    }
+  ]
+}
+</script><meta name="referrer" content="no-referrer-when-downgrade">
+  <link rel="icon" href="https://perrotta.dev/favicon.ico"><link rel="canonical" href="https://perrotta.dev/2026/09/typst-reusable-polylux-slides-with-section-navigation/"><link rel="alternate" type="text/markdown" href="https://perrotta.dev/2026/09/typst-reusable-polylux-slides-with-section-navigation/index.md" title="typst: reusable polylux slides with section navigation"><link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0">
+  <link rel="author" href="https://perrotta.dev/" title="Thiago Perrotta"><link rel="stylesheet" href="/css/site.min.af68175d71d68b1942ef966ad5c9810bc1ed34e96e8d80e687c613dedb88240e.css">
+
+  <link rel="apple-touch-icon" href="https://perrotta.dev/apple-touch-icon.webp">
+</head>
+
+<body>
+  <div class="h-card" style="display:none;">
+    <a class="p-name u-url" href="https://perrotta.dev/">Thiago Perrotta</a>
+    <span class="p-nickname">thiagowfx</span><a class="u-email" href="mailto:&#x73;&#x65;&#x72;&#x65;&#x6e;&#x64;&#x69;&#x70;&#x69;&#x74;&#x79;&#x40;&#x70;&#x65;&#x72;&#x72;&#x6f;&#x74;&#x74;&#x61;&#x2e;&#x64;&#x65;&#x76;">&#x73;&#x65;&#x72;&#x65;&#x6e;&#x64;&#x69;&#x70;&#x69;&#x74;&#x79;&#x40;&#x70;&#x65;&#x72;&#x72;&#x6f;&#x74;&#x74;&#x61;&#x2e;&#x64;&#x65;&#x76;</a>
+    <img class="u-photo" src="https://perrotta.dev/thiagowfx.webp" alt="Thiago Perrotta">
+  </div>
+  <header>
+    <div class="header-top">
+      <a href="/" class="title" aria-label="not just serendipity">
+        <img src='https://perrotta.dev/thiagowfx.webp' alt="thiagowfx's avatar" width="32" height="32" fetchpriority="high">
+        <h1 class="title">¬ just serendipity 🍀<span class="visually-hidden"> (not just serendipity)</span></h1>
+      </a>
+      <div class="header-buttons">
+
+         <button id="search-toggle" aria-label="Search" title="Search (Ctrl/Cmd+K)">
+           <span id="search-toggle-icon">🔍</span>
+         </button>
+         <button id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+           <span id="theme-toggle-icon">☀️</span>
+         </button>
+       </div>
+    </div>
+    <nav aria-label="Main navigation">
+      <a href="/tags/bestof/">
+        <span class="nav-text">★</span>
+      </a>
+      <a href="/tags/bloggify/">
+        <span class="nav-text">🤖</span>
+      </a>
+      <a href="/posts/">
+        <span class="nav-text">Blog</span>
+      </a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-trigger" popovertarget="nav-dropdown-menu">
+          <span class="nav-text">More</span>
+          <span class="nav-dropdown-arrow">▼</span>
+        </button>
+        <div id="nav-dropdown-menu" class="nav-dropdown-menu" popover>
+          <a href="/search/" class="nav-dropdown-item">🔍 Search</a>
+          <a href="/blogroll/" class="nav-dropdown-item">📰 Blogroll</a>
+          <a href="/tags/" class="nav-dropdown-item">🏷️ Tags</a>
+          <a href="/categories/" class="nav-dropdown-item">📂 Categories</a>
+          <a href="/calendar/" class="nav-dropdown-item">📅 Calendar</a>
+          <a href="/graph/" class="nav-dropdown-item">🕸️ Graph</a>
+          <a href="/random/" class="nav-dropdown-item">🎲 Random</a>
+          <a href="/books/" class="nav-dropdown-item">📚 Books</a>
+          <a href="/tv-shows/" class="nav-dropdown-item">📺 TV Shows</a>
+          <a href="/projects/" class="nav-dropdown-item">🛠️ Projects</a>
+          <a href="/pomodoro/" class="nav-dropdown-item">🍅 Pomodoro</a>
+          <a href="/radio/" class="nav-dropdown-item">📻 Radio</a>
+          <a href="/cursed-knowledge/" class="nav-dropdown-item">👻 Cursed Knowledge</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+<div id="reading-progress" class="reading-progress" aria-hidden="true"></div>
+<script>
+  document.addEventListener('keydown', function(event) {
+    if (event.target.closest('input:not([type="hidden"]), textarea, [contenteditable="true"]')) return;
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    if (event.key === 'j' || event.key === 'ArrowLeft') {
+      const prev = document.querySelector('[data-nav="prev"]');
+      if (prev && prev.href) window.location.href = prev.href;
+    } else if (event.key === 'k' || event.key === 'ArrowRight') {
+      const next = document.querySelector('[data-nav="next"]');
+      if (next && next.href) window.location.href = next.href;
+    }
+  });
+</script>
+<a href="https://perrotta.dev/2026/09/talisman-exempt-git-commit-shas/" data-nav="prev" hidden></a>
+
+<article class="h-entry">
+<div class="article-header">
+  <h2>
+    <span class="p-name">typst: reusable polylux slides with section navigation</span>
+  </h2>
+  <div class="article-header-actions">
+      <button class="copy-markdown-btn" type="button" data-copy-markdown="/2026/09/typst-reusable-polylux-slides-with-section-navigation/index.md" data-copy-source="https://perrotta.dev/2026/09/typst-reusable-polylux-slides-with-section-navigation/" aria-label="Copy as Markdown" title="Copy as Markdown (Ctrl/Cmd/Alt-click to view source)">
+        <svg aria-hidden="true" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      </button>
+    <button id="fullscreen-btn" class="fullscreen-btn" aria-label="Toggle fullscreen mode" title="Toggle fullscreen mode (f)">
+      <span id="fullscreen-icon">⛶</span>
+    </button>
+  </div>
+</div>
+<p>
+  
+  <span class="pubdate-single">
+    <time class="dt-published" datetime='2026-09-28T23:58:53&#43;02:00'>
+      28 Sep, 2026
+    </time>
+     • 1191 words   • 6 min 
+    
+    • updated <time datetime='2026-09-29'>29 Sep, 2026</time>
+    
+  </span>
+  
+</p><div class="e-content"> <p><a href="https://perrotta.dev/2026/02/making-a-slides-presentation-in-2026/">Previously</a>.</p>
+<p><strong>Problem statement</strong>: how can I reuse a Typst slide layout without rebuilding its
+section navigation every time?</p>
+<p>Here is the complete <a href="https://polylux.dev/book/">Polylux</a> template. Put these
+three files in one directory. <code>theme.typ</code> owns the Metropolis-inspired layout
+and Frankfurt-style navigation: section names above one dot per content slide.
+Its state records the section counts and active slide. <code>new-section</code> creates a
+divider without a dot; <code>slide</code> adds a dot; <code>untracked-slide</code> is for title or
+closing pages.</p>
+<div class="codeblock" data-lang="typst">
+   <div class="codeblock-header">
+     <span class="codeblock-language">theme.typ</span>
+     <span class="codeblock-actions"><span class="codeblock-lang-badge">typst</span> <button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typst" data-lang="typst"><span class="line"><span class="cl"><span class="c1">// =============================================================================</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Metropolis theme + Frankfurt-style navigation bar with mini-frame dots</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// =============================================================================</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Visual style: Metropolis (navy blue, light blue accent, clean typography)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Navigation:   Frankfurt (section names + circle dots for slide progress)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// =============================================================================</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">#import</span><span class="w"> </span><span class="s2">&#34;@preview/polylux:0.4.0&#34;</span><span class="p">:</span><span class="w"> </span><span class="o">*</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nv">_polylux-slide</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">slide</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Colors — Navy blue palette</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nv">dark-teal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">rgb</span><span class="p">(</span><span class="s2">&#34;#1a2744&#34;</span><span class="p">)</span><span class="w">    </span><span class="c1">// navy blue (primary dark)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nv">bright</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">rgb</span><span class="p">(</span><span class="s2">&#34;#4a90d9&#34;</span><span class="p">)</span><span class="w">       </span><span class="c1">// accent / emphasis (medium blue)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nv">brighter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">rgb</span><span class="p">(</span><span class="s2">&#34;#a8c4e0&#34;</span><span class="p">)</span><span class="w">     </span><span class="c1">// muted light blue</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nv">bg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">white</span><span class="p">.</span><span class="nf">darken</span><span class="p">(</span><span class="m">2</span><span class="kr">%</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nv">fg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">dark-teal</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Navigation state — tracks slides per section for mini-frame dots</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nv">_nav-sections</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">state</span><span class="p">(</span><span class="s2">&#34;nav-sections&#34;</span><span class="p">,</span><span class="w"> </span><span class="p">())</span><span class="w">       </span><span class="c1">// [{name, count}, ...]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nv">_nav-current-sec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">state</span><span class="p">(</span><span class="s2">&#34;nav-current-sec&#34;</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w">  </span><span class="c1">// index into sections</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nv">_nav-current-frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">state</span><span class="p">(</span><span class="s2">&#34;nav-current-frame&#34;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nf">_begin-section</span><span class="p">(</span><span class="nv">name</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">_nav-sections</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">secs</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">secs</span><span class="p">.</span><span class="nf">push</span><span class="p">((</span><span class="nv">name</span><span class="p">:</span><span class="w"> </span><span class="nv">name</span><span class="p">,</span><span class="w"> </span><span class="nv">count</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">secs</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">_nav-current-sec</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">i</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">_nav-current-frame</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nf">_count-frame</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">context</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nv">sec-idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">_nav-current-sec</span><span class="p">.</span><span class="nf">get</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kr">if</span><span class="w"> </span><span class="nv">sec-idx</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nv">_nav-current-frame</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">f</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nv">f</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nv">_nav-sections</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">secs</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kr">if</span><span class="w"> </span><span class="nv">sec-idx</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nv">secs</span><span class="p">.</span><span class="nf">len</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nv">secs</span><span class="p">.</span><span class="nf">at</span><span class="p">(</span><span class="nv">sec-idx</span><span class="p">).</span><span class="nv">count</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nv">secs</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Navigation header — section names + mini-frame circles</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nf">_nav-header</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">context</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nv">all-secs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">_nav-sections</span><span class="p">.</span><span class="nf">final</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nv">curr-sec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">_nav-current-sec</span><span class="p">.</span><span class="nf">get</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nv">curr-frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">_nav-current-frame</span><span class="p">.</span><span class="nf">get</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kr">if</span><span class="w"> </span><span class="nv">all-secs</span><span class="p">.</span><span class="nf">len</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">return</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">set</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">white</span><span class="p">,</span><span class="w"> </span><span class="nv">size</span><span class="p">:</span><span class="w"> </span><span class="m">0.5</span><span class="kr">em</span><span class="p">,</span><span class="w"> </span><span class="nv">weight</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;bold&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nv">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">all-secs</span><span class="p">.</span><span class="nf">len</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">// Row 1: Section names</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nv">names-row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">all-secs</span><span class="p">.</span><span class="nf">enumerate</span><span class="p">().</span><span class="nf">map</span><span class="p">(((</span><span class="nv">i</span><span class="p">,</span><span class="w"> </span><span class="nv">sec</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nv">is-current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">curr-sec</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nv">is-past</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nv">curr-sec</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nv">name-color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nv">is-current</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">white</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nv">is-past</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">white</span><span class="p">.</span><span class="nf">darken</span><span class="p">(</span><span class="m">10</span><span class="kr">%</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">white</span><span class="p">.</span><span class="nf">darken</span><span class="p">(</span><span class="m">35</span><span class="kr">%</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nf">align</span><span class="p">(</span><span class="nv">center</span><span class="p">,</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">name-color</span><span class="p">,</span><span class="w"> </span><span class="nv">sec</span><span class="p">.</span><span class="nv">name</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">// Row 2: Mini-frame dots (aligned under each section name)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nv">dots-row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">all-secs</span><span class="p">.</span><span class="nf">enumerate</span><span class="p">().</span><span class="nf">map</span><span class="p">(((</span><span class="nv">i</span><span class="p">,</span><span class="w"> </span><span class="nv">sec</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nv">is-current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">curr-sec</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nv">is-past</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nv">curr-sec</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nv">dots</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">range</span><span class="p">(</span><span class="nv">sec</span><span class="p">.</span><span class="nv">count</span><span class="p">).</span><span class="nf">map</span><span class="p">(</span><span class="nv">j</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="kd">let</span><span class="w"> </span><span class="nv">frame-num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="kd">let</span><span class="w"> </span><span class="nv">dot-fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nv">is-past</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nv">white</span><span class="p">.</span><span class="nf">darken</span><span class="p">(</span><span class="m">10</span><span class="kr">%</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nv">is-current</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="nv">frame-num</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nv">curr-frame</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nv">white</span><span class="p">.</span><span class="nf">darken</span><span class="p">(</span><span class="m">5</span><span class="kr">%</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nv">is-current</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="nv">frame-num</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">curr-frame</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nv">bright</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kc">none</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="kd">let</span><span class="w"> </span><span class="nv">dot-stroke</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nv">dot-fill</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">none</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="m">0.6</span><span class="kr">pt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">white</span><span class="p">.</span><span class="nf">darken</span><span class="p">(</span><span class="m">30</span><span class="kr">%</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kc">none</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="kd">let</span><span class="w"> </span><span class="nv">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nv">dot-fill</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">none</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">dark-teal</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">dot-fill</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nf">box</span><span class="p">(</span><span class="nf">circle</span><span class="p">(</span><span class="nv">radius</span><span class="p">:</span><span class="w"> </span><span class="m">2.5</span><span class="kr">pt</span><span class="p">,</span><span class="w"> </span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">fill</span><span class="p">,</span><span class="w"> </span><span class="nv">stroke</span><span class="p">:</span><span class="w"> </span><span class="nv">dot-stroke</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nf">align</span><span class="p">(</span><span class="nv">center</span><span class="p">,</span><span class="w"> </span><span class="nv">dots</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="nf">h</span><span class="p">(</span><span class="m">2.5</span><span class="kr">pt</span><span class="p">)))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">// Combine into a two-row grid</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nf">block</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="kr">%</span><span class="p">,</span><span class="w"> </span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">dark-teal</span><span class="p">,</span><span class="w"> </span><span class="nv">inset</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="nv">x</span><span class="p">:</span><span class="w"> </span><span class="m">0.6</span><span class="kr">em</span><span class="p">,</span><span class="w"> </span><span class="nv">y</span><span class="p">:</span><span class="w"> </span><span class="m">0.3</span><span class="kr">em</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nf">grid</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nv">columns</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="kr">fr</span><span class="p">,)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nv">n</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nv">row-gutter</span><span class="p">:</span><span class="w"> </span><span class="m">0.25</span><span class="kr">em</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">..</span><span class="nv">names-row</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">..</span><span class="nv">dots-row</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Slide title header (Metropolis style — below nav bar)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nv">_title-header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">toolbox</span><span class="p">.</span><span class="nf">next-heading</span><span class="p">(</span><span class="nv">h</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">show</span><span class="p">:</span><span class="w"> </span><span class="nv">toolbox</span><span class="p">.</span><span class="nv">full-width-block</span><span class="p">.</span><span class="nf">with</span><span class="p">(</span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">dark-teal</span><span class="p">,</span><span class="w"> </span><span class="nv">inset</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="nv">x</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="kr">em</span><span class="p">,</span><span class="w"> </span><span class="nv">y</span><span class="p">:</span><span class="w"> </span><span class="m">0.6</span><span class="kr">em</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">set</span><span class="w"> </span><span class="nf">align</span><span class="p">(</span><span class="nv">horizon</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">set</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">bg</span><span class="p">,</span><span class="w"> </span><span class="nv">size</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="kr">em</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nf">strong</span><span class="p">(</span><span class="nv">h</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Footer — Metropolis style</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nf">_the-footer</span><span class="p">(</span><span class="nv">content</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">set</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span><span class="w"> </span><span class="m">0.7</span><span class="kr">em</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">show</span><span class="p">:</span><span class="w"> </span><span class="nv">pad</span><span class="p">.</span><span class="nf">with</span><span class="p">(</span><span class="m">0.5</span><span class="kr">em</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">set</span><span class="w"> </span><span class="nf">align</span><span class="p">(</span><span class="nv">bottom</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">context</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">fg</span><span class="p">.</span><span class="nf">lighten</span><span class="p">(</span><span class="m">40</span><span class="kr">%</span><span class="p">),</span><span class="w"> </span><span class="nv">content</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nf">h</span><span class="p">(</span><span class="m">1</span><span class="kr">fr</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">toolbox</span><span class="p">.</span><span class="nv">slide-number</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Progress bar — Metropolis style (blue)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nv">progress-bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">toolbox</span><span class="p">.</span><span class="nf">progress-ratio</span><span class="p">(</span><span class="nv">ratio</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">set</span><span class="w"> </span><span class="nv">grid</span><span class="p">.</span><span class="nf">cell</span><span class="p">(</span><span class="nv">inset</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="nv">y</span><span class="p">:</span><span class="w"> </span><span class="m">0.03</span><span class="kr">em</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nf">grid</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">columns</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="nv">ratio</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">100</span><span class="kr">%</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="kr">fr</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">grid</span><span class="p">.</span><span class="nf">cell</span><span class="p">(</span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">bright</span><span class="p">)[],</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">grid</span><span class="p">.</span><span class="nf">cell</span><span class="p">(</span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">brighter</span><span class="p">)[],</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Public API: slide (tracked), new-section, focus, alert, note, divider</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">/// Content slide — automatically tracked in the navigation bar.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">/// Use `= Title` as the first line for the slide title.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nf">slide</span><span class="p">(</span><span class="nv">body</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nf">_count-frame</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nf">_polylux-slide</span><span class="p">(</span><span class="nv">body</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">/// Section divider slide — registers a new section and shows a title card.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">/// Not counted in mini-frame dots.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nf">new-section</span><span class="p">(</span><span class="nv">name</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nf">_begin-section</span><span class="p">(</span><span class="nv">name</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nf">_polylux-slide</span><span class="p">({</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">set</span><span class="w"> </span><span class="nf">page</span><span class="p">(</span><span class="nv">header</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">,</span><span class="w"> </span><span class="nv">footer</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">toolbox</span><span class="p">.</span><span class="nf">register-section</span><span class="p">(</span><span class="nv">name</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">show</span><span class="p">:</span><span class="w"> </span><span class="nv">pad</span><span class="p">.</span><span class="nf">with</span><span class="p">(</span><span class="m">20</span><span class="kr">%</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">set</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span><span class="w"> </span><span class="m">1.5</span><span class="kr">em</span><span class="p">,</span><span class="w"> </span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">fg</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">progress-bar</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">/// Focus slide — inverted colors for key messages.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nf">focus</span><span class="p">(</span><span class="nv">body</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">context</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">set</span><span class="w"> </span><span class="nf">page</span><span class="p">(</span><span class="nv">header</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">,</span><span class="w"> </span><span class="nv">footer</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">,</span><span class="w"> </span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">dark-teal</span><span class="p">,</span><span class="w"> </span><span class="nv">margin</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="kr">em</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">set</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">bg</span><span class="p">,</span><span class="w"> </span><span class="nv">size</span><span class="p">:</span><span class="w"> </span><span class="m">1.5</span><span class="kr">em</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">set</span><span class="w"> </span><span class="nf">align</span><span class="p">(</span><span class="nv">center</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">horizon</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">body</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">/// Untracked slide — for title, closing, etc. No navigation counting.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nf">untracked-slide</span><span class="p">(</span><span class="nv">body</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">_polylux-slide</span><span class="p">(</span><span class="nv">body</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">/// Blue divider line</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nv">divider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">line</span><span class="p">(</span><span class="nv">length</span><span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="kr">%</span><span class="p">,</span><span class="w"> </span><span class="nv">stroke</span><span class="p">:</span><span class="w"> </span><span class="m">0.1</span><span class="kr">em</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">bright</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">/// Alert text (blue bold)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nf">alert</span><span class="p">(</span><span class="nv">body</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">bright</span><span class="p">,</span><span class="w"> </span><span class="nv">weight</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;bold&#34;</span><span class="p">,</span><span class="w"> </span><span class="nv">body</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">/// Two-column layout helper — e.g. diagram left, bullets right</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nf">side-by-side</span><span class="p">(</span><span class="nv">left</span><span class="p">,</span><span class="w"> </span><span class="nv">right</span><span class="p">,</span><span class="w"> </span><span class="nv">ratio</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="kr">fr</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nf">grid</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">columns</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="nv">ratio</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="kr">fr</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">gutter</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="kr">em</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">left</span><span class="p">,</span><span class="w"> </span><span class="nv">right</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">/// Captioned image from assets directory</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nf">fig</span><span class="p">(</span><span class="nv">path</span><span class="p">,</span><span class="w"> </span><span class="nv">caption</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">,</span><span class="w"> </span><span class="nv">width</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="kr">%</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nf">align</span><span class="p">(</span><span class="nv">center</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nf">figure</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nf">image</span><span class="p">(</span><span class="s2">&#34;assets/&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">path</span><span class="p">,</span><span class="w"> </span><span class="nv">width</span><span class="p">:</span><span class="w"> </span><span class="nv">width</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nv">caption</span><span class="p">:</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nv">caption</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">none</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span><span class="w"> </span><span class="m">0.75</span><span class="kr">em</span><span class="p">,</span><span class="w"> </span><span class="nv">caption</span><span class="p">)</span><span class="w"> </span><span class="p">},</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">/// Speaker notes — pass `--input notes=false` to hide</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nf">note</span><span class="p">(</span><span class="nv">body</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nv">hidden</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">sys</span><span class="p">.</span><span class="nv">inputs</span><span class="p">.</span><span class="nf">at</span><span class="p">(</span><span class="s2">&#34;notes&#34;</span><span class="p">,</span><span class="w"> </span><span class="nv">default</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&#34;false&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kr">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="nv">hidden</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nf">place</span><span class="p">(</span><span class="nv">bottom</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">left</span><span class="p">,</span><span class="w"> </span><span class="nv">dx</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="kr">pt</span><span class="p">,</span><span class="w"> </span><span class="nv">dy</span><span class="p">:</span><span class="w"> </span><span class="m">0.8</span><span class="kr">em</span><span class="p">)[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nf">#block</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nv">width</span><span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="kr">%</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nv">inset</span><span class="p">:</span><span class="w"> </span><span class="m">6</span><span class="kr">pt</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nf">rgb</span><span class="p">(</span><span class="s2">&#34;#fef9c3&#34;</span><span class="p">).</span><span class="nf">transparentize</span><span class="p">(</span><span class="m">20</span><span class="kr">%</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nv">radius</span><span class="p">:</span><span class="w"> </span><span class="m">4</span><span class="kr">pt</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nf">text</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="kr">pt</span><span class="p">,</span><span class="w"> </span><span class="nv">style</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;italic&#34;</span><span class="p">,</span><span class="w"> </span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">fg</span><span class="p">,</span><span class="w"> </span><span class="nv">body</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Theme setup — call as:  #show: theme.setup.with(...)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ---------------------------------------------------------------------------</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#let</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">footer</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">navbar</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">text-font</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Avenir Next&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">math-font</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Avenir Next&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">code-font</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;IBM Plex Mono&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">text-size</span><span class="p">:</span><span class="w"> </span><span class="m">22</span><span class="kr">pt</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">body</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">set</span><span class="w"> </span><span class="nf">page</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">paper</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;presentation-16-9&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">bg</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">margin</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="nv">top</span><span class="p">:</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nv">navbar</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="m">4.5</span><span class="kr">em</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="m">3</span><span class="kr">em</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nv">left</span><span class="p">:</span><span class="w"> </span><span class="m">1.2</span><span class="kr">em</span><span class="p">,</span><span class="w"> </span><span class="nv">right</span><span class="p">:</span><span class="w"> </span><span class="m">1.2</span><span class="kr">em</span><span class="p">,</span><span class="w"> </span><span class="nv">bottom</span><span class="p">:</span><span class="w"> </span><span class="m">1.8</span><span class="kr">em</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">header</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="kd">set</span><span class="w"> </span><span class="nf">align</span><span class="p">(</span><span class="nv">top</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="kr">if</span><span class="w"> </span><span class="nv">navbar</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">toolbox</span><span class="p">.</span><span class="nv">full-width-block</span><span class="p">[</span><span class="nf">#_nav-header</span><span class="p">()]</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nv">_title-header</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">},</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">footer</span><span class="p">:</span><span class="w"> </span><span class="nf">_the-footer</span><span class="p">(</span><span class="nv">footer</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">set</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">font</span><span class="p">:</span><span class="w"> </span><span class="nv">text-font</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">size</span><span class="p">:</span><span class="w"> </span><span class="nv">text-size</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">fg</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">set</span><span class="w"> </span><span class="nf">strong</span><span class="p">(</span><span class="nv">delta</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">show</span><span class="w"> </span><span class="nv">math</span><span class="p">.</span><span class="nv">equation</span><span class="p">:</span><span class="w"> </span><span class="kd">set</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="nv">font</span><span class="p">:</span><span class="w"> </span><span class="nv">math-font</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">show</span><span class="w"> </span><span class="nv">raw</span><span class="p">:</span><span class="w"> </span><span class="kd">set</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="nv">font</span><span class="p">:</span><span class="w"> </span><span class="nv">code-font</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">show</span><span class="w"> </span><span class="nv">raw</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="nv">block</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">):</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nf">block</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">width</span><span class="p">:</span><span class="w"> </span><span class="m">100</span><span class="kr">%</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nf">luma</span><span class="p">(</span><span class="mi">240</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">inset</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="kr">pt</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">radius</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="kr">pt</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">stroke</span><span class="p">:</span><span class="w"> </span><span class="m">0.5</span><span class="kr">pt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">luma</span><span class="p">(</span><span class="mi">200</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nv">it</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">set</span><span class="w"> </span><span class="nf">align</span><span class="p">(</span><span class="nv">horizon</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">set</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="nv">spacing</span><span class="p">:</span><span class="w"> </span><span class="m">1.4</span><span class="kr">em</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">set</span><span class="w"> </span><span class="nf">enum</span><span class="p">(</span><span class="nv">spacing</span><span class="p">:</span><span class="w"> </span><span class="m">1.4</span><span class="kr">em</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">show</span><span class="w"> </span><span class="nv">emph</span><span class="p">:</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nf">text</span><span class="p">(</span><span class="nv">fill</span><span class="p">:</span><span class="w"> </span><span class="nv">bright</span><span class="p">,</span><span class="w"> </span><span class="nv">it</span><span class="p">.</span><span class="nv">body</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">show</span><span class="w"> </span><span class="nv">heading</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="nv">level</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">):</span><span class="w"> </span><span class="nv">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kc">none</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">body</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div>
+</div>
+<div class="codeblock" data-lang="typst">
+   <div class="codeblock-header">
+     <span class="codeblock-language">slides.typ</span>
+     <span class="codeblock-actions"><span class="codeblock-lang-badge">typst</span> <button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typst" data-lang="typst"><span class="line"><span class="cl"><span class="kn">#import</span><span class="w"> </span><span class="s2">&#34;theme.typ&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">#import</span><span class="w"> </span><span class="nv">theme</span><span class="p">:</span><span class="w"> </span><span class="nv">slide</span><span class="p">,</span><span class="w"> </span><span class="nv">untracked-slide</span><span class="p">,</span><span class="w"> </span><span class="nv">new-section</span><span class="p">,</span><span class="w"> </span><span class="nv">alert</span><span class="p">,</span><span class="w"> </span><span class="nv">note</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">#show</span><span class="p">:</span><span class="w"> </span><span class="nv">theme</span><span class="p">.</span><span class="nv">setup</span><span class="p">.</span><span class="nf">with</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">footer</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>Slide<span class="w"> </span>template<span class="p">],</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">text-font</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Libertinus Serif&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">code-font</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;DejaVu Sans Mono&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nv">text-size</span><span class="p">:</span><span class="w"> </span><span class="m">22</span><span class="kr">pt</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nf">#untracked-slide</span><span class="p">[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">#set</span><span class="w"> </span><span class="nf">page</span><span class="p">(</span><span class="nv">header</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">,</span><span class="w"> </span><span class="nv">footer</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">#set</span><span class="w"> </span><span class="nf">align</span><span class="p">(</span><span class="nv">center</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">horizon</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nf">#text</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span><span class="w"> </span><span class="m">1.5</span><span class="kr">em</span><span class="p">,</span><span class="w"> </span><span class="nv">weight</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;bold&#34;</span><span class="p">)[</span>Slide<span class="w"> </span>template<span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nf">#new-section</span><span class="p">[</span>First<span class="w"> </span>section<span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nf">#slide</span><span class="p">[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="gh">  = First slide</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>A<span class="w"> </span><span class="nf">#alert</span><span class="p">[</span>highlight<span class="p">]</span><span class="w"> </span>and<span class="w"> </span>a<span class="w"> </span>speaker<span class="w"> </span>note.<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nf">#note</span><span class="p">[</span>This<span class="w"> </span>note<span class="w"> </span>is<span class="w"> </span>absent<span class="w"> </span>from<span class="w"> </span>the<span class="w"> </span>audience<span class="w"> </span>PDF.<span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nf">#slide</span><span class="p">[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="gh">  = Second slide</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>The<span class="w"> </span>navigation<span class="w"> </span>bar<span class="w"> </span>counts<span class="w"> </span>this<span class="w"> </span>slide<span class="w"> </span>within<span class="w"> </span>the<span class="w"> </span>first<span class="w"> </span>section.<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nf">#new-section</span><span class="p">[</span>Second<span class="w"> </span>section<span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nf">#slide</span><span class="p">[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="gh">  = Third slide</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>The<span class="w"> </span>section<span class="w"> </span>changes,<span class="w"> </span>and<span class="w"> </span>the<span class="w"> </span>dot<span class="w"> </span>count<span class="w"> </span>starts<span class="w"> </span>again.<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">]</span></span></span></code></pre></div>
+</div>
+<div class="codeblock" data-lang="just">
+   <div class="codeblock-header">
+     <span class="codeblock-language">Justfile</span>
+     <span class="codeblock-actions"><span class="codeblock-lang-badge">just</span> <button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <pre tabindex="0"><code class="language-just" data-lang="just">watch:
+    typst watch --input notes=true slides.typ
+
+all: build audience
+
+build:
+    typst compile --input notes=true slides.typ
+
+alias speaker := build
+
+audience:
+    typst compile --input notes=false slides.typ slides-audience.pdf</code></pre>
+</div>
+<p><code>slides.typ</code> is a minimal deck with two sections, three tracked slides, an
+untracked title, and a speaker note. Change its content and fonts for a new
+presentation; keep the theme and build recipes.</p>
+<p><code>Justfile</code> produces two PDFs from the same source. <code>notes=false</code> hides speaker
+notes from the audience copy:</p>
+<div class="codeblock" data-lang="text">
+   <div class="codeblock-header">
+     <span class="codeblock-language">text</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">% just all
+</span></span><span class="line"><span class="cl">typst compile --input notes=true slides.typ
+</span></span><span class="line"><span class="cl">typst compile --input notes=false slides.typ slides-audience.pdf</span></span></code></pre></div>
+</div>
+<p><span class="post-end-mark">∎</span></p> </div>
+<div class="agent-blog-note" role="note">
+  🤖 This post was drafted with an AI agent through
+  <a href="https://github.com/thiagowfx/skills/blob/master/plugins/thiagowfx/skills/bloggify/SKILL.md"><code>/bloggify</code></a>,
+  then reviewed and edited by me.
+  <a href="/tags/bloggify/">More agent-assisted posts.</a>
+</div><div class="post-footer-meta">
+<p style="text-align: center; margin: 2em 0 1em;">— § —</p>
+<div style="display: flex; justify-content: space-between">
+  
+  <p style="margin: 0;">
+    Reply via
+    <a
+      href="mailto:&#x73;&#x65;&#x72;&#x65;&#x6e;&#x64;&#x69;&#x70;&#x69;&#x74;&#x79;&#x40;&#x70;&#x65;&#x72;&#x72;&#x6f;&#x74;&#x74;&#x61;&#x2e;&#x64;&#x65;&#x76;?subject=Reply to: typst: reusable polylux slides with section navigation"
+      >email</a
+    >
+  </p>
+  
+  
+  <p style="margin: 0;"><a href="https://perrotta.dev/tags/bloggify/">#bloggify</a> <a href="https://perrotta.dev/tags/dev/">#dev</a> <a href="https://perrotta.dev/tags/meta/">#meta</a>
+  </p>
+  
+</div>
+</div><div class="related-posts" style="border: 2px solid var(--border-color); border-radius: .5rem; padding: 1.5rem; margin-top: 1.5rem;"><h4 id="related-posts" style="margin-top: 0;">Related Posts</h4>
+  <section style="display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0;"><article style="flex: 1 1 250px; padding: 1rem; background: var(--code-bg); border-radius: .25rem; color: var(--text-color);">
+      <h5 style="margin-top: 0; margin-bottom: .5rem; color: var(--heading-color);">
+        <a href="https://perrotta.dev/2026/02/making-a-slides-presentation-in-2026/">Making a slides presentation in 2026</a>
+      </h5><p style="margin: .5rem 0; font-size: .9rem;">Problem statement: make a slides presentation for a certain business or academic use case.
+Part I: What? # Classic approach: pick one of: LibreOffice, …</p><small style="color: var(--color-gray);">Feb 07, 2026</small>
+    </article><article style="flex: 1 1 250px; padding: 1rem; background: var(--code-bg); border-radius: .25rem; color: var(--text-color);">
+      <h5 style="margin-top: 0; margin-bottom: .5rem; color: var(--heading-color);">
+        <a href="https://perrotta.dev/2026/09/lf-edit-files-and-enter-directories-with-enter/">lf: edit files and enter directories with enter</a>
+      </h5><p style="margin: .5rem 0; font-size: .9rem;">Problem statement: in lf, how can &lt;Enter&gt; edit files without trying to edit directories?
+e already opens the selected file in $EDITOR. My first …</p><small style="color: var(--color-gray);">Sep 16, 2026</small>
+    </article></section><p class="previously" style="margin-bottom: 0; margin-top: 0.5rem;"><a href="https://perrotta.dev/2026/08/blog-calendar-view/" title="blog: calendar view">Previously</a>, <a href="https://perrotta.dev/2026/08/hugo-tag-based-post-connections/" title="hugo: tag-based post connections">previously</a>, <a href="https://perrotta.dev/2026/08/markdown-nested-code-fences/" title="markdown: nested code fences">previously</a>, <a href="https://perrotta.dev/2026/08/new-tag-bloggify/" title="new tag: bloggify">previously</a>, <a href="https://perrotta.dev/2026/08/dual-review-address-review-findings-automatically/" title="dual-review: address review findings automatically">previously</a>.
+  </p></div><div class="mini-graph">
+  <h4 id="connections"><a href="/graph/">Connections</a></h4>
+  <svg
+    viewBox="0 0 640 232"
+    role="img"
+    aria-label="Posts with direct links or shared tags"
+    preserveAspectRatio="xMidYMid meet"
+    paint-order="stroke">
+    <defs>
+      <marker
+        id="mini-graph-arrow"
+        viewBox="0 0 10 10"
+        refX="5"
+        refY="5"
+        markerWidth="5"
+        markerHeight="5"
+        orient="auto">
+        <path d="M0,0 L10,5 L0,10 Z" />
+      </marker>
+    </defs><path class="mini-graph-direct-edge" marker-mid="url(#mini-graph-arrow)" d="M252,50 L315.5,50 L379,50" /><path class="mini-graph-tag-edge" d="M240,59 L136,137" /><path class="mini-graph-tag-edge" d="M136,159 L130,189" /><path class="mini-graph-tag-edge" d="M136,159 L350,189" /><path class="mini-graph-tag-edge" d="M240,59 L240,137" /><path class="mini-graph-tag-edge" d="M240,159 L130,189" /><path class="mini-graph-tag-edge" d="M240,159 L350,189" /><path class="mini-graph-tag-edge" d="M240,59 L344,137" /><path class="mini-graph-tag-edge" d="M344,159 L130,189" /><path class="mini-graph-tag-edge" d="M344,159 L350,189" /><text class="mini-graph-header" x="398" y="14">Links to</text><text class="mini-graph-header mini-graph-tag-header" x="240" y="114" text-anchor="middle">Shared tags</text><a class="mini-graph-direct" href="https://perrotta.dev/2026/02/making-a-slides-presentation-in-2026/">
+        <title>Making a slides presentation in 2026</title>
+        <circle class="mini-graph-direct-node" cx="388" cy="50" r="5.5" />
+        <text class="mini-graph-direct-label" x="398" y="50" dy="0.35em">Making a slides…</text>
+      </a><a class="mini-graph-tag-node" href="/tags/bloggify/">
+        <title>View posts tagged bloggify</title>
+        <rect x="92" y="138" width="88" height="20" rx="10" />
+        <text class="mini-graph-tag-key" x="136" y="148" text-anchor="middle" dy="0.35em">#bloggify</text>
+      </a><a class="mini-graph-tag-node" href="/tags/dev/">
+        <title>View posts tagged dev</title>
+        <rect x="196" y="138" width="88" height="20" rx="10" />
+        <text class="mini-graph-tag-key" x="240" y="148" text-anchor="middle" dy="0.35em">#dev</text>
+      </a><a class="mini-graph-tag-node" href="/tags/meta/">
+        <title>View posts tagged meta</title>
+        <rect x="300" y="138" width="88" height="20" rx="10" />
+        <text class="mini-graph-tag-key" x="344" y="148" text-anchor="middle" dy="0.35em">#meta</text>
+      </a><a class="mini-graph-tag" href="https://perrotta.dev/2026/08/blog-calendar-view/">
+        <title>blog: calendar view</title>
+        <circle class="mini-graph-tag-post-node" cx="130" cy="196" r="4.5" />
+        <text class="mini-graph-tag-label" x="130" y="215" text-anchor="middle">blog: calendar view</text>
+      </a><a class="mini-graph-tag" href="https://perrotta.dev/2026/08/hugo-tag-based-post-connections/">
+        <title>hugo: tag-based post connections</title>
+        <circle class="mini-graph-tag-post-node" cx="350" cy="196" r="4.5" />
+        <text class="mini-graph-tag-label" x="350" y="215" text-anchor="middle">hugo: tag-based post…</text>
+      </a><circle class="mini-graph-current" cx="240" cy="50" r="7" />
+    <text class="mini-graph-current-label" x="240" y="70" text-anchor="middle">typst: reusable polylux slides with…</text>
+  </svg><div class="mini-graph-list"><p class="mini-graph-list-header mini-graph-list-direct-header">Links to</p>
+      <ul class="mini-graph-list-direct"><li><a href="https://perrotta.dev/2026/02/making-a-slides-presentation-in-2026/">Making a slides presentation in 2026</a></li></ul><p class="mini-graph-list-header">Shared tags</p>
+      <ul class="mini-graph-list-tags"><li>
+            <a href="https://perrotta.dev/2026/08/blog-calendar-view/">blog: calendar view</a>
+            <small>(<a href="/tags/bloggify/">bloggify</a>, <a href="/tags/dev/">dev</a>, <a href="/tags/meta/">meta</a>)</small>
+          </li><li>
+            <a href="https://perrotta.dev/2026/08/hugo-tag-based-post-connections/">hugo: tag-based post connections</a>
+            <small>(<a href="/tags/bloggify/">bloggify</a>, <a href="/tags/dev/">dev</a>, <a href="/tags/meta/">meta</a>)</small>
+          </li></ul></div>
+</div><a class="u-url" href="https://perrotta.dev/2026/09/typst-reusable-polylux-slides-with-section-navigation/" aria-hidden="true" style="display:none;"></a>
+<span class="p-author h-card" style="display:none;">
+  <a class="p-name u-url" href="https://perrotta.dev/" rel="author">Thiago Perrotta</a>
+</span>
+</article>
+  </main>
+  <hr>
+  <footer>
+    <span>
+      © 2013 - 2026 Thiago Perrotta ·
+a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•ʔ bear</a> · <a href="/colophon">colophon</a> · <a href="/contact">contact</a> · <a href="https://perrotta.dev/index.xml">rss</a> · <a href="https://uptime.perrotta.dev/status/indianapolis">status</a>
+    </span>
+
+    <div class="badge-wrapper">
+      <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">
+        <img src="https://perrotta.dev/vendor/cc-by-nc-sa-4.0-88x31.webp" width="88" height="31" alt="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License" loading="lazy">
+      </a>
+      <a target="_blank" href="https://indieweb.org/" title="IndieWebCamp">
+        <img src="https://perrotta.dev/vendor/indieweb88x31-flat.webp" width="88" height="31" alt="IndieWebCamp" loading="lazy">
+      </a>
+      <a target="_blank" href="https://512kb.club" title="512kb.club badge">
+        <img src="https://perrotta.dev/vendor/green-team.webp" width="88" height="31" alt="a proud member of the green team of 512KB club" loading="lazy">
+      </a>
+      <a target="_blank" href="https://powrss.com/" title="powRSS">
+        <img src="https://perrotta.dev/vendor/powrss-88-31.webp" width="88" height="31" alt="powRSS" loading="lazy">
+      </a>
+      <a target="_blank" href="https://www.vim.org/" title="Vim text editor">
+        <img src="https://perrotta.dev/vendor/vim.webp" width="88" height="31" alt="Vim text editor" loading="lazy">
+      </a>
+      <a target="_blank" href="https://edleeman.co.uk/cookie-zero/" title="Cookie Zero">
+        <img src="https://perrotta.dev/vendor/cookiezero.webp" width="88" height="31" alt="Cookie Zero" loading="lazy">
+      </a>
+      <a target="_blank" href="https://validator.w3.org/nu/?doc=https://perrotta.dev/" title="Valid HTML5">
+        <img src="https://perrotta.dev/vendor/html5-validator-badge.webp" width="88" height="31" alt="Valid HTML5" loading="lazy">
+      </a>
+      <a target="_blank" href="https://validator.w3.org/feed/check.cgi?url=https://perrotta.dev/index.xml" title="Valid RSS feed">
+        <img src="https://perrotta.dev/vendor/valid-rss-rogers.webp" width="88" height="31" alt="Valid RSS feed" loading="lazy">
+      </a>
+    </div>
+  </footer><dialog id="search-modal" class="search-modal" aria-label="Search" closedby="any">
+  <div class="search-modal-header">
+    <input type="text" id="search-modal-input" placeholder="Search posts... (use * as wildcard)" autocomplete="off">
+    <kbd class="search-modal-kbd">ESC</kbd>
+    <form class="search-modal-close-form" method="dialog">
+      <button class="search-modal-close" type="submit" aria-label="Close search" title="Close search">×</button>
+    </form>
+  </div>
+  <label class="search-content-toggle search-modal-content-toggle">
+    <input type="checkbox" id="search-modal-content-toggle">
+    Search post content
+  </label>
+  <div id="search-modal-info" class="search-info"></div>
+  <div id="search-modal-results" class="search-modal-results"></div>
+</dialog>
+<script type="module">
+  import { SearchIndex } from '\/js\/search.min.338ef3fdd4dadfd658d4ba5ea17bb4aa974582e63b2b9f44d9f1a2db6b2cd576.js';
+
+  const modal = document.getElementById('search-modal');
+  const modalInput = document.getElementById('search-modal-input');
+  const modalResults = document.getElementById('search-modal-results');
+  const modalInfo = document.getElementById('search-modal-info');
+  const contentSearch = document.getElementById('search-modal-content-toggle');
+  const lang = 'en' || 'en';
+  const langPath = lang === 'en' ? '' : '/' + lang;
+  const search = new SearchIndex(langPath);
+
+  const debounce = (fn, delay) => {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn(...args), delay);
+    };
+  };
+
+  const escapeHtml = (text) => {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  };
+
+  const highlightMatch = (text, query) => {
+    if (!text) return '';
+    const escaped = escapeHtml(text);
+    const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 0);
+    return terms.reduce((result, term) => {
+      const pattern = term.includes('*')
+        ? term.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '[^\\s]*')
+        : term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return result.replace(new RegExp(`(${pattern})`, 'gi'), '<mark>$1</mark>');
+    }, escaped);
+  };
+
+  const loadSearchIndex = () => {
+    if (search.posts !== null) return Promise.resolve(search.posts);
+    modalInfo.textContent = 'Loading search index';
+    modalInfo.classList.add('loading');
+    return search.loadPosts()
+      .then(posts => {
+        modalInfo.classList.remove('loading');
+        modalInfo.textContent = '';
+        return posts;
+      })
+      .catch(err => {
+        modalInfo.classList.remove('loading');
+        modalInfo.textContent = 'Error loading search index';
+        console.error('Search index load error:', err);
+      });
+  };
+
+  const performSearch = (query) => {
+    if (!search.posts) return;
+
+    const q = query.toLowerCase().trim();
+    if (q.length === 0) {
+      modalResults.innerHTML = '';
+      modalInfo.textContent = '';
+      return;
+    }
+
+    const results = search.search(q, search.posts, contentSearch.checked);
+    if (results.length === 0) {
+      modalInfo.textContent = 'No results found';
+      modalResults.innerHTML = '';
+      return;
+    }
+
+    modalInfo.textContent = `${results.length} result${results.length === 1 ? '' : 's'}`;
+    modalResults.innerHTML = results.slice(0, 20).map(({ post }, i) => {
+      const tags = (post.tags ?? [])
+        .map(t => `<span class="search-tag">#${escapeHtml(t)}</span>`)
+        .join(' ');
+
+      return `
+        <a href="${escapeHtml(post.url)}" class="search-modal-result${i === 0 ? ' active' : ''}" data-index="${i}">
+          <span class="search-modal-result-title">${highlightMatch(post.title, query)}</span>
+          <span class="search-modal-result-meta">
+            <span class="search-result-date">${escapeHtml(post.date)}</span>
+            ${tags ? ` · ${tags}` : ''}
+          </span>
+        </a>
+      `;
+    }).join('');
+  };
+
+  let activeIndex = 0;
+
+  const updateActive = (newIndex) => {
+    const items = modalResults.querySelectorAll('.search-modal-result');
+    if (items.length === 0) return;
+    activeIndex = Math.max(0, Math.min(newIndex, items.length - 1));
+    items.forEach((item, i) => item.classList.toggle('active', i === activeIndex));
+    items[activeIndex].scrollIntoView({ block: 'nearest' });
+  };
+
+  const openModal = () => {
+    if (modal.open) return;
+    modal.showModal();
+    modalInput.focus();
+    loadSearchIndex().then(() => {
+      if (modalInput.value) performSearch(modalInput.value);
+    });
+  };
+
+  modal.addEventListener('close', () => {
+    modalInput.value = '';
+    modalResults.innerHTML = '';
+    modalInfo.textContent = '';
+    activeIndex = 0;
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      e.stopPropagation();
+      openModal();
+    }
+  });
+
+  modalInput.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      updateActive(activeIndex + 1);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      updateActive(activeIndex - 1);
+    } else if (e.key === 'Enter') {
+      const items = modalResults.querySelectorAll('.search-modal-result');
+      if (items[activeIndex]) items[activeIndex].click();
+    }
+  });
+
+  const searchToggle = document.getElementById('search-toggle');
+  if (searchToggle) searchToggle.addEventListener('click', openModal);
+
+  modalInput.addEventListener('input', debounce((e) => {
+    activeIndex = 0;
+    performSearch(e.target.value);
+  }, 150));
+  contentSearch.addEventListener('change', () => {
+    activeIndex = 0;
+    if (!contentSearch.checked) {
+      performSearch(modalInput.value);
+      return;
+    }
+
+    modalInfo.textContent = 'Loading search index';
+    modalInfo.classList.add('loading');
+    search.loadContent()
+      .then(() => {
+        modalInfo.classList.remove('loading');
+        performSearch(modalInput.value);
+      })
+      .catch(err => {
+        contentSearch.checked = false;
+        modalInfo.classList.remove('loading');
+        modalInfo.textContent = 'Error loading search index';
+        console.error('Content search index load error:', err);
+      });
+  });
+</script>
+
+  <script src="/js/main.min.d1e6b4e53eeda413a2eb7b2ec1ef740096d0229c3fc3d75be675915a3cc7f86e.js" defer></script>
+</body>
+
+</html>
