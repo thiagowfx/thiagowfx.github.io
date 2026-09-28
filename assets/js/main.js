@@ -36,61 +36,6 @@ document.getElementById("theme-toggle").addEventListener("click", function () {
   setTheme(next);
 });
 
-// Dropdown menu functionality
-const dropdownTriggers = document.querySelectorAll(".nav-dropdown-trigger");
-dropdownTriggers.forEach((trigger) => {
-  trigger.addEventListener("click", function (e) {
-    e.preventDefault();
-    const dropdown = this.closest(".nav-dropdown");
-    const isOpen = dropdown.classList.contains("open");
-
-    // Close all dropdowns
-    document.querySelectorAll(".nav-dropdown.open").forEach((d) => {
-      d.classList.remove("open");
-    });
-
-    // Open clicked dropdown if it wasn't open
-    if (!isOpen) {
-      dropdown.classList.add("open");
-    }
-  });
-});
-
-// Language dropdown functionality
-const langToggle = document.getElementById("lang-toggle");
-if (langToggle) {
-  langToggle.addEventListener("click", function (e) {
-    e.preventDefault();
-    const dropdown = this.closest(".lang-dropdown");
-    const isOpen = dropdown.classList.contains("open");
-
-    // Close all dropdowns
-    document.querySelectorAll(".lang-dropdown.open").forEach((d) => {
-      d.classList.remove("open");
-    });
-
-    // Open clicked dropdown if it wasn't open
-    if (!isOpen) {
-      dropdown.classList.add("open");
-    }
-  });
-}
-
-// Close dropdown when clicking outside
-document.addEventListener("click", function (e) {
-  if (
-    !e.target.closest(".nav-dropdown") &&
-    !e.target.closest(".lang-dropdown")
-  ) {
-    document.querySelectorAll(".nav-dropdown.open").forEach((d) => {
-      d.classList.remove("open");
-    });
-    document.querySelectorAll(".lang-dropdown.open").forEach((d) => {
-      d.classList.remove("open");
-    });
-  }
-});
-
 document.addEventListener("click", function (event) {
   const button = event.target.closest("[data-copy-code]");
   if (!button) {

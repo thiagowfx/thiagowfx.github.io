@@ -1,18 +1,18 @@
-<div id="search-modal" class="search-modal" role="dialog" aria-modal="true" aria-label="Search">
-  <div class="search-modal-backdrop"></div>
-  <div class="search-modal-container">
-    <div class="search-modal-header">
-      <input type="text" id="search-modal-input" placeholder="{{ i18n "searchPlaceholder" }}" autocomplete="off">
-      <kbd class="search-modal-kbd">ESC</kbd>
-    </div>
-    <label class="search-content-toggle search-modal-content-toggle">
-      <input type="checkbox" id="search-modal-content-toggle">
-      {{ i18n "searchContent" }}
-    </label>
-    <div id="search-modal-info" class="search-info"></div>
-    <div id="search-modal-results" class="search-modal-results"></div>
+<dialog id="search-modal" class="search-modal" aria-label="Search" closedby="any">
+  <div class="search-modal-header">
+    <input type="text" id="search-modal-input" placeholder="{{ i18n "searchPlaceholder" }}" autocomplete="off">
+    <kbd class="search-modal-kbd">ESC</kbd>
+    <form class="search-modal-close-form" method="dialog">
+      <button class="search-modal-close" type="submit" aria-label="Close search" title="Close search">×</button>
+    </form>
   </div>
-</div>
+  <label class="search-content-toggle search-modal-content-toggle">
+    <input type="checkbox" id="search-modal-content-toggle">
+    {{ i18n "searchContent" }}
+  </label>
+  <div id="search-modal-info" class="search-info"></div>
+  <div id="search-modal-results" class="search-modal-results"></div>
+</dialog>
 {{- $searchJS := resources.Get "js/search.js" | minify | fingerprint }}
 <script type="module">
   import { SearchIndex } from '{{ $searchJS.RelPermalink }}';
@@ -22,7 +22,6 @@
   const modalResults = document.getElementById('search-modal-results');
   const modalInfo = document.getElementById('search-modal-info');
   const contentSearch = document.getElementById('search-modal-content-toggle');
-  const backdrop = modal.querySelector('.search-modal-backdrop');
   const lang = '{{ site.Language.Lang }}' || 'en';
   const langPath = lang === 'en' ? '' : '/' + lang;
   const search = new SearchIndex(langPath);
@@ -116,35 +115,26 @@
   };
 
   const openModal = () => {
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    if (modal.open) return;
+    modal.showModal();
+    modalInput.focus();
     loadSearchIndex().then(() => {
-      modalInput.focus();
       if (modalInput.value) performSearch(modalInput.value);
     });
   };
 
-  const closeModal = () => {
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
+  modal.addEventListener('close', () => {
     modalInput.value = '';
     modalResults.innerHTML = '';
     modalInfo.textContent = '';
     activeIndex = 0;
-  };
+  });
 
   document.addEventListener('keydown', (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
       e.preventDefault();
       e.stopPropagation();
       openModal();
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) {
-      e.preventDefault();
-      closeModal();
     }
   });
 
@@ -163,7 +153,6 @@
 
   const searchToggle = document.getElementById('search-toggle');
   if (searchToggle) searchToggle.addEventListener('click', openModal);
-  backdrop.addEventListener('click', closeModal);
 
   modalInput.addEventListener('input', debounce((e) => {
     activeIndex = 0;
