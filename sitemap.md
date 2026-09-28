@@ -27,6 +27,7 @@
 ## Blog Posts
 
 
+- [talisman: exempt git commit SHAs](https://perrotta.dev/2026/09/talisman-exempt-git-commit-shas/) (2026-09-28)
 - [Reply to: Put an AV test at the start of your slides](https://perrotta.dev/2026/09/reply-to-put-an-av-test-at-the-start-of-your-slides/) (2026-09-20)
 - [Reply to: I don't like LLMs](https://perrotta.dev/2026/09/reply-to-i-dont-like-llms/) (2026-09-20)
 - [@claude: troubleshoot](https://perrotta.dev/2026/09/@claude-troubleshoot/) (2026-09-16)
@@ -1379,12 +1380,12 @@
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1240 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1241 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (9 posts)
-- [Git](https://perrotta.dev/tags/git/) (71 posts)
+- [Git](https://perrotta.dev/tags/git/) (72 posts)
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (50 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (172 posts)
@@ -1397,7 +1398,7 @@
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (34 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (61 posts)
-- [Security](https://perrotta.dev/tags/security/) (68 posts)
+- [Security](https://perrotta.dev/tags/security/) (69 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (14 posts)
 - [Serenity](https://perrotta.dev/tags/serenity/) (283 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (12 posts)
