@@ -27,6 +27,7 @@
 ## Blog Posts
 
 
+- [JIRA: backfill tickets from merged pull requests](https://perrotta.dev/2026/09/jira-backfill-tickets-from-merged-pull-requests/) (2026-09-29)
 - [typst: reusable polylux slides with section navigation](https://perrotta.dev/2026/09/typst-reusable-polylux-slides-with-section-navigation/) (2026-09-28)
 - [talisman: exempt git commit SHAs](https://perrotta.dev/2026/09/talisman-exempt-git-commit-shas/) (2026-09-28)
 - [postgres: point-in-time restore to roll back a breaking upgrade](https://perrotta.dev/2026/09/postgres-point-in-time-restore-to-roll-back-a-breaking-upgrade/) (2026-09-24)
@@ -1379,17 +1380,17 @@
 - [Argocd](https://perrotta.dev/tags/argocd/) (21 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (13 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (200 posts)
-- [Bloggify](https://perrotta.dev/tags/bloggify/) (56 posts)
+- [Bloggify](https://perrotta.dev/tags/bloggify/) (57 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1245 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1246 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (9 posts)
-- [Git](https://perrotta.dev/tags/git/) (73 posts)
+- [Git](https://perrotta.dev/tags/git/) (74 posts)
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (51 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (172 posts)

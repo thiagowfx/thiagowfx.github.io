@@ -11,8 +11,19 @@
     <copyright>© 2013 - 2026 Thiago Perrotta ·
   a fork of [hugo ʕ•ᴥ•ʔ bear](https://github.com/janraasch/hugo-bearblog/)
 </copyright>
-    <lastBuildDate>Tue, 29 Sep 2026 11:31:57 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 29 Sep 2026 12:40:09 +0200</lastBuildDate>
     <atom:link href="https://perrotta.dev/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JIRA: backfill tickets from merged pull requests
+      </title>
+      <link>https://perrotta.dev/2026/09/jira-backfill-tickets-from-merged-pull-requests/</link>
+      <pubDate>Tue, 29 Sep 2026 11:21:17 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author>
+      <category>bloggify</category>
+      <category>dev</category>
+      <category>git</category>
+      <guid>https://perrotta.dev/2026/09/jira-backfill-tickets-from-merged-pull-requests/</guid>
+      <description>&lt;p&gt;♠ &lt;strong&gt;Problem statement&lt;/strong&gt;: how can I catch up JIRA when pull requests have already&#xA;(been) merged without tickets?&lt;/p&gt;&#xA;&lt;p&gt;I wrote a local &lt;code&gt;/backfill-jira&lt;/code&gt; skill for my AI harnesses. It compares recent&#xA;merged PRs with existing issues before it creates anything. This is its&#xA;structure; internal projects, repositories, queries, and field IDs are omitted:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;% rg -n &amp;#39;^### Phase&amp;#39; ~/.claude/skills/backfill-jira/SKILL.md&#xA;31:### Phase A — gather &amp;#43; reconcile (read-only)&#xA;72:### Phase B — create the backfill tickets&#xA;125:### Phase C — confirm&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;The unit of work is a &lt;em&gt;theme&lt;/em&gt;, not a PR. Several PRs can implement one change;&#xA;one PR can also be routine enough to need no ticket. The skill checks PR&#xA;references and matching issue summaries before declaring a gap. Existing&#xA;backlog issues count as coverage.&lt;/p&gt;&#xA;&lt;p&gt;The report rule in the skill is explicit:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-plaintext&#34;&gt;4. **Report.** Print a table of every PR → (existing ticket | NEW theme-N | skipped-routine) and a&#xA;   separate list of the gap themes to create. The counts must reconcile: covered &amp;#43; new &amp;#43; skipped =&#xA;   total PRs. Don&amp;#39;t let &amp;#34;get every PR to a theme&amp;#34; pressure you into merging unrelated skipped PRs&#xA;   into a theme just to shrink the skipped list.&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Phase B creates one ticket for each uncovered theme, marks work as complete,&#xA;and reads the status back. It also checks the sprint assignment after writing&#xA;it. Neither a successful create response nor an attempted status change is&#xA;proof that the final fields stuck.&lt;/p&gt;&#xA;&lt;p&gt;The skill deliberately leaves routine work alone:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-plaintext&#34;&gt;- Don&amp;#39;t create per-PR tickets by default — one ticket per theme keeps signal high. **Never create a&#xA;  &amp;#34;grab bag&amp;#34; / &amp;#34;catch-all&amp;#34; / &amp;#34;hygiene&amp;#34; ticket that lumps together unrelated PRs** just to get to&#xA;  zero gaps — each ticket must describe one coherent, describable piece of work. If a PR is&#xA;  genuinely routine and not worth tracking on its own (a version bump, a dependency bump, a typo&#xA;  fix) and doesn&amp;#39;t fit an existing theme, leave it **uncovered**: list it in the report as *skipped&#xA;  (routine, no ticket)* rather than inventing a ticket to absorb it.&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;A second pass over the same window checks whether the new tickets now cover&#xA;the gaps. Zero new gaps matters more than zero skipped PRs. ∎&lt;/p&gt;&#xA;&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href=&#34;mailto:serendipity@perrotta.dev?subject=Reply to: JIRA: backfill tickets from merged pull requests&#34;&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&#34;https://perrotta.dev/tags/bloggify/&#34;&gt;#bloggify&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/dev/&#34;&gt;#dev&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/git/&#34;&gt;#git&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>talisman: exempt git commit SHAs
       </title>
@@ -446,16 +457,6 @@
       <category>git</category>
       <guid>https://perrotta.dev/2025/10/git-list-branches-by-recent-activity/</guid>
       <description>&lt;p&gt;♠ Tweak &lt;code&gt;~/.gitconfig&lt;/code&gt;:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-ini&#34;&gt;[alias]&#xA;  xl = branch -vv&#xA;&#xA;[branch]&#xA;&#x9;sort = -committerdate&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;&lt;strong&gt;Result&lt;/strong&gt;: &lt;code&gt;git xl&lt;/code&gt; will print your repository branches sorted by the most&#xA;recent ones in terms of activity, instead of the alphabetical default.&lt;/p&gt;&#xA;&lt;p&gt;I have this setting for a long time, and IMHO it&amp;rsquo;s a better default.&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://tekin.co.uk/2021/11/listing-most-recent-git-branches&#34;&gt;This post&lt;/a&gt; by&#xA;Tekin Süleyman prompted me to share it. ∎&lt;/p&gt;&#xA;&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href=&#34;mailto:serendipity@perrotta.dev?subject=Reply to: git: list branches by recent activity&#34;&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&#34;https://perrotta.dev/tags/dev/&#34;&gt;#dev&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/git/&#34;&gt;#git&lt;/a&gt;&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>git: commit with the wrong email
-      </title>
-      <link>https://perrotta.dev/2025/10/git-commit-with-the-wrong-email/</link>
-      <pubDate>Tue, 14 Oct 2025 13:50:36 +0200</pubDate><author>serendipity@perrotta.dev (Thiago Perrotta)</author>
-      <category>dev</category>
-      <category>git</category>
-      <guid>https://perrotta.dev/2025/10/git-commit-with-the-wrong-email/</guid>
-      <description>&lt;p&gt;♠ You are sending a PR upstream.&lt;/p&gt;&#xA;&lt;p&gt;You accidentally commit it with the wrong email.&lt;/p&gt;&#xA;&lt;p&gt;First, you prevent this mistake from happening again by updating your&#xA;&lt;code&gt;~/.gitconfig&lt;/code&gt;.&lt;/p&gt;&#xA;&lt;p&gt;And now you need to fix the most recent commit.&lt;/p&gt;&#xA;&lt;p&gt;You can easily do so with:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;% git commit --amend --reset-author --no-edit&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Alternatively, with &lt;a href=&#34;https://github.com/thiagowfx/.dotfiles&#34;&gt;my aliases&lt;/a&gt;:&lt;/p&gt;&#xA;&#xA;&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git uncommit &amp;amp;&amp;amp; git recommit&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;∎&lt;/p&gt;&lt;p&gt;— § —&lt;/p&gt;&lt;p&gt;Reply via &lt;a href=&#34;mailto:serendipity@perrotta.dev?subject=Reply to: git: commit with the wrong email&#34;&gt;email&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&#34;https://perrotta.dev/tags/dev/&#34;&gt;#dev&lt;/a&gt; &lt;a href=&#34;https://perrotta.dev/tags/git/&#34;&gt;#git&lt;/a&gt;&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
