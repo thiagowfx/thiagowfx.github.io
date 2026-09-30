@@ -27,6 +27,7 @@
 ## Blog Posts
 
 
+- [Goodbye](https://perrotta.dev/2026/09/goodbye/) (2026-09-30)
 - [offboarding: export your own work before the laptop is wiped](https://perrotta.dev/2026/09/offboarding-export-your-own-work-before-the-laptop-is-wiped/) (2026-09-30)
 - [JIRA: backfill tickets from merged pull requests](https://perrotta.dev/2026/09/jira-backfill-tickets-from-merged-pull-requests/) (2026-09-29)
 - [typst: reusable polylux slides with section navigation](https://perrotta.dev/2026/09/typst-reusable-polylux-slides-with-section-navigation/) (2026-09-28)
@@ -1387,13 +1388,13 @@
 - [Anki](https://perrotta.dev/tags/anki/) (12 posts)
 - [Argocd](https://perrotta.dev/tags/argocd/) (23 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (13 posts)
-- [Bestof](https://perrotta.dev/tags/bestof/) (200 posts)
+- [Bestof](https://perrotta.dev/tags/bestof/) (201 posts)
 - [Bloggify](https://perrotta.dev/tags/bloggify/) (65 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1254 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1255 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1413,7 +1414,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (61 posts)
 - [Security](https://perrotta.dev/tags/security/) (70 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (14 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (284 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (285 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (12 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (9 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (19 posts)

@@ -1,0 +1,26 @@
+---
+title: "Goodbye"
+url: https://perrotta.dev/2026/09/goodbye/
+last_updated: 2026-09-30
+---
+
+
+Today is my last day at [Tulip](http://tulip.co/).
+
+I should write about my experience sometime.
+
+For now, I'll just say that I had a better experience here than in Google
+Germany[^1].
+
+[^1]: By far.
+
+Pull Request (PR) stats by year of PR creation:
+
+- 460 (2024)
+- 1,096 (2025)
+- 1,468 (2026 to date)
+
+Clearly LLM assistance has significantly increased my throughput.
+
+Now it's time to prepare for what's coming next.
+
