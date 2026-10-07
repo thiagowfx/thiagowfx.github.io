@@ -27,6 +27,7 @@
 ## Blog Posts
 
 
+- [git clone of a private repo hangs](https://perrotta.dev/2026/10/git-clone-of-a-private-repo-hangs/) (2026-10-07)
 - [Goodbye](https://perrotta.dev/2026/09/goodbye/) (2026-09-30)
 - [offboarding: export your own work before the laptop is wiped](https://perrotta.dev/2026/09/offboarding-export-your-own-work-before-the-laptop-is-wiped/) (2026-09-30)
 - [JIRA: backfill tickets from merged pull requests](https://perrotta.dev/2026/09/jira-backfill-tickets-from-merged-pull-requests/) (2026-09-29)
@@ -1394,12 +1395,12 @@
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1255 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1256 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
 - [Ghostty](https://perrotta.dev/tags/ghostty/) (9 posts)
-- [Git](https://perrotta.dev/tags/git/) (79 posts)
+- [Git](https://perrotta.dev/tags/git/) (80 posts)
 - [Kubernetes](https://perrotta.dev/tags/kubernetes/) (53 posts)
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (172 posts)
@@ -1412,7 +1413,7 @@
 - [Posse](https://perrotta.dev/tags/posse/) (2 posts)
 - [Pre-Commit](https://perrotta.dev/tags/pre-commit/) (35 posts)
 - [Privacy](https://perrotta.dev/tags/privacy/) (61 posts)
-- [Security](https://perrotta.dev/tags/security/) (70 posts)
+- [Security](https://perrotta.dev/tags/security/) (71 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (14 posts)
 - [Serenity](https://perrotta.dev/tags/serenity/) (285 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (12 posts)
