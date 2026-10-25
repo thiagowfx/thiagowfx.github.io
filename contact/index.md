@@ -1,7 +1,7 @@
 ---
 title: "Contact"
 url: https://perrotta.dev/contact/
-last_updated: 2026-08-24
+last_updated: 2026-10-25
 ---
 
 
@@ -10,7 +10,7 @@ last_updated: 2026-08-24
 I do not have an SLO: replies are best-effort, though I tend to reply quickly
 whenever I'm not too busy.
 
-You can also find me on these platforms[^1]:
+I'm also on these platforms[^1]:
 
 <!-- keep-sorted start -->
 - <a href="https://github.com/thiagowfx" rel="me">GitHub</a>
