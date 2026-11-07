@@ -27,6 +27,7 @@
 ## Blog Posts
 
 
+- [ack → rg](https://perrotta.dev/2026/11/ack-rg/) (2026-11-07)
 - [spotify: spotmenu](https://perrotta.dev/2026/11/spotify-spotmenu/) (2026-11-07)
 - [git clone of a private repo hangs](https://perrotta.dev/2026/10/git-clone-of-a-private-repo-hangs/) (2026-10-07)
 - [Goodbye](https://perrotta.dev/2026/09/goodbye/) (2026-09-30)
@@ -1396,7 +1397,7 @@
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1256 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1257 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
