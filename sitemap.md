@@ -27,6 +27,7 @@
 ## Blog Posts
 
 
+- [macos: meetingbar for calendar events](https://perrotta.dev/2026/11/macos-meetingbar-for-calendar-events/) (2026-11-07)
 - [ack → rg](https://perrotta.dev/2026/11/ack-rg/) (2026-11-07)
 - [spotify: spotmenu](https://perrotta.dev/2026/11/spotify-spotmenu/) (2026-11-07)
 - [git clone of a private repo hangs](https://perrotta.dev/2026/10/git-clone-of-a-private-repo-hangs/) (2026-10-07)
@@ -1394,7 +1395,7 @@
 - [Argocd](https://perrotta.dev/tags/argocd/) (23 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (13 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (201 posts)
-- [Bloggify](https://perrotta.dev/tags/bloggify/) (66 posts)
+- [Bloggify](https://perrotta.dev/tags/bloggify/) (67 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
@@ -1409,7 +1410,7 @@
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (174 posts)
 - [Linux](https://perrotta.dev/tags/linux/) (2 posts)
-- [Macos](https://perrotta.dev/tags/macos/) (61 posts)
+- [Macos](https://perrotta.dev/tags/macos/) (62 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (69 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pi](https://perrotta.dev/tags/pi/) (24 posts)
@@ -1419,7 +1420,7 @@
 - [Privacy](https://perrotta.dev/tags/privacy/) (61 posts)
 - [Security](https://perrotta.dev/tags/security/) (71 posts)
 - [Selfhosted](https://perrotta.dev/tags/selfhosted/) (14 posts)
-- [Serenity](https://perrotta.dev/tags/serenity/) (286 posts)
+- [Serenity](https://perrotta.dev/tags/serenity/) (287 posts)
 - [Socialmedia](https://perrotta.dev/tags/socialmedia/) (12 posts)
 - [Ssh](https://perrotta.dev/tags/ssh/) (9 posts)
 - [Terraform](https://perrotta.dev/tags/terraform/) (19 posts)
