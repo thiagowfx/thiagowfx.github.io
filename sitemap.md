@@ -27,6 +27,7 @@
 ## Blog Posts
 
 
+- [maccy: pinned items instead of private espanso snippets](https://perrotta.dev/2026/11/maccy-pinned-items-instead-of-private-espanso-snippets/) (2026-11-08)
 - [macos: meetingbar for calendar events](https://perrotta.dev/2026/11/macos-meetingbar-for-calendar-events/) (2026-11-07)
 - [atuin: resume coding agent sessions](https://perrotta.dev/2026/11/atuin-resume-coding-agent-sessions/) (2026-11-07)
 - [ack → rg](https://perrotta.dev/2026/11/ack-rg/) (2026-11-07)
@@ -1396,12 +1397,12 @@
 - [Argocd](https://perrotta.dev/tags/argocd/) (23 posts)
 - [Aws](https://perrotta.dev/tags/aws/) (13 posts)
 - [Bestof](https://perrotta.dev/tags/bestof/) (201 posts)
-- [Bloggify](https://perrotta.dev/tags/bloggify/) (68 posts)
+- [Bloggify](https://perrotta.dev/tags/bloggify/) (69 posts)
 - [Bytebytego](https://perrotta.dev/tags/bytebytego/) (42 posts)
 - [Claude](https://perrotta.dev/tags/claude/) (62 posts)
 - [Coding](https://perrotta.dev/tags/coding/) (30 posts)
 - [Degoogling](https://perrotta.dev/tags/degoogling/) (10 posts)
-- [Dev](https://perrotta.dev/tags/dev/) (1259 posts)
+- [Dev](https://perrotta.dev/tags/dev/) (1260 posts)
 - [Docker](https://perrotta.dev/tags/docker/) (13 posts)
 - [Fosdem](https://perrotta.dev/tags/fosdem/) (6 posts)
 - [Gaming](https://perrotta.dev/tags/gaming/) (16 posts)
@@ -1411,7 +1412,7 @@
 - [Leetcode](https://perrotta.dev/tags/leetcode/) (207 posts)
 - [Legacy](https://perrotta.dev/tags/legacy/) (174 posts)
 - [Linux](https://perrotta.dev/tags/linux/) (2 posts)
-- [Macos](https://perrotta.dev/tags/macos/) (62 posts)
+- [Macos](https://perrotta.dev/tags/macos/) (63 posts)
 - [Meta](https://perrotta.dev/tags/meta/) (69 posts)
 - [Movies](https://perrotta.dev/tags/movies/) (3 posts)
 - [Pi](https://perrotta.dev/tags/pi/) (24 posts)
