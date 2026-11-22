@@ -1,5 +1,5 @@
 ---
-title: "[FAQFlow #2]: Android Upgrading/Rooting Notes"
+title: "FAQFlow #2: Android Upgrading/Rooting Notes"
 date: 2015-03-11T22:41:06-03:00
 tags:
   - bestof

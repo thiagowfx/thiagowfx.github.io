@@ -1,5 +1,5 @@
 ---
-title: "[FAQFlow #3]: Hello, SaltStack (for Arch?)"
+title: "FAQFlow #3: Hello, SaltStack (for Arch?)"
 date: 2015-03-26T19:48:15-03:00
 tags:
   - dev

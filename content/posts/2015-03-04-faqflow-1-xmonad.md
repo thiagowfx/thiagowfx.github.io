@@ -1,5 +1,5 @@
 ---
-title: "[FAQFlow #1]: XMonad"
+title: "FAQFlow #1: XMonad"
 date: 2015-03-04T21:45:47-03:00
 tags:
   - dev
