@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en-us" id="root-html">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)">
+  <title class="title">FAQFlow #4: OpenMPI: notes | ¬ just serendipity 🍀</title><meta name="title" content="FAQFlow #4: OpenMPI: notes">
+<meta name="description" content="Note: this is just for future reference. Sometimes 1 2 I create posts of this nature to serve as summaries of broad topics I might need later on. Because, in a …">
+<meta name="keywords" content="dev,legacy,"><meta property="og:url" content="https://perrotta.dev/2015/04/faqflow-%234-openmpi-notes/">
+	<meta property="og:site_name" content="¬ just serendipity 🍀">
+	<meta property="og:title" content="FAQFlow #4: OpenMPI: notes">
+	<meta property="og:description" content="Note: this is just for future reference. Sometimes 1 2 I create posts of this nature to serve as summaries of broad topics I might need later on. Because, in a few {months,years}, the future Thiago won’t remember what the current one was thinking…and, of course, I take those opportunities to share knowledge as well.
+OpenMPI (and some OpenMP) # OpenMPI is like OpenMP in the sense that they both are standards: sponsored, endorsed and maintained by a bunch of important corporations. OpenMP has something to do with parallelization, and doesn’t necessarily involve multiple machines. In particular, MP stands for multiprocessing3. It is like an add-on to the compiler, to take advantage of multiple processing cores available on several machines nowadays. Keyword: shared memory. OpenMPI, in the other hand, is more like an API (a particular case of MPI), and is something that has been created for the purpose of having a common interface to pass messages between different computers (computing cores, for that matter). Keyword: distributed memory. You write a single program, which is run by all nodes(computers); however, each computer is uniquely assigned a number, so you can orchestrate the processing logic{,power} through them all. Both support C, C&#43;&#43; and FORTRAN. OpenMPI uses mainly the “mpi.h” header, and it usually uses a wrapper compiler (e.g. mpic&#43;&#43;) which calls an underlying compiler (for example: g&#43;&#43;, clang&#43;&#43;, or the Intel compiler) which does the actual compilation. Why this wrapper? To encapsulate libraries and directories – the developer has no need to worry about -L, -I, or -l flags. The CXX environment variable can be used to define the underlying compiler, but this is not usually necessary. OpenMP is hooked to the compiler: you don’t have to care about anything besides adding a few compile directives (#pragma) to your code. Keyword: thread parallelism. Because of this, data racing is common. Still confused?4 might help.">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2015-04-20T22:23:18-03:00">
+		<meta property="article:modified_time" content="2026-11-22T22:14:15+00:00">
+		<meta property="article:tag" content="Dev">
+		<meta property="article:tag" content="Legacy">
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="FAQFlow #4: OpenMPI: notes">
+	<meta name="twitter:description" content="Note: this is just for future reference. Sometimes 1 2 I create posts of this nature to serve as summaries of broad topics I might need later on. Because, in a few {months,years}, the future Thiago won’t remember what the current one was thinking…and, of course, I take those opportunities to share knowledge as well.
+OpenMPI (and some OpenMP) # OpenMPI is like OpenMP in the sense that they both are standards: sponsored, endorsed and maintained by a bunch of important corporations. OpenMP has something to do with parallelization, and doesn’t necessarily involve multiple machines. In particular, MP stands for multiprocessing3. It is like an add-on to the compiler, to take advantage of multiple processing cores available on several machines nowadays. Keyword: shared memory. OpenMPI, in the other hand, is more like an API (a particular case of MPI), and is something that has been created for the purpose of having a common interface to pass messages between different computers (computing cores, for that matter). Keyword: distributed memory. You write a single program, which is run by all nodes(computers); however, each computer is uniquely assigned a number, so you can orchestrate the processing logic{,power} through them all. Both support C, C&#43;&#43; and FORTRAN. OpenMPI uses mainly the “mpi.h” header, and it usually uses a wrapper compiler (e.g. mpic&#43;&#43;) which calls an underlying compiler (for example: g&#43;&#43;, clang&#43;&#43;, or the Intel compiler) which does the actual compilation. Why this wrapper? To encapsulate libraries and directories – the developer has no need to worry about -L, -I, or -l flags. The CXX environment variable can be used to define the underlying compiler, but this is not usually necessary. OpenMP is hooked to the compiler: you don’t have to care about anything besides adding a few compile directives (#pragma) to your code. Keyword: thread parallelism. Because of this, data racing is common. Still confused?4 might help.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "FAQFlow #4: OpenMPI: notes",
+      "description": "Note: this is just for future reference. Sometimes 1 2 I create posts of this nature to serve as summaries of broad topics I might need later on. Because, in a …",
+      "url": "https://perrotta.dev/2015/04/faqflow-%234-openmpi-notes/",
+      "datePublished": "2015-04-20T22:23:18-03:00",
+      "dateModified": "2026-11-22T22:14:15+00:00",
+      "author": {"@type":"Person","name":"Thiago Perrotta","url":"https://perrotta.dev/"},
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://perrotta.dev/2015/04/faqflow-%234-openmpi-notes/"
+      },"keywords": ["dev","legacy"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [{"@type":"ListItem","item":"https://perrotta.dev","name":"Home","position":1},{"@type":"ListItem","item":"https://perrotta.dev/posts/","name":"Posts","position":2},{"@type":"ListItem","name":"FAQFlow #4: OpenMPI: notes","position":3}]
+    }
+  ]
+}
+</script><meta name="referrer" content="no-referrer-when-downgrade">
+  <link rel="icon" href="https://perrotta.dev/favicon.ico"><link rel="canonical" href="https://perrotta.dev/2015/04/faqflow-%234-openmpi-notes/"><link rel="alternate" type="text/markdown" href="https://perrotta.dev/2015/04/faqflow-%234-openmpi-notes/index.md" title="FAQFlow #4: OpenMPI: notes"><link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0">
+  <link rel="author" href="https://perrotta.dev/" title="Thiago Perrotta"><link rel="stylesheet" href="/css/site.min.af68175d71d68b1942ef966ad5c9810bc1ed34e96e8d80e687c613dedb88240e.css">
+
+  <link rel="apple-touch-icon" href="https://perrotta.dev/apple-touch-icon.webp">
+</head>
+
+<body>
+  <div class="h-card" style="display:none;">
+    <a class="p-name u-url" href="https://perrotta.dev/">Thiago Perrotta</a>
+    <span class="p-nickname">thiagowfx</span><a class="u-email" href="mailto:&#x73;&#x65;&#x72;&#x65;&#x6e;&#x64;&#x69;&#x70;&#x69;&#x74;&#x79;&#x40;&#x70;&#x65;&#x72;&#x72;&#x6f;&#x74;&#x74;&#x61;&#x2e;&#x64;&#x65;&#x76;">&#x73;&#x65;&#x72;&#x65;&#x6e;&#x64;&#x69;&#x70;&#x69;&#x74;&#x79;&#x40;&#x70;&#x65;&#x72;&#x72;&#x6f;&#x74;&#x74;&#x61;&#x2e;&#x64;&#x65;&#x76;</a>
+    <img class="u-photo" src="https://perrotta.dev/thiagowfx.webp" alt="Thiago Perrotta">
+  </div>
+  <header>
+    <div class="header-top">
+      <a href="/" class="title" aria-label="not just serendipity">
+        <img src='https://perrotta.dev/thiagowfx.webp' alt="thiagowfx's avatar" width="32" height="32" fetchpriority="high">
+        <h1 class="title">¬ just serendipity 🍀<span class="visually-hidden"> (not just serendipity)</span></h1>
+      </a>
+      <div class="header-buttons">
+
+         <button id="search-toggle" aria-label="Search" title="Search (Ctrl/Cmd+K)">
+           <span id="search-toggle-icon">🔍</span>
+         </button>
+         <button id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+           <span id="theme-toggle-icon">☀️</span>
+         </button>
+       </div>
+    </div>
+    <nav aria-label="Main navigation">
+      <a href="/tags/bestof/">
+        <span class="nav-text">★</span>
+      </a>
+      <a href="/tags/bloggify/">
+        <span class="nav-text">🤖</span>
+      </a>
+      <a href="/posts/">
+        <span class="nav-text">Blog</span>
+      </a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-trigger" popovertarget="nav-dropdown-menu">
+          <span class="nav-text">More</span>
+          <span class="nav-dropdown-arrow">▼</span>
+        </button>
+        <div id="nav-dropdown-menu" class="nav-dropdown-menu" popover>
+          <a href="/search/" class="nav-dropdown-item">🔍 Search</a>
+          <a href="/blogroll/" class="nav-dropdown-item">📰 Blogroll</a>
+          <a href="/tags/" class="nav-dropdown-item">🏷️ Tags</a>
+          <a href="/categories/" class="nav-dropdown-item">📂 Categories</a>
+          <a href="/calendar/" class="nav-dropdown-item">📅 Calendar</a>
+          <a href="/graph/" class="nav-dropdown-item">🕸️ Graph</a>
+          <a href="/random/" class="nav-dropdown-item">🎲 Random</a>
+          <a href="/books/" class="nav-dropdown-item">📚 Books</a>
+          <a href="/tv-shows/" class="nav-dropdown-item">📺 TV Shows</a>
+          <a href="/projects/" class="nav-dropdown-item">🛠️ Projects</a>
+          <a href="/pomodoro/" class="nav-dropdown-item">🍅 Pomodoro</a>
+          <a href="/radio/" class="nav-dropdown-item">📻 Radio</a>
+          <a href="/cursed-knowledge/" class="nav-dropdown-item">👻 Cursed Knowledge</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+<div id="reading-progress" class="reading-progress" aria-hidden="true"></div>
+<script>
+  document.addEventListener('keydown', function(event) {
+    if (event.target.closest('input:not([type="hidden"]), textarea, [contenteditable="true"]')) return;
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    if (event.key === 'j' || event.key === 'ArrowLeft') {
+      const prev = document.querySelector('[data-nav="prev"]');
+      if (prev && prev.href) window.location.href = prev.href;
+    } else if (event.key === 'k' || event.key === 'ArrowRight') {
+      const next = document.querySelector('[data-nav="next"]');
+      if (next && next.href) window.location.href = next.href;
+    }
+  });
+</script>
+<a href="https://perrotta.dev/2015/04/using-cmake-with-the-ninja-generator/" data-nav="prev" hidden></a>
+<a href="https://perrotta.dev/2015/05/lvm-and-gpt-uefi-paradise/" data-nav="next" hidden></a>
+<article class="h-entry">
+<div class="article-header">
+  <h2>
+    <span class="p-name">FAQFlow #4: OpenMPI: notes</span>
+  </h2>
+  <div class="article-header-actions">
+      <button class="copy-markdown-btn" type="button" data-copy-markdown="/2015/04/faqflow-%234-openmpi-notes/index.md" data-copy-source="https://perrotta.dev/2015/04/faqflow-%234-openmpi-notes/" aria-label="Copy as Markdown" title="Copy as Markdown (Ctrl/Cmd/Alt-click to view source)">
+        <svg aria-hidden="true" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      </button>
+    <button id="fullscreen-btn" class="fullscreen-btn" aria-label="Toggle fullscreen mode" title="Toggle fullscreen mode (f)">
+      <span id="fullscreen-icon">⛶</span>
+    </button>
+  </div>
+</div>
+<p>
+  
+  <span class="pubdate-single">
+    <time class="dt-published" datetime='2015-04-20T22:23:18-03:00'>
+      20 Apr, 2015
+    </time>
+     • 878 words   • 5 min 
+    
+    • updated <time datetime='2026-11-22'>22 Nov, 2026</time>
+    
+  </span>
+  
+</p>
+    <div class="old-entry-warning" role="note">
+      ⚠️ This post is over one year old. It may no longer be up to date or relevant. Opinions may have changed.
+    </div><div class="e-content"> <p><strong>Note</strong>: this is just for future reference. Sometimes <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> I create posts
+of this nature to serve as summaries of broad topics I might need later on.
+Because, in a few {months,years}, the future Thiago won&rsquo;t remember what the
+current one was thinking&hellip;and, of course, I take those opportunities to share
+knowledge as well.</p>
+<h2 id="openmpi-and-some-openmp">
+  OpenMPI (and some OpenMP)
+  <a class="heading-anchor" href="#openmpi-and-some-openmp" aria-label="Link to this section">#</a>
+</h2>
+<ul>
+<li>OpenMPI is like OpenMP in the sense that they both are standards: sponsored,
+endorsed and maintained by a bunch of important corporations.</li>
+<li>OpenMP has something to do with parallelization, and doesn&rsquo;t necessarily
+involve multiple machines. In particular, MP stands for <em>multiprocessing</em><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.
+It is like an add-on to the compiler, to take advantage of multiple
+processing cores available on several machines nowadays. Keyword: <strong>shared
+memory</strong>.</li>
+<li>OpenMPI, in the other hand, is more like an API (a particular case of MPI),
+and is something that has been created for the purpose of having a common
+interface to pass messages between different computers (computing cores, for
+that matter). Keyword: <strong>distributed memory</strong>. You write a single program,
+which is run by all nodes(computers); however, each computer is uniquely
+assigned a number, so you can orchestrate the processing logic{,power} through
+them all.</li>
+<li>Both support C, C++ and FORTRAN.</li>
+<li>OpenMPI uses mainly the &ldquo;mpi.h&rdquo; header, and it usually uses a wrapper compiler
+(e.g. mpic++) which calls an underlying compiler (for example: <code>g++</code>, <code>clang++</code>,
+or the Intel compiler) which does the actual compilation. Why this wrapper? To
+encapsulate libraries and directories – the developer has no need to worry
+about <code>-L</code>, <code>-I</code>, or <code>-l</code> flags. The CXX environment variable can be used to define
+the underlying compiler, but this is not usually necessary.</li>
+<li>OpenMP is hooked to the compiler: you don&rsquo;t have to care about anything
+besides adding a few compile directives (<code>#pragma</code>) to your code. Keyword:
+<strong>thread parallelism</strong>. Because of this, data racing is common.</li>
+</ul>
+<p>Still confused?<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup> might help.</p>
+<h2 id="openmpi-innocuous-example">
+  OpenMPI, innocuous example
+  <a class="heading-anchor" href="#openmpi-innocuous-example" aria-label="Link to this section">#</a>
+</h2>
+<div class="codeblock" data-lang="cpp">
+   <div class="codeblock-header">
+     <span class="codeblock-language">cpp</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cm">/* hello.cpp */</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#include
+</span></span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Hello, world!&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div>
+</div>
+<p>Now, you would normally run this program with:</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">g++ hello.cpp -o hello <span class="o">&amp;&amp;</span> ./hello</span></span></code></pre></div>
+</div>
+<p>What would you do with OpenMPI? Nothing fancy, really:</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mpic++ hello.cpp -o hellompi <span class="o">&amp;&amp;</span> ./hellompi</span></span></code></pre></div>
+</div>
+<p>This will call <code>g++</code> under the hood (supposing there are no other recognized C++
+compilers on the system), but adding a few command-line flags to make it
+understand the MPI world. Of course, this example doesn&rsquo;t contain anything which
+actually uses MPI. But, in fact, you can inspect they produce different
+executables:</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sdiff &lt;<span class="o">(</span>strings hello<span class="o">)</span> &lt;<span class="o">(</span>strings hellompi<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># or, alternatively, use `diff -uN`</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># you&#39;ll see a few additional strings in the hellompi executable specific to OpenMPI</span></span></span></code></pre></div>
+</div>
+<h2 id="openmpi-real-example">
+  OpenMPI, real example
+  <a class="heading-anchor" href="#openmpi-real-example" aria-label="Link to this section">#</a>
+</h2>
+<p>Credits for the source: on<sup id="fnref1:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
+<div class="codeblock" data-lang="cpp">
+   <div class="codeblock-header">
+     <span class="codeblock-language">cpp</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cm">/* example.cpp */</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#include
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include
+</span></span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">rank</span><span class="p">;</span> <span class="c1">// id
+</span></span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">size</span><span class="p">;</span> <span class="c1">// number of processors
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">MPI_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">argv</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MPI_Comm_size</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">size</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MPI_Comm_rank</span><span class="p">(</span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">rank</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Hello from &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">rank</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MPI_Finalize</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div>
+</div>
+<p>Let&rsquo;s proceed&hellip;</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mpic++ example.cpp -o example
+</span></span><span class="line"><span class="cl"><span class="c1"># note: if you try to compile this example with g++...well, then you&#39;re screwed, as it won&#39;t work out-of-the-box -- you would have to add the required compile flags manually</span></span></span></code></pre></div>
+</div>
+<p>Then run it:</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># naive: this will do nothing special</span>
+</span></span><span class="line"><span class="cl">$ ./example
+</span></span><span class="line"><span class="cl">Hello from <span class="m">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># this is where the magic happens</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># no need to specify it as &#34;./example&#34;; just use the executable name</span>
+</span></span><span class="line"><span class="cl">$ mpirun -np <span class="m">4</span> example
+</span></span><span class="line"><span class="cl">Hello from <span class="m">0</span>
+</span></span><span class="line"><span class="cl">Hello from <span class="m">1</span>
+</span></span><span class="line"><span class="cl">Hello from <span class="m">2</span>
+</span></span><span class="line"><span class="cl">Hello from <span class="m">3</span></span></span></code></pre></div>
+</div>
+<p>I ran it a few times and the order in which the lines were printed occasionally
+became different. You can use &ldquo;400&rdquo; instead of &ldquo;4&rdquo;&hellip;no problem. My load average
+became &ldquo;100&rdquo;&hellip;whoa!!! Okay, a more lightweight example is &ldquo;10&rdquo;:</p>
+<div class="codeblock" data-lang="shell">
+   <div class="codeblock-header">
+     <span class="codeblock-language">shell</span>
+     <span class="codeblock-actions"><button class="codeblock-copy" type="button" data-copy-code title="Copy"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span>
+   </div>
+   <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ mpirun -np <span class="m">10</span> example
+</span></span><span class="line"><span class="cl">Hello from <span class="m">5</span>
+</span></span><span class="line"><span class="cl">Hello from <span class="m">3</span>
+</span></span><span class="line"><span class="cl">Hello from <span class="m">4</span>
+</span></span><span class="line"><span class="cl">Hello from <span class="m">0</span>
+</span></span><span class="line"><span class="cl">Hello from <span class="m">8</span>
+</span></span><span class="line"><span class="cl">Hello from <span class="m">7</span>
+</span></span><span class="line"><span class="cl">Hello from <span class="m">9</span>
+</span></span><span class="line"><span class="cl">Hello from <span class="m">2</span>
+</span></span><span class="line"><span class="cl">Hello from <span class="m">6</span>
+</span></span><span class="line"><span class="cl">Hello from <span class="m">1</span></span></span></code></pre></div>
+</div>
+<p>You don&rsquo;t have to have the number of cores of the argument you pass to the -np
+flag. This just specifies the number of processes you&rsquo;ll spawn. When I just run
+&ldquo;mpirun example&rdquo;, without the -np argument, only two lines are printed. My
+ultrabook has two physical cores and two threads per core (2 x 2 = 4 virtual
+processors), so I believe mpirun picked the number of physical cores from my
+computer.</p>
+<h2 id="conclusion">
+  Conclusion
+  <a class="heading-anchor" href="#conclusion" aria-label="Link to this section">#</a>
+</h2>
+<p>OpenMPI distributes work <strong>across</strong> nodes (between different nodes) and OpenMP
+distributes work within nodes (within a given node). In OpenMPI, each process is
+isolated from each other and can&rsquo;t see variables or the memory from each other;
+in OpenMP, the several threads spawned by a process <strong>do</strong> share memory and can
+see variables from the other ones. <strong>The End</strong>.</p>
+<h2 id="bonus">
+  Bonus
+  <a class="heading-anchor" href="#bonus" aria-label="Link to this section">#</a>
+</h2>
+<ul>
+<li>How many virtual processors do you have? Run <code>nproc</code>.</li>
+<li>More info about processors? Run <code>lscpu</code> or inspect /proc/cpuinfo.</li>
+<li>Slides on <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup></li>
+<li>Run <code>ompi_info</code>.</li>
+<li><code>man MPI_Send</code> and <code>man MPI_Recv</code> (they&rsquo;re both blocking calls)</li>
+<li><code>mpic++ --showme</code> (want to see the the compile flags of your friendly wrapper compiler?)</li>
+<li>Difference between <em>mpiexec</em> and <em>mpirun</em>? It looks like the former is more standardized; however, the last one seems to be more common – at least on the sources I accessed.</li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://perrotta.dev/2015/03/faqflow-%232-android-upgrading-rooting-notes/">FAQFlow #2: Android Upgrading/Rooting Notes</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://perrotta.dev/pt/2014/03/scilab-notes-howto/">Scilab Notes (HOWTO)</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="http://pawangh.blogspot.com.br/2014/05/mpi-vs-openmp.html">http://pawangh.blogspot.com.br/2014/05/mpi-vs-openmp.html</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="http://darmawan-salihun.blogspot.com.br/2009/11/openmp-vs-openmpi.html">http://darmawan-salihun.blogspot.com.br/2009/11/openmp-vs-openmpi.html</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p><a href="https://www.open-mpi.org/papers/sc-2009/jjhursey-iu-booth.pdf">https://www.open-mpi.org/papers/sc-2009/jjhursey-iu-booth.pdf</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+<p><span class="post-end-mark">∎</span></p> </div><div class="post-footer-meta">
+<p style="text-align: center; margin: 2em 0 1em;">— § —</p>
+<div style="display: flex; justify-content: space-between">
+  
+  <p style="margin: 0;">
+    Reply via
+    <a
+      href="mailto:&#x73;&#x65;&#x72;&#x65;&#x6e;&#x64;&#x69;&#x70;&#x69;&#x74;&#x79;&#x40;&#x70;&#x65;&#x72;&#x72;&#x6f;&#x74;&#x74;&#x61;&#x2e;&#x64;&#x65;&#x76;?subject=Reply to: FAQFlow #4: OpenMPI: notes"
+      >email</a
+    >
+  </p>
+  
+  
+  <p style="margin: 0;"><a href="https://perrotta.dev/tags/dev/">#dev</a> <a href="https://perrotta.dev/tags/legacy/">#legacy</a>
+  </p>
+  
+</div>
+</div><div class="related-posts" style="border: 2px solid var(--border-color); border-radius: .5rem; padding: 1.5rem; margin-top: 1.5rem;"><h4 id="related-posts" style="margin-top: 0;">Related Posts</h4>
+  <section style="display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0;"><article style="flex: 1 1 250px; padding: 1rem; background: var(--code-bg); border-radius: .25rem; color: var(--text-color);">
+      <h5 style="margin-top: 0; margin-bottom: .5rem; color: var(--heading-color);">
+        <a href="https://perrotta.dev/2015/03/faqflow-%232-android-upgrading-rooting-notes/">[FAQFlow #2]: Android Upgrading/Rooting Notes</a>
+      </h5><p style="margin: .5rem 0; font-size: .9rem;">I successfully upgraded my Android phone from Jelly Bean (4.1.2) to Kit Kat (4.4.2). Here are notes about my upgrade process.
+Key steps # Backup your …</p><small style="color: var(--color-gray);">Mar 11, 2015</small>
+    </article><article style="flex: 1 1 250px; padding: 1rem; background: var(--code-bg); border-radius: .25rem; color: var(--text-color);">
+      <h5 style="margin-top: 0; margin-bottom: .5rem; color: var(--heading-color);">
+        <a href="https://perrotta.dev/2017/02/arch-linux-on-macbook-installation-notes/">Arch Linux on macbook installation notes</a>
+      </h5><p style="margin: .5rem 0; font-size: .9rem;">Imported from thiagowfx@&rsquo;s gist.
+Arch Linux Installation Notes (Macbook, UEFI, LVM ON LUKS, swap, btrfs root and home):
+References # Create an …</p><small style="color: var(--color-gray);">Feb 11, 2017</small>
+    </article></section><p class="previously" style="margin-bottom: 0; margin-top: 0.5rem;"><a href="https://perrotta.dev/2015/04/using-cmake-with-the-ninja-generator/" title="Using cmake with the ninja generator">Previously</a>, <a href="https://perrotta.dev/2015/04/setting-up-spark-on-arch-linux/" title="Setting up Spark on Arch Linux">previously</a>, <a href="https://perrotta.dev/2015/04/ocaml-starters/" title="OCaml starters">previously</a>, <a href="https://perrotta.dev/2015/04/spacemacs-i-love-you-not-really/" title="Spacemacs, I love you (not really)">previously</a>, <a href="https://perrotta.dev/2015/04/functional-languages-brainstorming-all-over-again/" title="Functional languages, brainstorming all over again">previously</a>.
+  </p></div><div class="mini-graph">
+  <h4 id="connections"><a href="/graph/">Connections</a></h4>
+  <svg
+    viewBox="0 0 640 232"
+    role="img"
+    aria-label="Posts with direct links or shared tags"
+    preserveAspectRatio="xMidYMid meet"
+    paint-order="stroke">
+    <defs>
+      <marker
+        id="mini-graph-arrow"
+        viewBox="0 0 10 10"
+        refX="5"
+        refY="5"
+        markerWidth="5"
+        markerHeight="5"
+        orient="auto">
+        <path d="M0,0 L10,5 L0,10 Z" />
+      </marker>
+    </defs><path class="mini-graph-direct-edge" marker-mid="url(#mini-graph-arrow)" d="M252,50 L315.5,50 L379,50" /><path class="mini-graph-tag-edge" d="M240,59 L188,137" /><path class="mini-graph-tag-edge" d="M188,159 L130,189" /><path class="mini-graph-tag-edge" d="M188,159 L350,189" /><path class="mini-graph-tag-edge" d="M240,59 L292,137" /><path class="mini-graph-tag-edge" d="M292,159 L130,189" /><path class="mini-graph-tag-edge" d="M292,159 L350,189" /><text class="mini-graph-header" x="398" y="14">Links to</text><text class="mini-graph-header mini-graph-tag-header" x="240" y="114" text-anchor="middle">Shared tags</text><a class="mini-graph-direct" href="https://perrotta.dev/2015/03/faqflow-%232-android-upgrading-rooting-notes/">
+        <title>[FAQFlow #2]: Android Upgrading/Rooting Notes</title>
+        <circle class="mini-graph-direct-node" cx="388" cy="50" r="5.5" />
+        <text class="mini-graph-direct-label" x="398" y="50" dy="0.35em">[FAQFlow #2]: Android…</text>
+      </a><a class="mini-graph-tag-node" href="/tags/dev/">
+        <title>View posts tagged dev</title>
+        <rect x="144" y="138" width="88" height="20" rx="10" />
+        <text class="mini-graph-tag-key" x="188" y="148" text-anchor="middle" dy="0.35em">#dev</text>
+      </a><a class="mini-graph-tag-node" href="/tags/legacy/">
+        <title>View posts tagged legacy</title>
+        <rect x="248" y="138" width="88" height="20" rx="10" />
+        <text class="mini-graph-tag-key" x="292" y="148" text-anchor="middle" dy="0.35em">#legacy</text>
+      </a><a class="mini-graph-tag" href="https://perrotta.dev/2017/02/arch-linux-on-macbook-installation-notes/">
+        <title>Arch Linux on macbook installation notes</title>
+        <circle class="mini-graph-tag-post-node" cx="130" cy="196" r="4.5" />
+        <text class="mini-graph-tag-label" x="130" y="215" text-anchor="middle">Arch Linux on macbook…</text>
+      </a><a class="mini-graph-tag" href="https://perrotta.dev/2016/09/linux-goodness-in-your-chromebook/">
+        <title>Linux goodness in your Chromebook</title>
+        <circle class="mini-graph-tag-post-node" cx="350" cy="196" r="4.5" />
+        <text class="mini-graph-tag-label" x="350" y="215" text-anchor="middle">Linux goodness in your…</text>
+      </a><circle class="mini-graph-current" cx="240" cy="50" r="7" />
+    <text class="mini-graph-current-label" x="240" y="70" text-anchor="middle">FAQFlow #4: OpenMPI: notes</text>
+  </svg><div class="mini-graph-list"><p class="mini-graph-list-header mini-graph-list-direct-header">Links to</p>
+      <ul class="mini-graph-list-direct"><li><a href="https://perrotta.dev/2015/03/faqflow-%232-android-upgrading-rooting-notes/">[FAQFlow #2]: Android Upgrading/Rooting Notes</a></li></ul><p class="mini-graph-list-header">Shared tags</p>
+      <ul class="mini-graph-list-tags"><li>
+            <a href="https://perrotta.dev/2017/02/arch-linux-on-macbook-installation-notes/">Arch Linux on macbook installation notes</a>
+            <small>(<a href="/tags/dev/">dev</a>, <a href="/tags/legacy/">legacy</a>)</small>
+          </li><li>
+            <a href="https://perrotta.dev/2016/09/linux-goodness-in-your-chromebook/">Linux goodness in your Chromebook</a>
+            <small>(<a href="/tags/dev/">dev</a>, <a href="/tags/legacy/">legacy</a>)</small>
+          </li></ul></div>
+</div><a class="u-url" href="https://perrotta.dev/2015/04/faqflow-%234-openmpi-notes/" aria-hidden="true" style="display:none;"></a>
+<span class="p-author h-card" style="display:none;">
+  <a class="p-name u-url" href="https://perrotta.dev/" rel="author">Thiago Perrotta</a>
+</span>
+</article>
+  </main>
+  <hr>
+  <footer>
+    <span>
+      © 2013 - 2026 Thiago Perrotta ·
+a fork of <a href="https://github.com/janraasch/hugo-bearblog/">hugo ʕ•ᴥ•ʔ bear</a> · <a href="/colophon">colophon</a> · <a href="/contact">contact</a> · <a href="https://perrotta.dev/index.xml">rss</a> · <a href="https://uptime.perrotta.dev/status/indianapolis">status</a>
+    </span>
+
+    <div class="badge-wrapper">
+      <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License">
+        <img src="https://perrotta.dev/vendor/cc-by-nc-sa-4.0-88x31.webp" width="88" height="31" alt="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License" loading="lazy">
+      </a>
+      <a target="_blank" href="https://indieweb.org/" title="IndieWebCamp">
+        <img src="https://perrotta.dev/vendor/indieweb88x31-flat.webp" width="88" height="31" alt="IndieWebCamp" loading="lazy">
+      </a>
+      <a target="_blank" href="https://512kb.club" title="512kb.club badge">
+        <img src="https://perrotta.dev/vendor/green-team.webp" width="88" height="31" alt="a proud member of the green team of 512KB club" loading="lazy">
+      </a>
+      <a target="_blank" href="https://powrss.com/" title="powRSS">
+        <img src="https://perrotta.dev/vendor/powrss-88-31.webp" width="88" height="31" alt="powRSS" loading="lazy">
+      </a>
+      <a target="_blank" href="https://www.vim.org/" title="Vim text editor">
+        <img src="https://perrotta.dev/vendor/vim.webp" width="88" height="31" alt="Vim text editor" loading="lazy">
+      </a>
+      <a target="_blank" href="https://edleeman.co.uk/cookie-zero/" title="Cookie Zero">
+        <img src="https://perrotta.dev/vendor/cookiezero.webp" width="88" height="31" alt="Cookie Zero" loading="lazy">
+      </a>
+      <a target="_blank" href="https://validator.w3.org/nu/?doc=https://perrotta.dev/" title="Valid HTML5">
+        <img src="https://perrotta.dev/vendor/html5-validator-badge.webp" width="88" height="31" alt="Valid HTML5" loading="lazy">
+      </a>
+      <a target="_blank" href="https://validator.w3.org/feed/check.cgi?url=https://perrotta.dev/index.xml" title="Valid RSS feed">
+        <img src="https://perrotta.dev/vendor/valid-rss-rogers.webp" width="88" height="31" alt="Valid RSS feed" loading="lazy">
+      </a>
+    </div>
+  </footer><dialog id="search-modal" class="search-modal" aria-label="Search" closedby="any">
+  <div class="search-modal-header">
+    <input type="text" id="search-modal-input" placeholder="Search posts... (use * as wildcard)" autocomplete="off">
+    <kbd class="search-modal-kbd">ESC</kbd>
+    <form class="search-modal-close-form" method="dialog">
+      <button class="search-modal-close" type="submit" aria-label="Close search" title="Close search">×</button>
+    </form>
+  </div>
+  <label class="search-content-toggle search-modal-content-toggle">
+    <input type="checkbox" id="search-modal-content-toggle">
+    Search post content
+  </label>
+  <div id="search-modal-info" class="search-info"></div>
+  <div id="search-modal-results" class="search-modal-results"></div>
+</dialog>
+<script type="module">
+  import { SearchIndex } from '\/js\/search.min.338ef3fdd4dadfd658d4ba5ea17bb4aa974582e63b2b9f44d9f1a2db6b2cd576.js';
+
+  const modal = document.getElementById('search-modal');
+  const modalInput = document.getElementById('search-modal-input');
+  const modalResults = document.getElementById('search-modal-results');
+  const modalInfo = document.getElementById('search-modal-info');
+  const contentSearch = document.getElementById('search-modal-content-toggle');
+  const lang = 'en' || 'en';
+  const langPath = lang === 'en' ? '' : '/' + lang;
+  const search = new SearchIndex(langPath);
+
+  const debounce = (fn, delay) => {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn(...args), delay);
+    };
+  };
+
+  const escapeHtml = (text) => {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  };
+
+  const highlightMatch = (text, query) => {
+    if (!text) return '';
+    const escaped = escapeHtml(text);
+    const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 0);
+    return terms.reduce((result, term) => {
+      const pattern = term.includes('*')
+        ? term.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '[^\\s]*')
+        : term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return result.replace(new RegExp(`(${pattern})`, 'gi'), '<mark>$1</mark>');
+    }, escaped);
+  };
+
+  const loadSearchIndex = () => {
+    if (search.posts !== null) return Promise.resolve(search.posts);
+    modalInfo.textContent = 'Loading search index';
+    modalInfo.classList.add('loading');
+    return search.loadPosts()
+      .then(posts => {
+        modalInfo.classList.remove('loading');
+        modalInfo.textContent = '';
+        return posts;
+      })
+      .catch(err => {
+        modalInfo.classList.remove('loading');
+        modalInfo.textContent = 'Error loading search index';
+        console.error('Search index load error:', err);
+      });
+  };
+
+  const performSearch = (query) => {
+    if (!search.posts) return;
+
+    const q = query.toLowerCase().trim();
+    if (q.length === 0) {
+      modalResults.innerHTML = '';
+      modalInfo.textContent = '';
+      return;
+    }
+
+    const results = search.search(q, search.posts, contentSearch.checked);
+    if (results.length === 0) {
+      modalInfo.textContent = 'No results found';
+      modalResults.innerHTML = '';
+      return;
+    }
+
+    modalInfo.textContent = `${results.length} result${results.length === 1 ? '' : 's'}`;
+    modalResults.innerHTML = results.slice(0, 20).map(({ post }, i) => {
+      const tags = (post.tags ?? [])
+        .map(t => `<span class="search-tag">#${escapeHtml(t)}</span>`)
+        .join(' ');
+
+      return `
+        <a href="${escapeHtml(post.url)}" class="search-modal-result${i === 0 ? ' active' : ''}" data-index="${i}">
+          <span class="search-modal-result-title">${highlightMatch(post.title, query)}</span>
+          <span class="search-modal-result-meta">
+            <span class="search-result-date">${escapeHtml(post.date)}</span>
+            ${tags ? ` · ${tags}` : ''}
+          </span>
+        </a>
+      `;
+    }).join('');
+  };
+
+  let activeIndex = 0;
+
+  const updateActive = (newIndex) => {
+    const items = modalResults.querySelectorAll('.search-modal-result');
+    if (items.length === 0) return;
+    activeIndex = Math.max(0, Math.min(newIndex, items.length - 1));
+    items.forEach((item, i) => item.classList.toggle('active', i === activeIndex));
+    items[activeIndex].scrollIntoView({ block: 'nearest' });
+  };
+
+  const openModal = () => {
+    if (modal.open) return;
+    modal.showModal();
+    modalInput.focus();
+    loadSearchIndex().then(() => {
+      if (modalInput.value) performSearch(modalInput.value);
+    });
+  };
+
+  modal.addEventListener('close', () => {
+    modalInput.value = '';
+    modalResults.innerHTML = '';
+    modalInfo.textContent = '';
+    activeIndex = 0;
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      e.stopPropagation();
+      openModal();
+    }
+  });
+
+  modalInput.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      updateActive(activeIndex + 1);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      updateActive(activeIndex - 1);
+    } else if (e.key === 'Enter') {
+      const items = modalResults.querySelectorAll('.search-modal-result');
+      if (items[activeIndex]) items[activeIndex].click();
+    }
+  });
+
+  const searchToggle = document.getElementById('search-toggle');
+  if (searchToggle) searchToggle.addEventListener('click', openModal);
+
+  modalInput.addEventListener('input', debounce((e) => {
+    activeIndex = 0;
+    performSearch(e.target.value);
+  }, 150));
+  contentSearch.addEventListener('change', () => {
+    activeIndex = 0;
+    if (!contentSearch.checked) {
+      performSearch(modalInput.value);
+      return;
+    }
+
+    modalInfo.textContent = 'Loading search index';
+    modalInfo.classList.add('loading');
+    search.loadContent()
+      .then(() => {
+        modalInfo.classList.remove('loading');
+        performSearch(modalInput.value);
+      })
+      .catch(err => {
+        contentSearch.checked = false;
+        modalInfo.classList.remove('loading');
+        modalInfo.textContent = 'Error loading search index';
+        console.error('Content search index load error:', err);
+      });
+  });
+</script>
+
+  <script src="/js/main.min.d1e6b4e53eeda413a2eb7b2ec1ef740096d0229c3fc3d75be675915a3cc7f86e.js" defer></script>
+</body>
+
+</html>
