@@ -1,7 +1,7 @@
 ---
-title: "[FAQFlow #3]: Hello, SaltStack (for Arch?)"
+title: "FAQFlow #3: Hello, SaltStack (for Arch?)"
 url: https://perrotta.dev/2015/03/faqflow-%233-hello-saltstack-for-arch/
-last_updated: 2026-02-19
+last_updated: 2026-11-22
 ---
 
 

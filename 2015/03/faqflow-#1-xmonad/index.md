@@ -1,7 +1,7 @@
 ---
-title: "[FAQFlow #1]: XMonad"
+title: "FAQFlow #1: XMonad"
 url: https://perrotta.dev/2015/03/faqflow-%231-xmonad/
-last_updated: 2026-02-19
+last_updated: 2026-11-22
 ---
 
 

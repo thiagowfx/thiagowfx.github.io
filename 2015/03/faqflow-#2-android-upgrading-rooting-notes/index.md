@@ -1,7 +1,7 @@
 ---
-title: "[FAQFlow #2]: Android Upgrading/Rooting Notes"
+title: "FAQFlow #2: Android Upgrading/Rooting Notes"
 url: https://perrotta.dev/2015/03/faqflow-%232-android-upgrading-rooting-notes/
-last_updated: 2026-02-19
+last_updated: 2026-11-22
 ---
 
 
